@@ -17,14 +17,14 @@
  * For the full copyright and license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Accurateweb\SettingBundle\DependencyInjection;
+namespace Accurateweb\ApplicationSettingsAdminBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-class AccuratewebSettingExtension extends Extension
+class AccuratewebApplicationSettingsAdminExtension extends Extension
 {
   public function load(array $config, ContainerBuilder $container)
   {
@@ -37,13 +37,16 @@ class AccuratewebSettingExtension extends Extension
       $storage = isset($config['configuration']['storage']) ? $config['configuration']['storage'] : 'aw.settings.storage.doctrine';
       $container->setAlias('aw.settings.storage', $storage);
 
-      $class = $config['configuration']['class'];
+      $entityClass = $config['configuration']['class'];
 
       if ($storage == 'aw.settings.storage.doctrine')
       {
         $repository = $container->getDefinition('aw.settings.repository');
-        $repository->setArgument(1, $class);
+        $repository->setArgument(1, $entityClass);
       }
+      
+      $adminService = $container->getDefinition('aw.admin.settings');
+      $adminService->setArgument(1, $entityClass);
     }
   }
 }

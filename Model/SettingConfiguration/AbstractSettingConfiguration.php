@@ -1,6 +1,6 @@
 <?php
 
-namespace Accurateweb\SettingBundle\Model\SettingConfiguration;
+namespace Accurateweb\ApplicationSettingsAdminBundle\Model\SettingConfiguration;
 
 
 use Symfony\Component\Form\DataTransformerInterface;

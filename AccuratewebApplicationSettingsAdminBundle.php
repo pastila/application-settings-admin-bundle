@@ -11,10 +11,10 @@
  *   Ответственность за нарушение авторских прав наступает в соответствии с действующим законодательством РФ.
  */
 
-namespace Accurateweb\SettingBundle;
+namespace Accurateweb\ApplicationSettingsAdminBundle;
 
-use Accurateweb\SettingBundle\DependencyInjection\Compiler\SettingCompilerPass;
-use Accurateweb\SettingBundle\DependencyInjection\Compiler\SettingsConfigurationCompilerPass;
+use Accurateweb\ApplicationSettingsAdminBundle\DependencyInjection\Compiler\SettingCompilerPass;
+use Accurateweb\ApplicationSettingsAdminBundle\DependencyInjection\Compiler\SettingsConfigurationCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -24,7 +24,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  * Date: 27.03.18
  * Time: 13:34
  */
-class AccuratewebSettingBundle extends Bundle
+class AccuratewebApplicationSettingsAdminBundle extends Bundle
 {
 
   public function build(ContainerBuilder $container)

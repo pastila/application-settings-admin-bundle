@@ -1,10 +1,10 @@
 <?php
 
-namespace Accurateweb\SettingBundle\EventListener;
+namespace Accurateweb\ApplicationSettingsAdminBundle\EventListener;
 
-use Accurateweb\SettingBundle\Model\Manager\SettingManager;
-use Accurateweb\SettingBundle\Model\SettingConfiguration\SettingConfigurationPool;
-use Accurateweb\SettingBundle\Model\Storage\SettingStorageInterface;
+use Accurateweb\ApplicationSettingsAdminBundle\Model\Manager\SettingManager;
+use Accurateweb\ApplicationSettingsAdminBundle\Model\SettingConfiguration\SettingConfigurationPool;
+use Accurateweb\ApplicationSettingsAdminBundle\Model\Storage\SettingStorageInterface;
 use Symfony\Component\Console\Event\ConsoleTerminateEvent;
 use Symfony\Component\HttpKernel\Event\PostResponseEvent;
 

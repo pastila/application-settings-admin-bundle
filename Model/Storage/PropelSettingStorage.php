@@ -11,7 +11,7 @@
  *   Ответственность за нарушение авторских прав наступает в соответствии с действующим законодательством РФ.
  */
 
-namespace Accurateweb\SettingBundle\Model\Storage;
+namespace Accurateweb\ApplicationSettingsAdminBundle\Model\Storage;
 
 class PropelSettingStorage implements SettingStorageInterface
 {

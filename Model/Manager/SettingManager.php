@@ -1,8 +1,8 @@
 <?php
 
-namespace Accurateweb\SettingBundle\Model\Manager;
+namespace Accurateweb\ApplicationSettingsAdminBundle\Model\Manager;
 
-use Accurateweb\SettingBundle\Event\SettingSetEvent;
+use Accurateweb\ApplicationSettingsAdminBundle\Event\SettingSetEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class SettingManager implements SettingManagerInterface
