@@ -11,7 +11,7 @@
  *   Ответственность за нарушение авторских прав наступает в соответствии с действующим законодательством РФ.
  */
 
-namespace Accurateweb\SettingBundle\Exception;
+namespace Accurateweb\ApplicationSettingsAdminBundle\Exception;
 
 class SettingNotFoundException extends \Exception
 {

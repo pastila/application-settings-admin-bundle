@@ -11,9 +11,9 @@
  *   Ответственность за нарушение авторских прав наступает в соответствии с действующим законодательством РФ.
  */
 
-namespace Accurateweb\SettingBundle\Model\Storage;
+namespace Accurateweb\ApplicationSettingsAdminBundle\Model\Storage;
 
-use Accurateweb\SettingBundle\Repository\SettingRepository;
+use Accurateweb\ApplicationSettingsAdminBundle\Repository\SettingRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\UnitOfWork;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

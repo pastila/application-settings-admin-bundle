@@ -11,7 +11,7 @@
  *   Ответственность за нарушение авторских прав наступает в соответствии с действующим законодательством РФ.
  */
 
-namespace Accurateweb\SettingBundle\DependencyInjection;
+namespace Accurateweb\ApplicationSettingsAdminBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -29,7 +29,7 @@ class Configuration implements ConfigurationInterface
   public function getConfigTreeBuilder ()
   {
     $treeBuilder = new TreeBuilder();
-    $rootNode = $treeBuilder->root('accurateweb_setting');
+    $rootNode = $treeBuilder->root('accurateweb_application_settings_admin');
 
     $rootNode
       ->addDefaultsIfNotSet()

@@ -11,7 +11,7 @@
  *   Ответственность за нарушение авторских прав наступает в соответствии с действующим законодательством РФ.
  */
 
-namespace Accurateweb\SettingBundle\Model\Setting;
+namespace Accurateweb\ApplicationSettingsAdminBundle\Model\Setting;
 
 class NumericSetting extends StringSetting
 {

@@ -11,7 +11,7 @@
  *   Ответственность за нарушение авторских прав наступает в соответствии с действующим законодательством РФ.
  */
 
-namespace Accurateweb\SettingBundle\Model\Entity;
+namespace Accurateweb\ApplicationSettingsAdminBundle\Model\Entity;
 
 interface SettingEntityInterface
 {
