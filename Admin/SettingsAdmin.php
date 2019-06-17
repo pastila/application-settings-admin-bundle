@@ -116,14 +116,27 @@ class SettingsAdmin extends AbstractAdmin
       if ($settingsRepository->get($setting->getName()) === null)
       {
         $val = $this->getConfigurationPool()->getContainer()->get('aw.settings.manager')->getValue($setting->getName());
-        $storage->set($setting->getName(), $val);
+
+        if ($val)
+        {
+          $storage->set($setting->getName(), $val);
+        }
       }
     }
+
+    $storage->commit();
 
     $pq = new ProxyQuery($this->createQuery()
       ->where('o.name NOT IN (:settingNames)')
       ->setParameter('settingNames', array_keys($settings))
     );
-    $this->getModelManager()->batchDelete($this->getClass(), $pq);
+
+    /** @var Query $query */
+    $query = $pq->getQueryBuilder()->getQuery();
+    # удаляет из БД то, что удалили из settings.yml
+    if (null !== $query->setMaxResults(1)->getOneOrNullResult())
+    {
+      $this->getModelManager()->batchDelete($this->getClass(), $pq);
+    }
   }
 }
