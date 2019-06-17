@@ -1,9 +1,9 @@
 <?php
 
-namespace Accurateweb\SettingBundle\Model\Manager;
+namespace Accurateweb\ApplicationSettingsAdminBundle\Model\Manager;
 
-use Accurateweb\SettingBundle\Model\SettingConfiguration\SettingConfigurationPool;
-use Accurateweb\SettingBundle\Model\Storage\SettingStorageInterface;
+use Accurateweb\ApplicationSettingsAdminBundle\Model\SettingConfiguration\SettingConfigurationPool;
+use Accurateweb\ApplicationSettingsAdminBundle\Model\Storage\SettingStorageInterface;
 use ProxyManager\Factory\LazyLoadingValueHolderFactory;
 use ProxyManager\Proxy\VirtualProxyInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -35,7 +35,7 @@ class SettingManagerFactory
 
     /** @var SettingManager|VirtualProxyInterface $proxy */
     $proxy = $factory->createProxy(
-      'Accurateweb\SettingBundle\Model\Manager\SettingManager',
+      'Accurateweb\ApplicationSettingsAdminBundle\Model\Manager\SettingManager',
       function (& $wrappedObject, $proxy, $method, $parameters, & $initializer) {
         if ($method === 'getModifiedValues')
         {

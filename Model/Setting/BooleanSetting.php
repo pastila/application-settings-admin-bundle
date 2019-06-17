@@ -11,9 +11,9 @@
  *   Ответственность за нарушение авторских прав наступает в соответствии с действующим законодательством РФ.
  */
 
-namespace Accurateweb\SettingBundle\Model\Setting;
+namespace Accurateweb\ApplicationSettingsAdminBundle\Model\Setting;
 
-use Accurateweb\SettingBundle\Model\Storage\SettingStorageInterface;
+use Accurateweb\ApplicationSettingsAdminBundle\Model\Storage\SettingStorageInterface;
 use Symfony\Component\Form\CallbackTransformer;
 
 class BooleanSetting implements SettingInterface

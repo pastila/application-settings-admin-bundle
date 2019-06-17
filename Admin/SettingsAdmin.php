@@ -11,9 +11,9 @@
  *   Ответственность за нарушение авторских прав наступает в соответствии с действующим законодательством РФ.
  */
 
-namespace Accurateweb\SettingBundle\Admin;
+namespace Accurateweb\ApplicationSettingsAdminBundle\Admin;
 
-use Accurateweb\SettingBundle\Model\SettingConfiguration\SettingConfigurationPool;
+use Accurateweb\ApplicationSettingsAdminBundle\Model\SettingConfiguration\SettingConfigurationPool;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;

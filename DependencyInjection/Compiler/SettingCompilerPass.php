@@ -11,7 +11,7 @@
  *   Ответственность за нарушение авторских прав наступает в соответствии с действующим законодательством РФ.
  */
 
-namespace Accurateweb\SettingBundle\DependencyInjection\Compiler;
+namespace Accurateweb\ApplicationSettingsAdminBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -33,7 +33,7 @@ class SettingCompilerPass implements CompilerPassInterface
 
       switch ($def->getClass())
       {
-        case 'Accurateweb\SettingBundle\Model\Setting\StringSetting':
+        case 'Accurateweb\ApplicationSettingsAdminBundle\Model\Setting\StringSetting':
           $options = [
             'type' => 'string',
             'name' => $def->getArgument(1),
@@ -41,7 +41,7 @@ class SettingCompilerPass implements CompilerPassInterface
             'defaultValue' => $def->getArgument(3),
           ];
           break;
-        case 'Accurateweb\SettingBundle\Model\Setting\EntitySetting':
+        case 'Accurateweb\ApplicationSettingsAdminBundle\Model\Setting\EntitySetting':
           $options = [
             'type' => 'entity',
             'repository' => $def->getArgument(1),
@@ -49,7 +49,7 @@ class SettingCompilerPass implements CompilerPassInterface
             'description' => $def->getArgument(3),
           ];
           break;
-        case 'Accurateweb\SettingBundle\Model\Setting\NumericSetting':
+        case 'Accurateweb\ApplicationSettingsAdminBundle\Model\Setting\NumericSetting':
           $options = [
             'type' => 'numeric',
             'name' => $def->getArgument(1),
@@ -57,7 +57,7 @@ class SettingCompilerPass implements CompilerPassInterface
             'defaultValue' => $def->getArgument(3),
           ];
           break;
-        case 'Accurateweb\SettingBundle\Model\Setting\BooleanSetting':
+        case 'Accurateweb\ApplicationSettingsAdminBundle\Model\Setting\BooleanSetting':
           $options = [
             'type' => 'boolean',
             'name' => $def->getArgument(1),
@@ -84,19 +84,19 @@ class SettingCompilerPass implements CompilerPassInterface
     switch ($options['type'])
     {
       case 'string':
-        $className = 'Accurateweb\SettingBundle\Model\SettingConfiguration\StringSettingConfiguration';
+        $className = 'Accurateweb\ApplicationSettingsAdminBundle\Model\SettingConfiguration\StringSettingConfiguration';
         $def = new Definition($className, [$options['name'], $options['description'], $options['defaultValue']]);
         break;
       case 'numeric':
-        $className = 'Accurateweb\SettingBundle\Model\SettingConfiguration\NumericSettingConfiguration';
+        $className = 'Accurateweb\ApplicationSettingsAdminBundle\Model\SettingConfiguration\NumericSettingConfiguration';
         $def = new Definition($className, [$options['name'], $options['description'], $options['defaultValue']]);
         break;
       case 'boolean':
-        $className = 'Accurateweb\SettingBundle\Model\SettingConfiguration\BooleanSettingConfiguration';
+        $className = 'Accurateweb\ApplicationSettingsAdminBundle\Model\SettingConfiguration\BooleanSettingConfiguration';
         $def = new Definition($className, [$options['name'], $options['description'], $options['defaultValue']]);
         break;
       case 'entity':
-        $className = 'Accurateweb\SettingBundle\Model\SettingConfiguration\EntitySettingConfiguration';
+        $className = 'Accurateweb\ApplicationSettingsAdminBundle\Model\SettingConfiguration\EntitySettingConfiguration';
         $def = new Definition($className, [$options['name'], $options['repository'], $options['description']]);
         break;
       default:

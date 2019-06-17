@@ -11,11 +11,11 @@
  *   Ответственность за нарушение авторских прав наступает в соответствии с действующим законодательством РФ.
  */
 
-namespace Accurateweb\SettingBundle\Twig;
+namespace Accurateweb\ApplicationSettingsAdminBundle\Twig;
 
-use Accurateweb\SettingBundle\Exception\SettingNotFoundException;
-use Accurateweb\SettingBundle\Model\Manager\SettingManagerInterface;
-use Accurateweb\SettingBundle\Model\SettingConfiguration\SettingConfigurationPool;
+use Accurateweb\ApplicationSettingsAdminBundle\Exception\SettingNotFoundException;
+use Accurateweb\ApplicationSettingsAdminBundle\Model\Manager\SettingManagerInterface;
+use Accurateweb\ApplicationSettingsAdminBundle\Model\SettingConfiguration\SettingConfigurationPool;
 
 class SettingsExtension extends \Twig_Extension
 {

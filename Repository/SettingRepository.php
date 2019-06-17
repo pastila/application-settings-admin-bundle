@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Accurateweb\SettingBundle\Repository;
+namespace Accurateweb\ApplicationSettingsAdminBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
