@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="HandheldFriendly" content="true">
+    <title>Document</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Rubik:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./local/templates/kdteam/styles/main.min.css">
+
+    <!-- Home Page Style Mobile -->
+    <link rel="stylesheet" href="./local/templates/kdteam/pages/obrashcheniya/main.min.css">
+
+</head>
+
+<body>
+
+    <!-- Start Wrap -->
+    <div class="wrap">
+        <!-- Header -->
+        <header class="header">
+            <div class="header__container">
+                <a class="header__logo" href="/index.html">
+                    <img class="header__logo_img" src="./local/templates/kdteam/images/svg/header/logo/logo_header.svg"
+                        alt="OMS">
+
+                    <div class="header__logo_name">company name</div>
+                </a>
+
+                <!-- IF User Not Auth show this header item -->
+                <div class="header__r" style="display: none;">
+                    <div class="header__r_auth">
+                        <a href="./includes/ajax-auth-login.html" id="login-link" class="header__r_auth_login">
+                            <img class="header__r_auth_login_img"
+                                src="./local/templates/kdteam/images/svg/header/login/man-user.svg" alt="OMS">
+                            <div class="header__r_auth_login_text">
+                                Вход
+                            </div>
+                        </a>
+
+                        <a href="./includes/ajax-auth-reg.html" id="reg-link" class="header__r_auth_reg">
+                            <img class="header__r_auth_login_img"
+                                src="./local/templates/kdteam/images/svg/header/reg/key.svg" alt="OMS">
+                            <div class="header__r_auth_login_text">
+                                Регистрация
+                            </div>
+                        </a>
+                    </div>
+
+                    <button class="header__r_mainBtn mainBtn">
+                        Написать нам
+                    </button>
+                </div>
+
+                <!-- If User Auth show this header item -->
+                <div class="header__r" style="display: flex;">
+                    <div class="header__r_auth">
+                        <a href="#menu" id="show-mnu" class="header__r_auth_user">
+                            <span class="header__r_auth_user_hello">
+                                Добрый день,
+                            </span>
+
+                            <span class="header__r_auth_user_name">Николай Николаевич !</span>
+                        </a>
+
+                        <!-- #menu -->
+                        <div id="menu" class="white_block">
+                            <ul>
+                                <li>
+                                    <a href="#">Личный кабинет</a>
+                                </li>
+
+                                <li>
+                                    <!-- Если есть обращения в админке добавляем класс active -->
+                                    <!-- И показываем блок с колличеством обращений -->
+                                    <div class="menu-req">
+                                        3
+                                    </div>
+                                    <a class="active" href="#">Ваши обращения</a>
+                                </li>
+
+                                <li>
+                                    <div class="menu-req">
+                                        1
+                                    </div>
+                                    <a href="#">Отправленные</a>
+                                </li>
+                            </ul>
+
+                            <a href="#">Выйти</a>
+                        </div>
+
+                        <div class="header__r_auth_user-image">
+                            <img src="" alt="">
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <main class="main">
+
+            <!-- Breadcrumbs -->
+            <ul class="breadcrumbs">
+                <li><a href="/index.html">Главная</a></li>
+                <li>обращения</li>
+            </ul>
+
+            <!-- Pages Title -->
+            <h2 class="page-title">Ваши обращения</h2>
+
+            <!-- Обращение -->
+            <div class="obrashcheniya">
+
+                <div class="obrashcheniya__btns">
+                    <a class="smallMainBtn" href="#">Прикрепить скан или фото</a>
+
+                    <a class="smallMainBtn" href="#">Отправить</a>
+                </div>
+
+                <!-- Уведомления оь отправке -->
+                <p class="success">Обращение успешно отправлено в страховую компанию. Ваше обращение находится в личном
+                    кабинете «Отправленные»</p>
+
+                <div class="card">
+                    <!-- Контент -->
+                    <div class="obrashcheniya__content">
+                        <!-- Контент левая сторона -->
+                        <div class="obrashcheniya__content_left">
+
+                            <!-- Внутри контента Верхняя часть -->
+                            <div class="obrashcheniya__content_left_top">
+                                <div class="obrashcheniya__content_left_top_text">
+                                    Обращение № 1
+                                </div>
+
+                                <div class="obrashcheniya__content_left_top_data">
+                                    дата: 20.09.2019
+                                </div>
+
+                                <div class="obrashcheniya__content_left_top_link">
+                                    <a href="#">Редактировать</a>
+
+                                    <a href="#">удалить</a>
+                                </div>
+                            </div>
+
+                            <!-- Внутри контента центральная часть -->
+                            <div class="obrashcheniya__content_left_center">
+
+                                <!-- Item ы -->
+                                <div class="obrashcheniya__content_left_center_item">
+                                    <div class="obrashcheniya__content_left_center_item_text">
+                                        Фио
+                                    </div>
+
+                                    <p class="obrashcheniya__content_left_center_item_text-full">
+                                        Феофаний Николай Николаевич
+                                    </p>
+                                </div>
+
+                                <!-- Item ы -->
+                                <div class="obrashcheniya__content_left_center_item">
+                                    <div class="obrashcheniya__content_left_center_item_text">
+                                        Больница:
+                                    </div>
+
+                                    <p class="obrashcheniya__content_left_center_item_text-full">
+                                        ГОСУДАРСТВЕННОЕ БЮДЖЕТНОЕ УЧРЕЖДЕНИЕ ЗДРАВООХРАНЕНИЯ РЕСПУБЛИКИ АДЫГЕЯ
+                                        АДЫГЕЙСКАЯ РЕСПУБЛИКАНСКАЯ КЛИНИЧЕСКАЯ БОЛЬНИЦА
+                                    </p>
+                                </div>
+
+                                <!-- Item ы -->
+                                <div class="obrashcheniya__content_left_center_item">
+                                    <div class="obrashcheniya__content_left_center_item_text">
+                                        Адрес:
+                                    </div>
+
+                                    <p class="obrashcheniya__content_left_center__item_text-full">
+                                        385000, РЕСПУБЛИКА АДЫГЕЯ, Г.МАЙКОП, УЛ.ЖУКОВСКОГО, 4
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Контент правая сторона -->
+                        <div class="obrashcheniya__content_sidebar">
+                            <div class="obrashcheniya__content_sidebar_title">
+                                Прикрепленные файлы
+                            </div>
+
+                            <!-- Item Sidebar -->
+                            <div class="obrashcheniya__content_sidebar_blocks">
+
+                                <div class="obrashcheniya__content_sidebar_blocks_img">
+                                    <img src="./local/templates/kdteam/images/svg/image_block_two.svg" alt="">
+                                </div>
+
+                                <div class="obrashcheniya__content_sidebar_blocks_text">
+                                    <div class="obrashcheniya__content_sidebar_blocks_text_title">
+                                        Заявление на возврат
+                                    </div>
+
+                                    <a class="obrashcheniya__content_sidebar_blocks_text_link">
+                                        скачать
+                                    </a>
+                                </div>
+
+                            </div>
+
+                            <div class="obrashcheniya__content_sidebar_blocks">
+
+                                <div class="obrashcheniya__content_sidebar_blocks_img">
+                                    <img src="./local/templates/kdteam/images/svg/image_block_two.svg" alt="">
+                                </div>
+
+                                <div class="obrashcheniya__content_sidebar_blocks_text">
+                                    <div class="obrashcheniya__content_sidebar_blocks_text_title">
+                                        Заявление на возврат
+                                    </div>
+
+                                    <a class="obrashcheniya__content_sidebar_blocks_text_link">
+                                        скачать
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Обращение -->
+            <div class="obrashcheniya">
+
+                <div class="obrashcheniya__btns">
+                    <a class="smallMainBtn" href="#">Прикрепить скан или фото</a>
+
+                    <a class="smallMainBtn" href="#">Отправить</a>
+                </div>
+
+                <!-- Уведомления об отправке -->
+                <p class="danger">Обращение не может быть отправлено так как Вы не прикрепили файлы скана чека или фото
+                </p>
+
+                <div class="card">
+                    <!-- Контент -->
+                    <div class="obrashcheniya__content">
+                        <!-- Контент левая сторона -->
+                        <div class="obrashcheniya__content_left">
+
+                            <!-- Внутри контента Верхняя часть -->
+                            <div class="obrashcheniya__content_left_top">
+                                <div class="obrashcheniya__content_left_top_text">
+                                    Обращение № 1
+                                </div>
+
+                                <div class="obrashcheniya__content_left_top_data">
+                                    дата: 20.09.2019
+                                </div>
+
+                                <div class="obrashcheniya__content_left_top_link">
+                                    <a href="#">Редактировать</a>
+
+                                    <a href="#">удалить</a>
+                                </div>
+                            </div>
+
+                            <!-- Внутри контента центральная часть -->
+                            <div class="obrashcheniya__content_left_center">
+
+                                <!-- Item ы -->
+                                <div class="obrashcheniya__content_left_center_item">
+                                    <div class="obrashcheniya__content_left_center_item_text">
+                                        Фио
+                                    </div>
+
+                                    <p class="obrashcheniya__content_left_center_item_text-full">
+                                        Феофаний Николай Николаевич
+                                    </p>
+                                </div>
+
+                                <!-- Item ы -->
+                                <div class="obrashcheniya__content_left_center_item">
+                                    <div class="obrashcheniya__content_left_center_item_text">
+                                        Больница:
+                                    </div>
+
+                                    <p class="obrashcheniya__content_left_center_item_text-full">
+                                        ГОСУДАРСТВЕННОЕ БЮДЖЕТНОЕ УЧРЕЖДЕНИЕ ЗДРАВООХРАНЕНИЯ РЕСПУБЛИКИ АДЫГЕЯ
+                                        АДЫГЕЙСКАЯ РЕСПУБЛИКАНСКАЯ КЛИНИЧЕСКАЯ БОЛЬНИЦА
+                                    </p>
+                                </div>
+
+                                <!-- Item ы -->
+                                <div class="obrashcheniya__content_left_center_item">
+                                    <div class="obrashcheniya__content_left_center_item_text">
+                                        Адрес:
+                                    </div>
+
+                                    <p class="obrashcheniya__content_left_center__item_text-full">
+                                        385000, РЕСПУБЛИКА АДЫГЕЯ, Г.МАЙКОП, УЛ.ЖУКОВСКОГО, 4
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Контент правая сторона -->
+                        <div class="obrashcheniya__content_sidebar">
+                            <div class="obrashcheniya__content_sidebar_title">
+                                Прикрепленные файлы
+                            </div>
+
+                            <!-- Item Sidebar -->
+                            <div class="obrashcheniya__content_sidebar_blocks">
+
+                                <div class="obrashcheniya__content_sidebar_blocks_img">
+                                    <img src="./local/templates/kdteam/images/svg/image_block_two.svg" alt="">
+                                </div>
+
+                                <div class="obrashcheniya__content_sidebar_blocks_text">
+                                    <div class="obrashcheniya__content_sidebar_blocks_text_title">
+                                        Заявление на возврат
+                                    </div>
+
+                                    <a class="obrashcheniya__content_sidebar_blocks_text_link">
+                                        скачать
+                                    </a>
+                                </div>
+
+                            </div>
+
+                            <div class="obrashcheniya__content_sidebar_blocks">
+
+                                <div class="obrashcheniya__content_sidebar_blocks_img">
+                                    <img src="./local/templates/kdteam/images/svg/image_block_two.svg" alt="">
+                                </div>
+
+                                <div class="obrashcheniya__content_sidebar_blocks_text">
+                                    <div class="obrashcheniya__content_sidebar_blocks_text_title">
+                                        Заявление на возврат
+                                    </div>
+
+                                    <a class="obrashcheniya__content_sidebar_blocks_text_link">
+                                        скачать
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+    </div><!-- END Wrap -->
+</body>
+
+<script src="./local/templates/kdteam/js/main.min.js"></script>
+
+<script src="./local/templates/kdteam/pages/obrashcheniya/main.min.js"></script>
+
+</html>

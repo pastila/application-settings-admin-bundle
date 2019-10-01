@@ -1,0 +1,14 @@
+@import './vars';
+
+@mixin btn($bgColor, $color) {
+    display: inline-flex;
+    font-size: 1.6rem;
+    background-color: $bgColor;
+    color: $color;
+    padding: 1.5rem 2.5rem;
+    cursor: pointer;
+}
+
+@mixin boxShadow {
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.08);
+}

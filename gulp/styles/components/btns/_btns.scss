@@ -1,0 +1,7 @@
+.mainBtn {
+    @include btn($mainColor, white);
+}
+
+.accentBtn {
+    @include btn($accentColor, white);
+}
