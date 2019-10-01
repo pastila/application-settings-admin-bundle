@@ -93,18 +93,23 @@ window.addEventListener('DOMContentLoaded', () => {
         items.forEach(function(item) {
             const btn = item.querySelector('.feedback__bottom_link');
             const showBlock = item.querySelector('.hidenComments');
-
-            if (btn) {
-                btn.addEventListener('click', function(e) {
-                    
-                    this.classList.toggle('active');
-
-                    if (btn.classList.contains('active')) {
-                        showBlock.classList.add('active');
-                    } else {
-                        showBlock.classList.remove('active');
-                    }
-                });
+            const count = item.querySelector('.comment-count');
+            
+            if (count && count.innerText > 0) {
+                if (btn) {
+                    btn.addEventListener('click', function(e) {
+                        
+                        this.classList.toggle('active');
+    
+                        if (btn.classList.contains('active')) {
+                            showBlock.classList.add('active');
+                        } else {
+                            showBlock.classList.remove('active');
+                        }
+                    });
+                }
+            } else {
+                return
             }
         });
     }
