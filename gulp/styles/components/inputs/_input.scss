@@ -1,0 +1,37 @@
+.input {
+    &__wrap {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 2rem;
+        &_label {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+        }
+        
+        input, textarea {
+            font-size: 1.6rem;
+            padding: 1rem;
+            background: $inputColor;
+            border: none;
+            &:focus, &:visited, &:focus {
+                outline: none;
+            }
+        }
+    }
+
+    &__lost-pass {
+        display: block;
+        font-size: 1.6rem;
+        margin-bottom: 3rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .input {
+        &__wrap {
+            input, textarea {
+                padding: 2rem;
+            }
+        }
+    }
+}

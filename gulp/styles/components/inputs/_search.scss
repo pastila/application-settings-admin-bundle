@@ -1,0 +1,43 @@
+.custom-serach {
+    display: flex;
+    position: relative;
+
+    .search-btn {
+        position: absolute;
+        height: 2rem;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        border: none;
+        background: transparent;
+
+        img {
+            height: 100%;
+        }
+    }
+
+    input[name=search] {
+        width: 100%;
+        font-size: 1.2rem;
+        padding: 1rem;
+
+        &:focus, &:active, &:visited {
+            outline: none;
+        }
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    .custom-serach {
+    
+        .search-btn {
+            height: 2rem;
+        }
+    
+        input[name=search] {
+            width: 100%;
+            font-size: 1.6rem;
+            padding: 1.5rem;
+        }
+    }
+}

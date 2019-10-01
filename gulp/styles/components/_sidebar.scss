@@ -1,0 +1,60 @@
+@import '../utils/vars';
+
+.sidebar {
+    &__item {
+        &_title {
+            font-size: 1.4rem;
+            background: $mainColor;
+            color: white;
+            margin-top: -2rem;
+            margin-left: -2rem;
+            margin-right: -2rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        &_lists {
+            &_list {
+                padding: 1rem 0;
+                &_link {
+                    font-size: 1.2rem;
+                }
+            }
+        }
+    }
+
+    .smallAccentBtn {
+        margin-top: 2rem;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .sidebar {
+        &__item {
+            &_title {
+                font-size: 1.6rem;
+                background: $mainColor;
+                color: white;
+                margin-top: -3rem;
+                margin-left: -3rem;
+                margin-right: -3rem;
+                padding: 2rem 3rem;
+                margin-bottom: 2rem;
+            }
+    
+            &_lists {
+                &_list {
+                    &_link {
+                        font-size: 1.6rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .sidebar {
+        grid-column: 10 / 13;
+    }
+}

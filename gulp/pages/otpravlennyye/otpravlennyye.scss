@@ -1,0 +1,35 @@
+.otpravlennyye {
+    margin-bottom: 2rem;
+
+    &__item {
+        &_title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        &_data {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .otpravlennyye {
+        margin-bottom: 2rem;
+    
+        &__item {
+            &_title {
+                font-size: 1.8rem;
+                margin-bottom: 2rem;
+            }
+    
+            &_data {
+                font-size: 1.6rem;
+                margin-top: 1rem;
+                margin-bottom: 3rem;
+            }
+        }
+    }
+}

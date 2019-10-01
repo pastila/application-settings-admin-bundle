@@ -15,3 +15,5 @@ robots.txt
 *.xml
 *.log
 *.csv
+node_modules
+node_modules

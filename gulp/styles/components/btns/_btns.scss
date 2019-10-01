@@ -1,7 +1,25 @@
 .mainBtn {
-    @include btn($mainColor, white);
+    @include btnMobile($mainColor, white);
 }
 
 .accentBtn {
-    @include btn($accentColor, white);
+    @include btnMobile($accentColor, $mainColor);
+}
+
+.smallMainBtn {
+    @include smallBtn($mainColor, white);
+}
+
+.smallAccentBtn {
+    @include smallBtn($accentColor, $mainColor);
+}
+
+@media screen and (min-width: 992px) {
+    .mainBtn {
+        @include btnDesc($mainColor, white);
+    }
+    
+    .accentBtn {
+        @include btnDesc($accentColor, $mainColor);
+    }
 }

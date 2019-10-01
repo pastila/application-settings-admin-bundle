@@ -1,11 +1,25 @@
 @import './utils/reset';
+@import './utils/vars';
 @import './utils/mixins';
 @import './utils/typografy';
 
 @import './components/btns/btns';
+@import './components/inputs/input';
+@import './components/inputs/checkbox';
+@import './components/inputs/select';
+@import './components/inputs/search';
+
+@import './components/block';
+@import './components/breadcrumbs';
+@import './components/modal';
+@import './components/sidebar';
+@import './components/star-rating';
 
 @import './header.scss';
 @import './footer.scss';
+
+// Popup
+@import '../../node_modules/magnific-popup/dist/magnific-popup.css';
 
 * {
     -moz-user-select: none; /* Firefox */
@@ -24,6 +38,8 @@ html,body {
     overflow-x: hidden;
     min-height: 100vh;
     background: $bgColor;
+    color: $mainColor;
+    line-height: 1.6;
 }
 
 h1 {
@@ -32,11 +48,21 @@ h1 {
 
 a {
     text-decoration: none;
+    color: $mainColor;
 }
 
 img {
     max-width: 100%;
-    max-height: 100%;
+}
+
+button {
+    &:focus, &:active, &:visited {
+        outline: none;
+    }
+}
+
+section {
+    margin-bottom: 2rem;
 }
 
 .wrap {
@@ -53,5 +79,54 @@ img {
 
 main.main {
     margin: 0 auto;
+    width: 100%;
     max-width: 137.5rem;
+}
+
+.white_block {
+    background: white;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: solid 0.1rem $accentColor;
+
+    &:hover {
+        @include boxShadow;
+    }
+}
+
+.success {
+    color: $succes;
+}
+
+.danger {
+    color: red;
+}
+
+.color-main {
+    background: $mainColor;
+}
+
+.star {
+    height: 1.5rem;
+}
+
+.link-underline {
+    text-decoration: underline;
+    font-size: 1.2rem;
+}
+
+@media screen and (min-width: 992px) {
+    section {
+        margin-bottom: 5rem;
+    }
+
+    .link-underline {
+        font-size: 1.6rem;
+    }
+
+    .white_block {
+        position: relative;
+        padding: 3rem;
+        margin-bottom: 4rem;
+    }
 }

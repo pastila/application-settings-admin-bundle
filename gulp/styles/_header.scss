@@ -5,7 +5,9 @@
     background: white;
     margin-right: -1.5rem;
     margin-left: -1.5rem;
+    margin-bottom: 3rem;
     @include boxShadow;
+    
     &__container {
         display: flex;
         justify-content: space-between;
@@ -20,25 +22,336 @@
         display: inline-flex;
         align-items: center;
         color: $mainColor;
+        &_img {
+            width: 3rem;
+            height: 3rem;
+        }
+    
+        &_name {
+            display: none;
+            text-transform: capitalize;
+            font-size: 1.4rem;
+            margin-left: 1rem;
+        }
     }
 
-    &__logo_img {
-        width: 3rem;
-        height: 3rem;
-    }
-
-    &__logo_name {
-        text-transform: capitalize;
-        font-size: 1.4rem;
-        margin-left: 1rem;
-    }
-
-    &__auth {
+    &__r {
         display: flex;
-        &_login_img {
-            width: 2rem;
-            height: 2rem;
+        align-items: center;
+
+        &_auth {
+            position: relative;
+            display: flex;
+            align-items: center;
+    
+            &_login, &_reg {
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                
+                &_img {
+                    width: 2rem;
+                    height: 2rem;
+                }
+        
+                &_text {
+                    display: none;
+                }
+            }
+
+            &_reg {
+                margin-left: 4rem;
+            }
+
+            &_user {
+                position: relative;
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    content: "";
+                    top: 60%;
+                    width: 0;
+                    height: 0;
+                    right: -1rem;
+                    border: .5rem solid transparent;
+                    -webkit-transform: translateY(-50%);
+                    transform: translateY(-50%);
+                    border-color: #3a4552 transparent transparent transparent;
+                }
+
+                &.active {
+                    &::after {
+                        top: 50%;
+                        -webkit-transform: translateY(-50%);
+                        transform: translateY(-50%);
+                        border-color: transparent transparent #3a4552 transparent;
+                    }
+                }
+
+                &_name {
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+                    font-size: 1.2rem;
+                    cursor: pointer;
+                    font-weight: 700;
+                }
+            }
+
+            &_user-image {
+                width: 2rem;
+                height: 2rem;
+                background-color: $accentColor;
+                margin-left: 2rem;
+                img {
+                    max-height: 100%;
+                }
+            }
+
+            #menu {
+                display: none;
+            }
+    
+            #show-mnu.active + #menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                display: flex;
+                flex-direction: column;
+                font-size: 1.2rem;
+                z-index: 2;
+
+                .menu-req {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 2rem;
+                    height: 100%;
+                    background-color:$accentColor;
+                    border-radius: 50%;
+                    font-size: 1rem;
+                }
+
+                li {
+                    display: flex;
+                    align-items: center;
+                }
+
+                a {
+                    width: 100%;
+                    display: block;
+                    padding: 0.5rem 0;
+                    text-align: right;
+
+                    &.active {
+                        font-weight: 700;
+                    }
+                }
+            }
+        }
+    
+        &_mainBtn {
+            display: none;
+            text-transform: capitalize;
         }
     }
 }
 
+#auth-form-reg {
+    max-width: 87rem;
+
+    .mainBtn {
+        width: 100%;
+    }
+}
+
+#auth-form-login {
+    max-width: 50rem;
+
+    .mainBtn {
+        width: 100%;
+    }
+}
+
+.auth-form {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+
+    .close-modal {
+        position: absolute;
+        width: 2rem;
+        top: 2rem;
+        right: 2rem;
+        cursor: pointer;
+    }
+
+    .popup {
+        &__wrap {
+            width: 100%;
+            padding: 2rem;
+            background: white;
+            
+                &_top, &_middle, &_bottom {
+                    display: flex;
+                    flex-wrap: wrap;
+
+                    .input {
+                        &__wrap {
+                            width: 100%;
+                        }
+                    }
+                }
+
+            &_tabs {
+                display: flex;
+
+                &_title {
+                    font-size: 2rem;
+                    margin-bottom: 3rem;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 576px) {
+    .header {
+        &__r {
+            &_mainBtn {
+                display: flex;
+                margin-left: 4rem;
+                padding: 1.3rem 4rem;
+            }
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .header {
+        &__r {
+            &_auth {
+                &_user {
+                    display: flex;
+                    align-items: center;
+                    
+                    &_hello {
+                        font-size: 1.4rem;
+                        margin-right: 0.5rem;
+                    }
+
+                    &_name {
+                        font-size: 1.6rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 992px) {
+    .header {
+        height: 10rem;
+        
+        &__logo {
+            &_img {
+                width: 5rem;
+                height: 5rem;
+            }
+
+            &_name {
+                display: block;
+                font-size: 1.8rem;
+            }
+        }
+
+        &__r {
+            &_auth {
+
+                #menu {
+                    min-width: 23rem;
+                }
+
+                #show-mnu.active + #menu {
+                    font-size: 1.6rem;
+
+                    .menu-req {
+                        width: 3rem;
+                        font-size: 1.6rem;
+                    }
+                }
+
+                &_user {
+                    &_name {
+                        margin-right: 2rem;
+                    }
+                }
+
+                &_user-image {
+                    width: 5rem;
+                    height: 5rem;
+                    margin-left: 4rem;
+                }
+
+                &_login, &_reg {
+                    &_text {
+                        display: flex;
+                        margin-left: 2.5rem;
+                        font-size: 1.6rem;
+                    }
+                }
+            }
+    
+            &_mainBtn {
+                margin-left: 8rem;
+                padding: 1.6rem 4rem;
+            }
+        }
+    }
+
+    // Auth Form
+    .auth-form {
+        .close-modal {
+            width: 4rem;
+        }
+
+        .popup {
+            &__wrap {
+                padding: 5rem;
+
+                &_top, &_middle, &_bottom {
+                    display: flex;
+                    flex-wrap: nowrap;
+
+                    .input {
+                        &__wrap {
+                            padding: 1rem;
+                            margin-bottom: 2rem;
+                        }
+                    }
+                }
+    
+                &_tabs {
+                    display: flex;
+    
+                    &_title {
+                        font-size: 2.6rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 1600px) {
+    .header {
+        &__r {
+            &_mainBtn {
+                margin-left: 8rem;
+            }
+        }
+    }
+}

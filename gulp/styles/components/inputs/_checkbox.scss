@@ -1,0 +1,47 @@
+@import '../../utils/vars';
+
+.wrap-chrckbox {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .check-label {
+        display: flex;
+        font-size: 1.6rem;
+        position: relative;
+        padding-left: 3rem;
+    
+        input {
+            opacity: 0;
+        }
+    }
+}
+
+input:checked ~ .check-img:after {
+    display: block;
+}
+
+.check-img {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 2rem;
+    height: 2rem;
+    transform: translateY(-50%);
+    background-color: $accentColor;
+
+    &:after {
+        content: "";
+        position: absolute;
+        display: none;
+        width: 100%;
+        height: 100%;
+        background-image: url('../images/svg/tick.svg');
+    }
+}
+
+@media screen and (min-width: 576px) {
+    .check-label {
+        margin-right: 2rem;
+    }
+}

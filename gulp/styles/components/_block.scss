@@ -1,0 +1,24 @@
+@import '../utils/vars';
+@import '../utils/mixins';
+
+.card {
+    background:white;
+    padding: 2rem;
+    @include boxShadow();
+}
+
+@media screen and (min-width: 992px) {
+    .card {
+        background:white;
+        padding: 3rem;
+        @include boxShadow();
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    .card {
+        background:white;
+        padding: 7rem;
+        @include boxShadow();
+    }
+}

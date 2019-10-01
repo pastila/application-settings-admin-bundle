@@ -1,0 +1,103 @@
+.custom-select {
+  position: relative;
+
+  select {
+    display: none;
+  }
+}
+
+.select-selected {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: $inputColor;
+  height: 2rem;
+  white-space: nowrap;
+  overflow: hidden;
+
+  &:after {
+    position: absolute;
+    content: "";
+    top: 60%;
+    width: 0;
+    height: 0;
+    right: 1rem;
+    border: 0.5rem solid transparent;
+    transform: translateY(-50%);
+    border-color: $mainColor transparent transparent transparent;
+  }
+
+  &.select-arrow-active:after {
+      top: 50%;
+      transform: translateY(-50%);
+      border-color: transparent transparent $mainColor transparent;
+  }
+}
+
+/* Style the arrow inside the select element: */
+
+/* Point the arrow upwards when the select box is open (active): */
+
+/* style the items (options), including the selected item: */
+
+.select-items div, .select-selected {
+  cursor: pointer;
+}
+
+/* Style items (options): */
+
+.select-items {
+  position: absolute;
+  padding: 1rem;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  background: white;
+  @include boxShadow;
+
+  > div {
+      padding: 0.5rem 0;
+      &:hover {
+          background-color: lighten($mainColor,65%);
+      }
+  }
+}
+
+/* Hide the items when the select box is closed: */
+
+.select-hide {
+  display: none;
+}
+
+@media screen and (min-width: 992px) {
+  .select-selected {
+    padding: 2rem 3rem;
+    font-size: 1.4rem;
+
+    &:after {
+      right: 2rem;
+      border-color: $mainColor transparent transparent transparent;
+    }
+  }
+  .select-items {
+
+    > div {
+        padding: 1rem 0;
+        font-size: 1.4rem;
+    }
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .select-selected {
+    font-size: 1.4rem;
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  .select-selected {
+    font-size: 1.6rem;
+  }
+}

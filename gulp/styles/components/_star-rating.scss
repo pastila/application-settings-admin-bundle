@@ -1,0 +1,58 @@
+.success-box {
+    display: none;
+    margin: 2rem 0;
+    padding: 2rem;
+    border: 1px solid #eee;
+    background: #f9f9f9;
+
+    &.active {
+        display: flex;
+        align-items: center;
+    }
+  
+    img {
+      margin-right: 10px;
+      display: inline-block;
+      vertical-align: top;
+    }
+  
+    > div {
+      vertical-align: top;
+      display: inline-block;
+      color: #888;
+    }
+  }
+  
+  /* Rating Star Widgets Style */
+  
+  .rating-stars ul {
+    list-style-type: none;
+    padding: 0;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+  
+    > li.star {
+      display: inline-block;
+  
+      > i.fa {
+        font-size: 2.5em;
+  
+        /* Change the size of the stars */
+        color: #ccc;
+  
+        /* Color on idle state */
+      }
+  
+      &.hover > i.fa {
+        color: #FFCC36;
+      }
+  
+      &.selected > i.fa {
+        color: #FF912C;
+      }
+    }
+  }
+
+  .text-message {
+      font-size: 1.4rem;
+  }

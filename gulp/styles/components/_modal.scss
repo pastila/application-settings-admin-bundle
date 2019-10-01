@@ -1,0 +1,55 @@
+.modal {
+    position: relative;
+    max-width: 80vw;
+    padding: 2rem;
+    background: white;
+    margin: 0 auto;
+    text-align: center;
+
+    .title {
+        font-size: 1.6rem;
+        margin-bottom: 2rem;
+        padding: 0 2rem 0 0;
+        font-weight: bold;
+    }
+
+    .close-modal {
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+        cursor: pointer;
+
+        img {
+            height: 2rem;
+        }
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .modal {
+        max-width: 50vw;
+        padding: 4rem;
+    
+        .title {
+            font-size: 2.1rem;
+        }
+    
+        .close-modal {
+    
+            img {
+                height: 4rem;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    .modal {
+        max-width: 30vw;
+        padding: 7rem;
+    
+        .title {
+            font-size: 2.6rem;
+        }
+    }
+}
