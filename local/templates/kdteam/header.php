@@ -36,77 +36,78 @@ $asset = Asset::getInstance();
 
                 <div class="header__logo_name">company name</div>
             </a>
-
-            <!-- IF User Not Auth show this header item -->
-            <div class="header__r" style="display: none;">
-                <div class="header__r_auth">
-                    <a href="./includes/ajax-auth-login.html" id="login-link" class="header__r_auth_login">
-                        <img class="header__r_auth_login_img"
-                             src="./local/templates/kdteam/images/svg/header/login/man-user.svg" alt="OMS">
-                        <div class="header__r_auth_login_text">
-                            Вход
-                        </div>
-                    </a>
-
-                    <a href="./includes/ajax-auth-reg.html" id="reg-link" class="header__r_auth_reg">
-                        <img class="header__r_auth_login_img"
-                             src="./local/templates/kdteam/images/svg/header/reg/key.svg" alt="OMS">
-                        <div class="header__r_auth_login_text">
-                            Регистрация
-                        </div>
-                    </a>
-                </div>
-
-                <button class="header__r_mainBtn mainBtn">
-                    Написать нам
-                </button>
-            </div>
-
-            <!-- If User Auth show this header item -->
-            <div class="header__r" style="display: flex;">
-                <div class="header__r_auth">
-                    <a href="#menu" id="show-mnu" class="header__r_auth_user">
+            <?php
+            global $USER;
+            if ($USER->IsAuthorized()) { ?>
+                <div class="header__r" style="display: flex;">
+                    <div class="header__r_auth">
+                        <a href="#menu" id="show-mnu" class="header__r_auth_user">
                             <span class="header__r_auth_user_hello">
                                 Добрый день,
                             </span>
 
-                        <span class="header__r_auth_user_name">Николай Николаевич !</span>
-                    </a>
+                            <span class="header__r_auth_user_name"><?php echo $USER->GetFullName();?> !</span>
+                        </a>
 
-                    <!-- #menu -->
-                    <div id="menu" class="white_block">
-                        <ul>
-                            <li>
-                                <a href="#">Личный кабинет</a>
-                            </li>
+                        <!-- #menu -->
+                        <div id="menu" class="white_block">
+                            <ul>
+                                <li>
+                                    <a href="#">Личный кабинет</a>
+                                </li>
 
-                            <li>
-                                <!-- Если есть обращения в админке добавляем класс active -->
-                                <!-- И показываем блок с колличеством обращений -->
-                                <div class="menu-req">
-                                    3
-                                </div>
-                                <a class="active" href="/obrashcheniya.html">Ваши обращения</a>
-                            </li>
+                                <li>
+                                    <!-- Если есть обращения в админке добавляем класс active -->
+                                    <!-- И показываем блок с колличеством обращений -->
+                                    <div class="menu-req">
+                                        3
+                                    </div>
+                                    <a class="active" href="/obrashcheniya.html">Ваши обращения</a>
+                                </li>
 
-                            <li>
-                                <div class="menu-req">
-                                    1
-                                </div>
-                                <a href="/otpravlennyye.html">Отправленные</a>
-                            </li>
-                        </ul>
+                                <li>
+                                    <div class="menu-req">
+                                        1
+                                    </div>
+                                    <a href="/otpravlennyye.html">Отправленные</a>
+                                </li>
+                            </ul>
 
-                        <a href="#">Выйти</a>
+                            <a href="#">Выйти</a>
+                        </div>
+
+                        <div class="header__r_auth_user-image">
+                            <img src="" alt="">
+                        </div>
                     </div>
 
-                    <div class="header__r_auth_user-image">
-                        <img src="" alt="">
-                    </div>
+
                 </div>
+            <?php } else { ?>
+                <div class="header__r" style="display: flex;">
+                    <div class="header__r_auth">
+                        <a href="./includes/ajax-auth-login.html" id="login-link" class="header__r_auth_login">
+                            <img class="header__r_auth_login_img"
+                                 src="./local/templates/kdteam/images/svg/header/login/man-user.svg" alt="OMS">
+                            <div class="header__r_auth_login_text">
+                                Вход
+                            </div>
+                        </a>
 
+                        <a href="./includes/ajax-auth-reg.html" id="reg-link" class="header__r_auth_reg">
+                            <img class="header__r_auth_login_img"
+                                 src="./local/templates/kdteam/images/svg/header/reg/key.svg" alt="OMS">
+                            <div class="header__r_auth_login_text">
+                                Регистрация
+                            </div>
+                        </a>
+                    </div>
 
-            </div>
+                    <button class="header__r_mainBtn mainBtn">
+                        Написать нам
+                    </button>
+                </div>
+            <?php } ?>
         </div>
     </header>
 
