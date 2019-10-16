@@ -1,88 +1,69 @@
-<?
-require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
-$APPLICATION->SetPageProperty("title", "Демонстрационная версия продукта «1С-Битрикс: Управление сайтом»");
+<?php require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
+
+use Bitrix\Main\Page\Asset;
+$asset = Asset::getInstance();
+//Home Page Style Mobile
+$asset->addCss(SITE_TEMPLATE_PATH . "/pages/home/home.min.css");
+$APPLICATION->SetPageProperty("title", "OMS");
 $APPLICATION->SetPageProperty("NOT_SHOW_NAV_CHAIN", "Y");
-$APPLICATION->SetTitle("Каталог книг");
-?> <?$APPLICATION->IncludeComponent(
-	"bitrix:catalog.section.list",
-	"",
-	Array(
-		"IBLOCK_TYPE" => "books",
-		"IBLOCK_ID" => "5",
-		"SECTION_ID" => $_REQUEST["SECTION_ID"],
-		"SECTION_URL" => "/e-store/books/#SECTION_ID#/",
-		"COUNT_ELEMENTS" => "Y",
-		"DISPLAY_PANEL" => "N",
-		"CACHE_TYPE" => "A",
-		"CACHE_TIME" => "3600"
-	)
-);?>
-<hr />
+?>
+    <!-- Slider -->
+    <div class="slider">
+        <div class="slider__l">
+            <picture>
+                <source srcset="./local/templates/kdteam/images/jpg/home/slider/slider_img.jpg"
+                        class="slider__l_img">
+                <source srcset="./local/templates/kdteam/images/jpg/home/slider/slider_img.jpg"
+                        class="slider__l_img" type="image/webp">
+                <img src="./local/templates/kdteam/images/jpg/home/slider/slider_img.jpg" class="slider__l_img"
+                     alt="OMS">
+            </picture>
+        </div>
 
-<?$APPLICATION->IncludeComponent(
-	"bitrix:catalog.top",
-	"",
-	Array(
-		"IBLOCK_TYPE" => "books",
-		"IBLOCK_ID" => "5",
-		"ELEMENT_SORT_FIELD" => "sort",
-		"ELEMENT_SORT_ORDER" => "asc",
-		"SECTION_URL" => "/e-store/books/#SECTION_ID#/",
-		"DETAIL_URL" => "/e-store/books/#SECTION_ID#/#ELEMENT_ID#/",
-		"BASKET_URL" => "/personal/cart/",
-		"ACTION_VARIABLE" => "action",
-		"PRODUCT_ID_VARIABLE" => "id",
-		"SECTION_ID_VARIABLE" => "SECTION_ID",
-		"DISPLAY_COMPARE" => "N",
-		"ELEMENT_COUNT" => "3",
-		"LINE_ELEMENT_COUNT" => "1",
-		"PROPERTY_CODE" => Array(),
-		"PRICE_CODE" => Array("RETAIL"),
-		"USE_PRICE_COUNT" => "N",
-		"SHOW_PRICE_COUNT" => "1",
-		"CACHE_TYPE" => "A",
-		"CACHE_TIME" => "3600"
-	)
-);?>
+        <div class="slider__r">
+            <div class="slider__r_title">
+                OMS заголовок для теста
+            </div>
 
-<h2>Видео-новости</h2>
+            <div class="slider__r_descr">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam architecto tempore itaque
+                doloremque, porro, dolore distinctio consequatur iste, ipsum quo dolor! Cumque a obcaecati,
+                aliquam rem est accusamus eligendi deserunt?
+            </div>
+        </div>
+    </div>
 
-<?$APPLICATION->IncludeComponent(
-	"bitrix:player",
-	"",
-	Array(
-		"PLAYER_TYPE" => "auto",
-		"USE_PLAYLIST" => "N",
-		"PATH" => "/upload/intro.flv",
-		"WIDTH" => "400",
-		"HEIGHT" => "324",
-		"FULLSCREEN" => "Y",
-		"SKIN_PATH" => "/bitrix/components/bitrix/player/mediaplayer/skins",
-		"SKIN" => "bitrix.swf",
-		"CONTROLBAR" => "bottom",
-		"WMODE" => "transparent",
-		"HIDE_MENU" => "N",
-		"SHOW_CONTROLS" => "Y",
-		"SHOW_STOP" => "N",
-		"SHOW_DIGITS" => "Y",
-		"CONTROLS_BGCOLOR" => "FFFFFF",
-		"CONTROLS_COLOR" => "000000",
-		"CONTROLS_OVER_COLOR" => "000000",
-		"SCREEN_COLOR" => "000000",
-		"WMODE_WMV" => "window",
-		"AUTOSTART" => "N",
-		"REPEAT" => "N",
-		"VOLUME" => "90",
-		"DISPLAY_CLICK" => "play",
-		"MUTE" => "N",
-		"HIGH_QUALITY" => "Y",
-		"ADVANCED_MODE_SETTINGS" => "N",
-		"BUFFER_LENGTH" => "10",
-		"DOWNLOAD_LINK_TARGET" => "_self"
-	),
-false
-);?>
+    <!-- Block buttons links to pages -->
+    <div class="buttons__items">
+        <!-- Item -->
+        <a href="/forma-obrashenija.html" class="buttons__items_item">
+            <img class="buttons__items_item_img"
+                 src="./local/templates/kdteam/images/jpg/home/buttons_menu/item1/img.jpg" alt="">
 
-<!-- --><!-- -->
+            <h3 class="buttons__items_item_title">
+                Страховой случай в ОМС
+            </h3>
+        </a>
 
-<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
+        <!-- Item -->
+        <a href="/feedback.html" class="buttons__items_item">
+            <img class="buttons__items_item_img"
+                 src="./local/templates/kdteam/images/jpg/home/buttons_menu/item2/img.jpg" alt="">
+
+            <h3 class="buttons__items_item_title">
+                Отзывы о представителях
+            </h3>
+        </a>
+
+        <!-- Item -->
+        <a href="#" class="buttons__items_item">
+            <img class="buttons__items_item_img"
+                 src="./local/templates/kdteam/images/jpg/home/buttons_menu/item3/img.jpg" alt="">
+
+            <h3 class="buttons__items_item_title">
+                Читать про ОМС
+            </h3>
+        </a>
+    </div>
+
+<?php require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php");
