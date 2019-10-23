@@ -1,11 +1,10 @@
 $(document).ready(function(){
   create_select();
-  $(document).on('click', '.option', function() {
+  $(document).on('click', '#option', function() {
     let classID = $(this).attr("value");
     let component = $(".grid");
     let id = $(this).attr("id");
-
-    if (!!classID && id === undefined){
+    if (!!classID && id === 'option'){
       $.post("/ajax/main_form_oms.php", {id: classID}, function(result) {
         $(component).html(result);
         update_select();
@@ -39,10 +38,9 @@ function update_select () {
       c.setAttribute("value", selElmnt.options[j].value);
       if (!!selElmnt.options[j].id) {
         c.setAttribute("id",selElmnt.options[j].id);
+      } else {
+        c.setAttribute("id", "option");
       }
-      c.setAttribute("class", "option");
-
-
       c.addEventListener("click", function (e) {
         /* When an item is clicked, update the original select box,
         and the selected item: */
@@ -120,7 +118,7 @@ function create_select () {
             c = document.createElement("DIV");
             c.innerHTML = selElmnt.options[j].innerHTML;
             c.setAttribute("value", selElmnt.options[j].value);
-            c.setAttribute("class", "option");
+            c.setAttribute("id", "option");
 
             c.addEventListener("click", function (e) {
                 /* When an item is clicked, update the original select box,
