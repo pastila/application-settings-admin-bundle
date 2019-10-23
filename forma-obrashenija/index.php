@@ -4,6 +4,7 @@ use Bitrix\Main\Page\Asset;
 $asset = Asset::getInstance();
 $asset->addCss(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/main.min.css");
 $asset->addJs(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/main.min.js");
+//$asset->addJs(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/forma-obrashenija.min.js");
 ?>
 
 
@@ -134,26 +135,26 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/main.min.js");
                     <div class="title-select">Выбор региона:</div>
                     <div class="custom-select">
                         <select>
-                            <option value="0">Выберите регион:</option>
-                            <option value="1">Амурская область</option>
-                            <option value="2">Архангельская область</option>
-                            <option value="3">Астраханская область</option>
-                            <option value="4">Белгородская область</option>
-                            <option value="5">Брянская область</option>
-                            <option value="6">Владимирская область</option>
+                            <option value="">Выберите регион:</option>
+                            <option value="">Амурская область</option>
+                            <option value="">Архангельская область</option>
+                            <option value="">Астраханская область</option>
+                            <option value="">Белгородская область</option>
+                            <option value="">Брянская область</option>
+                            <option value="">Владимирская область</option>
                         </select>
                     </div>
 
                     <div class="title-select">Список больниц:</div>
                     <div class="custom-select">
                         <select>
-                            <option value="0">Начните поиск набором на клавиатуре</option>
-                            <option value="1">Амурская область Больница #1</option>
-                            <option value="2">Архангельская область Больница #122132</option>
-                            <option value="3">Астраханская область Больница #123423446546</option>
-                            <option value="4">Белгородская область Больница #234234456654</option>
-                            <option value="5">Брянская область Больница #34576587678</option>
-                            <option value="6">Владимирская область #34576587678</option>
+                            <option value="">Начните поиск набором на клавиатуре</option>
+                            <option value="">Амурская область Больница #1</option>
+                            <option value="">Архангельская область Больница #122132</option>
+                            <option value="">Астраханская область Больница #123423446546</option>
+                            <option value="">Белгородская область Больница #234234456654</option>
+                            <option value="">Брянская область Больница #34576587678</option>
+                            <option value="">Владимирская область #34576587678</option>
                         </select>
                     </div>
                 </div>
@@ -195,67 +196,30 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/main.min.js");
 
                 <a class="link-underline" href="#">Ссылка на статью в блоге</a>
 
-                <div class="grid" action="">
-                    <div class="grid-item">
-                        <div class="title-select">Выберите класс</div>
-                        <div class="custom-select">
-                            <select>
-                                <option value="0">Болезни дыхания</option>
-                                <option value="1">Амурская область</option>
-                                <option value="2">Архангельская область</option>
-                                <option value="3">Астраханская область</option>
-                                <option value="4">Белгородская область</option>
-                                <option value="5">Брянская область</option>
-                                <option value="6">Владимирская область</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="grid-item">
-                        <div class="title-select">Выберите группу</div>
-                        <div class="custom-select">
-                            <select>
-                                <option value="0">Группа заболеваний</option>
-                                <option value="1">Амурская область Больница #1</option>
-                                <option value="2">Архангельская область Больница #122132</option>
-                                <option value="3">Астраханская область Больница #123423446546</option>
-                                <option value="4">Белгородская область Больница #234234456654</option>
-                                <option value="5">Брянская область Больница #34576587678</option>
-                                <option value="6">Владимирская область #34576587678</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="grid-item">
-                        <div class="title-select">Выберите подгруппу</div>
-                        <div class="custom-select">
-                            <select>
-                                <option value="0">Подгруппа заболеваний</option>
-                                <option value="1">Амурская область Больница #1</option>
-                                <option value="2">Архангельская область Больница #122132</option>
-                                <option value="3">Астраханская область Больница #123423446546</option>
-                                <option value="4">Белгородская область Больница #234234456654</option>
-                                <option value="5">Брянская область Больница #34576587678</option>
-                                <option value="6">Владимирская область #34576587678</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="grid-item">
-                        <div class="title-select">Выберите диагноз</div>
-                        <div class="custom-select">
-                            <select>
-                                <option value="0">Диагноз</option>
-                                <option value="1">Амурская область Больница #1</option>
-                                <option value="2">Архангельская область Больница #122132</option>
-                                <option value="3">Астраханская область Больница #123423446546</option>
-                                <option value="4">Белгородская область Больница #234234456654</option>
-                                <option value="5">Брянская область Больница #34576587678</option>
-                                <option value="6">Владимирская область #34576587678</option>
-                            </select>
-                        </div>
-                    </div>
-
+                <div id="grid" class="grid" action="">
+                    <?php
+                    $APPLICATION->IncludeComponent(
+                        "bitrix:catalog.section.list",
+                        "",
+                        array(
+                            "VIEW_MODE" => "LIST",
+                            "SHOW_PARENT_NAME" => "N",
+                            "IBLOCK_TYPE" => "",
+                            "IBLOCK_ID" => "8",
+                            "SECTION_ID" => "",
+                            "SECTION_CODE" => "",
+                            "SECTION_URL" => "",
+                            "COUNT_ELEMENTS" => "N",
+                            "TOP_DEPTH" => "3",
+                            "SECTION_FIELDS" => "",
+                            "SECTION_USER_FIELDS" => "",
+                            "ADD_SECTIONS_CHAIN" => "N",
+                            "CACHE_TYPE" => "A",
+                            "CACHE_TIME" => "36000000",
+                            "CACHE_NOTES" => "",
+                            "CACHE_GROUPS" => "Y"
+                        )
+                    );?>
                 </div>
             </div>
         </section>
