@@ -159,7 +159,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                             <option><?php echo $arResult['SECTION']['NAME']?></option>
                             <?php
                             $db_list = CIBlockSection::GetList(
-                                array(),
+                                array("name" => "asc"),
                                 array('IBLOCK_ID' => 8, "GLOBAL_ACTIVE" => "Y", "DEPTH_LEVEL" => 1,
                                     "!ID" => $arResult['SECTION']['ID']),
                                 false,
@@ -202,7 +202,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                 $class = CIBlockSection::GetByID($arResult['SECTION']['IBLOCK_SECTION_ID']);
                 if($ar_cur_class = $class->GetNext()) {
                     $db_list = CIBlockSection::GetList(
-                        array(),
+                        array("name" => "asc"),
                         array('IBLOCK_ID' => 8, "GLOBAL_ACTIVE" => "Y", "DEPTH_LEVEL" => 1,
                             "!ID" => $ar_cur_class['ID']),
                         false,
@@ -210,7 +210,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                         false
                     );
                     $db_list_lvl2 = CIBlockSection::GetList(
-                        array(),
+                        array("name" => "asc"),
                         array('IBLOCK_ID' => 8, "GLOBAL_ACTIVE" => "Y", "DEPTH_LEVEL" => 2,
                             "SECTION_ID" => $ar_cur_class['ID']),
                         false,
@@ -270,7 +270,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                     $rsClass = CIBlockSection::GetByID($arGroup['IBLOCK_SECTION_ID']);
                     if ($arClass = $rsClass->GetNext()) {
                         $db_list = CIBlockSection::GetList(
-                            array(),
+                            array("name" => "asc"),
                             array('IBLOCK_ID' => 8, "GLOBAL_ACTIVE" => "Y", "DEPTH_LEVEL" => 1,
                                 "!ID" => $arClass['ID']),
                             false,
@@ -278,7 +278,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                             false
                         );
                         $db_list_lvl2 = CIBlockSection::GetList(
-                            array(),
+                            array("name" => "asc"),
                             array('IBLOCK_ID' => 8, "GLOBAL_ACTIVE" => "Y", "DEPTH_LEVEL" => 2,
                                 "SECTION_ID" => $arClass['ID']),
                             false,
@@ -286,7 +286,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                             false
                         );
                         $db_list_lvl3 = CIBlockSection::GetList(
-                            array(),
+                            array("name" => "asc"),
                             array('IBLOCK_ID' => 8, "GLOBAL_ACTIVE" => "Y", "DEPTH_LEVEL" => 3,
                                 "SECTION_ID" => $arGroup['ID']),
                             false,
@@ -345,7 +345,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
             if ($arResult['SECTION']['DEPTH_LEVEL'] == 3) {
                 $arFilter = array("IBLOCK_ID" => 8, "ACTIVE"=>"Y", "IBLOCK_SECTION_ID" => $arResult['SECTION']['ID']);
                 $arSelect = Array("ID", "NAME", "IBLOCK_ID");
-                $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+                $res = CIBlockElement::GetList(array("name" => "asc"), $arFilter, false, false, $arSelect);
                 while($ob = $res->GetNextElement())
                 {
                     $arFields[] = $ob->GetFields();
