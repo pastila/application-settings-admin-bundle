@@ -121,42 +121,30 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/main.min.js");
         <!-- 3 Step -->
         <section class="form-obrashcheniya__step_three">
             <div class="form-obrashcheniya__step_three_l">
-                <div class="card">
-                    <p class="form-obrashcheniya__step_three_l_text">Мы собрали для вас информацию обо всех
-                        медорганизациях, оказывающих помощь по полису ОМС……..
-                        есть ли в данном списке больница, в которую вы обратились за помощью. Если больницы в
-                        списке
-                        нет, денежные средства вернуть не получится…… Рекомендуем сверяться со списком при
-                        обращении
-                        за помощью</p>
-
-                    <a class="link-underline" href="#">Ссылка на статью в блоге</a>
-
-                    <div class="title-select">Выбор региона:</div>
-                    <div class="custom-select">
-                        <select>
-                            <option value="">Выберите регион:</option>
-                            <option value="">Амурская область</option>
-                            <option value="">Архангельская область</option>
-                            <option value="">Астраханская область</option>
-                            <option value="">Белгородская область</option>
-                            <option value="">Брянская область</option>
-                            <option value="">Владимирская область</option>
-                        </select>
-                    </div>
-
-                    <div class="title-select">Список больниц:</div>
-                    <div class="custom-select">
-                        <select>
-                            <option value="">Начните поиск набором на клавиатуре</option>
-                            <option value="">Амурская область Больница #1</option>
-                            <option value="">Архангельская область Больница #122132</option>
-                            <option value="">Астраханская область Больница #123423446546</option>
-                            <option value="">Белгородская область Больница #234234456654</option>
-                            <option value="">Брянская область Больница #34576587678</option>
-                            <option value="">Владимирская область #34576587678</option>
-                        </select>
-                    </div>
+                <div id="hospitals" class="card">
+                    <?php
+                    $APPLICATION->IncludeComponent(
+                        "bitrix:catalog.section.list",
+                        "hospitals",
+                        array(
+                            "VIEW_MODE" => "LIST",
+                            "SHOW_PARENT_NAME" => "N",
+                            "IBLOCK_TYPE" => "",
+                            "IBLOCK_ID" => "9",
+                            "SECTION_ID" => "",
+                            "SECTION_CODE" => "",
+                            "SECTION_URL" => "",
+                            "COUNT_ELEMENTS" => "N",
+                            "TOP_DEPTH" => "1",
+                            "SECTION_FIELDS" => "",
+                            "SECTION_USER_FIELDS" => "",
+                            "ADD_SECTIONS_CHAIN" => "N",
+                            "CACHE_TYPE" => "A",
+                            "CACHE_TIME" => "36000000",
+                            "CACHE_NOTES" => "",
+                            "CACHE_GROUPS" => "Y"
+                        )
+                    );?>
                 </div>
             </div>
 
@@ -164,11 +152,11 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/main.min.js");
                 <div class="card">
                     <div class="form-obrashcheniya__step_three_r_wrap">
                         <div class="form-obrashcheniya__step_three_r_wrap_title">
-                            Вы выбрали поликлинику:
+                            Вы выбрали регион:
                         </div>
 
-                        <div class="form-obrashcheniya__step_three_r_wrap_name">
-                            АЛЕЙСКАЯ ЦЕНТРАЛЬНАЯ РАЙОННАЯ БОЛЬНИЦА
+                        <div id="region_name" class="form-obrashcheniya__step_three_r_wrap_name">
+                            Не выбрано
                         </div>
                     </div>
 
@@ -177,8 +165,8 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/main.min.js");
                             Вы выбрали поликлинику:
                         </div>
 
-                        <div class="form-obrashcheniya__step_three_r_wrap_name">
-                            АЛЕЙСКАЯ ЦЕНТРАЛЬНАЯ РАЙОННАЯ БОЛЬНИЦА
+                        <div id="hosptital_name" class="form-obrashcheniya__step_three_r_wrap_name">
+                            Не выбрано
                         </div>
                     </div>
                 </div>

@@ -382,7 +382,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                         <?php
                         foreach ($arResult['SECTIONS'] as &$arSection) {?>
                             <?php if ($arSection['DEPTH_LEVEL'] == 1) { ?>
-                                <option id="<?=$arSection['ID']?>" value="<?=$arSection['ID']?>"><?php echo $arSection['NAME']?></option>
+                                <option value="<?=$arSection['ID']?>"><?php echo $arSection['NAME']?></option>
                             <?php }?>
                         <?php } ?>
                     </select>
