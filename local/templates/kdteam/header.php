@@ -86,7 +86,8 @@ $asset = Asset::getInstance();
             <?php } else { ?>
                 <div class="header__r" style="display: flex;">
                     <div class="header__r_auth">
-                        <a href="./includes/ajax-auth-login.html" id="login-link" class="header__r_auth_login">
+                        <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-login.php"?>" id="login-link"
+                           class="header__r_auth_login">
                             <img class="header__r_auth_login_img"
                                  src="./local/templates/kdteam/images/svg/header/login/man-user.svg" alt="OMS">
                             <div class="header__r_auth_login_text">
@@ -110,7 +111,6 @@ $asset = Asset::getInstance();
             <?php } ?>
         </div>
     </header>
-
     <!-- Content -->
     <main class="main">
 
