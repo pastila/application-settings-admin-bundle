@@ -43,8 +43,9 @@
     "node-sass": "^4.12.0"
   },
   "browserslist": [
-    "last 2 version",
-    "> 2%"
+    "last 10 version",
+    "> 5%",
+    "IE 10"
   ],
   "author": "",
   "license": "ISC"
