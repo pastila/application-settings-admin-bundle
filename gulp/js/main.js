@@ -2,6 +2,32 @@
 //= ../../node_modules/magnific-popup/dist/jquery.magnific-popup.min.js
 
 $(document).ready(function () {
+    //authorization
+  console.log('start');
+  $(document).on('click', '#auth_btn', function(e) {
+    console.log('auth');
+    $.ajax({
+      type: 'POST',
+      url: '/ajax/authorization.php',
+      data: {
+        mode: 'login',
+        login: $('#auth-form input[name=login]').val(),
+        password: $('#auth-form input[name=password]').val()
+      },
+      dataType: 'json',
+      success: function(result){
+        if(result.status)
+          location.reload();
+        else{
+          $('.message.error').html(result.message);
+          $('.message.error').show();
+        }
+      }
+    });
+    e.preventDefault();
+    return false;
+  });
+    // end authorization
 
     $('#login-link').magnificPopup({
         type: 'ajax',
