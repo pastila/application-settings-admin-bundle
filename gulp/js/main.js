@@ -11,8 +11,8 @@ $(document).ready(function () {
       url: '/ajax/authorization.php',
       data: {
         mode: 'login',
-        login: $('#auth-form input[name=login]').val(),
-        password: $('#auth-form input[name=password]').val()
+        login: $('#auth-form-login input[name=login]').val(),
+        password: $('#auth-form-login input[name=password]').val()
       },
       dataType: 'json',
       success: function(result){
