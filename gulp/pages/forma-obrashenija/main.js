@@ -17,23 +17,25 @@ $(document).ready(function() {
     let region_name_value = $(this).text();
     let component = $("#hospitals");
     let region_name = $('#region_name');
-    console.log(region_name_value);
     let id = $(this).attr("id");
     if (!!classID && id === 'location'){
       $.post("/ajax/form_hospitals.php", {id: classID}, function(result) {
         $(component).html(result);
         $(region_name).html(region_name_value);
+        $('#hosptital_name').html('Не выбрано');
         update_hospital_select();
       }, "html");
     }
   });
 
   $(document).on('click', '#hospital', function() {
-    console.log('click');
     let hospital_name_value = $(this).text();
     let hospital_name = $('#hosptital_name');
     $(hospital_name).html(hospital_name_value);
   });
+
+
+
 
 });
 
