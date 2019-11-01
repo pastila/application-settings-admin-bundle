@@ -3,8 +3,9 @@
 use Bitrix\Main\Page\Asset;
 $asset = Asset::getInstance();
 $asset->addCss(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/main.min.css");
+$asset->addCss(SITE_TEMPLATE_PATH . "/pages/stax-sluchay/main.min.css");
 $asset->addJs(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/main.min.js");
-//$asset->addJs(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/forma-obrashenija.min.js");
+$asset->addJs(SITE_TEMPLATE_PATH . "/pages/stax-sluchay/main.min.js");
 ?>
 
 
@@ -15,10 +16,10 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/main.min.js");
     </ul>
 
     <!-- Pages Title -->
-    <h2 class="page-title">Проверить свой дигноз</h2>
+    <h2 id="page-title" class="page-title">Проверить свой дигноз</h2>
 
     <!-- ALL STEPS IN FORM -->
-    <form action="">
+    <form id="appeal-form" action="">
         <!-- 1 Step -->
         <section class="form-obrashcheniya__step_one">
             <div class="form-obrashcheniya__step_one_title">
@@ -79,15 +80,15 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/main.min.js");
                 </div>
 
                 <div class="wrap-chrckbox">
-                    <label class="check-label">
+                    <label id="planned_label" class="check-label">
                         Плановое
-                        <input type="checkbox" value="" />
+                        <input id="planned" type="checkbox" value="" />
                         <span class="check-img"></span>
                     </label>
 
-                    <label class="check-label">
+                    <label  class="check-label">
                         Неотложное
-                        <input type="checkbox" value="" />
+                        <input id="urgent" type="checkbox" value="" />
                         <span class="check-img"></span>
                     </label>
                 </div>
@@ -212,7 +213,7 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/main.min.js");
             </div>
         </section>
 
-        <a href="/strax-sluchay.html" class="mainBtn">проверить диагноз</a>
+        <span id="strax-sluchay" class="mainBtn">проверить диагноз</span>
     </form>
 
 

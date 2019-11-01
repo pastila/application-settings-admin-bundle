@@ -1,5 +1,34 @@
 $(document).ready(function() {
   create_select();
+
+  let urgent = $("#urgent");
+  let planned = $( "#planned");
+  let appeal;
+
+  planned.click(function() {
+    if(planned.is(':checked')) {
+      urgent.prop('checked', false);
+      appeal = 'Плановое';
+    }
+  });
+
+  urgent.click(function() {
+    if(urgent.is(':checked')) {
+      planned.prop('checked', false);
+      appeal = 'Неотложное';
+    }
+  });
+
+  $(document).on('click', '#strax-sluchay', function() {
+    let $form = $("#appeal-form");
+    let $title = $("#page-title");
+    $.post("/ajax/diagnoz.php", {APPEAL_VALUE: appeal}, function(result) {
+      var diagnoz = jQuery.parseJSON(result);
+      $form.replaceWith(diagnoz['DIAGNOZ']);
+      $title.html(diagnoz['FULL_NAME']);
+    }, "html");
+  });
+
   $(document).on('click', '#option', function() {
     let classID = $(this).attr("value");
     let component = $(".grid");
@@ -302,3 +331,4 @@ function closeAllSelect(elmnt) {
     }
   }
 }
+
