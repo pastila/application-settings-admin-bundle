@@ -95,7 +95,7 @@ $asset = Asset::getInstance();
                             </div>
                         </a>
 
-                        <a href="./includes/ajax-auth-reg.html" id="reg-link" class="header__r_auth_reg">
+                        <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-reg.html"?>" id="reg-link" class="header__r_auth_reg">
                             <img class="header__r_auth_login_img"
                                  src="./local/templates/kdteam/images/svg/header/reg/key.svg" alt="OMS">
                             <div class="header__r_auth_login_text">
