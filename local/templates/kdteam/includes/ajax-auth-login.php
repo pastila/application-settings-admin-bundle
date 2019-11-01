@@ -1,6 +1,4 @@
 <?php require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");?>
-<<<<<<< HEAD
-=======
     <form id="auth-form-login" class="auth-form">
         <div class="close-modal">
             <img src="./local/templates/kdteam/images/svg/close_modal.svg" alt="">
@@ -14,7 +12,6 @@
             <div class="message error"></div>
             <div class="popup__wrap_tabs_tab">
                 <div id="popup-login-content" class="popup__wrap_logIn">
->>>>>>> 82d3940dc1bf182cea4f358e89d49cad897c8951
 
 <form id="auth-form-login" class="auth-form">
     <div class="close-modal">
