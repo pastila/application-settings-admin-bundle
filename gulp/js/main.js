@@ -4,6 +4,7 @@
 $(document).ready(function () {
     //authorization
   console.log('start');
+
   $(document).on('click', '#auth_btn', function(e) {
     console.log('auth');
     $.ajax({
@@ -60,6 +61,27 @@ $(document).ready(function () {
             }
         }
     });
+
+
+
+      $('form#auth-form-reg').validator({
+        submitHandler: function( e ){
+
+                e.preventDefault();
+
+                console.log("323");
+        }
+      });
+
+
+
+
+
+
+
+
+
+
 });
 
 $(document).on('click', '.close-modal', function (e) {
