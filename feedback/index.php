@@ -5,13 +5,13 @@ $asset = Asset::getInstance();
 $asset->addCss(SITE_TEMPLATE_PATH . "/pages/feedback/main.min.css");
 $asset->addJs(SITE_TEMPLATE_PATH . "/pages/feedback/main.min.js");
 
-require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
 CModule::IncludeModule("iblock");
 
 $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_*");
-$arFilter = Array("IBLOCK_ID"=> 13, "ACTIVE_DATE"=>"Y", "ACTIVE"=>"Y");
+$arFilter = Array("SECTION_CODE"=> "name_insurance_companies", "ACTIVE_DATE"=>"Y", "ACTIVE"=>"Y");
 $res = CIBlockElement::GetList(false, $arFilter, false,false, $arSelect);
 while($ob = $res->GetNextElement()){
+    echo 233232232;
     $arFields = $ob->GetFields();
     echo '<pre>';
    print_r($arFields);
