@@ -74,7 +74,7 @@ $asset = Asset::getInstance();
                                 </li>
                             </ul>
 
-                            <a href="ajax/logout.php">Выйти</a>
+                            <a href="/ajax/logout.php">Выйти</a>
                         </div>
 
                         <div class="header__r_auth_user-image">
