@@ -44,7 +44,7 @@
 
     $.extend(Validator.VALIDATORS, options.custom)
 
-    this.$element.attr('novalidate', true) // disable automatic native validation
+     // this.$element.attr('novalidate', true) // disable automatic native validation
     this.toggleSubmit()
 
     this.$element.on('input.bs.validator change.bs.validator focusout.bs.validator', $.proxy(this.validateInput, this))

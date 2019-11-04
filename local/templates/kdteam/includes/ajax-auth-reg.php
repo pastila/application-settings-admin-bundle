@@ -1,4 +1,7 @@
-<?php ?>
+<?php
+use Bitrix\Main\Application;
+require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
+?>
 <!-- Popup Always at the bottom -->
 <form id="auth-form-reg" class="auth-form">
     <div class="close-modal">
@@ -34,18 +37,22 @@
             <!-- Input -->
             <div class="input__wrap">
                 <label class="input__wrap_label">Ваша фамилия</label>
-                <input id="f-name" type="text" name="famaly_name" required>
+                <input id="famaly-name" type="text" name="famaly-name" required>
             </div>
 
             <!-- Input -->
             <div class="input__wrap">
                 <label class="input__wrap_label">Ваше отчество</label>
-                <input id="last-name" type="text" name="last_name" required>
+                <input id="last-name" type="text" name="last-name" required>
             </div>
 
             <div class="input__wrap">
                 <label class="input__wrap_label">Номер страхового полиса</label>
                 <input id="number_polic" type="text" name="number_polic" required>
+            </div>
+            <div class="input__wrap">
+                <label class="input__wrap_label">Пароль</label>
+                <input id="password"  minlength="6" type="password" name="password" required>
             </div>
         </div>
 
@@ -54,7 +61,10 @@
             <div class="input__wrap">
                 <label class="input__wrap_label">Укажите свою страховую компанию</label>
                 <input id="company" type="text" name="company" required>
+
+                <div class="search_company"></div>
             </div>
+
         </div>
 
         <button type="submit" id="registration" class="mainBtn">Регистрация</button>

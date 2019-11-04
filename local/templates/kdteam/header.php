@@ -19,6 +19,7 @@ $asset = Asset::getInstance();
     $asset->addCss("https://fonts.googleapis.com/css?family=Rubik:400,700&display=swap");
     $asset->addCss(SITE_TEMPLATE_PATH . "/styles/main.min.css");
     $asset->addJs(SITE_TEMPLATE_PATH . "/js/main.min.js");
+    $asset->addJs(SITE_TEMPLATE_PATH . "/js/validator.min.js");
     ?>
 </head>
 
@@ -73,11 +74,11 @@ $asset = Asset::getInstance();
                                 </li>
                             </ul>
 
-                            <a href="#">Выйти</a>
+                            <a href="ajax/logout.php">Выйти</a>
                         </div>
 
                         <div class="header__r_auth_user-image">
-                            <img src="" alt="">
+                            <img src="./local/templates/kdteam/images/png/header/head_login.png" alt="">
                         </div>
                     </div>
 
