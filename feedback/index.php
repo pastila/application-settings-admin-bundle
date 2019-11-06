@@ -60,9 +60,12 @@ global $USER;
         <!-- FeedBack block -->
 
         <?php
+        $order = Array("date_active_from" => "desc");
         $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
         $arFilter = Array("IBLOCK_ID" => 13, "ACTIVE" => "Y");
-        $res = CIBlockElement::GetList(false, $arFilter, false, false, $arSelect);
+        $pagen = Array("nPageSize" => 1);
+        $res = CIBlockElement::GetList($order, $arFilter, false, $pagen, $arSelect);
+        $res->NavStart(0);
         while ($ob = $res->GetNextElement()) {
             $arFields = $ob->GetFields();
             $arProps = $ob->GetProperties();
@@ -189,7 +192,11 @@ global $USER;
                 </div>
 
             </div><!-- FeedBack block END -->
-        <? } ?>
+        <? }
+        $navStr = $res->GetPageNavStringEx($navComponentObject, "Страницы:", ".default");
+        echo $navStr;
+        ?>
+
     </div>
 
     <div class="sidebar">
