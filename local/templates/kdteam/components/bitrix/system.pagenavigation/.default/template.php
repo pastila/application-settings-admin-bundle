@@ -20,7 +20,6 @@ if(!$arResult["NavShowAlways"])
 
 $strNavQueryString = ($arResult["NavQueryString"] != "" ? $arResult["NavQueryString"]."&amp;" : "");
 $strNavQueryStringFull = ($arResult["NavQueryString"] != "" ? "?".$arResult["NavQueryString"] : "");
-ob_start();
 ?>
 
 <font class="text"><?=$arResult["NavTitle"]?> 
@@ -129,33 +128,33 @@ ob_start();
 
 
 </font>
-<?
-$paging = ob_get_contents();
-$paging = preg_replace_callback('/href="([^"]+)"/is', function($matches) {
-    $url = $matches[1];
-    $newUrl = '';
-    if ($arUrl = parse_url($url)) {
-        $newUrl .= $arUrl['path'];
-        if (substr($newUrl, -1) != '/') {
-            $newUrl .= '/';
-        }
-        $newUrl = preg_replace('#(pagen[\d]+/)#is', '', $newUrl);
-        parse_str(htmlspecialcharsback($arUrl['query']), $arQuery);
-        foreach ($arQuery as $k => $v) {
-            if (in_array($k, array('SECTION_CODE'))) {
-                unset($arQuery[$k]);
-            } elseif (substr($k, 0, 5)=='PAGEN') {
-                $newUrl .= 'pagen'.intval($v).'/';
-                unset($arQuery[$k]);
-            }
-        }
-        $buildQuery = http_build_query($arQuery, '', '&');
-        if (strlen($buildQuery)) {
-            $newUrl .= '?'.$buildQuery;
-        }
-    }
-    return 'href="'.$newUrl.'"';
-}, $paging);
-ob_end_clean();
-echo $paging;
-?>
+<?//
+//$paging = ob_get_contents();
+//$paging = preg_replace_callback('/href="([^"]+)"/is', function($matches) {
+//    $url = $matches[1];
+//    $newUrl = '';
+//    if ($arUrl = parse_url($url)) {
+//        $newUrl .= $arUrl['path'];
+//        if (substr($newUrl, -1) != '/') {
+//            $newUrl .= '/';
+//        }
+//        $newUrl = preg_replace('#(pagen[\d]+/)#is', '', $newUrl);
+//        parse_str(htmlspecialcharsback($arUrl['query']), $arQuery);
+//        foreach ($arQuery as $k => $v) {
+//            if (in_array($k, array('SECTION_CODE'))) {
+//                unset($arQuery[$k]);
+//            } elseif (substr($k, 0, 5)=='PAGEN') {
+//                $newUrl .= 'pagen'.intval($v).'/';
+//                unset($arQuery[$k]);
+//            }
+//        }
+//        $buildQuery = http_build_query($arQuery, '', '&');
+//        if (strlen($buildQuery)) {
+//            $newUrl .= '?'.$buildQuery;
+//        }
+//    }
+//    return 'href="'.$newUrl.'"';
+//}, $paging);
+//ob_end_clean();
+//echo $paging;
+//?>
