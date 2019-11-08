@@ -6,33 +6,44 @@ $asset = Asset::getInstance();
 $asset->addCss(SITE_TEMPLATE_PATH . "/pages/home/home.min.css");
 $APPLICATION->SetPageProperty("title", "OMS");
 $APPLICATION->SetPageProperty("NOT_SHOW_NAV_CHAIN", "Y");
+CModule::IncludeModule("iblock");
+?>
+
+
+
+<?
+
+   $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "DETAIL_TEXT", "PREVIEW_TEXT", "PROPERTY_*");
+   $arFilter = Array("IBLOCK_ID"=>18,"ID" => 37549);
+   $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+   while($ob = $res->GetNextElement()){
+       $arFields = $ob->GetFields();
+       $arProps = $ob->GetProperties();
+
 ?>
     <!-- Slider -->
     <div class="slider">
         <div class="slider__l">
+            <? foreach ($arProps["IMG_SLIDER"]["VALUE"] as $item_img) {
+                      $url_img =  CFile::GetPath($item_img); ?>
             <picture>
-                <source srcset="./local/templates/kdteam/images/jpg/home/slider/slider_img.jpg"
-                        class="slider__l_img">
-                <source srcset="./local/templates/kdteam/images/jpg/home/slider/slider_img.jpg"
-                        class="slider__l_img" type="image/webp">
-                <img src="./local/templates/kdteam/images/jpg/home/slider/slider_img.jpg" class="slider__l_img"
+                <img src="<?=$url_img?>" class="slider__l_img"
                      alt="OMS">
             </picture>
+                <? }?>
         </div>
 
         <div class="slider__r">
             <div class="slider__r_title">
-                OMS заголовок для теста
+                <?=$arFields["PREVIEW_TEXT"]?>
             </div>
 
             <div class="slider__r_descr">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam architecto tempore itaque
-                doloremque, porro, dolore distinctio consequatur iste, ipsum quo dolor! Cumque a obcaecati,
-                aliquam rem est accusamus eligendi deserunt?
+               <?=$arFields["DETAIL_TEXT"]?>
             </div>
         </div>
     </div>
-
+<?}?>
     <!-- Block buttons links to pages -->
     <div class="buttons__items">
         <!-- Item -->
