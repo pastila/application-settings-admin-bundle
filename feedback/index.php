@@ -193,6 +193,7 @@ global $USER;
 
             </div><!-- FeedBack block END -->
         <? }
+
         $navStr = $res->GetPageNavStringEx($navComponentObject, "Страницы:", ".default");
         echo $navStr;
         ?>

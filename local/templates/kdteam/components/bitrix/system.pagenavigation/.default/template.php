@@ -20,6 +20,7 @@ if(!$arResult["NavShowAlways"])
 
 $strNavQueryString = ($arResult["NavQueryString"] != "" ? $arResult["NavQueryString"]."&amp;" : "");
 $strNavQueryStringFull = ($arResult["NavQueryString"] != "" ? "?".$arResult["NavQueryString"] : "");
+//ob_start();
 ?>
 
 <font class="text"><?=$arResult["NavTitle"]?> 
@@ -141,10 +142,8 @@ $strNavQueryStringFull = ($arResult["NavQueryString"] != "" ? "?".$arResult["Nav
 //        $newUrl = preg_replace('#(pagen[\d]+/)#is', '', $newUrl);
 //        parse_str(htmlspecialcharsback($arUrl['query']), $arQuery);
 //        foreach ($arQuery as $k => $v) {
-//            if (in_array($k, array('SECTION_CODE'))) {
-//                unset($arQuery[$k]);
-//            } elseif (substr($k, 0, 5)=='PAGEN') {
-//                $newUrl .= 'pagen'.intval($v).'/';
+//            if (substr($k, 0, 5)=='PAGEN') {
+//                $arQuery['page'] = intval($v);
 //                unset($arQuery[$k]);
 //            }
 //        }
