@@ -19,6 +19,7 @@ $asset = Asset::getInstance();
     $asset->addCss("https://fonts.googleapis.com/css?family=Rubik:400,700&display=swap");
     $asset->addCss(SITE_TEMPLATE_PATH . "/styles/main.min.css");
     $asset->addJs(SITE_TEMPLATE_PATH . "/js/main.min.js");
+    CModule::IncludeModule("iblock");
     ?>
 </head>
 
@@ -67,7 +68,20 @@ $asset = Asset::getInstance();
 
                                 <li>
                                     <div class="menu-req">
-                                        1
+                                        <?
+                                        global $USER;
+                                        $ID_USER = $USER->GetID();
+
+                                        $arFilter = Array("IBLOCK_ID" => 11, "UF_USER_ID" => $ID_USER);
+                                        $section = CIBlockSection::GetList(Array(), $arFilter, false, false,
+                                            false);  // получили секцию по айди юзера
+                                        if ($Section = $section->GetNext()) {
+                                            $arFilter = Array("IBLOCK_ID" => 11, "SECTION_ID" => $Section["ID"]);
+                                            $Element = CIBlockElement::GetList(Array(), $arFilter, false, false,
+                                                false); //получили обращения юзера
+                                            $obElement = $Element->SelectedRowsCount();
+
+                                        } ?><?= $obElement ?>
                                     </div>
                                     <a href="/otpravlennyye.html">Отправленные</a>
                                 </li>
