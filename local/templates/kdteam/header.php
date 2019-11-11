@@ -76,14 +76,14 @@ $asset = Asset::getInstance();
                                         $section = CIBlockSection::GetList(Array(), $arFilter, false, false,
                                             false);  // получили секцию по айди юзера
                                         if ($Section = $section->GetNext()) {
-                                            $arFilter = Array("IBLOCK_ID" => 11, "SECTION_ID" => $Section["ID"]);
+                                            $arFilter = Array("IBLOCK_ID" => 11, "SECTION_ID" => $Section["ID"],"PROPERTY_SEND_REVIEW_VALUE"=> 1);
                                             $Element = CIBlockElement::GetList(Array(), $arFilter, false, false,
                                                 false); //получили обращения юзера
                                             $obElement = $Element->SelectedRowsCount();
 
                                         } ?><?= $obElement ?>
                                     </div>
-                                    <a href="/otpravlennyye.html">Отправленные</a>
+                                    <a href="/otpravlennyye/index.php">Отправленные</a>
                                 </li>
                             </ul>
 
