@@ -2,12 +2,21 @@
 //= ../../node_modules/magnific-popup/dist/jquery.magnific-popup.min.js
 
 $(document).ready(function() {
+
+
+  $(document).mouseup(function (e){
+    var div = $(".danger");
+    if (!div.is(e.target)) {
+      div.hide();
+    }
+  });
+
   //authorization
   console.log('start');
   $('.header__r_auth_reg').click(function() {
     setTimeout(function() {
       FormReg();
-    }, 1000);
+    }, 1500);
   });
 
   function FormReg() {
@@ -15,18 +24,45 @@ $(document).ready(function() {
 
     $('#auth-form-reg').validator().on('submit', function(e) {
        e.preventDefault();
+      if($("#generate_form").length != 0){
+        $('#auth-form-reg').append("<input type='hidden'  name='review' value='review'>")
+      }
         var data_form = $('#auth-form-reg').serializeArray();
+
+
           $.ajax({
             url: '/ajax/registration.php',
             type: 'POST',
             data: data_form,
             success: function(msg) {
-              if (msg == 'Уже существует') {
+              console.log(msg);
+              var suc = JSON.parse(msg);
+              console.log(suc);
+              if (suc.user == 'Уже существует') {
                 var email = $('#email');
                 email.after(
                     '<div class="danger" data-danger-email>Пользовватель с таким эмейлом уже сущесвуте</div>');
-              } else if (msg != 0) {
-                window.location.href = '/';
+              } else if (suc.user != 0 && suc.review !="register_with_review") {
+               // location.reload()
+                console.log('reload');
+              }else if(suc.review == "register_with_review"){
+                console.log("alolo");
+                $(".close-modal").trigger("click");
+                $("#generate_form").attr("href","/ajax/form_statement.php");
+                $("body").css({"overflow":"hidden"});
+           setTimeout(function() {
+             $.magnificPopup.open({
+               items: {
+                 src: '<div class="white-popup custom_styles_popup" style="min-width: 350px;\n' +
+                 '    min-height: 170px;\n' +
+                 '    font-size: 21px;\n' +
+                 '    padding: 15px;">Регистрация и создание обращения успешно завершены.' +
+                 'для перехода в личный кабинет нажмите <a href="/obrashcheniya/" >сюда</a></div>',
+                 type: 'inline'
+               }
+             });
+             $("body").css({"overflow":"initial"});
+           },1000)
               }
             },
           });

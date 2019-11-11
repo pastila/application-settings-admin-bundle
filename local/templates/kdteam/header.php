@@ -19,8 +19,9 @@ $asset = Asset::getInstance();
     $asset->addCss("https://fonts.googleapis.com/css?family=Rubik:400,700&display=swap");
     $asset->addCss(SITE_TEMPLATE_PATH . "/styles/main.min.css");
     $asset->addJs(SITE_TEMPLATE_PATH . "/js/main.min.js");
-    $asset->addJs(SITE_TEMPLATE_PATH . "/js/validator.min.js");
+
     ?>
+    <script src="/local/templates/kdteam/js/validator.min.js"></script>
 </head>
 
 <body>

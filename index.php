@@ -4,6 +4,7 @@ use Bitrix\Main\Page\Asset;
 $asset = Asset::getInstance();
 //Home Page Style Mobile
 $asset->addCss(SITE_TEMPLATE_PATH . "/pages/home/home.min.css");
+
 $APPLICATION->SetPageProperty("title", "OMS");
 $APPLICATION->SetPageProperty("NOT_SHOW_NAV_CHAIN", "Y");
 ?>
@@ -36,7 +37,7 @@ $APPLICATION->SetPageProperty("NOT_SHOW_NAV_CHAIN", "Y");
     <!-- Block buttons links to pages -->
     <div class="buttons__items">
         <!-- Item -->
-        <a href="/forma-obrashenija.html" class="buttons__items_item">
+        <a href="/forma-obrashenija/index.php" class="buttons__items_item">
             <img class="buttons__items_item_img"
                  src="./local/templates/kdteam/images/jpg/home/buttons_menu/item1/img.jpg" alt="">
 

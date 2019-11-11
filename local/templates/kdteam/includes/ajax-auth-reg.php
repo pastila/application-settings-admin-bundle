@@ -5,13 +5,16 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.
 <!-- Popup Always at the bottom -->
 <form id="auth-form-reg" class="auth-form">
     <div class="close-modal">
-        <img src="./local/templates/kdteam/images/svg/close_modal.svg" alt="">
+        <img src="/local/templates/kdteam/images/svg/close_modal.svg" alt="">
     </div>
 
     <div class="popup__wrap">
+        <div class="register_before_review">
+            Для созданя образщения ван нужно зарегестрироваться
+        </div>
         <div id="auth__form" class="popup__wrap_tabs">
             <div class="popup__wrap_tabs_title">
-Регистрация
+                Регистрация
             </div>
         </div>
 
