@@ -166,10 +166,10 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
             if ($arResult['SECTION']['DEPTH_LEVEL'] == 1) {
                 ?>
                 <div class="grid-item">
-                    <div class="title-select">Выберите класс</div>
+                    <div class="title-select">Выбор региона:</div>
                     <div class="custom-select">
                         <select>
-                            <option><?php echo $arResult['SECTION']['NAME']?></option>
+                            <option value="<?=$arResult['SECTION']['ID']?>"><?php echo $arResult['SECTION']['NAME']?></option>
                             <?php
                             $db_list = CIBlockSection::GetList(
                                 array("name" => "asc"),
@@ -224,7 +224,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
             <div class="title-select">Список больниц:</div>
             <div class="custom-select" style="pointer-events: none">
                 <select>
-                    <option value="">Список больниц</option>
+                    <option>Список больниц</option>
                 </select>
             </div>
 
