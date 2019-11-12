@@ -25,14 +25,14 @@ use Bitrix\Catalog;
 
 CModule::IncludeModule("catalog");
 CModule::IncludeModule("sale");
-CModule::IncludeModule("iblock");
+
 
 global $DB;
 global $USER;
 @set_time_limit(0);
 @ignore_user_abort(true);
 
-// код сброса буфферов битрикса
+ код сброса буфферов битрикса
 ob_end_clean();
 ob_end_clean();
 ob_end_clean();
@@ -66,7 +66,7 @@ while ($Section = $section->GetNext()) {
             $time = strtotime($newDate);
             $Difference_time = (int)$_SERVER["REQUEST_TIME"] - (int)$time;
 
-            if($Difference_time > 2592000){    //больше чем 30 дней 2592000
+            if($Difference_time > 2){    //больше чем 30 дней 2592000
               $url = "devdoc1.kdteam.su/feedback/index.php";
               $arEventFields = array(
                 "MAIL" => $arUser["EMAIL"],
@@ -75,7 +75,7 @@ while ($Section = $section->GetNext()) {
             );
 
                 CEvent::Send("APPEAL_REMINDER", "s1", $arEventFields);
-                $res =  $oElement->Update($Section["ID"],array("UF_CHEKED_SEND" => 1),false,true);
+               $res =  $oElement->Update($Section["ID"],array("UF_CHEKED_SEND" => 1),false,true);
 
                 if(!$res)
                     echo $oElement->LAST_ERROR;
