@@ -40,7 +40,7 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/stax-sluchay/main.min.js");
                     "NEWS_COUNT" => "100",
                     "SORT_BY1" => "SORT",
                     "SORT_ORDER1" => "ASC",
-                    "CHECK_DATES" => "Y",
+                    "CHECK_DATES" => "N",
                     "SET_TITLE" => "N",
                     "SET_BROWSER_TITLE" => "N",
                     "SET_META_KEYWORDS" => "N",

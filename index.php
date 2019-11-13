@@ -36,7 +36,7 @@ $APPLICATION->SetPageProperty("NOT_SHOW_NAV_CHAIN", "Y");
     <!-- Block buttons links to pages -->
     <div class="buttons__items">
         <!-- Item -->
-        <a href="/forma-obrashenija.html" class="buttons__items_item">
+        <a href="/forma-obrashenija/" class="buttons__items_item">
             <img class="buttons__items_item_img"
                  src="./local/templates/kdteam/images/jpg/home/buttons_menu/item1/img.jpg" alt="">
 
@@ -46,7 +46,7 @@ $APPLICATION->SetPageProperty("NOT_SHOW_NAV_CHAIN", "Y");
         </a>
 
         <!-- Item -->
-        <a href="/feedback.html" class="buttons__items_item">
+        <a href="/feedback/" class="buttons__items_item">
             <img class="buttons__items_item_img"
                  src="./local/templates/kdteam/images/jpg/home/buttons_menu/item2/img.jpg" alt="">
 
