@@ -111,4 +111,6 @@ if ($arSection = $rsSections->GetNext()) {
         $idElement = $oElement->Add($arFields_el);
     }
 }
+
+
 ?>
