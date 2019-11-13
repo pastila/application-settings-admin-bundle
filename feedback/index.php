@@ -63,7 +63,7 @@ global $USER;
         $order = Array("date_active_from" => "desc");
         $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
         $arFilter = Array("IBLOCK_ID" => 13, "ACTIVE" => "Y");
-        $pagen = Array("nPageSize" => 1);
+        $pagen = Array("nPageSize" => 10);
         $res = CIBlockElement::GetList($order, $arFilter, false, $pagen, $arSelect);
         $res->NavStart(0);
         while ($ob = $res->GetNextElement()) {
@@ -80,11 +80,14 @@ global $USER;
                 $count_comments = 0;
             }
 
+            $compani=CIBlockElement::GetByID($arProps["NAME_COMPANY"]["VALUE"])->GetNextElement()->GetProperties();
+            
+            $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width'=>100, 'height'=>100), BX_RESIZE_IMAGE_PROPORTIONAL, true);
 
             ?>
             <div class="white_block">
                 <!-- Company Name -->
-                <div class="feedback__block_company-name"><?= $arProps["NAME_COMPANY"]["VALUE"] ?></div>
+                <div class="feedback__block_company-name"><img src="<?=$file["src"]?>"></div>
                 <!-- top -->
                 <div class="feedback__block_top">
                     <div class="feedback__block_top_star">
