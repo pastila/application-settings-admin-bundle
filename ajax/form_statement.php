@@ -56,8 +56,10 @@ $res = CIBlockElement::GetByID($_SESSION["DIAGNOZ"]);
 if ($ar_res = $res->GetNext()) {
     $arDiagnoz = $ar_res;
 }
+if($USER->IsAuthorized()) {
+$rsUser = CUser::GetByID($USER->GetID());
+$arUser = $rsUser->Fetch();
 
-if($USER->IsAuthorized()){
     if ($arSection = $rsSections->GetNext()) {
         $el = new CIBlockElement;
         $arFields_el = array(
@@ -74,6 +76,7 @@ if($USER->IsAuthorized()){
                 "SUBGROUP" => $arSubGroup["NAME"],
                 "DIAGNOZ" => $arDiagnoz["NAME"],
                 "APPEAL" => $arAppeal,
+                "POLICY" => $arUser['UF_INSURANCE_POLICY']
             )
         );
         foreach ($_SESSION['YEARS'] as $year) {
@@ -101,6 +104,7 @@ if($USER->IsAuthorized()){
                     "SUBGROUP" => $arSubGroup["NAME"],
                     "DIAGNOZ" => $arDiagnoz["NAME"],
                     "APPEAL" => $arAppeal,
+                    "POLICY" => $arUser['UF_INSURANCE_POLICY']
                 )
             );
             foreach ($_SESSION['YEARS'] as $year) {
@@ -108,8 +112,7 @@ if($USER->IsAuthorized()){
             }
             $oElement = new CIBlockElement();
             $idElement = $oElement->Add($arFields_el);
-            $oElement = new CIBlockElement();
-            $idElement = $oElement->Add($arFields_el);
+
         }
     }
 }
