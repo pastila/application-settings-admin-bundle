@@ -85,7 +85,7 @@ $asset = Asset::getInstance();
                                     }
                                     ?>
                                     <?php if ($countAppeals > 0) { ?>
-                                        <div class="menu-req">
+                                        <div id="number_calls" class="menu-req">
                                             <?php echo $countAppeals?>
                                         </div>
                                         <a class="active" href="/obrashcheniya/">Ваши обращения</a>
@@ -95,17 +95,28 @@ $asset = Asset::getInstance();
 
                                 <li>
                                     <div class="menu-req">
-                                        <?
+                                        <?php
                                         global $USER;
                                         $ID_USER = $USER->GetID();
 
-                                        $arFilter = Array("IBLOCK_ID" => 11, "UF_USER_ID" => $ID_USER);
-                                        $section = CIBlockSection::GetList(Array(), $arFilter, false, false,
-                                            false);  // получили секцию по айди юзера
+                                        $arFilter = array("IBLOCK_ID" => 11, "UF_USER_ID" => $ID_USER);
+                                        $section = CIBlockSection::GetList(
+                                            array(),
+                                            $arFilter,
+                                            false,
+                                            false,
+                                            false
+                                        );  // получили секцию по айди юзера
                                         if ($Section = $section->GetNext()) {
-                                            $arFilter = Array("IBLOCK_ID" => 11, "SECTION_ID" => $Section["ID"],"PROPERTY_SEND_REVIEW_VALUE"=> 1);
-                                            $Element = CIBlockElement::GetList(Array(), $arFilter, false, false,
-                                                false); //получили обращения юзера
+                                            $arFilter = array("IBLOCK_ID" => 11,
+                                                "SECTION_ID" => $Section["ID"],"PROPERTY_SEND_REVIEW_VALUE" => 1);
+                                            $Element = CIBlockElement::GetList(
+                                                array(),
+                                                $arFilter,
+                                                false,
+                                                false,
+                                                false
+                                            ); //получили обращения юзера
                                             $obElement = $Element->SelectedRowsCount();
 
                                         } ?><?= $obElement ?>
