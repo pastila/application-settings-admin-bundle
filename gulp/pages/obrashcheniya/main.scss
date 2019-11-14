@@ -1,5 +1,9 @@
 @import '../../styles/utils/vars';
 
+.error {
+    color: red;
+}
+
 .obrashcheniya {
     display: flex;
     flex-direction: column;
@@ -13,6 +17,7 @@
 
     &__content {
         &_left {
+            width: 100%;
             position: relative;
             padding-bottom: 2rem;
             margin-bottom: 2rem;
