@@ -22,14 +22,6 @@ if ((!empty($_POST['APPEAL_VALUE']) and !empty($_POST['HOSPITAL'])) and json_dec
             $result['FULL_NAME'] = "Ваш диагноз " . $USER->GetFullName();
             $result['DIAGNOZ'] = $arFields['~PREVIEW_TEXT'];
         }
-//
-//        global $USER;
-//        if ($USER->IsAuthorized()) {
-//
-//            $arSelectSection = array("ID", "IBLOCK_ID", "UF_USER_ID", "NAME");
-//            $arFilterSection = array("ID", "IBLOCK_ID", "UF_USER_ID", "NAME");
-//
-//        } else {
             session_start();
             $_SESSION['YEARS'] = $_POST['YEARS'];
             $_SESSION['APPEAL'] = $_POST['APPEAL_VALUE'];
