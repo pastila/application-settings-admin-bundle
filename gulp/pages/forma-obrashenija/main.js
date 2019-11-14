@@ -80,14 +80,21 @@ $(document).ready(function() {
 
               callbacks: {
                 beforeOpen: function() {
-                  console.log('beforeOpen');
+                  console.log('beforeOpen аааа');
                   if($(window).width() < 700) {
                     this.st.focus = false;
                   } else {
                     this.st.focus = '#name';
                   }
+                },
+                afterClose: function() {
+                  console.log('succeadfsadsfss');
+                  $.post('/ajax/number_calls.php', function(result) {
+                    $('#number_calls').html(result);
+                    console.log(result);
+                  }, 'html');
                 }
-              }
+              },
             });
     }
           } else {
