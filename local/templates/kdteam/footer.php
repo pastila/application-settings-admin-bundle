@@ -10,7 +10,7 @@ if (defined("B_PROLOG_INCLUDED") && B_PROLOG_INCLUDED === true) {
     <footer class="footer">
         <div class="footer__container">
             <div class="footer__logo">
-                <img src="./local/templates/kdteam/images/svg/header/logo/logo_header.svg" alt="OMS">
+                <img src="/local/templates/kdteam/images/svg/header/logo/logo_header.svg" alt="OMS">
 
                 <div class="footer__logo_name">
                     Company Name
@@ -39,7 +39,7 @@ if (defined("B_PROLOG_INCLUDED") && B_PROLOG_INCLUDED === true) {
                     <input type="text" name="search" placeholder="Поиск">
 
                     <button class="search-btn">
-                        <img src="./local/templates/kdteam/images/svg/search.svg" alt="">
+                        <img src="/local/templates/kdteam/images/svg/search.svg" alt="">
                     </button>
                 </div>
             </form>

@@ -64,6 +64,13 @@ $(document).ready(function() {
 
             document.body.scrollTop = document.documentElement.scrollTop = 0;
 
+
+  if($(".header__r_auth_reg").length == 1) {
+    $("#generate_form").removeAttr("href");
+    $("#generate_form").click(function() {
+      $(".header__r_auth_reg").trigger("click");
+    })
+  }else{
             $('#generate_form').magnificPopup({
               type: 'ajax',
               modal: true,
@@ -79,6 +86,7 @@ $(document).ready(function() {
                 }
               }
             });
+    }
           } else {
             $.magnificPopup.open({
               items: {

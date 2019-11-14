@@ -6,6 +6,17 @@ $asset->addCss(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/main.min.css");
 $asset->addCss(SITE_TEMPLATE_PATH . "/pages/stax-sluchay/main.min.css");
 $asset->addJs(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/main.min.js");
 $asset->addJs(SITE_TEMPLATE_PATH . "/pages/stax-sluchay/main.min.js");
+CModule::IncludeModule("iblock");
+$arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_*");
+$arFilter = Array("IBLOCK_ID"=>19);
+$arResult_block= array();
+$res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+while($ob = $res->GetNextElement()){
+    $arProps = $ob->GetProperties();
+   $arResult_block[]= $arProps["TEXT_FORMA"]["VALUE"];
+   $arResult_block[]= $arProps["FIRST_TEXT"]["VALUE"];
+
+}
 ?>
 
 
@@ -40,7 +51,7 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/stax-sluchay/main.min.js");
                     "NEWS_COUNT" => "100",
                     "SORT_BY1" => "SORT",
                     "SORT_ORDER1" => "ASC",
-                    "CHECK_DATES" => "Y",
+                    "CHECK_DATES" => "N",
                     "SET_TITLE" => "N",
                     "SET_BROWSER_TITLE" => "N",
                     "SET_META_KEYWORDS" => "N",
@@ -103,24 +114,16 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/stax-sluchay/main.min.js");
             <div class="form-obrashcheniya__step_two_r">
                 <div class="form-obrashcheniya__step_two_r_wrap">
                     <div class="form-obrashcheniya__step_two_r_wrap_title">
-                        Плановое
+                       <?=$arResult_block[1]?>
                     </div>
-                    <p>при проведении профилактических мероприятий, при заболеваниях и состояниях, не
-                        сопровождающихся угрозой жизни пациента, не требующих экстренной и неотложной
-                        медицинской
-                        помощи, отсрочка оказания которой на определенное время не повлечет за собой ухудшение
-                        состояния пациента, угрозу его жизни и здоровью</p>
+                    <p><?=$arResult_block[0]?></p>
                 </div>
 
                 <div class="form-obrashcheniya__step_two_r_wrap">
                     <div class="form-obrashcheniya__step_two_r_wrap_title">
-                        Плановое
+                        <?=$arResult_block[3]?>
                     </div>
-                    <p>при проведении профилактических мероприятий, при заболеваниях и состояниях, не
-                        сопровождающихся угрозой жизни пациента, не требующих экстренной и неотложной
-                        медицинской
-                        помощи, отсрочка оказания которой на определенное время не повлечет за собой ухудшение
-                        состояния пациента, угрозу его жизни и здоровью</p>
+                    <p><?=$arResult_block[2]?></p>
                 </div>
             </div>
         </section>
@@ -183,11 +186,7 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/stax-sluchay/main.min.js");
         <!-- 4 Step -->
         <section class="form-obrashcheniya__step_four">
             <div class="card">
-                <p class="form-obrashcheniya__step_four_text">Мы собрали для вас информацию обо всех
-                    медорганизациях, оказывающих помощь по полису ОМС……..
-                    есть ли в данном списке больница, в которую вы обратились за помощью. Если больницы в списке
-                    нет, денежные средства вернуть не получится…… Рекомендуем сверяться со списком при обращении
-                    за помощью</p>
+                <p class="form-obrashcheniya__step_four_text"><?=$arResult_block[8]?></p>
 
                 <a class="link-underline" href="#">Ссылка на статью в блоге</a>
 
