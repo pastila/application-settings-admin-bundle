@@ -5,259 +5,81 @@ $asset = Asset::getInstance();
 $asset->addCss(SITE_TEMPLATE_PATH . "/pages/obrashcheniya/main.min.css");
 $asset->addJs(SITE_TEMPLATE_PATH . "/pages/obrashcheniya/main.min.js");
 ?>
-<!-- Breadcrumbs -->
-<ul class="breadcrumbs">
-    <li><a href="/index.html">Главная</a></li>
-    <li>обращения</li>
-</ul>
+<?php
+global $USER;
 
-<!-- Pages Title -->
-<h2 class="page-title">Ваши обращения</h2>
+if ($USER->IsAuthorized()) { ?>
+    <!-- Breadcrumbs -->
+    <ul class="breadcrumbs">
+        <li><a href="/">Главная</a></li>
+        <li>обращения</li>
+    </ul>
 
-<!-- Обращение -->
-<div class="obrashcheniya">
 
-    <div class="obrashcheniya__btns">
-        <a class="smallMainBtn" href="#">Прикрепить скан или фото</a>
+    <?php
+    if (CModule::IncludeModule("iblock")) {
+        $arFilter = array("IBLOCK_ID" => 11, "UF_USER_ID" => $USER->GetID());
+        $arSelect = array("ID");
+        $rsSections = CIBlockSection::GetList(array(), $arFilter, false, $arSelect, false);
+    }
 
-        <a class="smallMainBtn" href="#">Отправить</a>
-    </div>
+    if ($arSection = $rsSections->GetNext()) {
+        $APPLICATION->IncludeComponent(
+            "bitrix:news.list",
+            "otpravlennyye",
+            array(
+                "DISPLAY_DATE" => "Y",
+                "DISPLAY_NAME" => "Y",
+                "DISPLAY_PICTURE" => "Y",
+                "DISPLAY_PREVIEW_TEXT" => "Y",
+                "AJAX_MODE" => "Y",
+                "IBLOCK_TYPE" => "",
+                "IBLOCK_ID" => "11",
+                "NEWS_COUNT" => "100",
+                "SORT_BY1" => "SORT",
+                "SORT_ORDER1" => "ASC",
+                "CHECK_DATES" => "Y",
+                "SET_TITLE" => "N",
+                "SET_BROWSER_TITLE" => "N",
+                "SET_META_KEYWORDS" => "N",
+                "SET_META_DESCRIPTION" => "N",
+                "SET_LAST_MODIFIED" => "N",
+                "INCLUDE_IBLOCK_INTO_CHAIN" => "N",
+                "ADD_SECTIONS_CHAIN" => "N",
+                "HIDE_LINK_WHEN_NO_DETAIL" => "N",
+                "PARENT_SECTION" => $arSection["ID"],
+                "PARENT_SECTION_CODE" => "",
+                "INCLUDE_SUBSECTIONS" => "Y",
+                "CACHE_TYPE" => "A",
+                "CACHE_TIME" => "3600",
+                "CACHE_FILTER" => "Y",
+                "CACHE_GROUPS" => "Y",
+                "DISPLAY_TOP_PAGER" => "Y",
+                "DISPLAY_BOTTOM_PAGER" => "Y",
+                "PAGER_TITLE" => "Новости",
+                "PAGER_SHOW_ALWAYS" => "Y",
+                "PAGER_TEMPLATE" => "",
+                "PAGER_DESC_NUMBERING" => "Y",
+                "PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
+                "PAGER_SHOW_ALL" => "Y",
+                "PAGER_BASE_LINK_ENABLE" => "Y",
+                "SET_STATUS_404" => "Y",
+                "SHOW_404" => "Y",
+                "MESSAGE_404" => "",
+                "PAGER_BASE_LINK" => "",
+                "PAGER_PARAMS_NAME" => "arrPager",
+                "AJAX_OPTION_JUMP" => "N",
+                "AJAX_OPTION_STYLE" => "Y",
+                "AJAX_OPTION_HISTORY" => "N",
+                "AJAX_OPTION_ADDITIONAL" => "",
+                "PROPERTY_CODE" => array("PROPERTY_*")
+            )
+        );
+    } else {?>
+        <a href="/forma-obrashenija/" class="page-title">Проверить свой дигноз</a>
+    <?php }?>
+<?php } else { ?>
 
-    <!-- Уведомления оь отправке -->
-    <p class="success">Обращение успешно отправлено в страховую компанию. Ваше обращение находится в личном
-        кабинете «Отправленные»</p>
-
-    <div class="card">
-        <!-- Контент -->
-        <div class="obrashcheniya__content">
-            <!-- Контент левая сторона -->
-            <div class="obrashcheniya__content_left">
-
-                <!-- Внутри контента Верхняя часть -->
-                <div class="obrashcheniya__content_left_top">
-                    <div class="obrashcheniya__content_left_top_text">
-                        Обращение № 1
-                    </div>
-
-                    <div class="obrashcheniya__content_left_top_data">
-                        дата: 20.09.2019
-                    </div>
-
-                    <div class="obrashcheniya__content_left_top_link">
-                        <a href="#">Редактировать</a>
-
-                        <a href="#">удалить</a>
-                    </div>
-                </div>
-
-                <!-- Внутри контента центральная часть -->
-                <div class="obrashcheniya__content_left_center">
-
-                    <!-- Item ы -->
-                    <div class="obrashcheniya__content_left_center_item">
-                        <div class="obrashcheniya__content_left_center_item_text">
-                            Фио
-                        </div>
-
-                        <p class="obrashcheniya__content_left_center_item_text-full">
-                            Феофаний Николай Николаевич
-                        </p>
-                    </div>
-
-                    <!-- Item ы -->
-                    <div class="obrashcheniya__content_left_center_item">
-                        <div class="obrashcheniya__content_left_center_item_text">
-                            Больница:
-                        </div>
-
-                        <p class="obrashcheniya__content_left_center_item_text-full">
-                            ГОСУДАРСТВЕННОЕ БЮДЖЕТНОЕ УЧРЕЖДЕНИЕ ЗДРАВООХРАНЕНИЯ РЕСПУБЛИКИ АДЫГЕЯ
-                            АДЫГЕЙСКАЯ РЕСПУБЛИКАНСКАЯ КЛИНИЧЕСКАЯ БОЛЬНИЦА
-                        </p>
-                    </div>
-
-                    <!-- Item ы -->
-                    <div class="obrashcheniya__content_left_center_item">
-                        <div class="obrashcheniya__content_left_center_item_text">
-                            Адрес:
-                        </div>
-
-                        <p class="obrashcheniya__content_left_center__item_text-full">
-                            385000, РЕСПУБЛИКА АДЫГЕЯ, Г.МАЙКОП, УЛ.ЖУКОВСКОГО, 4
-                        </p>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Контент правая сторона -->
-            <div class="obrashcheniya__content_sidebar">
-                <div class="obrashcheniya__content_sidebar_title">
-                    Прикрепленные файлы
-                </div>
-
-                <!-- Item Sidebar -->
-                <div class="obrashcheniya__content_sidebar_blocks">
-
-                    <div class="obrashcheniya__content_sidebar_blocks_img">
-                        <img src="./local/templates/kdteam/images/svg/image_block_two.svg" alt="">
-                    </div>
-
-                    <div class="obrashcheniya__content_sidebar_blocks_text">
-                        <div class="obrashcheniya__content_sidebar_blocks_text_title">
-                            Заявление на возврат
-                        </div>
-
-                        <a class="obrashcheniya__content_sidebar_blocks_text_link">
-                            скачать
-                        </a>
-                    </div>
-
-                </div>
-
-                <div class="obrashcheniya__content_sidebar_blocks">
-
-                    <div class="obrashcheniya__content_sidebar_blocks_img">
-                        <img src="./local/templates/kdteam/images/svg/image_block_two.svg" alt="">
-                    </div>
-
-                    <div class="obrashcheniya__content_sidebar_blocks_text">
-                        <div class="obrashcheniya__content_sidebar_blocks_text_title">
-                            Заявление на возврат
-                        </div>
-
-                        <a class="obrashcheniya__content_sidebar_blocks_text_link">
-                            скачать
-                        </a>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Обращение -->
-<div class="obrashcheniya">
-
-    <div class="obrashcheniya__btns">
-        <a class="smallMainBtn" href="#">Прикрепить скан или фото</a>
-
-        <a class="smallMainBtn" href="#">Отправить</a>
-    </div>
-
-    <!-- Уведомления об отправке -->
-    <p class="danger">Обращение не может быть отправлено так как Вы не прикрепили файлы скана чека или фото
-    </p>
-
-    <div class="card">
-        <!-- Контент -->
-        <div class="obrashcheniya__content">
-            <!-- Контент левая сторона -->
-            <div class="obrashcheniya__content_left">
-
-                <!-- Внутри контента Верхняя часть -->
-                <div class="obrashcheniya__content_left_top">
-                    <div class="obrashcheniya__content_left_top_text">
-                        Обращение № 1
-                    </div>
-
-                    <div class="obrashcheniya__content_left_top_data">
-                        дата: 20.09.2019
-                    </div>
-
-                    <div class="obrashcheniya__content_left_top_link">
-                        <a href="#">Редактировать</a>
-
-                        <a href="#">удалить</a>
-                    </div>
-                </div>
-
-                <!-- Внутри контента центральная часть -->
-                <div class="obrashcheniya__content_left_center">
-
-                    <!-- Item ы -->
-                    <div class="obrashcheniya__content_left_center_item">
-                        <div class="obrashcheniya__content_left_center_item_text">
-                            Фио
-                        </div>
-
-                        <p class="obrashcheniya__content_left_center_item_text-full">
-                            Феофаний Николай Николаевич
-                        </p>
-                    </div>
-
-                    <!-- Item ы -->
-                    <div class="obrashcheniya__content_left_center_item">
-                        <div class="obrashcheniya__content_left_center_item_text">
-                            Больница:
-                        </div>
-
-                        <p class="obrashcheniya__content_left_center_item_text-full">
-                            ГОСУДАРСТВЕННОЕ БЮДЖЕТНОЕ УЧРЕЖДЕНИЕ ЗДРАВООХРАНЕНИЯ РЕСПУБЛИКИ АДЫГЕЯ
-                            АДЫГЕЙСКАЯ РЕСПУБЛИКАНСКАЯ КЛИНИЧЕСКАЯ БОЛЬНИЦА
-                        </p>
-                    </div>
-
-                    <!-- Item ы -->
-                    <div class="obrashcheniya__content_left_center_item">
-                        <div class="obrashcheniya__content_left_center_item_text">
-                            Адрес:
-                        </div>
-
-                        <p class="obrashcheniya__content_left_center__item_text-full">
-                            385000, РЕСПУБЛИКА АДЫГЕЯ, Г.МАЙКОП, УЛ.ЖУКОВСКОГО, 4
-                        </p>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Контент правая сторона -->
-            <div class="obrashcheniya__content_sidebar">
-                <div class="obrashcheniya__content_sidebar_title">
-                    Прикрепленные файлы
-                </div>
-
-                <!-- Item Sidebar -->
-                <div class="obrashcheniya__content_sidebar_blocks">
-
-                    <div class="obrashcheniya__content_sidebar_blocks_img">
-                        <img src="./local/templates/kdteam/images/svg/image_block_two.svg" alt="">
-                    </div>
-
-                    <div class="obrashcheniya__content_sidebar_blocks_text">
-                        <div class="obrashcheniya__content_sidebar_blocks_text_title">
-                            Заявление на возврат
-                        </div>
-
-                        <a class="obrashcheniya__content_sidebar_blocks_text_link">
-                            скачать
-                        </a>
-                    </div>
-
-                </div>
-
-                <div class="obrashcheniya__content_sidebar_blocks">
-
-                    <div class="obrashcheniya__content_sidebar_blocks_img">
-                        <img src="./local/templates/kdteam/images/svg/image_block_two.svg" alt="">
-                    </div>
-
-                    <div class="obrashcheniya__content_sidebar_blocks_text">
-                        <div class="obrashcheniya__content_sidebar_blocks_text_title">
-                            Заявление на возврат
-                        </div>
-
-                        <a class="obrashcheniya__content_sidebar_blocks_text_link">
-                            скачать
-                        </a>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<?php } ?>
 
 <?php require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php");?>
