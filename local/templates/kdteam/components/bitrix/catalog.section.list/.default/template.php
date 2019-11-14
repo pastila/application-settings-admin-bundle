@@ -167,9 +167,16 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                                 array('ID','NAME'),
                                 false
                             );
-                            while ($ar_result = $db_list->GetNext()) { ?>
-                                <option value="<?=$ar_result['ID']?>"><?php echo $ar_result['NAME']?></option>
-                            <?php
+                            $i = 1;
+                            while ($ar_result = $db_list->GetNext()) {
+                                if($i == 1){?>
+                                    <option  id="empty_class">Здесь нет моего класса</option>
+                                <?  }else {?>
+
+                                    <option value="<?= $ar_result['ID'] ?>"><?php echo $ar_result['NAME'] ?></option>
+                                    <?php
+                                }
+                                ++$i;
                             }
                             ?>
                         </select>
@@ -180,12 +187,14 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                     <div id="choose_group" class="custom-select">
                         <select>
                             <option>Не выбрано</option>
+                            <option id="empty_group">Здесь нет моей группы</option>
                             <?php
                             foreach ($arResult['SECTIONS'] as &$arSection) {?>
                                 <?php if ($arSection['DEPTH_LEVEL'] == 2) { ?>
                                     <option value="<?=$arSection['ID']?>"><?php echo $arSection['NAME']?></option>
                                 <?php }?>
-                            <?php } ?>
+                            <?php
+                            } ?>
                         </select>
                     </div>
                 </div>
@@ -225,9 +234,16 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                             <select>
                                 <option value="<?=$ar_cur_class['ID']?>" ><?php echo $ar_cur_class['NAME']?></option>
                                 <?php
-                                while ($ar_result = $db_list->GetNext()) { ?>
-                                    <option value="<?=$ar_result['ID']?>"><?php echo $ar_result['NAME']?></option>
-                                <?php
+                                $i = 0;
+                                while ($ar_result = $db_list->GetNext()) {
+                                    if($i == 1){?>
+                                        <option  id="empty_class">Здесь нет моего класса</option>
+                                    <?  }else {?>
+
+                                        <option value="<?= $ar_result['ID'] ?>"><?php echo $ar_result['NAME'] ?></option>
+                                        <?php
+                                    }
+                                    ++$i;
                                 }
                                 ?>
                             </select>
@@ -238,8 +254,11 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                         <div id="choose_group"  class="custom-select">
                             <select>
                                 <option value="<?=$arResult['SECTION']['ID']?>"><?php echo $arResult['SECTION']['NAME']?></option>
+                                <option id="empty_group">Здесь нет моей группы</option>
                                 <?php
+
                                 while ($ar_result = $db_list_lvl2->GetNext()) { ?>
+
                                     <option value="<?=$ar_result['ID']?>"><?php echo $ar_result['NAME']?></option>
                                     <?php
                                 }
@@ -252,6 +271,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                         <div id="choose_subgroup" class="custom-select">
                             <select>
                                 <option>Не выбрано</option>
+                                <option id="empty_subgroup">Здесь нет моей подгруппы</option>
                                 <?php
                                 foreach ($arResult['SECTIONS'] as &$arSection) {?>
                                     <?php if ($arSection['DEPTH_LEVEL'] == 3) { ?>
@@ -301,9 +321,16 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                                 <select>
                                     <option value="<?=$arClass['ID']?>"><?php echo $arClass['NAME']?></option>
                                     <?php
-                                    while ($ar_result = $db_list->GetNext()) { ?>
-                                        <option value="<?=$ar_result['ID']?>"><?php echo $ar_result['NAME']?></option>
-                                        <?php
+                                    $i = 0;
+                                    while ($ar_result = $db_list->GetNext()) {
+                                        if($i == 1){?>
+                                            <option  id="empty_class">Здесь нет моего класса</option>
+                                        <?  }else {?>
+
+                                            <option value="<?= $ar_result['ID'] ?>"><?php echo $ar_result['NAME'] ?></option>
+                                            <?php
+                                        }
+                                        ++$i;
                                     }
                                     ?>
                                 </select>
@@ -314,6 +341,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                             <div id="choose_group"  class="custom-select">
                                 <select>
                                     <option value="<?=$arGroup['ID']?>"><?php echo $arGroup['NAME']?></option>
+                                    <option id="empty_group">Здесь нет моей группу</option>
                                     <?php
                                     while ($ar_result = $db_list_lvl2->GetNext()) { ?>
                                         <option value="<?=$ar_result['ID']?>"><?php echo $ar_result['NAME']?></option>
@@ -328,6 +356,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                             <div id="choose_subgroup" class="custom-select">
                                 <select>
                                     <option value="<?=$arResult['SECTION']['ID']?>"><?php echo $arResult['SECTION']['NAME']?></option>
+                                    <option id="empty_subgroup">Здесь нет моей подгруппы</option>
                                     <?php
                                     while ($ar_result = $db_list_lvl3->GetNext()) { ?>
                                         <option value="<?=$ar_result['ID']?>"><?php echo $ar_result['NAME']?></option>
@@ -357,6 +386,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                     <div id="choose_diagnoz" class="custom-select">
                         <select>
                             <option>Не выбрано</option>
+                            <option id="empty_diagnoz">Здесь нет моего диагноза</option>
                             <?php foreach ($arFields as $arItem) {?>
                                 <option id="diagnoz_elem" value="<?=$arItem['ID']?>"><?php echo $arItem['NAME']?></option>
                             <?php }?>
@@ -381,11 +411,21 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                     <select id="cur_class">
                         <option>Не выбрано</option>
                         <?php
-                        foreach ($arResult['SECTIONS'] as &$arSection) {?>
+                        $i= 1;
+                        foreach ($arResult['SECTIONS'] as &$arSection) {
+
+                            ?>
                             <?php if ($arSection['DEPTH_LEVEL'] == 1) { ?>
-                                <option value="<?=$arSection['ID']?>"><?php echo $arSection['NAME']?></option>
-                            <?php }?>
-                        <?php } ?>
+                                <?php if($i == 1){ ?>
+                                    <option id="empty_class">Здесь нет моего класса</option>
+                               <?php }else { ?>
+                                    <option value="<?= $arSection['ID'] ?>"><?php echo $arSection['NAME'] ?></option>
+                                    <?php
+                                }
+                                }?>
+                        <?php
+                        ++$i;
+                        } ?>
                     </select>
                 </div>
             </div>
@@ -416,4 +456,5 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
         <?php }
         break;
     }
+
 ?>

@@ -159,6 +159,41 @@ $(document).ready(function() {
     }
   });
 
+    $(document).on("click","#empty_class",function() {
+    $.magnificPopup.open({
+      items: {
+        src: '<div class="white-popup custom_styles_popup">Если больницы, в которую вы обратились, в списке нет, значит, она не является участником системы ОМС и не несет обязательств по оказанию помщи по полису ОМС. Случай не страховой.</div>',
+        type: 'inline'
+      }
+    });
+  })  ;
+    $(document).on("click","#empty_group",function() {
+    $.magnificPopup.open({
+      items: {
+        src: '<div class="white-popup custom_styles_popup">Если больницы, в которую вы обратились, в списке нет, значит, она не является участником системы ОМС и не несет обязательств по оказанию помщи по полису ОМС. Случай не страховой.</div>',
+        type: 'inline'
+      }
+    });
+  }) ;
+  $(document).on("click","#empty_subgroup",function() {
+    $.magnificPopup.open({
+      items: {
+        src: '<div class="white-popup custom_styles_popup">Если больницы, в которую вы обратились, в списке нет, значит, она не является участником системы ОМС и не несет обязательств по оказанию помщи по полису ОМС. Случай не страховой.</div>',
+        type: 'inline'
+      }
+    });
+  });
+  $(document).on("click","#empty_diagnoz",function() {
+    $.magnificPopup.open({
+      items: {
+        src: '<div class="white-popup custom_styles_popup">Если больницы, в которую вы обратились, в списке нет, значит, она не является участником системы ОМС и не несет обязательств по оказанию помщи по полису ОМС. Случай не страховой.</div>',
+        type: 'inline'
+      }
+    });
+  })
+
+
+
 });
 
 function update_hospital_select() {

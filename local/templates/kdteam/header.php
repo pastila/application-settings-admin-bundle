@@ -110,7 +110,7 @@ $asset = Asset::getInstance();
 
                                         } ?><?= $obElement ?>
                                     </div>
-                                    <a href="/otpravlennyye/index.php">Отправленные</a>
+
                                     <a href="/otpravlennyye/">Отправленные</a>
                                 </li>
                             </ul>

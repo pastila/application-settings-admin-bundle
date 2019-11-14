@@ -43,7 +43,7 @@ $(document).ready(function() {
                 email.after(
                     '<div class="danger" data-danger-email>Пользовватель с таким эмейлом уже сущесвуте</div>');
               } else if (suc.user != 0 && suc.review !="register_with_review") {
-               // location.reload()
+                location.reload()
 
               }else if(suc.review == "register_with_review"){
 
