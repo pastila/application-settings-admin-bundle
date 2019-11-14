@@ -24,6 +24,6 @@ if (CModule::IncludeModule("iblock")) {
         $countAppeals = count($arFields);
     }
 }
+
 echo $countAppeals;
 
-exit($countAppeals);
