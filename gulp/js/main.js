@@ -44,9 +44,9 @@ $(document).ready(function() {
                     '<div class="danger" data-danger-email>Пользовватель с таким эмейлом уже сущесвуте</div>');
               } else if (suc.user != 0 && suc.review !="register_with_review") {
                // location.reload()
-                console.log('reload');
+
               }else if(suc.review == "register_with_review"){
-                console.log("alolo");
+
                 $(".close-modal").trigger("click");
                 $("#generate_form").attr("href","/ajax/form_statement.php");
                 $("body").css({"overflow":"hidden"});
@@ -82,11 +82,9 @@ $(document).ready(function() {
           type: 'POST',
           data: data,
           beforeSend: function() {
-            if ($('.primer_company').length != 0) {
-              $('.primer_company').remove();
-            }
           },
         }).done(function(html) {
+          console.log(html);
           $('.search_company').append(html);
 
         });

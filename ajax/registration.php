@@ -23,10 +23,18 @@ if($_POST) {
     $tmp = 'sort';
     $rsUser = CUser::GetList($order, $tmp, $filter);
 
+
+
+
+
     if ($rsUser->SelectedRowsCount() > 0) {
         $msg = array("user"=> "Уже существует");
         $result =  array_merge($result, $msg);
-    } else {
+    } else
+
+
+
+        {
         $arFields = Array(
             "NAME" => $name,
             "LAST_NAME" => $familia,
