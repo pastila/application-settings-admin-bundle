@@ -242,12 +242,14 @@ $mpdf = new \Mpdf\Mpdf([
     'margin_bottom' => 0,
     'margin_left' => 0,
     'margin_right' => 0,
-]);//создаем PDF файл, задаем формат, отступы и.т.д.
-echo 3;
+]);
+//создаем PDF файл, задаем формат, отступы и.т.д.
+
 //
-//$name_file = "";
-//$name_file .= date('Y-m-d-h:i:s');
-//$name_file .= "_". $email. "_";
-//$name_file .= "file";
-//$mpdf->WriteHTML($html);
-//$mpdf->Output('upload/pdf/PDF_'.$name_file.'.pdf','F');
+$name_file = "";
+$name_file .= date('Y-m-d-h:i:s');
+$name_file .= "_". $email. "_";
+$name_file .= "file";
+$mpdf->WriteHTML($html);
+$mpdf->Output('upload/pdf/PDF_'.$name_file.'.pdf','F');
+echo '/upload/pdf/PDF_'.$name_file.'.pdf';
