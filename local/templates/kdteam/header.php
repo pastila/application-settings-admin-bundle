@@ -21,6 +21,7 @@ $asset = Asset::getInstance();
     $asset->addJs(SITE_TEMPLATE_PATH . "/js/main.min.js");
     CModule::IncludeModule("iblock");
     ?>
+    <script src="/local/templates/kdteam/js/validator.min.js"></script>
 </head>
 
 <body>
@@ -31,8 +32,8 @@ $asset = Asset::getInstance();
     <!-- Header -->
     <header class="header">
         <div class="header__container">
-            <a class="header__logo" href="/index.html">
-                <img class="header__logo_img" src="./local/templates/kdteam/images/svg/header/logo/logo_header.svg"
+            <a class="header__logo" href="/">
+                <img class="header__logo_img" src="/local/templates/kdteam/images/svg/header/logo/logo_header.svg"
                      alt="OMS">
 
                 <div class="header__logo_name">company name</div>
@@ -60,10 +61,36 @@ $asset = Asset::getInstance();
                                 <li>
                                     <!-- Если есть обращения в админке добавляем класс active -->
                                     <!-- И показываем блок с колличеством обращений -->
-                                    <div class="menu-req">
-                                        3
-                                    </div>
-                                    <a class="active" href="/obrashcheniya.html">Ваши обращения</a>
+                                    <?php
+                                    //Количество обращений
+                                    if (CModule::IncludeModule("iblock")) {
+                                        $arFilterSect = array('IBLOCK_ID' => 11, "UF_USER_ID" => $USER->GetID());
+                                        $rsSect = CIBlockSection::GetList(array(), $arFilterSect);
+                                        if ($arSect = $rsSect->GetNext()) {
+                                            $arSelect = array("ID", "NAME", "DATE_ACTIVE_FROM");
+                                            $arFilter = array("IBLOCK_ID" => 11, "!PROPERTY_SEND_REVIEW" => "1",
+                                                "IBLOCK_SECTION_ID" => $arSect["ID"], "ACTIVE" => "Y");
+                                            $res = CIBlockElement::GetList(
+                                                array(),
+                                                $arFilter,
+                                                false,
+                                                false,
+                                                $arSelect
+                                            );
+                                            while ($ob = $res->GetNextElement()) {
+                                                $arFields[] = $ob->GetFields();
+                                            }
+                                            $countAppeals = count($arFields);
+                                        }
+                                    }
+                                    ?>
+                                    <?php if ($countAppeals > 0) { ?>
+                                        <div class="menu-req">
+                                            <?php echo $countAppeals?>
+                                        </div>
+                                        <a class="active" href="/obrashcheniya/">Ваши обращения</a>
+                                    <?php }?>
+
                                 </li>
 
                                 <li>
@@ -84,14 +111,15 @@ $asset = Asset::getInstance();
                                         } ?><?= $obElement ?>
                                     </div>
                                     <a href="/otpravlennyye/index.php">Отправленные</a>
+                                    <a href="/otpravlennyye/">Отправленные</a>
                                 </li>
                             </ul>
 
-                            <a href="#">Выйти</a>
+                            <a href="/ajax/logout.php">Выйти</a>
                         </div>
 
                         <div class="header__r_auth_user-image">
-                            <img src="" alt="">
+                            <img src="./local/templates/kdteam/images/png/header/head_login.png" alt="">
                         </div>
                     </div>
 
@@ -109,7 +137,7 @@ $asset = Asset::getInstance();
                             </div>
                         </a>
 
-                        <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-reg.html"?>" id="reg-link" class="header__r_auth_reg">
+                        <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-reg.php"?>" id="reg-link" class="header__r_auth_reg">
                             <img class="header__r_auth_login_img"
                                  src="./local/templates/kdteam/images/svg/header/reg/key.svg" alt="OMS">
                             <div class="header__r_auth_login_text">

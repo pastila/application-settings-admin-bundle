@@ -154,9 +154,10 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                 ?>
                 <div class="grid-item">
                     <div class="title-select">Выберите класс</div>
-                    <div class="custom-select">
+                    <div id="choose_class" class="custom-select">
                         <select>
-                            <option><?php echo $arResult['SECTION']['NAME']?></option>
+                            <option value="<?=$arResult['SECTION']['ID']?>" ><?php echo $arResult['SECTION']['NAME']?>
+                            </option>
                             <?php
                             $db_list = CIBlockSection::GetList(
                                 array("name" => "asc"),
@@ -176,7 +177,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                 </div>
                 <div class="grid-item">
                     <div class="title-select">Выберите группу</div>
-                    <div class="custom-select">
+                    <div id="choose_group" class="custom-select">
                         <select>
                             <option>Не выбрано</option>
                             <?php
@@ -190,7 +191,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                 </div>
                 <div class="grid-item">
                     <div class="title-select">Выберите подгруппу</div>
-                    <div class="custom-select" style="pointer-events: none">
+                    <div id="choose_subgroup" class="custom-select" style="pointer-events: none">
                         <select>
                             <option>Подгруппа</option>
                         </select>
@@ -220,9 +221,9 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                     ?>
                     <div class="grid-item">
                         <div class="title-select">Выберите класс</div>
-                        <div class="custom-select">
+                        <div id="choose_class" class="custom-select">
                             <select>
-                                <option><?php echo $ar_cur_class['NAME']?></option>
+                                <option value="<?=$ar_cur_class['ID']?>" ><?php echo $ar_cur_class['NAME']?></option>
                                 <?php
                                 while ($ar_result = $db_list->GetNext()) { ?>
                                     <option value="<?=$ar_result['ID']?>"><?php echo $ar_result['NAME']?></option>
@@ -234,9 +235,9 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                     </div>
                     <div class="grid-item">
                         <div class="title-select">Выберите группу</div>
-                        <div class="custom-select">
+                        <div id="choose_group"  class="custom-select">
                             <select>
-                                <option><?php echo $arResult['SECTION']['NAME']?></option>
+                                <option value="<?=$arResult['SECTION']['ID']?>"><?php echo $arResult['SECTION']['NAME']?></option>
                                 <?php
                                 while ($ar_result = $db_list_lvl2->GetNext()) { ?>
                                     <option value="<?=$ar_result['ID']?>"><?php echo $ar_result['NAME']?></option>
@@ -248,7 +249,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                     </div>
                     <div class="grid-item">
                         <div class="title-select">Выберите подгруппу</div>
-                        <div class="custom-select">
+                        <div id="choose_subgroup" class="custom-select">
                             <select>
                                 <option>Не выбрано</option>
                                 <?php
@@ -296,9 +297,9 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                         ?>
                         <div class="grid-item">
                             <div class="title-select">Выберите класс</div>
-                            <div class="custom-select">
+                            <div id="choose_class" class="custom-select">
                                 <select>
-                                    <option><?php echo $arClass['NAME']?></option>
+                                    <option value="<?=$arClass['ID']?>"><?php echo $arClass['NAME']?></option>
                                     <?php
                                     while ($ar_result = $db_list->GetNext()) { ?>
                                         <option value="<?=$ar_result['ID']?>"><?php echo $ar_result['NAME']?></option>
@@ -310,9 +311,9 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                         </div>
                         <div class="grid-item">
                             <div class="title-select">Выберите группу</div>
-                            <div class="custom-select">
+                            <div id="choose_group"  class="custom-select">
                                 <select>
-                                    <option><?php echo $arGroup['NAME']?></option>
+                                    <option value="<?=$arGroup['ID']?>"><?php echo $arGroup['NAME']?></option>
                                     <?php
                                     while ($ar_result = $db_list_lvl2->GetNext()) { ?>
                                         <option value="<?=$ar_result['ID']?>"><?php echo $ar_result['NAME']?></option>
@@ -324,9 +325,9 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                         </div>
                         <div class="grid-item">
                             <div class="title-select">Выберите подгруппу</div>
-                            <div class="custom-select">
+                            <div id="choose_subgroup" class="custom-select">
                                 <select>
-                                    <option><?php echo $arResult['SECTION']['NAME']?></option>
+                                    <option value="<?=$arResult['SECTION']['ID']?>"><?php echo $arResult['SECTION']['NAME']?></option>
                                     <?php
                                     while ($ar_result = $db_list_lvl3->GetNext()) { ?>
                                         <option value="<?=$ar_result['ID']?>"><?php echo $ar_result['NAME']?></option>
@@ -353,11 +354,11 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                 ?>
                 <div class="grid-item">
                     <div class="title-select">Выберите диагноз</div>
-                    <div class="custom-select">
+                    <div id="choose_diagnoz" class="custom-select">
                         <select>
                             <option>Не выбрано</option>
                             <?php foreach ($arFields as $arItem) {?>
-                                <option id="element" value="<?=$arItem['ID']?>"><?php echo $arItem['NAME']?></option>
+                                <option id="diagnoz_elem" value="<?=$arItem['ID']?>"><?php echo $arItem['NAME']?></option>
                             <?php }?>
                         </select>
                     </div>
@@ -366,7 +367,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
             } else { ?>
                 <div class="grid-item">
                     <div class="title-select">Выберите диагноз</div>
-                    <div class="custom-select" style="pointer-events: none">
+                    <div id="choose_diagnoz" class="custom-select" style="pointer-events: none">
                         <select disabled>
                             <option>Диагноз</option>
                         </select>
@@ -376,7 +377,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
         <?php } else { ?>
             <div class="grid-item">
                 <div class="title-select">Выберите класс</div>
-                <div class="custom-select">
+                <div id="choose_class" class="custom-select">
                     <select id="cur_class">
                         <option>Не выбрано</option>
                         <?php
@@ -390,7 +391,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
             </div>
             <div class="grid-item">
                 <div class="title-select">Выберите группу</div>
-                <div class="custom-select" style="pointer-events: none">
+                <div id="choose_group"  class="custom-select" style="pointer-events: none">
                     <select>
                         <option>Группа</option>
                     </select>
@@ -398,7 +399,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
             </div>
             <div class="grid-item">
                 <div class="title-select">Выберите подгруппу</div>
-                <div class="custom-select" style="pointer-events: none">
+                <div id="choose_subgroup" class="custom-select" style="pointer-events: none">
                     <select>
                         <option>Подгруппа</option>
                     </select>

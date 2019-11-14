@@ -13,7 +13,18 @@
 $this->setFrameMode(true);
 
 
+CModule::IncludeModule("iblock");
+$arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_*");
+$arFilter = Array("IBLOCK_ID"=>19, );
+$arResult_block= array();
+$res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+while($ob = $res->GetNextElement()){
+    $arProps = $ob->GetProperties();
 
+    $arResult_block[]= $arProps["TEXT_FORMA"]["VALUE"];
+    $arResult_block[]= $arProps["FIRST_TEXT"]["VALUE"];
+
+}
 $arViewModeList = $arResult['VIEW_MODE_LIST'];
 
 $arViewStyles = array(
@@ -149,13 +160,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
 			break;
 		case 'LIST':?>
 
-            <p class="form-obrashcheniya__step_three_l_text">Мы собрали для вас информацию обо всех
-                медорганизациях, оказывающих помощь по полису ОМС……..
-                есть ли в данном списке больница, в которую вы обратились за помощью. Если больницы в
-                списке
-                нет, денежные средства вернуть не получится…… Рекомендуем сверяться со списком при
-                обращении
-                за помощью</p>
+            <p class="form-obrashcheniya__step_three_l_text"><?=$arResult_block[6]?></p>
 
             <a class="link-underline" href="#">Ссылка на статью в блоге</a>
 
@@ -166,10 +171,10 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
             if ($arResult['SECTION']['DEPTH_LEVEL'] == 1) {
                 ?>
                 <div class="grid-item">
-                    <div class="title-select">Выберите класс</div>
+                    <div class="title-select">Выбор региона:</div>
                     <div class="custom-select">
                         <select>
-                            <option><?php echo $arResult['SECTION']['NAME']?></option>
+                            <option value="<?=$arResult['SECTION']['ID']?>"><?php echo $arResult['SECTION']['NAME']?></option>
                             <?php
                             $db_list = CIBlockSection::GetList(
                                 array("name" => "asc"),
@@ -224,7 +229,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
             <div class="title-select">Список больниц:</div>
             <div class="custom-select" style="pointer-events: none">
                 <select>
-                    <option value="">Список больниц</option>
+                    <option>Список больниц</option>
                 </select>
             </div>
 
