@@ -82,6 +82,7 @@ $(document).ready(function() {
           type: 'POST',
           data: data,
           beforeSend: function() {
+
           },
         }).done(function(html) {
           console.log(html);

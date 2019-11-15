@@ -23,7 +23,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
             c.innerHTML = selElmnt.options[j].innerHTML;
             c.innerVALUE= selElmnt.options[j].value;
-            console.log(c.innerVALUE);
+
             c.setAttribute("data-value",c.innerVALUE);
 
             c.addEventListener("click", function (e) {

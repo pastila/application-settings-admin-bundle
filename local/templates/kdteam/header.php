@@ -14,6 +14,7 @@ $asset = Asset::getInstance();
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="HandheldFriendly" content="true">
     <title><?php $APPLICATION->ShowTitle(); ?></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <?php $APPLICATION->ShowHead(); ?>
     <?php
     $asset->addCss("https://fonts.googleapis.com/css?family=Rubik:400,700&display=swap");
@@ -21,7 +22,7 @@ $asset = Asset::getInstance();
     $asset->addJs(SITE_TEMPLATE_PATH . "/js/main.min.js");
     CModule::IncludeModule("iblock");
     ?>
-    <script src="/local/templates/kdteam/js/validator.min.js"></script>
+
 </head>
 
 <body>
@@ -130,7 +131,7 @@ $asset = Asset::getInstance();
                         </div>
 
                         <div class="header__r_auth_user-image">
-                            <img src="./local/templates/kdteam/images/png/header/head_login.png" alt="">
+                            <img src="/local/templates/kdteam/images/png/header/head_login.png" alt="">
                         </div>
                     </div>
 
@@ -142,7 +143,7 @@ $asset = Asset::getInstance();
                         <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-login.php"?>" id="login-link"
                            class="header__r_auth_login">
                             <img class="header__r_auth_login_img"
-                                 src="./local/templates/kdteam/images/svg/header/login/man-user.svg" alt="OMS">
+                                 src="/local/templates/kdteam/images/svg/header/login/man-user.svg" alt="OMS">
                             <div class="header__r_auth_login_text">
                                 Вход
                             </div>
@@ -150,7 +151,7 @@ $asset = Asset::getInstance();
 
                         <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-reg.php"?>" id="reg-link" class="header__r_auth_reg">
                             <img class="header__r_auth_login_img"
-                                 src="./local/templates/kdteam/images/svg/header/reg/key.svg" alt="OMS">
+                                 src="/local/templates/kdteam/images/svg/header/reg/key.svg" alt="OMS">
                             <div class="header__r_auth_login_text">
                                 Регистрация
                             </div>

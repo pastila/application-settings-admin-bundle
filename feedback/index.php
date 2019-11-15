@@ -27,7 +27,7 @@ $sort_url = $_GET;
 
     <!-- Add and All feedback btns -->
     <div class="feedback__btns">
-        <a href="/add-feedback.html" class="smallMainBtn">Добавить отзыв</a>
+        <a href="/add-feedback/" class="smallMainBtn">Добавить отзыв</a>
         <a href="?comments=all" class="smallAccentBtn">Все отзывы</a>
     </div>
 
