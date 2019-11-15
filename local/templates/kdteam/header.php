@@ -85,7 +85,7 @@ $asset = Asset::getInstance();
                                     }
                                     ?>
                                     <?php if ($countAppeals > 0) { ?>
-                                        <div class="menu-req">
+                                        <div id="number_calls" class="menu-req">
                                             <?php echo $countAppeals?>
                                         </div>
                                         <a class="active" href="/obrashcheniya/">Ваши обращения</a>
@@ -95,22 +95,33 @@ $asset = Asset::getInstance();
 
                                 <li>
                                     <div class="menu-req">
-                                        <?
+                                        <?php
                                         global $USER;
                                         $ID_USER = $USER->GetID();
 
-                                        $arFilter = Array("IBLOCK_ID" => 11, "UF_USER_ID" => $ID_USER);
-                                        $section = CIBlockSection::GetList(Array(), $arFilter, false, false,
-                                            false);  // получили секцию по айди юзера
+                                        $arFilter = array("IBLOCK_ID" => 11, "UF_USER_ID" => $ID_USER);
+                                        $section = CIBlockSection::GetList(
+                                            array(),
+                                            $arFilter,
+                                            false,
+                                            false,
+                                            false
+                                        );  // получили секцию по айди юзера
                                         if ($Section = $section->GetNext()) {
-                                            $arFilter = Array("IBLOCK_ID" => 11, "SECTION_ID" => $Section["ID"],"PROPERTY_SEND_REVIEW_VALUE"=> 1);
-                                            $Element = CIBlockElement::GetList(Array(), $arFilter, false, false,
-                                                false); //получили обращения юзера
+                                            $arFilter = array("IBLOCK_ID" => 11,
+                                                "SECTION_ID" => $Section["ID"],"PROPERTY_SEND_REVIEW_VALUE" => 1);
+                                            $Element = CIBlockElement::GetList(
+                                                array(),
+                                                $arFilter,
+                                                false,
+                                                false,
+                                                false
+                                            ); //получили обращения юзера
                                             $obElement = $Element->SelectedRowsCount();
 
                                         } ?><?= $obElement ?>
                                     </div>
-                                    <a href="/otpravlennyye/index.php">Отправленные</a>
+
                                     <a href="/otpravlennyye/">Отправленные</a>
                                 </li>
                             </ul>
@@ -119,7 +130,7 @@ $asset = Asset::getInstance();
                         </div>
 
                         <div class="header__r_auth_user-image">
-                            <img src="./local/templates/kdteam/images/png/header/head_login.png" alt="">
+                            <img src="/local/templates/kdteam/images/png/header/head_login.png" alt="">
                         </div>
                     </div>
 
@@ -131,7 +142,7 @@ $asset = Asset::getInstance();
                         <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-login.php"?>" id="login-link"
                            class="header__r_auth_login">
                             <img class="header__r_auth_login_img"
-                                 src="./local/templates/kdteam/images/svg/header/login/man-user.svg" alt="OMS">
+                                 src="/local/templates/kdteam/images/svg/header/login/man-user.svg" alt="OMS">
                             <div class="header__r_auth_login_text">
                                 Вход
                             </div>
@@ -139,7 +150,7 @@ $asset = Asset::getInstance();
 
                         <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-reg.php"?>" id="reg-link" class="header__r_auth_reg">
                             <img class="header__r_auth_login_img"
-                                 src="./local/templates/kdteam/images/svg/header/reg/key.svg" alt="OMS">
+                                 src="/local/templates/kdteam/images/svg/header/reg/key.svg" alt="OMS">
                             <div class="header__r_auth_login_text">
                                 Регистрация
                             </div>

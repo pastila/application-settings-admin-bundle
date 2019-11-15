@@ -1,4 +1,6 @@
-<?php if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
+<?php if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) {
+    die();
+}
 /** @var array $arParams */
 /** @var array $arResult */
 /** @global CMain $APPLICATION */
@@ -28,19 +30,15 @@ foreach ($arResult["ITEMS"] as $arItem) {
     <!-- Обращение -->
     <div class="obrashcheniya">
         <div class="obrashcheniya__btns">
-            <input class="smallMainBtn" id="<?=$arItem["ID"]?>" type="file" multiple name="file">
-            <label for="<?=$arItem["ID"]?>" class="btn btn-tertiary js-labelFile">
-                <?php if (empty($arItem["PREVIEW_PICTURE"]["SRC"])) {?>
-                      <span class="js-fileName">Прикрепить скан или фото</span>
-                <?php } else { ?>
-                      <span class="js-fileName">Изменить загруженный файл</span>
-                <?php }?>
-            </label>
-            <a class="smallMainBtn" href="#">Отправить</a>
+            <div class="block__button_send">
+                <input class="smallMainBtn hidden_browse_input" id="<?= $arItem["ID"] ?>" type="file" multiple name="file">
+                <label for="<?= $arItem["ID"] ?>" class="btn btn-tertiary js-labelFile smallMainBtn">Прикрепить скан или фото</label>
+            </div>
+            <a class="smallMainBtn block_button_mob" href="#">Отправить</a>
         </div>
-        <p id="error_<?=$arItem["ID"]?>" class="error"></p>
-        <p id="success_<?=$arItem["ID"]?>" class="success"></p>
-        <div id="card_<?=$arItem["ID"]?>" class="card">
+        <p id="error_<?= $arItem["ID"] ?>" class="error"></p>
+        <p id="success_<?= $arItem["ID"] ?>" class="success"></p>
+        <div id="card_<?= $arItem["ID"] ?>" class="card">
             <!-- Контент -->
             <div class="obrashcheniya__content">
                 <!-- Контент левая сторона -->
@@ -49,11 +47,11 @@ foreach ($arResult["ITEMS"] as $arItem) {
                     <!-- Внутри контента Верхняя часть -->
                     <div class="obrashcheniya__content_left_top">
                         <div class="obrashcheniya__content_left_top_text">
-                            Обращение № <?php echo $i?>
+                            Обращение № <?php echo $i ?>
                         </div>
 
                         <div class="obrashcheniya__content_left_top_data">
-                            дата: <?php echo $date[0]?>
+                            дата: <?php echo $date[0] ?>
                         </div>
 
                         <div class="obrashcheniya__content_left_top_link">
@@ -73,7 +71,7 @@ foreach ($arResult["ITEMS"] as $arItem) {
                             </div>
 
                             <p class="obrashcheniya__content_left_center_item_text-full">
-                                <?php echo $arItem["PROPERTIES"]["FULL_NAME"]["VALUE"]?>
+                                <?php echo $arItem["PROPERTIES"]["FULL_NAME"]["VALUE"] ?>
                             </p>
                         </div>
 
@@ -84,7 +82,7 @@ foreach ($arResult["ITEMS"] as $arItem) {
                             </div>
 
                             <p class="obrashcheniya__content_left_center_item_text-full">
-                                <?php echo $hospital?>
+                                <?php echo $hospital ?>
                             </p>
                         </div>
 
@@ -95,7 +93,7 @@ foreach ($arResult["ITEMS"] as $arItem) {
                             </div>
 
                             <p class="obrashcheniya__content_left_center__item_text-full">
-                                <?php echo $arItem["PROPERTIES"]["ADDRESS"]["VALUE"]?>
+                                <?php echo $arItem["PROPERTIES"]["ADDRESS"]["VALUE"] ?>
                             </p>
                         </div>
 
@@ -105,7 +103,7 @@ foreach ($arResult["ITEMS"] as $arItem) {
                             </div>
 
                             <p class="obrashcheniya__content_left_center__item_text-full">
-                                <?php echo $arItem["PROPERTIES"]["POLICY"]["VALUE"]?>
+                                <?php echo $arItem["PROPERTIES"]["POLICY"]["VALUE"] ?>
                             </p>
                         </div>
 
@@ -115,7 +113,7 @@ foreach ($arResult["ITEMS"] as $arItem) {
                             </div>
 
                             <p class="obrashcheniya__content_left_center__item_text-full">
-                                <?php echo $arItem["PROPERTIES"]["VISIT_DATE"]["VALUE"]?>
+                                <?php echo $arItem["PROPERTIES"]["VISIT_DATE"]["VALUE"] ?>
                             </p>
                         </div>
                     </div>
@@ -128,23 +126,24 @@ foreach ($arResult["ITEMS"] as $arItem) {
                     </div>
 
                     <!-- Item Sidebar -->
-                    <div class="js-img-add">
-                        <?php if (!empty($arItem["PREVIEW_PICTURE"]["SRC"])) {?>
-                            <div id="img_block_<?=$arItem['ID']?>" class="obrashcheniya__content_sidebar_blocks">
+                    <div class="js-img-add block__items_flex">
+                        <?php if (!empty($arItem["PREVIEW_PICTURE"]["SRC"])) { ?>
+                            <div id="img_block_<?= $arItem['ID'] ?>" class="obrashcheniya__content_sidebar_blocks">
                                 <div class="obrashcheniya__content_sidebar_blocks_img">
-                                    <img src="<?=$arItem["PREVIEW_PICTURE"]["SRC"]?>" alt="">
+                                    <img src="<?= $arItem["PREVIEW_PICTURE"]["SRC"] ?>" alt="">
                                 </div>
 
                                 <div class="obrashcheniya__content_sidebar_blocks_text">
                                     <div class="obrashcheniya__content_sidebar_blocks_text_title">
                                         Загруженный документ
                                     </div>
-                                    <a id="download_img" download href="<?=$arItem["PREVIEW_PICTURE"]["SRC"]?>"
+                                    <a id="download_img" download href="<?= $arItem["PREVIEW_PICTURE"]["SRC"] ?>"
                                        class="obrashcheniya__content_sidebar_blocks_text_link">
                                         скачать
                                     </a>
-                                    <button id="delete_<?=$arItem['ID']?>" onclick="del(this)"
-                                            class="delete_img_js" >Удалить</button>
+                                    <a href="#" rel="nofollow" id="delete_<?= $arItem['ID'] ?>" onclick="del(this)"
+                                       class="delete_img_js">удалить
+                                    </a>
                                 </div>
                             </div>
                         <?php } ?>
@@ -153,7 +152,7 @@ foreach ($arResult["ITEMS"] as $arItem) {
                     <div class="obrashcheniya__content_sidebar_blocks">
 
                         <div class="obrashcheniya__content_sidebar_blocks_img">
-<!--                            <img src="./local/templates/kdteam/images/svg/image_block_two.svg" alt="">-->
+                            <img src="/local/templates/kdteam/images/svg/pdf_icon.svg" alt="">
                         </div>
 
                         <div class="obrashcheniya__content_sidebar_blocks_text">
@@ -171,5 +170,5 @@ foreach ($arResult["ITEMS"] as $arItem) {
             </div>
         </div>
     </div>
-<?php }?>
+<?php } ?>
 

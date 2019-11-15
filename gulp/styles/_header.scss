@@ -102,6 +102,9 @@
             &_user-image {
                 width: 2rem;
                 height: 2rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 background-color: $accentColor;
                 margin-left: 2rem;
                 img {
