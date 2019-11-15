@@ -20,11 +20,12 @@ global $USER;
 //$number_polic_POST = $_POST["number_polic"];
 $data_user_oformlenie_POST = "21.05.2018";
 $data_user_oplata_POST = "21.06.2018";
-$number_polic_POST = "polic_number";
+$number_polic_POST = "polic_n4343434";
+
+
 
 
 $ID_user = $USER->GetID();
-
 $rsUser = CUser::GetByID($ID_user);
 $person = $rsUser->Fetch();
 
@@ -33,7 +34,8 @@ $person = $rsUser->Fetch();
 // echo '</pre>';
 
 $email = $person["EMAIL"];
-$mobail_number = $person["PERSONAL_MOBILE"];
+$mobail_number = $person["PERSONAL_PHONE"];
+$full_name_user = $USER->GetFullName();
 $strahovay_compani = $person["UF_INSURANCE_COMPANY"];
 
 
@@ -44,11 +46,12 @@ $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
 $ob = $res->GetNextElement();
 $arProps = $ob->GetProperties();
 $arFields = $ob->GetFields();
-//   echo '<pre>';
-//    print_r($arProps);
-//   echo '</pre>';
-$boss_compani = "кто-то кто-тович  ктотов";
-$mail_compani = $arProps["EMAIL_FIRST"]["VALUE"];
+
+
+$name_company = $arFields["NAME"];// название компании
+$boss_compani = $arProps["NAME_BOSS"]["VALUE"];// руководитель компании
+$mail_compani = $arProps["EMAIL_FIRST"]["VALUE"];// имйл компании
+
 if($arProps["EMAIL_SECOND"]["VALUE"] !="") {
     $mail_compani .= "," . $arProps["EMAIL_SECOND"]["VALUE"];
 }
@@ -57,10 +60,10 @@ if($arProps["EMAIL_THIRD"]["VALUE"] != "") {
 }
 
 
-$res = CIBlockElement::GetByID($_SESSION["HOSPITAL"]);
-if ($ar_res = $res->GetNext()) {
-    $arHospital = $ar_res;
-}
+//$res = CIBlockElement::GetByID($_SESSION["HOSPITAL"]);
+//if ($ar_res = $res->GetNext()) {
+//    $arHospital = $ar_res;
+//}
 // $res = CIBlockSection::GetByID($_SESSION["REGION"]);
 // if ($ar_res = $res->GetNext()) {
 //     $arRegion = $ar_res;
@@ -112,7 +115,7 @@ $html ='
                         <span class="bold-text" style="font-weight: bold;">Руководителю страховой медицинской организации</span>
 ​
                         <div class="blue-text cursive" style="color: rgb(55, 144, 223); font-style: italic;">
-'.$strahovay_compani.',
+'.$name_company.',
                             '.$boss_compani.'
                             '.$mail_compani.'
                         </div>
@@ -129,7 +132,7 @@ $html ='
                     </div>
 ​
                     <div class="header__items_item--text blue-text cursive" style=" color: rgb(55, 144, 223); font-style: italic;">
-(ФИО, указанные при регистрации, с возможностью корректировки перед отправкой)
+'.$full_name_user.'
                     </div>
                 </div>
 ​
@@ -142,7 +145,7 @@ $html ='
                     </div>
 ​
                     <div class="header__items_item--text red-text cursive" style=" color: red;  font-style: italic;">
-'. $number_polic .'
+'. $number_polic_POST .'
 </div>
                 </div>
             </div>
@@ -228,7 +231,7 @@ $html ='
     <p>
 Приложение: документы, подтверждающие факт оплаты медицинских услуг – в электронном виде.
     </p>
-    <span class="blue-text cursive" style=" color: rgb(55, 144, 223); font-style: italic;"> Дата формирования заявления'.$data_user_oformlenie_POST.'</span>
+    <span class="blue-text cursive" style=" color: rgb(55, 144, 223); font-style: italic;"> Дата формирования заявления ' . $data_user_oformlenie_POST.'</span>
 
 </page>
 
@@ -246,10 +249,12 @@ $mpdf = new \Mpdf\Mpdf([
 //создаем PDF файл, задаем формат, отступы и.т.д.
 
 //
-$name_file = "";
+$name_file = "/var/www/upload/pdf/PDF_";
 $name_file .= date('Y-m-d-h:i:s');
 $name_file .= "_". $email. "_";
-$name_file .= "file";
+$name_file .= "file.pdf";
+
 $mpdf->WriteHTML($html);
-$mpdf->Output('upload/pdf/PDF_'.$name_file.'.pdf','F');
-echo '/upload/pdf/PDF_'.$name_file.'.pdf';
+$mpdf->Output($name_file,'F');
+$url_pdf_for_user = "/upload/pdf/PDF_". date('Y-m-d-h:i:s')."_". $email. "_file.pdf";
+echo $url_pdf_for_user;
