@@ -26,7 +26,7 @@ global $USER;?>
             </ul>
 
             <!-- Pages Title -->
-            <?if($USER->Authorize()){?>
+            <?if($USER->IsAuthorized()){?>
                 <h2 class="page-title">Добавить отзыв о компании</h2>
 
                 <!-- Wrap -->
