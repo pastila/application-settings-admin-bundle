@@ -9,6 +9,9 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/feedback/main.min.js");
 CModule::IncludeModule("iblock");
 global $USER;
 
+
+$sort_url = $_GET;
+
 ?>
 <!-- Breadcrumbs -->
 <ul class="breadcrumbs">
@@ -25,33 +28,59 @@ global $USER;
     <!-- Add and All feedback btns -->
     <div class="feedback__btns">
         <a href="/add-feedback.html" class="smallMainBtn">Добавить отзыв</a>
-        <a href="#" class="smallAccentBtn">Все отзывы</a>
+        <a href="?comments=all" class="smallAccentBtn">Все отзывы</a>
     </div>
 
     <div class="feedback__filter">
         <div class="custom-select">
             <select>
-                <option value="0">Все отзывы <span>( 512 )</span></option>
-                <option value="1">Амурская область Больница #1</option>
-                <option value="2">Архангельская область Больница #122132</option>
-                <option value="3">Астраханская область Больница #123423446546</option>
-                <option value="4">Белгородская область Больница #234234456654</option>
-                <option value="5">Брянская область Больница #34576587678</option>
-                <option value="6">Владимирская область #34576587678</option>
+
+                <?
+                $order = Array("name" => "asc");
+                $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM");
+                $arFilter = Array("IBLOCK_ID" => 16);
+                $res = CIBlockElement::GetList($order, $arFilter, false, false, $arSelect);
+                $i = 1;
+                while ($ob = $res->GetNextElement()) {
+                    $arProps = $ob->GetFields();
+                    if ($i == 1) {
+                        ?>
+                        <option value="">Все отзывы <span><?= $res->SelectedRowsCount() ?></span></option>
+                    <? } else {
+                        ?>
+                        <option value="?sort=company&filterby=PROPERTY_NAME_COMPANY&filterorder=<?= $arProps["ID"] ?>"><?= $arProps["NAME"] ?></option>
+                    <? } ?>
+                    <? ++$i;
+                } ?>
             </select>
         </div>
 
         <div class="custom-select">
-            <select>
-                <option value="0">Оценка</span></option>
-                <option value="1">Оценки 5</option>
-                <option value="2">Оценки 4</option>
-                <option value="3">Оценки 3</option>
-                <option value="4">Оценки 2</option>
-                <option value="5">Оценки 1</option>
+            <select onchange="window.open(this.value)">
+                <?if ($sort_url["sort"] == "star") {  // сортировка
+
+            $assessment = $sort_url["filterorder"];
+        }?>
+
+                <option value="0">Оценка <?=$assessment?></option>
+                <option value="?sort=star&filterby=PROPERTY_EVALUATION&filterorder=1" class="number_star">Оценки 1
+                </option>
+                <option value="?sort=star&filterby=PROPERTY_EVALUATION&filterorder=2" class="number_star">Оценки 2
+                </option>
+                <option value="?sort=star&filterby=PROPERTY_EVALUATION&filterorder=3" class="number_star">Оценки 3
+                </option>
+                <option value="?sort=star&filterby=PROPERTY_EVALUATION&filterorder=4" class="number_star">Оценки 4
+                </option>
+                <option value="?sort=star&filterby=PROPERTY_EVALUATION&filterorder=5" class="number_star">Оценки 5
+                </option>
             </select>
         </div>
+
+        <div>
+            <a href="/feedback/">Сбросить</a>
+        </div>
     </div>
+
 </form>
 
 <!-- Wrap -->
@@ -60,13 +89,39 @@ global $USER;
         <!-- FeedBack block -->
 
         <?php
+        $fiterby = "";
+        $filterorder = "";
+        if ($sort_url["sort"] == "star") {  // сортировка
+            $fiterby = $sort_url["filterby"];
+            $filterorder = $sort_url["filterorder"];
+        }
+        if ($sort_url["sort"] == "city") {
+            $fiterby = $sort_url["filterby"];
+            $filterorder = $sort_url["filterorder"];
+        }
+        if ($sort_url["sort"] == "popular_company") {
+            $fiterby = $sort_url["filterby"];
+            $filterorder = $sort_url["filterorder"];
+        }
+        if ($sort_url["sort"] == "company") {
+            $fiterby = $sort_url["filterby"];
+            $filterorder = $sort_url["filterorder"];
+        }
+
         $order = Array("date_active_from" => "desc");
         $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
-        $arFilter = Array("IBLOCK_ID" => 13, "ACTIVE" => "Y");
+        $arFilter = Array("IBLOCK_ID" => 13, "ACTIVE" => "Y", $fiterby => $filterorder);
+
         $pagen = Array("nPageSize" => 10);
+        if ($sort_url["comments"] == "all") {
+            $pagen = false;
+        }
         $res = CIBlockElement::GetList($order, $arFilter, false, $pagen, $arSelect);
-        $res->NavStart(0);
+        if (!$sort_url["comments"] == "all") {
+            $res->NavStart(0);
+        }
         while ($ob = $res->GetNextElement()) {
+
             $arFields = $ob->GetFields();
             $arProps = $ob->GetProperties();
             $newDate = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_ACTIVE_FROM"]));
@@ -79,15 +134,17 @@ global $USER;
             } else {
                 $count_comments = 0;
             }
+            $city = CIBlockSection::GetByID($arProps["REGION"]["VALUE"])->GetNext();
 
-            $compani=CIBlockElement::GetByID($arProps["NAME_COMPANY"]["VALUE"])->GetNextElement()->GetProperties();
+            $compani = CIBlockElement::GetByID($arProps["NAME_COMPANY"]["VALUE"])->GetNextElement()->GetProperties();
 
-            $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width'=>100, 'height'=>100), BX_RESIZE_IMAGE_PROPORTIONAL, true);
+            $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 100, 'height' => 100),
+                BX_RESIZE_IMAGE_PROPORTIONAL, true);
 
             ?>
             <div class="white_block">
                 <!-- Company Name -->
-                <div class="feedback__block_company-name"><img src="<?=$file["src"]?>"></div>
+                <div class="feedback__block_company-name"><img src="<?= $file["src"] ?>"></div>
                 <!-- top -->
                 <div class="feedback__block_top">
                     <div class="feedback__block_top_star">
@@ -101,7 +158,7 @@ global $USER;
                         <? } ?>
                     </div>
                     <div class="feedback__block_top_name">
-                        <?= $name_user ?>, <?= $arProps["REGION"]['VALUE'] ?>, <?= $newDate?>
+                        <?= $name_user ?>, <?= $city["NAME"] ?>, <?= $newDate ?>
                     </div>
                     <!--                <div class="feedback__block_top_data">-->
                     <!--                    05 сент, 2019-->
@@ -131,7 +188,7 @@ global $USER;
                 <!-- COMMETNS -->
                 <div class="hidenComments">
                     <?php
-                    $ID_COMMENTS = $arProps["COMMENTS_TO_REWIEW"]["VALUE"];
+                    $ID_COMMENTS = $arProps["COMMENTS_TO_REWIEW"]["VALUE"]; /// комментарии
                     $order = Array("date_active_from" => "desc");
                     $arSelectComments = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
                     $arFilterComments = Array("IBLOCK_ID" => 14, "ACTIVE" => "Y", "ID" => $ID_COMMENTS);
@@ -161,9 +218,9 @@ global $USER;
                         <a id="show-comment" class="hidenComments__link" href="#">Цитировать</a>
 
 
-                         <!-- Цитаты-->
+                        <!-- Цитаты-->
                         <?
-                        if ($arPropsComments["CITED"]["VALUE"] != "") {
+                        if ($arPropsComments["CITED"]["VALUE"] != "") {  // цитаты к коментариям
                             $ID_Quote = $arPropsComments["CITED"]["VALUE"];
                             $arSelectQuote = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
                             $arFilterQuote = Array("IBLOCK_ID" => 15, "ACTIVE" => "Y", "ID" => $ID_Quote);
@@ -196,9 +253,10 @@ global $USER;
 
             </div><!-- FeedBack block END -->
         <? }
-
-        $navStr = $res->GetPageNavStringEx($navComponentObject, "Страницы:", ".default");
-        echo $navStr;
+        if (!$sort_url["comments"] == "all") {
+            $navStr = $res->GetPageNavStringEx($navComponentObject, "Страницы:", ".default");
+            echo $navStr;
+        }
         ?>
 
     </div>
@@ -209,38 +267,34 @@ global $USER;
             <div class="sidebar__item_title">Народный Рейтинг Страховых</div>
 
             <ul class="sidebar__item_lists">
-                <li class="sidebar__item_lists_list">
-                    <a href="#" class="sidebar__item_lists_list_link">
-                        ВТБ Страхование
-                    </a>
-                </li>
+                <?php
+                $order = Array("PROPERTY_AMOUNT_STAR" => "desc", "name" => "asc");
+                $elementselect = Array("ID", "IBLOCK_ID", "NAME", "CODE", "DATE_ACTIVE_FROM", "PROPERTY_AMOUNT_STAR");
+                $arFilter = Array("IBLOCK_ID" => 16);
+                $Element_filter = CIBlockElement::GetList($order, $arFilter, false, false, $elementselect);
+                while ($ob_element_filter = $Element_filter->GetNextElement()) {
+                    $fields = $ob_element_filter->GetFields();
+                    if ($fields["PROPERTY_AMOUNT_STAR_VALUE"] == "" || $fields["PROPERTY_AMOUNT_STAR_VALUE"] == 0) {
+                        continue;
+                    }
 
-                <li class="sidebar__item_lists_list">
-                    <a href="#" class="sidebar__item_lists_list_link">
-                        ВТБ Страхование
-                    </a>
-                </li>
+                    ?>
 
-                <li class="sidebar__item_lists_list">
-                    <a href="#" class="sidebar__item_lists_list_link">
-                        ВТБ Страхование
-                    </a>
-                </li>
+                    <li class="sidebar__item_lists_list">
+                        <a href="/feedback/?sort=popular_company&filterby=PROPERTY_NAME_COMPANY&filterorder=<?= $fields["ID"] ?>"
+                           class="sidebar__item_lists_list_link" id="company"
+                           data-amount-star="<?= $fields["PROPERTY_AMOUNT_STAR_VALUE"] ?>"
+                           data-id="<?= $fields["ID"] ?>">
+                            <?= $fields["NAME"] ?>
+                        </a>
+                    </li>
 
-                <li class="sidebar__item_lists_list">
-                    <a href="#" class="sidebar__item_lists_list_link">
-                        ВТБ Страхование
-                    </a>
-                </li>
+                <? } ?>
 
-                <li class="sidebar__item_lists_list">
-                    <a href="#" class="sidebar__item_lists_list_link">
-                        ВТБ Страхование
-                    </a>
-                </li>
-            </ul>
 
-            <button class="smallAccentBtn">Весь рейтинг</button>
+                <ul>
+
+                    <button class="smallAccentBtn">Весь рейтинг</button>
         </div>
 
         <!-- Second Sidebar block -->
@@ -248,65 +302,25 @@ global $USER;
             <div class="sidebar__item_title">Отзывы о страховых в городах</div>
 
             <ul class="sidebar__item_lists">
-                <li class="sidebar__item_lists_list">
-                    <a href="#" class="sidebar__item_lists_list_link">
-                        Москва
-                    </a>
-                </li>
+                <?php
 
-                <li class="sidebar__item_lists_list">
-                    <a href="#" class="sidebar__item_lists_list_link">
-                        Санкт-Петербург
-                    </a>
-                </li>
 
-                <li class="sidebar__item_lists_list">
-                    <a href="#" class="sidebar__item_lists_list_link">
-                        Новосибирск
-                    </a>
-                </li>
+                $order = Array("name" => "asc");
+                $arFilter = Array("IBLOCK_ID" => 16);
+                $Section_filter = CIBlockSection::GetList($order, $arFilter, false);
+                while ($ob_section_filter = $Section_filter->GetNext()) {
 
-                <li class="sidebar__item_lists_list">
-                    <a href="#" class="sidebar__item_lists_list_link">
-                        Екатеринбург
-                    </a>
-                </li>
+                    ?>
 
-                <li class="sidebar__item_lists_list">
-                    <a href="#" class="sidebar__item_lists_list_link">
-                        Нижний Новгород
-                    </a>
-                </li>
+                    <li class="sidebar__item_lists_list">
+                        <a href="/feedback/?sort=city&filterby=PROPERTY_REGION&filterorder=<?= $ob_section_filter["ID"] ?>"
+                           class="sidebar__item_lists_list_link" id="city" data-id="<?= $ob_section_filter["ID"] ?>">
+                            <?= $ob_section_filter["NAME"] ?>
+                        </a>
+                    </li>
 
-                <li class="sidebar__item_lists_list">
-                    <a href="#" class="sidebar__item_lists_list_link">
-                        Казань
-                    </a>
-                </li>
+                <? } ?>
 
-                <li class="sidebar__item_lists_list">
-                    <a href="#" class="sidebar__item_lists_list_link">
-                        Самара
-                    </a>
-                </li>
-
-                <li class="sidebar__item_lists_list">
-                    <a href="#" class="sidebar__item_lists_list_link">
-                        Омск
-                    </a>
-                </li>
-
-                <li class="sidebar__item_lists_list">
-                    <a href="#" class="sidebar__item_lists_list_link">
-                        Челябинск
-                    </a>
-                </li>
-
-                <li class="sidebar__item_lists_list">
-                    <a href="#" class="sidebar__item_lists_list_link">
-                        Ростов-на-Дону
-                    </a>
-                </li>
             </ul>
 
             <button class="smallAccentBtn">Все отзывы</button>

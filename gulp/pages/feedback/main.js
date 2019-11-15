@@ -13,12 +13,18 @@ window.addEventListener('DOMContentLoaded', () => {
         /* For each element, create a new DIV that will contain the option list: */
         b = document.createElement("DIV");
         b.setAttribute("class", "select-items select-hide");
+        b.setAttribute("onchange", "select-items select-hide");
+
         for (j = 1; j < selElmnt.length; j++) {
 
             /* For each option in the original select element,
             create a new DIV that will act as an option item: */
             c = document.createElement("DIV");
+
             c.innerHTML = selElmnt.options[j].innerHTML;
+            c.innerVALUE= selElmnt.options[j].value;
+            console.log(c.innerVALUE);
+            c.setAttribute("data-value",c.innerVALUE);
 
             c.addEventListener("click", function (e) {
                 /* When an item is clicked, update the original select box,
@@ -31,6 +37,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     if (s.options[i].innerHTML == this.innerHTML) {
                         s.selectedIndex = i;
                         h.innerHTML = this.innerHTML;
+
 
                         if (h.clientWidth < 350) {
                             const str = h.textContent.slice(0, 20) + "...";
@@ -45,6 +52,7 @@ window.addEventListener('DOMContentLoaded', () => {
                             y[k].removeAttribute("class");
                         }
                         this.setAttribute("class", "same-as-selected");
+
                         break;
                     }
                 }
@@ -115,5 +123,11 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     showComment();
+
+
+$(document).on("click",".select-items div",function() {
+   let url = "/feedback/"+ $(this).attr("data-value");
+  window.open(url,"_self")
+})
 
 })
