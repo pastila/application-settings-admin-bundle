@@ -129,5 +129,64 @@ $(document).on("click",".select-items div",function() {
    let url = "/feedback/"+ $(this).attr("data-value");
   window.open(url,"_self")
 })
+    $(".button-comments").click(function(e) {
+    let error = [];
+    e.preventDefault();
+    let id_review  = $(this).attr("data-id-comment");
 
+    let text_comment = $(this).siblings("[name]").val();
+    if(text_comment == ""){
+      $(this).siblings(".danger").css({"display":"block"});
+      error.push("text");
+    }
+    let data = {
+      "id_review":id_review,
+      "message":text_comment,
+    };
+
+    $.ajax({
+      url : "/ajax/add-comment.php",
+      type: "POST",
+      data :data,
+      beforeSend: function() {
+      }
+
+    }).done(function(msg) {
+      if(msg == 1){
+        location.reload("_self")
+      }
+    })
+
+  })
+
+
+  $(".button-cited").click(function(e) {
+    let error = [];
+    e.preventDefault();
+    let id_comment  = $(this).attr("data-id-cited");
+
+    let text_cited = $(this).siblings("[name]").val();
+    if(text_cited == ""){
+      $(this).siblings(".danger").css({"display":"block"});
+      error.push("text");
+    }
+    let data = {
+      "id_comment":id_comment,
+      "message":text_cited,
+    };
+
+    $.ajax({
+      url : "/ajax/add_cited.php",
+      type: "POST",
+      data :data,
+      beforeSend: function() {
+      }
+
+    }).done(function(msg) {
+      if(msg == 1){
+        location.reload("_self")
+      }
+    })
+
+  })
 })

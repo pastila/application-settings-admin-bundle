@@ -137,7 +137,7 @@ $(document).ready(function() {
 
 $("#form-comments").validator().on('submit', function(e) {
   e.preventDefault();
-  console.log(data);
+
   var data_form = $('#form-comments').serializeArray();
   let empty = [];
   data.head =data_form[0]["value"];
@@ -154,7 +154,9 @@ $("#form-comments").validator().on('submit', function(e) {
     $("[data-select=star]").next().css({"display":"block"});
     empty.push("star");
   }
+  console.log(empty);
   if(empty.length == 0){
+    console.log("dsds");
     $.ajax({
       url: "/ajax/add_reviews.php",
       type: 'POST',

@@ -101,7 +101,9 @@ main.main {
 .danger {
     color: red;
 }
-
+.hidden {
+    display:none;
+}
 .color-main {
     background: $mainColor;
 }

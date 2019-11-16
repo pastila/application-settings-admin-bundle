@@ -184,6 +184,12 @@ $sort_url = $_GET;
                                 </span>
                         комментариев
                     </a>
+                    <form action="" >
+                        <input type="text" minlength="10" name="comment" required data-id-comment="<?=$arFields["ID"]?>">
+                        <div class="danger hidden"  >Заполните поле</div>
+                        <button type="submit" class="smallMainBtn button-comments" id="comments" data-id-comment="<?=$arFields["ID"]?>" >Комментировать</button>
+                    </form>
+
                 </div>
                 <!-- COMMETNS -->
                 <div class="hidenComments">
@@ -215,8 +221,12 @@ $sort_url = $_GET;
 
                         <p><?= $arPropsComments["COMMENTS"]["VALUE"] ?></p>
 
-                        <a id="show-comment" class="hidenComments__link" href="#">Цитировать</a>
-
+<!--                        <a id="show-comment" class="hidenComments__link" href="#">Цитировать</a>-->
+                        <form action="" >
+                            <input type="text" minlength="10" name="cited" required data-id-cited="<?=$arFieldsComments["ID"]?>">
+                            <div class="danger hidden"  >Заполните поле</div>
+                            <button type="submit" class="smallMainBtn button-cited" id="comments" data-id-cited="<?=$arFieldsComments["ID"]?>" >Цитировать</button>
+                        </form>
 
                         <!-- Цитаты-->
                         <?
