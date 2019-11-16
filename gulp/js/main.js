@@ -18,6 +18,11 @@ $(document).ready(function() {
       FormReg();
     }, 1500);
   });
+  $('.header__r_auth_login').click(function() {
+    setTimeout(function() {
+      FormAuth();
+    }, 1500);
+  });
 
   function FormReg() {
 
@@ -98,9 +103,11 @@ $(document).ready(function() {
       $('.primer_company').remove();
     });
   }
+function FormAuth() {
 
-  $(document).on('click', '#auth_btn', function(e) {
     console.log('auth');
+    $('#auth-form-login').validator().on('submit', function(e) {
+      e.preventDefault();
     $.ajax({
       type: 'POST',
       url: '/ajax/authorization.php',
@@ -119,9 +126,10 @@ $(document).ready(function() {
         }
       },
     });
-    e.preventDefault();
+
     return false;
   });
+}
   // end authorization
 
   $('#login-link').magnificPopup({
