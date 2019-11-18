@@ -90,7 +90,7 @@ $strNavQueryStringFull = ($arResult["NavQueryString"] != "" ? "?".$arResult["Nav
 		<?endif?>
 
 	<?else:?>
-		<?=GetMessage("nav_begin")?><?=GetMessage("nav_prev")?>
+<!--		--><?//=GetMessage("nav_begin")?><!----><?//=GetMessage("nav_prev")?>
 	<?endif?>
 
 	<?while($arResult["nStartPage"] <= $arResult["nEndPage"]):?>
@@ -109,7 +109,7 @@ $strNavQueryStringFull = ($arResult["NavQueryString"] != "" ? "?".$arResult["Nav
 		<a href="<?=$arResult["sUrlPath"]?>?<?=$strNavQueryString?>PAGEN_<?=$arResult["NavNum"]?>=<?=($arResult["NavPageNomer"]+1)?>"><?=GetMessage("nav_next")?></a>
 		<a href="<?=$arResult["sUrlPath"]?>?<?=$strNavQueryString?>PAGEN_<?=$arResult["NavNum"]?>=<?=$arResult["NavPageCount"]?>"><?=GetMessage("nav_end")?></a>
 	<?else:?>
-		<?=GetMessage("nav_next")?><?=GetMessage("nav_end")?>
+<!--		--><?//=GetMessage("nav_next")?><!----><?//=GetMessage("nav_end")?>
 	<?endif?>
 
 <?endif?>

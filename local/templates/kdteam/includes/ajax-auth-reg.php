@@ -9,7 +9,7 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.
     </div>
 
     <div class="popup__wrap">
-        <p class="register_before_review error">
+        <p class="register_before_review error hidden">
             Для создания обращение вам необходимо зарегистрироваться
         </p>
         <div id="auth__form" class="popup__wrap_tabs">

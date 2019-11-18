@@ -73,7 +73,10 @@ $(document).ready(function() {
   if($(".header__r_auth_reg").length == 1) {
     $("#generate_form").removeAttr("href");
     $("#generate_form").click(function() {
-      $(".header__r_auth_reg").trigger("click");
+    $(".header__r_auth_reg").trigger("click");
+    setTimeout(function() {
+      $(".register_before_review").removeClass("hidden");
+    },700)
     })
   }else{
             $('#generate_form').magnificPopup({
