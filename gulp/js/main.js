@@ -47,7 +47,12 @@ $(document).ready(function() {
                 var email = $('#email');
                 email.after(
                     '<div class="danger" data-danger-email>Пользовватель с таким эмейлом уже сущесвуте</div>');
-              } else if (suc.user != 0 && suc.review !="register_with_review") {
+              } else if(suc.company == "Нет компании"){
+                var email = $('#company');
+                email.after(
+                    '<div class="danger" data-danger-company>В нашей базе нет этой компании ,мы не можем вас зарегестрировать </div>');
+              }
+              else if (suc.user != 0 && suc.review !="register_with_review") {
                 location.reload()
 
               }else if(suc.review == "register_with_review"){
