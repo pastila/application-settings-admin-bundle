@@ -4,6 +4,9 @@
 $(document).ready(function() {
   create_select();
 
+
+
+
   let urgent = $('#urgent');
   let planned = $('#planned');
   let appeal;
@@ -120,6 +123,9 @@ $(document).ready(function() {
     }
   });
 
+
+
+
   $(document).on('click', '#location', function() {
     let classID = $(this).attr('value');
     let region_name_value = $(this).text();
@@ -139,12 +145,61 @@ $(document).ready(function() {
 
   $(document).on('click', '#hospital', function() {
     let cur_select = $('.select-arrow-active');
+
     let hospital_name_value = $(this).text();
     let hospital_name = $('#hosptital_name');
+    console.log(hospital_name_value);
+
     $(hospital_name).html(hospital_name_value);
     cur_select.attr('value', this.getAttribute('value'));
     cur_select.attr('id', 'selected_hospital');
+    if(hospital_name_value == "Здесь нет моей больници"){
+      $.magnificPopup.open({
+        items: {
+          src: '<div class="white-popup custom_styles_popup">Если больницы, в которую вы обратились, в списке нет, значит, она не является участником системы ОМС и не несет обязательств по оказанию помщи по полису ОМС. Случай не страховой.</div>',
+          type: 'inline'
+        }
+      });
+      $("#choose_class").css({"pointer-events":"none"});
+    }else{
+      $("#choose_class").removeAttr("style");
+    }
   });
+
+    $(document).on("click","#empty_class",function() {
+    $.magnificPopup.open({
+      items: {
+        src: '<div class="white-popup custom_styles_popup">Если больницы, в которую вы обратились, в списке нет, значит, она не является участником системы ОМС и не несет обязательств по оказанию помщи по полису ОМС. Случай не страховой.</div>',
+        type: 'inline'
+      }
+    });
+  })  ;
+    $(document).on("click","#empty_group",function() {
+    $.magnificPopup.open({
+      items: {
+        src: '<div class="white-popup custom_styles_popup">Если больницы, в которую вы обратились, в списке нет, значит, она не является участником системы ОМС и не несет обязательств по оказанию помщи по полису ОМС. Случай не страховой.</div>',
+        type: 'inline'
+      }
+    });
+  }) ;
+  $(document).on("click","#empty_subgroup",function() {
+    $.magnificPopup.open({
+      items: {
+        src: '<div class="white-popup custom_styles_popup">Если больницы, в которую вы обратились, в списке нет, значит, она не является участником системы ОМС и не несет обязательств по оказанию помщи по полису ОМС. Случай не страховой.</div>',
+        type: 'inline'
+      }
+    });
+  });
+  $(document).on("click","#empty_diagnoz",function() {
+    $.magnificPopup.open({
+      items: {
+        src: '<div class="white-popup custom_styles_popup">Если больницы, в которую вы обратились, в списке нет, значит, она не является участником системы ОМС и не несет обязательств по оказанию помщи по полису ОМС. Случай не страховой.</div>',
+        type: 'inline'
+      }
+    });
+  })
+
+
 
 });
 

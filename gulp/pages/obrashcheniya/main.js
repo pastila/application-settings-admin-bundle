@@ -43,7 +43,7 @@ $(document).ready(function() {
                 '        <div class="obrashcheniya__content_sidebar_blocks_text_title">Загруженный документ</div>\n' +
                 '        <a id="download_img" download href="'+ r +'"\n' +
                 '           class="obrashcheniya__content_sidebar_blocks_text_link">скачать</a>\n' +
-                '        <button onclick="del(this)" id="delete_'+ result2.ID +'" class="delete_img_js">Удалить</button>\n' +
+                '        <a href="#" rel="nofollow" onclick="del(this)" id="delete_'+ result2.ID +'" class="delete_img_js">Удалить</a>\n' +
                 '    </div>\n' +
                 '</div>'
             );

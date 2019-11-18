@@ -78,8 +78,20 @@ if ($USER->IsAuthorized()) { ?>
     } else {?>
         <a href="/forma-obrashenija/" class="page-title">Проверить свой дигноз</a>
     <?php }?>
-<?php } else { ?>
-    <p>АЛЛО Я ТУТА</p>
+<?php } else {
+
+
+
+    ?>
+    <!-- Breadcrumbs -->
+    <ul class="breadcrumbs">
+        <li><a href="/">Главная</a></li>
+        <li>обращения</li>
+    </ul>
+    <h2 class="page-title">Ваши обращения</h2>
+    <div class="obrashcheniya">
+        <p>Вам необходимо авторизоваться, чтобы видеть свои обращения, либо пройдите проверку своего диагноза <a class="link-underline" href="/forma-obrashenija/">здесь</a>.</p>
+    </div>
 <?php } ?>
 
 <?php require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php");?>

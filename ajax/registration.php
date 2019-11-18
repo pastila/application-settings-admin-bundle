@@ -10,7 +10,7 @@ if($_POST) {
     $email = $_POST["email"];
     $tel = $_POST["phone"];
     $nomer_polica = $_POST["number_polic"];
-    $name_compani = $_POST["company"];
+    $name_company = $_POST["company"];
     $parol = $_POST["password"];
 
     global $USER;
@@ -24,17 +24,18 @@ if($_POST) {
     $rsUser = CUser::GetList($order, $tmp, $filter);
 
 
+    $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM");
+    $arFilter = Array("IBLOCK_ID"=>16,"NAME"=> $name_company);
+    $res_company = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+    if ($res_company->SelectedRowsCount() == 0){
+        $msg = array("company"=> "Нет компании");
+        $result =  array_merge($result, $msg);
 
-
-
-    if ($rsUser->SelectedRowsCount() > 0) {
+    } elseif ($rsUser->SelectedRowsCount() > 0) {
         $msg = array("user"=> "Уже существует");
         $result =  array_merge($result, $msg);
-    } else
 
-
-
-        {
+    } else {
         $arFields = Array(
             "NAME" => $name,
             "LAST_NAME" => $familia,
@@ -47,7 +48,7 @@ if($_POST) {
             "CONFIRM_PASSWORD" => $parol,
             "PERSONAL_MOBILE" => $tel,
             "UF_INSURANCE_POLICY" => $nomer_polica,
-            "UF_INSURANCE_COMPANY" => $name_compani
+            "UF_INSURANCE_COMPANY" => $name_company
         );
         $ID = $USER->Add($arFields);
         $ID_user = array("user"=> $ID);
@@ -123,7 +124,7 @@ if($_POST) {
 //                "SECOND_NAME" => $otchestvo,
 //                "LOGIN" => $email,
 //                "UF_INSURANCE_POLICY" => $nomer_polica,
-//                "UF_INSURANCE_COMPANY" => $name_compani
+//                "UF_INSURANCE_COMPANY" => $name_company
 //            );
 //            CEvent::SendImmediate("NEW_USER", "s1", $Send);
 //        }

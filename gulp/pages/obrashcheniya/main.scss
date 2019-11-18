@@ -4,12 +4,25 @@
     color: red;
 }
 
+label {
+    cursor: pointer;
+    /* Style as you please, it will become the visible UI component. */
+}
+
+.hidden_browse_input {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
 .obrashcheniya {
     display: flex;
     flex-direction: column;
     margin-bottom: 2rem;
 
     &__btns {
+        display: flex;
+        align-items: baseline;
+        flex-wrap: wrap;
         .smallMainBtn {
             margin-bottom: 2rem;
         }
@@ -47,16 +60,13 @@
                         font-size: 1.4rem;
                         font-weight: 700;
                     }
-
-                    &_text-full {
-                        text-transform: lowercase;
-                    }
                 }
             }
 
             &:after {
                 content: '';
-                position: absolute;
+                margin: 2rem 0;
+                display: block;
                 width: 100%;
                 height: 0.1rem;
                 bottom: 0;
@@ -77,6 +87,7 @@
                 display: flex;
                 align-items: center;
                 margin-bottom: 2rem;
+                margin-right: 1.5rem;
 
                 &_img {
                     width: 5rem;
@@ -89,6 +100,14 @@
                         text-decoration: underline;
                     }
                 }
+            }
+            .delete_img_js{
+                text-decoration: underline;
+                margin-left: .5rem;
+            }
+            .block__items_flex{
+                display: flex;
+                flex-wrap: wrap;
             }
         }
     }
@@ -105,6 +124,20 @@
         }
     }
 }
+@media(max-width: 575px){
+    .obrashcheniya {
+        &__btns {
+            .block__button_send{
+                display: block;
+                width: 100%;
+            }
+            .block_button_mob{
+                display: block;
+                width: 100%;
+            }
+        }
+    }
+}
 
 @media screen and (min-width: 992px) {
     .obrashcheniya {
@@ -112,17 +145,11 @@
 
         &__content {
             display: flex;
+            flex-wrap: wrap;
 
             &_left {
                 padding-bottom: 0;
                 margin-bottom: 0;
-                padding-right: 2rem;
-
-                &:after {
-                    width: 0.1rem;
-                    height: 100%;
-                    right: 0;
-                }
 
                 &_top {
                     position: relative;
@@ -171,11 +198,6 @@
                     }
                 }
             }
-
-            &_sidebar {
-                width: 30%;
-                padding-left: 3rem;
-            }
         }
     }
 }
@@ -185,11 +207,6 @@
         margin-bottom: 5rem;
 
         &__content {
-
-            &_sidebar {
-                width: 21%;
-                padding-left: 4rem;
-            }
         }
     }
 }

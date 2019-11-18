@@ -18,6 +18,11 @@ $(document).ready(function() {
       FormReg();
     }, 1500);
   });
+  $('.header__r_auth_login').click(function() {
+    setTimeout(function() {
+      FormAuth();
+    }, 1500);
+  });
 
   function FormReg() {
 
@@ -42,8 +47,13 @@ $(document).ready(function() {
                 var email = $('#email');
                 email.after(
                     '<div class="danger" data-danger-email>Пользовватель с таким эмейлом уже сущесвуте</div>');
-              } else if (suc.user != 0 && suc.review !="register_with_review") {
-               // location.reload()
+              } else if(suc.company == "Нет компании"){
+                var email = $('#company');
+                email.after(
+                    '<div class="danger" data-danger-company>В нашей базе нет этой компании ,мы не можем вас зарегестрировать </div>');
+              }
+              else if (suc.user != 0 && suc.review !="register_with_review") {
+                location.reload()
 
               }else if(suc.review == "register_with_review"){
 
@@ -82,6 +92,7 @@ $(document).ready(function() {
           type: 'POST',
           data: data,
           beforeSend: function() {
+            $('.search_company > div').remove();
           },
         }).done(function(html) {
           console.log(html);
@@ -97,9 +108,11 @@ $(document).ready(function() {
       $('.primer_company').remove();
     });
   }
+function FormAuth() {
 
-  $(document).on('click', '#auth_btn', function(e) {
     console.log('auth');
+    $('#auth-form-login').validator().on('submit', function(e) {
+      e.preventDefault();
     $.ajax({
       type: 'POST',
       url: '/ajax/authorization.php',
@@ -118,9 +131,10 @@ $(document).ready(function() {
         }
       },
     });
-    e.preventDefault();
+
     return false;
   });
+}
   // end authorization
 
   $('#login-link').magnificPopup({
@@ -266,4 +280,14 @@ if (theToggle) {
     return false;
   };
 }
+
+//scrollbar
+(function(){
+  let isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+  let isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
+  let scrollbarDiv = document.querySelector('.scrollbar');
+  if (!isChrome && !isSafari) {
+    scrollbarDiv.innerHTML = 'You need Webkit browser to run this code';
+  }
+})();
 

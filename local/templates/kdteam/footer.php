@@ -51,5 +51,5 @@ if (defined("B_PROLOG_INCLUDED") && B_PROLOG_INCLUDED === true) {
 
 </div><!-- END Wrap -->
 </body>
-
+<script src="/local/templates/kdteam/js/validator.min.js"></script>
 </html>
