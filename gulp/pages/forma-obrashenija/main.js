@@ -29,11 +29,13 @@ $(document).ready(function() {
     cur_select.attr('value', this.getAttribute('value'));
   });
 
+
+
   $(document).on('click', '#strax-sluchay', function() {
     let $form = $('#appeal-form');
     let $title = $('#page-title');
-    let region = $('#selected_location').attr('value');
-    let hospital = $('#selected_hospital').attr('value');
+    let region = $('#choose_location_elem').attr('value');
+    let hospital = $('#choose_hospital_elem').attr('value');
 
     let choose_class = $('#choose_class_elem').attr('value');
     let choose_group = $('#choose_group_elem').attr('value');
@@ -80,7 +82,6 @@ $(document).ready(function() {
 
               callbacks: {
                 beforeOpen: function() {
-                  console.log('beforeOpen аааа');
                   if($(window).width() < 700) {
                     this.st.focus = false;
                   } else {
@@ -88,10 +89,8 @@ $(document).ready(function() {
                   }
                 },
                 afterClose: function() {
-                  console.log('succeadfsadsfss');
                   $.post('/ajax/number_calls.php', function(result) {
                     $('#number_calls').html(result);
-                    console.log(result);
                   }, 'html');
                 }
               },
@@ -144,16 +143,14 @@ $(document).ready(function() {
 
 
   $(document).on('click', '#hospital', function() {
-    let cur_select = $('.select-arrow-active');
-
+    let cur_select = $('#choose_hospital_elem');
+    cur_select.attr('value', this.getAttribute('value'));
     let hospital_name_value = $(this).text();
     let hospital_name = $('#hosptital_name');
-    console.log(hospital_name_value);
-
     $(hospital_name).html(hospital_name_value);
-    cur_select.attr('value', this.getAttribute('value'));
-    cur_select.attr('id', 'selected_hospital');
-    if(hospital_name_value == "Здесь нет моей больници"){
+    // cur_select.attr('value', this.getAttribute('value'));
+    // cur_select.attr('id', 'selected_hospital');
+    if(hospital_name_value == "Здесь нет моей больницы"){
       $.magnificPopup.open({
         items: {
           src: '<div class="white-popup custom_styles_popup">Если больницы, в которую вы обратились, в списке нет, значит, она не является участником системы ОМС и не несет обязательств по оказанию помщи по полису ОМС. Случай не страховой.</div>',
@@ -215,7 +212,7 @@ function update_hospital_select() {
     // a.setAttribute("date-value",);
     a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
     a.setAttribute('value', selElmnt.options[selElmnt.selectedIndex].value);
-    a.setAttribute('id', 'selected_location');
+    a.setAttribute('id', x[i].getAttribute('id') + '_elem');
 
     x[i].appendChild(a);
     /* For each element, create a new DIV that will contain the option list: */
@@ -241,7 +238,6 @@ function update_hospital_select() {
         h = this.parentNode.previousSibling;
 
         for (i = 0; i < s.length; i++) {
-          // console.log(this.innerHTML);
 
           if (s.options[i].innerHTML == this.innerHTML) {
             s.selectedIndex = i;
@@ -321,7 +317,6 @@ function update_select() {
         h = this.parentNode.previousSibling;
 
         for (i = 0; i < s.length; i++) {
-          // console.log(this.innerHTML);
 
           if (s.options[i].innerHTML == this.innerHTML) {
             s.selectedIndex = i;
@@ -399,7 +394,6 @@ function create_select() {
         h = this.parentNode.previousSibling;
 
         for (i = 0; i < s.length; i++) {
-          // console.log(this.innerHTML);
 
           if (s.options[i].innerHTML == this.innerHTML) {
             s.selectedIndex = i;

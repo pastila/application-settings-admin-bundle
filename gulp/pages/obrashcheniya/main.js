@@ -1,4 +1,5 @@
 //= ../../node_modules/jquery/dist/jquery.min.js
+//= ../../node_modules/air-datepicker/dist/js/datepicker.min.js
 //= ../../node_modules/magnific-popup/dist/jquery.magnific-popup.min.js
 
 $(document).ready(function() {
@@ -47,7 +48,6 @@ $(document).ready(function() {
                 '    </div>\n' +
                 '</div>'
             );
-            n.find($("img")).attr("src",r);
           }
         }
       }
@@ -82,24 +82,30 @@ function delete_el(el) {
 }
 
 function edit(ed) {
+  console.log('edit');
   let element = $(ed)[0].id.split('_');
   let cur_el = $('#appeal_' + element[1]);
+  console.log(cur_el);
   let usrname = $("input[name='usrname']");
   let policy = $("input[name='policy']");
   let time = $("input[name='time']");
 
-  let usrname_p = $('#usrname');
-  let policy_p = $('#policy');
-  let time_p = $('#time');
+  let usrname_p = $('#usrname_' + element[1]);
+  let policy_p = $('#policy_' + element[1]);
+  let time_p = $('#time_' + element[1]);
 
+
+  $('#save_' + element[1]).css('display', 'block');
 
   cur_el.find(usrname).css('display', 'block');
   cur_el.find(policy).css('display', 'block');
   cur_el.find(time).css('display', 'block');
 
-  cur_el.find(usrname_p).css('display', 'none');
-  cur_el.find(policy_p).css('display', 'none');
-  cur_el.find(time_p).css('display', 'none');
+  $('#edit_' + element[1]).css('display', 'none');
+
+  usrname_p.css('display', 'none');
+  policy_p.css('display', 'none');
+  time_p.css('display', 'none');
 }
 function save(sv) {
 
@@ -109,9 +115,9 @@ function save(sv) {
   let policy = $("input[name='policy']");
   let time = $("input[name='time']");
 
-  let usrname_p = $('#usrname');
-  let policy_p = $('#policy');
-  let time_p = $('#time');
+  let usrname_p = $('#usrname_' + element[1]);
+  let policy_p = $('#policy_' + element[1]);
+  let time_p = $('#time_' + element[1]);
 
   $.ajax({
     url: '/ajax/edit_appeal.php',
@@ -123,25 +129,25 @@ function save(sv) {
     },
     type: 'post',
     success: function(result) {
-      console.log(result);
+      $('#save_' + element[1]).css('display', 'none');
+
       cur_el.find(usrname).css('display', 'none');
       cur_el.find(policy).css('display', 'none');
       cur_el.find(time).css('display', 'none');
 
-      cur_el.find(usrname_p).html();
-      cur_el.find(policy_p).html();
-      cur_el.find(time_p).html();
+      usrname_p.html(cur_el.find(usrname).val());
+      policy_p.html(cur_el.find(policy).val());
+      time_p.html(cur_el.find(time).val());
 
-      cur_el.find(usrname_p).css('display', 'block');
-      cur_el.find(policy_p).css('display', 'block');
-      cur_el.find(time_p).css('display', 'block');
+      $('#edit_' + element[1]).css('display', 'block');
+
+      $('#success_' + element[1]).html(result);
+
+      usrname_p.css('display', 'block');
+      policy_p.css('display', 'block');
+      time_p.css('display', 'block');
     }
   });
-  console.log('save');
-  console.log(cur_el.find(usrname).val());
-  console.log(cur_el.find(policy).val());
-  console.log(cur_el.find(time).val());
-
 }
 
 

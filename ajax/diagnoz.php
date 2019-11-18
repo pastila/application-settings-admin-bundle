@@ -34,7 +34,7 @@ if ((!empty($_POST['APPEAL_VALUE']) and !empty($_POST['HOSPITAL'])) and json_dec
 //        }
 
     } else {
-        $result = 'error';
+        $result = 'erroriche';
     }
 } else {
     $result = 'error';
