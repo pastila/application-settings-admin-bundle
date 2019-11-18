@@ -1,7 +1,7 @@
 <?php require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");?>
     <form id="auth-form-login" class="auth-form">
         <div class="close-modal">
-            <img src="./local/templates/kdteam/images/svg/close_modal.svg" alt="">
+            <img src="/local/templates/kdteam/images/svg/close_modal.svg" alt="">
         </div>
         <div class="popup__wrap">
             <div id="auth__form" class="popup__wrap_tabs">
