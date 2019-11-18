@@ -48,7 +48,6 @@ $(document).ready(function() {
                 '    </div>\n' +
                 '</div>'
             );
-            n.find($("img")).attr("src",r);
           }
         }
       }
