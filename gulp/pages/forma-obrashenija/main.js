@@ -147,11 +147,10 @@ $(document).ready(function() {
     cur_select.attr('value', this.getAttribute('value'));
     let hospital_name_value = $(this).text();
     let hospital_name = $('#hosptital_name');
-
     $(hospital_name).html(hospital_name_value);
     // cur_select.attr('value', this.getAttribute('value'));
     // cur_select.attr('id', 'selected_hospital');
-    if(hospital_name_value == "Здесь нет моей больници"){
+    if(hospital_name_value == "Здесь нет моей больницы"){
       $.magnificPopup.open({
         items: {
           src: '<div class="white-popup custom_styles_popup">Если больницы, в которую вы обратились, в списке нет, значит, она не является участником системы ОМС и не несет обязательств по оказанию помщи по полису ОМС. Случай не страховой.</div>',
