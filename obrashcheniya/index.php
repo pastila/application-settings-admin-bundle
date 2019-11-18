@@ -79,7 +79,7 @@ if ($USER->IsAuthorized()) { ?>
         <a href="/forma-obrashenija/" class="page-title">Проверить свой дигноз</a>
     <?php }?>
 <?php } else { ?>
-
+    <p>АЛЛО Я ТУТА</p>
 <?php } ?>
 
 <?php require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php");?>

@@ -2,25 +2,6 @@
 //= ../../node_modules/magnific-popup/dist/jquery.magnific-popup.min.js
 
 $(document).ready(function() {
-
-
-
-  // $('.delete_img_js').click(function() {
-  //   console.log(this);
-  //   let element = this.id;
-  //   console.log(element);
-  //
-  //   $.ajax({
-  //     url: '/ajax/img_delete.php',
-  //     data: {ID: element},
-  //     type: 'post',
-  //     success: function(result) {
-  //       console.log(result);
-  //       $('#img_block_' + result).remove();
-  //     }
-  //   });
-  // });
-
   //Загрузка изображений
   $( "input[type='file']" ).change(function() {
     let element = this.id;
@@ -87,5 +68,82 @@ function del(f) {
     }
   });
 }
+
+function delete_el(el) {
+  let element = $(el)[0].id;
+  $.ajax({
+    url: '/ajax/delete_appeal.php',
+    data: {ID: element},
+    type: 'post',
+    success: function(result) {
+      $('#appeal_' + result).remove();
+    }
+  });
+}
+
+function edit(ed) {
+  let element = $(ed)[0].id.split('_');
+  let cur_el = $('#appeal_' + element[1]);
+  let usrname = $("input[name='usrname']");
+  let policy = $("input[name='policy']");
+  let time = $("input[name='time']");
+
+  let usrname_p = $('#usrname');
+  let policy_p = $('#policy');
+  let time_p = $('#time');
+
+
+  cur_el.find(usrname).css('display', 'block');
+  cur_el.find(policy).css('display', 'block');
+  cur_el.find(time).css('display', 'block');
+
+  cur_el.find(usrname_p).css('display', 'none');
+  cur_el.find(policy_p).css('display', 'none');
+  cur_el.find(time_p).css('display', 'none');
+}
+function save(sv) {
+
+  let element = $(sv)[0].id.split('_');
+  let cur_el = $('#appeal_' + element[1]);
+  let usrname = $("input[name='usrname']");
+  let policy = $("input[name='policy']");
+  let time = $("input[name='time']");
+
+  let usrname_p = $('#usrname');
+  let policy_p = $('#policy');
+  let time_p = $('#time');
+
+  $.ajax({
+    url: '/ajax/edit_appeal.php',
+    data: {
+      ID: element[1],
+      NAME: cur_el.find(usrname).val(),
+      POLICY: cur_el.find(policy).val(),
+      TIME: cur_el.find(time).val()
+    },
+    type: 'post',
+    success: function(result) {
+      console.log(result);
+      cur_el.find(usrname).css('display', 'none');
+      cur_el.find(policy).css('display', 'none');
+      cur_el.find(time).css('display', 'none');
+
+      cur_el.find(usrname_p).html();
+      cur_el.find(policy_p).html();
+      cur_el.find(time_p).html();
+
+      cur_el.find(usrname_p).css('display', 'block');
+      cur_el.find(policy_p).css('display', 'block');
+      cur_el.find(time_p).css('display', 'block');
+    }
+  });
+  console.log('save');
+  console.log(cur_el.find(usrname).val());
+  console.log(cur_el.find(policy).val());
+  console.log(cur_el.find(time).val());
+
+}
+
+
 
 
