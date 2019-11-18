@@ -3,6 +3,7 @@ CModule::IncludeModule("iblock");
 global $USER;
 $section = new CIBlockSection();
 $el = new CIBlockElement();
+
 if ($_POST) {
     $id_user = $USER->GetID();
     $email_user = $USER->GetEmail();

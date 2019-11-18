@@ -132,9 +132,9 @@ $(document).on("click",".select-items div",function() {
     $(".button-comments").click(function(e) {
     let error = [];
     e.preventDefault();
+    var  ID = $(this).attr("data-id-comment");
     let id_review  = $(this).attr("data-id-comment");
-
-    let text_comment = $(this).siblings("[name]").val();
+    let text_comment = $("[data-id-comment="+ID+"]").val();
     if(text_comment == ""){
       $(this).siblings(".danger").css({"display":"block"});
       error.push("text");
@@ -144,28 +144,30 @@ $(document).on("click",".select-items div",function() {
       "message":text_comment,
     };
 
-    $.ajax({
-      url : "/ajax/add-comment.php",
-      type: "POST",
-      data :data,
-      beforeSend: function() {
-      }
+      if(error.length == 0) {
+        $.ajax({
+          url: "/ajax/add-comment.php",
+          type: "POST",
+          data: data,
+          beforeSend: function() {
+          }
 
-    }).done(function(msg) {
-      if(msg == 1){
-        location.reload("_self")
+        }).done(function(msg) {
+          if (msg == 1) {
+             location.reload();
+          }
+        })
       }
-    })
-
   })
 
 
   $(".button-cited").click(function(e) {
     let error = [];
     e.preventDefault();
+    var  ID = $(this).attr("data-id-cited");
     let id_comment  = $(this).attr("data-id-cited");
 
-    let text_cited = $(this).siblings("[name]").val();
+    let text_cited = $("[data-id-cited="+ID+"]").val();
     if(text_cited == ""){
       $(this).siblings(".danger").css({"display":"block"});
       error.push("text");
@@ -175,19 +177,20 @@ $(document).on("click",".select-items div",function() {
       "message":text_cited,
     };
 
-    $.ajax({
-      url : "/ajax/add_cited.php",
-      type: "POST",
-      data :data,
-      beforeSend: function() {
-      }
+ if(error.length == 0) {
+   $.ajax({
+     url: "/ajax/add_cited.php",
+     type: "POST",
+     data: data,
+     beforeSend: function() {
+     }
 
-    }).done(function(msg) {
-      if(msg == 1){
-        location.reload("_self")
-      }
-    })
-
+   }).done(function(msg) {
+     if (msg == 1) {
+       location.reload();
+     }
+   })
+ }
   })
 });
 

@@ -184,7 +184,10 @@ $sort_url = $_GET;
                                 </span>
                             комментариев
                         </a>
+
+                    <?if($USER->IsAuthorized()){?>
                         <a rel="nofollow" class="toggle_comment_dropdown opacity_block">Оставить комментарий</a>
+                    <?}?>
                     <div class="block_commented_styles block__commented">
                         <form action="" >
                             <div class="input__wrap">
@@ -207,8 +210,8 @@ $sort_url = $_GET;
                         $arFieldsComments = $obComments->GetFields();
                         $arPropsComments = $obComments->GetProperties();
                         $newDateComments = FormatDate("d F, Y", MakeTimeStamp($arFieldsComments["DATE_ACTIVE_FROM"]));
-                        $ID_USERComments = $arPropsComments["AVTOR_COMMENTS"]["VALUE"];
-                        $rsUserComments = CUser::GetByID($ID_USERComments);
+
+                        $rsUserComments = CUser::GetByID($arPropsComments["AVTOR_COMMENTS"]["VALUE"]);
                         $arUserComments = $rsUserComments->Fetch();
                         $name_userComments = $arUserComments["NAME"];
                         ?>
@@ -224,7 +227,8 @@ $sort_url = $_GET;
                         </div>
 
                         <p><?= $arPropsComments["COMMENTS"]["VALUE"] ?></p>
-
+                    <?if($USER->IsAuthorized()){?>
+                            <?if($arPropsComments["CITED"]["VALUE"] == ""){?>
 <!--                        <a id="show-comment" class="hidenComments__link" href="#">Цитировать</a>-->
                        <div class="block_commented_styles">
                             <form action="" >
@@ -235,7 +239,8 @@ $sort_url = $_GET;
                                 <button type="submit" class="smallMainBtn button-cited" id="comments" data-id-cited="<?=$arFieldsComments["ID"]?>" >Цитировать</button>
                             </form>
                         </div>
-
+                            <?}?>
+                    <?}?>
                         <!-- Цитаты-->
                         <div class="block_quotes">
                             <?
@@ -264,7 +269,7 @@ $sort_url = $_GET;
 
                                     <p class="quotes_italic">« <?= $arPropsQuote["CIATION"]["VALUE"] ?> »</p>
 
-                                    <a id="show-comment" class="hidenComments__link" href="#">Цитата</a>
+
                                 <? } ?>
                             <? } ?>
                         </div>
