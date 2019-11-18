@@ -166,8 +166,41 @@ Not supports in Firefox and IE */
 
 /* div box */
 .scrollbar {
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
     background: #fff;
     display: block;
+}
+
+//pagination
+.title_count_page{
+    opacity: .5;
+    font-size: 1.6rem;
+    display: block;
+    padding: 0 .5rem;
+    margin-bottom: 1rem;
+}
+.block_pagen{
+    display: block;
+    margin-bottom: 2rem;
+    a{
+        font-size: 1.4rem;
+        display: inline-block;
+        line-height: normal;
+        transition: all .4s;
+        padding: .5rem;
+        &:hover{
+            background-color: #c5d2e0;
+            color: #3a4552;
+        }
+    }
+    b{
+        background-color: #3a4552;
+        color: #fff;
+        pointer-events: none;
+        font-size: 1.4rem;
+        display: inline-block;
+        line-height: normal;
+        padding: .5rem 1rem;
+    }
 }

@@ -76,8 +76,8 @@ $sort_url = $_GET;
             </select>
         </div>
 
-        <div>
-            <a href="/feedback/">Сбросить</a>
+        <div class="reset_block">
+            <a class="smallAccentBtn" href="/feedback/">Сбросить</a>
         </div>
     </div>
 
@@ -135,11 +135,11 @@ $sort_url = $_GET;
                 $count_comments = 0;
             }
             $city = CIBlockSection::GetByID($arProps["REGION"]["VALUE"])->GetNext();
-
-            $compani = CIBlockElement::GetByID($arProps["NAME_COMPANY"]["VALUE"])->GetNextElement()->GetProperties();
-
-            $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 100, 'height' => 100),
-                BX_RESIZE_IMAGE_PROPORTIONAL, true);
+            /* владик */
+//            $compani = CIBlockElement::GetByID($arProps["NAME_COMPANY"]["VALUE"])->GetNextElement()->GetProperties();
+//
+//            $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 100, 'height' => 100),
+//                BX_RESIZE_IMAGE_PROPORTIONAL, true);
 
             ?>
             <div class="white_block">
@@ -174,22 +174,26 @@ $sort_url = $_GET;
 
                 <!-- Bottom -->
                 <div class="feedback__bottom">
-                    <div class="feedback__bottom_name">OMC</div>
+                        <div class="feedback__bottom_name opacity_block">OMC</div>
 
-                    <a id="show-comments" class="feedback__bottom_link">
-                        <img src="" alt="">
+                        <a id="show-comments" class="feedback__bottom_link opacity_block">
+                            <img src="" alt="">
 
-                        <span class="comment-count">
+                            <span class="comment-count">
                     <?= $count_comments ?>
                                 </span>
-                        комментариев
-                    </a>
-                    <form action="" >
-                        <input type="text" minlength="10" name="comment" required data-id-comment="<?=$arFields["ID"]?>">
-                        <div class="danger hidden"  >Заполните поле</div>
-                        <button type="submit" class="smallMainBtn button-comments" id="comments" data-id-comment="<?=$arFields["ID"]?>" >Комментировать</button>
-                    </form>
-
+                            комментариев
+                        </a>
+                        <a rel="nofollow" class="toggle_comment_dropdown opacity_block">Оставить комментарий</a>
+                    <div class="block_commented_styles block__commented">
+                        <form action="" >
+                            <div class="input__wrap">
+                                <textarea  minlength="10" name="comment" required data-id-comment="<?=$arFields["ID"]?>"></textarea>
+                            </div>
+                            <div class="danger hidden"  >Заполните поле</div>
+                            <button type="submit" class="smallMainBtn button-comments" id="comments" data-id-comment="<?=$arFields["ID"]?>" >Комментировать</button>
+                        </form>
+                    </div>
                 </div>
                 <!-- COMMETNS -->
                 <div class="hidenComments">
@@ -222,42 +226,48 @@ $sort_url = $_GET;
                         <p><?= $arPropsComments["COMMENTS"]["VALUE"] ?></p>
 
 <!--                        <a id="show-comment" class="hidenComments__link" href="#">Цитировать</a>-->
-                        <form action="" >
-                            <input type="text" minlength="10" name="cited" required data-id-cited="<?=$arFieldsComments["ID"]?>">
-                            <div class="danger hidden"  >Заполните поле</div>
-                            <button type="submit" class="smallMainBtn button-cited" id="comments" data-id-cited="<?=$arFieldsComments["ID"]?>" >Цитировать</button>
-                        </form>
+                       <div class="block_commented_styles">
+                            <form action="" >
+                                <div class="input__wrap">
+                                    <textarea minlength="10" name="cited" required data-id-cited="<?=$arFieldsComments["ID"]?>"></textarea>
+                                </div>
+                                <div class="danger hidden"  >Заполните поле</div>
+                                <button type="submit" class="smallMainBtn button-cited" id="comments" data-id-cited="<?=$arFieldsComments["ID"]?>" >Цитировать</button>
+                            </form>
+                        </div>
 
                         <!-- Цитаты-->
-                        <?
-                        if ($arPropsComments["CITED"]["VALUE"] != "") {  // цитаты к коментариям
-                            $ID_Quote = $arPropsComments["CITED"]["VALUE"];
-                            $arSelectQuote = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
-                            $arFilterQuote = Array("IBLOCK_ID" => 15, "ACTIVE" => "Y", "ID" => $ID_Quote);
-                            $resQuote = CIBlockElement::GetList(false, $arFilterQuote, false, false, $arSelectQuote);
-                            while ($obQuote = $resQuote->GetNextElement()) {
-                                $arFieldsQuote = $obQuote->GetFields();
-                                $arPropsQuote = $obQuote->GetProperties();
-                                $newDateQuote = FormatDate("d F, Y", MakeTimeStamp($arFieldsQuote["DATE_ACTIVE_FROM"]));
-                                $ID_USERQuote = $arPropsQuote["AVTOR_CIATION"]["VALUE"];
-                                $rsUserQuote = CUser::GetByID($ID_USERQuote);
-                                $arUserQuote = $rsUserQuote->Fetch();
-                                $name_userQuote = $arUserQuote["NAME"]; ?>
-                                <div class="hidenComments__top">
+                        <div class="block_quotes">
+                            <?
+                            if ($arPropsComments["CITED"]["VALUE"] != "") {  // цитаты к коментариям
+                                $ID_Quote = $arPropsComments["CITED"]["VALUE"];
+                                $arSelectQuote = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
+                                $arFilterQuote = Array("IBLOCK_ID" => 15, "ACTIVE" => "Y", "ID" => $ID_Quote);
+                                $resQuote = CIBlockElement::GetList(false, $arFilterQuote, false, false, $arSelectQuote);
+                                while ($obQuote = $resQuote->GetNextElement()) {
+                                    $arFieldsQuote = $obQuote->GetFields();
+                                    $arPropsQuote = $obQuote->GetProperties();
+                                    $newDateQuote = FormatDate("d F, Y", MakeTimeStamp($arFieldsQuote["DATE_ACTIVE_FROM"]));
+                                    $ID_USERQuote = $arPropsQuote["AVTOR_CIATION"]["VALUE"];
+                                    $rsUserQuote = CUser::GetByID($ID_USERQuote);
+                                    $arUserQuote = $rsUserQuote->Fetch();
+                                    $name_userQuote = $arUserQuote["NAME"]; ?>
+                                    <div class="hidenComments__top">
 
-                                    <img src="./local/templates/kdteam/images/svg/image_block_three.svg" alt="OMS">
+                                        <img src="./local/templates/kdteam/images/svg/image_block_three.svg" alt="OMS">
 
-                                    <div class="hidenComments__top_wrap">
-                                        <div class="hidenComments__top_name"><?= $name_userQuote ?></div>
-                                        <div class="hidenComments__top_data"><?= $newDateQuote ?></div>
+                                        <div class="hidenComments__top_wrap">
+                                            <div class="hidenComments__top_name"><?= $name_userQuote ?></div>
+                                            <div class="hidenComments__top_data"><?= $newDateQuote ?></div>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <p><?= $arPropsQuote["CIATION"]["VALUE"] ?></p>
+                                    <p class="quotes_italic">« <?= $arPropsQuote["CIATION"]["VALUE"] ?> »</p>
 
-                                <a id="show-comment" class="hidenComments__link" href="#">Цитата</a>
+                                    <a id="show-comment" class="hidenComments__link" href="#">Цитата</a>
+                                <? } ?>
                             <? } ?>
-                        <? } ?>
+                        </div>
                     <? } ?>
                 </div>
 
@@ -276,7 +286,7 @@ $sort_url = $_GET;
         <div class="white_block">
             <div class="sidebar__item_title">Народный Рейтинг Страховых</div>
 
-            <ul class="sidebar__item_lists">
+            <ul class="sidebar__item_lists scrollbar">
                 <?php
                 $order = Array("PROPERTY_AMOUNT_STAR" => "desc", "name" => "asc");
                 $elementselect = Array("ID", "IBLOCK_ID", "NAME", "CODE", "DATE_ACTIVE_FROM", "PROPERTY_AMOUNT_STAR");
@@ -311,7 +321,7 @@ $sort_url = $_GET;
         <div class="white_block">
             <div class="sidebar__item_title">Отзывы о страховых в городах</div>
 
-            <ul class="sidebar__item_lists">
+            <ul class="sidebar__item_lists scrollbar">
                 <?php
 
 
