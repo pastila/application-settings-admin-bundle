@@ -1,6 +1,5 @@
 <?php
 require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
-print_r($_POST);
 if (!empty($_POST)) {
     if (CModule::IncludeModule("iblock")) {
         $arSelect = array("IBLOCK_ID", "ID", "PROPERTY_FULL_NAME", "PROPERTY_POLICY", "PROPERTY_VISIT_DATE");
@@ -14,15 +13,12 @@ if (!empty($_POST)) {
         );
         if ($ob = $res->GetNextElement()) {
             $arFields = $ob->GetFields();
-            print_r($arFields);
-
         }
-
-        if ($arFields['PROPERTY_FULL_NAME_VALUE'] === $_POST['NAME']) {
+        if ($arFields['PROPERTY_FULL_NAME_VALUE'] === $_POST['NAME'] and
+            $arFields['PROPERTY_POLICY_VALUE'] === $_POST['POLICY'] and
+            $arFields['PROPERTY_VISIT_DATE_VALUE'] === $_POST['TIME']) {
             echo 'Сохранено без изменений';
         } else {
-            $time = ConvertDateTime($_POST['TIME'], "DD.MM.YYYY", "s1");
-            print_r($time);
             $PROP = array();
             $PROP['FULL_NAME'] = $_POST['NAME'];
             $PROP['POLICY'] = $_POST['POLICY'];
@@ -35,7 +31,7 @@ if (!empty($_POST)) {
                     "VISIT_DATE" => date("d.m.Y", strtotime($_POST['TIME']))
                 )
             );
-
+            echo 'Изменения успешно сохранены';
         }
     }
 }

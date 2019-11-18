@@ -55,10 +55,10 @@ foreach ($arResult["ITEMS"] as $arItem) {
                         </div>
 
                         <div class="obrashcheniya__content_left_top_link">
-                            <a href="#" onclick="edit(this)" id="edit_<?=$arItem["ID"]?>">Редактировать</a>
-                            <a href="#" onclick="save(this)" id="save_<?=$arItem["ID"]?>">Сохранить</a>
+                            <a onclick="edit(this)" id="edit_<?=$arItem["ID"]?>">Редактировать</a>
+                            <a style="display: none" onclick="save(this)" id="save_<?=$arItem["ID"]?>">Сохранить</a>
 
-                            <a href="#" onclick="delete_el(this)" id="delete_el_<?=$arItem["ID"]?>">Удалить</a>
+                            <a onclick="delete_el(this)" id="delete_el_<?=$arItem["ID"]?>">Удалить</a>
                         </div>
                     </div>
 
@@ -71,11 +71,9 @@ foreach ($arResult["ITEMS"] as $arItem) {
                                 ФИО
                             </div>
 
-                            <p class="obrashcheniya__content_left_center_item_text-full">
-                                <?php echo $arItem["PROPERTIES"]["FULL_NAME"]["VALUE"] ?>
-                            <p id="usrname" class="obrashcheniya__content_left_center_item_text-full">
-                                <?php echo $arItem["PROPERTIES"]["FULL_NAME"]["VALUE"]?>
-                            </p>
+                            <p id="usrname_<?=$arItem['ID']?>" class="obrashcheniya__content_left_center_item_text-full">
+                                <?php echo $arItem["PROPERTIES"]["FULL_NAME"]["VALUE"] ?></p>
+
                             <input style="display: none" type="text" name="usrname"
                                    value="<?=$arItem["PROPERTIES"]["FULL_NAME"]["VALUE"]?>">
                         </div>
@@ -107,11 +105,8 @@ foreach ($arResult["ITEMS"] as $arItem) {
                                 Полис:
                             </div>
 
-                            <p class="obrashcheniya__content_left_center__item_text-full">
-                                <?php echo $arItem["PROPERTIES"]["POLICY"]["VALUE"] ?>
-                            <p id="policy" class="obrashcheniya__content_left_center__item_text-full">
-                                <?php echo $arItem["PROPERTIES"]["POLICY"]["VALUE"]?>
-                            </p>
+                            <p id="policy_<?=$arItem['ID']?>" class="obrashcheniya__content_left_center__item_text-full">
+                                <?php echo $arItem["PROPERTIES"]["POLICY"]["VALUE"] ?></p>
                             <input style="display: none"
                                    type="text"
                                    name="policy"
@@ -123,13 +118,10 @@ foreach ($arResult["ITEMS"] as $arItem) {
                                 Дата посещения больницы:
                             </div>
 
-                            <p class="obrashcheniya__content_left_center__item_text-full">
-                                <?php echo $arItem["PROPERTIES"]["VISIT_DATE"]["VALUE"] ?>
-                            <p id="time" class="obrashcheniya__content_left_center__item_text-full">
-                                <?php echo $arItem["PROPERTIES"]["VISIT_DATE"]["VALUE"]?>
-                            </p>
-                            <input style="display: none"
-                                   type="date"
+                            <p id="time_<?=$arItem['ID']?>" class="obrashcheniya__content_left_center__item_text-full">
+                                <?php echo $arItem["PROPERTIES"]["VISIT_DATE"]["VALUE"]?></p>
+                            <input style="display: none" class="datepicker-here"
+                                   type="text"
                                    name="time"
                                    value="<?=$arItem["PROPERTIES"]["VISIT_DATE"]["VALUE"]?>">
                         </div>

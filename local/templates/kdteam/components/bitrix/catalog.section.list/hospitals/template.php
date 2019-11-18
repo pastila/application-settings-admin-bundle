@@ -172,7 +172,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                 ?>
                 <div class="grid-item">
                     <div class="title-select">Выбор региона:</div>
-                    <div class="custom-select">
+                    <div id="choose_location" class="custom-select">
                         <select>
                             <option value="<?=$arResult['SECTION']['ID']?>"><?php echo $arResult['SECTION']['NAME']?></option>
                             <?php
@@ -202,7 +202,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                 }
                 ?>
                 <div class="title-select">Список больниц:</div>
-                <div class="custom-select">
+                <div id="choose_hospital" class="custom-select">
                     <select>
                         <option>Не выбрано</option>
 
@@ -223,7 +223,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
             }?>
         <?php } else { ?>
             <div class="title-select">Выбор региона:</div>
-            <div class="custom-select">
+            <div id="choose_location" class="custom-select">
                 <select>
                     <option>Не выбрано</option>
                     <?php
@@ -236,7 +236,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
             </div>
 
             <div class="title-select">Список больниц:</div>
-            <div class="custom-select" style="pointer-events: none">
+            <div id="choose_hospital" class="custom-select" style="pointer-events: none">
                 <select>
                     <option>Список больниц</option>
                 </select>
