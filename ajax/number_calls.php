@@ -9,7 +9,7 @@ if (CModule::IncludeModule("iblock")) {
     $rsSect = CIBlockSection::GetList(array(), $arFilterSect);
     if ($arSect = $rsSect->GetNext()) {
         $arSelect = array("ID", "NAME", "DATE_ACTIVE_FROM");
-        $arFilter = array("IBLOCK_ID" => 11, "!PROPERTY_SEND_REVIEW" => "1",
+        $arFilter = array("IBLOCK_ID" => 11, "!PROPERTY_SEND_REVIEW" => 3,
             "IBLOCK_SECTION_ID" => $arSect["ID"], "ACTIVE" => "Y");
         $res = CIBlockElement::GetList(
             array(),

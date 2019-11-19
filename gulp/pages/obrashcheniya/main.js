@@ -142,6 +142,7 @@ function save(sv) {
       $('#edit_' + element[1]).css('display', 'block');
 
       $('#success_' + element[1]).html(result);
+      $('#error' + element[1]).html('');
 
       usrname_p.css('display', 'block');
       policy_p.css('display', 'block');
@@ -149,6 +150,32 @@ function save(sv) {
     }
   });
 }
+
+function send_ms(sd) {
+  let element = $(sd)[0].id.split('_');
+  $.ajax({
+    url: '/ajax/send_message.php',
+    data: {
+      ID: element[1],
+    },
+    type: 'post',
+    success: function(result) {
+      let result2 = JSON.parse(result);
+      console.log(result2);
+      let error = $('#error_' + element[1]);
+      let success = $('#success_' + element[1]);
+      if (result2.error !== undefined) {
+        error.text(result2.error);
+        success.text('');
+      } else if (result2.success !== undefined){
+        error.text('');
+        success.text(result2.success);
+      }
+    }
+  });
+}
+
+
 
 
 

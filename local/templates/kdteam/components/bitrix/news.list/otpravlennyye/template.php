@@ -31,10 +31,12 @@ foreach ($arResult["ITEMS"] as $arItem) {
     <div id="appeal_<?=$arItem["ID"]?>" class="obrashcheniya">
         <div class="obrashcheniya__btns">
             <div class="block__button_send">
-                <input class="smallMainBtn hidden_browse_input" id="<?= $arItem["ID"] ?>" type="file" multiple name="file">
-                <label for="<?= $arItem["ID"] ?>" class="btn btn-tertiary js-labelFile smallMainBtn">Прикрепить скан или фото</label>
+                <input class="smallMainBtn hidden_browse_input" id="<?= $arItem["ID"] ?>" type="file" multiple
+                       name="file">
+                <label for="<?= $arItem["ID"] ?>" class="btn btn-tertiary js-labelFile smallMainBtn">
+                    Прикрепить скан или фото</label>
             </div>
-            <a class="smallMainBtn block_button_mob" href="#">Отправить</a>
+            <a class="smallMainBtn block_button_mob" onclick="send_ms(this)" id="send_<?=$arItem["ID"]?>">Отправить</a>
         </div>
         <p id="error_<?= $arItem["ID"] ?>" class="error"></p>
         <p id="success_<?= $arItem["ID"] ?>" class="success"></p>
@@ -71,7 +73,8 @@ foreach ($arResult["ITEMS"] as $arItem) {
                                 ФИО
                             </div>
 
-                            <p id="usrname_<?=$arItem['ID']?>" class="obrashcheniya__content_left_center_item_text-full">
+                            <p id="usrname_<?=$arItem['ID']?>"
+                               class="obrashcheniya__content_left_center_item_text-full">
                                 <?php echo $arItem["PROPERTIES"]["FULL_NAME"]["VALUE"] ?></p>
 
                             <input style="display: none" type="text" name="usrname"
@@ -105,7 +108,8 @@ foreach ($arResult["ITEMS"] as $arItem) {
                                 Полис:
                             </div>
 
-                            <p id="policy_<?=$arItem['ID']?>" class="obrashcheniya__content_left_center__item_text-full">
+                            <p id="policy_<?=$arItem['ID']?>"
+                               class="obrashcheniya__content_left_center__item_text-full">
                                 <?php echo $arItem["PROPERTIES"]["POLICY"]["VALUE"] ?></p>
                             <input style="display: none"
                                    type="text"
