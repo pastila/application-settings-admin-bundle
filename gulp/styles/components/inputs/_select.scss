@@ -8,8 +8,8 @@
 
 .select-selected {
   position: relative;
-  display: flex;
-  align-items: center;
+  display: block;
+  text-overflow: ellipsis;
   padding: 1rem;
   background-color: $inputColor;
   height: 2rem;
