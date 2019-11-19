@@ -115,7 +115,7 @@ foreach ($arResult["ITEMS"] as $arItem) {
 
                         <div  class="obrashcheniya__content_left_center_item">
                             <div class="obrashcheniya__content_left_center_item_text">
-                                Дата посещения больницы:
+                                Дата оплаты медицинских услуг:
                             </div>
 
                             <p id="time_<?=$arItem['ID']?>" class="obrashcheniya__content_left_center__item_text-full">

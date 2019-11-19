@@ -161,8 +161,9 @@ label {
 
                     &_text {
                         flex: 1;
-                        max-width: 20rem;
-                        min-width: 20rem;
+                        max-width: 25rem;
+                        min-width: 25rem;
+                        margin-right: 1rem;
                     }
 
                     &_data {
@@ -189,8 +190,9 @@ label {
 
                         &_text {
                             flex: 1;
-                            max-width: 20rem;
-                            min-width: 20rem;
+                            max-width: 25rem;
+                            min-width: 25rem;
+                            margin-right: 1rem;
                         }
 
                         &_text-full {
