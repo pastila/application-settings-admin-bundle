@@ -14,7 +14,7 @@ if ($_POST) {
     $trans .= $data;
 
     $name = $_POST["head"];
-    $name .= "   " . $data;
+//    $name .= "   " . $data;
 
 
     $arFilter = Array("IBLOCK_ID" => 13, "NAME" => $email_user);
