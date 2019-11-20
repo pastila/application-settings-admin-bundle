@@ -52,7 +52,7 @@ while ($Section = $section->GetNext()) {
         $rsUser = CUser::GetByID($Section["UF_USER_ID"]);
         $arUser = $rsUser->Fetch();
 
-        $arSelect = Array("ID", "IBLOCK_ID", "NAME", "CREATED_DATE","IBLOCK_SECTION_ID", "PROPERTY_*");
+        $arSelect = Array("ID", "IBLOCK_ID", "NAME", "CREATED_DATE","IBLOCK_SECTION_ID", "PROPERTY_SEND_MESSAGE");
         $arFilter = Array("IBLOCK_ID" => 11 , "SECTION_ID" => $Section["ID"]);
         $Element = CIBlockElement::GetList(Array("created" => "asc"), $arFilter, false, false, $arSelect); //получили обращения юзера
 
@@ -60,27 +60,26 @@ while ($Section = $section->GetNext()) {
 
             $arFields = $obElement->GetFields();
 
+            if ($arFields["PROPERTY_SEND_MESSAGE_VALUE"]) {
+                $newDate = FormatDate("d.m.Y", MakeTimeStamp($arFields["PROPERTY_SEND_MESSAGE_VALUE"]));
+                $time = strtotime($newDate);
+                $Difference_time = (int)$_SERVER["REQUEST_TIME"] - (int)$time;
 
+                if ($Difference_time > 2592000) {    //больше чем 30 дней 2592000
+                    $url = "devdoc1.kdteam.su/feedback/index.php";
+                    $arEventFields = array(
+                        "MAIL" => $arUser["EMAIL"],
+                        "DATE_APPEAL" => $newDate,
+                        "URL_COMMENTS" => $url ,
+                    );
 
-            $newDate = FormatDate("d.m.Y", MakeTimeStamp($arFields["CREATED_DATE"]));
-            $time = strtotime($newDate);
-            $Difference_time = (int)$_SERVER["REQUEST_TIME"] - (int)$time;
+                    CEvent::Send("APPEAL_REMINDER", "s1", $arEventFields);
+                    $res =  $oElement->Update($Section["ID"],array("UF_CHEKED_SEND" => 1),false,true);
 
-            if($Difference_time > 2592000){    //больше чем 30 дней 2592000
-              $url = "devdoc1.kdteam.su/feedback/index.php";
-              $arEventFields = array(
-                "MAIL" => $arUser["EMAIL"],
-                "DATE_APPEAL" => $newDate,
-                "URL_COMMENTS" => $url ,
-            );
+                    if(!$res)
+                        echo $oElement->LAST_ERROR;
 
-                CEvent::Send("APPEAL_REMINDER", "s1", $arEventFields);
-               $res =  $oElement->Update($Section["ID"],array("UF_CHEKED_SEND" => 1),false,true);
-
-                if(!$res)
-                    echo $oElement->LAST_ERROR;
-
-
+                }
             }
 
         }
