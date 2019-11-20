@@ -108,7 +108,7 @@ $sort_url = $_GET;
             $filterorder = $sort_url["filterorder"];
         }
 
-        $order = Array("date_active_from" => "desc");
+        $order = Array("created" => "desc");
         $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
         $arFilter = Array("IBLOCK_ID" => 13, "ACTIVE" => "Y", $fiterby => $filterorder);
 
@@ -136,10 +136,10 @@ $sort_url = $_GET;
             }
             $city = CIBlockSection::GetByID($arProps["REGION"]["VALUE"])->GetNext();
             /* владик */
-//            $compani = CIBlockElement::GetByID($arProps["NAME_COMPANY"]["VALUE"])->GetNextElement()->GetProperties();
-//
-//            $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 100, 'height' => 100),
-//                BX_RESIZE_IMAGE_PROPORTIONAL, true);
+            $compani = CIBlockElement::GetByID($arProps["NAME_COMPANY"]["VALUE"])->GetNextElement()->GetProperties();
+
+            $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 100, 'height' => 100),
+                BX_RESIZE_IMAGE_PROPORTIONAL, true);
 
             ?>
             <div class="white_block">
