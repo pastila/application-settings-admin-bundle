@@ -67,7 +67,7 @@ $(document).ready(function() {
                  '    min-height: 170px;\n' +
                  '    font-size: 21px;\n' +
                  '    padding: 15px;">Регистрация и создание обращения успешно завершены.' +
-                 'для перехода в личный кабинет нажмите <a href="/obrashcheniya/" >сюда</a></div>',
+                 'Для перехода в личный кабинет нажмите <a href="/obrashcheniya/" >сюда</a></div>',
                  type: 'inline'
                }
              });
@@ -217,11 +217,11 @@ $(document).ready(function() {
         10);
     var msg = '';
     if (ratingValue > 1) {
-      msg = 'Thanks! You rated this ' + ratingValue + ' stars.';
+      msg = 'Спасибо! Ваша оценка ' + ratingValue + '.';
     }
     else {
-      msg = 'We will improve ourselves. You rated this ' + ratingValue +
-          ' stars.';
+      msg = 'Мы будем стараться лучше. Ваша оценка ' + ratingValue +
+          '.';
     }
     responseMessage(msg);
 

@@ -119,7 +119,8 @@
             #show-mnu.active + #menu {
                 position: absolute;
                 top: 100%;
-                left: 0;
+                left: auto;
+                right: 0;
                 display: flex;
                 flex-direction: column;
                 font-size: 1.2rem;
