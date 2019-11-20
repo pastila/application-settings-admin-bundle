@@ -35,19 +35,25 @@ $(document).ready(function() {
             error.text('');
             success.text(result2.SUCCESS);
             let r = result2.SRC;
-            n.find($(".js-img-add")).html(
-                '<div id="img_block_'+ result2.ID +'" class="obrashcheniya__content_sidebar_blocks">\n' +
-                '    <div class="obrashcheniya__content_sidebar_blocks_img">\n' +
-                '        <img src="'+ r +'">\n' +
-                '    </div>\n' +
-                '    <div class="obrashcheniya__content_sidebar_blocks_text">\n' +
-                '        <div class="obrashcheniya__content_sidebar_blocks_text_title">Загруженный документ</div>\n' +
-                '        <a id="download_img" download href="'+ r +'"\n' +
-                '           class="obrashcheniya__content_sidebar_blocks_text_link">скачать</a>\n' +
-                '        <a href="#" rel="nofollow" onclick="del(this)" id="delete_'+ result2.ID +'" class="delete_img_js">Удалить</a>\n' +
-                '    </div>\n' +
-                '</div>'
-            );
+            console.log(result2);
+            if (n.find($(".js-img-add")).children().length < 5) {
+              n.find($(".js-img-add")).append(
+                  '<div id="img_block_'+ result2.ID +'_img_' + length +'" class="obrashcheniya__content_sidebar_blocks">\n' +
+                  '    <div class="obrashcheniya__content_sidebar_blocks_img">\n' +
+                  '        <img src="'+ r +'">\n' +
+                  '    </div>\n' +
+                  '    <div class="obrashcheniya__content_sidebar_blocks_text">\n' +
+                  '        <div class="obrashcheniya__content_sidebar_blocks_text_title">Загруженный документ</div>\n' +
+                  '        <a id="download_img" download href="'+ r +'"\n' +
+                  '           class="obrashcheniya__content_sidebar_blocks_text_link">скачать</a>\n' +
+                  '        <a href="#" rel="nofollow" onclick="del(this)" id="delete_'+ result2.ID +'" class="delete_img_js">Удалить</a>\n' +
+                  '    </div>\n' +
+                  '</div>'
+              );
+            } else {
+              error.text('Вы превысили лимит по загруженным картинкам');
+              success.text('');
+            }
           }
         }
       }
