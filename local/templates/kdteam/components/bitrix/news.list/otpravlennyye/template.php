@@ -154,7 +154,7 @@ foreach ($arResult["ITEMS"] as $arItem) {
                                        class="obrashcheniya__content_sidebar_blocks_text_link">
                                         скачать
                                     </a>
-                                    <a href="#" rel="nofollow" id="delete_<?= $arItem['ID'] ?>" onclick="del(this)"
+                                    <a rel="nofollow" id="delete_<?= $arItem['ID'] ?>_img_1" onclick="del(this)"
                                        class="delete_img_js">удалить
                                     </a>
                                 </div>

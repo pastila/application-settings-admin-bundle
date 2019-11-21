@@ -39,7 +39,7 @@ $(document).ready(function() {
               success.text(result2.SUCCESS);
               let r = result2.SRC;
               n.find($(".js-img-add")).append(
-                  '<div id="img_block_'+ result2.ID +'_img_' + length +'" class="obrashcheniya__content_sidebar_blocks">\n' +
+                  '<div id="img_block_'+ result2.ID +'" class="obrashcheniya__content_sidebar_blocks">\n' +
                   '    <div class="obrashcheniya__content_sidebar_blocks_img">\n' +
                   '        <img src="'+ r +'">\n' +
                   '    </div>\n' +
@@ -47,7 +47,7 @@ $(document).ready(function() {
                   '        <div class="obrashcheniya__content_sidebar_blocks_text_title">Загруженный документ</div>\n' +
                   '        <a id="download_img" download href="'+ r +'"\n' +
                   '           class="obrashcheniya__content_sidebar_blocks_text_link">скачать</a>\n' +
-                  '        <a href="#" rel="nofollow" onclick="del(this)" id="delete_'+ result2.ID +'_img_' + length +'" class="delete_img_js">Удалить</a>\n' +
+                  '        <a href="#" rel="nofollow" onclick="del(this)" id="delete_'+ result2.ID +'" class="delete_img_js">удалить</a>\n' +
                   '    </div>\n' +
                   '</div>'
               );
@@ -63,17 +63,17 @@ $(document).ready(function() {
 });
 
 function del(f) {
-  console.log(f);
-  console.log($(f));
+
   let element = $(f)[0].id;
   $.ajax({
     url: '/ajax/img_delete.php',
     data: {ID: element},
     type: 'post',
     success: function(result) {
-      $('#img_block_' + result).remove();
-      $('#success_' + result).text('Файл успешно удален!');
-      $('#error_' + result).text('');
+      let r = JSON.parse(result);
+      $('#img_block_' + r.ID).remove();
+      $('#success_' + r.ID_EL).text('Файл успешно удален!');
+      $('#error_' + r.ID_EL).text('');
     }
   });
 }

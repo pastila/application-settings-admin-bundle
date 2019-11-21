@@ -17,4 +17,8 @@ if ($ID[3] === 1) {
         array("IMG_" . $ID[3] => array('del' => 'Y'))
     );
 }
-echo $ID[1] . "_img_" . $ID[3];
+
+$result['ID'] = $ID[1] . "_img_" . $ID[3];
+$result['ID_EL'] = $ID[1];
+
+exit(json_encode($result));

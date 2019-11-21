@@ -23,14 +23,19 @@ if (isset($_FILES['import_file']['tmp_name'])) {
 
         if (empty($arFields['PREVIEW_PICTURE'])) {
             $picture = 'PREVIEW_PICTURE';
+            $i = 1;
         } elseif (empty($arFields['PROPERTY_IMG_2_VALUE'])) {
             $key = 'IMG_2';
+            $i = 2;
         } elseif (empty($arFields['PROPERTY_IMG_3_VALUE'])) {
             $key = 'IMG_3';
+            $i = 3;
         } elseif (empty($arFields['PROPERTY_IMG_4_VALUE'])) {
             $key = 'IMG_4';
+            $i = 4;
         } elseif (empty($arFields['PROPERTY_IMG_5_VALUE'])) {
             $key = 'IMG_5';
+            $i = 5;
         }
         if ($picture) {
             $res = $el->Update($_POST['id_elem'], array("PREVIEW_PICTURE" => $_FILES['import_file']));
@@ -56,7 +61,7 @@ if (isset($_FILES['import_file']['tmp_name'])) {
             }
         }
         $result['SRC'] = $arFile["SRC"];
-        $result['ID'] = $_POST['id_elem'];
+        $result['ID'] = $_POST['id_elem'] . '_img_' . $i;
         $result['RES'] = $res;
         $result['SUCCESS'] = "Файл успешно загружен!";
     } else {
