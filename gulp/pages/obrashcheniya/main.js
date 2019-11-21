@@ -151,7 +151,7 @@ function save(sv) {
       $('#edit_' + element[1]).css('display', 'block');
 
       $('#success_' + element[1]).html(result);
-      $('#error' + element[1]).html('');
+      $('#error_' + element[1]).html('');
 
       usrname_p.css('display', 'block');
       policy_p.css('display', 'block');

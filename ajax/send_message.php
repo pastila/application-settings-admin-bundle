@@ -88,7 +88,8 @@ if (CModule::IncludeModule("iblock")) {
                             array("SEND_REVIEW" => 3,
                                 "SEND_MESSAGE" => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time()))
                         );
-                        $result['success'] = 'Ваше обращение успешно отправлено';
+                        $result['success'] = 'Обращение успешно отправлено в страховую компанию.
+                         Ваше обращение находится в личном кабинете «Отправленные»';
                     }
 
                 } else {
