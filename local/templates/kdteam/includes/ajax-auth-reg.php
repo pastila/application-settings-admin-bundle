@@ -9,9 +9,9 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.
     </div>
 
     <div class="popup__wrap">
-        <div class="register_before_review">
-            Для созданя образщения ван нужно зарегестрироваться
-        </div>
+        <p class="register_before_review error hidden">
+            Для создания обращение вам необходимо зарегистрироваться
+        </p>
         <div id="auth__form" class="popup__wrap_tabs">
             <div class="popup__wrap_tabs_title">
                 Регистрация
@@ -35,7 +35,6 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.
                 <input id="phone" type="tel" name="phone" data-inputmask="'mask': '+38 099 999 99 99'" required>
             </div>
         </div>
-
         <div class="popup__wrap_middle">
             <!-- Input -->
             <div class="input__wrap">
@@ -65,7 +64,7 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.
                 <label class="input__wrap_label">Укажите свою страховую компанию</label>
                 <input id="company" type="text" name="company" required>
 
-                <div class="search_company"></div>
+                <div class="search_company scrollbar"></div>
             </div>
 
         </div>

@@ -6,19 +6,62 @@ CModule::IncludeModule("iblock");
 if (isset($_FILES['import_file']['tmp_name'])) {
     // проверяем, можно ли загружать изображение
     $check = can_upload($_FILES['import_file']);
+    if ($check === true) {
 
-    if($check === true){
-        // загружаем изображение на сервер
-        $el = new CIBlockElement;
-        $res = $el->Update($_POST['id_elem'], array("PREVIEW_PICTURE" => $_FILES['import_file']));
-        if ($res > 0) {
-            $rs = CIBlockElement::GetByID($_POST['id_elem']);
-            if ($arElem = $rs->GetNext()) {
-                $arFile = CFile::GetFileArray($arElem["PREVIEW_PICTURE"]);
-            }
-            $result['SRC'] = $arFile["SRC"];
+        $arSelect = array("ID", "IBLOCK_ID", "PREVIEW_PICTURE", "PROPERTY_IMG_2", "PROPERTY_IMG_3", "PROPERTY_IMG_4",
+            "PROPERTY_IMG_5");
+        $arFilter = array("IBLOCK_ID" => 11, "ID" => $_POST['id_elem']);
+        $res = CIBlockElement::GetList(array(), $arFilter, false, false, $arSelect);
+        if ($ob = $res->GetNextElement()) {
+            $arFields = $ob->GetFields();
         }
-        $result['ID'] = $_POST['id_elem'];
+
+
+        // загружаем изображение на сервер
+
+        $el = new CIBlockElement;
+
+        if (empty($arFields['PREVIEW_PICTURE'])) {
+            $picture = 'PREVIEW_PICTURE';
+            $i = 1;
+        } elseif (empty($arFields['PROPERTY_IMG_2_VALUE'])) {
+            $key = 'IMG_2';
+            $i = 2;
+        } elseif (empty($arFields['PROPERTY_IMG_3_VALUE'])) {
+            $key = 'IMG_3';
+            $i = 3;
+        } elseif (empty($arFields['PROPERTY_IMG_4_VALUE'])) {
+            $key = 'IMG_4';
+            $i = 4;
+        } elseif (empty($arFields['PROPERTY_IMG_5_VALUE'])) {
+            $key = 'IMG_5';
+            $i = 5;
+        }
+        if ($picture) {
+            $res = $el->Update($_POST['id_elem'], array("PREVIEW_PICTURE" => $_FILES['import_file']));
+            if ($res > 0) {
+                $rs = CIBlockElement::GetByID($_POST['id_elem']);
+                if ($arElem = $rs->GetNext()) {
+                    $arFile = CFile::GetFileArray($arElem['PREVIEW_PICTURE']);
+
+                }
+            }
+        }
+        if ($key) {
+            $result[$key] = true;
+            CIBlockElement::SetPropertyValuesEx(
+                $_POST['id_elem'],
+                11,
+                array($key => $_FILES['import_file'])
+            );
+
+            $db_props = CIBlockElement::GetProperty(11, $_POST['id_elem'], array(), array("CODE" => $key));
+            if ($ar_props = $db_props->Fetch()) {
+                $arFile = CFile::GetFileArray($ar_props['VALUE']);
+            }
+        }
+        $result['SRC'] = $arFile["SRC"];
+        $result['ID'] = $_POST['id_elem'] . '_img_' . $i;
         $result['RES'] = $res;
         $result['SUCCESS'] = "Файл успешно загружен!";
     } else {

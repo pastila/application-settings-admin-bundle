@@ -21,154 +21,260 @@ $this->setFrameMode(true);
 
 
 <?php
-$i = 0;
-foreach ($arResult["ITEMS"] as $arItem) {
-    $i++;
-    $date = explode(" ", $arItem['TIMESTAMP_X']);
-    $hospital = htmlspecialchars_decode($arItem["PROPERTIES"]["HOSPITAL"]["VALUE"]);
-    ?>
-    <!-- Обращение -->
-    <div class="obrashcheniya">
-        <div class="obrashcheniya__btns">
-            <div class="block__button_send">
-                <input class="smallMainBtn hidden_browse_input" id="<?= $arItem["ID"] ?>" type="file" multiple name="file">
-                <label for="<?= $arItem["ID"] ?>" class="btn btn-tertiary js-labelFile smallMainBtn">Прикрепить скан или фото</label>
-            </div>
-            <a class="smallMainBtn block_button_mob" href="#">Отправить</a>
-        </div>
-        <p id="error_<?= $arItem["ID"] ?>" class="error"></p>
-        <p id="success_<?= $arItem["ID"] ?>" class="success"></p>
-        <div id="card_<?= $arItem["ID"] ?>" class="card">
-            <!-- Контент -->
-            <div class="obrashcheniya__content">
-                <!-- Контент левая сторона -->
-                <div class="obrashcheniya__content_left">
-
-                    <!-- Внутри контента Верхняя часть -->
-                    <div class="obrashcheniya__content_left_top">
-                        <div class="obrashcheniya__content_left_top_text">
-                            Обращение № <?php echo $i ?>
-                        </div>
-
-                        <div class="obrashcheniya__content_left_top_data">
-                            дата: <?php echo $date[0] ?>
-                        </div>
-
-                        <div class="obrashcheniya__content_left_top_link">
-                            <a href="#">Редактировать</a>
-
-                            <a href="#">удалить</a>
-                        </div>
-                    </div>
-
-                    <!-- Внутри контента центральная часть -->
-                    <div class="obrashcheniya__content_left_center">
-
-                        <!-- Item ы -->
-                        <div class="obrashcheniya__content_left_center_item">
-                            <div class="obrashcheniya__content_left_center_item_text">
-                                Фио
-                            </div>
-
-                            <p class="obrashcheniya__content_left_center_item_text-full">
-                                <?php echo $arItem["PROPERTIES"]["FULL_NAME"]["VALUE"] ?>
-                            </p>
-                        </div>
-
-                        <!-- Item ы -->
-                        <div class="obrashcheniya__content_left_center_item">
-                            <div class="obrashcheniya__content_left_center_item_text">
-                                Больница:
-                            </div>
-
-                            <p class="obrashcheniya__content_left_center_item_text-full">
-                                <?php echo $hospital ?>
-                            </p>
-                        </div>
-
-                        <!-- Item ы -->
-                        <div class="obrashcheniya__content_left_center_item">
-                            <div class="obrashcheniya__content_left_center_item_text">
-                                Адрес:
-                            </div>
-
-                            <p class="obrashcheniya__content_left_center__item_text-full">
-                                <?php echo $arItem["PROPERTIES"]["ADDRESS"]["VALUE"] ?>
-                            </p>
-                        </div>
-
-                        <div class="obrashcheniya__content_left_center_item">
-                            <div class="obrashcheniya__content_left_center_item_text">
-                                Полис:
-                            </div>
-
-                            <p class="obrashcheniya__content_left_center__item_text-full">
-                                <?php echo $arItem["PROPERTIES"]["POLICY"]["VALUE"] ?>
-                            </p>
-                        </div>
-
-                        <div class="obrashcheniya__content_left_center_item">
-                            <div class="obrashcheniya__content_left_center_item_text">
-                                Дата посещения больницы:
-                            </div>
-
-                            <p class="obrashcheniya__content_left_center__item_text-full">
-                                <?php echo $arItem["PROPERTIES"]["VISIT_DATE"]["VALUE"] ?>
-                            </p>
-                        </div>
-                    </div>
+if (count($arResult["ITEMS"]) > 0) {
+    foreach ($arResult["ITEMS"] as $arItem) {
+        $date = explode(" ", $arItem['TIMESTAMP_X']);
+        $hospital = htmlspecialchars_decode($arItem["PROPERTIES"]["HOSPITAL"]["VALUE"]);
+        ?>
+        <!-- Обращение -->
+        <div id="appeal_<?=$arItem["ID"]?>" class="obrashcheniya">
+            <div class="obrashcheniya__btns">
+                <div class="block__button_send">
+                    <input class="smallMainBtn hidden_browse_input" id="<?= $arItem["ID"] ?>" type="file" multiple
+                           name="file">
+                    <label for="<?= $arItem["ID"] ?>" class="btn btn-tertiary js-labelFile smallMainBtn">
+                        Прикрепить скан или фото</label>
                 </div>
+                <a class="smallMainBtn block_button_mob" onclick="send_ms(this)" id="send_<?=$arItem["ID"]?>">Отправить</a>
+            </div>
+            <p id="error_<?= $arItem["ID"] ?>" class="error"></p>
+            <p id="success_<?= $arItem["ID"] ?>" class="success"></p>
+            <div id="card_<?= $arItem["ID"] ?>" class="card">
+                <!-- Контент -->
+                <div class="obrashcheniya__content">
+                    <!-- Контент левая сторона -->
+                    <div class="obrashcheniya__content_left">
 
-                <!-- Контент правая сторона -->
-                <div class="obrashcheniya__content_sidebar">
-                    <div class="obrashcheniya__content_sidebar_title">
-                        Прикрепленные файлы
-                    </div>
+                        <!-- Внутри контента Верхняя часть -->
+                        <div class="obrashcheniya__content_left_top">
+                            <div class="obrashcheniya__content_left_top_text">
+                                Обращение № <?php echo $arItem['ID'] ?>
+                            </div>
 
-                    <!-- Item Sidebar -->
-                    <div class="js-img-add block__items_flex">
-                        <?php if (!empty($arItem["PREVIEW_PICTURE"]["SRC"])) { ?>
-                            <div id="img_block_<?= $arItem['ID'] ?>" class="obrashcheniya__content_sidebar_blocks">
-                                <div class="obrashcheniya__content_sidebar_blocks_img">
-                                    <img src="<?= $arItem["PREVIEW_PICTURE"]["SRC"] ?>" alt="">
+                            <div class="obrashcheniya__content_left_top_data">
+                                дата: <?php echo $date[0] ?>
+                            </div>
+
+                            <div class="obrashcheniya__content_left_top_link">
+                                <a onclick="edit(this)" id="edit_<?=$arItem["ID"]?>">Редактировать</a>
+                                <a style="display: none" onclick="save(this)" id="save_<?=$arItem["ID"]?>">Сохранить</a>
+
+                                <a onclick="delete_el(this)" id="delete_el_<?=$arItem["ID"]?>">Удалить</a>
+                            </div>
+                        </div>
+
+                        <!-- Внутри контента центральная часть -->
+                        <div class="obrashcheniya__content_left_center">
+
+                            <!-- Item ы -->
+                            <div class="obrashcheniya__content_left_center_item">
+                                <div class="obrashcheniya__content_left_center_item_text">
+                                    ФИО
                                 </div>
 
-                                <div class="obrashcheniya__content_sidebar_blocks_text">
-                                    <div class="obrashcheniya__content_sidebar_blocks_text_title">
-                                        Загруженный документ
+                                <p id="usrname_<?=$arItem['ID']?>"
+                                   class="obrashcheniya__content_left_center_item_text-full">
+                                    <?php echo $arItem["PROPERTIES"]["FULL_NAME"]["VALUE"] ?></p>
+
+                                <input style="display: none" type="text" name="usrname"
+                                       value="<?=$arItem["PROPERTIES"]["FULL_NAME"]["VALUE"]?>">
+                            </div>
+
+                            <!-- Item ы -->
+                            <div class="obrashcheniya__content_left_center_item">
+                                <div class="obrashcheniya__content_left_center_item_text">
+                                    Больница:
+                                </div>
+
+                                <p class="obrashcheniya__content_left_center_item_text-full">
+                                    <?php echo $hospital ?>
+                                </p>
+                            </div>
+
+                            <!-- Item ы -->
+                            <div class="obrashcheniya__content_left_center_item">
+                                <div class="obrashcheniya__content_left_center_item_text">
+                                    Адрес:
+                                </div>
+
+                                <p class="obrashcheniya__content_left_center__item_text-full">
+                                    <?php echo $arItem["PROPERTIES"]["ADDRESS"]["VALUE"] ?>
+                                </p>
+                            </div>
+
+                            <div  class="obrashcheniya__content_left_center_item">
+                                <div class="obrashcheniya__content_left_center_item_text">
+                                    Полис:
+                                </div>
+
+                                <p id="policy_<?=$arItem['ID']?>"
+                                   class="obrashcheniya__content_left_center__item_text-full">
+                                    <?php echo $arItem["PROPERTIES"]["POLICY"]["VALUE"] ?></p>
+                                <input style="display: none"
+                                       type="text"
+                                       name="policy"
+                                       value="<?=$arItem["PROPERTIES"]["POLICY"]["VALUE"]?>">
+                            </div>
+
+                            <div  class="obrashcheniya__content_left_center_item">
+                                <div class="obrashcheniya__content_left_center_item_text">
+                                    Дата оплаты медицинских услуг:
+                                </div>
+
+                                <p id="time_<?=$arItem['ID']?>" class="obrashcheniya__content_left_center__item_text-full">
+                                    <?php echo $arItem["PROPERTIES"]["VISIT_DATE"]["VALUE"]?></p>
+                                <input style="display: none" class="datepicker-here"
+                                       type="text"
+                                       name="time"
+                                       value="<?=$arItem["PROPERTIES"]["VISIT_DATE"]["VALUE"]?>">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Контент правая сторона -->
+                    <div class="obrashcheniya__content_sidebar">
+                        <div class="obrashcheniya__content_sidebar_title">
+                            Прикрепленные файлы
+                        </div>
+
+                        <!-- Item Sidebar -->
+                        <div class="js-img-add block__items_flex">
+                            <?php if (!empty($arItem["PREVIEW_PICTURE"]["SRC"])) { ?>
+                                <div id="img_block_<?= $arItem['ID'] ?>_img_1" class="obrashcheniya__content_sidebar_blocks">
+                                    <div class="obrashcheniya__content_sidebar_blocks_img">
+                                        <img src="<?= $arItem["PREVIEW_PICTURE"]["SRC"] ?>" alt="">
                                     </div>
-                                    <a id="download_img" download href="<?= $arItem["PREVIEW_PICTURE"]["SRC"] ?>"
-                                       class="obrashcheniya__content_sidebar_blocks_text_link">
-                                        скачать
-                                    </a>
-                                    <a href="#" rel="nofollow" id="delete_<?= $arItem['ID'] ?>" onclick="del(this)"
-                                       class="delete_img_js">удалить
-                                    </a>
+
+                                    <div class="obrashcheniya__content_sidebar_blocks_text">
+                                        <div class="obrashcheniya__content_sidebar_blocks_text_title">
+                                            Загруженный документ
+                                        </div>
+                                        <a id="download_img" download href="<?= $arItem["PREVIEW_PICTURE"]["SRC"] ?>"
+                                           class="obrashcheniya__content_sidebar_blocks_text_link">
+                                            скачать
+                                        </a>
+                                        <a rel="nofollow" id="delete_<?= $arItem['ID'] ?>_img_1" onclick="del(this)"
+                                           class="delete_img_js">удалить
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                        <?php } ?>
-                    </div>
+                            <?php } ?>
+                            <?php if (!empty($arItem["PROPERTIES"]["IMG_2"]['VALUE'])) { ?>
+                                <div id="img_block_<?= $arItem['ID'] ?>_img_2" class="obrashcheniya__content_sidebar_blocks">
+                                    <div class="obrashcheniya__content_sidebar_blocks_img">
+                                        <img src="<?=CFile::GetFileArray($arItem["PROPERTIES"]["IMG_2"]['VALUE'])["SRC"]?>"
+                                             alt="">
+                                    </div>
 
-                    <div class="obrashcheniya__content_sidebar_blocks">
+                                    <div class="obrashcheniya__content_sidebar_blocks_text">
+                                        <div class="obrashcheniya__content_sidebar_blocks_text_title">
+                                            Загруженный документ
+                                        </div>
+                                        <a id="download_img" download
+                                           href="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_2"]['VALUE'])["SRC"] ?>"
+                                           class="obrashcheniya__content_sidebar_blocks_text_link">
+                                            скачать
+                                        </a>
+                                        <a rel="nofollow" id="delete_<?= $arItem['ID'] ?>_img_2" onclick="del(this)"
+                                           class="delete_img_js">удалить
+                                        </a>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                            <?php if (!empty($arItem["PROPERTIES"]["IMG_3"]['VALUE'])) { ?>
+                                <div id="img_block_<?= $arItem['ID'] ?>_img_3" class="obrashcheniya__content_sidebar_blocks">
+                                    <div class="obrashcheniya__content_sidebar_blocks_img">
+                                        <img src="<?=CFile::GetFileArray($arItem["PROPERTIES"]["IMG_3"]['VALUE'])["SRC"]?>"
+                                             alt="">
+                                    </div>
 
-                        <div class="obrashcheniya__content_sidebar_blocks_img">
-                            <img src="/local/templates/kdteam/images/svg/pdf_icon.svg" alt="">
+                                    <div class="obrashcheniya__content_sidebar_blocks_text">
+                                        <div class="obrashcheniya__content_sidebar_blocks_text_title">
+                                            Загруженный документ
+                                        </div>
+                                        <a id="download_img" download
+                                           href="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_3"]['VALUE'])["SRC"] ?>"
+                                           class="obrashcheniya__content_sidebar_blocks_text_link">
+                                            скачать
+                                        </a>
+                                        <a rel="nofollow" id="delete_<?= $arItem['ID'] ?>_img_3" onclick="del(this)"
+                                           class="delete_img_js">удалить
+                                        </a>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                            <?php if (!empty($arItem["PROPERTIES"]["IMG_4"]['VALUE'])) { ?>
+                                <div id="img_block_<?= $arItem['ID'] ?>_img_4" class="obrashcheniya__content_sidebar_blocks">
+                                    <div class="obrashcheniya__content_sidebar_blocks_img">
+                                        <img src="<?=CFile::GetFileArray($arItem["PROPERTIES"]["IMG_4"]['VALUE'])["SRC"]?>"
+                                             alt="">
+                                    </div>
+
+                                    <div class="obrashcheniya__content_sidebar_blocks_text">
+                                        <div class="obrashcheniya__content_sidebar_blocks_text_title">
+                                            Загруженный документ
+                                        </div>
+                                        <a id="download_img" download
+                                           href="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_4"]['VALUE'])["SRC"] ?>"
+                                           class="obrashcheniya__content_sidebar_blocks_text_link">
+                                            скачать
+                                        </a>
+                                        <a rel="nofollow" id="delete_<?= $arItem['ID'] ?>_img_4" onclick="del(this)"
+                                           class="delete_img_js">удалить
+                                        </a>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                            <?php if (!empty($arItem["PROPERTIES"]["IMG_5"]['VALUE'])) { ?>
+                                <div id="img_block_<?= $arItem['ID'] ?>_img_5" class="obrashcheniya__content_sidebar_blocks">
+                                    <div class="obrashcheniya__content_sidebar_blocks_img">
+                                        <img src="<?=CFile::GetFileArray($arItem["PROPERTIES"]["IMG_5"]['VALUE'])["SRC"]?>"
+                                             alt="">
+                                    </div>
+
+                                    <div class="obrashcheniya__content_sidebar_blocks_text">
+                                        <div class="obrashcheniya__content_sidebar_blocks_text_title">
+                                            Загруженный документ
+                                        </div>
+                                        <a id="download_img" download
+                                           href="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_5"]['VALUE'])["SRC"] ?>"
+                                           class="obrashcheniya__content_sidebar_blocks_text_link">
+                                            скачать
+                                        </a>
+                                        <a rel="nofollow" id="delete_<?= $arItem['ID'] ?>_img_5" onclick="del(this)"
+                                           class="delete_img_js">удалить
+                                        </a>
+                                    </div>
+                                </div>
+                            <?php } ?>
                         </div>
 
-                        <div class="obrashcheniya__content_sidebar_blocks_text">
-                            <div class="obrashcheniya__content_sidebar_blocks_text_title">
-                                Заявление на возврат
+                        <div class="obrashcheniya__content_sidebar_blocks">
+
+                            <div class="obrashcheniya__content_sidebar_blocks_img">
+                                <img src="/local/templates/kdteam/images/svg/pdf_icon.svg" alt="">
                             </div>
 
-                            <a class="obrashcheniya__content_sidebar_blocks_text_link">
-                                скачать
-                            </a>
-                        </div>
+                            <div class="obrashcheniya__content_sidebar_blocks_text">
+                                <div class="obrashcheniya__content_sidebar_blocks_text_title">
+                                    Заявление на возврат
+                                </div>
 
+                                <a class="obrashcheniya__content_sidebar_blocks_text_link">
+                                    скачать
+                                </a>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    <?php }
+} else { ?>
+    <div class="obrashcheniya">
+        <p> У вас нету обращений. Пройдите проверку своего диагноза
+            <a class="link-underline" href="/forma-obrashenija/">здесь</a>.</p>
     </div>
 <?php } ?>
 

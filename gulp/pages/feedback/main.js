@@ -13,12 +13,18 @@ window.addEventListener('DOMContentLoaded', () => {
         /* For each element, create a new DIV that will contain the option list: */
         b = document.createElement("DIV");
         b.setAttribute("class", "select-items select-hide");
+        b.setAttribute("onchange", "select-items select-hide");
+
         for (j = 1; j < selElmnt.length; j++) {
 
             /* For each option in the original select element,
             create a new DIV that will act as an option item: */
             c = document.createElement("DIV");
+
             c.innerHTML = selElmnt.options[j].innerHTML;
+            c.innerVALUE= selElmnt.options[j].value;
+
+            c.setAttribute("data-value",c.innerVALUE);
 
             c.addEventListener("click", function (e) {
                 /* When an item is clicked, update the original select box,
@@ -31,6 +37,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     if (s.options[i].innerHTML == this.innerHTML) {
                         s.selectedIndex = i;
                         h.innerHTML = this.innerHTML;
+
 
                         if (h.clientWidth < 350) {
                             const str = h.textContent.slice(0, 20) + "...";
@@ -45,6 +52,7 @@ window.addEventListener('DOMContentLoaded', () => {
                             y[k].removeAttribute("class");
                         }
                         this.setAttribute("class", "same-as-selected");
+
                         break;
                     }
                 }
@@ -116,4 +124,81 @@ window.addEventListener('DOMContentLoaded', () => {
 
     showComment();
 
+
+$(document).on("click",".select-items div",function() {
+   let url = "/feedback/"+ $(this).attr("data-value");
+  window.open(url,"_self")
 })
+    $(".button-comments").click(function(e) {
+    let error = [];
+    e.preventDefault();
+    var  ID = $(this).attr("data-id-comment");
+    let id_review  = $(this).attr("data-id-comment");
+    let text_comment = $("[data-id-comment="+ID+"]").val();
+    if(text_comment == ""){
+      $(this).siblings(".danger").css({"display":"block"});
+      error.push("text");
+    }
+    let data = {
+      "id_review":id_review,
+      "message":text_comment,
+    };
+
+      if(error.length == 0) {
+        $.ajax({
+          url: "/ajax/add-comment.php",
+          type: "POST",
+          data: data,
+          beforeSend: function() {
+          }
+
+        }).done(function(msg) {
+          if (msg == 1) {
+             location.reload();
+          }
+        })
+      }
+  })
+
+
+  $(".button-cited").click(function(e) {
+    let error = [];
+    e.preventDefault();
+    var  ID = $(this).attr("data-id-cited");
+    let id_comment  = $(this).attr("data-id-cited");
+
+    let text_cited = $("[data-id-cited="+ID+"]").val();
+    if(text_cited == ""){
+      $(this).siblings(".danger").css({"display":"block"});
+      error.push("text");
+    }
+    let data = {
+      "id_comment":id_comment,
+      "message":text_cited,
+    };
+
+ if(error.length == 0) {
+   $.ajax({
+     url: "/ajax/add_cited.php",
+     type: "POST",
+     data: data,
+     beforeSend: function() {
+     }
+
+   }).done(function(msg) {
+     if (msg == 1) {
+       location.reload();
+     }
+   })
+ }
+  })
+});
+
+
+$(document).ready(function() {
+
+
+  $('.toggle_comment_dropdown').on('click', function (e) {
+    $(this).parent().toggleClass('openedBlock');
+  });
+});

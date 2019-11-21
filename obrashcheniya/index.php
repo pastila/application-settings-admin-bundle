@@ -24,6 +24,9 @@ if ($USER->IsAuthorized()) { ?>
     }
 
     if ($arSection = $rsSections->GetNext()) {
+        global $arrFilter;
+        $arrFilter = array("!PROPERTY_SEND_REVIEW" => 3);
+
         $APPLICATION->IncludeComponent(
             "bitrix:news.list",
             "otpravlennyye",
@@ -35,6 +38,7 @@ if ($USER->IsAuthorized()) { ?>
                 "AJAX_MODE" => "Y",
                 "IBLOCK_TYPE" => "",
                 "IBLOCK_ID" => "11",
+                "FILTER_NAME" => "arrFilter",
                 "NEWS_COUNT" => "100",
                 "SORT_BY1" => "SORT",
                 "SORT_ORDER1" => "ASC",

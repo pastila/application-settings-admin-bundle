@@ -119,7 +119,8 @@
             #show-mnu.active + #menu {
                 position: absolute;
                 top: 100%;
-                left: 0;
+                left: auto;
+                right: 0;
                 display: flex;
                 flex-direction: column;
                 font-size: 1.2rem;
@@ -162,13 +163,28 @@
 }
 
 #auth-form-reg {
-    max-width: 87rem;
+    max-width: 105rem;
 
     .mainBtn {
         width: 100%;
     }
 }
-
+#auth-form-reg{
+    .search_company{
+        max-height: 20rem;
+        position: absolute;
+        z-index: 100;
+        top: 100%;
+        .primer_company {
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 1rem 2rem;
+            &:hover{
+                background-color: #e8ebef;
+            }
+        }
+    }
+}
 #auth-form-login {
     max-width: 50rem;
 

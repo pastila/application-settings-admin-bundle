@@ -21,13 +21,6 @@
 // Popup
 @import '../../node_modules/magnific-popup/dist/magnific-popup.css';
 
-* {
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer */
-   -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
-  -webkit-user-select: none; /* Chrome, Safari, and Opera */
-  -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
-}
 
 // Styles for all pages
 html {
@@ -101,7 +94,9 @@ main.main {
 .danger {
     color: red;
 }
-
+.hidden {
+    display:none;
+}
 .color-main {
     background: $mainColor;
 }
@@ -128,5 +123,137 @@ main.main {
         position: relative;
         padding: 3rem;
         margin-bottom: 4rem;
+    }
+}
+.error{
+    color: red;
+}
+.input__wrap{
+    position: relative;
+}
+/* Customize website's scrollbar like Mac OS
+Not supports in Firefox and IE */
+
+/* total width */
+.scrollbar::-webkit-scrollbar {
+    background-color:#fff;
+    width:16px
+}
+
+/* background of the scrollbar except button or resizer */
+.scrollbar::-webkit-scrollbar-track {
+    background-color:#fff
+}
+
+/* scrollbar itself */
+.scrollbar::-webkit-scrollbar-thumb {
+    background-color:#babac0;
+    border-radius:16px;
+    border:5px solid #fff
+}
+.scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color:#a0a0a5;
+    border:4px solid #f4f4f4
+}
+
+/* set button(top and bottom of the scrollbar) */
+.scrollbar::-webkit-scrollbar-button {
+    display:none
+}
+
+/* div box */
+.scrollbar {
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #fff;
+}
+.custom-select{
+    .select-items{
+        overflow-x: hidden;
+        overflow-y: auto;
+        max-height: 33rem;
+        &::-webkit-scrollbar {
+            background-color:#fff;
+            width:16px
+        }
+        &::-webkit-scrollbar-track {
+            background-color:#fff
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color:#babac0;
+            border-radius:16px;
+            border:5px solid #fff
+        }
+        &::-webkit-scrollbar-thumb:hover {
+            background-color:#a0a0a5;
+            border:4px solid #f4f4f4
+        }
+        &::-webkit-scrollbar-button {
+            display:none
+        }
+    }
+}
+//pagination
+.title_count_page{
+    opacity: .5;
+    font-size: 1.6rem;
+    display: block;
+    padding: 0 .5rem;
+    margin-bottom: 1rem;
+}
+.block_pagen{
+    display: block;
+    margin-bottom: 2rem;
+    a{
+        font-size: 1.4rem;
+        display: inline-block;
+        line-height: normal;
+        transition: all .4s;
+        padding: .5rem;
+        &:hover{
+            background-color: #c5d2e0;
+            color: #3a4552;
+        }
+    }
+    b{
+        background-color: #3a4552;
+        color: #fff;
+        pointer-events: none;
+        font-size: 1.4rem;
+        display: inline-block;
+        line-height: normal;
+        padding: .5rem 1rem;
+    }
+}
+textarea{
+    resize: none;
+}
+.custom_styles_popup{
+    max-width: 50rem;
+    background: #fff;
+    margin: 0 auto;
+    position: relative;
+    font-size: 1.6rem;
+    padding: 4rem;
+    @media (min-width: 992px) {
+        padding: 6rem;
+        width: 100%;
+    }
+    .mfp-close{
+        background: url('/local/templates/kdteam/images/svg/close_modal.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        top: 2rem;
+        right: 2rem;
+        cursor: pointer;
+        opacity: 1;
+        text-indent: 999999px;
+        width: 4rem;
+        @media(max-width: 991px){
+            width: 2rem;
+        }
+    }
+    a{
+        text-decoration: underline;
     }
 }

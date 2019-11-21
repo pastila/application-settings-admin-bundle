@@ -23,33 +23,28 @@ $strNavQueryStringFull = ($arResult["NavQueryString"] != "" ? "?".$arResult["Nav
 //ob_start();
 ?>
 
-<font class="text"><?=$arResult["NavTitle"]?> 
+<font class="text title_count_page"><?=$arResult["NavTitle"]?>
 
 <?if($arResult["bDescPageNumbering"] === true):?>
 
 	<?=$arResult["NavFirstRecordShow"]?> <?=GetMessage("nav_to")?> <?=$arResult["NavLastRecordShow"]?> <?=GetMessage("nav_of")?> <?=$arResult["NavRecordCount"]?><br /></font>
 
-	<font class="text">
+	<font class="text block_pagen">
 
 	<?if ($arResult["NavPageNomer"] < $arResult["NavPageCount"]):?>
 		<?if($arResult["bSavePage"]):?>
 			<a href="<?=$arResult["sUrlPath"]?>?<?=$strNavQueryString?>PAGEN_<?=$arResult["NavNum"]?>=<?=$arResult["NavPageCount"]?>"><?=GetMessage("nav_begin")?></a>
-			|
 			<a href="<?=$arResult["sUrlPath"]?>?<?=$strNavQueryString?>PAGEN_<?=$arResult["NavNum"]?>=<?=($arResult["NavPageNomer"]+1)?>"><?=GetMessage("nav_prev")?></a>
-			|
 		<?else:?>
 			<a href="<?=$arResult["sUrlPath"]?><?=$strNavQueryStringFull?>"><?=GetMessage("nav_begin")?></a>
-			|
 			<?if ($arResult["NavPageCount"] == ($arResult["NavPageNomer"]+1) ):?>
 				<a href="<?=$arResult["sUrlPath"]?><?=$strNavQueryStringFull?>"><?=GetMessage("nav_prev")?></a>
-				|
 			<?else:?>
 				<a href="<?=$arResult["sUrlPath"]?>?<?=$strNavQueryString?>PAGEN_<?=$arResult["NavNum"]?>=<?=($arResult["NavPageNomer"]+1)?>"><?=GetMessage("nav_prev")?></a>
-				|
 			<?endif?>
 		<?endif?>
 	<?else:?>
-		<?=GetMessage("nav_begin")?>&nbsp;|&nbsp;<?=GetMessage("nav_prev")?>&nbsp;|
+		<?=GetMessage("nav_begin")?><?=GetMessage("nav_prev")?>
 	<?endif?>
 
 	<?while($arResult["nStartPage"] >= $arResult["nEndPage"]):?>
@@ -66,42 +61,36 @@ $strNavQueryStringFull = ($arResult["NavQueryString"] != "" ? "?".$arResult["Nav
 		<?$arResult["nStartPage"]--?>
 	<?endwhile?>
 
-	|
 
 	<?if ($arResult["NavPageNomer"] > 1):?>
 		<a href="<?=$arResult["sUrlPath"]?>?<?=$strNavQueryString?>PAGEN_<?=$arResult["NavNum"]?>=<?=($arResult["NavPageNomer"]-1)?>"><?=GetMessage("nav_next")?></a>
-		|
 		<a href="<?=$arResult["sUrlPath"]?>?<?=$strNavQueryString?>PAGEN_<?=$arResult["NavNum"]?>=1"><?=GetMessage("nav_end")?></a>
 	<?else:?>
-		<?=GetMessage("nav_next")?>&nbsp;|&nbsp;<?=GetMessage("nav_end")?>
+		<?=GetMessage("nav_next")?><?=GetMessage("nav_end")?>
 	<?endif?>
 
 <?else:?>
 
 	<?=$arResult["NavFirstRecordShow"]?> <?=GetMessage("nav_to")?> <?=$arResult["NavLastRecordShow"]?> <?=GetMessage("nav_of")?> <?=$arResult["NavRecordCount"]?><br /></font>
 
-	<font class="text">
+	<font class="text block_pagen">
 
 	<?if ($arResult["NavPageNomer"] > 1):?>
 
 		<?if($arResult["bSavePage"]):?>
 			<a href="<?=$arResult["sUrlPath"]?>?<?=$strNavQueryString?>PAGEN_<?=$arResult["NavNum"]?>=1"><?=GetMessage("nav_begin")?></a>
-			|
 			<a href="<?=$arResult["sUrlPath"]?>?<?=$strNavQueryString?>PAGEN_<?=$arResult["NavNum"]?>=<?=($arResult["NavPageNomer"]-1)?>"><?=GetMessage("nav_prev")?></a>
-			|
 		<?else:?>
 			<a href="<?=$arResult["sUrlPath"]?><?=$strNavQueryStringFull?>"><?=GetMessage("nav_begin")?></a>
-			|
 			<?if ($arResult["NavPageNomer"] > 2):?>
 				<a href="<?=$arResult["sUrlPath"]?>?<?=$strNavQueryString?>PAGEN_<?=$arResult["NavNum"]?>=<?=($arResult["NavPageNomer"]-1)?>"><?=GetMessage("nav_prev")?></a>
 			<?else:?>
 				<a href="<?=$arResult["sUrlPath"]?><?=$strNavQueryStringFull?>"><?=GetMessage("nav_prev")?></a>
 			<?endif?>
-			|
 		<?endif?>
 
 	<?else:?>
-		<?=GetMessage("nav_begin")?>&nbsp;|&nbsp;<?=GetMessage("nav_prev")?>&nbsp;|
+<!--		--><?//=GetMessage("nav_begin")?><!----><?//=GetMessage("nav_prev")?>
 	<?endif?>
 
 	<?while($arResult["nStartPage"] <= $arResult["nEndPage"]):?>
@@ -115,13 +104,12 @@ $strNavQueryStringFull = ($arResult["NavQueryString"] != "" ? "?".$arResult["Nav
 		<?endif?>
 		<?$arResult["nStartPage"]++?>
 	<?endwhile?>
-	|
 
 	<?if($arResult["NavPageNomer"] < $arResult["NavPageCount"]):?>
-		<a href="<?=$arResult["sUrlPath"]?>?<?=$strNavQueryString?>PAGEN_<?=$arResult["NavNum"]?>=<?=($arResult["NavPageNomer"]+1)?>"><?=GetMessage("nav_next")?></a>&nbsp;|
+		<a href="<?=$arResult["sUrlPath"]?>?<?=$strNavQueryString?>PAGEN_<?=$arResult["NavNum"]?>=<?=($arResult["NavPageNomer"]+1)?>"><?=GetMessage("nav_next")?></a>
 		<a href="<?=$arResult["sUrlPath"]?>?<?=$strNavQueryString?>PAGEN_<?=$arResult["NavNum"]?>=<?=$arResult["NavPageCount"]?>"><?=GetMessage("nav_end")?></a>
 	<?else:?>
-		<?=GetMessage("nav_next")?>&nbsp;|&nbsp;<?=GetMessage("nav_end")?>
+<!--		--><?//=GetMessage("nav_next")?><!----><?//=GetMessage("nav_end")?>
 	<?endif?>
 
 <?endif?>

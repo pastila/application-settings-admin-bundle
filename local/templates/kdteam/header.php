@@ -14,6 +14,7 @@ $asset = Asset::getInstance();
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="HandheldFriendly" content="true">
     <title><?php $APPLICATION->ShowTitle(); ?></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <?php $APPLICATION->ShowHead(); ?>
     <?php
     $asset->addCss("https://fonts.googleapis.com/css?family=Rubik:400,700&display=swap");
@@ -21,7 +22,7 @@ $asset = Asset::getInstance();
     $asset->addJs(SITE_TEMPLATE_PATH . "/js/main.min.js");
     CModule::IncludeModule("iblock");
     ?>
-    <script src="/local/templates/kdteam/js/validator.min.js"></script>
+
 </head>
 
 <body>
@@ -68,7 +69,7 @@ $asset = Asset::getInstance();
                                         $rsSect = CIBlockSection::GetList(array(), $arFilterSect);
                                         if ($arSect = $rsSect->GetNext()) {
                                             $arSelect = array("ID", "NAME", "DATE_ACTIVE_FROM");
-                                            $arFilter = array("IBLOCK_ID" => 11, "!PROPERTY_SEND_REVIEW" => "1",
+                                            $arFilter = array("IBLOCK_ID" => 11, "!PROPERTY_SEND_REVIEW" => 3,
                                                 "IBLOCK_SECTION_ID" => $arSect["ID"], "ACTIVE" => "Y");
                                             $res = CIBlockElement::GetList(
                                                 array(),
@@ -84,12 +85,10 @@ $asset = Asset::getInstance();
                                         }
                                     }
                                     ?>
-                                    <?php if ($countAppeals > 0) { ?>
                                         <div id="number_calls" class="menu-req">
                                             <?php echo $countAppeals?>
                                         </div>
                                         <a class="active" href="/obrashcheniya/">Ваши обращения</a>
-                                    <?php }?>
 
                                 </li>
 
