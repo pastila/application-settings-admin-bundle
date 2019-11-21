@@ -177,6 +177,7 @@ function send_ms(sd) {
         error.text(result2.error);
         success.text('');
       } else if (result2.success !== undefined){
+        $('#appeal_' + element[1]).addClass( " sended" );
         error.text('');
         success.text(result2.success);
       }

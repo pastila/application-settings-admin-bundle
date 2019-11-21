@@ -85,12 +85,10 @@ $asset = Asset::getInstance();
                                         }
                                     }
                                     ?>
-                                    <?php if ($countAppeals > 0) { ?>
                                         <div id="number_calls" class="menu-req">
                                             <?php echo $countAppeals?>
                                         </div>
                                         <a class="active" href="/obrashcheniya/">Ваши обращения</a>
-                                    <?php }?>
 
                                 </li>
 
