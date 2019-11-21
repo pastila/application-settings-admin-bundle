@@ -99,7 +99,8 @@ var data = {
 $(".star").click(function() {
   data.star = $(this).attr("data-value");
 })
-$(document).on("click",".select-items .select-city",function() {
+
+$(document).on("click",".custom-select-js-cite > .select-items > div",function() {
 
   data.id_city = $(this).attr('data-id-cite');
 
@@ -119,7 +120,7 @@ $(document).on("click",".select-items .select-city",function() {
     list_compani.forEach(function(item) {
         $(".select-items").append('<div class="item_select" data-id-company="'+item.ID+'" >'+item.NAME+'</div>');
      })
-        $(".custom-select").removeAttr("style");
+        $(".custom-select-js").removeClass("no_click");
   });
 
 
