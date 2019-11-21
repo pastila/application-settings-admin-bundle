@@ -39,7 +39,7 @@ if ($Section = $section->GetNext()) {
             <div class="card">
                 <div class="otpravlennyye__item">
                     <div class="otpravlennyye__item_title">
-                        <?= $arFields["NAME"] ?>
+                        <?= $arFields["NAME"] . ' № ' . $arFields["ID"]?>
                     </div>
 
                     <p class="success">Направлено в страховую компанию</p>

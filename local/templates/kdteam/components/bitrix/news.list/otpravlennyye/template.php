@@ -21,9 +21,7 @@ $this->setFrameMode(true);
 
 
 <?php
-$i = 0;
 foreach ($arResult["ITEMS"] as $arItem) {
-    $i++;
     $date = explode(" ", $arItem['TIMESTAMP_X']);
     $hospital = htmlspecialchars_decode($arItem["PROPERTIES"]["HOSPITAL"]["VALUE"]);
     ?>
@@ -49,7 +47,7 @@ foreach ($arResult["ITEMS"] as $arItem) {
                     <!-- Внутри контента Верхняя часть -->
                     <div class="obrashcheniya__content_left_top">
                         <div class="obrashcheniya__content_left_top_text">
-                            Обращение № <?php echo $i ?>
+                            Обращение № <?php echo $arItem['ID'] ?>
                         </div>
 
                         <div class="obrashcheniya__content_left_top_data">
