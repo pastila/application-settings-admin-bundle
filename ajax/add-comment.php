@@ -24,29 +24,33 @@ if ($_POST) {
 
     if ($COMMENT = $el->Add($arFields)) {
 
-     echo 1;
+    echo 1;
     } else {
         echo "Error: " . $el->LAST_ERROR;
     }
 
-    $new_comments = Array(
-        0 => $COMMENT,
-    );
 
+
+    $list_comments = [];
     $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_*");
     $arFilter = Array("IBLOCK_ID"=>13,"ID"=> $id_review);
     $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
     while($ob = $res->GetNextElement()){
         $arProps = $ob->GetProperties();
 
-        $list_comments = $arProps["COMMENTS_TO_REWIEW"]["VALUE"];
-
-        $all_comments = array_merge($list_comments,$new_comments);
+    if(is_array($arProps["COMMENTS_TO_REWIEW"]["VALUE"])){
+        $list_comments += $arProps["COMMENTS_TO_REWIEW"]["VALUE"];
+    }
     }
 
+    array_push($list_comments, $COMMENT);
+
+
+
     $arProperty = Array(
-        "COMMENTS_TO_REWIEW" =>$all_comments,
+        "COMMENTS_TO_REWIEW" =>$list_comments,
     );
+
 
   CIBlockElement::SetPropertyValuesEx($id_review, 13, $arProperty);
 
