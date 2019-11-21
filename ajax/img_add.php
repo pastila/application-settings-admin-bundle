@@ -18,47 +18,44 @@ if (isset($_FILES['import_file']['tmp_name'])) {
 
 
         // загружаем изображение на сервер
+
+        $el = new CIBlockElement;
+
         if (empty($arFields['PREVIEW_PICTURE'])) {
             $picture = 'PREVIEW_PICTURE';
-        } elseif (empty($arFields['PROPERTY_IMG_2'])) {
+        } elseif (empty($arFields['PROPERTY_IMG_2_VALUE'])) {
             $key = 'IMG_2';
-        } elseif (empty($arFields['PROPERTY_IMG_3'])) {
+        } elseif (empty($arFields['PROPERTY_IMG_3_VALUE'])) {
             $key = 'IMG_3';
-        } elseif (empty($arFields['PROPERTY_IMG_4'])) {
+        } elseif (empty($arFields['PROPERTY_IMG_4_VALUE'])) {
             $key = 'IMG_4';
-        } elseif (empty($arFields['PROPERTY_IMG_5'])) {
+        } elseif (empty($arFields['PROPERTY_IMG_5_VALUE'])) {
             $key = 'IMG_5';
         }
         if ($picture) {
-            $el = new CIBlockElement;
             $res = $el->Update($_POST['id_elem'], array("PREVIEW_PICTURE" => $_FILES['import_file']));
-        }
-        if ($key) {
-            CIBlockElement::SetPropertyValuesEx(
-                $_POST['ID'],
-                11,
-                array($key => $_FILES['import_file'])
-            );
-        }
-        if ($res > 0) {
-            if ($key) {
-                $db_props = CIBlockElement::GetProperty(11, $_POST['id_elem'], array(), array("CODE" => $key));
-                if ($ar_props = $db_props->Fetch()) {
-                    $result['ELEMMMM'] = $ar_props;
-                }
-            }
-
-            if ($picture) {
+            if ($res > 0) {
                 $rs = CIBlockElement::GetByID($_POST['id_elem']);
                 if ($arElem = $rs->GetNext()) {
                     $arFile = CFile::GetFileArray($arElem['PREVIEW_PICTURE']);
+
                 }
             }
-
-            $result['SRC'] = $arFile["SRC"];
-//            $result['ELEM_KEY'] = $arElem;
-//            $result['ELEM_KEYgen'] = $key;
         }
+        if ($key) {
+            $result[$key] = true;
+            CIBlockElement::SetPropertyValuesEx(
+                $_POST['id_elem'],
+                11,
+                array($key => $_FILES['import_file'])
+            );
+
+            $db_props = CIBlockElement::GetProperty(11, $_POST['id_elem'], array(), array("CODE" => $key));
+            if ($ar_props = $db_props->Fetch()) {
+                $arFile = CFile::GetFileArray($ar_props['VALUE']);
+            }
+        }
+        $result['SRC'] = $arFile["SRC"];
         $result['ID'] = $_POST['id_elem'];
         $result['RES'] = $res;
         $result['SUCCESS'] = "Файл успешно загружен!";

@@ -63,10 +63,7 @@ $(document).ready(function() {
            setTimeout(function() {
              $.magnificPopup.open({
                items: {
-                 src: '<div class="white-popup custom_styles_popup" style="min-width: 350px;\n' +
-                 '    min-height: 170px;\n' +
-                 '    font-size: 21px;\n' +
-                 '    padding: 15px;">Регистрация и создание обращения успешно завершены.' +
+                 src: '<div class="white-popup custom_styles_popup">Регистрация и создание обращения успешно завершены.' +
                  'для перехода в личный кабинет нажмите <a href="/obrashcheniya/" >сюда</a></div>',
                  type: 'inline'
                }

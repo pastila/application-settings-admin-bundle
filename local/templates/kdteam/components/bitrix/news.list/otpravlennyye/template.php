@@ -141,7 +141,7 @@ foreach ($arResult["ITEMS"] as $arItem) {
                     <!-- Item Sidebar -->
                     <div class="js-img-add block__items_flex">
                         <?php if (!empty($arItem["PREVIEW_PICTURE"]["SRC"])) { ?>
-                            <div id="img_block_<?= $arItem['ID'] ?>" class="obrashcheniya__content_sidebar_blocks">
+                            <div id="img_block_<?= $arItem['ID'] ?>_img_1" class="obrashcheniya__content_sidebar_blocks">
                                 <div class="obrashcheniya__content_sidebar_blocks_img">
                                     <img src="<?= $arItem["PREVIEW_PICTURE"]["SRC"] ?>" alt="">
                                 </div>
@@ -155,6 +155,94 @@ foreach ($arResult["ITEMS"] as $arItem) {
                                         скачать
                                     </a>
                                     <a href="#" rel="nofollow" id="delete_<?= $arItem['ID'] ?>" onclick="del(this)"
+                                       class="delete_img_js">удалить
+                                    </a>
+                                </div>
+                            </div>
+                        <?php } ?>
+                        <?php if (!empty($arItem["PROPERTIES"]["IMG_2"]['VALUE'])) { ?>
+                            <div id="img_block_<?= $arItem['ID'] ?>_img_2" class="obrashcheniya__content_sidebar_blocks">
+                                <div class="obrashcheniya__content_sidebar_blocks_img">
+                                    <img src="<?=CFile::GetFileArray($arItem["PROPERTIES"]["IMG_2"]['VALUE'])["SRC"]?>"
+                                         alt="">
+                                </div>
+
+                                <div class="obrashcheniya__content_sidebar_blocks_text">
+                                    <div class="obrashcheniya__content_sidebar_blocks_text_title">
+                                        Загруженный документ
+                                    </div>
+                                    <a id="download_img" download
+                                       href="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_2"]['VALUE'])["SRC"] ?>"
+                                       class="obrashcheniya__content_sidebar_blocks_text_link">
+                                        скачать
+                                    </a>
+                                    <a rel="nofollow" id="delete_<?= $arItem['ID'] ?>_img_2" onclick="del(this)"
+                                       class="delete_img_js">удалить
+                                    </a>
+                                </div>
+                            </div>
+                        <?php } ?>
+                        <?php if (!empty($arItem["PROPERTIES"]["IMG_3"]['VALUE'])) { ?>
+                            <div id="img_block_<?= $arItem['ID'] ?>_img_3" class="obrashcheniya__content_sidebar_blocks">
+                                <div class="obrashcheniya__content_sidebar_blocks_img">
+                                    <img src="<?=CFile::GetFileArray($arItem["PROPERTIES"]["IMG_3"]['VALUE'])["SRC"]?>"
+                                         alt="">
+                                </div>
+
+                                <div class="obrashcheniya__content_sidebar_blocks_text">
+                                    <div class="obrashcheniya__content_sidebar_blocks_text_title">
+                                        Загруженный документ
+                                    </div>
+                                    <a id="download_img" download
+                                       href="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_3"]['VALUE'])["SRC"] ?>"
+                                       class="obrashcheniya__content_sidebar_blocks_text_link">
+                                        скачать
+                                    </a>
+                                    <a rel="nofollow" id="delete_<?= $arItem['ID'] ?>_img_3" onclick="del(this)"
+                                       class="delete_img_js">удалить
+                                    </a>
+                                </div>
+                            </div>
+                        <?php } ?>
+                        <?php if (!empty($arItem["PROPERTIES"]["IMG_4"]['VALUE'])) { ?>
+                            <div id="img_block_<?= $arItem['ID'] ?>_img_4" class="obrashcheniya__content_sidebar_blocks">
+                                <div class="obrashcheniya__content_sidebar_blocks_img">
+                                    <img src="<?=CFile::GetFileArray($arItem["PROPERTIES"]["IMG_4"]['VALUE'])["SRC"]?>"
+                                         alt="">
+                                </div>
+
+                                <div class="obrashcheniya__content_sidebar_blocks_text">
+                                    <div class="obrashcheniya__content_sidebar_blocks_text_title">
+                                        Загруженный документ
+                                    </div>
+                                    <a id="download_img" download
+                                       href="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_4"]['VALUE'])["SRC"] ?>"
+                                       class="obrashcheniya__content_sidebar_blocks_text_link">
+                                        скачать
+                                    </a>
+                                    <a rel="nofollow" id="delete_<?= $arItem['ID'] ?>_img_4" onclick="del(this)"
+                                       class="delete_img_js">удалить
+                                    </a>
+                                </div>
+                            </div>
+                        <?php } ?>
+                        <?php if (!empty($arItem["PROPERTIES"]["IMG_5"]['VALUE'])) { ?>
+                            <div id="img_block_<?= $arItem['ID'] ?>_img_5" class="obrashcheniya__content_sidebar_blocks">
+                                <div class="obrashcheniya__content_sidebar_blocks_img">
+                                    <img src="<?=CFile::GetFileArray($arItem["PROPERTIES"]["IMG_5"]['VALUE'])["SRC"]?>"
+                                         alt="">
+                                </div>
+
+                                <div class="obrashcheniya__content_sidebar_blocks_text">
+                                    <div class="obrashcheniya__content_sidebar_blocks_text_title">
+                                        Загруженный документ
+                                    </div>
+                                    <a id="download_img" download
+                                       href="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_5"]['VALUE'])["SRC"] ?>"
+                                       class="obrashcheniya__content_sidebar_blocks_text_link">
+                                        скачать
+                                    </a>
+                                    <a rel="nofollow" id="delete_<?= $arItem['ID'] ?>_img_5" onclick="del(this)"
                                        class="delete_img_js">удалить
                                     </a>
                                 </div>

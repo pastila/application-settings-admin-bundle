@@ -12,31 +12,32 @@ $(document).ready(function() {
     let fd = new FormData();
     fd.append("import_file", $input.prop('files')[0]);
     fd.append("id_elem", element);
-    $.ajax({
-      url: '/ajax/img_add.php',
-      cache: false,
-      contentType: false,
-      processData: false,
-      data: fd,
-      type: 'post',
-      success: function(result){
-        let result2 = JSON.parse(result);
-        let error = $('#error_' + result2.ID);
-        let success = $('#success_' + result2.ID);
-        if (result2.ERROR !== undefined) {
-          error.text(result2.ERROR);
-          success.text('');
-        } else {
-          if (result2.RES === false) {
-            error.text('Не удается прочитать файл');
+    let n =  $('#card_' + element);
+    let error = $('#error_' + element);
+    let success = $('#success_' + element);
+    let length = n.find($(".js-img-add")).children().length;
+    if (length < 5) {
+      $.ajax({
+        url: '/ajax/img_add.php',
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: fd,
+        type: 'post',
+        success: function(result){
+          let result2 = JSON.parse(result);
+
+          if (result2.ERROR !== undefined) {
+            error.text(result2.ERROR);
             success.text('');
           } else {
-            let n =  $('#card_' + result2.ID);
-            error.text('');
-            success.text(result2.SUCCESS);
-            let r = result2.SRC;
-            console.log(result2);
-            if (n.find($(".js-img-add")).children().length < 5) {
+            if (result2.RES === false) {
+              error.text('Не удается прочитать файл');
+              success.text('');
+            } else {
+              error.text('');
+              success.text(result2.SUCCESS);
+              let r = result2.SRC;
               n.find($(".js-img-add")).append(
                   '<div id="img_block_'+ result2.ID +'_img_' + length +'" class="obrashcheniya__content_sidebar_blocks">\n' +
                   '    <div class="obrashcheniya__content_sidebar_blocks_img">\n' +
@@ -46,22 +47,24 @@ $(document).ready(function() {
                   '        <div class="obrashcheniya__content_sidebar_blocks_text_title">Загруженный документ</div>\n' +
                   '        <a id="download_img" download href="'+ r +'"\n' +
                   '           class="obrashcheniya__content_sidebar_blocks_text_link">скачать</a>\n' +
-                  '        <a href="#" rel="nofollow" onclick="del(this)" id="delete_'+ result2.ID +'" class="delete_img_js">Удалить</a>\n' +
+                  '        <a href="#" rel="nofollow" onclick="del(this)" id="delete_'+ result2.ID +'_img_' + length +'" class="delete_img_js">Удалить</a>\n' +
                   '    </div>\n' +
                   '</div>'
               );
-            } else {
-              error.text('Вы превысили лимит по загруженным картинкам');
-              success.text('');
             }
           }
         }
-      }
-    });
+      });
+    } else {
+      error.text('Вы превысили лимит по загруженным картинкам');
+      success.text('');
+    }
   });
 });
 
 function del(f) {
+  console.log(f);
+  console.log($(f));
   let element = $(f)[0].id;
   $.ajax({
     url: '/ajax/img_delete.php',
