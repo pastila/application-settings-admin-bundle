@@ -128,6 +128,8 @@ function save(sv) {
   let policy_p = $('#policy_' + element[1]);
   let time_p = $('#time_' + element[1]);
 
+
+
   $.ajax({
     url: '/ajax/edit_appeal.php',
     data: {
@@ -156,6 +158,25 @@ function save(sv) {
       usrname_p.css('display', 'block');
       policy_p.css('display', 'block');
       time_p.css('display', 'block');
+
+      let data = {
+         "number_polic":cur_el.find(policy).val(),
+         "data_user_oplata_POST":time_p.text(),
+         "data_checkout": "1",
+         "usrname": cur_el.find(usrname).val(),
+         "id":element[1],
+      };
+      $.ajax({
+        url: '/pdf/file_pdf.php',
+        type: 'POST',
+        data: data,
+        success: function(msg){
+
+         $('[data-obrashenie-id='+element[1]+']').find(".pdf").attr("href",msg)
+        },
+      }).done(function(msg) {
+
+      });
     }
   });
 }

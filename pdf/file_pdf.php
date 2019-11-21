@@ -13,14 +13,15 @@ require '/var/www/vendor/autoload.php';
 
 global $USER;
 
+if($_POST["data_checkout"] == 1){
+    $data_user_oformlenie_POST = "(Дата запишеться как только вы отправите обращение)";
+}else{
+    $data_user_oformlenie_POST = date('d.m.Y');
+}
 
+$data_user_oplata_POST = $_POST["data_user_oplata_POST"];
 
-//$data_user_oformlenie_POST = $_POST["data_user_oformlenie_POST"];
-//$data_user_oplata_POST = $_POST["data_user_oplata_POST"];
-//$number_polic_POST = $_POST["number_polic"];
-$data_user_oformlenie_POST = "21.05.2018";
-$data_user_oplata_POST = "21.06.2018";
-$number_polic_POST = "polic_n4343434";
+$number_polic_POST = $_POST["number_polic"];
 
 
 
@@ -35,7 +36,7 @@ $person = $rsUser->Fetch();
 
 $email = $person["EMAIL"];
 $mobail_number = $person["PERSONAL_PHONE"];
-$full_name_user = $USER->GetFullName();
+$full_name_user = $_POST["usrname"];
 $strahovay_compani = $person["UF_INSURANCE_COMPANY"];
 
 
@@ -51,43 +52,6 @@ $arFields = $ob->GetFields();
 $name_company = $arFields["NAME"];// название компании
 $boss_compani = $arProps["NAME_BOSS"]["VALUE"];// руководитель компании
 $mail_compani = $arProps["EMAIL_FIRST"]["VALUE"];// имйл компании
-
-if($arProps["EMAIL_SECOND"]["VALUE"] !="") {
-    $mail_compani .= "," . $arProps["EMAIL_SECOND"]["VALUE"];
-}
-if($arProps["EMAIL_THIRD"]["VALUE"] != "") {
-    $mail_compani .= "," . $arProps["EMAIL_THIRD"]["VALUE"];
-}
-
-
-//$res = CIBlockElement::GetByID($_SESSION["HOSPITAL"]);
-//if ($ar_res = $res->GetNext()) {
-//    $arHospital = $ar_res;
-//}
-// $res = CIBlockSection::GetByID($_SESSION["REGION"]);
-// if ($ar_res = $res->GetNext()) {
-//     $arRegion = $ar_res;
-// }
-// $res = CIBlockSection::GetByID($_SESSION["CLASS"]);
-// if ($ar_res = $res->GetNext()) {
-//     $arClass = $ar_res;
-// }
-// $res = CIBlockSection::GetByID($_SESSION["GROUP"]);
-// if ($ar_res = $res->GetNext()) {
-//     $arGroup = $ar_res;
-// }
-// $res = CIBlockSection::GetByID($_SESSION["SUBGROUP"]);
-// if ($ar_res = $res->GetNext()) {
-//     $arSubGroup = $ar_res;
-// }
-// $res = CIBlockElement::GetByID($_SESSION["DIAGNOZ"]);
-// if ($ar_res = $res->GetNext()) {
-//     $arDiagnoz = $ar_res;
-// }
-// $arName = $USER->GetFullName();
-// $arAppeal = $_SESSION["APPEAL"];
-
-
 
 $html ='
     <style>
@@ -257,4 +221,10 @@ $name_file .= "file.pdf";
 $mpdf->WriteHTML($html);
 $mpdf->Output($name_file,'F');
 $url_pdf_for_user = "/upload/pdf/PDF_". date('Y-m-d-h:i:s')."_". $email. "_file.pdf";
+$arFile = CFile::MakeFileArray($url_pdf_for_user);
+$arProperty = Array(
+    "PDF" =>$arFile,
+);
+CIBlockElement::SetPropertyValuesEx($_POST["id"], 11, $arProperty);
 echo $url_pdf_for_user;
+

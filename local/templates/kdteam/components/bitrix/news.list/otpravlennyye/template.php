@@ -27,7 +27,7 @@ if (count($arResult["ITEMS"]) > 0) {
         $hospital = htmlspecialchars_decode($arItem["PROPERTIES"]["HOSPITAL"]["VALUE"]);
         ?>
         <!-- Обращение -->
-        <div id="appeal_<?=$arItem["ID"]?>" class="obrashcheniya">
+        <div id="appeal_<?= $arItem["ID"] ?>" class="obrashcheniya">
             <div class="obrashcheniya__btns">
                 <div class="block__button_send">
                     <input class="smallMainBtn hidden_browse_input" id="<?= $arItem["ID"] ?>" type="file" multiple
@@ -35,7 +35,7 @@ if (count($arResult["ITEMS"]) > 0) {
                     <label for="<?= $arItem["ID"] ?>" class="btn btn-tertiary js-labelFile smallMainBtn">
                         Прикрепить скан или фото</label>
                 </div>
-                <a class="smallMainBtn block_button_mob" onclick="send_ms(this)" id="send_<?=$arItem["ID"]?>">Отправить</a>
+                <a class="smallMainBtn block_button_mob" onclick="send_ms(this)" id="send_<?= $arItem["ID"] ?>">Отправить</a>
             </div>
             <p id="error_<?= $arItem["ID"] ?>" class="error"></p>
             <p id="success_<?= $arItem["ID"] ?>" class="success"></p>
@@ -56,10 +56,11 @@ if (count($arResult["ITEMS"]) > 0) {
                             </div>
 
                             <div class="obrashcheniya__content_left_top_link">
-                                <a onclick="edit(this)" id="edit_<?=$arItem["ID"]?>">Редактировать</a>
-                                <a style="display: none" onclick="save(this)" id="save_<?=$arItem["ID"]?>">Сохранить</a>
+                                <a onclick="edit(this)" id="edit_<?= $arItem["ID"] ?>">Редактировать</a>
+                                <a style="display: none" onclick="save(this)"
+                                   id="save_<?= $arItem["ID"] ?>">Сохранить</a>
 
-                                <a onclick="delete_el(this)" id="delete_el_<?=$arItem["ID"]?>">Удалить</a>
+                                <a onclick="delete_el(this)" id="delete_el_<?= $arItem["ID"] ?>">Удалить</a>
                             </div>
                         </div>
 
@@ -72,12 +73,12 @@ if (count($arResult["ITEMS"]) > 0) {
                                     ФИО
                                 </div>
 
-                                <p id="usrname_<?=$arItem['ID']?>"
+                                <p id="usrname_<?= $arItem['ID'] ?>"
                                    class="obrashcheniya__content_left_center_item_text-full">
                                     <?php echo $arItem["PROPERTIES"]["FULL_NAME"]["VALUE"] ?></p>
 
                                 <input style="display: none" type="text" name="usrname"
-                                       value="<?=$arItem["PROPERTIES"]["FULL_NAME"]["VALUE"]?>">
+                                       value="<?= $arItem["PROPERTIES"]["FULL_NAME"]["VALUE"] ?>">
                             </div>
 
                             <!-- Item ы -->
@@ -102,37 +103,38 @@ if (count($arResult["ITEMS"]) > 0) {
                                 </p>
                             </div>
 
-                            <div  class="obrashcheniya__content_left_center_item">
+                            <div class="obrashcheniya__content_left_center_item">
                                 <div class="obrashcheniya__content_left_center_item_text">
                                     Полис:
                                 </div>
 
-                                <p id="policy_<?=$arItem['ID']?>"
+                                <p id="policy_<?= $arItem['ID'] ?>"
                                    class="obrashcheniya__content_left_center__item_text-full">
                                     <?php echo $arItem["PROPERTIES"]["POLICY"]["VALUE"] ?></p>
                                 <input style="display: none"
                                        type="text"
                                        name="policy"
-                                       value="<?=$arItem["PROPERTIES"]["POLICY"]["VALUE"]?>">
+                                       value="<?= $arItem["PROPERTIES"]["POLICY"]["VALUE"] ?>">
                             </div>
 
-                            <div  class="obrashcheniya__content_left_center_item">
+                            <div class="obrashcheniya__content_left_center_item">
                                 <div class="obrashcheniya__content_left_center_item_text">
                                     Дата оплаты медицинских услуг:
                                 </div>
 
-                                <p id="time_<?=$arItem['ID']?>" class="obrashcheniya__content_left_center__item_text-full">
-                                    <?php echo $arItem["PROPERTIES"]["VISIT_DATE"]["VALUE"]?></p>
+                                <p id="time_<?= $arItem['ID'] ?>"
+                                   class="obrashcheniya__content_left_center__item_text-full">
+                                    <?php echo $arItem["PROPERTIES"]["VISIT_DATE"]["VALUE"] ?></p>
                                 <input style="display: none" class="datepicker-here"
                                        type="text"
                                        name="time"
-                                       value="<?=$arItem["PROPERTIES"]["VISIT_DATE"]["VALUE"]?>">
+                                       value="<?= $arItem["PROPERTIES"]["VISIT_DATE"]["VALUE"] ?>">
                             </div>
                         </div>
                     </div>
 
                     <!-- Контент правая сторона -->
-                    <div class="obrashcheniya__content_sidebar">
+                    <div class="obrashcheniya__content_sidebar" data-obrashenie-id="<?= $arItem["ID"] ?>">
                         <div class="obrashcheniya__content_sidebar_title">
                             Прикрепленные файлы
                         </div>
@@ -140,7 +142,8 @@ if (count($arResult["ITEMS"]) > 0) {
                         <!-- Item Sidebar -->
                         <div class="js-img-add block__items_flex">
                             <?php if (!empty($arItem["PREVIEW_PICTURE"]["SRC"])) { ?>
-                                <div id="img_block_<?= $arItem['ID'] ?>_img_1" class="obrashcheniya__content_sidebar_blocks">
+                                <div id="img_block_<?= $arItem['ID'] ?>_img_1"
+                                     class="obrashcheniya__content_sidebar_blocks">
                                     <div class="obrashcheniya__content_sidebar_blocks_img">
                                         <img src="<?= $arItem["PREVIEW_PICTURE"]["SRC"] ?>" alt="">
                                     </div>
@@ -160,9 +163,10 @@ if (count($arResult["ITEMS"]) > 0) {
                                 </div>
                             <?php } ?>
                             <?php if (!empty($arItem["PROPERTIES"]["IMG_2"]['VALUE'])) { ?>
-                                <div id="img_block_<?= $arItem['ID'] ?>_img_2" class="obrashcheniya__content_sidebar_blocks">
+                                <div id="img_block_<?= $arItem['ID'] ?>_img_2"
+                                     class="obrashcheniya__content_sidebar_blocks">
                                     <div class="obrashcheniya__content_sidebar_blocks_img">
-                                        <img src="<?=CFile::GetFileArray($arItem["PROPERTIES"]["IMG_2"]['VALUE'])["SRC"]?>"
+                                        <img src="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_2"]['VALUE'])["SRC"] ?>"
                                              alt="">
                                     </div>
 
@@ -182,9 +186,10 @@ if (count($arResult["ITEMS"]) > 0) {
                                 </div>
                             <?php } ?>
                             <?php if (!empty($arItem["PROPERTIES"]["IMG_3"]['VALUE'])) { ?>
-                                <div id="img_block_<?= $arItem['ID'] ?>_img_3" class="obrashcheniya__content_sidebar_blocks">
+                                <div id="img_block_<?= $arItem['ID'] ?>_img_3"
+                                     class="obrashcheniya__content_sidebar_blocks">
                                     <div class="obrashcheniya__content_sidebar_blocks_img">
-                                        <img src="<?=CFile::GetFileArray($arItem["PROPERTIES"]["IMG_3"]['VALUE'])["SRC"]?>"
+                                        <img src="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_3"]['VALUE'])["SRC"] ?>"
                                              alt="">
                                     </div>
 
@@ -204,9 +209,10 @@ if (count($arResult["ITEMS"]) > 0) {
                                 </div>
                             <?php } ?>
                             <?php if (!empty($arItem["PROPERTIES"]["IMG_4"]['VALUE'])) { ?>
-                                <div id="img_block_<?= $arItem['ID'] ?>_img_4" class="obrashcheniya__content_sidebar_blocks">
+                                <div id="img_block_<?= $arItem['ID'] ?>_img_4"
+                                     class="obrashcheniya__content_sidebar_blocks">
                                     <div class="obrashcheniya__content_sidebar_blocks_img">
-                                        <img src="<?=CFile::GetFileArray($arItem["PROPERTIES"]["IMG_4"]['VALUE'])["SRC"]?>"
+                                        <img src="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_4"]['VALUE'])["SRC"] ?>"
                                              alt="">
                                     </div>
 
@@ -226,9 +232,10 @@ if (count($arResult["ITEMS"]) > 0) {
                                 </div>
                             <?php } ?>
                             <?php if (!empty($arItem["PROPERTIES"]["IMG_5"]['VALUE'])) { ?>
-                                <div id="img_block_<?= $arItem['ID'] ?>_img_5" class="obrashcheniya__content_sidebar_blocks">
+                                <div id="img_block_<?= $arItem['ID'] ?>_img_5"
+                                     class="obrashcheniya__content_sidebar_blocks">
                                     <div class="obrashcheniya__content_sidebar_blocks_img">
-                                        <img src="<?=CFile::GetFileArray($arItem["PROPERTIES"]["IMG_5"]['VALUE'])["SRC"]?>"
+                                        <img src="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_5"]['VALUE'])["SRC"] ?>"
                                              alt="">
                                     </div>
 
@@ -260,8 +267,11 @@ if (count($arResult["ITEMS"]) > 0) {
                                     Заявление на возврат
                                 </div>
 
-                                <a class="obrashcheniya__content_sidebar_blocks_text_link">
-                                    скачать
+                                <?php
+                                $url_pdf = CFile::GetPath($arItem["PROPERTIES"]["PDF"]["VALUE"]); ?>
+                                <a class="obrashcheniya__content_sidebar_blocks_text_link pdf" <?php if ($url_pdf != "") { ?> href="<?= $url_pdf ?>"<? } ?> >
+
+                                    просмотреть
                                 </a>
                             </div>
 
