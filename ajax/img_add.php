@@ -92,7 +92,7 @@ function can_upload($file){
 
     // если расширение не входит в список допустимых - return
     if(!in_array($mime, $types))
-        return 'Недопустимый тип файла.';
+        return 'Недопустимый тип файла. Доступные форматы: jpg, png, bmp, jpeg';
 
     return true;
 }
