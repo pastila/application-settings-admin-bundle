@@ -4,6 +4,7 @@
 $(document).ready(function() {
 
 
+
   $(document).mouseup(function (e){
     var div = $(".danger");
     if (!div.is(e.target)) {
@@ -26,6 +27,23 @@ $(document).ready(function() {
 
   function FormReg() {
 
+    $('#sel_reg').change(function() {
+      let sVal = $(this).val();
+      $.ajax({
+        dataType: 'html',
+        url: '/ajax/search_company.php',
+        type: 'POST',
+        data: {id :sVal},
+      }).done(function(html) {
+        $('#oms_company').html(html);
+        console.log('html');
+        $('#oms_company').change(function() {
+          let company = $(this).val();
+          console.log(company);
+          $('#company').attr('value', company);
+        })
+      });
+    });
 
     $('#auth-form-reg').validator().on('submit', function(e) {
        e.preventDefault();
@@ -33,7 +51,7 @@ $(document).ready(function() {
         $('#auth-form-reg').append("<input type='hidden'  name='review' value='review'>")
       }
         var data_form = $('#auth-form-reg').serializeArray();
-
+        console.log(data_form);
 
           $.ajax({
             url: '/ajax/registration.php',
@@ -78,26 +96,28 @@ $(document).ready(function() {
 
     });
 
-    $('#company').on('input', function(ev) { // скрипт для подгрузки компаний
-      if ($(ev.target).val().length > 2) {
-        var data = {
-          'name': $(ev.target).val(),
-        };
-        $.ajax({
-          dataType: 'html',
-          url: '/ajax/search_company.php',
-          type: 'POST',
-          data: data,
-          beforeSend: function() {
-            $('.search_company > div').remove();
-          },
-        }).done(function(html) {
-          console.log(html);
-          $('.search_company').append(html);
 
-        });
-      }
-    });
+
+    // $('#company').on('input', function(ev) { // скрипт для подгрузки компаний
+    //   if ($(ev.target).val().length > 2) {
+    //     var data = {
+    //       'name': $(ev.target).val(),
+    //     };
+    //     $.ajax({
+    //       dataType: 'html',
+    //       url: '/ajax/search_company.php',
+    //       type: 'POST',
+    //       data: data,
+    //       beforeSend: function() {
+    //         $('.search_company > div').remove();
+    //       },
+    //     }).done(function(html) {
+    //       console.log(html);
+    //       $('.search_company').append(html);
+    //
+    //     });
+    //   }
+    // });
 
     $('.search_company').on('click', '.primer_company', function() {
       var name_check_comapany = $(this).text();

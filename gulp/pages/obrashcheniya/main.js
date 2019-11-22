@@ -141,6 +141,17 @@ function save(sv) {
     },
     type: 'post',
     success: function(result) {
+      $.ajax({
+        url: '/pdf/file_pdf.php',
+        data: {
+          "data_user_oplata_POST":cur_el.find(time).val(),
+          "number_polic":cur_el.find(policy).val(),
+        },
+        type: 'post',
+        success: function(result) {
+          console.log(result)
+        }
+      });
       $('#save_' + element[1]).css('display', 'none');
 
       cur_el.find(usrname).css('display', 'none');

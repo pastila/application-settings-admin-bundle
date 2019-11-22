@@ -1,6 +1,8 @@
 <?php
 use Bitrix\Main\Application;
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
+CModule::IncludeModule("iblock");
+
 ?>
 <!-- Popup Always at the bottom -->
 <form id="auth-form-reg" class="auth-form">
@@ -61,12 +63,30 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.
         <div class="popup__wrap_bottom">
             <!-- Input -->
             <div class="input__wrap">
-                <label class="input__wrap_label">Укажите свою страховую компанию</label>
-                <input id="company" type="text" name="company" required>
+                <label class="input__wrap_label">Регион в котором заключали договор</label>
+
+                <select id="sel_reg" required>
+                    <?php
+                    $arSelect = Array("ID", "IBLOCK_ID", "NAME");
+                    $arFilter = Array("IBLOCK_ID"=> 16, "ACTIVE"=>"Y" ,"%NAME"=>$_POST["name"]);
+                    $res = CIBlockSection::GetList(false, $arFilter, false, $arSelect,false);
+                    while($ob = $res->GetNext()) {
+                        $arFields = $ob;
+                        echo '<option class="region_reg" value="' . $arFields['ID'] . '">' . $arFields["NAME"] . '</option>';
+                    }
+                    ?>
+                </select>
 
                 <div class="search_company scrollbar"></div>
             </div>
 
+            <div class="input__wrap">
+                <label class="input__wrap_label">Укажите свою страховую компанию</label>
+                <select id="oms_company" required>
+                    <option>Выберите регион</option>
+                </select>
+                <input value="" id="company" type="hidden" name="company" required>
+            </div>
         </div>
 
         <button type="submit" id="registration" class="mainBtn">Регистрация</button>

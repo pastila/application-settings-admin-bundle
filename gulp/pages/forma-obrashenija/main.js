@@ -169,7 +169,7 @@ $(document).ready(function() {
     $(document).on("click","#empty_class",function() {
     $.magnificPopup.open({
       items: {
-        src: '<div class="white-popup custom_styles_popup">Если больницы, в которую вы обратились, в списке нет, значит, она не является участником системы ОМС и не несет обязательств по оказанию помщи по полису ОМС. Случай не страховой.</div>',
+        src: '<div class="white-popup custom_styles_popup">Если среди диагнозов вы не нашли свой, значит заболевание не относится к числу тех, что оплачитваются из средства ОМС. Случай не является страховым.</div>',
         type: 'inline'
       }
     });
@@ -177,7 +177,7 @@ $(document).ready(function() {
     $(document).on("click","#empty_group",function() {
     $.magnificPopup.open({
       items: {
-        src: '<div class="white-popup custom_styles_popup">Если больницы, в которую вы обратились, в списке нет, значит, она не является участником системы ОМС и не несет обязательств по оказанию помщи по полису ОМС. Случай не страховой.</div>',
+        src: '<div class="white-popup custom_styles_popup">Если среди диагнозов вы не нашли свой, значит заболевание не относится к числу тех, что оплачитваются из средства ОМС. Случай не является страховым.</div>',
         type: 'inline'
       }
     });
@@ -185,7 +185,7 @@ $(document).ready(function() {
   $(document).on("click","#empty_subgroup",function() {
     $.magnificPopup.open({
       items: {
-        src: '<div class="white-popup custom_styles_popup">Если больницы, в которую вы обратились, в списке нет, значит, она не является участником системы ОМС и не несет обязательств по оказанию помщи по полису ОМС. Случай не страховой.</div>',
+        src: '<div class="white-popup custom_styles_popup">Если среди диагнозов вы не нашли свой, значит заболевание не относится к числу тех, что оплачитваются из средства ОМС. Случай не является страховым.</div>',
         type: 'inline'
       }
     });
@@ -193,7 +193,7 @@ $(document).ready(function() {
   $(document).on("click","#empty_diagnoz",function() {
     $.magnificPopup.open({
       items: {
-        src: '<div class="white-popup custom_styles_popup">Если больницы, в которую вы обратились, в списке нет, значит, она не является участником системы ОМС и не несет обязательств по оказанию помщи по полису ОМС. Случай не страховой.</div>',
+        src: '<div class="white-popup custom_styles_popup">Если среди диагнозов вы не нашли свой, значит заболевание не относится к числу тех, что оплачитваются из средства ОМС. Случай не является страховым.</div>',
         type: 'inline'
       }
     });
