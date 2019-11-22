@@ -12,7 +12,19 @@
         padding: 0 2rem 0 0;
         font-weight: bold;
     }
-
+    .link_block{
+        margin: 1rem 0 0 0;
+        a{
+            font-size: 1.2rem;
+            text-decoration: underline;
+            @media screen and (min-width: 992px) {
+                font-size: 1.6vmax;
+            }
+            @media screen and (min-width: 1400px) {
+                font-size: 1.6rem;
+            }
+        }
+    }
     .close-modal {
         position: absolute;
         top: 2rem;
