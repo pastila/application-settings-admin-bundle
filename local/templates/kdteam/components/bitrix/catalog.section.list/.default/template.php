@@ -386,7 +386,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                     <div id="choose_diagnoz" class="custom-select">
                         <select>
                             <option>Не выбрано</option>
-                            <option id="empty_diagnoz">Здесь нет моего диагноза</option>
+                            <option id="empty_diagnoz" value="">Здесь нет моего диагноза</option>
                             <?php foreach ($arFields as $arItem) {?>
                                 <option id="diagnoz_elem" value="<?=$arItem['ID']?>"><?php echo $arItem['NAME']?></option>
                             <?php }?>

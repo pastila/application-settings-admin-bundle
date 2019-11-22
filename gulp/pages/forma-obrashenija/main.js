@@ -36,7 +36,6 @@ $(document).ready(function() {
     let $title = $('#page-title');
     let region = $('#choose_location_elem').attr('value');
     let hospital = $('#choose_hospital_elem').attr('value');
-
     let choose_class = $('#choose_class_elem').attr('value');
     let choose_group = $('#choose_group_elem').attr('value');
     let choose_subgroup = $('#choose_subgroup_elem').attr('value');
@@ -48,67 +47,77 @@ $(document).ready(function() {
       $(div).find("input:checked").each(function() {
         years.push(this.value)
       });
+    if ($('#choose_diagnoz_elem').val() != 'Здесь нет моего диагноза'){
+      $.post('/ajax/diagnoz.php',
+          {
+            APPEAL_VALUE: appeal,
+            YEARS: years,
+            REGION: region,
+            HOSPITAL: hospital,
+            CLASS: choose_class,
+            GROUP: choose_group,
+            SUBGROUP: choose_subgroup,
+            DIAGNOZ: choose_diagnoz,
+          },
+          function(result) {
+            let diagnoz = jQuery.parseJSON(result);
+            console.log(diagnoz);
+            if (diagnoz !== 'error') {
 
-    $.post('/ajax/diagnoz.php',
-        {
-          APPEAL_VALUE: appeal,
-          YEARS: years,
-          REGION: region,
-          HOSPITAL: hospital,
-          CLASS: choose_class,
-          GROUP: choose_group,
-          SUBGROUP: choose_subgroup,
-          DIAGNOZ: choose_diagnoz,
-        },
-        function(result) {
-          let diagnoz = jQuery.parseJSON(result);
-          if (diagnoz !== 'error') {
+              $form.replaceWith(diagnoz['DIAGNOZ']);
+              $title.html(diagnoz['FULL_NAME']);
 
-            $form.replaceWith(diagnoz['DIAGNOZ']);
-            $title.html(diagnoz['FULL_NAME']);
-
-            document.body.scrollTop = document.documentElement.scrollTop = 0;
+              document.body.scrollTop = document.documentElement.scrollTop = 0;
 
 
-  if($(".header__r_auth_reg").length == 1) {
-    $("#generate_form").removeAttr("href");
-    $("#generate_form").click(function() {
-    $(".header__r_auth_reg").trigger("click");
-    setTimeout(function() {
-      $(".register_before_review").removeClass("hidden");
-    },700)
-    })
-  }else{
-            $('#generate_form').magnificPopup({
-              type: 'ajax',
-              modal: true,
+              if($(".header__r_auth_reg").length == 1) {
+                $("#generate_form").removeAttr("href");
+                $("#generate_form").click(function() {
+                  $(".header__r_auth_reg").trigger("click");
+                  setTimeout(function() {
+                    $(".register_before_review").removeClass("hidden");
+                  },700)
+                })
+              }else{
+                $('#generate_form').magnificPopup({
+                  type: 'ajax',
+                  modal: true,
 
-              callbacks: {
-                beforeOpen: function() {
-                  if($(window).width() < 700) {
-                    this.st.focus = false;
-                  } else {
-                    this.st.focus = '#name';
-                  }
-                },
-                afterClose: function() {
-                  $.post('/ajax/number_calls.php', function(result) {
-                    $('#number_calls').html(result);
-                  }, 'html');
-                }
-              },
-            });
-    }
-          } else {
-            $.magnificPopup.open({
-              items: {
-                src: '<div class="white-popup custom_styles_popup">Вы заполнили не все данные</div>',
-                type: 'inline'
+                  callbacks: {
+                    beforeOpen: function() {
+                      if($(window).width() < 700) {
+                        this.st.focus = false;
+                      } else {
+                        this.st.focus = '#name';
+                      }
+                    },
+                    afterClose: function() {
+                      $.post('/ajax/number_calls.php', function(result) {
+                        $('#number_calls').html(result);
+                      }, 'html');
+                    }
+                  },
+                });
               }
-            });
+            } else {
+              $.magnificPopup.open({
+                items: {
+                  src: '<div class="white-popup custom_styles_popup">Вы заполнили не все данные</div>',
+                  type: 'inline'
+                }
+              });
 
-          }
-        }, 'html');
+            }
+          }, 'html');
+    } else {
+      $.magnificPopup.open({
+        items: {
+          src: '<div class="white-popup custom_styles_popup">Вы заполнили не все данные</div>',
+          type: 'inline'
+        }
+      });
+    }
+
   });
 
 
