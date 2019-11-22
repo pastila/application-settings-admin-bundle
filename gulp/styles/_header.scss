@@ -235,6 +235,18 @@
             }
         }
     }
+    .input__wrap{
+        select{
+            height: auto;
+            width: 100%;
+            display: block;
+            outline: none;
+            border: none;
+            option{
+                background-color: #fff;
+            }
+        }
+    }
 }
 
 @media (min-width: 576px) {

@@ -142,9 +142,13 @@
     display: none;
 }
 .block_quotes{
-    padding-left: 10rem;
+    background-color: $bgColor;
+    color: $mainColor;
+    padding: 1.4rem 3rem;
+    margin: 2rem 0 2rem 5rem;
+    border:  1px dashed $accentColor;
     @media(max-width: 767px){
-        padding-left: 3rem;
+        margin-left: 3rem;
     }
     .quotes_italic{
         font-style: italic;

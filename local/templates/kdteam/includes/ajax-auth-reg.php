@@ -65,7 +65,7 @@ CModule::IncludeModule("iblock");
             <div class="input__wrap">
                 <label class="input__wrap_label">Регион в котором заключали договор</label>
 
-                <select id="sel_reg" required>
+                <select  class="select-selected" id="sel_reg" required>
                     <?php
                     $arSelect = Array("ID", "IBLOCK_ID", "NAME");
                     $arFilter = Array("IBLOCK_ID"=> 16, "ACTIVE"=>"Y" ,"%NAME"=>$_POST["name"]);
@@ -82,7 +82,7 @@ CModule::IncludeModule("iblock");
 
             <div class="input__wrap">
                 <label class="input__wrap_label">Укажите свою страховую компанию</label>
-                <select id="oms_company" required>
+                <select class="select-selected" id="oms_company" required>
                     <option>Выберите регион</option>
                 </select>
                 <input value="" id="company" type="hidden" name="company" required>
