@@ -54,95 +54,72 @@ $boss_compani = $arProps["NAME_BOSS"]["VALUE"];// руководитель ко�
 $mail_compani = $arProps["EMAIL_FIRST"]["VALUE"];// имйл компании
 
 $html ='
-    <style>
-        body {
-            font-family: "Times New Roman", Times, serif;
-            font-weight: normal;
-            font-size: calc(100vw / 50);
-            padding: 2rem;
-        }
-        p {
-            line-height: calc(100vw / 40);
-        }
-    </style>
-<page>
 
- <div class="header" style="display: flex;flex-direction: column;width: 80%; margin-left: auto;">
-        <div class="header__items" style="display: flex; flex-direction: column;  width: 100%; margin-bottom: 1rem;">
+<page>
+ <div class="header" style="width: 100%; padding: 40px 200px 0 200px; margin: 0 auto;">
+        <div class="header__items" style="width: 100%;">
             <div class="header__items_item">
-                <div class="header__items_item_wrap" style=" display: flex;">
-                    <div class="header__items_item--label" style=" flex: 2; font-weight: bold;">
-Кому:
-                    </div>
-​
-                    <div class="header__items_item--text" style="flex: 5;">
+                <div class="header__items_item_wrap" style="margin-bottom: 15px;">
+                    <span class="header__items_item--label" style="font-weight: bold;">
+                        Кому:
+                    </span>
+                    <span class="header__items_item--text" style="margin-bottom: 10px;">
                         <span class="bold-text" style="font-weight: bold;">Руководителю страховой медицинской организации</span>
-​
-                        <div class="blue-text cursive" style="color: rgb(55, 144, 223); font-style: italic;">
-'.$name_company.',
+                        <div class="blue-text cursive" style="font-style: italic;">
+                            '.$name_company.',
                             '.$boss_compani.'
                             '.$mail_compani.'
                         </div>
-                    </div>
-                </div>
-​
-​
-</div>
-​
-            <div class="header__items_item">
-                <div class="header__items_item_wrap">
-                    <div class="header__items_item--label">
-От:
-                    </div>
-​
-                    <div class="header__items_item--text blue-text cursive" style=" color: rgb(55, 144, 223); font-style: italic;">
-'.$full_name_user.'
-                    </div>
-                </div>
-​
-            </div>
-​
-            <div class="header__items_item">
-                <div class="header__items_item_wrap">
-                    <div class="header__items_item--label">
-Номер полиса: 
-                    </div>
-​
-                    <div class="header__items_item--text red-text cursive" style=" color: red;  font-style: italic;">
-'. $number_polic_POST .'
-</div>
+                    </span>
                 </div>
             </div>
-​
-            <div class="header__items_item">
+            <div class="header__items_item" style="margin-bottom: 15px;">
                 <div class="header__items_item_wrap">
-                    <div class="header__items_item--label">
-Адрес электронной почты:
-                    </div>
-​
-                    <div class="header__items_item--text blue-text cursive" style=" color: rgb(55, 144, 223); font-style: italic;">
-'. $email .'
-</div>
+                    <span class="header__items_item--label">
+                        <span style="font-weight: bold;">От:</span>
+                    </span>
+                    <span class="header__items_item--text blue-text cursive" style="font-style: italic;">
+                        '.$full_name_user.'
+                    </span>
                 </div>
             </div>
-​
-            <div class="header__items_item">
+            <div class="header__items_item" style="margin-bottom: 15px;">
                 <div class="header__items_item_wrap">
-                    <div class="header__items_item--label">
-Телефон:
-                    </div>
-​
-                    <div class="header__items_item--text blue-text cursive" style=" color: rgb(55, 144, 223); font-style: italic;">
-'. $mobail_number .'
-</div>
+                    <span class="header__items_item--label">
+                        <span style="font-weight: bold;">Номер полиса:</span> 
+                    </span>
+                    <span class="header__items_item--text red-text cursive" style="font-style: italic;">
+                        '. $number_polic_POST .'
+                    </span>
+                </div>
+            </div>
+            <div class="header__items_item" style="margin-bottom: 15px;">
+                <div class="header__items_item_wrap">
+                    <span class="header__items_item--label" >
+                        <span style="font-weight: bold;">Адрес электронной почты:</span>
+                    </span>
+                    <span class="header__items_item--text blue-text cursive" style=" font-style: italic;">
+                        '. $email .'
+                    </span>
+                </div>
+            </div>
+            <div class="header__items_item" style="margin-bottom: 10px;">
+                <div class="header__items_item_wrap">
+                    <span class="header__items_item--label" >
+                        <span style="font-weight: bold;">Телефон:</span>
+                    </span>
+                    <span class="header__items_item--text blue-text cursive" style=" font-style: italic;">
+                        '. $mobail_number .'
+                    </span>
                 </div>
             </div>
         </div>
     </div>
-​
-    <p>
-        <span class="red-text cursive" style=" color: red; font-style: italic;">«'.$data_user_oplata_POST.'</span> г. в медицинской организации <span
-            class="blue-text cursive" style=" color: rgb(55, 144, 223); font-style: italic;">'.$arHospital.'</span> мною
+​   <div style="width: 100%; padding: 0 40px 40px 40px; margin: 0 auto;">
+        <p style="text-align: center; margin-bottom: 15px; font-size: 22px; font-weight: bold;">ПРЕТЕНЗИЯ</p>
+         <p>
+        <span class="red-text cursive" style="font-style: italic;">«'.$data_user_oplata_POST.'</span> г. в медицинской организации <span
+            class="blue-text cursive" style="font-style: italic;">'.$arHospital.'</span> мною
         была совершена
         оплата медицинских услуг, что подтверждается прилагаемыми к настоящему письму документами.
     </p>
@@ -159,7 +136,7 @@ $html ='
         организацию, выбранную для получения первичной медико-санитарной помощи.
     </p>
     <p>
-При обращении в <span class="blue-text cursive" style=" color: rgb(55, 144, 223); font-style: italic;">'.$arHospital.'</span> мне не сообщили о возможности
+При обращении в <span class="blue-text cursive" style="font-style: italic;">'.$arHospital.'</span> мне не сообщили о возможности
         получения
         медицинской помощи бесплатно в
         сроки, установленные Территориальной программой государственных гарантий оказания гражданам бесплатной
@@ -195,8 +172,8 @@ $html ='
     <p>
 Приложение: документы, подтверждающие факт оплаты медицинских услуг – в электронном виде.
     </p>
-    <span class="blue-text cursive" style=" color: rgb(55, 144, 223); font-style: italic;"> Дата формирования заявления ' . $data_user_oformlenie_POST.'</span>
-
+    <span class="blue-text cursive" style="font-style: italic; margin-top: 15px;"> Дата формирования заявления ' . $data_user_oformlenie_POST.'</span>
+    </div>
 </page>
 
 ';
