@@ -141,85 +141,88 @@ function save(sv) {
     },
     type: 'post',
     success: function(result) {
-      $.ajax({
-        url: '/pdf/file_pdf.php',
-        data: {
-          "data_user_oplata_POST":cur_el.find(time).val(),
-          "number_polic":cur_el.find(policy).val(),
-        },
-        type: 'post',
-        success: function(result) {
-          console.log(result)
-        }
-      });
-      $('#save_' + element[1]).css('display', 'none');
-
-      cur_el.find(usrname).css('display', 'none');
-      cur_el.find(policy).css('display', 'none');
-      cur_el.find(time).css('display', 'none');
-
-      usrname_p.html(cur_el.find(usrname).val());
-      policy_p.html(cur_el.find(policy).val());
-      time_p.html(cur_el.find(time).val());
-
-      $('#edit_' + element[1]).css('display', 'block');
-
-      $('#success_' + element[1]).html(result);
-      $('#error_' + element[1]).html('');
-
-      usrname_p.css('display', 'block');
-      policy_p.css('display', 'block');
-      time_p.css('display', 'block');
-     var time_p_str = time_p.text().replace(/\s/g, '');
-
-     var policy_str = cur_el.find(policy).val();
-      policy_str = policy_str.replace(/\s/g, '');
-
-     var usrname_str = cur_el.find(usrname).val()
-      usrname_str= usrname_str.replace(/\s/g, '');
-
-      if (time_p_str.length <= 3 || policy_str.length <= 1 || usrname_str.length <= 3) {
-
+      if (result === 'false'){
+        $('#success_' + element[1]).html('');
+        $('#error_' + element[1]).html('Заполните дату оплаты услуг');
       } else {
-        let data = {
-          "number_polic": cur_el.find(policy).val(),
-          "data_user_oplata_POST": time_p.text(),
-          "data_checkout": "1",
-          "usrname": cur_el.find(usrname).val(),
-          "id": element[1],
-          "hospitl": cur_el.find(hospitl).text(),
-        };
         $.ajax({
           url: '/pdf/file_pdf.php',
-          type: 'POST',
-          data: data,
-          success: function(msg) {
-
-            $('[data-obrashenie-id=' + element[1] + ']').
-                find(".pdf").
-                attr("href", msg);
-            $('[data-obrashenie-id=' + element[1] + ']').
-                find(".pdf").
-                removeClass("error");
-            $('[data-obrashenie-id=' + element[1] + ']').
-                find(".pdf").
-                text("Просмотреть");
-            $(".ready_pdf").removeClass("hidden");
-            $(".with_out_pdf").addClass("hidden")
+          data: {
+            "data_user_oplata_POST":cur_el.find(time).val(),
+            "number_polic":cur_el.find(policy).val(),
           },
-        }).done(function(msg) {
-
+          type: 'post',
+          success: function(result) {
+            console.log(result)
+          }
         });
+        $('#save_' + element[1]).css('display', 'none');
+
+        cur_el.find(usrname).css('display', 'none');
+        cur_el.find(policy).css('display', 'none');
+        cur_el.find(time).css('display', 'none');
+
+        usrname_p.html(cur_el.find(usrname).val());
+        policy_p.html(cur_el.find(policy).val());
+        time_p.html(cur_el.find(time).val());
+
+        $('#edit_' + element[1]).css('display', 'block');
+
+        $('#success_' + element[1]).html(result);
+        $('#error_' + element[1]).html('');
+
+        usrname_p.css('display', 'block');
+        policy_p.css('display', 'block');
+        time_p.css('display', 'block');
+        var time_p_str = time_p.text().replace(/\s/g, '');
+
+        var policy_str = cur_el.find(policy).val();
+        policy_str = policy_str.replace(/\s/g, '');
+
+        var usrname_str = cur_el.find(usrname).val()
+        usrname_str= usrname_str.replace(/\s/g, '');
+
+        if (time_p_str.length <= 3 || policy_str.length <= 1 || usrname_str.length <= 3) {
+
+        } else {
+          let data = {
+            "number_polic": cur_el.find(policy).val(),
+            "data_user_oplata_POST": time_p.text(),
+            "data_checkout": "1",
+            "usrname": cur_el.find(usrname).val(),
+            "id": element[1],
+            "hospitl": cur_el.find(hospitl).text(),
+          };
+          $.ajax({
+            url: '/pdf/file_pdf.php',
+            type: 'POST',
+            data: data,
+            success: function(msg) {
+
+              $('[data-obrashenie-id=' + element[1] + ']').
+                  find(".pdf").
+                  attr("href", msg);
+              $('[data-obrashenie-id=' + element[1] + ']').
+                  find(".pdf").
+                  removeClass("error");
+              $('[data-obrashenie-id=' + element[1] + ']').
+                  find(".pdf").
+                  text("Просмотреть");
+              $(".ready_pdf").removeClass("hidden");
+              $(".with_out_pdf").addClass("hidden")
+            },
+          }).done(function(msg) {
+
+          });
+        }
       }
+
     }
   });
 }
 
 function send_ms(sd) {
   let element = $(sd)[0].id.split('_');
- if( $(".pdf").hasClass("error") ){
-  $(".with_out_pdf").removeClass("hidden");
- }else {
    $.ajax({
      url: '/ajax/send_message.php',
      data: {
@@ -274,7 +277,6 @@ function send_ms(sd) {
 
      }
    });
- }
 }
 
 

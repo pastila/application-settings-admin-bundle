@@ -165,14 +165,20 @@ $("#form-comments").validator().on('submit', function(e) {
       dataType: "html",
       beforeSend: function() {
 
-      }
+      },
+
     }).done(function(msg) {
             if(msg == 1){
               $.magnificPopup.open({
                 items: {
                   src: '<div class="white-popup custom_styles_popup" >Ваш отзыв успешно отправлен</div>',
                   type: 'inline'
-                }
+                },
+                callbacks: {
+                  afterClose: function() {
+                    document.location.reload(true);
+                  },
+                },
               });
             }
     });

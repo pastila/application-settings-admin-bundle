@@ -1,10 +1,10 @@
 <?php
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
-
 if (CModule::IncludeModule("iblock")) {
     $arSelect = array("IBLOCK_ID", "ID", "PREVIEW_PICTURE", "PROPERTY_FULL_NAME", "PROPERTY_HOSPITAL",
         "PROPERTY_ADDRESS", "PROPERTY_CLASS", "PROPERTY_GROUP", "PROPERTY_SUBGROUP", "PROPERTY_DIAGNOZ",
-        "PROPERTY_APPEAL", "PROPERTY_YEARS", "PROPERTY_POLICY", "PROPERTY_VISIT_DATE");
+        "PROPERTY_APPEAL", "PROPERTY_YEARS", "PROPERTY_POLICY", "PROPERTY_VISIT_DATE", "PROPERTY_IMG_2",
+        "PROPERTY_IMG_3", "PROPERTY_IMG_4", "PROPERTY_IMG_5", "PROPERTY_PDF");
     $arFilter = array("IBLOCK_ID" => 11, "ID" => $_POST['ID'], "!PROPERTY_SEND_REVIEW" => 1);
     $res = CIBlockElement::GetList(
         array(),
@@ -39,18 +39,10 @@ if (CModule::IncludeModule("iblock")) {
                     global $USER;
                     $rsUser = CUser::GetByID($USER->GetID());
                     $arUser = $rsUser->Fetch();
-                    $db_list = CIBlockSection::GetList(
-                        array(),
-                        array("IBLOCK_ID" => 16 ,'NAME' => $arFields['PROPERTY_ADDRESS_VALUE']),
-                        false,
-                        array('ID'),
-                        false
-                    )->GetNext();
 
-                    $arSel = array("ID", "IBLOCK_ID", "PROPERTY_EMAIL_FIRST", "PROPERTY_EMAIL_SECOND",
+                    $arSel = array("ID", "IBLOCK_ID", "NAME", "PROPERTY_EMAIL_FIRST", "PROPERTY_EMAIL_SECOND",
                         "PROPERTY_EMAIL_THIRD");
-                    $arFil = array("IBLOCK_ID" => 16, "~NAME" => $arUser['UF_INSURANCE_COMPANY'],
-                        "SECTION_ID" => $db_list['ID']);
+                    $arFil = array("IBLOCK_ID" => 16, "ID" => $arUser['UF_INSURANCE_COMPANY']);
                     $rs = CIBlockElement::GetList(array(), $arFil, false, false, $arSel);
                     if ($obs = $rs->GetNextElement()) {
                         $arOMS = $obs->GetFields();
@@ -66,22 +58,69 @@ if (CModule::IncludeModule("iblock")) {
                         }
                     }
 
-                    $message .= 'ФИО ' . $arFields['PROPERTY_FULL_NAME_VALUE'] . '<br>';
-                    $message .= 'Период получения помощи: ' . $nameYear . '<br>';
-                    $message .= 'Обращение: ' . $arFields['PROPERTY_APPEAL_VALUE'] . '<br>';
-                    $message .= 'Регион: ' . $arFields['PROPERTY_ADDRESS_VALUE'] . '<br>';
-                    $message .= 'Больница: ' . htmlspecialchars_decode($arFields['PROPERTY_HOSPITAL_VALUE']) . '<br>';
-                    $message .= 'Класс: ' . $arFields['PROPERTY_CLASS_VALUE'] . '<br>';
-                    $message .= 'Группа: ' . $arFields['PROPERTY_GROUP_VALUE'] . '<br>';
-                    $message .= 'Подгруппа: ' . $arFields['PROPERTY_SUBGROUP_VALUE'] . '<br>';
-                    $message .= 'Диагноз: ' . $arFields['PROPERTY_DIAGNOZ_VALUE'] . '<br>';
-                    $message .= 'Полис: ' . $arFields['PROPERTY_POLICY_VALUE'] . '<br>';
-                    $message .= 'Дата посещения больницы: ' . $arFields['PROPERTY_VISIT_DATE_VALUE'] . '<br>';
                     $message .= 'Загруженные документы пользователем:<br>';
-                    $message .= 'Картинка №1: <img src="http://' . $_SERVER['SERVER_NAME'] . CFile::GetPath($arFields['PREVIEW_PICTURE']) . '"><br>';
+                    $message .= 'Картинка №1: 
+                    <img src="http://' . $_SERVER['SERVER_NAME'] . CFile::GetPath($arFields['PREVIEW_PICTURE']) . '">
+                    <br>';
+                    if (!empty($arFields['PROPERTY_IMG_2_VALUE'])) {
+                        $message .= 'Картинка №2: 
+                        <img src="http://' . $_SERVER['SERVER_NAME'] .
+                            CFile::GetPath($arFields['PROPERTY_IMG_2_VALUE']) . '">
+                        <br>';
+                    }
+                    if (!empty($arFields['PROPERTY_IMG_3_VALUE'])) {
+                        $message .= 'Картинка №3: 
+                        <img src="http://' . $_SERVER['SERVER_NAME'] .
+                            CFile::GetPath($arFields['PROPERTY_IMG_3_VALUE']) . '">
+                        <br>';
+                    }
+                    if (!empty($arFields['PROPERTY_IMG_4_VALUE'])) {
+                        $message .= 'Картинка №4: 
+                        <img src="http://' . $_SERVER['SERVER_NAME'] .
+                            CFile::GetPath($arFields['PROPERTY_IMG_4_VALUE']) . '">
+                        <br>';
+                    }
+                    if (!empty($arFields['PROPERTY_IMG_5_VALUE'])) {
+                        $message .= 'Картинка №5: 
+                        <img src="http://' . $_SERVER['SERVER_NAME'] .
+                            CFile::GetPath($arFields['PROPERTY_IMG_5_VALUE']) . '">
+                        <br>';
+                    }
+                    $message .= 'PDF: 
+                        <a download="" href="' . $_SERVER['SERVER_NAME'] .
+                        CFile::GetPath($arFields['PROPERTY_PDF_VALUE']) . '">скачать</a>
+                        <br>';
+                    $ID_user = $USER->GetID();
+                    $rsUser = CUser::GetByID($ID_user);
+                    $person = $rsUser->Fetch();
+
+                    $user_email = $person["EMAIL"];
+                    $mobail_number = $person["PERSONAL_PHONE"];
+                    $full_name_user = $USER->GetFullName();
+
+                    $name_company = $arOMS["NAME"];// название компании
+                    $boss_company = $arOMS["NAME_BOSS"]["VALUE"];// руководитель компании
+                    $mail_company = $arOMS["EMAIL_FIRST"]["VALUE"];// имйл компании
 
                     if (!empty($email)) {
-                        CEvent::Send('SEND_MESSAGE', 's1', array('MESSAGE' => $message, 'EMAIL' => $email));
+                        CEvent::Send(
+                            'SEND_MESSAGE',
+                            's1',
+                            array(
+                                'MESSAGE' => $message,
+                                'NAME_COMPANY' => $name_company,
+                                'BOSS_COMPANY' => $boss_company,
+                                'MAIL_COMPANY' => $mail_company,
+                                'EMAIL' => $email,
+                                'USER_MAIL' => $user_email,
+                                'FULLNAME' => $arFields['PROPERTY_FULL_NAME_VALUE'],
+                                'POLICY' => $arFields['PROPERTY_POLICY_VALUE'],
+                                'PHONE' => $mobail_number,
+                                'HOSPITAL' => htmlspecialchars_decode($arFields['PROPERTY_HOSPITAL_VALUE']),
+                                'DATE_SEND' => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time()),
+                                'DATE_PAY' => $arFields['PROPERTY_VISIT_DATE_VALUE'],
+                            )
+                        );
                         CIBlockElement::SetPropertyValuesEx(
                             $_POST['ID'],
                             11,
