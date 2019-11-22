@@ -34,7 +34,7 @@ global $USER;?>
                     <div class="white_block">
 
                         <div class="feedback__top">
-                            <div class="custom-select">
+                            <div class="custom-select custom-select-js-cite">
                                 <div class="title-select" data-select="city">Ваш Город</div>
                                 <div class="danger" style="display: none" >Выбирете город</div>
                                 <select>
@@ -54,24 +54,14 @@ global $USER;?>
                                 </select>
                             </div>
 
-                            <div class="custom-select" style="pointer-events: none">
+                            <div class="custom-select  custom-select-js  no_click">
+
                                 <div class="title-select" data-select="company">Страховая компания</div>
                                 <div class="danger" style="display: none">Выбирете компанию</div>
                                 <select>
                                     <option value="0" >Выберите регион: </option>
-                                    <!--                                --><?//
-                                    //                                $arOrder = Array("name"=>"asc");
-                                    //                                $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_*");
-                                    //                                $arFilter = Array("IBLOCK_ID"=>16);
-                                    //                                $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
-                                    //                                while($ob = $res->GetNextElement()){
-                                    //                                    $arFields = $ob->GetFields();?>
-                                    <!--                                   <option value="1" data-id-compani="--><?//=$arFields["ID"]?><!--">--><?//= $arFields["NAME"]?><!--</option>-->
-                                    <!--                              --><?//  }?>
-
-
-
                                 </select>
+
                             </div>
                         </div>
 
