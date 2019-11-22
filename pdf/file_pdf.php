@@ -13,6 +13,8 @@ require '/var/www/vendor/autoload.php';
 
 global $USER;
 
+$arHospital = $_POST["hospitl"];
+
 if($_POST["data_checkout"] == 1){
     $data_user_oformlenie_POST = "(Дата запишеться как только вы отправите обращение)";
 }else{
@@ -30,9 +32,7 @@ $ID_user = $USER->GetID();
 $rsUser = CUser::GetByID($ID_user);
 $person = $rsUser->Fetch();
 
-// echo '<pre>';
-// print_r($person);
-// echo '</pre>';
+
 
 $email = $person["EMAIL"];
 $mobail_number = $person["PERSONAL_PHONE"];
@@ -220,11 +220,14 @@ $name_file .= "file.pdf";
 
 $mpdf->WriteHTML($html);
 $mpdf->Output($name_file,'F');
+
 $url_pdf_for_user = "/upload/pdf/PDF_". date('Y-m-d-h:i:s')."_". $email. "_file.pdf";
 $arFile = CFile::MakeFileArray($url_pdf_for_user);
 $arProperty = Array(
     "PDF" =>$arFile,
 );
-CIBlockElement::SetPropertyValuesEx($_POST["id"], 11, $arProperty);
+
+   CIBlockElement::SetPropertyValuesEx($_POST["id"], 11, $arProperty);
+
 echo $url_pdf_for_user;
 

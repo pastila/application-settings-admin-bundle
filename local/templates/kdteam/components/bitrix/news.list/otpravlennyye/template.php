@@ -39,7 +39,9 @@ if (count($arResult["ITEMS"]) > 0) {
             </div>
             <p id="error_<?= $arItem["ID"] ?>" class="error"></p>
             <p id="success_<?= $arItem["ID"] ?>" class="success"></p>
+            <div class="obrashcheniya__content_left_center_item_text-full hidden with_out_pdf error">Без  сформированного документа PDF нельзя отрпавить обращение</div>
             <div id="card_<?= $arItem["ID"] ?>" class="card">
+
                 <!-- Контент -->
                 <div class="obrashcheniya__content">
                     <!-- Контент левая сторона -->
@@ -87,9 +89,7 @@ if (count($arResult["ITEMS"]) > 0) {
                                     Больница:
                                 </div>
 
-                                <p class="obrashcheniya__content_left_center_item_text-full">
-                                    <?php echo $hospital ?>
-                                </p>
+                                <p id="hospitl_<?= $arItem['ID'] ?>" class="obrashcheniya__content_left_center_item_text-full"><?php echo $hospital ?></p>
                             </div>
 
                             <!-- Item ы -->
@@ -269,10 +269,11 @@ if (count($arResult["ITEMS"]) > 0) {
 
                                 <?php
                                 $url_pdf = CFile::GetPath($arItem["PROPERTIES"]["PDF"]["VALUE"]); ?>
-                                <a class="obrashcheniya__content_sidebar_blocks_text_link pdf" <?php if ($url_pdf != "") { ?> href="<?= $url_pdf ?>"<? } ?> >
-
-                                    просмотреть
+                                <a class="obrashcheniya__content_sidebar_blocks_text_link pdf <?php if ($url_pdf == "") { ?>error<?}?>" <?php if ($url_pdf != "") { ?> href="<?= $url_pdf ?>"<? } ?> >
+                                  <?php if ($url_pdf != "") { ?>  просмотреть <? }else{ ?> Заполните все поля для формирования pdf файла<?}?>
                                 </a>
+                                <div class="hidden ready_pdf success"> Файл пдф сформирован</div>
+                                <div class="hidden updata_pdf success"> Файл пдф обновлен</div>
                             </div>
 
                         </div>
