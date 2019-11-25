@@ -42,7 +42,7 @@ $strahovay_compani = $person["UF_INSURANCE_COMPANY"];
 
 
 $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_*");
-$arFilter = Array("IBLOCK_ID"=>16,"NAME"=> $strahovay_compani);
+$arFilter = Array("IBLOCK_ID"=>16,"ID"=> $strahovay_compani);
 $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
 $ob = $res->GetNextElement();
 $arProps = $ob->GetProperties();
