@@ -26,12 +26,11 @@ $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM");
 $arFilter = Array("IBLOCK_ID" => 11, "UF_USER_ID" => $ID_USER);
 $section = CIBlockSection::GetList(Array(), $arFilter, false, $arSelect, false);  // получили секцию по айди юзера
 if ($Section = $section->GetNext()) {
-    $arSelect = Array("ID", "IBLOCK_ID", "NAME", "CREATED_DATE", "PROPERTY_*");
+    $arSelect = Array("ID", "IBLOCK_ID", "NAME", "CREATED_DATE", "PROPERTY_SEND_MESSAGE");
     $arFilter = Array("IBLOCK_ID" => 11, "SECTION_ID" => $Section["ID"], "PROPERTY_SEND_REVIEW_VALUE"=> 1);
     $Element = CIBlockElement::GetList(Array("created" => "desc"), $arFilter, false, false, $arSelect); //получили обращения юзера
     while ($obElement = $Element->GetNextElement()) {
         $arFields = $obElement->GetFields();
-
         $newDate = FormatDate("d.m.Y", MakeTimeStamp($arFields["CREATED_DATE"]));
         ?>
         <!-- Обращения item -->
@@ -45,7 +44,7 @@ if ($Section = $section->GetNext()) {
                     <p class="success">Направлено в страховую компанию</p>
 
                     <div class="otpravlennyye__item_data">
-                        дата: <?= $newDate ?>
+                        дата: <?= $arFields['PROPERTY_SEND_MESSAGE_VALUE'] ?>
                     </div>
 
                     <p class="otpravlennyye__item_text">
