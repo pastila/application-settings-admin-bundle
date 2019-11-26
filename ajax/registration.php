@@ -45,7 +45,7 @@ if($_POST) {
             "GROUP_ID" => array(3, 4, 5),
             "PASSWORD" => $parol,
             "CONFIRM_PASSWORD" => $parol,
-            "PERSONAL_MOBILE" => $tel,
+            "PERSONAL_PHONE" => $tel,
             "UF_INSURANCE_POLICY" => $nomer_polica,
             "UF_INSURANCE_COMPANY" => $id_company
         );
