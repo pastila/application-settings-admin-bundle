@@ -1,8 +1,8 @@
 //= ../../node_modules/jquery/dist/jquery.min.js
 //= ../../node_modules/magnific-popup/dist/jquery.magnific-popup.min.js
+//= ../../node_modules/jquery-mask-plugin/dist/jquery.mask.min.js
 
 $(document).ready(function() {
-
 
 
   $(document).mouseup(function (e){
@@ -26,6 +26,7 @@ $(document).ready(function() {
   });
 
   function FormReg() {
+    $('#phone').mask('+7(000)000-00-00');
 
     $('#sel_reg').change(function() {
       let sVal = $(this).val();
