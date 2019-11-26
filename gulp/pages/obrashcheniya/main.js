@@ -74,6 +74,7 @@ function del(f) {
       $('#img_block_' + r.ID).remove();
       $('#success_' + r.ID_EL).text('Файл успешно удален!');
       $('#error_' + r.ID_EL).text('');
+      document.getElementById(r.ID_EL).value = "";
     }
   });
 }
@@ -179,7 +180,7 @@ function save(sv) {
         var policy_str = cur_el.find(policy).val();
         policy_str = policy_str.replace(/\s/g, '');
 
-        var usrname_str = cur_el.find(usrname).val()
+        var usrname_str = cur_el.find(usrname).val();
         usrname_str= usrname_str.replace(/\s/g, '');
 
         if (time_p_str.length <= 3 || policy_str.length <= 1 || usrname_str.length <= 3) {
