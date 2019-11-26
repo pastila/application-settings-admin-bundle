@@ -34,7 +34,7 @@ CModule::IncludeModule("iblock");
             </div>
             <div class="input__wrap">
                 <label class="input__wrap_label">Ваш номер телефона</label>
-                <input id="phone" type="tel" name="phone" placeholder="+7(000)000-00-00"  required>
+                <input id="phone" type="tel" minlength="16" name="phone" placeholder="+7(000)000-00-00"  required>
             </div>
         </div>
         <div class="popup__wrap_middle">
