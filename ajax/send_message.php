@@ -87,7 +87,7 @@ if (CModule::IncludeModule("iblock")) {
                         <br>';
                     }
                     $message .= 'PDF: 
-                        <a download="" href="' . $_SERVER['SERVER_NAME'] .
+                        <a download="" href="http://' . $_SERVER['SERVER_NAME'] .
                         CFile::GetPath($arFields['PROPERTY_PDF_VALUE']) . '">скачать</a>
                         <br>';
                     $ID_user = $USER->GetID();
