@@ -18,7 +18,7 @@ $arHospital = $_POST["hospitl"];
 if($_POST["data_checkout"] == 1){
     $data_user_oformlenie_POST = "(Дата запишеться как только вы отправите обращение)";
 }else{
-    $data_user_oformlenie_POST = date('d.m.Y');
+    $data_user_oformlenie_POST = date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time());
 }
 
 $data_user_oplata_POST = $_POST["data_user_oplata_POST"];
@@ -201,7 +201,7 @@ $mpdf->Output($name_file,'F');
 $url_pdf_for_user = "/upload/pdf/PDF_". date('Y-m-d-h:i:s')."_". $email. "_file.pdf";
 $arFile = CFile::MakeFileArray($url_pdf_for_user);
 $arProperty = Array(
-    "PDF" =>$arFile,
+    "PDF" => $arFile,
 );
 
    CIBlockElement::SetPropertyValuesEx($_POST["id"], 11, $arProperty);

@@ -86,9 +86,10 @@ if (CModule::IncludeModule("iblock")) {
                             CFile::GetPath($arFields['PROPERTY_IMG_5_VALUE']) . '">
                         <br>';
                     }
+                    $arFile = CFile::GetFileArray($arFields['PROPERTY_PDF_VALUE']);
                     $message .= 'PDF: 
                         <a href="http://' . $_SERVER['SERVER_NAME'] .
-                        CFile::GetPath($arFields['PROPERTY_PDF_VALUE']) . '" download>скачать</a>
+                        $arFile['SRC'] . '">скачать</a>
                         <br>';
                     $ID_user = $USER->GetID();
                     $rsUser = CUser::GetByID($ID_user);
