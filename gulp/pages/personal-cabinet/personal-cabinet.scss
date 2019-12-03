@@ -1,0 +1,48 @@
+@import '../../styles/utils/vars';
+
+
+.personal_cabinet{
+  .flex_personal{
+    margin-bottom: 5rem;
+    @media screen and (min-width: 992px){
+      display: flex;
+    }
+    .personal_data{
+      @media screen and (min-width: 992px){
+        flex: 2;
+        padding-right: 3rem;
+        margin-bottom: 0;
+      }
+      @media(max-width: 991px){
+        margin-bottom: 2rem;
+      }
+      .flex_data {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+        .item_data {
+          font-weight: 700;
+          width: 100%;
+          @media(min-width: 576px){
+            width: 49%;
+          }
+        }
+      }
+    }
+    .edit_block{
+      @media screen and (min-width: 992px){
+        flex: 1;
+        align-self: center;
+      }
+      .photo_user{
+        display: flex;
+        justify-content: center;
+        margin-top: 3rem;
+        img{
+          max-width: 100%;
+        }
+      }
+    }
+  }
+}
