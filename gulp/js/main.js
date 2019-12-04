@@ -26,6 +26,7 @@ $(document).ready(function() {
   });
 
   function FormReg() {
+    $('#phone').mask('+7(000)000-00-00');
 
     $('#sel_reg').change(function() {
       let sVal = $(this).val();
