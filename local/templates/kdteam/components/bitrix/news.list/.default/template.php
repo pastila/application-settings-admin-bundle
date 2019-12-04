@@ -16,7 +16,7 @@ $this->setFrameMode(true);
     <?php foreach ($arResult["ITEMS"] as $arItem) { ?>
         <label class="check-label">
             <?php echo $arItem["NAME"]?>
-            <input type="checkbox" value="<?=$arItem['ID']?>" />
+            <input name="years" type="radio" value="<?=$arItem['ID']?>" />
             <span class="check-img"></span>
         </label>
     <?php }?>
