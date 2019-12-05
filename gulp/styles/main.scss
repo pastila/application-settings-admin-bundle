@@ -21,7 +21,6 @@
 // Popup
 @import '../../node_modules/magnific-popup/dist/magnific-popup.css';
 
-
 // Styles for all pages
 html {
     font-family: 'Rubik', sans-serif;
@@ -260,3 +259,29 @@ textarea{
 a{
     cursor: pointer;
 }
+
+CSS
+textarea,
+input.text,
+input[type="text"],
+input[type="button"],
+input[type="submit"],
+.input-checkbox {
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    border-radius: 0;
+}
+
+input{
+    -moz-appearance: none;/* older firefox */
+    -webkit-appearance: none; /* safari, chrome, edge and ie mobile */
+    appearance: none; /* rest */
+    border-radius: 0;
+ }
+
+ select {
+    -moz-appearance: none;/* older firefox */
+    -webkit-appearance: none; /* safari, chrome, edge and ie mobile */
+    appearance: none; /* rest */
+    border-radius: 0 !important;
+ }
