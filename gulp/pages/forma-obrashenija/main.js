@@ -1,7 +1,51 @@
 //= ../../node_modules/jquery/dist/jquery.min.js
 //= ../../node_modules/magnific-popup/dist/jquery.magnific-popup.min.js
-
+function smart_search() {
+  console.log('change');
+}
 $(document).ready(function() {
+
+  $(".search_result li").click(function(){
+    $('#referal').val($(this).text());
+    $(".search_result").fadeOut();
+  });
+  $("#referal").click(function(){
+    $(".search_result").fadeIn();
+  });
+  $(document).mouseup(function (e) {
+    let container = $("#referal");
+    if (container.has(e.target).length === 0){
+      $(".search_result").fadeOut();
+    }
+  });
+  $('#referal').on('keyup', function(){
+
+    var $this = $(this);
+    var delay = 500;
+
+    clearTimeout($this.data('timer'));
+    $('span').text('Загрузка...');
+
+    $this.data('timer', setTimeout(function(){
+
+      $this.removeData('timer');
+
+      $.post('/ajax/smart_search.php', { q: $this.val() }, function(){
+        console.log('smart_search');
+
+        $('span').text('Готово!');
+
+      });
+
+    }, delay));
+
+  });
+
+
+
+
+
+
   create_select();
 
 
