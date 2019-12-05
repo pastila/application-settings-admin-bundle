@@ -26,7 +26,9 @@ $arFilter = array("IBLOCK_ID" => 11, "UF_USER_ID" => $USER->GetID());
 $arSelect = array("ID");
 $rsSections = CIBlockSection::GetList(array(), $arFilter, false, $arSelect, false);
 
-$arName = $USER->GetFullName();
+$rsUser = CUser::GetByID($USER->GetID());
+$arUser = $rsUser->Fetch();
+$arName = $arUser['NAME'] . ' ' . $arUser['LAST_NAME'] . ' ' . $arUser['SECOND_NAME'];
 $arAppeal = $_SESSION["APPEAL"];
 
 

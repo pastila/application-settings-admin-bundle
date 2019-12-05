@@ -56,7 +56,7 @@ $asset = Asset::getInstance();
                         <div id="menu" class="white_block">
                             <ul>
                                 <li>
-                                    <a href="#">Личный кабинет</a>
+                                    <a href="/personal-cabinet/">Личный кабинет</a>
                                 </li>
 
                                 <li>
