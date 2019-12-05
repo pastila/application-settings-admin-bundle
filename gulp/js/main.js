@@ -309,3 +309,41 @@ if (theToggle) {
   }
 })();
 
+function lazyloadImage() {
+  const images = document.querySelectorAll("[data-src]");
+  const imagesSource = document.querySelectorAll("[data-srcset]");
+
+  function preloadImage(img) {
+      const src = img.getAttribute("data-src");
+      const dataSrc = img.getAttribute("data-srcset");
+      if (!src) {
+          img.srcset = dataSrc;
+      }
+      img.src = src;
+  }
+
+  const imgOptions = {
+      threshold: 0,
+      rootMargin: "0px 0px 0px 0px"
+  };
+
+  const imgObserver = new IntersectionObserver(function (entries, imgObserver) {
+      entries.forEach(entrie => {
+          if (!entrie.isIntersecting) {
+              return;
+          } else {
+              entrie.target.classList.remove("lazy-kdteam");
+              preloadImage(entrie.target);
+              imgObserver.unobserve(entrie.target);
+          }
+      });
+  }, imgOptions);
+
+  images.forEach(image => {
+      imgObserver.observe(image);
+  });
+
+  imagesSource.forEach(image => {
+      imgObserver.observe(image);
+  });
+}
