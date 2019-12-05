@@ -2,8 +2,17 @@
   position: relative;
 
   select {
-    display: none;
+    display: block;
+    display: block;
+    width: 100%;
+    height: 7rem;
+    border: solid transparent;
+    background-color:$inputColor;
   }
+
+  // select {
+  //   display: none;
+  // }
 }
 
 .select-selected {

@@ -25,6 +25,30 @@
             outline: none;
         }
     }
+
+    &__items {
+        display: none;
+        position: absolute;
+        top: 100%;
+        width: 100%;
+        max-height: 30rem;
+        background-color: white;
+        box-shadow: 0px 0px 10px rgba(10px, 16px, 28px, 0.1);
+        z-index: 2;
+        overflow-y: scroll;
+        &.active {
+            display: block;
+        }
+
+        &_item {
+            padding: 1rem 2rem;
+            font-size: 1.6rem;
+            text-transform: uppercase;
+            &:hover {
+                background-color: $accentColor;
+            }
+        }
+    }
 }
 
 @media screen and (min-width: 1400px) {
