@@ -222,18 +222,31 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                 <?php
             }?>
         <?php } else { ?>
-            <div class="title-select">Выбор региона:</div>
-            <div id="choose_location" class="custom-select">
-                <select>
-                    <option>Не выбрано</option>
-                    <?php
-                    foreach ($arResult['SECTIONS'] as &$arSection) {?>
-                        <?php if ($arSection['DEPTH_LEVEL'] == 1) { ?>
-                            <option id="location" value="<?=$arSection['ID']?>"><?php echo $arSection['NAME']?></option>
-                        <?php }?>
-                    <?php } ?>
-                </select>
+            <div class="aligndiv">
+                <label for="user_pass">Выбор региона: </label>
+                <div>
+                    <input id="referal" type="text" placeholder="Поиск по региону" onkeyup="smart_search()" autocomplete="off"/>
+                    <ul style="cursor: pointer;" class="search_result" id="search_result">
+                        <?php
+                        foreach ($arResult['SECTIONS'] as &$arSection) {?>
+                            <?php if ($arSection['DEPTH_LEVEL'] == 1) { ?>
+                                <li><?php echo $arSection['NAME']?></li>
+                            <?php }?>
+                        <?php } ?>
+                    </ul>
+                </div>
             </div>
+<!--            <div id="choose_location" class="custom-select">-->
+<!--                <select>-->
+<!--                    <option>Не выбрано</option>-->
+<!--                    --><?php
+//                    foreach ($arResult['SECTIONS'] as &$arSection) {?>
+<!--                        --><?php //if ($arSection['DEPTH_LEVEL'] == 1) { ?>
+<!--                            <option id="location" value="--><?//=$arSection['ID']?><!--">--><?php //echo $arSection['NAME']?><!--</option>-->
+<!--                        --><?php //}?>
+<!--                    --><?php //} ?>
+<!--                </select>-->
+<!--            </div>-->
 
             <div class="title-select">Список больниц:</div>
             <div id="choose_hospital" class="custom-select" style="pointer-events: none">
