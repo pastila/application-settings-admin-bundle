@@ -153,7 +153,7 @@ while($ob = $res->GetNextElement()){
                    <p>Ваш e-mail</p>
                </div>
                <div class="item_data input__wrap">
-                   <input type="text" name="email" value="<?=$person["EMAIL"];?>">
+                   <input type="text" name="email" class="input_email" value="<?=$person["EMAIL"];?>">
 
                </div>
            </div>
