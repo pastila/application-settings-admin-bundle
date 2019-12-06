@@ -83,6 +83,21 @@ if (count($arResult["ITEMS"]) > 0) {
                                            value="<?= $arItem["PROPERTIES"]["FULL_NAME"]["VALUE"] ?>">
                                 </div>
                             </div>
+                            <div class="obrashcheniya__content_left_center_item">
+                                <div class="obrashcheniya__content_left_center_item_text">
+                                    Мобильный номер
+                                </div>
+
+                                <p id="phone_<?= $arItem['ID'] ?>"
+                                   class="obrashcheniya__content_left_center__item_text-full">
+                                    <?php echo $arItem["PROPERTIES"]["MOBAIL_PHONE"]["VALUE"] ?></p>
+                                <div class="input__wrap no_margin">
+                                    <input style="display: none"
+                                           type="text"
+                                           name="phone"
+                                           value="<?= $arItem["PROPERTIES"]["MOBAIL_PHONE"]["VALUE"] ?>">
+                                </div>
+                            </div>
 
                             <!-- Item ы -->
                             <div class="obrashcheniya__content_left_center_item">
