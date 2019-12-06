@@ -1,6 +1,8 @@
 @import '../../styles/utils/vars';
 
-
+.no_click{
+    pointer-events: none;
+}
 .personal_cabinet{
   .flex_personal{
     margin-bottom: 5rem;
