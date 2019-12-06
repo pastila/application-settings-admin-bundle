@@ -286,3 +286,12 @@ input{
     appearance: none; /* rest */
     border-radius: 0 !important;
  }
+ .select_block{
+     select{
+         background-image: url('/local/templates/kdteam/images/svg/sort-down.svg');
+         background-size: 15px;
+         background-repeat: no-repeat;
+         background-position: 95% 50%;
+         padding-right: 4rem;
+     }
+ }

@@ -23,27 +23,14 @@ CModule::IncludeModule("iblock");
         <div class="popup__wrap_top">
             <!-- Input -->
             <div class="input__wrap">
-                <label class="input__wrap_label">Электронная почта</label>
-                <input id="email" type="email" name="email" required>
+                <label class="input__wrap_label">Ваша фамилия</label>
+                <input id="famaly-name" type="text" name="famaly-name" required>
             </div>
 
             <!-- Input -->
             <div class="input__wrap">
                 <label class="input__wrap_label">Ваше имя</label>
                 <input id="name" type="text" name="name" required>
-            </div>
-            <div class="input__wrap">
-                <label class="input__wrap_label">Ваш номер телефона</label>
-                <input id="phone" type="tel" pattern="\+7\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2}" name="phone"
-                       data-mask="+7 (000) 000 00 00"
-                       placeholder="+7 (___) ___ __ __"  required>
-            </div>
-        </div>
-        <div class="popup__wrap_middle">
-            <!-- Input -->
-            <div class="input__wrap">
-                <label class="input__wrap_label">Ваша фамилия</label>
-                <input id="famaly-name" type="text" name="famaly-name" required>
             </div>
 
             <!-- Input -->
@@ -52,6 +39,19 @@ CModule::IncludeModule("iblock");
                 <input id="last-name" type="text" name="last-name" required>
             </div>
 
+        </div>
+        <div class="popup__wrap_middle">
+            <!-- Input -->
+            <div class="input__wrap">
+                <label class="input__wrap_label">Электронная почта</label>
+                <input id="email" type="email" name="email" required>
+            </div>
+            <div class="input__wrap">
+                <label class="input__wrap_label">Ваш номер телефона</label>
+                <input id="phone" type="tel" pattern="\+7\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2}" name="phone"
+                       data-mask="+7 (000) 000 00 00"
+                       placeholder="+7 (___) ___ __ __"  required>
+            </div>
             <div class="input__wrap">
                 <label class="input__wrap_label">Номер страхового полиса</label>
                 <input id="number_polic" type="text" name="number_polic" required>
@@ -64,7 +64,7 @@ CModule::IncludeModule("iblock");
 
         <div class="popup__wrap_bottom">
             <!-- Input -->
-            <div class="input__wrap">
+            <div class="input__wrap select_block">
                 <label class="input__wrap_label">Регион в котором заключали договор</label>
 
                 <select  class="select-selected" id="sel_reg" required>
@@ -83,7 +83,7 @@ CModule::IncludeModule("iblock");
                 <div class="search_company scrollbar"></div>
             </div>
 
-            <div class="input__wrap">
+            <div class="input__wrap select_block">
                 <label class="input__wrap_label">Укажите свою страховую компанию</label>
                 <select class="select-selected" id="oms_company" required>
                     <option>Вы не выбрали регион</option>
