@@ -6,6 +6,16 @@ $ID_USER = $USER->GetID();
 $rsUser = CUser::GetByID($ID_USER);
 $person = $rsUser->Fetch();
 $array_field = Array();
+$filter = Array(
+    "EMAIL" => $_POST["email"],
+);
+$order = array('sort' => 'asc');
+$tmp = 'sort';
+$rsUser = CUser::GetList($order, $tmp, $filter);
+if($rsUser->SelectedRowsCount() > 0){
+    echo "Пользователь с таким эмейлом уже есть";
+    die();
+}
 
 if($_POST["name"] != ""){
     $array_field +=["NAME"=>$_POST["name"]];

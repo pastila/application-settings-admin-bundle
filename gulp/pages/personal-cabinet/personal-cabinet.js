@@ -180,6 +180,10 @@ console.log(data_FORM);
         if(msg == "1"){
           window.location.reload();
         }
+        if(msg == "Пользователь с таким эмейлом уже есть"){
+          console.log($(".input_email"));
+          $(".input_email").after('<p class="danger">Пользователь с таким эмейлом уже есть</p>')
+        }
             },
           }).done(function(msg) {
 
