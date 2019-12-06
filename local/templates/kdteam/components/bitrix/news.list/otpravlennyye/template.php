@@ -274,7 +274,7 @@ if (count($arResult["ITEMS"]) > 0) {
 
                                 <?php
                                 $url_pdf = CFile::GetPath($arItem["PROPERTIES"]["PDF"]["VALUE"]); ?>
-                                <a class="obrashcheniya__content_sidebar_blocks_text_link pdf <?php if ($url_pdf == "") { ?>error<?}?>" <?php if ($url_pdf != "") { ?> href="<?= $url_pdf ?>"<? } ?> >
+                                <a target="_blank" class="obrashcheniya__content_sidebar_blocks_text_link pdf <?php if ($url_pdf == "") { ?>error<?}?>" <?php if ($url_pdf != "") { ?> href="<?= $url_pdf ?>"<? } ?> >
                                   <?php if ($url_pdf != "") { ?>  просмотреть <? }else{ ?> Заполните все поля для формирования pdf файла<?}?>
                                 </a>
                                 <div class="hidden ready_pdf success"> Файл пдф сформирован</div>

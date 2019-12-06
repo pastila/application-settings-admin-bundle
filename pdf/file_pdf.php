@@ -60,57 +60,57 @@ $html ='
         <div class="header__items" style="width: 100%;">
             <div class="header__items_item">
                 <div class="header__items_item_wrap" style="margin-bottom: 15px;">
-                    <span class="header__items_item--label" style="font-weight: bold;">
+                    <div class="header__items_item--label" style="font-weight: bold;">
                         Кому:
-                    </span>
-                    <span class="header__items_item--text" style="margin-bottom: 10px;">
+                    </div>
+                    <div class="header__items_item--text" style="margin-bottom: 10px;">
                         <span class="bold-text" style="font-weight: bold;">Руководителю страховой медицинской организации</span>
                         <div class="blue-text cursive" style="font-style: italic;">
                             '.$name_company.',
                             '.$boss_compani.'
                             '.$mail_compani.'
                         </div>
-                    </span>
+                    </div>
                 </div>
             </div>
             <div class="header__items_item" style="margin-bottom: 15px;">
                 <div class="header__items_item_wrap">
-                    <span class="header__items_item--label">
+                    <div class="header__items_item--label">
                         <span style="font-weight: bold;">От:</span>
-                    </span>
-                    <span class="header__items_item--text blue-text cursive" style="font-style: italic;">
+                    </div>
+                    <div class="header__items_item--text blue-text cursive" style="font-style: italic;">
                         '.$full_name_user.'
-                    </span>
+                    </div>
                 </div>
             </div>
             <div class="header__items_item" style="margin-bottom: 15px;">
                 <div class="header__items_item_wrap">
-                    <span class="header__items_item--label">
+                    <div class="header__items_item--label">
                         <span style="font-weight: bold;">Номер полиса:</span> 
-                    </span>
-                    <span class="header__items_item--text red-text cursive" style="font-style: italic;">
+                    </div>
+                    <div class="header__items_item--text red-text cursive" style="font-style: italic;">
                         '. $number_polic_POST .'
-                    </span>
+                    </div>
                 </div>
             </div>
             <div class="header__items_item" style="margin-bottom: 15px;">
                 <div class="header__items_item_wrap">
-                    <span class="header__items_item--label" >
+                    <div class="header__items_item--label" >
                         <span style="font-weight: bold;">Адрес электронной почты:</span>
-                    </span>
-                    <span class="header__items_item--text blue-text cursive" style=" font-style: italic;">
+                    </div>
+                    <div class="header__items_item--text blue-text cursive" style=" font-style: italic;">
                         '. $email .'
-                    </span>
+                    </div>
                 </div>
             </div>
             <div class="header__items_item" style="margin-bottom: 10px;">
                 <div class="header__items_item_wrap">
-                    <span class="header__items_item--label" >
+                    <div class="header__items_item--label" >
                         <span style="font-weight: bold;">Телефон:</span>
-                    </span>
-                    <span class="header__items_item--text blue-text cursive" style=" font-style: italic;">
+                    </div>
+                    <div class="header__items_item--text blue-text cursive" style=" font-style: italic;">
                         '. $mobail_number .'
-                    </span>
+                    </div>
                 </div>
             </div>
         </div>
