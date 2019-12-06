@@ -22,10 +22,14 @@
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
+        align-items: center;
         margin-bottom: 1rem;
         .item_data {
-          font-weight: 700;
           width: 100%;
+          margin-bottom: 0;
+          &:nth-child(odd){
+            font-weight: 700;
+          }
           @media(min-width: 576px){
             width: 49%;
           }
@@ -35,7 +39,6 @@
     .edit_block{
       @media screen and (min-width: 992px){
         flex: 1;
-        align-self: center;
       }
       .photo_user{
         display: flex;
@@ -47,4 +50,52 @@
       }
     }
   }
+}
+.submit_button{
+  .mainBtn{
+    margin: 1rem 0 0 0;
+    @media(max-width: 991px){
+      width: 100%;
+    }
+  }
+}
+.file-input {
+  display: inline-block;
+  position: relative;
+  font-weight: bold;
+}
+.file-input > [type='file'] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.file-input > .button {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.file-input > .label {
+  color: #333;
+  white-space: nowrap;
+  opacity: .3;
+  display: inline-block;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 0 0 .6em;
+}
+.file-input > .label.block-error-label {
+  display: block;
+  overflow: initial;
+  color: #f12323;
+  opacity: 1;
+  margin: .5rem 0;
+  padding: 0;
+}
+.logo_block{
+  max-width: 10rem;
 }

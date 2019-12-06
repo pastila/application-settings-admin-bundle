@@ -99,7 +99,9 @@ while($ob = $res->GetNextElement()){
                    <p>Логотип вашей компании</p>
                </div>
                <div class="item_data">
-                   <img src="<?=$logo_company["SRC"]?>">
+                   <div class="logo_block">
+                       <img src="<?=$logo_company["SRC"]?>">
+                   </div>
                </div>
            </div>
        </div>
@@ -116,7 +118,7 @@ while($ob = $res->GetNextElement()){
                <div class="item_data">
                    <p>Имя</p>
                </div>
-               <div class="item_data">
+               <div class="item_data input__wrap">
                    <input type="text" name="name" value="<?=$person["NAME"];?>">
                </div>
            </div>
@@ -124,7 +126,7 @@ while($ob = $res->GetNextElement()){
                <div class="item_data">
                    <p>Фамилия</p>
                </div>
-               <div class="item_data">
+               <div class="item_data input__wrap">
                    <input type="text" name="last_name" value="<?=$person["LAST_NAME"];?>">
                </div>
            </div>
@@ -132,7 +134,7 @@ while($ob = $res->GetNextElement()){
                <div class="item_data">
                    <p>Отчество</p>
                </div>
-               <div class="item_data">
+               <div class="item_data input__wrap">
                    <input type="text" name="second_name" value="<?=$person["SECOND_NAME"];?>">
 
                </div>
@@ -140,9 +142,9 @@ while($ob = $res->GetNextElement()){
 
            <div class="flex_data">
                <div class="item_data">
-                   <p>Ваш Номер телефона</p>
+                   <p>Ваш номер телефона</p>
                </div>
-               <div class="item_data">
+               <div class="item_data input__wrap">
                    <input type="text" name="personal_phone" value="<?=$person["PERSONAL_PHONE"];?>">
                </div>
            </div>
@@ -150,7 +152,7 @@ while($ob = $res->GetNextElement()){
                <div class="item_data">
                    <p>Ваш e-mail</p>
                </div>
-               <div class="item_data">
+               <div class="item_data input__wrap">
                    <input type="text" name="email" value="<?=$person["EMAIL"];?>">
 
                </div>
@@ -159,7 +161,7 @@ while($ob = $res->GetNextElement()){
                <div class="item_data">
                    <p>Ваш страховой полис</p>
                </div>
-               <div class="item_data">
+               <div class="item_data input__wrap">
                    <input type="text" name="uf_insurance_policy" value="<?=$person["UF_INSURANCE_POLICY"];?>">
                </div>
            </div>
@@ -168,13 +170,14 @@ while($ob = $res->GetNextElement()){
                <div class="item_data">
                    <p>Ваша аватарка</p>
                </div>
-               <div class="item_data">
+               <div class="item_data file-input">
                    <input type="file" name="file" class="input_file"
                           accept="image/*">
+                   <span class="button smallAccentBtn">Выберите файл</span>
                    <span class="label" data-js-label>.png .jpeg</span>
-                   <span class="label block-error-label">Максимальный размер файла 10mb</span>
-                   <span class="label block-error-label_size" style="display: none" >Размер файла превышен</span>
-                   <span class="label block-error-label_format" style="display: none" >Не первый формат</span>
+                   <span class="label error-inputs block-error-label">Максимальный размер файла 10mb</span>
+                   <span class="label error-inputs block-error-label_size" style="display: none" >Размер файла превышен</span>
+                   <span class="label error-inputs block-error-label_format" style="display: none" >Не первый формат</span>
                </div>
            </div>
                <div class="feedback__top">
@@ -208,7 +211,9 @@ while($ob = $res->GetNextElement()){
 
                    </div>
                </div>
-               <button type="submit" id="save_data">Сохранить</button>
+              <div class="submit_button">
+                  <button class="mainBtn" type="submit" id="save_data">Сохранить</button>
+              </div>
            </form>
 
        </div>

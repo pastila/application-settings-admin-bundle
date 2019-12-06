@@ -142,9 +142,9 @@ $(document).ready(function() {
 })
 $("#save_data").click(function(e) {
   e.preventDefault();
-  var data =  $("#form_change_data").serializeArray();
+  var data_FORM =  $("#form_change_data").serializeArray();
   var input_file = $('.input_file');
-console.log(input_file.prop('files')[0]);
+
   if (input_file.prop('files')[0] != undefined) {
     if (input_file.prop('files')[0]['size'] > 10485760) {
       error.push('size');
@@ -157,15 +157,15 @@ console.log(input_file.prop('files')[0]);
       $('.block-error-label_format').css({"display":"block"});
     }
   }
-  console.log(input_file.prop('files')[0]);
+console.log(data_FORM);
   fd.append('import_file', input_file.prop('files')[0]);
-  fd.append('name', data[0]['value']);
-  fd.append('last_name', data[1]['value']);
-  fd.append('second_name', data[2]['value']);
-  fd.append('personal_phone', data[3]['value']);
-  fd.append('email', data[4]['value']);
-  fd.append('uf_insurance_policy', data[5]['value']);
-  fd.append('name_company', data[6]['value']);
+  fd.append('name', data_FORM[0]['value']);
+  fd.append('last_name', data_FORM[1]['value']);
+  fd.append('second_name', data_FORM[2]['value']);
+  fd.append('personal_phone', data_FORM[3]['value']);
+  fd.append('email', data_FORM[4]['value']);
+  fd.append('uf_insurance_policy', data_FORM[5]['value']);
+
 
       $.ajax({
             url: '/ajax/change_data_user.php',
