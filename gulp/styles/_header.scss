@@ -22,16 +22,13 @@
         display: inline-flex;
         align-items: center;
         color: $mainColor;
-        &_img {
-            width: 3rem;
-            height: 3rem;
+        width: 15rem;
+        max-height: calc(100vw / 6);
+        img {
+            max-height: 100%;
         }
-    
-        &_name {
-            display: none;
-            text-transform: capitalize;
-            font-size: 1.4rem;
-            margin-left: 1rem;
+        @media screen and(max-width: 992px){
+            max-height: calc(100vw / 12);
         }
     }
 
@@ -286,18 +283,6 @@
 @media (min-width: 992px) {
     .header {
         height: 10rem;
-        
-        &__logo {
-            &_img {
-                width: 5rem;
-                height: 5rem;
-            }
-
-            &_name {
-                display: block;
-                font-size: 1.8rem;
-            }
-        }
 
         &__r {
             &_auth {
