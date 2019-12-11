@@ -46,6 +46,9 @@ $(document).ready(function() {
       });
     });
 
+    document.getElementById("password").onchange = validatePassword;
+    document.getElementById("pass_conf").onchange = validatePassword;
+
     $('#auth-form-reg').validator().on('submit', function(e) {
        e.preventDefault();
       if($("#generate_form").length != 0){
@@ -346,4 +349,14 @@ function lazyloadImage() {
   imagesSource.forEach(image => {
       imgObserver.observe(image);
   });
+}
+
+function validatePassword(){
+  let pass2=document.getElementById("pass_conf").value;
+  let pass1=document.getElementById("password").value;
+  if(pass1 != pass2)
+    document.getElementById("pass_conf").setCustomValidity("Пароли не совпадают");
+  else
+    document.getElementById("pass_conf").setCustomValidity('');
+//empty string means no validation error
 }
