@@ -48,6 +48,12 @@
                 background-color: $accentColor;
             }
         }
+        .error_region{
+            padding: 1rem 2rem;
+             font-size: 1.6rem;
+             text-transform: uppercase;
+             color:red;
+        }
     }
 }
 
