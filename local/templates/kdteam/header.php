@@ -34,10 +34,9 @@ $asset = Asset::getInstance();
     <header class="header">
         <div class="header__container">
             <a class="header__logo" href="/">
-                <img class="header__logo_img" src="/local/templates/kdteam/images/svg/header/logo/logo_header.svg"
-                     alt="OMS">
-
-                <div class="header__logo_name">company name</div>
+                <img class="header__logo_img"
+                    src="/local/templates/kdteam/images/png/header/logo-oms.png"
+                    alt="OMS">
             </a>
             <?php
             global $USER;

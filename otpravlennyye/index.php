@@ -53,6 +53,13 @@ if ($Section = $section->GetNext()) {
                         продлении срока рассмотрения обращения, если для решения поставленных вопросов нужно
                         проведение экспертизы
                     </p>
+                    <div class="sent-mail-block">
+                        <div class="logo_block">
+                            <img src="/local/templates/kdteam/images/png/header/logo-oms.png" alt="">
+                        </div>
+                        <p>Подготовлено с использованием сервиса bezbahil.ru. Почта для обращений представителей СМО -
+                            <a href="mailto:smo@bezbahil.ru">smo@bezbahil.ru</a>.</p>
+                    </div>
                 </div>
             </div>
         </div>

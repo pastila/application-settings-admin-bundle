@@ -1,3 +1,5 @@
+@import './../../styles/utils/vars';
+
 .otpravlennyye {
     margin-bottom: 2rem;
 
@@ -11,6 +13,25 @@
         &_data {
             font-size: 1.2rem;
             margin-bottom: 2rem;
+        }
+    }
+    .sent-mail-block{
+        display: flex;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: solid .1rem $accentColor;
+        .logo_block {
+            width: 10rem;
+            margin-right: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            @media(max-width: 575px){
+                width: 20rem;
+            }
+        }
+        a{
+            text-decoration: underline;
         }
     }
 }
