@@ -60,6 +60,10 @@ CModule::IncludeModule("iblock");
                 <label class="input__wrap_label">Пароль</label>
                 <input id="password"  minlength="6" type="password" name="password" required>
             </div>
+            <div class="input__wrap">
+                <label class="input__wrap_label">Подтвердите пароль</label>
+                <input id="pass_conf"  minlength="6" type="password" name="pass_conf" required>
+            </div>
         </div>
 
         <div class="popup__wrap_bottom">
