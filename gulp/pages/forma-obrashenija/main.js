@@ -1,41 +1,137 @@
 //= ../../node_modules/jquery/dist/jquery.min.js
 //= ../../node_modules/magnific-popup/dist/jquery.magnific-popup.min.js
-function smart_search() {
-  console.log('change');
-}
+
 $(document).ready(function() {
 
-  $("#search_result li").click(function(){
+  $(document).on('click', '#search_result li', function() {
     $('#referal').val($(this).text());
-    $("#search_result").fadeOut();
-  });
-  
-  $("#referal").click(function(){
-    $("#search_result").fadeIn();
+    $('#search_result').fadeOut();
   });
 
-  $(document).mouseup(function (e) {
-    let container = $("#referal");
-    if (container.has(e.target).length === 0){
-      $("#search_result").fadeOut();
+  $(document).on('click', '#referal', function() {
+
+    $('#search_result').css({'display': 'block'});
+  });
+
+  $(document).mouseup(function(e) {
+    let container = $('#referal');
+    if (container.has(e.target).length === 0) {
+      $('#search_result').fadeOut();
     }
   });
-  $('#referal').on('keyup', function(){
+  $(document).on('click', '#search_result_hospital li', function() {
+    $('#referal_two').val($(this).text());
+    $('#search_result_hospital').fadeOut();
+  });
 
+  $(document).on('click', '#referal_two', function() {
+    $('#search_result_hospital').css({'display': 'block'});
+  });
+
+  $(document).mouseup(function(e) {
+    let container = $('#referal_two');
+    if (container.has(e.target).length === 0) {
+      $('#search_result_hospital').fadeOut();
+    }
+  });
+  $(document).on('click', '.region', function() {
+
+    let id_region = $(this).attr('value');
+    let select_region = $(this).text();
+    $('#referal').val(select_region);
+    $('#referal').attr('data-id_region', id_region);
+    $('#region_name').text(select_region);
+    $('#referal').attr('data-region_check', 'check');
+    let component = $('#hospitals');
+    $.ajax({
+      dataType: 'html',
+      url: '/ajax/form_hospitals.php',
+      type: 'POST',
+      data: {id: id_region},
+      beforeSend: function() {
+
+      },
+      success: function(result) {
+        $(component).html(result);
+        $('#region_name').text(select_region);
+        $('#hosptital_name').html('Не выбрано');
+        search_hospital();
+      },
+    }).done(function(msg) {
+
+    });
+  });
+  $(document).mouseup(function(e) {
+    var div = $('#search_result');
+    var input = $('#referal');
+    if (div.text() == '' || $('#referal').attr('data-region_check') != 'check') {
+      if (!div.is(e.target) && div.has(e.target).length === 0 &&
+          !input.is(e.target)) {
+        $('#referal').text('');
+        $('#referal').val('');
+      }
+    }
+  });
+  $('#referal').on('keyup', function() {
     var $this = $(this);
     var delay = 500;
+    if ($this.val() == '') {
+      $('#region_name').text('НЕ ВЫБРАНО');
+    }
 
     clearTimeout($this.data('timer'));
-    $('span').text('Загрузка...');
 
-    $this.data('timer', setTimeout(function(){
+    $this.data('timer', setTimeout(function() {
 
       $this.removeData('timer');
 
-      $.post('/ajax/smart_search.php', { q: $this.val() }, function(){
-        console.log('smart_search');
+      $.post('/ajax/smart_search.php', {name_city: $this.val()}, function(msg) {
+        if ($('.error_region').length != 0) {
+          $('.error_region').remove();
+        }
+        $('.custom-serach__items_item').each(function() {
+          $(this).remove();
+        });
+        if (msg == 'error_region') {
+          if ($('.error_region').length != 0) {
+            $('.error_region').remove();
+            $('#search_result').
+                append('<li class="error_region" >Город не найден</li>');
+          } else {
+            $('#search_result').
+                append('<li class="error_region" >Город не найден</li>');
+          }
+        } else {
+          setTimeout(function() {
+            $('#search_result').append(msg);
+          }, 100);
+          $(document).on('click', '.region', function() {
+            let id_region = $(this).attr('value');
+            let select_region = $(this).text();
+            $('#referal').val(select_region);
+            $('#referal').attr('data-id_region', id_region);
+            $('#referal').attr('data-region_check', 'check');
+            $('#region_name').text(select_region);
+            let component = $('#hospitals');
+            $.ajax({
+              dataType: 'html',
+              url: '/ajax/form_hospitals.php',
+              type: 'POST',
+              data: {id: id_region},
+              beforeSend: function() {
 
-        $('span').text('Готово!');
+              },
+              success: function(result) {
+                $(component).html(result);
+                $('#region_name').text(select_region);
+                $('#hosptital_name').html('Не выбрано');
+                search_hospital();
+              },
+            }).done(function(msg) {
+
+            });
+          });
+        }
 
       });
 
@@ -43,10 +139,82 @@ $(document).ready(function() {
 
   });
 
+
+function search_hospital() {
+
+
+
+  $(document).on('click', '.hospital', function() {
+    console.log("3232");
+    console.log($(this));
+    let id_region = $(this).attr('value');
+    let select_region = $(this).text();
+    $('#referal_two').val(select_region);
+    $('#referal_two').attr('data-id_region', id_region);
+    $('#referal_two').attr('data-region_check', 'check');
+    $('#hosptital_name').text(select_region);
+
+
+  });
+  $('#referal_two').on('keyup', function() {
+
+    var $this = $(this);
+    var delay = 500;
+    if ($this.val() == '') {
+      $('#hosptital_name').text('НЕ ВЫБРАНО');
+      $this.attr("data-id_region","");
+    }
+
+    clearTimeout($this.data('timer'));
+
+    $this.data('timer', setTimeout(function() {
+
+      $this.removeData('timer');
+
+      $.post('/ajax/smart_search_hospital.php', {name_hospital: $this.val(), region_id:$("#referal").attr("data-id_region") }, function(msg) {
+        if ($('.error_region').length != 0) {
+          $('.error_region').remove();
+        }
+        $('.custom-serach__items_item').each(function() {
+          $(this).remove();
+        });
+        if (msg == 'error_hospital') {
+          if ($('.error_region').length != 0) {
+            $('.error_region').remove();
+            $('#search_result_hospital').
+                append('<li class="error_region" >Больница не найдена</li>');
+          } else {
+            $('#search_result_hospital').
+                append('<li class="error_region" >Больница не найдена</li>');
+          }
+        } else {
+          setTimeout(function() {
+
+            $('#search_result_hospital').append(msg);
+          }, 100);
+
+
+          $(document).on('click', '.hospital', function() {
+            let id_region = $(this).attr('value');
+            let select_region = $(this).text();
+            $('#referal_two').val(select_region);
+            $('#referal_two').attr('data-id_region', id_region);
+            $('#referal_two').attr('data-region_check', 'check');
+            $('#hosptital_name').text(select_region);
+
+
+          });
+
+        }
+
+      });
+
+    }, delay));
+
+  });
+}
+
   //create_select();
-
-
-
 
   let urgent = $('#urgent');
   let planned = $('#planned');
@@ -70,8 +238,6 @@ $(document).ready(function() {
     cur_select.attr('value', this.getAttribute('value'));
   });
 
-
-
   $(document).on('click', '#strax-sluchay', function() {
     let $form = $('#appeal-form');
     let $title = $('#page-title');
@@ -84,11 +250,11 @@ $(document).ready(function() {
 
     let years = [];
 
-      let div = $("#years");
-      $(div).find("input:checked").each(function() {
-        years.push(this.value)
-      });
-    if ($('#choose_diagnoz_elem').val() != 'Здесь нет моего диагноза'){
+    let div = $('#years');
+    $(div).find('input:checked').each(function() {
+      years.push(this.value);
+    });
+    if ($('#choose_diagnoz_elem').val() != 'Здесь нет моего диагноза') {
       $.post('/ajax/diagnoz.php',
           {
             APPEAL_VALUE: appeal,
@@ -110,23 +276,22 @@ $(document).ready(function() {
 
               document.body.scrollTop = document.documentElement.scrollTop = 0;
 
-
-              if($(".header__r_auth_reg").length == 1) {
-                $("#generate_form").removeAttr("href");
-                $("#generate_form").click(function() {
-                  $(".header__r_auth_reg").trigger("click");
+              if ($('.header__r_auth_reg').length == 1) {
+                $('#generate_form').removeAttr('href');
+                $('#generate_form').click(function() {
+                  $('.header__r_auth_reg').trigger('click');
                   setTimeout(function() {
-                    $(".register_before_review").removeClass("hidden");
-                  },700)
-                })
-              }else{
+                    $('.register_before_review').removeClass('hidden');
+                  }, 700);
+                });
+              } else {
                 $('#generate_form').magnificPopup({
                   type: 'ajax',
                   modal: true,
 
                   callbacks: {
                     beforeOpen: function() {
-                      if($(window).width() < 700) {
+                      if ($(window).width() < 700) {
                         this.st.focus = false;
                       } else {
                         this.st.focus = '#name';
@@ -136,7 +301,7 @@ $(document).ready(function() {
                       $.post('/ajax/number_calls.php', function(result) {
                         $('#number_calls').html(result);
                       }, 'html');
-                    }
+                    },
                   },
                 });
               }
@@ -144,8 +309,8 @@ $(document).ready(function() {
               $.magnificPopup.open({
                 items: {
                   src: '<div class="white-popup custom_styles_popup">Вы заполнили не все данные</div>',
-                  type: 'inline'
-                }
+                  type: 'inline',
+                },
               });
 
             }
@@ -154,14 +319,12 @@ $(document).ready(function() {
       $.magnificPopup.open({
         items: {
           src: '<div class="white-popup custom_styles_popup">Вы заполнили не все данные</div>',
-          type: 'inline'
-        }
+          type: 'inline',
+        },
       });
     }
 
   });
-
-
 
   $(document).on('click', '#option', function() {
     let classID = $(this).attr('value');
@@ -174,9 +337,6 @@ $(document).ready(function() {
       }, 'html');
     }
   });
-
-
-
 
   $(document).on('click', '#location', function() {
     let classID = $(this).attr('value');
@@ -194,7 +354,6 @@ $(document).ready(function() {
     }
   });
 
-
   $(document).on('click', '#hospital', function() {
     let cur_select = $('#choose_hospital_elem');
     cur_select.attr('value', this.getAttribute('value'));
@@ -203,53 +362,51 @@ $(document).ready(function() {
     $(hospital_name).html(hospital_name_value);
     // cur_select.attr('value', this.getAttribute('value'));
     // cur_select.attr('id', 'selected_hospital');
-    if(hospital_name_value == "Здесь нет моей больницы"){
+    if (hospital_name_value == 'Здесь нет моей больницы') {
       $.magnificPopup.open({
         items: {
           src: '<div class="white-popup custom_styles_popup">Если больницы, в которую вы обратились, в списке нет, значит, она не является участником системы ОМС и не несет обязательств по оказанию помщи по полису ОМС. Случай не страховой.</div>',
-          type: 'inline'
-        }
+          type: 'inline',
+        },
       });
-      $("#choose_class").css({"pointer-events":"none"});
-    }else{
-      $("#choose_class").removeAttr("style");
+      $('#choose_class').css({'pointer-events': 'none'});
+    } else {
+      $('#choose_class').removeAttr('style');
     }
   });
 
-    $(document).on("click","#empty_class",function() {
+  $(document).on('click', '#empty_class', function() {
     $.magnificPopup.open({
       items: {
         src: '<div class="white-popup custom_styles_popup">Если среди диагнозов вы не нашли свой, значит заболевание не относится к числу тех, что оплачитваются из средства ОМС. Случай не является страховым.</div>',
-        type: 'inline'
-      }
-    });
-  })  ;
-    $(document).on("click","#empty_group",function() {
-    $.magnificPopup.open({
-      items: {
-        src: '<div class="white-popup custom_styles_popup">Если среди диагнозов вы не нашли свой, значит заболевание не относится к числу тех, что оплачитваются из средства ОМС. Случай не является страховым.</div>',
-        type: 'inline'
-      }
-    });
-  }) ;
-  $(document).on("click","#empty_subgroup",function() {
-    $.magnificPopup.open({
-      items: {
-        src: '<div class="white-popup custom_styles_popup">Если среди диагнозов вы не нашли свой, значит заболевание не относится к числу тех, что оплачитваются из средства ОМС. Случай не является страховым.</div>',
-        type: 'inline'
-      }
+        type: 'inline',
+      },
     });
   });
-  $(document).on("click","#empty_diagnoz",function() {
+  $(document).on('click', '#empty_group', function() {
     $.magnificPopup.open({
       items: {
         src: '<div class="white-popup custom_styles_popup">Если среди диагнозов вы не нашли свой, значит заболевание не относится к числу тех, что оплачитваются из средства ОМС. Случай не является страховым.</div>',
-        type: 'inline'
-      }
+        type: 'inline',
+      },
     });
-  })
-
-
+  });
+  $(document).on('click', '#empty_subgroup', function() {
+    $.magnificPopup.open({
+      items: {
+        src: '<div class="white-popup custom_styles_popup">Если среди диагнозов вы не нашли свой, значит заболевание не относится к числу тех, что оплачитваются из средства ОМС. Случай не является страховым.</div>',
+        type: 'inline',
+      },
+    });
+  });
+  $(document).on('click', '#empty_diagnoz', function() {
+    $.magnificPopup.open({
+      items: {
+        src: '<div class="white-popup custom_styles_popup">Если среди диагнозов вы не нашли свой, значит заболевание не относится к числу тех, что оплачитваются из средства ОМС. Случай не является страховым.</div>',
+        type: 'inline',
+      },
+    });
+  });
 
 });
 
