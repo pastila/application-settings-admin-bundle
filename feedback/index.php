@@ -33,7 +33,7 @@ $sort_url = $_GET;
 
     <div class="feedback__filter">
         <div class="custom-select">
-            <select>
+            <select style="display: none">
 
                 <?
                 $order = Array("name" => "asc");
@@ -56,23 +56,38 @@ $sort_url = $_GET;
         </div>
 
         <div class="custom-select">
-            <select onchange="window.open(this.value)">
-                <?if ($sort_url["sort"] == "star") {  // сортировка
+            <select style="display: none" onchange="window.open(this.value)">
 
-            $assessment = $sort_url["filterorder"];
-        }?>
+                <option value="0">Оценка <?
+                    if(isset($_GET["property_evaluation"])){
+                        echo $_GET["property_evaluation"];
+                    } ?></option>
+                <?php if (isset($_GET["property_evaluation"]) || isset($_GET["property_name_company"]) || isset($_GET["property_region"])) {
+                    $url_for_filter = "?";
 
-                <option value="0">Оценка <?=$assessment?></option>
-                <option value="?sort=star&filterby=PROPERTY_EVALUATION&filterorder=1" class="number_star">Оценки 1
-                </option>
-                <option value="?sort=star&filterby=PROPERTY_EVALUATION&filterorder=2" class="number_star">Оценки 2
-                </option>
-                <option value="?sort=star&filterby=PROPERTY_EVALUATION&filterorder=3" class="number_star">Оценки 3
-                </option>
-                <option value="?sort=star&filterby=PROPERTY_EVALUATION&filterorder=4" class="number_star">Оценки 4
-                </option>
-                <option value="?sort=star&filterby=PROPERTY_EVALUATION&filterorder=5" class="number_star">Оценки 5
-                </option>
+                    foreach ($sort_url as $key => $filter) {
+                        if ($key != "property_evaluation") {
+                            $url_for_filter .= "$key=$filter&";
+                        }
+                    }
+
+                    for ($i = 1; $i <= 5; ++$i) {
+                        ?>
+                        <option value="<?= $url_for_filter ?>property_evaluation=<?= $i ?>" class="number_star">
+                            Оценки <?= $i ?>
+                        </option>
+                    <?php }
+                    ?>
+                <? } else {
+                    for ($i = 1; $i <= 5; ++$i) {
+                        ?>
+
+                        <option value="?property_evaluation=<?= $i ?>" class="number_star">Оценки <?= $i ?>
+                        </option>
+                    <? }
+                } ?>
+
+
             </select>
         </div>
 
@@ -91,26 +106,46 @@ $sort_url = $_GET;
         <?php
         $fiterby = "";
         $filterorder = "";
-        if ($sort_url["sort"] == "star") {  // сортировка
-            $fiterby = $sort_url["filterby"];
-            $filterorder = $sort_url["filterorder"];
+        $arFilter = Array(
+            "IBLOCK_ID" => 13,
+            "ACTIVE" => "Y",
+        );
+
+        foreach ($sort_url as $key => $filter) {
+            $key = mb_strtoupper($key);
+            $arFilter += [$key => $filter];
         }
-        if ($sort_url["sort"] == "city") {
-            $fiterby = $sort_url["filterby"];
-            $filterorder = $sort_url["filterorder"];
-        }
-        if ($sort_url["sort"] == "popular_company") {
-            $fiterby = $sort_url["filterby"];
-            $filterorder = $sort_url["filterorder"];
-        }
-        if ($sort_url["sort"] == "company") {
-            $fiterby = $sort_url["filterby"];
-            $filterorder = $sort_url["filterorder"];
-        }
+
+        //        array(
+        //            "LOGIC" => "AND",
+        //            array("<PROPERTY_RADIUS" => 50, "=PROPERTY_CONDITION" => "Y"),
+        //            array(">=PROPERTY_RADIUS" => 50, "!=PROPERTY_CONDITION" => "Y"),
+        //        ),
+
+
+        //        if ($sort_url["sort"] == "star") {  // сортировка
+        //            $fiterby = $sort_url["filterby"];
+        //            $filterorder = $sort_url["filterorder"];
+        //        }
+        //        if ($sort_url["sort"] == "city") {
+        //            $fiterby = $sort_url["filterby"];
+        //            $filterorder = $sort_url["filterorder"];
+        //        }
+        //        if ($sort_url["sort"] == "popular_company") {
+        //            $fiterby = $sort_url["filterby"];
+        //            $filterorder = $sort_url["filterorder"];
+        //        }
+        //        if ($sort_url["sort"] == "company") {
+        //            $fiterby = $sort_url["filterby"];
+        //            $filterorder = $sort_url["filterorder"];
+        //        }
+
+        //        ?sort=popular_company&filterby=PROPERTY_NAME_COMPANY&filterorder=37325
+
 
         $order = Array("created" => "desc");
         $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
-        $arFilter = Array("IBLOCK_ID" => 13, "ACTIVE" => "Y", $fiterby => $filterorder);
+        //        $arFilter = Array("IBLOCK_ID" => 13, "ACTIVE" => "Y", $fiterby => $filterorder);
 
         $pagen = Array("nPageSize" => 10);
         if ($sort_url["comments"] == "all") {
@@ -174,27 +209,32 @@ $sort_url = $_GET;
 
                 <!-- Bottom -->
                 <div class="feedback__bottom">
-                        <div class="feedback__bottom_name opacity_block">OMC</div>
+                    <div class="feedback__bottom_name opacity_block">OMC</div>
 
-                        <a id="show-comments" class="feedback__bottom_link opacity_block">
-                            <img src="" alt="">
+                    <a id="show-comments" class="feedback__bottom_link opacity_block">
+                        <img src="" alt="">
 
-                            <span class="comment-count">
+                        <span class="comment-count">
                     <?= $count_comments ?>
                                 </span>
-                            комментариев
-                        </a>
+                        комментариев
+                    </a>
 
-                    <?if($USER->IsAuthorized()){?>
+                    <?
+                    if ($USER->IsAuthorized()) { ?>
                         <a rel="nofollow" class="toggle_comment_dropdown opacity_block">Оставить комментарий</a>
-                    <?}?>
+                        <?
+                    } ?>
                     <div class="block_commented_styles block__commented">
-                        <form action="" >
+                        <form action="">
                             <div class="input__wrap">
-                                <textarea  minlength="10" name="comment" required data-id-comment="<?=$arFields["ID"]?>"></textarea>
+                                <textarea minlength="10" name="comment" required
+                                          data-id-comment="<?= $arFields["ID"] ?>"></textarea>
                             </div>
-                            <div class="danger hidden"  >Заполните поле</div>
-                            <button type="submit" class="smallMainBtn button-comments" id="comments" data-id-comment="<?=$arFields["ID"]?>" >Комментировать</button>
+                            <div class="danger hidden">Заполните поле</div>
+                            <button type="submit" class="smallMainBtn button-comments" id="comments"
+                                    data-id-comment="<?= $arFields["ID"] ?>">Комментировать
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -227,20 +267,23 @@ $sort_url = $_GET;
                         </div>
 
                         <p><?= $arPropsComments["COMMENTS"]["VALUE"] ?></p>
-                    <?if($USER->IsAuthorized()){?>
-                            <?if($arPropsComments["CITED"]["VALUE"] == ""){?>
-<!--                        <a id="show-comment" class="hidenComments__link" href="#">Цитировать</a>-->
-                       <div class="block_commented_styles">
-                            <form action="" >
-                                <div class="input__wrap">
-                                    <textarea minlength="10" name="cited" required data-id-cited="<?=$arFieldsComments["ID"]?>"></textarea>
+                        <? if ($USER->IsAuthorized()) { ?>
+                            <? if ($arPropsComments["CITED"]["VALUE"] == "") { ?>
+                                <!--                        <a id="show-comment" class="hidenComments__link" href="#">Цитировать</a>-->
+                                <div class="block_commented_styles">
+                                    <form action="">
+                                        <div class="input__wrap">
+                                            <textarea minlength="10" name="cited" required
+                                                      data-id-cited="<?= $arFieldsComments["ID"] ?>"></textarea>
+                                        </div>
+                                        <div class="danger hidden">Заполните поле</div>
+                                        <button type="submit" class="smallMainBtn button-cited" id="comments"
+                                                data-id-cited="<?= $arFieldsComments["ID"] ?>">Цитировать
+                                        </button>
+                                    </form>
                                 </div>
-                                <div class="danger hidden"  >Заполните поле</div>
-                                <button type="submit" class="smallMainBtn button-cited" id="comments" data-id-cited="<?=$arFieldsComments["ID"]?>" >Цитировать</button>
-                            </form>
-                        </div>
-                            <?}?>
-                    <?}?>
+                            <? } ?>
+                        <? } ?>
                         <!-- Цитаты-->
                         <div class="block_quotes">
                             <?
@@ -248,11 +291,13 @@ $sort_url = $_GET;
                                 $ID_Quote = $arPropsComments["CITED"]["VALUE"];
                                 $arSelectQuote = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
                                 $arFilterQuote = Array("IBLOCK_ID" => 15, "ACTIVE" => "Y", "ID" => $ID_Quote);
-                                $resQuote = CIBlockElement::GetList(false, $arFilterQuote, false, false, $arSelectQuote);
+                                $resQuote = CIBlockElement::GetList(false, $arFilterQuote, false, false,
+                                    $arSelectQuote);
                                 while ($obQuote = $resQuote->GetNextElement()) {
                                     $arFieldsQuote = $obQuote->GetFields();
                                     $arPropsQuote = $obQuote->GetProperties();
-                                    $newDateQuote = FormatDate("d F, Y", MakeTimeStamp($arFieldsQuote["DATE_ACTIVE_FROM"]));
+                                    $newDateQuote = FormatDate("d F, Y",
+                                        MakeTimeStamp($arFieldsQuote["DATE_ACTIVE_FROM"]));
                                     $ID_USERQuote = $arPropsQuote["AVTOR_CIATION"]["VALUE"];
                                     $rsUserQuote = CUser::GetByID($ID_USERQuote);
                                     $arUserQuote = $rsUserQuote->Fetch();
@@ -297,22 +342,47 @@ $sort_url = $_GET;
                 $elementselect = Array("ID", "IBLOCK_ID", "NAME", "CODE", "DATE_ACTIVE_FROM", "PROPERTY_AMOUNT_STAR");
                 $arFilter = Array("IBLOCK_ID" => 16);
                 $Element_filter = CIBlockElement::GetList($order, $arFilter, false, false, $elementselect);
-                while ($ob_element_filter = $Element_filter->GetNextElement()) {
-                    $fields = $ob_element_filter->GetFields();
-                    if ($fields["PROPERTY_AMOUNT_STAR_VALUE"] == "" || $fields["PROPERTY_AMOUNT_STAR_VALUE"] == 0) {
-                        continue;
-                    }
 
-                    ?>
+                if (isset($_GET["property_evaluation"]) || isset($_GET["property_name_company"]) || isset($_GET["property_region"])) {
+                    while ($ob_element_filter = $Element_filter->GetNextElement()) {
+                        $fields = $ob_element_filter->GetFields();
+                        if ($fields["PROPERTY_AMOUNT_STAR_VALUE"] == "" || $fields["PROPERTY_AMOUNT_STAR_VALUE"] == 0) {
+                            continue;
+                        }
+                        $url_for_filter = "?";
 
-                    <li class="sidebar__item_lists_list">
-                        <a href="/feedback/?sort=popular_company&filterby=PROPERTY_NAME_COMPANY&filterorder=<?= $fields["ID"] ?>"
-                           class="sidebar__item_lists_list_link" id="company"
-                           data-amount-star="<?= $fields["PROPERTY_AMOUNT_STAR_VALUE"] ?>"
-                           data-id="<?= $fields["ID"] ?>">
-                            <?= $fields["NAME"] ?>
-                        </a>
-                    </li>
+                        foreach ($sort_url as $key => $filter) {
+                            if ($key != "property_name_company") {
+                                $url_for_filter .= "$key=$filter&";
+                            }
+                        }
+                        ?>
+                        <li class="sidebar__item_lists_list">
+                            <a href="<?= $url_for_filter ?>property_name_company=<?= $fields["ID"] ?>"
+                               class="sidebar__item_lists_list_link" id="company"
+                               data-amount-star="<?= $fields["PROPERTY_AMOUNT_STAR_VALUE"] ?>"
+                               data-id="<?= $fields["ID"] ?>">
+                                <?= $fields["NAME"] ?>
+                            </a>
+                        </li>
+                    <? } ?>
+                <? } else {
+                    while ($ob_element_filter = $Element_filter->GetNextElement()) {
+                        $fields = $ob_element_filter->GetFields();
+                        if ($fields["PROPERTY_AMOUNT_STAR_VALUE"] == "" || $fields["PROPERTY_AMOUNT_STAR_VALUE"] == 0) {
+                            continue;
+                        }
+
+                        ?>
+                        <li class="sidebar__item_lists_list">
+                            <a href="?property_name_company=<?= $fields["ID"] ?>" class="sidebar__item_lists_list_link"
+                               id="company"
+                               data-amount-star="<?= $fields["PROPERTY_AMOUNT_STAR_VALUE"] ?>"
+                               data-id="<?= $fields["ID"] ?>">
+                                <?= $fields["NAME"] ?>
+                            </a>
+                        </li>
+                    <? } ?>
 
                 <? } ?>
 
@@ -333,18 +403,48 @@ $sort_url = $_GET;
                 $order = Array("name" => "asc");
                 $arFilter = Array("IBLOCK_ID" => 16);
                 $Section_filter = CIBlockSection::GetList($order, $arFilter, false);
-                while ($ob_section_filter = $Section_filter->GetNext()) {
+                if (isset($_GET["property_evaluation"]) || isset($_GET["property_name_company"]) || isset($_GET["property_region"])) {
+                    while ($ob_section_filter = $Section_filter->GetNext()) {
+                $url_for_filter = "?";
 
-                    ?>
-
+                foreach ($sort_url as $key => $filter) {
+                    if ($key != "property_region") {
+                        $url_for_filter .= "$key=$filter&";
+                    }
+                }
+                ?>
                     <li class="sidebar__item_lists_list">
-                        <a href="/feedback/?sort=city&filterby=PROPERTY_REGION&filterorder=<?= $ob_section_filter["ID"] ?>"
+                        <a href="<?=$url_for_filter?>property_region=<?= $ob_section_filter["ID"] ?>"
                            class="sidebar__item_lists_list_link" id="city" data-id="<?= $ob_section_filter["ID"] ?>">
                             <?= $ob_section_filter["NAME"] ?>
                         </a>
                     </li>
+                <? } ?>
+                <? } else {
+                    while ($ob_section_filter = $Section_filter->GetNext()) {
+                ?>
+                        <li class="sidebar__item_lists_list">
+                            <a href="?property_region=<?= $ob_section_filter["ID"] ?>"
+                               class="sidebar__item_lists_list_link" id="city" data-id="<?= $ob_section_filter["ID"] ?>">
+                                <?= $ob_section_filter["NAME"] ?>
+                            </a>
+                        </li>
+                <? } ?>
 
                 <? } ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             </ul>
 
