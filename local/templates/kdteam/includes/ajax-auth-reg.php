@@ -64,6 +64,12 @@ CModule::IncludeModule("iblock");
                 <label class="input__wrap_label">Подтвердите пароль</label>
                 <input id="pass_conf"  minlength="6" type="password" name="pass_conf" required>
             </div>
+            <div class="input__wrap">
+                <label class="input__wrap_label">Дата рождение</label>
+                <input class="datepicker-here" type="text" name="time"  >
+                <div class="danger date" style="display: none;">Регистрация лиц, не достигших 18 лет, не допускается</div>
+            </div>
+            <div class="uu">sds</div>
         </div>
 
         <div class="popup__wrap_bottom">
