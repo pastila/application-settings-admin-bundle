@@ -54,7 +54,7 @@ CModule::IncludeModule("iblock");
             </div>
             <div class="input__wrap">
                 <label class="input__wrap_label">Номер страхового полиса</label>
-                <input id="number_polic" type="text" name="number_polic" required>
+                <input id="number_polic" type="text" minlength="16" maxlength="16" name="number_polic" required>
             </div>
             <div class="input__wrap">
                 <label class="input__wrap_label">Пароль</label>
