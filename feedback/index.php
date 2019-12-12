@@ -58,10 +58,6 @@ $sort_url = $_GET;
         <div class="custom-select">
             <select style="display: none" onchange="window.open(this.value)">
 
-                <? if ($sort_url["sort"] == "star") {  // сортировка
-
-                    $assessment = $sort_url["filterorder"];
-                } ?>
                 <option value="0">Оценка <?
                     if(isset($_GET["property_evaluation"])){
                         echo $_GET["property_evaluation"];
