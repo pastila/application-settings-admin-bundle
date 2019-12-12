@@ -28,7 +28,10 @@ if (defined("B_PROLOG_INCLUDED") && B_PROLOG_INCLUDED === true) {
                     <a href="#">связаться</a>
                 </li>
                 <li>
-                    <a href="#">связаться</a>
+                    <a href="/terms-of-use/">Пользовательское соглашение</a>
+                </li>
+                <li>
+                    <a href="/personal-data-processing/">Политика по обработке персональных данных</a>
                 </li>
             </ul>
 

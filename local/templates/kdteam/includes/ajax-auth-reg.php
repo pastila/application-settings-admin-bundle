@@ -101,7 +101,13 @@ CModule::IncludeModule("iblock");
                 <input value="" id="company" type="hidden" name="company" required>
             </div>
         </div>
-
+        <div class="wrap-chrckbox checkbox_registration">
+                                            <label class="check-label">
+                                                Я ознакомлен и согласен с условиями <a href="/terms-of-use/">пользовательского соглашения</a> и
+                                                <a href="/personal-data-processing/">политикой по обработке персональных данных</a>
+                                                <input type="checkbox" value="" />
+                                                <span class="check-img"></span>
+        </div>
         <button type="submit" id="registration" class="mainBtn">Регистрация</button>
     </div>
 </form>
