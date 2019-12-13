@@ -27,6 +27,7 @@ while($ob = $res->GetNextElement()){
 
 <div class="personal_cabinet">
     <h1 class="page-title">Мои данные</h1>
+    <div class="user_vip"><p class="text_vip">Аккаунт представителя страховой службы</p></div>
    <div class="flex_personal">
        <div class="personal_data" id="true_data_person">
             <div class="flex_data">

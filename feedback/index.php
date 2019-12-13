@@ -171,6 +171,9 @@ $sort_url = $_GET;
                     <!--                <div class="feedback__block_top_data">-->
                     <!--                    05 сент, 2019-->
                     <!--                </div>-->
+                    <div class="feedback_strah_user">
+                        <p class="text_user">Представитель страховой службы</p>
+                    </div>
                 </div>
                 <!-- Title -->
                 <div class="feedback__title">

@@ -231,6 +231,7 @@
             display: flex;
             font-size: 1.6rem;
             margin-bottom: 4rem;
+            flex-wrap: wrap;
 
             &_star, &_name {
                 margin-right: 4rem;
@@ -297,5 +298,17 @@
                 right: 3rem;
             }
         }
+    }
+}
+.feedback_strah_user{
+    display: block;
+    width: 100%;
+    margin: 1rem 0;
+    .text_user{
+        display: inline-block;
+        background: $lightBg;
+        border: 1px dashed $accentColor;
+        padding: 0.5rem;
+        font-weight: bold;
     }
 }
