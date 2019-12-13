@@ -18,9 +18,10 @@
 @import './header.scss';
 @import './footer.scss';
 
+@import '../../node_modules/air-datepicker/dist/css/datepicker.min.css';
+
 // Popup
 @import '../../node_modules/magnific-popup/dist/magnific-popup.css';
-
 
 // Styles for all pages
 html {
@@ -123,6 +124,7 @@ main.main {
         position: relative;
         padding: 3rem;
         margin-bottom: 4rem;
+        font-size: 1.4rem;
     }
 }
 .error{
@@ -260,3 +262,42 @@ textarea{
 a{
     cursor: pointer;
 }
+
+CSS
+textarea,
+input.text,
+input[type="text"],
+input[type="button"],
+input[type="submit"],
+.input-checkbox {
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    border-radius: 0;
+}
+
+input{
+    -moz-appearance: none;/* older firefox */
+    -webkit-appearance: none; /* safari, chrome, edge and ie mobile */
+    appearance: none; /* rest */
+    border-radius: 0;
+ }
+
+ select {
+    -moz-appearance: none;/* older firefox */
+    -webkit-appearance: none; /* safari, chrome, edge and ie mobile */
+    appearance: none; /* rest */
+    border-radius: 0 !important;
+ }
+ .select_block{
+     select{
+         background-image: url('/local/templates/kdteam/images/svg/sort-down.svg');
+         background-size: 15px;
+         background-repeat: no-repeat;
+         background-position: 95% 50%;
+         padding-right: 4rem;
+     }
+ }
+ .title_medium{
+     font-size: 2.6rem;
+     margin: 2rem 0;
+ }

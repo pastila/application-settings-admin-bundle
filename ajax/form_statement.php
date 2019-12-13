@@ -28,6 +28,7 @@ $rsSections = CIBlockSection::GetList(array(), $arFilter, false, $arSelect, fals
 
 $rsUser = CUser::GetByID($USER->GetID());
 $arUser = $rsUser->Fetch();
+$phone = $arUser['PERSONAL_PHONE'];
 $arName = $arUser['NAME'] . ' ' . $arUser['LAST_NAME'] . ' ' . $arUser['SECOND_NAME'];
 $arAppeal = $_SESSION["APPEAL"];
 
@@ -74,6 +75,7 @@ $arUser = $rsUser->Fetch();
             "NAME" => "Обращение",
             "PROPERTY_VALUES" => array(
                 "FULL_NAME" => $arName,
+                "MOBAIL_PHONE" => $phone,
                 "HOSPITAL" => $arHospital["NAME"],
                 "ADDRESS" => $arRegion["NAME"],
                 "CLASS" => $arClass["NAME"],

@@ -19,6 +19,20 @@
         }
     }
 
+    &__ico {
+        width: 1.5rem;
+        height: 2rem;
+        position: absolute;
+        right: 2rem;
+        top: 50%;
+        transform: translateY(-50%);
+
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
     &__lost-pass {
         display: block;
         font-size: 1.6rem;
@@ -30,7 +44,7 @@
     .input {
         &__wrap {
             input, textarea {
-                padding: 2rem;
+                padding: 2rem 1rem;
             }
         }
     }

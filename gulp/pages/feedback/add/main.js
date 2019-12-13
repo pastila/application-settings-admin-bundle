@@ -151,13 +151,10 @@ $("#form-comments").validator().on('submit', function(e) {
     $("[data-select=company]").next().css({"display":"block"});
     empty.push("company");
   }
-  if(data.star == 0){
-    $("[data-select=star]").next().css({"display":"block"});
-    empty.push("star");
-  }
+
   console.log(empty);
   if(empty.length == 0){
-    console.log("dsds");
+
     $.ajax({
       url: "/ajax/add_reviews.php",
       type: 'POST',

@@ -34,10 +34,9 @@ $asset = Asset::getInstance();
     <header class="header">
         <div class="header__container">
             <a class="header__logo" href="/">
-                <img class="header__logo_img" src="/local/templates/kdteam/images/svg/header/logo/logo_header.svg"
-                     alt="OMS">
-
-                <div class="header__logo_name">company name</div>
+                <img class="header__logo_img"
+                    src="/local/templates/kdteam/images/png/header/logo-oms.png"
+                    alt="OMS">
             </a>
             <?php
             global $USER;
@@ -92,6 +91,27 @@ $asset = Asset::getInstance();
 
                                 </li>
 
+
+                                <li>
+                                    <!-- Если есть обращения в админке добавляем класс active -->
+                                    <!-- И показываем блок с колличеством обращений -->
+                                    <?php
+                                    //Количество обращений
+                                    if (CModule::IncludeModule("iblock")) {
+
+                                        $arSelect = Array("ID", "IBLOCK_ID", "NAME",);
+                                        $arFilter = Array("IBLOCK_ID"=>13, "PROPERTY_NAME_USER"=>$USER->GetID() );
+                                        $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+                                        $count_reviews = $res->SelectedRowsCount();
+                                        }
+
+                                    ?>
+                                    <div id="number_calls" class="menu-req">
+                                        <?php echo $count_reviews?>
+                                    </div>
+                                    <a class="" href="/reviews/">Ваши отзывы</a>
+
+                                </li>
                                 <li>
                                     <div class="menu-req">
                                         <?php

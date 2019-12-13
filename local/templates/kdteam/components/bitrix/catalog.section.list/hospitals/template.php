@@ -170,28 +170,34 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
             <?php
             if ($arResult['SECTION']['DEPTH_LEVEL'] == 1) {
                 ?>
-                <div class="grid-item">
-                    <div class="title-select">Выбор региона:</div>
-                    <div id="choose_location" class="custom-select">
-                        <select>
-                            <option value="<?=$arResult['SECTION']['ID']?>"><?php echo $arResult['SECTION']['NAME']?></option>
-                            <?php
-                            $db_list = CIBlockSection::GetList(
-                                array("name" => "asc"),
-                                array('IBLOCK_ID' => 9, "GLOBAL_ACTIVE" => "Y", "DEPTH_LEVEL" => 1,
-                                    "!ID" => $arResult['SECTION']['ID']),
-                                false,
-                                array('ID','NAME'),
-                                false
-                            );
-                            while ($ar_result = $db_list->GetNext()) { ?>
-                                <option id="location" value="<?=$ar_result['ID']?>"><?php echo $ar_result['NAME']?></option>
-                            <?php
-                            }
-                            ?>
-                        </select>
+                <div class="input-with-search">
+                    <label class="title-select" for="user_pass">Выбор региона: </label>
+                    <div class="input__wrap">
+                        <div class="input__ico">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                        </div>
+                        <input id="referal" type="text" data-region_check="check" data-id_region="<?=$arResult['SECTION']['ID']?>" placeholder="Поиск по региону" value="<?php echo $arResult['SECTION']['NAME']?>" autocomplete="off"/>
+                        <ul style="cursor: pointer;" class="custom-serach__items" id="search_result">
+                <?php
+                $db_list = CIBlockSection::GetList(
+                    array("name" => "asc"),
+                    array('IBLOCK_ID' => 9, "GLOBAL_ACTIVE" => "Y", "DEPTH_LEVEL" => 1,
+                        "!ID" => $arResult['SECTION']['ID']),
+                    false,
+                    array('ID','NAME'),
+                    false
+                );
+                while ($ar_result = $db_list->GetNext()) { ?>
+
+                                    <li value="<?=$ar_result['ID']?>" class="custom-serach__items_item region"><?php echo $ar_result['NAME']?></li>
+                                <?php }?>
+
+                        </ul>
                     </div>
                 </div>
+
+
+
                 <?php
                 $arFilter = array("IBLOCK_ID" => 9, "ACTIVE"=>"Y", "IBLOCK_SECTION_ID" => $arResult['SECTION']['ID']);
                 $arSelect = Array("ID", "NAME", "IBLOCK_ID");
@@ -201,45 +207,65 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                     $arFields[] = $ob->GetFields();
                 }
                 ?>
-                <div class="title-select">Список больниц:</div>
-                <div id="choose_hospital" class="custom-select">
-                    <select>
-                        <option>Не выбрано</option>
-
-                        <?php
-                        $i = 1;
-                        foreach ($arFields as $arItem) {
-                            if ($i == 1) {
-                                ?>
-                                <option id="hospital" value="">Здесь нет моей больницы</option>
-                            <?php } else {?>
-                                <option id="hospital" value="<?=$arItem['ID']?>"><?php echo $arItem['NAME']?></option>
-                            <? }
-                            ++$i;
-                        }?>
-                    </select>
+                <div class="input-with-search">
+                    <label class="title-select" for="user_pass">Список больниц : </label>
+                    <div class="input__wrap">
+                        <div class="input__ico">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                        </div>
+                        <input id="referal_two" type="text" placeholder="Поиск по региону" autocomplete="off"/>
+                        <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_hospital">
+                            <?
+                                 $i = 1;
+                            foreach ($arFields as &$arItem) {?>
+                                    <?php  if ($i == 1) { ?>
+                                        <li value="" id="hospital" class="custom-serach__items_item">Здесь нет моей больницы</li>
+                                    <?php } else {?>
+                                    <li value="<?=$arItem['ID']?>" class="custom-serach__items_item  hospital">
+                                        <?php echo $arItem['NAME']?></li>
+                                <?php }?>
+                                <?php ++$i; ?>
+                            <?php } ?>
+                        </ul>
+                    </div>
                 </div>
+
+
                 <?php
             }?>
         <?php } else { ?>
-            <div class="title-select">Выбор региона:</div>
-            <div id="choose_location" class="custom-select">
-                <select>
-                    <option>Не выбрано</option>
-                    <?php
-                    foreach ($arResult['SECTIONS'] as &$arSection) {?>
-                        <?php if ($arSection['DEPTH_LEVEL'] == 1) { ?>
-                            <option id="location" value="<?=$arSection['ID']?>"><?php echo $arSection['NAME']?></option>
-                        <?php }?>
-                    <?php } ?>
-                </select>
+
+            <div class="input-with-search">
+                <label class="title-select" for="user_pass">Выбор региона: </label>
+                <div class="input__wrap">
+                    <div class="input__ico">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                    </div>
+                    <input id="referal" type="text" placeholder="Поиск по региону" autocomplete="off"/>
+                    <ul style="cursor: pointer;" class="custom-serach__items" id="search_result">
+                        <?php
+                        foreach ($arResult['SECTIONS'] as &$arSection) {?>
+                            <?php if ($arSection['DEPTH_LEVEL'] == 1) { ?>
+                                <li value="<?=$arSection["ID"]?>" class="custom-serach__items_item region"><?php echo $arSection['NAME']?></li>
+                            <?php }?>
+                        <?php } ?>
+                    </ul>
+                </div>
             </div>
 
-            <div class="title-select">Список больниц:</div>
-            <div id="choose_hospital" class="custom-select" style="pointer-events: none">
-                <select>
-                    <option>Список больниц</option>
-                </select>
+            <div class="input-with-search">
+                <label class="title-select" for="user_pass">Список больниц: </label>
+                <div class="input__wrap" style="pointer-events: none">
+                    <div class="input__ico">
+
+                    </div>
+                    <input id="" type="text" placeholder="Список больниц" autocomplete="off"/>
+                    <ul style="cursor: pointer;" class="custom-serach__items" id="">
+
+
+
+                    </ul>
+                </div>
             </div>
 
         <?php }

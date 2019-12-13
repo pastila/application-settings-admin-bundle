@@ -83,6 +83,21 @@ if (count($arResult["ITEMS"]) > 0) {
                                            value="<?= $arItem["PROPERTIES"]["FULL_NAME"]["VALUE"] ?>">
                                 </div>
                             </div>
+                            <div class="obrashcheniya__content_left_center_item">
+                                <div class="obrashcheniya__content_left_center_item_text">
+                                    Мобильный номер
+                                </div>
+
+                                <p id="phone_<?= $arItem['ID'] ?>"
+                                   class="obrashcheniya__content_left_center__item_text-full">
+                                    <?php echo $arItem["PROPERTIES"]["MOBAIL_PHONE"]["VALUE"] ?></p>
+                                <div class="input__wrap no_margin">
+                                    <input style="display: none"
+                                           type="text"
+                                           name="phone"
+                                           value="<?= $arItem["PROPERTIES"]["MOBAIL_PHONE"]["VALUE"] ?>">
+                                </div>
+                            </div>
 
                             <!-- Item ы -->
                             <div class="obrashcheniya__content_left_center_item">
@@ -274,7 +289,7 @@ if (count($arResult["ITEMS"]) > 0) {
 
                                 <?php
                                 $url_pdf = CFile::GetPath($arItem["PROPERTIES"]["PDF"]["VALUE"]); ?>
-                                <a class="obrashcheniya__content_sidebar_blocks_text_link pdf <?php if ($url_pdf == "") { ?>error<?}?>" <?php if ($url_pdf != "") { ?> href="<?= $url_pdf ?>"<? } ?> >
+                                <a target="_blank" class="obrashcheniya__content_sidebar_blocks_text_link pdf <?php if ($url_pdf == "") { ?>error<?}?>" <?php if ($url_pdf != "") { ?> href="<?= $url_pdf ?>"<? } ?> >
                                   <?php if ($url_pdf != "") { ?>  просмотреть <? }else{ ?> Заполните все поля для формирования pdf файла<?}?>
                                 </a>
                                 <div class="hidden ready_pdf success"> Файл пдф сформирован</div>

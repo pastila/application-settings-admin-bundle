@@ -1,7 +1,7 @@
 //= ../../node_modules/jquery/dist/jquery.min.js
 //= ../../node_modules/magnific-popup/dist/jquery.magnific-popup.min.js
 //= ../../node_modules/jquery-mask-plugin/dist/jquery.mask.min.js
-
+//= ../../node_modules/air-datepicker/dist/js/datepicker.min.js
 $(document).ready(function() {
 
 
@@ -26,7 +26,11 @@ $(document).ready(function() {
   });
 
   function FormReg() {
+
     $('#phone').mask('+7(000)000-00-00');
+
+     $(".datepicker-here").datepicker();
+     $("#datepickers-container").css({"z-index":"9999"});
 
     $('#sel_reg').change(function() {
       let sVal = $(this).val();
@@ -46,55 +50,64 @@ $(document).ready(function() {
       });
     });
 
+    document.getElementById("password").onchange = validatePassword;
+    document.getElementById("pass_conf").onchange = validatePassword;
+
     $('#auth-form-reg').validator().on('submit', function(e) {
        e.preventDefault();
       if($("#generate_form").length != 0){
         $('#auth-form-reg').append("<input type='hidden'  name='review' value='review'>")
       }
         var data_form = $('#auth-form-reg').serializeArray();
-        console.log(data_form);
+      var vozrast =  $(".datepicker-here").val();
+      var y =   Date.parse(vozrast);
+      var now = new Date();
+      var total = parseInt(now) - parseInt(568036800000);
+      if( total < y ){
+        $(".date").css({"display":"block"})
+      }else {
 
-          $.ajax({
-            url: '/ajax/registration.php',
-            type: 'POST',
-            data: data_form,
-            success: function(msg) {
-              console.log(msg);
-              var suc = JSON.parse(msg);
-              console.log(suc);
-              if (suc.user == 'Уже существует') {
-                var email = $('#email');
-                email.after(
-                    '<div class="danger" data-danger-email>Пользовватель с таким эмейлом уже сущесвуте</div>');
-              } else if(suc.company == "Нет компании"){
-                var email = $('#company');
-                email.after(
-                    '<div class="danger" data-danger-company>В нашей базе нет этой компании ,мы не можем вас зарегестрировать </div>');
-              }
-              else if (suc.user != 0 && suc.review !="register_with_review") {
-                location.reload()
+        $.ajax({
+          url: '/ajax/registration.php',
+          type: 'POST',
+          data: data_form,
+          success: function(msg) {
 
-              }else if(suc.review == "register_with_review"){
+            var suc = JSON.parse(msg);
 
-                $(".close-modal").trigger("click");
-                $("#generate_form").attr("href","/ajax/form_statement.php");
-                $("body").css({"overflow":"hidden"});
-           setTimeout(function() {
-             $.magnificPopup.open({
-               items: {
-                 src: '<div class="white-popup custom_styles_popup">Регистрация и создание обращения успешно завершены.' +
-                 'Для перехода в личный кабинет нажмите <a href="/obrashcheniya/" >сюда</a></div>',
-                 type: 'inline'
-               }
-             });
-             $("body").css({"overflow":"initial"});
-           },1000)
-              }
-            },
-          });
-          return false;
+            if (suc.user == 'Уже существует') {
+              var email = $('#email');
+              email.after(
+                  '<div class="danger" data-danger-email>Пользовватель с таким эмейлом уже сущесвуте</div>');
+            } else if (suc.company == "Нет компании") {
+              var email = $('#company');
+              email.after(
+                  '<div class="danger" data-danger-company>В нашей базе нет этой компании ,мы не можем вас зарегестрировать </div>');
+            }
+            else if (suc.user != 0 && suc.review != "register_with_review") {
+              location.reload()
 
+            } else if (suc.review == "register_with_review") {
 
+              $(".close-modal").trigger("click");
+              $("#generate_form").attr("href", "/ajax/form_statement.php");
+              $("body").css({"overflow": "hidden"});
+              setTimeout(function() {
+                $.magnificPopup.open({
+                  items: {
+                    src: '<div class="white-popup custom_styles_popup">Регистрация и создание обращения успешно завершены.' +
+                    'Для перехода в личный кабинет нажмите <a href="/obrashcheniya/" >сюда</a></div>',
+                    type: 'inline'
+                  }
+                });
+                $("body").css({"overflow": "initial"});
+              }, 1000)
+            }
+          },
+        });
+        return false;
+
+      }
     });
 
 
@@ -309,3 +322,51 @@ if (theToggle) {
   }
 })();
 
+function lazyloadImage() {
+  const images = document.querySelectorAll("[data-src]");
+  const imagesSource = document.querySelectorAll("[data-srcset]");
+
+  function preloadImage(img) {
+      const src = img.getAttribute("data-src");
+      const dataSrc = img.getAttribute("data-srcset");
+      if (!src) {
+          img.srcset = dataSrc;
+      }
+      img.src = src;
+  }
+
+  const imgOptions = {
+      threshold: 0,
+      rootMargin: "0px 0px 0px 0px"
+  };
+
+  const imgObserver = new IntersectionObserver(function (entries, imgObserver) {
+      entries.forEach(entrie => {
+          if (!entrie.isIntersecting) {
+              return;
+          } else {
+              entrie.target.classList.remove("lazy-kdteam");
+              preloadImage(entrie.target);
+              imgObserver.unobserve(entrie.target);
+          }
+      });
+  }, imgOptions);
+
+  images.forEach(image => {
+      imgObserver.observe(image);
+  });
+
+  imagesSource.forEach(image => {
+      imgObserver.observe(image);
+  });
+}
+
+function validatePassword(){
+  let pass2=document.getElementById("pass_conf").value;
+  let pass1=document.getElementById("password").value;
+  if(pass1 != pass2)
+    document.getElementById("pass_conf").setCustomValidity("Пароли не совпадают");
+  else
+    document.getElementById("pass_conf").setCustomValidity('');
+//empty string means no validation error
+}
