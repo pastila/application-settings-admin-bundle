@@ -116,36 +116,9 @@ $sort_url = $_GET;
             $arFilter += [$key => $filter];
         }
 
-        //        array(
-        //            "LOGIC" => "AND",
-        //            array("<PROPERTY_RADIUS" => 50, "=PROPERTY_CONDITION" => "Y"),
-        //            array(">=PROPERTY_RADIUS" => 50, "!=PROPERTY_CONDITION" => "Y"),
-        //        ),
-
-
-        //        if ($sort_url["sort"] == "star") {  // сортировка
-        //            $fiterby = $sort_url["filterby"];
-        //            $filterorder = $sort_url["filterorder"];
-        //        }
-        //        if ($sort_url["sort"] == "city") {
-        //            $fiterby = $sort_url["filterby"];
-        //            $filterorder = $sort_url["filterorder"];
-        //        }
-        //        if ($sort_url["sort"] == "popular_company") {
-        //            $fiterby = $sort_url["filterby"];
-        //            $filterorder = $sort_url["filterorder"];
-        //        }
-        //        if ($sort_url["sort"] == "company") {
-        //            $fiterby = $sort_url["filterby"];
-        //            $filterorder = $sort_url["filterorder"];
-        //        }
-
-        //        ?sort=popular_company&filterby=PROPERTY_NAME_COMPANY&filterorder=37325
-
-
         $order = Array("created" => "desc");
         $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
-        //        $arFilter = Array("IBLOCK_ID" => 13, "ACTIVE" => "Y", $fiterby => $filterorder);
+
 
         $pagen = Array("nPageSize" => 10);
         if ($sort_url["comments"] == "all") {

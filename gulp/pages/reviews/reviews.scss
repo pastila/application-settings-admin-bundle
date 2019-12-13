@@ -1,0 +1,301 @@
+@import '../../styles/utils/vars';
+
+.feedback {
+    position: relative;
+
+    &__block {
+        &_company-name {
+            position: relative;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+    }
+
+    &__btns {
+        display: flex;
+        flex-wrap: wrap;
+
+        .smallMainBtn, .smallAccentBtn {
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+    }
+
+    &__filter {
+        .custom-select {
+            margin-bottom: 2rem;
+        }
+        .select-selected {
+            background-color: $mainColor;
+            color: white;
+
+            &:after {
+                border-color: white transparent transparent transparent;
+            }
+
+            &.select-arrow-active:after {
+                top: 40%;
+                transform: translateY(-50%);
+                border-color: transparent transparent white transparent;
+            }
+        }
+    }
+
+    &__title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+    }
+
+    &__text {
+        margin-bottom: 2rem;
+    }
+
+    &__block_top {
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+
+        &_star {
+            margin-bottom: 1rem;
+        }
+
+        &_name, &_data {
+            opacity: 0.5;
+        }
+    }
+
+    &__bottom {
+        display: flex;
+        font-size: 1.2rem;
+        flex-wrap: wrap;
+
+        &_name {
+            margin-right: 2rem;
+        }
+    }
+
+    .hidenComments {
+        display: none;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: solid 0.1rem $accentColor;
+
+        &__top {
+            display: flex;
+            margin-bottom: 1rem;
+
+            &_wrap {
+                display: flex;
+                flex-direction: column;
+            }
+
+            img {
+                height: 5rem;
+                margin-right: 2rem;
+            }
+
+            &_name {
+                font-size: 1.4rem;
+            }
+        }
+
+        &__link {
+            display: block;
+            margin-top: 2rem;
+            font-size: 1.2rem;
+        }
+
+        &.active {
+            display: block;
+        }
+    }
+}
+
+.sidebar__item_lists{
+    max-height: 75rem;
+}
+.feedback__bottom_link{
+    cursor: pointer;
+}
+.feedback__bottom{
+    &.openedBlock{
+        .block__commented{
+            display: block;
+        }
+    }
+}
+.block_commented_styles{
+    margin: 1rem 0;
+    width: 100%;
+    textarea{
+        min-height: 15rem;
+        resize: none;
+        display: block;
+        width: auto;
+    }
+    .button-comments , .button-cited{
+        margin: 2rem 0 0 auto;
+    }
+}
+.block__commented{
+    display: none;
+}
+.block_quotes{
+    background-color: $bgColor;
+    color: $mainColor;
+    padding: 1.4rem 3rem;
+    margin: 2rem 0 2rem 5rem;
+    border:  1px dashed $accentColor;
+    @media(max-width: 767px){
+        margin-left: 3rem;
+    }
+    .quotes_italic{
+        font-style: italic;
+    }
+}
+.toggle_comment_dropdown{
+    margin-left: 3.7rem;
+    cursor: pointer;
+    @media(max-width: 767px){
+        display: block;
+        width: 100%;
+        margin-left: 0;
+    }
+}
+.reset_block{
+    margin-bottom: 2rem;
+    @media(max-width: 991px){
+
+    }
+}
+
+@media screen and (min-width: 576px) {
+    .feedback {
+        &__block {
+            &_company-name {
+                position: absolute;
+                right: 2rem;
+                top: 2rem;
+                font-size: 1.4rem;
+            }
+        }
+
+        &__btns {
+    
+            .smallMainBtn, .smallAccentBtn {
+                width: auto;
+                margin-right: 2rem;
+            }
+        }
+    
+        &__filter {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+
+            .custom-select {
+                width: 49%;
+            }
+        }
+
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .feedback {
+        &__block {
+            &_company-name {
+                right: 3rem;
+                top: 3rem;
+            }
+        }
+
+        &__filter {
+            display: flex;
+            justify-content: flex-start;
+
+            .custom-select {
+                max-width: 30rem;
+                width: 100%;
+                margin-right: 2rem;
+
+                .select-selected {
+                    padding: 1.5rem 3rem;
+                    font-size: 1.4rem;
+                }
+            }
+        }
+
+        &__block_top {
+            display: flex;
+            font-size: 1.6rem;
+            margin-bottom: 4rem;
+
+            &_star, &_name {
+                margin-right: 4rem;
+            }
+        }
+
+        &__title {
+            font-size: 1.8rem;
+        }
+
+        &__text {
+            margin-bottom: 3rem;
+        }
+
+        &__bottom {
+            font-size: 1.6rem;
+
+            &_name {
+                margin-right: 3.7rem;
+            }
+        }
+    }
+}
+.opacity_block{
+    opacity: .5;
+}
+
+@media screen and (min-width: 1200px) {
+    .feedback {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        grid-gap: 2rem;
+
+        &__wrap_white-blocks {
+            grid-column: 1 / 10;
+        }
+
+        &__block {
+            &_company-name {
+                position: relative;
+                top: 0;
+                right: 0;
+                font-size: 1.8rem;
+            }
+        }
+
+        &__title {
+            font-size: 2.1rem;
+        }
+
+        &__text {
+            margin-bottom: 5rem;
+        }
+    }
+}
+
+@media screen and (min-width: 1600px) {
+    .feedback {
+
+        &__block {
+            &_company-name {
+                position: absolute;
+                top: 3rem;
+                right: 3rem;
+            }
+        }
+    }
+}
