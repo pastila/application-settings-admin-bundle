@@ -7,6 +7,9 @@ $asset = Asset::getInstance();
 $asset->addCss(SITE_TEMPLATE_PATH . "/pages/news/news.min.css");
 $asset->addJs(SITE_TEMPLATE_PATH . "/pages/news/news.min.js");
 ?>
+
+
+<?$APPLICATION->SetTitle("Новости ОМС");?>
     <ul class="breadcrumbs">
         <li><a href="/">Главная</a></li>
         <li>Читать про ОМС</li>
