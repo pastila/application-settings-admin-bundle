@@ -239,11 +239,8 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/reviews/reviews.min.js");
                 $res->NavStart(0);
             }
             while ($ob = $res->GetNextElement()) {
-//
+
                 $arFields = $ob->GetFields();
-//                echo '<pre>';
-//                print_r($arFields);
-//                echo '</pre>';
                 $arProps = $ob->GetProperties();
                 $newDate = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_ACTIVE_FROM"]));
                 $ID_USER = $arProps["NAME_USER"]["VALUE"];
