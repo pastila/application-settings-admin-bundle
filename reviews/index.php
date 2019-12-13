@@ -1,5 +1,8 @@
 <?php require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 global $USER;
+if (!$USER->IsAuthorized()) {
+    LocalRedirect("/",false,"301 Moved permanently");
+}
 
 use Bitrix\Main\Page\Asset;
 
@@ -54,11 +57,15 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/reviews/reviews.min.js");
                 <div class="white_block">
                     <!-- Company Name -->
                     <div class="feedback__block_company-name"><img src="<?= $file["src"] ?>"></div>
+
+
+
+
                     <!-- top -->
                     <div class="feedback__block_top">
-                        <div class="feedback__block_top_star">
+                        <div class="feedback__block_top_star" data-block-star="<?=$arFields["ID"]?>">
                             <? for ($i = 1; $i <= $arProps["EVALUATION"]["VALUE"]; ++$i) { ?>
-                                <svg class="star star-active" xmlns="http://www.w3.org/2000/svg"
+                                <svg class="star star-active" data-star="<?=$arFields["ID"]?>" xmlns="http://www.w3.org/2000/svg"
                                      viewBox="0 0 47.94 47.94">
                                     <path
                                             d="M26.285 2.486l5.407 10.956a2.58 2.58 0 0 0 1.944 1.412l12.091 1.757c2.118.308 2.963 2.91 1.431 4.403l-8.749 8.528a2.582 2.582 0 0 0-.742 2.285l2.065 12.042c.362 2.109-1.852 3.717-3.746 2.722l-10.814-5.685a2.585 2.585 0 0 0-2.403 0l-10.814 5.685c-1.894.996-4.108-.613-3.746-2.722l2.065-12.042a2.582 2.582 0 0 0-.742-2.285L.783 21.014c-1.532-1.494-.687-4.096 1.431-4.403l12.091-1.757a2.58 2.58 0 0 0 1.944-1.412l5.407-10.956c.946-1.919 3.682-1.919 4.629 0z"
@@ -69,6 +76,7 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/reviews/reviews.min.js");
                         <div class="feedback__block_top_name">
                             <?= $name_user ?>, <?= $city["NAME"] ?>, <?= $newDate ?>
                         </div>
+
                         <!--                <div class="feedback__block_top_data">-->
                         <!--                    05 сент, 2019-->
                         <!--                </div>-->
@@ -94,6 +102,33 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/reviews/reviews.min.js");
                             комментариев
                         </a>
                     </div>
+
+                    <div class="feedback_change_star" data-id-rewiev="<?=$arFields["ID"]?>" >Редактировать оценку</div>
+
+                    <form action="" id="form_change_count_star" data-form-id="<?=$arFields["ID"]?>" class="hidden">
+                        <div class='rating-stars text-center' data-select="star">
+                            <ul id='stars'>
+                                <li class='star' title='Poor' data-star-id="<?=$arFields["ID"]?>" data-value='1'>
+                                    <i class='fa fa-star fa-fw'></i>
+                                </li>
+                                <li class='star' title='Fair' data-star-id="<?=$arFields["ID"]?>" data-value='2'>
+                                    <i class='fa fa-star fa-fw'></i>
+                                </li>
+                                <li class='star' title='Good' data-star-id="<?=$arFields["ID"]?>" data-value='3'>
+                                    <i class='fa fa-star fa-fw'></i>
+                                </li>
+                                <li class='star' title='Excellent' data-star-id="<?=$arFields["ID"]?>" data-value='4'>
+                                    <i class='fa fa-star fa-fw'></i>
+                                </li>
+                                <li class='star' title='WOW!!!' data-star-id="<?=$arFields["ID"]?>" data-value='5'>
+                                    <i class='fa fa-star fa-fw'></i>
+                                </li>
+                            </ul>
+                        </div>
+                        <button type="submit" class="change_count_star" data-id-rewiev="<?=$arFields["ID"]?>">Сохранить</button>
+                    </form>
+                    <div id="result_change hidden" data-result-id="<?=$arFields["ID"]?>"></div>
+
                     <!-- COMMETNS -->
                     <div class="hidenComments">
                         <?php
