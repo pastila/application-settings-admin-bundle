@@ -200,7 +200,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
 
                 <?php
                 $arFilter = array("IBLOCK_ID" => 9, "ACTIVE"=>"Y", "IBLOCK_SECTION_ID" => $arResult['SECTION']['ID']);
-                $arSelect = Array("ID", "NAME", "IBLOCK_ID");
+                $arSelect = Array("ID", "NAME", "IBLOCK_ID","PROPERTY_LOCATION","PROPERTY_NAME_BOSS");
                 $res = CIBlockElement::GetList(array("name" => "asc"), $arFilter, false, false, $arSelect);
                 while($ob = $res->GetNextElement())
                 {
@@ -221,6 +221,9 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                                     <?php  if ($i == 1) { ?>
                                         <li value="" id="hospital" class="custom-serach__items_item">Здесь нет моей больницы</li>
                                     <?php } else {?>
+                                    <?php echo '<pre>';
+                                    print_r($arItem);
+                                    echo '</pre>'; ?>
                                     <li value="<?=$arItem['ID']?>" class="custom-serach__items_item  hospital">
                                         <?php echo $arItem['NAME']?></li>
                                 <?php }?>
