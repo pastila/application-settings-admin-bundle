@@ -1,7 +1,9 @@
 <?php require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
 CModule::IncludeModule("iblock");
+$bs = new CIBlockSection;
 global $USER;
 $user = new CUser;
+$data_user_old ="";
 $ID_USER = $USER->GetID();
 $rsUser = CUser::GetByID($ID_USER);
 $person = $rsUser->Fetch();
@@ -24,22 +26,22 @@ if($_POST["last_name"] != ""){
     $array_field +=["LAST_NAME"=>$_POST["last_name"]];
 }
 if($_POST["second_name"] != ""){
-     $array_field +=["SECOND_MANE"=>$_POST["second_name"]];
+    $array_field +=["SECOND_MANE"=>$_POST["second_name"]];
 }
 if($_POST["personal_phone"] != ""){
-     $array_field +=["PERSONAL_PHONE"=>$_POST["personal_phone"]];
+    $array_field +=["PERSONAL_PHONE"=>$_POST["personal_phone"]];
 }
 if($_POST["email"] != ""){
-     $array_field +=["EMAIL"=>$_POST["email"]];
+    $array_field +=["EMAIL"=>$_POST["email"]];
 }
 if($_POST["uf_insurance_policy"] != ""){
-     $array_field +=["UF_INSURANCE_POLICY"=>$_POST["uf_insurance_policy"]];
+    $array_field +=["UF_INSURANCE_POLICY"=>$_POST["uf_insurance_policy"]];
 }
 //if($_POST["town"] != ""){
 //    $array_field +=["UF_INSURANCE_COMPANY"=>$_POST["town"]];
 //}
 if($_POST["id_company"] != ""){
-     $array_field +=["UF_INSURANCE_COMPANY"=>$_POST["id_company"]];
+    $array_field +=["UF_INSURANCE_COMPANY"=>$_POST["id_company"]];
 }
 if($_FILES['import_file']){
     $uploads_dir = '/var/www/upload/logo_users/';
@@ -58,7 +60,23 @@ if($_FILES['import_file']){
 
 $true = $user->Update($ID_USER, $array_field);
 
+$arFields_user = array(
+    "IBLOCK_ID"=>13,
+    "NAME" =>$person["EMAIL"]
+);
+$rsSections = CIBlockSection::GetList(array('LEFT_MARGIN' => 'ASC'), $arFields_user );
+$rsSections_res =  $rsSections->GetNext();
+
+
+$arFields= array(
+    "NAME"=> $_POST["email"]
+);
+
+$bs->Update($rsSections_res["ID"], $arFields, true, true, false);
+
 if($user->LAST_ERROR != ""){
     echo $strError .= $user->LAST_ERROR;
 }
 echo $true;
+
+
