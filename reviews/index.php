@@ -10,10 +10,12 @@ $asset = Asset::getInstance();
 $asset->addCss(SITE_TEMPLATE_PATH . "/pages/reviews/reviews.min.css");
 $asset->addJs(SITE_TEMPLATE_PATH . "/pages/reviews/reviews.min.js");
 ?>
-
-
+    <ul class="breadcrumbs">
+        <li><a href="/">Главная</a></li>
+        <li>Ваши отзывы</li>
+    </ul>
+    <h1 class="page-title">Ваши отзывы</h1>
     <div class="feedback">
-        <h1>Ваши отзыввы</h1>
         <div class="feedback__wrap_white-blocks">
             <!-- FeedBack block -->
 
@@ -80,6 +82,9 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/reviews/reviews.min.js");
                         <!--                <div class="feedback__block_top_data">-->
                         <!--                    05 сент, 2019-->
                         <!--                </div>-->
+                        <div class="feedback_strah_user">
+                            <p class="text_user">Представитель страховой службы</p>
+                        </div>
                     </div>
                     <!-- Title -->
                     <div class="feedback__title">
@@ -316,6 +321,9 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/reviews/reviews.min.js");
                                         <!--                <div class="feedback__block_top_data">-->
                                         <!--                    05 сент, 2019-->
                                         <!--                </div>-->
+                                        <div class="feedback_strah_user">
+                                            <p class="text_user">Представитель страховой службы</p>
+                                        </div>
                                     </div>
                                     <!-- Title -->
                                     <div class="feedback__title">

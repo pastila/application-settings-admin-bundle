@@ -99,3 +99,13 @@
 .logo_block{
   max-width: 10rem;
 }
+.user_vip{
+  margin-bottom: 2rem;
+  .text_vip{
+    display: inline-block;
+    background: $lightBg;
+    border: 1px dashed $accentColor;
+    padding: 0.5rem;
+    font-weight: bold;
+  }
+}
