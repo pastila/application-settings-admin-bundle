@@ -50,7 +50,7 @@ $arUrlRewrite=array (
   ),
     6 =>
         array (
-            'CONDITION' => '#^/feedback/comment-(\d+)/#',
+            'CONDITION' => '#^/feedback/comment-([0-9]*)/#',
             'RULE' => '',
             'PATH' => '/feedback/comment.php',
             'SORT' => 100,
