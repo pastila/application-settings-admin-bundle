@@ -174,7 +174,9 @@ $sort_url = $_GET;
                 </div>
                 <!-- Title -->
                 <div class="feedback__title">
+                    <a href="/feedback/comment-<?=$arFields["ID"]?>/">
                     <?= $arFields["NAME"] ?>
+                    </a>
                 </div>
 
                 <!-- Text -->
