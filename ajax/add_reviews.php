@@ -35,7 +35,14 @@ if ($_POST) {
                 "CODE" => $trans,
 
             );
+        $prop=CIBlockElement::GetByID($_POST["id_compani"])->GetNextElement()->GetProperties();
+        $date = date("Y:m:d H:i");
 
+        $arSend =array(
+            "EMAIL"=>   $prop["EMAIL_FIRST"]["VALUE"],
+            "DATE" => $date,
+        );
+        CEvent::Send("SEND_FEEDBACK_BOSS",s1,$arSend);
 
             if ($PRODUCT_ID = $el->Add($arFields)) {
                 echo 1;
@@ -69,8 +76,14 @@ if ($_POST) {
                 "CODE" => $trans,
 
             );
+            $prop=CIBlockElement::GetByID($_POST["id_compani"])->GetNextElement()->GetProperties();
+            $date = date("Y:m:d H:i");
 
-
+            $arSend =array(
+                "EMAIL"=>   $prop["EMAIL_FIRST"]["VALUE"],
+                "DATE" => $date,
+            );
+            CEvent::Send("SEND_FEEDBACK_BOSS",s1,$arSend);
             if ($PRODUCT_ID = $el->Add($arFields)) {
                 echo 1;
             } else {
@@ -78,4 +91,6 @@ if ($_POST) {
             }
         }
     }
+
+
 }
