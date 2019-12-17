@@ -76,8 +76,10 @@
 }
 
 .file-input > .button {
-  display: inline-block;
+  display: block;
+  margin-bottom: 1rem;
   cursor: pointer;
+  padding: 2rem 1rem;
 }
 
 .file-input > .label {
@@ -85,7 +87,7 @@
   white-space: nowrap;
   opacity: .3;
   display: inline-block;
-  max-width: 150px;
+  max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   padding: 0 0 0 .6em;
