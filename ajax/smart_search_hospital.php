@@ -11,7 +11,7 @@ $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_NAME_B
 $arFilter = Array("IBLOCK_ID"=>9, "SECTION_ID"=>$_POST["region_id"] , "%NAME"=>$_POST["name_hospital"] );
 $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
 if($res->SelectedRowsCount() > 0) {
-    echo '<li value="" id="hospital" class="custom-serach__items_item ">Здесь нет моей больницы</li>';
+    echo '<li value="" id="hospital" class="custom-serach__items_item hospital-empty">Здесь нет моей больницы</li>';
 while($ob = $res->GetNextElement()) {
     $arProps = $ob->GetFields();
 

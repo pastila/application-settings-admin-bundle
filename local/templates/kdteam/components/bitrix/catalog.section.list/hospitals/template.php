@@ -177,7 +177,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                             <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                         </div>
                         <input id="referal" type="text" data-region_check="check" data-id_region="<?=$arResult['SECTION']['ID']?>" placeholder="Поиск по региону" value="<?php echo $arResult['SECTION']['NAME']?>" autocomplete="off"/>
-                        <ul style="cursor: pointer;" class="custom-serach__items" id="search_result">
+                        <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_">
                 <?php
                 $db_list = CIBlockSection::GetList(
                     array("name" => "asc"),
@@ -219,13 +219,12 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                                  $i = 1;
                             foreach ($arFields as &$arItem) {?>
                                     <?php  if ($i == 1) { ?>
-                                        <li value="" id="hospital" class="custom-serach__items_item">Здесь нет моей больницы</li>
+                                        <li value="" id="hospital" class="custom-serach__items_item hospital-empty">Здесь нет моей больницы</li>
                                     <?php } else {?>
 <!--                                    --><?php //echo '<pre>';
 //                                    print_r($arItem);
 //                                    echo '</pre>'; ?>
-                                    <li value="<?=$arItem['ID']?>" class="custom-serach__items_item  hospital" data-name-boss="<?=$arItem["PROPERTY_NAME_BOSS_VALUE"]?>" data-street="<?=$arItem["PROPERTY_STREET_VALUE"]?>">
-                                        <?php echo $arItem['NAME']?></li>
+                                    <li value="<?=$arItem['ID']?>" class="custom-serach__items_item  hospital" data-name-boss="<?=$arItem["PROPERTY_NAME_BOSS_VALUE"]?>" data-street="<?=$arItem["PROPERTY_STREET_VALUE"]?>"><?php echo $arItem['NAME']?></li>
                                 <?php }?>
                                 <?php ++$i; ?>
                             <?php } ?>
@@ -249,7 +248,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                         <?php
                         foreach ($arResult['SECTIONS'] as &$arSection) {?>
                             <?php if ($arSection['DEPTH_LEVEL'] == 1) { ?>
-                                <li value="<?=$arSection["ID"]?>" class="custom-serach__items_item region"><?php echo $arSection['NAME']?></li>
+                                <li value="<?=$arSection["ID"]?>" class="custom-serach__items_item region "><?php echo $arSection['NAME']?></li>
                             <?php }?>
                         <?php } ?>
                     </ul>
