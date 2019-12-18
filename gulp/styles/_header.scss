@@ -160,10 +160,13 @@
 }
 
 #auth-form-reg {
-    max-width: 105rem;
+    max-width: 110rem;
 
     .mainBtn {
         width: 100%;
+    }
+    .check-label{
+        margin-right: 0;
     }
 }
 #auth-form-reg{

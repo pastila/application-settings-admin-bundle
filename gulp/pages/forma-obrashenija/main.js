@@ -2,17 +2,17 @@
 //= ../../node_modules/magnific-popup/dist/jquery.magnific-popup.min.js
 
 $(document).ready(function() {
-
+  search_region();
+  search_class();
+  keyup_class();
   $(document).on('click', '#search_result li', function() {
     $('#referal').val($(this).text());
     $('#search_result').fadeOut();
   });
-
   $(document).on('click', '#referal', function() {
 
     $('#search_result').css({'display': 'block'});
   });
-
   $(document).mouseup(function(e) {
     let container = $('#referal');
     if (container.has(e.target).length === 0) {
@@ -35,7 +35,6 @@ $(document).ready(function() {
     }
   });
   $(document).on('click', '.region', function() {
-
     let id_region = $(this).attr('value');
     let select_region = $(this).text();
     $('#referal').val(select_region);
@@ -49,7 +48,6 @@ $(document).ready(function() {
       type: 'POST',
       data: {id: id_region},
       beforeSend: function() {
-
       },
       success: function(result) {
         $(component).html(result);
@@ -58,7 +56,6 @@ $(document).ready(function() {
         search_hospital();
       },
     }).done(function(msg) {
-
     });
   });
   $(document).mouseup(function(e) {
@@ -72,81 +69,68 @@ $(document).ready(function() {
       }
     }
   });
-  $('#referal').on('keyup', function() {
-    var $this = $(this);
-    var delay = 500;
-    if ($this.val() == '') {
-      $('#region_name').text('НЕ ВЫБРАНО');
-    }
-
-    clearTimeout($this.data('timer'));
-
-    $this.data('timer', setTimeout(function() {
-
-      $this.removeData('timer');
-
-      $.post('/ajax/smart_search.php', {name_city: $this.val()}, function(msg) {
-        if ($('.error_region').length != 0) {
-          $('.error_region').remove();
-        }
-        $('.custom-serach__items_item').each(function() {
-          $(this).remove();
-        });
-        if (msg == 'error_region') {
-          if ($('.error_region').length != 0) {
-            $('.error_region').remove();
-            $('#search_result').
-                append('<li class="error_region" >Город не найден</li>');
-          } else {
-            $('#search_result').
-                append('<li class="error_region" >Город не найден</li>');
-          }
-        } else {
-          setTimeout(function() {
-            $('#search_result').append(msg);
-          }, 100);
-          $(document).on('click', '.region', function() {
-            let id_region = $(this).attr('value');
-            let select_region = $(this).text();
-            $('#referal').val(select_region);
-            $('#referal').attr('data-id_region', id_region);
-            $('#referal').attr('data-region_check', 'check');
-            $('#region_name').text(select_region);
-            let component = $('#hospitals');
-            $.ajax({
-              dataType: 'html',
-              url: '/ajax/form_hospitals.php',
-              type: 'POST',
-              data: {id: id_region},
-              beforeSend: function() {
-
-              },
-              success: function(result) {
-                $(component).html(result);
-                $('#region_name').text(select_region);
-                $('#hosptital_name').html('Не выбрано');
-                search_hospital();
-              },
-            }).done(function(msg) {
-
-            });
-          });
-        }
-
-      });
-
-    }, delay));
-
-  });
-
+ function search_region() {
+   $('#referal').on('keyup', function() {
+     var $this = $(this);
+     var delay = 500;
+     if ($this.val() == '') {
+       $('#region_name').text('НЕ ВЫБРАНО');
+     }
+     clearTimeout($this.data('timer'));
+     $this.data('timer', setTimeout(function() {
+       $this.removeData('timer');
+       $.post('/ajax/smart_search.php', {name_city: $this.val()}, function(msg) {
+         if ($('.error_region').length != 0) {
+           $('.error_region').remove();
+         }
+         $('.search_result').each(function() {
+           $(this).remove();
+         });
+         if (msg == 'error_region') {
+           if ($('.error_region').length != 0) {
+             $('.error_region').remove();
+             $('#search_result').
+                 append('<li class="error_region" >Город не найден</li>');
+           } else {
+             $('#search_result').
+                 append('<li class="error_region" >Город не найден</li>');
+           }
+         } else {
+           setTimeout(function() {
+             $('#search_result').append(msg);
+           }, 100);
+           $(document).on('click', '.region', function() {
+             let id_region = $(this).attr('value');
+             let select_region = $(this).text();
+             $('#referal').val(select_region);
+             $('#referal').attr('data-id_region', id_region);
+             $('#referal').attr('data-region_check', 'check');
+             $('#region_name').text(select_region);
+             let component = $('#hospitals');
+             $.ajax({
+               dataType: 'html',
+               url: '/ajax/form_hospitals.php',
+               type: 'POST',
+               data: {id: id_region},
+               beforeSend: function() {
+               },
+               success: function(result) {
+                 $(component).html(result);
+                 $('#region_name').text(select_region);
+                 $('#hosptital_name').html('Не выбрано');
+                 search_hospital();
+               },
+             }).done(function(msg) {
+             });
+           });
+         }
+       });
+     }, delay));
+   });
+ }
 
 function search_hospital() {
-
-
-
   $(document).on('click', '.hospital', function() {
-    console.log("3232");
-    console.log($(this));
     let id_region = $(this).attr('value');
     let select_region = $(this).text();
     let name_boss = $(this).attr("data-name-boss");
@@ -162,7 +146,6 @@ function search_hospital() {
 
   });
   $('#referal_two').on('keyup', function() {
-
     var $this = $(this);
     var delay = 500;
     if ($this.val() == '') {
@@ -171,19 +154,17 @@ function search_hospital() {
     }
 
     clearTimeout($this.data('timer'));
-
     $this.data('timer', setTimeout(function() {
-
       $this.removeData('timer');
-
       $.post('/ajax/smart_search_hospital.php', {name_hospital: $this.val(), region_id:$("#referal").attr("data-id_region") }, function(msg) {
         if ($('.error_region').length != 0) {
           $('.error_region').remove();
         }
-        $('.custom-serach__items_item').each(function() {
+        $('#search_result_hospital').each(function() {
           $(this).remove();
         });
         if (msg == 'error_hospital') {
+          keyup_class();
           if ($('.error_region').length != 0) {
             $('.error_region').remove();
             $('#search_result_hospital').
@@ -194,10 +175,8 @@ function search_hospital() {
           }
         } else {
           setTimeout(function() {
-
             $('#search_result_hospital').append(msg);
           }, 100);
-
 
           $(document).on('click', '.hospital', function() {
             let id_region = $(this).attr('value');
@@ -213,17 +192,15 @@ function search_hospital() {
 
 
           });
-
         }
-
       });
-
     }, delay));
-
   });
 }
 
-  //create_select();
+
+
+
 
   let urgent = $('#urgent');
   let planned = $('#planned');
@@ -250,13 +227,12 @@ function search_hospital() {
   $(document).on('click', '#strax-sluchay', function() {
     let $form = $('#appeal-form');
     let $title = $('#page-title');
-    let region = $('#choose_location_elem').attr('value');
-    let hospital = $('#choose_hospital_elem').attr('value');
-    let choose_class = $('#choose_class_elem').attr('value');
-    let choose_group = $('#choose_group_elem').attr('value');
-    let choose_subgroup = $('#choose_subgroup_elem').attr('value');
-    let choose_diagnoz = $('#choose_diagnoz_elem').attr('value');
-
+    let region = $('#referal').attr('data-id_region');
+    let hospital = $('#referal_two').attr('data-id_region');
+    let choose_class = $('#class_input').attr('data-id_class');
+    let choose_group = $('#group_input').attr('data-id_group');
+    let choose_subgroup = $('#subgroup_input').attr('data-id_subgroup');
+    let choose_diagnoz = $('#diagnoz_input').attr('data-id_diagnoz');
     let years = [];
 
     let div = $('#years');
@@ -277,7 +253,6 @@ function search_hospital() {
           },
           function(result) {
             let diagnoz = jQuery.parseJSON(result);
-            console.log(diagnoz);
             if (diagnoz !== 'error') {
 
               $form.replaceWith(diagnoz['DIAGNOZ']);
@@ -342,6 +317,7 @@ function search_hospital() {
     if (!!classID && id === 'option') {
       $.post('/ajax/main_form_oms.php', {id: classID}, function(result) {
         $(component).html(result);
+        console.log('stage 1');
         update_select();
       }, 'html');
     }
@@ -419,259 +395,335 @@ function search_hospital() {
 
 });
 
-// function update_hospital_select() {
-//   var x, i, j, selElmnt, a, b, c;
-//   /* Look for any elements with the class "custom-select": */
-//   x = document.getElementsByClassName('custom-select');
-//   for (i = 0; i < 2; i++) {
-//     selElmnt = x[i].getElementsByTagName('select')[0];
-//     /* For each element, create a new DIV that will act as the selected item: */
-//     a = document.createElement('DIV');
-//     a.setAttribute('class', 'select-selected');
-//     // a.setAttribute("date-value",);
-//     a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-//     a.setAttribute('value', selElmnt.options[selElmnt.selectedIndex].value);
-//     a.setAttribute('id', x[i].getAttribute('id') + '_elem');
+function search_class() {
+  // ------ choose_class ------
+  $(document).on('click', '#search_result_class li', function() {
+    $('#class_input').val($(this).text());
+    $('#search_result_class').fadeOut()
+  });
+  $(document).on('click', '#class_input', function() {
+    $('#search_result_class').css('display', 'block');
+  });
+  $(document).mouseup(function(e) {
+    let container = $('#class_input');
+    if (container.has(e.target).length === 0) {
+      $('#search_result_class').fadeOut();
+    }
+  });
 
-//     x[i].appendChild(a);
-//     /* For each element, create a new DIV that will contain the option list: */
-//     b = document.createElement('DIV');
-//     b.setAttribute('class', 'select-items select-hide');
-//     for (j = 1; j < selElmnt.length; j++) {
+  $(document).on('click', '.class-js', function() {
+    let id_class = $(this).attr('value');
+    let component = $('#grid');
+    $.post('/ajax/main_form_oms.php', {id: id_class}, function(result) {
+      $(component).html(result);
+      search_group();
+    }, 'html');
+  });
+}
+function search_group() {
+  // ------ choose_group ------
+  $(document).on('click', '#search_result_group li', function() {
+    $('#group_input').val($(this).text());
+    $('#search_result_group').fadeOut()
+  });
+  $(document).on('click', '#group_input', function() {
+    $('#search_result_group').css('display', 'block');
+  });
+  $(document).mouseup(function(e) {
+    let container = $('#group_input');
+    if (container.has(e.target).length === 0) {
+      $('#search_result_group').fadeOut();
+    }
+  });
+  $(document).on('click', '.group-js', function() {
+    let id_group = $(this).attr('value');
+    let component = $('#grid');
+    $.post('/ajax/main_form_oms.php', {id: id_group}, function(result) {
+      $(component).html(result);
+      console.log('stage 2');
+      search_subgroup()
+    }, 'html');
+  });
 
-//       /* For each option in the original select element,
-//       create a new DIV that will act as an option item: */
-//       c = document.createElement('DIV');
-//       c.innerHTML = selElmnt.options[j].innerHTML;
-//       c.setAttribute('value', selElmnt.options[j].value);
-//       if (!!selElmnt.options[j].id) {
-//         c.setAttribute('id', selElmnt.options[j].id);
-//       } else {
-//         c.setAttribute('id', 'option');
-//       }
-//       c.addEventListener('click', function(e) {
-//         /* When an item is clicked, update the original select box,
-//         and the selected item: */
-//         var y, i, k, s, h;
-//         s = this.parentNode.parentNode.getElementsByTagName('select')[0];
-//         h = this.parentNode.previousSibling;
+  keyup_class();
+  let id_class = $('#class_input').attr('data-id_class');
+  keyup_group(id_class);
 
-//         for (i = 0; i < s.length; i++) {
+}
+function search_subgroup() {
+  // ------ choose_subgroup ------
+  $(document).on('click', '#search_result_subgroup li', function() {
+    $('#subgroup_input').val($(this).text());
+    $('#search_result_subgroup').fadeOut()
+  });
+  $(document).on('click', '#subgroup_input', function() {
+    $('#search_result_subgroup').css('display', 'block');
+  });
+  $(document).mouseup(function(e) {
+    let container = $('#subgroup_input');
+    if (container.has(e.target).length === 0) {
+      $('#search_result_subgroup').fadeOut();
+    }
+  });
 
-//           if (s.options[i].innerHTML == this.innerHTML) {
-//             s.selectedIndex = i;
-//             h.innerHTML = this.innerHTML;
+  $(document).on('click', '.subgroup-js', function() {
+    let id_subgroup = $(this).attr('value');
+    let component = $('#grid');
+    $.post('/ajax/main_form_oms.php', {id: id_subgroup}, function(result) {
+      $(component).html(result);
+      console.log('stage 3');
+      search_diagnoz()
+    }, 'html');
+  });
+  keyup_class();
+  let id_class = $('#class_input').attr('data-id_class');
+  keyup_group(id_class);
+  let id_group = $('#group_input').attr('data-id_group');
+  keyup_subgroup(id_group);
 
-//             if (h.clientWidth < 310) {
-//               const str = h.textContent.slice(0, 15) + '...';
-//               h.innerHTML = str;
-//             } else {
-//               return;
-//             }
+}
+function search_diagnoz() {
+  // ------ choose_diagnoz ------
+  $(document).on('click', '#search_result_diagnoz li', function() {
+    $('#diagnoz_input').val($(this).text());
+    $('#diagnoz_input').attr('data-id_diagnoz', $(this).attr('value'));
+    $('#search_result_diagnoz').fadeOut();
 
-//             y = this.parentNode.getElementsByClassName('same-as-selected');
+  });
+  $(document).on('click', '#diagnoz_input', function() {
+    $('#search_result_diagnoz').css('display', 'block');
+  });
+  $(document).mouseup(function(e) {
+    let container = $('#diagnoz_input');
+    if (container.has(e.target).length === 0) {
+      $('#search_result_diagnoz').fadeOut();
+    }
+  });
 
-//             for (k = 0; k < y.length; k++) {
-//               y[k].removeAttribute('class');
-//             }
-//             this.setAttribute('class', 'same-as-selected');
-//             break;
-//           }
-//         }
-//         h.click();
-//       });
-//       b.appendChild(c);
-//     }
-//     x[i].appendChild(b);
-//     a.addEventListener('click', function(e) {
-//       /* When the select box is clicked, close any other select boxes,
-//       and open/close the current select box: */
-//       e.stopPropagation();
-//       closeAllSelect(this);
-//       this.nextSibling.classList.toggle('select-hide');
-//       this.classList.toggle('select-arrow-active');
-//     });
-//   }
+  keyup_class();
+  let id_class = $('#class_input').attr('data-id_class');
+  keyup_group(id_class);
+  let id_group = $('#group_input').attr('data-id_group');
+  keyup_subgroup(id_group);
+  let id_subgroup = $('#subgroup_input').attr('data-id_subgroup');
+  keyup_diagnoz(id_subgroup);
 
-//   /* If the user clicks anywhere outside the select box,
-//   then close all select boxes: */
-//   document.addEventListener('click', closeAllSelect);
-// }
+}
 
-// function update_select() {
-//   var x, i, j, selElmnt, a, b, c;
-//   /* Look for any elements with the class "custom-select": */
-//   x = document.getElementsByClassName('custom-select');
-//   for (i = 2; i < x.length; i++) {
-//     selElmnt = x[i].getElementsByTagName('select')[0];
-//     /* For each element, create a new DIV that will act as the selected item: */
-//     a = document.createElement('DIV');
-//     a.setAttribute('class', 'select-selected');
-//     // a.setAttribute("date-value",);
-//     a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-//     a.setAttribute('value', selElmnt.options[selElmnt.selectedIndex].value);
+function keyup_class() {
+  console.log('keyup_class');
+  $('#class_input').on('keyup', function() {
+    var $this = $(this);
+    var delay = 500;
+    clearTimeout($this.data('timer'));
+    $this.data('timer', setTimeout(function() {
+      $this.removeData('timer');
+      $.post('/ajax/smart_search_class.php', {name: $this.val()}, function(msg) {
+        console.log('search');
+        if ($('.error_class').length != 0) {
+          $('.error_class').remove();
+        }
+        $('.class-js').each(function() {
+          $(this).remove();
+        });
+        if (msg == 'error_class') {
+          if ($('.error_class').length != 0) {
+            $('.error_class').remove();
+            $('#search_result_class').
+                append('<li class="error_class">Класс не найден</li>');
+          } else {
+            $('#search_result_class').
+                append('<li class="error_class">Класс не найден</li>');
+          }
+        } else {
+          setTimeout(function() {
+            $('#search_result_class').append(msg);
+          }, 100);
+          $(document).on('click', '.class-js', function() {
+            let id = $(this).attr('value');
+            let select_region = $(this).text();
+            $('#class_input').val(select_region);
+            $('#class_input').attr('data-id_class', id);
+            let component = $('#grid');
+            $.ajax({
+              dataType: 'html',
+              url: '/ajax/main_form_oms.php',
+              type: 'POST',
+              data: {id: id},
+              beforeSend: function() {
+              },
+              success: function(result) {
+                $(component).html(result);
+                keyup_class();
+                let id_class = $('#class_input').attr('data-id_class');
+                keyup_group(id_class);
+              },
+            }).done(function(msg) {
 
-//     a.setAttribute('id', x[i].getAttribute('id') + '_elem');
-//     x[i].appendChild(a);
-//     /* For each element, create a new DIV that will contain the option list: */
-//     b = document.createElement('DIV');
-//     b.setAttribute('class', 'select-items select-hide');
-//     for (j = 1; j < selElmnt.length; j++) {
-
-//       /* For each option in the original select element,
-//       create a new DIV that will act as an option item: */
-//       c = document.createElement('DIV');
-//       c.innerHTML = selElmnt.options[j].innerHTML;
-//       c.setAttribute('value', selElmnt.options[j].value);
-//       if (!!selElmnt.options[j].id) {
-//         c.setAttribute('id', selElmnt.options[j].id);
-//       } else {
-//         c.setAttribute('id', 'option');
-//       }
-//       c.addEventListener('click', function(e) {
-//         /* When an item is clicked, update the original select box,
-//         and the selected item: */
-//         var y, i, k, s, h;
-//         s = this.parentNode.parentNode.getElementsByTagName('select')[0];
-//         h = this.parentNode.previousSibling;
-
-//         for (i = 0; i < s.length; i++) {
-
-//           if (s.options[i].innerHTML == this.innerHTML) {
-//             s.selectedIndex = i;
-//             h.innerHTML = this.innerHTML;
-
-//             if (h.clientWidth < 310) {
-//               const str = h.textContent.slice(0, 15) + '...';
-//               h.innerHTML = str;
-//             } else {
-//               return;
-//             }
-
-//             y = this.parentNode.getElementsByClassName('same-as-selected');
-
-//             for (k = 0; k < y.length; k++) {
-//               y[k].removeAttribute('class');
-//             }
-//             this.setAttribute('class', 'same-as-selected');
-//             break;
-//           }
-//         }
-//         h.click();
-//       });
-//       b.appendChild(c);
-//     }
-//     x[i].appendChild(b);
-//     a.addEventListener('click', function(e) {
-//       /* When the select box is clicked, close any other select boxes,
-//       and open/close the current select box: */
-//       e.stopPropagation();
-//       closeAllSelect(this);
-//       this.nextSibling.classList.toggle('select-hide');
-//       this.classList.toggle('select-arrow-active');
-//     });
-//   }
-
-//   /* If the user clicks anywhere outside the select box,
-//   then close all select boxes: */
-//   document.addEventListener('click', closeAllSelect);
-// }
-
-// function create_select() {
-//   var x, i, j, selElmnt, a, b, c;
-//   /* Look for any elements with the class "custom-select": */
-//   x = document.getElementsByClassName('custom-select');
-//   for (i = 0; i < x.length; i++) {
-//     selElmnt = x[i].getElementsByTagName('select')[0];
-//     /* For each element, create a new DIV that will act as the selected item: */
-//     a = document.createElement('DIV');
-//     a.setAttribute('class', 'select-selected');
-//     // a.setAttribute("date-value",);
-//     a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-//     x[i].appendChild(a);
-//     /* For each element, create a new DIV that will contain the option list: */
-//     b = document.createElement('DIV');
-//     b.setAttribute('class', 'select-items select-hide');
-//     for (j = 1; j < selElmnt.length; j++) {
-
-//       /* For each option in the original select element,
-//       create a new DIV that will act as an option item: */
-//       c = document.createElement('DIV');
-//       c.innerHTML = selElmnt.options[j].innerHTML;
-//       c.setAttribute('value', selElmnt.options[j].value);
-//       if (!!selElmnt.options[j].id) {
-//         c.setAttribute('id', selElmnt.options[j].id);
-//       } else {
-//         c.setAttribute('id', 'option');
-//       }
-
-//       c.addEventListener('click', function(e) {
-//         /* When an item is clicked, update the original select box,
-//         and the selected item: */
-//         var y, i, k, s, h;
-//         s = this.parentNode.parentNode.getElementsByTagName('select')[0];
-//         h = this.parentNode.previousSibling;
-
-//         for (i = 0; i < s.length; i++) {
-
-//           if (s.options[i].innerHTML == this.innerHTML) {
-//             s.selectedIndex = i;
-//             h.innerHTML = this.innerHTML;
-
-//             if (h.clientWidth < 310) {
-//               const str = h.textContent.slice(0, 15) + '...';
-//               h.innerHTML = str;
-//             } else {
-//               return;
-//             }
-
-//             y = this.parentNode.getElementsByClassName('same-as-selected');
-
-//             for (k = 0; k < y.length; k++) {
-//               y[k].removeAttribute('class');
-//             }
-//             this.setAttribute('class', 'same-as-selected');
-//             break;
-//           }
-//         }
-//         h.click();
-//       });
-//       b.appendChild(c);
-//     }
-//     x[i].appendChild(b);
-//     a.addEventListener('click', function(e) {
-//       /* When the select box is clicked, close any other select boxes,
-//       and open/close the current select box: */
-//       e.stopPropagation();
-//       closeAllSelect(this);
-//       this.nextSibling.classList.toggle('select-hide');
-//       this.classList.toggle('select-arrow-active');
-//     });
-//   }
-
-//   /* If the user clicks anywhere outside the select box,
-//   then close all select boxes: */
-//   document.addEventListener('click', closeAllSelect);
-// }
-
-// function closeAllSelect(elmnt) {
-//   /* A function that will close all select boxes in the document,
-//   except the current select box: */
-//   var x, y, i, arrNo = [];
-//   x = document.getElementsByClassName('select-items');
-//   y = document.getElementsByClassName('select-selected');
-//   for (i = 0; i < y.length; i++) {
-//     if (elmnt == y[i]) {
-//       arrNo.push(i);
-//     } else {
-//       y[i].classList.remove('select-arrow-active');
-//     }
-//   }
-//   for (i = 0; i < x.length; i++) {
-//     if (arrNo.indexOf(i)) {
-//       x[i].classList.add('select-hide');
-//     }
-//   }
-// }
+            });
+          });
+        }
+      });
+    }, delay));
+  });
+}
+function keyup_group(id_class) {
+  console.log('keyup_group');
+  $('#group_input').on('keyup', function() {
+    var $this = $(this);
+    var delay = 500;
+    clearTimeout($this.data('timer'));
+    $this.data('timer', setTimeout(function() {
+      $this.removeData('timer');
+      $.post('/ajax/smart_search_group.php', {name: $this.val(), id: id_class
+      }, function(msg) {
+        if ($('.error_group').length != 0) {
+          $('.error_group').remove();
+        }
+        $('.group-js').each(function() {
+          $(this).remove();
+        });
+        if (msg == 'error_group') {
+          if ($('.error_group').length != 0) {
+            $('.error_group').remove();
+            $('#search_result_group').
+                append('<li class="error_group">Группа не найдена</li>');
+          } else {
+            $('#search_result_group').
+                append('<li class="error_group">Группа не найдена</li>');
+          }
+        } else {
+          setTimeout(function() {
+            $('#search_result_group').append(msg);
+          }, 100);
+          $(document).on('click', '.group-js', function() {
+            let id = $(this).attr('value');
+            let select_region = $(this).text();
+            $('#group_input').val(select_region);
+            $('#group_input').attr('data-id_group', id);
+            let component = $('#grid');
+            $.ajax({
+              dataType: 'html',
+              url: '/ajax/main_form_oms.php',
+              type: 'POST',
+              data: {id: id},
+              beforeSend: function() {
+              },
+              success: function(result) {
+                $(component).html(result);
+                keyup_class();
+                let id_class = $('#class_input').attr('data-id_class');
+                keyup_group(id_class);
+                let id_group = $('#group_input').attr('data-id_group');
+                keyup_subgroup(id_group);
+              },
+            }).done(function(msg) {
+            });
+          });
+        }
+      });
+    }, delay));
+  });
+}
+function keyup_subgroup(id_group) {
+  console.log('keyup_subgroup');
+  $('#subgroup_input').on('keyup', function() {
+    var $this = $(this);
+    var delay = 500;
+    clearTimeout($this.data('timer'));
+    $this.data('timer', setTimeout(function() {
+      $this.removeData('timer');
+      $.post('/ajax/smart_search_subgroup.php', {name: $this.val(), id: id_group
+      }, function(msg) {
+        if ($('.error_subgroup').length != 0) {
+          $('.error_subgroup').remove();
+        }
+        $('.subgroup-js').each(function() {
+          $(this).remove();
+        });
+        if (msg == 'error_subgroup') {
+          if ($('.error_subgroup').length != 0) {
+            $('.error_subgroup').remove();
+            $('#search_result_subgroup').
+                append('<li class="error_subgroup">Подгруппа не найдена</li>');
+          } else {
+            $('#search_result_subgroup').
+                append('<li class="error_subgroup">Подгруппа не найдена</li>');
+          }
+        } else {
+          setTimeout(function() {
+            $('#search_result_subgroup').append(msg);
+          }, 100);
+          $(document).on('click', '.subgroup-js', function() {
+            let id = $(this).attr('value');
+            let select_region = $(this).text();
+            $('#subgroup_input').val(select_region);
+            $('#subgroup_input').attr('data-id_subgroup', id);
+            let component = $('#grid');
+            $.ajax({
+              dataType: 'html',
+              url: '/ajax/main_form_oms.php',
+              type: 'POST',
+              data: {id: id},
+              beforeSend: function() {
+              },
+              success: function(result) {
+                $(component).html(result);
+                keyup_class();
+                let id_class = $('#class_input').attr('data-id_class');
+                keyup_group(id_class);
+                let id_group = $('#group_input').attr('data-id_group');
+                keyup_subgroup(id_group);
+                let id_subgroup = $('#subgroup_input').attr('data-id_subgroup');
+                keyup_diagnoz(id_subgroup);
+              },
+            }).done(function(msg) {
+            });
+          });
+        }
+      });
+    }, delay));
+  });
+}
+function keyup_diagnoz(id_subgroup) {
+  console.log('keyup_diagnoz');
+  $('#diagnoz_input').on('keyup', function() {
+    var $this = $(this);
+    var delay = 500;
+    clearTimeout($this.data('timer'));
+    $this.data('timer', setTimeout(function() {
+      $this.removeData('timer');
+      $.post('/ajax/smart_search_diagnoz.php', {name: $this.val(), id: id_subgroup
+      }, function(msg) {
+        if ($('.error_diagnoz').length != 0) {
+          $('.error_diagnoz').remove();
+        }
+        $('.diagnoz-js').each(function() {
+          $(this).remove();
+        });
+        if (msg == 'error_diagnoz') {
+          if ($('.error_diagnoz').length != 0) {
+            $('.error_diagnoz').remove();
+            $('#search_result_diagnoz').
+                append('<li class="error_diagnoz">Диагноз не найден</li>');
+          } else {
+            $('#search_result_diagnoz').
+                append('<li class="error_diagnoz">Диагноз не найден</li>');
+          }
+        } else {
+          setTimeout(function() {
+            $('#search_result_diagnoz').append(msg);
+          }, 100);
+          $(document).on('click', '.diagnoz-js', function() {
+            let id = $(this).attr('value');
+            let select_region = $(this).text();
+            $('#diagnoz_input').val(select_region);
+            $('#diagnoz_input').attr('data-id_diagnoz', id);
+          });
+        }
+      });
+    }, delay));
+  });
+}
 
 

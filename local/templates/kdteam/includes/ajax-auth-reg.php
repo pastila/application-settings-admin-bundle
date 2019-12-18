@@ -41,6 +41,11 @@ CModule::IncludeModule("iblock");
 
         </div>
         <div class="popup__wrap_middle">
+            <div class="input__wrap">
+                <label class="input__wrap_label">Дата рождения</label>
+                <input class="datepicker-here" type="text" name="time"  >
+                <div class="danger date" style="display: none;">Регистрация лиц, не достигших 18 лет, не допускается</div>
+            </div>
             <!-- Input -->
             <div class="input__wrap">
                 <label class="input__wrap_label">Электронная почта</label>
@@ -52,26 +57,22 @@ CModule::IncludeModule("iblock");
                        data-mask="+7 (000) 000 00 00"
                        placeholder="+7 (___) ___ __ __"  required>
             </div>
+<!--            <div class="uu">sds</div>-->
+        </div>
+        <div class="popup__wrap_middle">
             <div class="input__wrap">
                 <label class="input__wrap_label">Номер страхового полиса</label>
                 <input id="number_polic" type="text" minlength="16" maxlength="16" name="number_polic" required>
             </div>
             <div class="input__wrap">
                 <label class="input__wrap_label">Пароль</label>
-                <input id="password"  minlength="6" type="password" name="password" required>
+                <input id="password" minlength="6" type="password" name="password" required>
             </div>
             <div class="input__wrap">
                 <label class="input__wrap_label">Подтвердите пароль</label>
-                <input id="pass_conf"  minlength="6" type="password" name="pass_conf" required>
+                <input id="pass_conf" minlength="6" type="password" name="pass_conf" required>
             </div>
-            <div class="input__wrap">
-                <label class="input__wrap_label">Дата рождение</label>
-                <input class="datepicker-here" type="text" name="time"  >
-                <div class="danger date" style="display: none;">Регистрация лиц, не достигших 18 лет, не допускается</div>
-            </div>
-            <div class="uu">sds</div>
         </div>
-
         <div class="popup__wrap_bottom">
             <!-- Input -->
             <div class="input__wrap select_block">
