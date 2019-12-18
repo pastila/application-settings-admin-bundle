@@ -160,7 +160,7 @@ function search_hospital() {
         if ($('.error_region').length != 0) {
           $('.error_region').remove();
         }
-        $('#search_result_hospital').each(function() {
+        $('.hospital').each(function() {
           $(this).remove();
         });
         if (msg == 'error_hospital') {
