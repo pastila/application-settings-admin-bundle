@@ -48,4 +48,11 @@ $arUrlRewrite=array (
     'PATH' => '/bitrix/services/rest/index.php',
     'SORT' => 100,
   ),
+    6 =>
+        array (
+            'CONDITION' => '#^/feedback/comment-([0-9]*)/#',
+            'RULE' => '',
+            'PATH' => '/feedback/comment.php',
+            'SORT' => 100,
+        ),
 );

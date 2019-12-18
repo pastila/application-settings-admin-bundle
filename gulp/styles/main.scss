@@ -18,6 +18,8 @@
 @import './header.scss';
 @import './footer.scss';
 
+@import '../../node_modules/air-datepicker/dist/css/datepicker.min.css';
+
 // Popup
 @import '../../node_modules/magnific-popup/dist/magnific-popup.css';
 
@@ -294,4 +296,8 @@ input{
          background-position: 95% 50%;
          padding-right: 4rem;
      }
+ }
+ .title_medium{
+     font-size: 2.6rem;
+     margin: 2rem 0;
  }

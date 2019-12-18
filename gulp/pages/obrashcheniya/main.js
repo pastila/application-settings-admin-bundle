@@ -1,5 +1,5 @@
 //= ../../node_modules/jquery/dist/jquery.min.js
-//= ../../node_modules/air-datepicker/dist/js/datepicker.min.js
+
 //= ../../node_modules/magnific-popup/dist/jquery.magnific-popup.min.js
 
 $(document).ready(function() {

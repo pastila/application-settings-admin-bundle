@@ -38,6 +38,15 @@ if ($_POST) {
 
 
             if ($PRODUCT_ID = $el->Add($arFields)) {
+                $prop=CIBlockElement::GetByID($_POST["id_compani"])->GetNextElement()->GetProperties();
+                $date = date("Y:m:d H:i");
+                $url = $_SERVER["SERVER_NAME"] . "/feedback/comment-".$PRODUCT_ID."/";
+                $arSend =array(
+                    "EMAIL"=>   $prop["EMAIL_FIRST"]["VALUE"],
+                    "DATE" => $date,
+                    "URL"=> $url,
+                );
+                CEvent::Send("SEND_FEEDBACK_BOSS",s1,$arSend);
                 echo 1;
             } else {
                 echo "Error: " . $el->LAST_ERROR;
@@ -70,12 +79,24 @@ if ($_POST) {
 
             );
 
-
             if ($PRODUCT_ID = $el->Add($arFields)) {
+
+                $prop=CIBlockElement::GetByID($_POST["id_compani"])->GetNextElement()->GetProperties();
+                $date = date("Y:m:d H:i");
+                $url = $_SERVER["NAME"] . "/feedback/comment-".$PRODUCT_ID."/";
+                $arSend =array(
+                    "EMAIL"=>   $prop["SERVER_NAME"]["VALUE"],
+                    "DATE" => $date,
+                    "URL"=> $url,
+                );
+                CEvent::Send("SEND_FEEDBACK_BOSS",s1,$arSend);
+
                 echo 1;
             } else {
                 echo "Error: " . $el->LAST_ERROR;
             }
         }
     }
+
+
 }

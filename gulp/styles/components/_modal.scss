@@ -65,3 +65,15 @@
         }
     }
 }
+#auth-form-reg{
+    .checkbox_registration{
+        padding: 1rem;
+        margin-bottom: 2rem;
+        a{
+            text-decoration: underline;
+        }
+        .check-label{
+            display: block;
+        }
+    }
+}
