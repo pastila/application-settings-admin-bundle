@@ -152,12 +152,16 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
             <?php
             if ($arResult['SECTION']['DEPTH_LEVEL'] == 1) {
                 ?>
-                <div class="grid-item">
-                    <div class="title-select">Выберите класс</div>
-                    <div id="choose_class" class="custom-select">
-                        <select>
-                            <option value="<?=$arResult['SECTION']['ID']?>" ><?php echo $arResult['SECTION']['NAME']?>
-                            </option>
+                <div class="input-with-search">
+                    <label class="title-select" for="user_pass">Выберите класс: </label>
+                    <div class="input__wrap">
+                        <div class="input__ico">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                        </div>
+                        <input id="class_input" type="text" data-id_class="<?=$arResult['SECTION']['ID']?>"
+                               placeholder="Поиск по классу" value="<?php echo $arResult['SECTION']['NAME']?>"
+                               autocomplete="off"/>
+                        <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_class">
                             <?php
                             $db_list = CIBlockSection::GetList(
                                 array("name" => "asc"),
@@ -169,41 +173,46 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                             );
                             $i = 1;
                             while ($ar_result = $db_list->GetNext()) {
-                                if($i == 1){?>
-                                    <option  id="empty_class">Здесь нет моего класса</option>
-                                <?  }else {?>
-
-                                    <option value="<?= $ar_result['ID'] ?>"><?php echo $ar_result['NAME'] ?></option>
+                                if ($i == 1) {?>
+                                    <li value="" id="empty_class" class="custom-serach__items_item">Здесь нет моего класса</li>
+                                <? } else {?>
+                                    <li value="<?=$ar_result['ID']?>" class="custom-serach__items_item  class-js"><?php echo $ar_result['NAME']?></li>
                                     <?php
                                 }
                                 ++$i;
                             }
                             ?>
-                        </select>
+                        </ul>
                     </div>
                 </div>
-                <div class="grid-item">
-                    <div class="title-select">Выберите группу</div>
-                    <div id="choose_group" class="custom-select">
-                        <select>
-                            <option>Не выбрано</option>
-                            <option id="empty_group">Здесь нет моей группы</option>
+                <div class="input-with-search">
+                    <label class="title-select" for="user_pass">Выберите группу: </label>
+                    <div class="input__wrap">
+                        <div class="input__ico">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                        </div>
+                        <input id="group_input" type="text" placeholder="Поиск по группе" autocomplete="off"/>
+                        <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_group">
+                            <li value="" id="empty_group" class="custom-serach__items_item">Здесь нет моей группы</li>
                             <?php
-                            foreach ($arResult['SECTIONS'] as &$arSection) {?>
+                            foreach ($arResult['SECTIONS'] as &$arSection) { ?>
                                 <?php if ($arSection['DEPTH_LEVEL'] == 2) { ?>
-                                    <option value="<?=$arSection['ID']?>"><?php echo $arSection['NAME']?></option>
-                                <?php }?>
-                            <?php
+                                        <li value="<?=$arSection['ID']?>" class="custom-serach__items_item  group-js"><?php echo $arSection['NAME']?></li>
+                                        <?php
+                                } ?>
+                                <?php
+                                ++$i;
                             } ?>
-                        </select>
+                        </ul>
                     </div>
                 </div>
-                <div class="grid-item">
-                    <div class="title-select">Выберите подгруппу</div>
-                    <div id="choose_subgroup" class="custom-select" style="pointer-events: none">
-                        <select>
-                            <option>Подгруппа</option>
-                        </select>
+                <div style="pointer-events: none" class="input-with-search">
+                    <label class="title-select" for="user_pass">Выберите подгруппу: </label>
+                    <div class="input__wrap">
+                        <div class="input__ico">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                        </div>
+                        <input type="text" placeholder="Поиск по подгруппе" autocomplete="off" value=""/>
                     </div>
                 </div>
             <?php
@@ -228,57 +237,68 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                         false
                     );
                     ?>
-                    <div class="grid-item">
-                        <div class="title-select">Выберите класс</div>
-                        <div id="choose_class" class="custom-select">
-                            <select>
-                                <option value="<?=$ar_cur_class['ID']?>" ><?php echo $ar_cur_class['NAME']?></option>
+                    <div class="input-with-search">
+                        <label class="title-select" for="user_pass">Выберите класс: </label>
+                        <div class="input__wrap">
+                            <div class="input__ico">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                            </div>
+                            <input id="class_input" type="text" data-id_class="<?=$ar_cur_class['ID']?>"
+                                   placeholder="Поиск по классу" value="<?php echo $ar_cur_class['NAME']?>"
+                                   autocomplete="off"/>
+                            <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_class">
                                 <?php
                                 $i = 0;
                                 while ($ar_result = $db_list->GetNext()) {
                                     if($i == 1){?>
-                                        <option  id="empty_class">Здесь нет моего класса</option>
+                                        <li value="" id="empty_class" class="custom-serach__items_item">Здесь нет моего класса</li>
                                     <?  }else {?>
-
-                                        <option value="<?= $ar_result['ID'] ?>"><?php echo $ar_result['NAME'] ?></option>
+                                        <li value="<?=$ar_result['ID']?>" class="custom-serach__items_item  class-js"><?php echo $ar_result['NAME']?></li>
                                         <?php
                                     }
                                     ++$i;
                                 }
                                 ?>
-                            </select>
+                            </ul>
                         </div>
                     </div>
-                    <div class="grid-item">
-                        <div class="title-select">Выберите группу</div>
-                        <div id="choose_group"  class="custom-select">
-                            <select>
-                                <option value="<?=$arResult['SECTION']['ID']?>"><?php echo $arResult['SECTION']['NAME']?></option>
-                                <option id="empty_group">Здесь нет моей группы</option>
+                    <div class="input-with-search">
+                        <label class="title-select" for="user_pass">Выберите группу: </label>
+                        <div class="input__wrap">
+                            <div class="input__ico">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                            </div>
+                            <input data-id_group="<?=$arResult['SECTION']['ID']?>" id="group_input"
+                                   value="<?php echo $arResult['SECTION']['NAME']?>" type="text"
+                                   placeholder="Поиск по группе" autocomplete="off"/>
+                            <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_group">
+                                <li value="" id="empty_group" class="custom-serach__items_item">Здесь нет моей группы</li>
                                 <?php
-
                                 while ($ar_result = $db_list_lvl2->GetNext()) { ?>
-
-                                    <option value="<?=$ar_result['ID']?>"><?php echo $ar_result['NAME']?></option>
+                                    <li value="<?=$ar_result['ID']?>" class="custom-serach__items_item  group-js"><?php echo $ar_result['NAME']?></li>
                                     <?php
                                 }
                                 ?>
-                            </select>
+                            </ul>
                         </div>
                     </div>
-                    <div class="grid-item">
-                        <div class="title-select">Выберите подгруппу</div>
-                        <div id="choose_subgroup" class="custom-select">
-                            <select>
-                                <option>Не выбрано</option>
-                                <option id="empty_subgroup">Здесь нет моей подгруппы</option>
+                    <div class="input-with-search">
+                        <label class="title-select" for="user_pass">Выберите подгруппу: </label>
+                        <div class="input__wrap">
+                            <div class="input__ico">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                            </div>
+                            <input id="subgroup_input" type="text" placeholder="Поиск по подгруппе" autocomplete="off"/>
+                            <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_subgroup">
+                                <li value="" id="empty_subgroup" class="custom-serach__items_item">Здесь нет моей подгруппы</li>
                                 <?php
-                                foreach ($arResult['SECTIONS'] as &$arSection) {?>
+                                foreach ($arResult['SECTIONS'] as &$arSection) { ?>
                                     <?php if ($arSection['DEPTH_LEVEL'] == 3) { ?>
-                                        <option value="<?=$arSection['ID']?>"><?php echo $arSection['NAME']?></option>
-                                    <?php }?>
-                                <?php } ?>
-                            </select>
+                                        <li value="<?=$arSection['ID']?>" class="custom-serach__items_item  subgroup-js"><?php echo $arSection['NAME']?></li>
+                                    <?php } ?>
+                                    <?php
+                                } ?>
+                            </ul>
                         </div>
                     </div>
                 <?php
@@ -315,58 +335,68 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                             false
                         );
                         ?>
-                        <div class="grid-item">
-                            <div class="title-select">Выберите класс</div>
-                            <div id="choose_class" class="custom-select">
-                                <select>
-                                    <option value="<?=$arClass['ID']?>"><?php echo $arClass['NAME']?></option>
-                                    <?php
-                                    $i = 0;
-                                    while ($ar_result = $db_list->GetNext()) {
-                                        if($i == 1){?>
-                                            <option  id="empty_class">Здесь нет моего класса</option>
-                                        <?  }else {?>
 
-                                            <option value="<?= $ar_result['ID'] ?>"><?php echo $ar_result['NAME'] ?></option>
-                                            <?php
-                                        }
-                                        ++$i;
+
+                        <div class="input-with-search">
+                            <label class="title-select" for="user_pass">Выберите класс: </label>
+                            <div class="input__wrap">
+                                <div class="input__ico">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                                </div>
+                                <input id="class_input" type="text" data-id_class="<?=$arClass['ID']?>"
+                                       placeholder="Поиск по классу" value="<?php echo $arClass['NAME']?>"
+                                       autocomplete="off"/>
+                                <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_class">
+                                    <li value="" id="empty_class" class="custom-serach__items_item">Здесь нет моего класса</li>
+                                    <?php
+                                    while ($ar_result = $db_list->GetNext()) { ?>
+                                        <li value="<?=$ar_result['ID']?>" class="custom-serach__items_item  class-js"><?php echo $ar_result['NAME']?></li>
+                                    <?php
                                     }
                                     ?>
-                                </select>
+                                </ul>
                             </div>
                         </div>
-                        <div class="grid-item">
-                            <div class="title-select">Выберите группу</div>
-                            <div id="choose_group"  class="custom-select">
-                                <select>
-                                    <option value="<?=$arGroup['ID']?>"><?php echo $arGroup['NAME']?></option>
-                                    <option id="empty_group">Здесь нет моей группу</option>
+                        <div class="input-with-search">
+                            <label class="title-select" for="user_pass">Выберите группу: </label>
+                            <div class="input__wrap">
+                                <div class="input__ico">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                                </div>
+                                <input data-id_group="<?=$arGroup['ID']?>" id="group_input"
+                                       value="<?php echo $arGroup['NAME']?>" type="text"
+                                       placeholder="Поиск по группе" autocomplete="off"/>
+                                <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_group">
+                                    <li value="" id="empty_group" class="custom-serach__items_item">Здесь нет моей группы</li>
                                     <?php
                                     while ($ar_result = $db_list_lvl2->GetNext()) { ?>
-                                        <option value="<?=$ar_result['ID']?>"><?php echo $ar_result['NAME']?></option>
+                                        <li value="<?=$ar_result['ID']?>" class="custom-serach__items_item  group-js"><?php echo $ar_result['NAME']?></li>
                                         <?php
                                     }
                                     ?>
-                                </select>
+                                </ul>
                             </div>
                         </div>
-                        <div class="grid-item">
-                            <div class="title-select">Выберите подгруппу</div>
-                            <div id="choose_subgroup" class="custom-select">
-                                <select>
-                                    <option value="<?=$arResult['SECTION']['ID']?>"><?php echo $arResult['SECTION']['NAME']?></option>
-                                    <option id="empty_subgroup">Здесь нет моей подгруппы</option>
+                        <div class="input-with-search">
+                            <label class="title-select" for="user_pass">Выберите подгруппу: </label>
+                            <div class="input__wrap">
+                                <div class="input__ico">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                                </div>
+                                <input data-id_subgroup="<?=$arResult['SECTION']['ID']?>" id="subgroup_input" type="text"
+                                       placeholder="Поиск по подгруппе" autocomplete="off" value="<?=$arResult['SECTION']['NAME']?>"/>
+                                <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_subgroup">
+                                    <li value="" id="empty_subgroup" class="custom-serach__items_item">Здесь нет моей подгруппы</li>
                                     <?php
                                     while ($ar_result = $db_list_lvl3->GetNext()) { ?>
-                                        <option value="<?=$ar_result['ID']?>"><?php echo $ar_result['NAME']?></option>
+                                        <li value="<?=$ar_result['ID']?>" class="custom-serach__items_item  subgroup-js"><?php echo $ar_result['NAME']?></li>
                                         <?php
                                     }
                                     ?>
-                                </select>
+                                </ul>
                             </div>
                         </div>
-                    <?php
+                        <?php
                     }
                 } ?>
             <?php
@@ -381,76 +411,86 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                     $arFields[] = $ob->GetFields();
                 }
                 ?>
-                <div class="grid-item">
-                    <div class="title-select">Выберите диагноз</div>
-                    <div id="choose_diagnoz" class="custom-select">
-                        <select>
-                            <option>Не выбрано</option>
-                            <option id="empty_diagnoz" value="">Здесь нет моего диагноза</option>
+                <div class="input-with-search">
+                    <label class="title-select" for="user_pass">Выберите диагноз: </label>
+                    <div class="input__wrap">
+                        <div class="input__ico">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                        </div>
+                        <input data-id_diagnoz="" id="diagnoz_input" type="text"
+                               placeholder="Поиск по диагнозу" autocomplete="off" value=""/>
+                        <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_diagnoz">
+                            <li value="" id="empty_diagnoz" class="custom-serach__items_item">Здесь нет моего диагноза</li>
                             <?php foreach ($arFields as $arItem) {?>
-                                <option id="diagnoz_elem" value="<?=$arItem['ID']?>"><?php echo $arItem['NAME']?></option>
+                                <li value="<?=$arItem['ID']?>" class="custom-serach__items_item  diagnoz-js"><?php echo $arItem['NAME']?></li>
                             <?php }?>
-                        </select>
+                        </ul>
                     </div>
                 </div>
             <?php
             } else { ?>
-                <div class="grid-item">
-                    <div class="title-select">Выберите диагноз</div>
-                    <div id="choose_diagnoz" class="custom-select" style="pointer-events: none">
-                        <select disabled>
-                            <option>Диагноз</option>
-                        </select>
+                <div style="pointer-events: none" class="input-with-search">
+                    <label class="title-select" for="user_pass">Выберите диагноз: </label>
+                    <div class="input__wrap">
+                        <div class="input__ico">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                        </div>
+                        <input data-id_diagnoz="" id="diagnoz_input" type="text"
+                               placeholder="Поиск по диагнозу" autocomplete="off" value=""/>
                     </div>
                 </div>
             <?php } ?>
         <?php } else { ?>
-            <div class="grid-item">
-                <div class="title-select">Выберите класс</div>
-                <div id="choose_class" class="custom-select">
-                    <select id="cur_class">
-                        <option>Не выбрано</option>
+            <div class="input-with-search">
+                <label class="title-select" for="user_pass">Выберите класс: </label>
+                <div class="input__wrap">
+                    <div class="input__ico">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                    </div>
+                    <input id="class_input" type="text" placeholder="Поиск по классу" autocomplete="off"/>
+                    <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_class">
                         <?php
                         $i= 1;
-                        foreach ($arResult['SECTIONS'] as &$arSection) {
-
-                            ?>
+                        foreach ($arResult['SECTIONS'] as &$arSection) { ?>
                             <?php if ($arSection['DEPTH_LEVEL'] == 1) { ?>
-                                <?php if($i == 1){ ?>
-                                    <option id="empty_class">Здесь нет моего класса</option>
-                               <?php }else { ?>
-                                    <option value="<?= $arSection['ID'] ?>"><?php echo $arSection['NAME'] ?></option>
+                                <?php if ($i == 1) { ?>
+                                    <li value="" id="empty_class" class="custom-serach__items_item">Здесь нет моего класса</li>
+                                <?php } else { ?>
+                                    <li value="<?=$arSection['ID']?>" class="custom-serach__items_item  class-js"><?php echo $arSection['NAME']?></li>
                                     <?php
                                 }
-                                }?>
-                        <?php
-                        ++$i;
+                            } ?>
+                            <?php
+                            ++$i;
                         } ?>
-                    </select>
+                    </ul>
                 </div>
             </div>
-            <div class="grid-item">
-                <div class="title-select">Выберите группу</div>
-                <div id="choose_group"  class="custom-select" style="pointer-events: none">
-                    <select>
-                        <option>Группа</option>
-                    </select>
+            <div style="pointer-events: none" class="input-with-search">
+                <label class="title-select" for="user_pass">Выберите группу: </label>
+                <div class="input__wrap">
+                    <div class="input__ico">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                    </div>
+                    <input type="text" placeholder="Поиск по группе" autocomplete="off" value=""/>
                 </div>
             </div>
-            <div class="grid-item">
-                <div class="title-select">Выберите подгруппу</div>
-                <div id="choose_subgroup" class="custom-select" style="pointer-events: none">
-                    <select>
-                        <option>Подгруппа</option>
-                    </select>
+            <div style="pointer-events: none" class="input-with-search">
+                <label class="title-select" for="user_pass">Выберите подгруппу: </label>
+                <div class="input__wrap">
+                    <div class="input__ico">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                    </div>
+                    <input type="text" placeholder="Поиск по подгруппе" autocomplete="off" value=""/>
                 </div>
             </div>
-            <div class="grid-item">
-                <div class="title-select">Выберите диагноз</div>
-                <div class="custom-select" style="pointer-events: none">
-                    <select>
-                        <option>Диагноз</option>
-                    </select>
+            <div style="pointer-events: none" class="input-with-search">
+                <label class="title-select" for="user_pass">Выберите диагноз: </label>
+                <div class="input__wrap">
+                    <div class="input__ico">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                    </div>
+                    <input type="text" placeholder="Поиск по диагнозу" autocomplete="off" value=""/>
                 </div>
             </div>
         <?php }
