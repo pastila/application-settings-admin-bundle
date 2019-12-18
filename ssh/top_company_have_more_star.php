@@ -50,13 +50,13 @@ while($ob = $resComp->GetNextElement()){
     $arProps = $ob->GetFields();
    $ID_company  = $arProps["ID"];
    $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_*");
-   $arFilter = Array("IBLOCK_ID"=>13, "PROPERTY_NAME_COMPANY"=> $ID_company );
+   $arFilter = Array("IBLOCK_ID"=>13, "PROPERTY_NAME_COMPANY"=> $ID_company,"!PROPERTY_VERIFIED" => false ,"PROPERTY_REJECTED" => false);
    $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
     $all_otzev= $res->SelectedRowsCount();
 
     while($ob = $res->GetNextElement()){
-
        $arPropsElement = $ob->GetProperties();
+
        ++$count;// просто счетчик
        $all_amount_star = (int)$all_amount_star + (int)$arPropsElement["EVALUATION"]["VALUE"];
 
