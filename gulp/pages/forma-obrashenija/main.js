@@ -149,10 +149,15 @@ function search_hospital() {
     console.log($(this));
     let id_region = $(this).attr('value');
     let select_region = $(this).text();
+    let name_boss = $(this).attr("data-name-boss");
+    let name_street = $(this).attr("data-street");
     $('#referal_two').val(select_region);
     $('#referal_two').attr('data-id_region', id_region);
     $('#referal_two').attr('data-region_check', 'check');
     $('#hosptital_name').text(select_region);
+    $('#street_name').text(name_street);
+    $('#boss_name').text(name_boss);
+
 
 
   });
@@ -197,10 +202,14 @@ function search_hospital() {
           $(document).on('click', '.hospital', function() {
             let id_region = $(this).attr('value');
             let select_region = $(this).text();
+            let name_boss = $(this).attr("data-name-boss");
+            let name_street = $(this).attr("data-street");
             $('#referal_two').val(select_region);
             $('#referal_two').attr('data-id_region', id_region);
             $('#referal_two').attr('data-region_check', 'check');
             $('#hosptital_name').text(select_region);
+            $('#street_name').text(name_street);
+            $('#boss_name').text(name_boss);
 
 
           });
