@@ -146,7 +146,7 @@ while($ob = $res->GetNextElement()){
                    <p>Ваш номер телефона</p>
                </div>
                <div class="item_data input__wrap">
-                   <input type="text" name="personal_phone" value="<?=$person["PERSONAL_PHONE"];?>">
+                   <input type="text" name="personal_phone" maxlength="16" data-mask="+7 (000) 000 00 00" placeholder="+7 (___) ___ __ __" value="<?=$person["PERSONAL_PHONE"];?>">
                </div>
            </div>
            <div class="flex_data">
@@ -163,7 +163,9 @@ while($ob = $res->GetNextElement()){
                    <p>Ваш страховой полис</p>
                </div>
                <div class="item_data input__wrap">
-                   <input type="text" name="uf_insurance_policy" value="<?=$person["UF_INSURANCE_POLICY"];?>">
+
+                   <input type="text"  minlength="16" maxlength="16" name="uf_insurance_policy" value="<?=$person["UF_INSURANCE_POLICY"];?>">
+
                </div>
            </div>
 
@@ -184,9 +186,18 @@ while($ob = $res->GetNextElement()){
                <div class="feedback__top">
                    <div class="custom-select custom-select-js-cite">
                        <div class="title-select" data-select="city">Ваш Город</div>
+
+
+
                        <div class="danger" style="display: none" >Выбирете город</div>
-                       <select>
-                           <option value="0" >Выберите регион</option>
+                       <select style="display:none;">
+                           <?php
+                           $db_list=   CIBlockSection::GetList(
+                               Array("SORT"=>"ASC"), Array('IBLOCK_ID'=>16,"ID"=>$person["UF_REGION"]), false);
+                           $ar_result = $db_list->GetNext();
+
+                           ?>
+                           <option value="0" ><?=$ar_result["NAME"]?></option>
 
                            <?
                            $arOrder = Array("name"=>"asc");
@@ -206,8 +217,15 @@ while($ob = $res->GetNextElement()){
 
                        <div class="title-select" data-select="company">Страховая компания</div>
                        <div class="danger" style="display: none">Выбирете компанию</div>
-                       <select>
-                           <option value="0" >Выберите регион: </option>
+                       <select style="display:none;">
+                           <?php $arSelect = Array("ID", "IBLOCK_ID", "NAME");
+                           $arFilter = Array("IBLOCK_ID"=>16,"ID"=>$person["UF_INSURANCE_COMPANY"] );
+                           $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+                           while($ob = $res->GetNextElement()){
+                               $arProps = $ob->GetFields();
+
+                           } ?>
+                           <option value="0" ><?=$arProps["NAME"]?> </option>
                        </select>
 
                    </div>
