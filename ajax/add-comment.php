@@ -5,6 +5,15 @@ $section = new CIBlockSection();
 $el = new CIBlockElement();
 if ($_POST) {
     $id_user = $USER->GetID();
+    $rsUser = CUser::GetByID($id_user);
+    $person = $rsUser->Fetch();
+    if($person["UF_REPRESENTATIVE"] == "1"){
+        $representative = 1;
+    }else{
+        $representative = 0;
+    }
+
+
     $email_user = $USER->GetEmail();
     $id_review = $_POST["id_review"];
     $message = $_POST["message"];
@@ -19,6 +28,7 @@ if ($_POST) {
             "COMMENTS" => $message,
             "REWIEW" => $id_review,
             "AVTOR_COMMENTS" => $id_user,
+            "REPRESENTATIVE" => $representative,
         ),
     );
 

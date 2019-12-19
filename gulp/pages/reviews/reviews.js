@@ -82,14 +82,17 @@ $(document).ready(function() {
                     if(msg == 1){
                       $('[data-result-id='+data_id_rewiev+']').html("Сохранено");
                       $('[data-result-id='+data_id_rewiev+']').removeClass("hidden");
-                     var star =  $(".star-active").first();
+
+                     var star =  $('[data-id-review='+data_id_rewiev+'] .star-active').first();
 
                      if($('[data-star='+data_id_rewiev+']').length < data.star){
+
                        var count_add = data.star - $('[data-star='+data_id_rewiev+']').length;
 
                        for(var i = 1; i <= count_add;++i) {
                          $('[data-block-star='+data_id_rewiev+']').append(star.clone());
                        }
+
                      }else if($('[data-star='+data_id_rewiev+']').length > data.star){
 
                        var count_remove =  $('[data-star='+data_id_rewiev+']').length  - data.star;

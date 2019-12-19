@@ -133,13 +133,13 @@ $sort_url = $_GET;
             $arFields = $ob->GetFields();
 
             $arProps = $ob->GetProperties();
-//            echo '<pre>';
-//            print_r($arProps);
-//            echo '</pre>';
+
             $newDate = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_ACTIVE_FROM"]));
             $ID_USER = $arProps["NAME_USER"]["VALUE"];
             $rsUser = CUser::GetByID($ID_USER);
             $arUser = $rsUser->Fetch();
+
+
             $name_user = $arUser["NAME"];
             if (is_array($arProps["COMMENTS_TO_REWIEW"]["VALUE"])) {
                 $count_comments = count($arProps["COMMENTS_TO_REWIEW"]["VALUE"]);
@@ -156,6 +156,7 @@ $sort_url = $_GET;
             ?>
             <div class="white_block">
                 <!-- Company Name -->
+                
                 <div class="feedback__block_company-name"><img src="<?= $file["src"] ?>"></div>
                 <!-- top -->
                 <div class="feedback__block_top">
@@ -182,12 +183,8 @@ $sort_url = $_GET;
                     <div class="feedback__block_top_name">
                         <?= $name_user ?>, <?= $city["NAME"] ?>, <?= $newDate ?>
                     </div>
-                    <!--                <div class="feedback__block_top_data">-->
-                    <!--                    05 сент, 2019-->
-                    <!--                </div>-->
-                    <div class="feedback_strah_user">
-                        <p class="text_user">Представитель страховой службы</p>
-                    </div>
+
+
                 </div>
                 <!-- Title -->
                 <div class="feedback__title">
@@ -250,8 +247,13 @@ $sort_url = $_GET;
 
                         <div class="hidenComments__top">
                             <img src="./local/templates/kdteam/images/svg/image_block_three.svg" alt="OMS">
-
+                            <?if($arPropsComments["REPRESENTATIVE"]["VALUE"] == "1"){?>
+                                <div class="feedback_strah_user">
+                                    <p class="text_user">Представитель страховой службы</p>
+                                </div>
+                            <?}?>
                             <div class="hidenComments__top_wrap">
+
                                 <div class="hidenComments__top_name"><?= $name_userComments ?></div>
 
                                 <div class="hidenComments__top_data"><?= $newDateComments ?></div>
@@ -297,7 +299,11 @@ $sort_url = $_GET;
                                     <div class="hidenComments__top">
 
                                         <img src="./local/templates/kdteam/images/svg/image_block_three.svg" alt="OMS">
-
+                                        <?if($arPropsQuote["REPRESENTATIVE"]["VALUE"] == "1"){?>
+                                            <div class="feedback_strah_user">
+                                                <p class="text_user">Представитель страховой службы</p>
+                                            </div>
+                                        <?}?>
                                         <div class="hidenComments__top_wrap">
                                             <div class="hidenComments__top_name"><?= $name_userQuote ?></div>
                                             <div class="hidenComments__top_data"><?= $newDateQuote ?></div>

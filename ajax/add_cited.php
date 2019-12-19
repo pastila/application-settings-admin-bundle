@@ -7,6 +7,13 @@ $el = new CIBlockElement();
 if ($_POST) {
     $id_user = $USER->GetID();
     $email_user = $USER->GetEmail();
+    $rsUser = CUser::GetByID($id_user);
+    $person = $rsUser->Fetch();
+    if($person["UF_REPRESENTATIVE"] == "1"){
+        $representative = 1;
+    }else{
+        $representative = 0;
+    }
     $id_comment = $_POST["id_comment"];
     $message = $_POST["message"];
     $name = date("d.m.Y h:i:s");
@@ -20,6 +27,7 @@ if ($_POST) {
             "CIATION" => $message,
             "CIATION_TO_COMMENTS" => $id_comment,
             "AVTOR_CIATION" => $id_user,
+            "REPRESENTATIVE" => $representative,
         ),
     );
     if ($CITED = $el->Add($arFields)) {
