@@ -17,8 +17,8 @@ function generate_string($input, $strength) {
     return $random_string;
 }
 $sms_code = generate_string($permitted_chars, 5);
-
-//$_SESSION['SMS_CODE'] = $sms_code;
+echo $sms_code;
+$_SESSION['SMS_CODE'] = $sms_code;
 //$result = $apiSms->execCommad('registerSender', array('name' => "GAZDA", 'country' => "ua"));
 //$result = $apiSms->execCommad("sendSMS", array(
 //    'sender' => "OMS",

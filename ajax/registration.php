@@ -2,8 +2,18 @@
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
 CModule::IncludeModule("iblock");
 $result = array();
+if ($_POST['sms-code']) {
+    if ($_POST['sms-code'] !== $_SESSION['SMS_CODE']) {
+        $result['error'] = 'Неправильный код подтверждения';
+        echo json_encode($result);
+        return;
+    }
+} else {
+    $result['error'] = 'Подтвердите номер телефона';
+        echo json_encode($result);
+        return;
+}
 if($_POST) {
-
     $name = $_POST["name"];
     $familia = $_POST["famaly-name"];
     $otchestvo = $_POST["last-name"];
