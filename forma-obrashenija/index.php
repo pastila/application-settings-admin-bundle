@@ -172,13 +172,35 @@ while($ob = $res->GetNextElement()){
 
                     <div class="form-obrashcheniya__step_three_r_wrap">
                         <div class="form-obrashcheniya__step_three_r_wrap_title">
-                            Вы выбрали поликлинику:
+                            Вы выбрали медицинскую организацию:
                         </div>
 
                         <div id="hosptital_name" class="form-obrashcheniya__step_three_r_wrap_name">
                             Не выбрано
                         </div>
                     </div>
+
+                    <div class="form-obrashcheniya__step_three_r_wrap">
+                        <div class="form-obrashcheniya__step_three_r_wrap_title">
+                            Расположение по адресу
+                        </div>
+
+                        <div id="street_name" class="form-obrashcheniya__step_three_r_wrap_name">
+                            Не выбрано
+                        </div>
+
+                   </div>
+
+                    <div class="form-obrashcheniya__step_three_r_wrap">
+                        <div class="form-obrashcheniya__step_three_r_wrap_title">
+                            Руководитель (главный врач)
+                        </div>
+
+                        <div id="boss_name" class="form-obrashcheniya__step_three_r_wrap_name">
+                            Не выбрано
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>

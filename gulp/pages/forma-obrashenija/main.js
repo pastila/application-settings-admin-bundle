@@ -10,7 +10,6 @@ $(document).ready(function() {
     $('#search_result').fadeOut();
   });
   $(document).on('click', '#referal', function() {
-    console.log('Города');
 
     $('#search_result').css({'display': 'block'});
   });
@@ -36,6 +35,7 @@ $(document).ready(function() {
     }
   });
   $(document).on('click', '.region', function() {
+
     let id_region = $(this).attr('value');
     let select_region = $(this).text();
     $('#referal').val(select_region);
@@ -52,8 +52,10 @@ $(document).ready(function() {
       },
       success: function(result) {
         $(component).html(result);
+
         $('#region_name').text(select_region);
         $('#hosptital_name').html('Не выбрано');
+        search_region();
         search_hospital();
       },
     }).done(function(msg) {
@@ -71,11 +73,14 @@ $(document).ready(function() {
     }
   });
  function search_region() {
+   console.log("23");
    $('#referal').on('keyup', function() {
+console.log("3232");
      var $this = $(this);
      var delay = 500;
      if ($this.val() == '') {
        $('#region_name').text('НЕ ВЫБРАНО');
+        $this.attr("data-id_region","");
      }
      clearTimeout($this.data('timer'));
      $this.data('timer', setTimeout(function() {
@@ -84,23 +89,24 @@ $(document).ready(function() {
          if ($('.error_region').length != 0) {
            $('.error_region').remove();
          }
-         $('.search_result').each(function() {
+         $('.region').each(function() {
            $(this).remove();
          });
          if (msg == 'error_region') {
+
            if ($('.error_region').length != 0) {
              $('.error_region').remove();
-             $('#search_result').
-                 append('<li class="error_region" >Город не найден</li>');
+             $('#search_result').append('<li class="error_region" >Город не найден</li>');
            } else {
-             $('#search_result').
-                 append('<li class="error_region" >Город не найден</li>');
+          console.log(   $("#search_result"));
+             $("#search_result").append('<li class="error_region" >Город не найден</li>');
            }
          } else {
            setTimeout(function() {
              $('#search_result').append(msg);
            }, 100);
            $(document).on('click', '.region', function() {
+
              let id_region = $(this).attr('value');
              let select_region = $(this).text();
              $('#referal').val(select_region);
@@ -120,6 +126,7 @@ $(document).ready(function() {
                  $('#region_name').text(select_region);
                  $('#hosptital_name').html('Не выбрано');
                  search_hospital();
+                 search_region();
                },
              }).done(function(msg) {
              });
@@ -134,10 +141,17 @@ function search_hospital() {
   $(document).on('click', '.hospital', function() {
     let id_region = $(this).attr('value');
     let select_region = $(this).text();
+    let name_boss = $(this).attr("data-name-boss");
+    let name_street = $(this).attr("data-street");
     $('#referal_two').val(select_region);
     $('#referal_two').attr('data-id_region', id_region);
     $('#referal_two').attr('data-region_check', 'check');
     $('#hosptital_name').text(select_region);
+    $('#street_name').text(name_street);
+    $('#boss_name').text(name_boss);
+
+
+
   });
   $('#referal_two').on('keyup', function() {
     var $this = $(this);
@@ -145,6 +159,9 @@ function search_hospital() {
     if ($this.val() == '') {
       $('#hosptital_name').text('НЕ ВЫБРАНО');
       $this.attr("data-id_region","");
+      $('#street_name').text('НЕ ВЫБРАНО');
+      $('#boss_name').text('НЕ ВЫБРАНО');
+
     }
 
     clearTimeout($this.data('timer'));
@@ -154,18 +171,21 @@ function search_hospital() {
         if ($('.error_region').length != 0) {
           $('.error_region').remove();
         }
-        $('#search_result_hospital').each(function() {
+        $('.hospital').each(function() {
           $(this).remove();
         });
+        $('.hospital-empty').remove();
+
         if (msg == 'error_hospital') {
           keyup_class();
           if ($('.error_region').length != 0) {
             $('.error_region').remove();
-            $('#search_result_hospital').
-                append('<li class="error_region" >Больница не найдена</li>');
+            $('#search_result_hospital').append('<li class="error_region" >Больница не найдена</li>');
+            $('.hospital-empty').remove();
+
           } else {
-            $('#search_result_hospital').
-                append('<li class="error_region" >Больница не найдена</li>');
+            $('#search_result_hospital').append('<li class="error_region" >Больница не найдена</li>');
+            $('.hospital-empty').remove();
           }
         } else {
           setTimeout(function() {
@@ -175,10 +195,16 @@ function search_hospital() {
           $(document).on('click', '.hospital', function() {
             let id_region = $(this).attr('value');
             let select_region = $(this).text();
+            let name_boss = $(this).attr("data-name-boss");
+            let name_street = $(this).attr("data-street");
             $('#referal_two').val(select_region);
             $('#referal_two').attr('data-id_region', id_region);
             $('#referal_two').attr('data-region_check', 'check');
             $('#hosptital_name').text(select_region);
+            $('#street_name').text(name_street);
+            $('#boss_name').text(name_boss);
+
+
           });
         }
       });
