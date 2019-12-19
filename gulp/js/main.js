@@ -49,6 +49,20 @@ $(document).ready(function() {
         })
       });
     });
+    $('.accept-phone-js').click(function() {
+      if ($('#phone')['0'].validity.valid === true) {
+        $(this).css('display', 'none');
+        $('#sms_confirm').css('display', 'block');
+        $.ajax({
+          url: '/ajax/sms_code_generate.php',
+          type: 'POST',
+          data: {phone: $('#phone').val()},
+          success: function(code) {
+            console.log(code);
+          }
+        });
+      }
+    });
 
     document.getElementById("password").onchange = validatePassword;
     document.getElementById("pass_conf").onchange = validatePassword;
@@ -65,8 +79,7 @@ $(document).ready(function() {
       var total = parseInt(now) - parseInt(568036800000);
       if( total < y ){
         $(".date").css({"display":"block"})
-      }else {
-
+      } else {
         $.ajax({
           url: '/ajax/registration.php',
           type: 'POST',
