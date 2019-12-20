@@ -27,7 +27,7 @@
                     <input type="password" name="password" required>
                 </div>
                 
-                <a href="#" class="input__lost-pass">
+                <a href="/personal-cabinet/?forgot_password=yes" class="input__lost-pass">
                     Забыли пароль ?
                 </a>
 
