@@ -6,7 +6,19 @@ CModule::IncludeModule('iblock');
 $asset->addCss(SITE_TEMPLATE_PATH . "/pages/personal-cabinet/personal-cabinet.min.css");
 $asset->addJs(SITE_TEMPLATE_PATH . "/pages/personal-cabinet/personal-cabinet.min.js");
 global $USER;
-if($USER->IsAuthorized()){
+if ($_GET['forgot_password'] == 'yes' and !$USER->IsAuthorized()) {
+    $APPLICATION->IncludeComponent(
+        "bitrix:system.auth.forgotpasswd",
+        "flat",
+        array()
+    );
+} elseif ($_GET['change_password'] == 'yes' and !$USER->IsAuthorized()) {
+    $APPLICATION->IncludeComponent(
+        "bitrix:system.auth.changepasswd",
+        "flat",
+        array()
+    );
+} elseif ($USER->IsAuthorized()) {
 $ID_USER = $USER->GetID();
 $rsUser = CUser::GetByID($ID_USER);
 $person = $rsUser->Fetch();
