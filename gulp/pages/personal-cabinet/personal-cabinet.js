@@ -118,11 +118,17 @@ $(document).on("click",".custom-select-js-cite > .select-items > div",function()
   });
 })
 
+$(document).on("click",".select-city",function() {// получаем акйди регоина
+  let name_rigion = $(this).text();
+  $(".select-arrow-active").text(name_rigion);
+  fd.append("town",$(this).attr("data-id-cite") );
+});
+
 $(document).on("click",".item_select",function() {// получаем акйди компании
   let name_company_div = $(this).text();
   $(".select-arrow-active").text(name_company_div);
    fd.append("id_company",$(this).attr("data-id-company") );
-})
+});
 
 
 $(document).ready(function() {
@@ -139,25 +145,66 @@ $(document).ready(function() {
       $("#change-data").text("Редактировать данные");
     }
   })
+  $('[name=personal_phone]').mask('+7(000)000-00-00');
 })
 $("#save_data").click(function(e) {
   e.preventDefault();
+  var error = [];
   var data_FORM =  $("#form_change_data").serializeArray();
   var input_file = $('.input_file');
 
   if (input_file.prop('files')[0] != undefined) {
     if (input_file.prop('files')[0]['size'] > 10485760) {
-      error.push('size');
+      error.push('error');
       $('.block-error-label_size').css({"display":"block"});
+      error.push("error");
     }
     var format_file = input_file.prop('files')[0]['type'];
     format_file = format_file.split('/')[1];
     if ((format_file.search('jpeg') == -1) &&
         (format_file.search('pjpeg') == -1) && (format_file.search('png') == -1)) {
       $('.block-error-label_format').css({"display":"block"});
+      error.push("error");
     }
   }
-console.log(data_FORM);
+
+    if(data_FORM[5]['value'].length >16 ){
+      $('[name=uf_insurance_policy]').after(
+          ' <span class="label danger  error-policy-max "  >Введен длинный номер полиса</span>');
+      error.push("error");
+
+    }else if( data_FORM[5]['value'].length  <16){
+      $('[name=uf_insurance_policy]').after(
+          '<span class="label danger  error-policy-min "  >Введен короткий номер полиса</span>');
+      error.push("error");
+    }
+    console.log(data_FORM[3]['value'].length );
+
+    if(data_FORM[3]['value'].length <16){
+      $('[name=personal_phone]').after(
+          '<span class="label danger  error-personal_phone "  >Введен короткий номер телефона</span>');
+      error.push("error");
+    }
+    if(data_FORM[0]['value'].length <2){
+      $('[name=name]').after(
+          '<span class="label danger  error-name "  >Введите имя</span>');
+      error.push("error");
+    }
+    if(data_FORM[1]['value'].length <2){
+      $('[name=last_name]').after(
+          '<span class="label danger  error-last_name "  >Введите фамилию</span>');
+      error.push("error");
+    }
+    if(data_FORM[2]['value'].length <2){
+      $('[name=second_name]').after(
+          '<span class="label danger  error-second_name "  >Введите отчество</span>');
+      error.push("error");
+    }
+  if(data_FORM[4]['value'].length <2){
+    $('[name=email]').after(
+        '<span class="label danger  error-email "  >Введите эмеил</span>');
+    error.push("error");
+  }
   fd.append('import_file', input_file.prop('files')[0]);
   fd.append('name', data_FORM[0]['value']);
   fd.append('last_name', data_FORM[1]['value']);
@@ -166,28 +213,31 @@ console.log(data_FORM);
   fd.append('email', data_FORM[4]['value']);
   fd.append('uf_insurance_policy', data_FORM[5]['value']);
 
+  if(error.length == 0) {
+    $.ajax({
+      url: '/ajax/change_data_user.php',
+      type: 'POST',
+      data: fd,
+      processData: false,
+      contentType: false,
+      beforeSend: function() {
 
-      $.ajax({
-            url: '/ajax/change_data_user.php',
-            type: 'POST',
-            data: fd,
-            processData: false,
-            contentType: false,
-            beforeSend: function() {
-
-            },
-            success: function(msg){
-        if(msg == "1"){
+      },
+      success: function(msg) {
+        if (msg == "1") {
           window.location.reload();
         }
-        if(msg == "Пользователь с таким эмейлом уже есть"){
-          console.log($(".input_email"));
-          $(".input_email").after('<p class="danger">Пользователь с таким эмейлом уже есть</p>')
-        }
-            },
-          }).done(function(msg) {
+        if (msg == "Пользователь с таким эмейлом уже есть") {
 
-          });
+          $(".input_email").
+              after(
+                  '<p class="danger">Пользователь с таким эмейлом уже есть</p>')
+        }
+      },
+    }).done(function(msg) {
+
+    });
+  }
 });
 /*добавление файла*/
 $(document).ready(function() {
