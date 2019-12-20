@@ -8,7 +8,7 @@ $(document).ready(function() {
   $(document).mouseup(function (e){
     var div = $(".danger");
     if (!div.is(e.target)) {
-      div.hide();
+      div.remove();
     }
   });
 
@@ -92,7 +92,7 @@ $(document).ready(function() {
             console.log('sssss');
             var suc = JSON.parse(msg);
             if (suc.error !== undefined) {
-              var email = $('#company');
+              var email = $('#phone');
               email.after(
                   '<div class="danger" data-danger-email>'+suc.error+'</div>');
 
