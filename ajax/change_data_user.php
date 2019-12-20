@@ -51,10 +51,9 @@ if ($_POST["uf_insurance_policy"] != "") {
 
     $array_field += ["UF_INSURANCE_POLICY" => $_POST["uf_insurance_policy"]];
 }
-if($_POST["town"] != ""){
-    $array_field +=["UF_REGION"=>$_POST["town"]];
-}
+
 if ($_POST["id_company"] != "") {
+    $array_field +=["UF_REGION"=>$_POST["town"]];
     $array_field += ["UF_INSURANCE_COMPANY" => $_POST["id_company"]];
 }
 if ($_FILES['import_file']) {
