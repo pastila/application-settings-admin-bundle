@@ -37,7 +37,7 @@ function translit($str) {
     $lat = array('A', 'B', 'V', 'G', 'D', 'E', 'E', 'Gh', 'Z', 'I', 'Y', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'F', 'H', 'C', 'Ch', 'Sh', 'Sch', 'Y', 'Y', 'Y', 'E', 'Yu', 'Ya', 'a', 'b', 'v', 'g', 'd', 'e', 'e', 'gh', 'z', 'i', 'y', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'f', 'h', 'c', 'ch', 'sh', 'sch', 'y', 'y', 'y', 'e', 'yu', 'ya');
     return str_replace($rus, $lat, $str);
 }
-
+$i = 0;
 foreach ($csv as $region => $hospitals) {
 
     $bs = new CIBlockSection;
@@ -58,31 +58,37 @@ foreach ($csv as $region => $hospitals) {
 
 
     $ID = $bs->Add($arFields);
+echo '<pre>';
+print_r($ID);
+echo '</pre>';
+if($ID) {
 
-    echo '<pre>';
-    print_r($ID);
-    echo '</pre>';
-    if(!$ID)
-        echo $bs->LAST_ERROR;
     foreach ($hospitals as $hospital) {
+        ++$i;
         $id_img = "";
 
         foreach ($fid as $item) {
             foreach ($item as $key => $id) {
-              if($key == $hospital[10]){
-                  $id_img = $id;
+                if ($key == $hospital[10]) {
+                    $id_img = $id;
 
-              }
+                }
             }
         }
-          $element_name =   translit($hospital[2]);
+        $lower_element_name =   mb_strtolower( $hospital[2]);
+
+        $element_name = translit($lower_element_name);
+        $element_name.= $i;
+     $new_code =  str_ireplace('"',"",$element_name);
+     $new_code2 =  str_ireplace(" ","",$new_code);
+     $new_name =  str_ireplace(" ","",$hospital[2]);
 
         $arFields = array(
             "ACTIVE" => "Y",
             "IBLOCK_ID" => 16,
             "IBLOCK_SECTION_ID" => $ID,
-            "NAME" => $hospital[2],
-            "CODE" => $element_name,
+            "NAME" => $new_name,
+            "CODE" => $new_code2,
             "PROPERTY_VALUES" => array(
                 "NAME_BOSS" => $hospital[3],
                 "MOBILE_NUMBER" => $hospital[4],
@@ -95,7 +101,7 @@ foreach ($csv as $region => $hospitals) {
                 "UNIQUE_CODE" => $hospital[11],
                 "KPP" => $hospital[12],
                 "GOROD" => $hospital[1],
-                "LOGO_IMG"=> $id_img,
+                "LOGO_IMG" => $id_img,
 
             )
         );
@@ -104,11 +110,12 @@ foreach ($csv as $region => $hospitals) {
         echo '</pre>';
         $oElement = new CIBlockElement();
         $idElement = $oElement->Add($arFields, false, false, true);
-        if(!$idElement)
+        if (!$idElement) {
             echo $oElement->LAST_ERROR;
+        }
 
     }
-
+}
 }
 
 

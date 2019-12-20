@@ -148,6 +148,7 @@ $sort_url = $_GET;
             }
             $city = CIBlockSection::GetByID($arProps["REGION"]["VALUE"])->GetNext();
             /* владик */
+
             $compani = CIBlockElement::GetByID($arProps["NAME_COMPANY"]["VALUE"])->GetNextElement()->GetProperties();
 
             $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 100, 'height' => 100),
@@ -334,10 +335,11 @@ $sort_url = $_GET;
                 $elementselect = Array("ID", "IBLOCK_ID", "NAME", "CODE", "DATE_ACTIVE_FROM", "PROPERTY_AMOUNT_STAR");
                 $arFilter = Array("IBLOCK_ID" => 16);
                 $Element_filter = CIBlockElement::GetList($order, $arFilter, false, false, $elementselect);
-
+                $i= 0;
                 if (isset($_GET["property_evaluation"]) || isset($_GET["property_name_company"]) || isset($_GET["property_region"])) {
                     while ($ob_element_filter = $Element_filter->GetNextElement()) {
                         $fields = $ob_element_filter->GetFields();
+
                         if ($fields["PROPERTY_AMOUNT_STAR_VALUE"] == "" || $fields["PROPERTY_AMOUNT_STAR_VALUE"] == 0) {
                             continue;
                         }
@@ -361,18 +363,21 @@ $sort_url = $_GET;
                 <? } else {
                     while ($ob_element_filter = $Element_filter->GetNextElement()) {
                         $fields = $ob_element_filter->GetFields();
+
                         if ($fields["PROPERTY_AMOUNT_STAR_VALUE"] == "" || $fields["PROPERTY_AMOUNT_STAR_VALUE"] == 0) {
                             continue;
                         }
-
+                        ++$i;
                         ?>
                         <li class="sidebar__item_lists_list">
+                            <span><?=$i?></span>
                             <a href="?property_name_company=<?= $fields["ID"] ?>" class="sidebar__item_lists_list_link"
                                id="company"
                                data-amount-star="<?= $fields["PROPERTY_AMOUNT_STAR_VALUE"] ?>"
                                data-id="<?= $fields["ID"] ?>">
                                 <?= $fields["NAME"] ?>
                             </a>
+                            <span><?=$fields["PROPERTY_AMOUNT_STAR_VALUE"]?></span>
                         </li>
                     <? } ?>
 
