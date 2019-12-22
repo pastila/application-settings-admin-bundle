@@ -186,9 +186,9 @@ $sort_url = $_GET;
                     <!--                <div class="feedback__block_top_data">-->
                     <!--                    05 сент, 2019-->
                     <!--                </div>-->
-                    <div class="feedback_strah_user">
-                        <p class="text_user">Представитель страховой службы</p>
-                    </div>
+                    <?php if($USER->IsAdmin()){ ?>
+                    <div data-id="<?php echo  $arFields["ID"]; ?>" class="dalete_review" >Удалить</div>
+                    <?php } ?>
                 </div>
                 <!-- Title -->
                 <div class="feedback__title">
@@ -257,6 +257,10 @@ $sort_url = $_GET;
 
                                 <div class="hidenComments__top_data"><?= $newDateComments ?></div>
                             </div>
+                            <?php if($USER->IsAdmin()){ ?>
+                                <div data-id="<?php echo  $arFieldsComments["ID"]; ?>" class="delet_comment" >Удалить</div>
+                            <?php } ?>
+
                         </div>
 
                         <p><?= $arPropsComments["COMMENTS"]["VALUE"] ?></p>
@@ -303,6 +307,12 @@ $sort_url = $_GET;
                                             <div class="hidenComments__top_name"><?= $name_userQuote ?></div>
                                             <div class="hidenComments__top_data"><?= $newDateQuote ?></div>
                                         </div>
+                                        <?php if($USER->IsAdmin()){ ?>
+                                            <div  class="delet_cation" data-id="<?php echo  $arFieldsQuote["ID"]; ?>" >Удалить</div>
+                                        <?php } ?>
+
+
+
                                     </div>
 
                                     <p class="quotes_italic">« <?= $arPropsQuote["CIATION"]["VALUE"] ?> »</p>
