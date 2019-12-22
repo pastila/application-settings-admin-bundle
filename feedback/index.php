@@ -157,7 +157,12 @@ $sort_url = $_GET;
             ?>
             <div class="white_block">
                 <!-- Company Name -->
-                <div class="feedback__block_company-name"><img src="<?= $file["src"] ?>"></div>
+                <div class="feedback__block_company-name">
+                    <?php if($arProps["REVIEW_LETTER"]["VALUE"] == "1"){ ?>
+                        <span>Возврат денежных средств</span>
+                    <?php } ?>
+                    <img src="<?= $file["src"] ?>">
+                </div>
                 <!-- top -->
                 <div class="feedback__block_top">
                     <div class="feedback__block_top_star">

@@ -3,6 +3,13 @@ use Bitrix\Main\Page\Asset;
 if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     die();
 }
+if($_GET){
+    $get_letter= $_GET;
+    if(isset($get_letter["letter"])){
+        setcookie("letter","yes",0);
+    }
+}
+
 $asset = Asset::getInstance();
 ?>
 <!DOCTYPE html>

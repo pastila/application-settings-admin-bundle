@@ -67,7 +67,7 @@ while ($Section = $section->GetNext()) {
 
                 if ($Difference_time > 2592000) {    //больше чем 30 дней 2592000
 
-                    $url = "devdoc1.kdteam.su/feedback/index.php";
+                    $url = "devdoc1.kdteam.su/feedback/?letter";
                     $arEventFields = array(
                         "MAIL" => $arUser["EMAIL"],
                         "DATE_APPEAL" => $newDate,
