@@ -77,7 +77,9 @@ $(document).ready(function() {
       }
         var data_form = $('#auth-form-reg').serializeArray();
       var vozrast =  $(".datepicker-here").val();
-      var y =   Date.parse(vozrast);
+      var vozrast_split = vozrast.split(".");
+      var new_vozrast_data = vozrast_split[1] +'.'+ vozrast_split[0] +'.'+ vozrast_split [2];
+      var y =   Date.parse(new_vozrast_data);
       var now = new Date();
       var total = parseInt(now) - parseInt(568036800000);
       if( total < y ){
