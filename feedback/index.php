@@ -252,10 +252,12 @@ $sort_url = $_GET;
                         $rsUserComments = CUser::GetByID($arPropsComments["AVTOR_COMMENTS"]["VALUE"]);
                         $arUserComments = $rsUserComments->Fetch();
                         $name_userComments = $arUserComments["NAME"];
+                        $file_comment = CFile::ResizeImageGet($arUserComments["PERSONAL_PHOTO"], array('width'=>50, 'height'=>50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
+
                         ?>
 
                         <div class="hidenComments__top">
-                            <img src="./local/templates/kdteam/images/svg/image_block_three.svg" alt="OMS">
+                            <img src="<?php echo $file_comment["src"] ?>" alt="OMS">
 
                             <div class="hidenComments__top_wrap">
                                 <div class="hidenComments__top_name"><?= $name_userComments ?></div>
@@ -303,10 +305,13 @@ $sort_url = $_GET;
                                     $ID_USERQuote = $arPropsQuote["AVTOR_CIATION"]["VALUE"];
                                     $rsUserQuote = CUser::GetByID($ID_USERQuote);
                                     $arUserQuote = $rsUserQuote->Fetch();
-                                    $name_userQuote = $arUserQuote["NAME"]; ?>
+                                    $name_userQuote = $arUserQuote["NAME"];
+                                    $file_quote = CFile::ResizeImageGet($arUserQuote["PERSONAL_PHOTO"], array('width'=>50, 'height'=>50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
+
+                                    ?>
                                     <div class="hidenComments__top">
 
-                                        <img src="./local/templates/kdteam/images/svg/image_block_three.svg" alt="OMS">
+                                        <img src="<?php echo $file_quote["src"]; ?>" alt="OMS">
 
                                         <div class="hidenComments__top_wrap">
                                             <div class="hidenComments__top_name"><?= $name_userQuote ?></div>

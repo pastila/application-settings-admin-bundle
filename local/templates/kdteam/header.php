@@ -47,6 +47,7 @@ $asset = Asset::getInstance();
             </a>
             <?php
             global $USER;
+            $ID_USER = $USER->GetID();
             if ($USER->IsAuthorized()) { ?>
                 <div class="header__r" style="display: flex;">
                     <div class="header__r_auth">
@@ -71,7 +72,7 @@ $asset = Asset::getInstance();
                                     <?php
                                     //Количество обращений
                                     if (CModule::IncludeModule("iblock")) {
-                                        $arFilterSect = array('IBLOCK_ID' => 11, "UF_USER_ID" => $USER->GetID());
+                                        $arFilterSect = array('IBLOCK_ID' => 11, "UF_USER_ID" => $ID_USER);
                                         $rsSect = CIBlockSection::GetList(array(), $arFilterSect);
                                         if ($arSect = $rsSect->GetNext()) {
                                             $arSelect = array("ID", "NAME", "DATE_ACTIVE_FROM");
@@ -107,7 +108,7 @@ $asset = Asset::getInstance();
                                     if (CModule::IncludeModule("iblock")) {
 
                                         $arSelect = Array("ID", "IBLOCK_ID", "NAME",);
-                                        $arFilter = Array("IBLOCK_ID"=>13, "PROPERTY_NAME_USER"=>$USER->GetID() );
+                                        $arFilter = Array("IBLOCK_ID"=>13, "PROPERTY_NAME_USER"=>$ID_USER );
                                         $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
                                         $count_reviews = $res->SelectedRowsCount();
                                         }
@@ -122,8 +123,7 @@ $asset = Asset::getInstance();
                                 <li>
                                     <div class="menu-req">
                                         <?php
-                                        global $USER;
-                                        $ID_USER = $USER->GetID();
+
 
                                         $arFilter = array("IBLOCK_ID" => 11, "UF_USER_ID" => $ID_USER);
                                         $section = CIBlockSection::GetList(
@@ -156,7 +156,15 @@ $asset = Asset::getInstance();
                         </div>
 
                         <div class="header__r_auth_user-image">
-                            <img src="/local/templates/kdteam/images/png/header/head_login.png" alt="">
+                            <?php
+                            $rsUser = CUser::GetByID($ID_USER);
+                            $person = $rsUser->Fetch();
+
+                            $file = CFile::ResizeImageGet($person["PERSONAL_PHOTO"], array('width'=>50, 'height'=>50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
+
+                            ?>
+
+                            <img src="<?=$file["src"]?>" alt="">
                         </div>
                     </div>
 
