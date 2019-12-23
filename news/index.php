@@ -9,11 +9,16 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/news/news.min.js");
 ?>
 
 
-<?$APPLICATION->SetTitle("Читать про ОМС");?>
-    <ul class="breadcrumbs">
-        <li><a href="/">Главная</a></li>
-        <li>Читать про ОМС</li>
-    </ul>
+<?php $APPLICATION->SetTitle("Читать про ОМС");?>
+<?php $APPLICATION->IncludeComponent(
+    "bitrix:breadcrumb",
+    "",
+    array(
+        "START_FROM" => "0",
+        "PATH" => "",
+        "SITE_ID" => "s1"
+    )
+);?>
     <h1 class="page-title">Читать про ОМС</h1>
 
     <div class="news_container">

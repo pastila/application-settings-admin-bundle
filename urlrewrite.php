@@ -2,7 +2,7 @@
 $arUrlRewrite = array (
     0 =>
         array(
-            "CONDITION" => "#^/news/#",
+            "CONDITION" => "#^/news/([a-zA-Z0-9\\.\\-_]+)/#",
             "RULE" => "",
             "ID" => "bitrix:news",
             "PATH" => "/news/index.php",
