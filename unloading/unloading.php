@@ -30,6 +30,11 @@ if ($_POST["data_2"] != "") {
         $arResult[$i]['ID'] = $arFields["ID"];
         $arResult[$i]['DATE_CREATE'] = $arFields["DATE_CREATE"];
         $arResult[$i]['TEXT_MASSEGE'] = $arProps["TEXT_MASSEGE"]["VALUE"];
+        $arResult[$i]['EVALUATION'] = $arProps["EVALUATION"]["VALUE"];
+
+       $company=CIBlockElement::GetByID($arProps["NAME_COMPANY"]["VALUE"])->GetNextElement()->GetProperties();
+
+       $arResult[$i]['UNIQUE_CODE'] = $company["UNIQUE_CODE"]["VALUE"];
 
 
         if ($ID_COMMENTS = $arProps["COMMENTS_TO_REWIEW"]["VALUE"]) { /// комментарии
@@ -97,26 +102,32 @@ if ($_POST["data_2"] != "") {
     $spreadsheet->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
     $spreadsheet->getActiveSheet()->getColumnDimension('H')->setAutoSize(true);
     $spreadsheet->getActiveSheet()->getColumnDimension('I')->setAutoSize(true);
+    $spreadsheet->getActiveSheet()->getColumnDimension('J')->setAutoSize(true);
+    $spreadsheet->getActiveSheet()->getColumnDimension('K')->setAutoSize(true);
     $sheet->setCellValue('A' . $intCounter_for_name_row, "Айди отзыва");
     $sheet->setCellValue('B' . $intCounter_for_name_row, "Дата создания");
     $sheet->setCellValue('C' . $intCounter_for_name_row, "Содержимое отзыва");
-    $sheet->setCellValue('D' . $intCounter_for_name_row, "Айди комментария");
-    $sheet->setCellValue('E' . $intCounter_for_name_row, "Дата создания");
-    $sheet->setCellValue('F' . $intCounter_for_name_row, "Содержимое комментария");
-    $sheet->setCellValue('G' . $intCounter_for_name_row, "Айди цитаты");
-    $sheet->setCellValue('H' . $intCounter_for_name_row, "Дата создания");
-    $sheet->setCellValue('I' . $intCounter_for_name_row, "Содержимое цитаты");
+    $sheet->setCellValue('D' . $intCounter_for_name_row, "Оценка");
+    $sheet->setCellValue('E' . $intCounter_for_name_row, "Код смо");
+    $sheet->setCellValue('F' . $intCounter_for_name_row, "Айди комментария");
+    $sheet->setCellValue('G' . $intCounter_for_name_row, "Дата создания");
+    $sheet->setCellValue('H' . $intCounter_for_name_row, "Содержимое комментария");
+    $sheet->setCellValue('I' . $intCounter_for_name_row, "Айди цитаты");
+    $sheet->setCellValue('J' . $intCounter_for_name_row, "Дата создания");
+    $sheet->setCellValue('K' . $intCounter_for_name_row, "Содержимое цитаты");
     $intCounter_for_item = 2;
     foreach ($arResult as $item) {
         $sheet->setCellValue('A' . $intCounter_for_item, $item["ID"]);
         $sheet->setCellValue('B' . $intCounter_for_item, $item["DATE_CREATE"]);
+        $sheet->setCellValue('D' . $intCounter_for_item, $item["EVALUATION"]);
         $sheet->setCellValue('C' . $intCounter_for_item, $item["TEXT_MASSEGE"]);
-        $sheet->setCellValue('D' . $intCounter_for_item, $item["COMMENT_ID"]);
-        $sheet->setCellValue('E' . $intCounter_for_item, $item["COMMENT_DATE_CREATE"]);
-        $sheet->setCellValue('F' . $intCounter_for_item, $item["COMMENT_TEXT_MASSEGE"]);
-        $sheet->setCellValue('G' . $intCounter_for_item, $item["QUOTE_ID"]);
-        $sheet->setCellValue('H' . $intCounter_for_item, $item["QUOTE_DATE_CREATE"]);
-        $sheet->setCellValue('I' . $intCounter_for_item, $item["QUOTE_TEXT_MASSEGE"]);
+        $sheet->setCellValue('E' . $intCounter_for_item, $item["UNIQUE_CODE"]);
+        $sheet->setCellValue('F' . $intCounter_for_item, $item["COMMENT_ID"]);
+        $sheet->setCellValue('G' . $intCounter_for_item, $item["COMMENT_DATE_CREATE"]);
+        $sheet->setCellValue('H' . $intCounter_for_item, $item["COMMENT_TEXT_MASSEGE"]);
+        $sheet->setCellValue('I' . $intCounter_for_item, $item["QUOTE_ID"]);
+        $sheet->setCellValue('J' . $intCounter_for_item, $item["QUOTE_DATE_CREATE"]);
+        $sheet->setCellValue('K' . $intCounter_for_item, $item["QUOTE_TEXT_MASSEGE"]);
         ++$intCounter_for_item;
     }
 
