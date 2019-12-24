@@ -200,7 +200,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
 
                 <?php
                 $arFilter = array("IBLOCK_ID" => 9, "ACTIVE"=>"Y", "IBLOCK_SECTION_ID" => $arResult['SECTION']['ID']);
-                $arSelect = Array("ID", "NAME", "IBLOCK_ID","PROPERTY_SECOND_NAME","PROPERTY_LOCATION","PROPERTY_PERSON_NAME","PROPERTY_MIDDLE_NAME");
+                $arSelect = Array("ID", "NAME", "IBLOCK_ID","PROPERTY_SECOND_NAME","PROPERTY_LOCATION","PROPERTY_PERSON_NAME","PROPERTY_MIDDLE_NAME","PROPERTY_FULL_NAME");
                 $res = CIBlockElement::GetList(array("name" => "asc"), $arFilter, false, false, $arSelect);
                 while($ob = $res->GetNextElement())
                 {
@@ -226,7 +226,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
 //                                    echo '</pre>';
 
                                     ?>
-                                    <li value="<?=$arItem['ID']?>" class="custom-serach__items_item  hospital" data-name-boss="<?=$arItem["PROPERTY_SECOND_NAME_VALUE"] ." ". $arItem["PROPERTY_PERSON_NAME_VALUE"] ." ". $arItem["PROPERTY_MIDDLE_NAME_VALUE"]?>" data-street="<?=$arItem["PROPERTY_LOCATION_VALUE"]?>"><?php echo $arItem['NAME']?></li>
+                                    <li value="<?=$arItem['ID']?>" class="custom-serach__items_item  hospital" data-name-boss="<?=$arItem["PROPERTY_SECOND_NAME_VALUE"] ." ". $arItem["PROPERTY_PERSON_NAME_VALUE"] ." ". $arItem["PROPERTY_MIDDLE_NAME_VALUE"]?>" data-street="<?=$arItem["PROPERTY_LOCATION_VALUE"]?>"><?php echo $arItem['PROPERTY_FULL_NAME_VALUE']?></li>
                                 <?php }?>
                                 <?php ++$i; ?>
                             <?php } ?>
