@@ -8,7 +8,7 @@ $(document).ready(function() {
   $(document).mouseup(function (e){
     var div = $(".danger");
     if (!div.is(e.target)) {
-      div.hide();
+      div.remove();
     }
   });
 
@@ -49,6 +49,23 @@ $(document).ready(function() {
         })
       });
     });
+    $('.accept-phone-js').click(function() {
+      if ($('#phone')['0'].validity.valid === true) {
+        $(this).css('display', 'none');
+        $('#sms_confirm_error').css('display','none');
+        $('#sms_confirm').css('display', 'block');
+        $.ajax({
+          url: '/ajax/sms_code_generate.php',
+          type: 'POST',
+          data: {phone: $('#phone').val()},
+          success: function(code) {
+            console.log(code);
+          }
+        });
+      } else {
+        $('#sms_confirm_error').css('display','block');
+      }
+    });
 
     document.getElementById("password").onchange = validatePassword;
     document.getElementById("pass_conf").onchange = validatePassword;
@@ -60,22 +77,28 @@ $(document).ready(function() {
       }
         var data_form = $('#auth-form-reg').serializeArray();
       var vozrast =  $(".datepicker-here").val();
-      var y =   Date.parse(vozrast);
+      var vozrast_split = vozrast.split(".");
+      var new_vozrast_data = vozrast_split[1] +'.'+ vozrast_split[0] +'.'+ vozrast_split [2];
+      var y =   Date.parse(new_vozrast_data);
       var now = new Date();
       var total = parseInt(now) - parseInt(568036800000);
       if( total < y ){
         $(".date").css({"display":"block"})
-      }else {
-
+      } else {
         $.ajax({
           url: '/ajax/registration.php',
           type: 'POST',
           data: data_form,
           success: function(msg) {
-
+            console.log(msg);
+            console.log('sssss');
             var suc = JSON.parse(msg);
+            if (suc.error !== undefined) {
+              var email = $('#phone');
+              email.after(
+                  '<div class="danger" data-danger-email>'+suc.error+'</div>');
 
-            if (suc.user == 'Уже существует') {
+            } else if (suc.user == 'Уже существует') {
               var email = $('#email');
               email.after(
                   '<div class="danger" data-danger-email>Пользовватель с таким эмейлом уже сущесвуте</div>');

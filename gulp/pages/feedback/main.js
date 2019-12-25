@@ -197,6 +197,60 @@ $(document).on("click",".select-items div",function() {
 
 $(document).ready(function() {
 
+  $(".delet_cation").click(function() {
+    var id = $(this).attr("data-id");
+    var data = {
+      "case":"cation",
+      "id":id,
+    };
+        $.ajax({
+              dataType: 'html',
+              url: '/ajax/delet_feedback.php',
+              type: 'POST',
+              data: data,
+              success: function(msg){
+                if(msg == 1) {
+                  window.location.reload();
+                }
+              },
+            })
+  });
+  $(".delet_comment").click(function() {
+    var id = $(this).attr("data-id");
+    var data = {
+      "case":"comment",
+      "id":id,
+    };
+    $.ajax({
+      dataType: 'html',
+      url: '/ajax/delet_feedback.php',
+      type: 'POST',
+      data: data,
+      success: function(msg){
+        if(msg == 1) {
+          window.location.reload();
+        }
+      },
+    })
+  });
+  $(".dalete_review").click(function() {
+    var id = $(this).attr("data-id");
+    var data = {
+      "case":"review",
+      "id":id,
+    };
+    $.ajax({
+      dataType: 'html',
+      url: '/ajax/delet_feedback.php',
+      type: 'POST',
+      data: data,
+      success: function(msg){
+        if(msg == 1) {
+          window.location.reload();
+        }
+      },
+    })
+  });
 
   $('.toggle_comment_dropdown').on('click', function (e) {
     $(this).parent().toggleClass('openedBlock');

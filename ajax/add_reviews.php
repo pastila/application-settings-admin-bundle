@@ -5,6 +5,12 @@ $section = new CIBlockSection();
 $el = new CIBlockElement();
 if ($_POST) {
 
+      if($_POST["letter"] == 1){
+          $REVIEW_LETTER = 1;
+      }else{
+          $REVIEW_LETTER = 0;
+      }
+
     $id_user = $USER->GetID();
     $email_user = $USER->GetEmail();
     $arParams = array("replace_space" => "-", "replace_other" => "-");
@@ -30,6 +36,7 @@ if ($_POST) {
                     "TEXT_MASSEGE" => $_POST["text"],
                     "EVALUATION" => $_POST["star"],
                     "NAME_USER" => $id_user,
+                    "REVIEW_LETTER"=> $REVIEW_LETTER,
                 ),
                 "NAME" => $name,
                 "CODE" => $trans,
@@ -73,6 +80,7 @@ if ($_POST) {
                     "TEXT_MASSEGE" => $_POST["text"],
                     "EVALUATION" => $_POST["star"],
                     "NAME_USER" => $id_user,
+                    "REVIEW_LETTER"=> $REVIEW_LETTER,
                 ),
                 "NAME" => $name,
                 "CODE" => $trans,

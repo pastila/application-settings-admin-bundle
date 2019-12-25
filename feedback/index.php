@@ -156,8 +156,12 @@ $sort_url = $_GET;
             ?>
             <div class="white_block">
                 <!-- Company Name -->
-                
-                <div class="feedback__block_company-name"><img src="<?= $file["src"] ?>"></div>
+                <div class="feedback__block_company-name">
+                    <?php if($arProps["REVIEW_LETTER"]["VALUE"] == "1"){ ?>
+                        <span>Возврат денежных средств</span>
+                    <?php } ?>
+                    <img src="<?= $file["src"] ?>">
+                </div>
                 <!-- top -->
                 <div class="feedback__block_top">
                     <div class="feedback__block_top_star">
@@ -183,8 +187,12 @@ $sort_url = $_GET;
                     <div class="feedback__block_top_name">
                         <?= $name_user ?>, <?= $city["NAME"] ?>, <?= $newDate ?>
                     </div>
-
-
+                    <!--                <div class="feedback__block_top_data">-->
+                    <!--                    05 сент, 2019-->
+                    <!--                </div>-->
+                    <?php if($USER->IsAdmin()){ ?>
+                    <div data-id="<?php echo  $arFields["ID"]; ?>" class="dalete_review" >Удалить</div>
+                    <?php } ?>
                 </div>
                 <!-- Title -->
                 <div class="feedback__title">
@@ -243,9 +251,13 @@ $sort_url = $_GET;
                         $rsUserComments = CUser::GetByID($arPropsComments["AVTOR_COMMENTS"]["VALUE"]);
                         $arUserComments = $rsUserComments->Fetch();
                         $name_userComments = $arUserComments["NAME"];
+                        $file_comment = CFile::ResizeImageGet($arUserComments["PERSONAL_PHOTO"], array('width'=>50, 'height'=>50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
+
                         ?>
 
                         <div class="hidenComments__top">
+                            <img src="<?php echo $file_comment["src"] ?>" alt="OMS">
+
                             <img src="./local/templates/kdteam/images/svg/image_block_three.svg" alt="OMS">
                             <?if($arPropsComments["REPRESENTATIVE"]["VALUE"] == "1"){?>
                                 <div class="feedback_strah_user">
@@ -253,11 +265,14 @@ $sort_url = $_GET;
                                 </div>
                             <?}?>
                             <div class="hidenComments__top_wrap">
-
                                 <div class="hidenComments__top_name"><?= $name_userComments ?></div>
 
                                 <div class="hidenComments__top_data"><?= $newDateComments ?></div>
                             </div>
+                            <?php if($USER->IsAdmin()){ ?>
+                                <div data-id="<?php echo  $arFieldsComments["ID"]; ?>" class="delet_comment" >Удалить</div>
+                            <?php } ?>
+
                         </div>
 
                         <p><?= $arPropsComments["COMMENTS"]["VALUE"] ?></p>
@@ -295,8 +310,13 @@ $sort_url = $_GET;
                                     $ID_USERQuote = $arPropsQuote["AVTOR_CIATION"]["VALUE"];
                                     $rsUserQuote = CUser::GetByID($ID_USERQuote);
                                     $arUserQuote = $rsUserQuote->Fetch();
-                                    $name_userQuote = $arUserQuote["NAME"]; ?>
+                                    $name_userQuote = $arUserQuote["NAME"];
+                                    $file_quote = CFile::ResizeImageGet($arUserQuote["PERSONAL_PHOTO"], array('width'=>50, 'height'=>50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
+
+                                    ?>
                                     <div class="hidenComments__top">
+
+                                        <img src="<?php echo $file_quote["src"]; ?>" alt="OMS">
 
                                         <img src="./local/templates/kdteam/images/svg/image_block_three.svg" alt="OMS">
                                         <?if($arPropsQuote["REPRESENTATIVE"]["VALUE"] == "1"){?>
@@ -308,6 +328,12 @@ $sort_url = $_GET;
                                             <div class="hidenComments__top_name"><?= $name_userQuote ?></div>
                                             <div class="hidenComments__top_data"><?= $newDateQuote ?></div>
                                         </div>
+                                        <?php if($USER->IsAdmin()){ ?>
+                                            <div  class="delet_cation" data-id="<?php echo  $arFieldsQuote["ID"]; ?>" >Удалить</div>
+                                        <?php } ?>
+
+
+
                                     </div>
 
                                     <p class="quotes_italic">« <?= $arPropsQuote["CIATION"]["VALUE"] ?> »</p>
@@ -340,10 +366,11 @@ $sort_url = $_GET;
                 $elementselect = Array("ID", "IBLOCK_ID", "NAME", "CODE", "DATE_ACTIVE_FROM", "PROPERTY_AMOUNT_STAR");
                 $arFilter = Array("IBLOCK_ID" => 16);
                 $Element_filter = CIBlockElement::GetList($order, $arFilter, false, false, $elementselect);
-
+                $i= 0;
                 if (isset($_GET["property_evaluation"]) || isset($_GET["property_name_company"]) || isset($_GET["property_region"])) {
                     while ($ob_element_filter = $Element_filter->GetNextElement()) {
                         $fields = $ob_element_filter->GetFields();
+
                         if ($fields["PROPERTY_AMOUNT_STAR_VALUE"] == "" || $fields["PROPERTY_AMOUNT_STAR_VALUE"] == 0) {
                             continue;
                         }
@@ -367,18 +394,21 @@ $sort_url = $_GET;
                 <? } else {
                     while ($ob_element_filter = $Element_filter->GetNextElement()) {
                         $fields = $ob_element_filter->GetFields();
+
                         if ($fields["PROPERTY_AMOUNT_STAR_VALUE"] == "" || $fields["PROPERTY_AMOUNT_STAR_VALUE"] == 0) {
                             continue;
                         }
-
+                        ++$i;
                         ?>
                         <li class="sidebar__item_lists_list">
+                            <span><?=$i?></span>
                             <a href="?property_name_company=<?= $fields["ID"] ?>" class="sidebar__item_lists_list_link"
                                id="company"
                                data-amount-star="<?= $fields["PROPERTY_AMOUNT_STAR_VALUE"] ?>"
                                data-id="<?= $fields["ID"] ?>">
                                 <?= $fields["NAME"] ?>
                             </a>
+                            <span><?=$fields["PROPERTY_AMOUNT_STAR_VALUE"]?></span>
                         </li>
                     <? } ?>
 

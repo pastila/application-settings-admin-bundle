@@ -26,10 +26,7 @@ $arFilter = array("IBLOCK_ID" => 11, "UF_USER_ID" => $USER->GetID());
 $arSelect = array("ID");
 $rsSections = CIBlockSection::GetList(array(), $arFilter, false, $arSelect, false);
 
-$rsUser = CUser::GetByID($USER->GetID());
-$arUser = $rsUser->Fetch();
-$phone = $arUser['PERSONAL_PHONE'];
-$arName = $arUser['NAME'] . ' ' . $arUser['LAST_NAME'] . ' ' . $arUser['SECOND_NAME'];
+
 $arAppeal = $_SESSION["APPEAL"];
 
 
@@ -62,11 +59,18 @@ $res = CIBlockElement::GetByID($_SESSION["DIAGNOZ"]);
 if ($ar_res = $res->GetNext()) {
     $arDiagnoz = $ar_res;
 }
+$phone ="";
 if($USER->IsAuthorized()) {
-$rsUser = CUser::GetByID($USER->GetID());
-$arUser = $rsUser->Fetch();
+
+
+    $rsUser = CUser::GetByID($USER->GetID());
+    $arUser = $rsUser->Fetch();
+    $phone = $arUser['PERSONAL_PHONE'];
+
+    $arName = $arUser['NAME'] . ' ' . $arUser['LAST_NAME'] . ' ' . $arUser['SECOND_NAME'];
 
     if ($arSection = $rsSections->GetNext()) {
+
         $el = new CIBlockElement;
         $arFields_el = array(
             "ACTIVE" => "Y",
@@ -92,6 +96,7 @@ $arUser = $rsUser->Fetch();
         $oElement = new CIBlockElement();
         $idElement = $oElement->Add($arFields_el);
     } else {
+
         $arFields = array("IBLOCK_ID" => 11, "NAME" => $USER->GetLogin(), "UF_USER_ID" => $USER->GetID());
         $bs = new CIBlockSection;
         $ID = $bs->Add($arFields);
@@ -104,6 +109,7 @@ $arUser = $rsUser->Fetch();
                 "NAME" => "Обращение",
                 "PROPERTY_VALUES" => array(
                     "FULL_NAME" => $arName,
+                    "MOBAIL_PHONE" => $phone,
                     "HOSPITAL" => $arHospital["NAME"],
                     "ADDRESS" => $arRegion["NAME"],
                     "CLASS" => $arClass["NAME"],

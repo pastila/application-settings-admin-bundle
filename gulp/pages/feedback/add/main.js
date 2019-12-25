@@ -95,6 +95,7 @@ var data = {
   "head":"0",
   "text":"0",
   "star":"0",
+  "letter":"0",
 };
 $(".star").click(function() {
   data.star = $(this).attr("data-value");
@@ -152,7 +153,18 @@ $("#form-comments").validator().on('submit', function(e) {
     empty.push("company");
   }
 
-  console.log(empty);
+
+  function getCookie(name) {
+    let matches = document.cookie.match(new RegExp(
+        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+  }
+  if(getCookie("letter") != undefined ){
+    data.letter = "1";
+  }
+console.log(data);
+
   if(empty.length == 0){
 
     $.ajax({

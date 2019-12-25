@@ -57,6 +57,28 @@ $strSectionEdit = CIBlock::GetArrayByID($arParams["IBLOCK_ID"], "SECTION_EDIT");
 $strSectionDelete = CIBlock::GetArrayByID($arParams["IBLOCK_ID"], "SECTION_DELETE");
 $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_CONFIRM'));
 
+
+$arCODE_region =array();
+$arsSections = CIBlockSection::GetList(array(), array("IBLOCK_ID" => 9), false,
+    array("UF_CODE_REGION"));
+while ($arSection = $arsSections->GetNext()) {
+
+    $arCODE_region[] = [$arSection["ID"] => $arSection["UF_CODE_REGION"]];
+}
+$arItems = array();
+foreach ($arResult['SECTIONS'] as $item) {
+    foreach ($arCODE_region as $item_code) {
+        foreach ($item_code as $key_1 => $item_code1) {
+            if ($key_1 == $item["ID"]) {
+                $item["UF_CODE_REGION"] = $item_code1;
+                $arItems []= $item;
+            }
+        }
+    }
+}
+
+$arResult["SECTIONS"] = $arItems;
+
 ?>
 <?php
 	switch ($arParams['VIEW_MODE'])
@@ -166,6 +188,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
 
 
         <?php
+
         if ($arResult['SECTION']['ID'] > 0) { ?>
             <?php
             if ($arResult['SECTION']['DEPTH_LEVEL'] == 1) {
@@ -177,19 +200,19 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                             <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                         </div>
                         <input id="referal" type="text" data-region_check="check" data-id_region="<?=$arResult['SECTION']['ID']?>" placeholder="Поиск по региону" value="<?php echo $arResult['SECTION']['NAME']?>" autocomplete="off"/>
-                        <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_">
+                        <ul style="cursor: pointer;" class="custom-serach__items" id="search_result">
                 <?php
                 $db_list = CIBlockSection::GetList(
                     array("name" => "asc"),
                     array('IBLOCK_ID' => 9, "GLOBAL_ACTIVE" => "Y", "DEPTH_LEVEL" => 1,
                         "!ID" => $arResult['SECTION']['ID']),
                     false,
-                    array('ID','NAME'),
+                    array('ID','NAME',"UF_CODE_REGION"),
                     false
                 );
                 while ($ar_result = $db_list->GetNext()) { ?>
 
-                                    <li value="<?=$ar_result['ID']?>" class="custom-serach__items_item region"><?php echo $ar_result['NAME']?></li>
+                                    <li value="<?=$ar_result['ID']?>" class="custom-serach__items_item region"><?php echo $ar_result["UF_CODE_REGION"] .' '. $ar_result['NAME']?></li>
                                 <?php }?>
 
                         </ul>
@@ -200,7 +223,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
 
                 <?php
                 $arFilter = array("IBLOCK_ID" => 9, "ACTIVE"=>"Y", "IBLOCK_SECTION_ID" => $arResult['SECTION']['ID']);
-                $arSelect = Array("ID", "NAME", "IBLOCK_ID","PROPERTY_LOCATION","PROPERTY_NAME_BOSS","PROPERTY_STREET");
+                $arSelect = Array("ID", "NAME", "IBLOCK_ID","PROPERTY_SECOND_NAME","PROPERTY_LOCATION","PROPERTY_PERSON_NAME","PROPERTY_MIDDLE_NAME","PROPERTY_FULL_NAME");
                 $res = CIBlockElement::GetList(array("name" => "asc"), $arFilter, false, false, $arSelect);
                 while($ob = $res->GetNextElement())
                 {
@@ -223,8 +246,10 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                                     <?php } else {?>
 <!--                                    --><?php //echo '<pre>';
 //                                    print_r($arItem);
-//                                    echo '</pre>'; ?>
-                                    <li value="<?=$arItem['ID']?>" class="custom-serach__items_item  hospital" data-name-boss="<?=$arItem["PROPERTY_NAME_BOSS_VALUE"]?>" data-street="<?=$arItem["PROPERTY_STREET_VALUE"]?>"><?php echo $arItem['NAME']?></li>
+//                                    echo '</pre>';
+
+                                    ?>
+                                    <li value="<?=$arItem['ID']?>" class="custom-serach__items_item  hospital" data-name-boss="<?=$arItem["PROPERTY_SECOND_NAME_VALUE"] ." ". $arItem["PROPERTY_PERSON_NAME_VALUE"] ." ". $arItem["PROPERTY_MIDDLE_NAME_VALUE"]?>" data-street="<?=$arItem["PROPERTY_LOCATION_VALUE"]?>"><?php echo $arItem['PROPERTY_FULL_NAME_VALUE']?></li>
                                 <?php }?>
                                 <?php ++$i; ?>
                             <?php } ?>
@@ -246,9 +271,11 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                     <input id="referal" type="text" placeholder="Поиск по региону" autocomplete="off"/>
                     <ul style="cursor: pointer;" class="custom-serach__items" id="search_result">
                         <?php
-                        foreach ($arResult['SECTIONS'] as &$arSection) {?>
+                        foreach ($arResult['SECTIONS'] as &$arSection) {
+
+                        ?>
                             <?php if ($arSection['DEPTH_LEVEL'] == 1) { ?>
-                                <li value="<?=$arSection["ID"]?>" class="custom-serach__items_item region "><?php echo $arSection['NAME']?></li>
+                                <li value="<?=$arSection["ID"]?>" class="custom-serach__items_item region "><?php echo $arSection["UF_CODE_REGION"] ." " . $arSection['NAME']?></li>
                             <?php }?>
                         <?php } ?>
                     </ul>

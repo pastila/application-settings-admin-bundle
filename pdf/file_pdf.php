@@ -83,6 +83,16 @@ $html ='
                     </div>
                 </div>
             </div>
+               <div class="header__items_item" style="margin-bottom: 15px;">
+                <div class="header__items_item_wrap">
+                    <div class="header__items_item--label" >
+                        <span style="font-weight: bold;">Адрес электронной почты:</span>
+                    </div>
+                    <div class="header__items_item--text blue-text cursive" style=" font-style: italic;">
+                        '. $email .'
+                    </div>
+                </div>
+            </div>
             <div class="header__items_item" style="margin-bottom: 15px;">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label">
@@ -90,16 +100,6 @@ $html ='
                     </div>
                     <div class="header__items_item--text red-text cursive" style="font-style: italic;">
                         '. $number_polic_POST .'
-                    </div>
-                </div>
-            </div>
-            <div class="header__items_item" style="margin-bottom: 15px;">
-                <div class="header__items_item_wrap">
-                    <div class="header__items_item--label" >
-                        <span style="font-weight: bold;">Адрес электронной почты:</span>
-                    </div>
-                    <div class="header__items_item--text blue-text cursive" style=" font-style: italic;">
-                        '. $email .'
                     </div>
                 </div>
             </div>

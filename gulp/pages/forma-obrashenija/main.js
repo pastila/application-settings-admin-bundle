@@ -239,87 +239,143 @@ function search_hospital() {
   });
 
   $(document).on('click', '#strax-sluchay', function() {
+    let error = [];
     let $form = $('#appeal-form');
     let $title = $('#page-title');
+
+
+
+
+
     let region = $('#referal').attr('data-id_region');
+    if(region == "" || region == undefined){
+      $('#referal').after(
+          '<span class="label danger"  >Выберете регион</span>');
+      error.push("error");
+    }
     let hospital = $('#referal_two').attr('data-id_region');
+    if(hospital == "" || hospital == undefined){
+      $('#referal_two').after(
+          '<span class="label danger"  >Выберете больницу</span>');
+      error.push("error");
+    }
     let choose_class = $('#class_input').attr('data-id_class');
+    if(choose_class == "" || choose_class == undefined){
+      $('#class_input').after(
+          '<span class="label danger"  >Выберете класс</span>');
+      error.push("error");
+    }
     let choose_group = $('#group_input').attr('data-id_group');
+    if(choose_group == "" || choose_group == undefined){
+      $('#group_input').after(
+          '<span class="label danger"  >Выберете группу</span>');
+      error.push("error");
+    }
     let choose_subgroup = $('#subgroup_input').attr('data-id_subgroup');
+    if(choose_subgroup == "" || choose_subgroup == undefined){
+      $('#subgroup_input').after(
+          '<span class="label danger"  >Выберете подгруппу</span>');
+      error.push("error");
+    }
     let choose_diagnoz = $('#diagnoz_input').attr('data-id_diagnoz');
+    if(choose_diagnoz == "" || choose_diagnoz == undefined){
+      $('#diagnoz_input').after(
+          '<span class="label danger"  >Выберете диагноз</span>');
+      error.push("error");
+    }
     let years = [];
 
     let div = $('#years');
     $(div).find('input:checked').each(function() {
       years.push(this.value);
     });
-    if ($('#choose_diagnoz_elem').val() != 'Здесь нет моего диагноза') {
-      $.post('/ajax/diagnoz.php',
-          {
-            APPEAL_VALUE: appeal,
-            YEARS: years,
-            REGION: region,
-            HOSPITAL: hospital,
-            CLASS: choose_class,
-            GROUP: choose_group,
-            SUBGROUP: choose_subgroup,
-            DIAGNOZ: choose_diagnoz,
-          },
-          function(result) {
-            let diagnoz = jQuery.parseJSON(result);
-            if (diagnoz !== 'error') {
+    if(years.length == 0 ){
+      $(".wrap-chrckbox:first").after(
+          '<span class="label danger"  >Выберете год</span>');
+      error.push("error");
+    }
+    let plan=[];
+    let div_last = $('.wrap-chrckbox').last();
+    $(div_last).find('input:checked').each(function() {
+      plan.push(this.value);
+    });
+    if(plan.length == 0 ){
+      div_last.after(
+          '<span class="label danger"  >Не выбранно</span>');
+      error.push("error");
+    }
+    if(error.length > 0){
 
-              $form.replaceWith(diagnoz['DIAGNOZ']);
-              $title.html(diagnoz['FULL_NAME']);
+    }else {
 
-              document.body.scrollTop = document.documentElement.scrollTop = 0;
+      if ($('#choose_diagnoz_elem').val() != 'Здесь нет моего диагноза') {
+        $.post('/ajax/diagnoz.php',
+            {
+              APPEAL_VALUE: appeal,
+              YEARS: years,
+              REGION: region,
+              HOSPITAL: hospital,
+              CLASS: choose_class,
+              GROUP: choose_group,
+              SUBGROUP: choose_subgroup,
+              DIAGNOZ: choose_diagnoz,
+            },
+            function(result) {
+              let diagnoz = jQuery.parseJSON(result);
+              if (diagnoz !== 'error') {
 
-              if ($('.header__r_auth_reg').length == 1) {
-                $('#generate_form').removeAttr('href');
-                $('#generate_form').click(function() {
-                  $('.header__r_auth_reg').trigger('click');
-                  setTimeout(function() {
-                    $('.register_before_review').removeClass('hidden');
-                  }, 700);
-                });
+                $form.replaceWith(diagnoz['DIAGNOZ']);
+                $title.html(diagnoz['FULL_NAME']);
+
+                document.body.scrollTop = document.documentElement.scrollTop = 0;
+
+                if ($('.header__r_auth_reg').length == 1) {
+                  $('#generate_form').removeAttr('href');
+                  $('#generate_form').click(function() {
+                    $('.header__r_auth_reg').trigger('click');
+                    setTimeout(function() {
+                      $('.register_before_review').removeClass('hidden');
+                    }, 700);
+                  });
+                } else {
+                  $('#generate_form').magnificPopup({
+                    type: 'ajax',
+                    modal: true,
+
+                    callbacks: {
+                      beforeOpen: function() {
+                        if ($(window).width() < 700) {
+                          this.st.focus = false;
+                        } else {
+                          this.st.focus = '#name';
+                        }
+                      },
+                      afterClose: function() {
+                        $.post('/ajax/number_calls.php', function(result) {
+                          $('#number_calls').html(result);
+                        }, 'html');
+                      },
+                    },
+                  });
+                }
               } else {
-                $('#generate_form').magnificPopup({
-                  type: 'ajax',
-                  modal: true,
-
-                  callbacks: {
-                    beforeOpen: function() {
-                      if ($(window).width() < 700) {
-                        this.st.focus = false;
-                      } else {
-                        this.st.focus = '#name';
-                      }
-                    },
-                    afterClose: function() {
-                      $.post('/ajax/number_calls.php', function(result) {
-                        $('#number_calls').html(result);
-                      }, 'html');
-                    },
+                $.magnificPopup.open({
+                  items: {
+                    src: '<div class="white-popup custom_styles_popup">Вы заполнили не все данные</div>',
+                    type: 'inline',
                   },
                 });
-              }
-            } else {
-              $.magnificPopup.open({
-                items: {
-                  src: '<div class="white-popup custom_styles_popup">Вы заполнили не все данные</div>',
-                  type: 'inline',
-                },
-              });
 
-            }
-          }, 'html');
-    } else {
-      $.magnificPopup.open({
-        items: {
-          src: '<div class="white-popup custom_styles_popup">Вы заполнили не все данные</div>',
-          type: 'inline',
-        },
-      });
+              }
+            }, 'html');
+      } else {
+        $.magnificPopup.open({
+          items: {
+            src: '<div class="white-popup custom_styles_popup">Вы заполнили не все данные</div>',
+            type: 'inline',
+          },
+        });
+      }
     }
 
   });

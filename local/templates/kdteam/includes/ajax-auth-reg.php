@@ -3,6 +3,9 @@ use Bitrix\Main\Application;
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
 CModule::IncludeModule("iblock");
 
+
+
+
 ?>
 <!-- Popup Always at the bottom -->
 <form id="auth-form-reg" class="auth-form">
@@ -56,8 +59,16 @@ CModule::IncludeModule("iblock");
                 <input id="phone" type="tel" pattern="\+7\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2}" name="phone"
                        data-mask="+7 (000) 000 00 00"
                        placeholder="+7 (___) ___ __ __"  required>
+                <p id="sms_confirm_error" style="display: none" class="error">Введите номер телефона</p>
             </div>
-<!--            <div class="uu">sds</div>-->
+            <div class="input__wrap">
+                <input type="button" class="accept-phone-js" value="Подтвердить номер телефона">
+            </div>
+            <div class="input__wrap" id="sms_confirm" style="display: none">
+                <label class="input__wrap_label">Введите код подтверждения</label>
+                <input id="check-code-js" name="sms-code" maxlength="5" class="check-code-js" type="text">
+                <input type="button" class="sms-again-button" value="Нету SMS? Отправить повторно">
+            </div>
         </div>
         <div class="popup__wrap_middle">
             <div class="input__wrap">
