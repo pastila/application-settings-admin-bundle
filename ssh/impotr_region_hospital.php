@@ -11,6 +11,7 @@ while (($result = fgetcsv($file, 1500, ';')) !== false) {
 }
 
 fclose($file);
+die();
 CModule::IncludeModule("iblock");
 $img_in_folder = scandir("/var/www/images/logo_company/", SCANDIR_SORT_DESCENDING);
 $fid = Array();
@@ -43,7 +44,7 @@ foreach ($csv as $region => $hospitals) {
     $bs = new CIBlockSection;
     preg_match_all("/([0-9]+)\s+(.+)/", $region, $new_region);
 
-  $lower_name =   mb_strtolower($new_region[2][0]);
+  $lower_name =   mb_strtolower($region);
 
 
     $trans =  translit($lower_name);
@@ -51,7 +52,7 @@ foreach ($csv as $region => $hospitals) {
     $arFields = array(
         "ACTIVE" => "Y",
         "IBLOCK_ID" => 16,
-        "NAME" => $new_region[2][0],
+        "NAME" => $region,
         "CODE"=>$trans,
         "UF_CODE_REGION" => (int)$new_region[1][0],
     );

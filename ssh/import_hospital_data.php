@@ -11,16 +11,16 @@ while (($result = fgetcsv($file, 1500, ',')) !== false)
 }
 
 fclose($file);
-
-foreach ($csv as $region => $hospitals) {
 die();
+foreach ($csv as $region => $hospitals) {
+
     $bs = new CIBlockSection;
     preg_match_all("/([0-9]+)\s+(.+)/", $region, $new_region);
     $lower_name =   mb_strtolower($new_region[2][0]);
     $arFields = array(
         "ACTIVE" => "Y",
         "IBLOCK_ID" => 9,
-        "NAME" => $new_region[2][0],
+        "NAME" => $region,
         "UF_CODE_REGION"=> (int)$new_region[1][0],
     );
 
