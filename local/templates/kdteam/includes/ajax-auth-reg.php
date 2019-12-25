@@ -26,22 +26,21 @@ CModule::IncludeModule("iblock");
         <div class="popup__wrap_top">
             <!-- Input -->
             <div class="input__wrap">
-                <label class="input__wrap_label">Ваша фамилия</label>
+                <label class="input__wrap_label">Фамилия</label>
                 <input id="famaly-name" type="text" name="famaly-name" required>
             </div>
 
             <!-- Input -->
             <div class="input__wrap">
-                <label class="input__wrap_label">Ваше имя</label>
+                <label class="input__wrap_label">Имя</label>
                 <input id="name" type="text" name="name" required>
             </div>
 
             <!-- Input -->
             <div class="input__wrap">
-                <label class="input__wrap_label">Ваше отчество</label>
+                <label class="input__wrap_label">Отчество</label>
                 <input id="last-name" type="text" name="last-name" required>
             </div>
-
         </div>
         <div class="popup__wrap_middle">
             <div class="input__wrap">
@@ -54,20 +53,27 @@ CModule::IncludeModule("iblock");
                 <label class="input__wrap_label">Электронная почта</label>
                 <input id="email" type="email" name="email" required>
             </div>
+
+        </div>
+        <div class="popup__wrap_middle">
             <div class="input__wrap">
                 <label class="input__wrap_label">Ваш номер телефона</label>
                 <input id="phone" type="tel" pattern="\+7\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2}" name="phone"
                        data-mask="+7 (000) 000 00 00"
                        placeholder="+7 (___) ___ __ __"  required>
-                <p id="sms_confirm_error" style="display: none" class="error">Введите номер телефона</p>
+                <p id="sms_confirm_error" style="display: none" class="error sms-error">Введите номер телефона</p>
             </div>
-            <div class="input__wrap">
-                <input type="button" class="accept-phone-js" value="Подтвердить номер телефона">
+            <div class="input__wrap hidden_wrap_phone flex_hidden_wrap_phone main_btn-parent">
+                <input type="button" class="accept-phone-js mainBtn" value="Подтвердить номер телефона">
             </div>
             <div class="input__wrap" id="sms_confirm" style="display: none">
-                <label class="input__wrap_label">Введите код подтверждения</label>
-                <input id="check-code-js" name="sms-code" maxlength="5" class="check-code-js" type="text">
-                <input type="button" class="sms-again-button" value="Нету SMS? Отправить повторно">
+                <div class="input_phone-flex">
+                    <label class="input__wrap_label">Введите код подтверждения</label>
+                    <input id="check-code-js" name="sms-code" maxlength="5" class="check-code-js" type="text">
+                </div>
+                <div class="input_phone-flex main_btn-parent">
+                <input type="button" class="sms-again-button mainBtn" value="Не получили SMS? Отправить повторно.">
+                </div>
             </div>
         </div>
         <div class="popup__wrap_middle">
