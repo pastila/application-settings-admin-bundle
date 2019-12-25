@@ -58,26 +58,26 @@ $strSectionDelete = CIBlock::GetArrayByID($arParams["IBLOCK_ID"], "SECTION_DELET
 $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_CONFIRM'));
 
 
-$arCODE_region =array();
-$arsSections = CIBlockSection::GetList(array(), array("IBLOCK_ID" => 9), false,
-    array("UF_CODE_REGION"));
-while ($arSection = $arsSections->GetNext()) {
-
-    $arCODE_region[] = [$arSection["ID"] => $arSection["UF_CODE_REGION"]];
-}
-$arItems = array();
-foreach ($arResult['SECTIONS'] as $item) {
-    foreach ($arCODE_region as $item_code) {
-        foreach ($item_code as $key_1 => $item_code1) {
-            if ($key_1 == $item["ID"]) {
-                $item["UF_CODE_REGION"] = $item_code1;
-                $arItems []= $item;
-            }
-        }
-    }
-}
-
-$arResult["SECTIONS"] = $arItems;
+//$arCODE_region =array();
+//$arsSections = CIBlockSection::GetList(array(), array("IBLOCK_ID" => 9), false,
+//    array("UF_CODE_REGION"));
+//while ($arSection = $arsSections->GetNext()) {
+//
+//    $arCODE_region[] = [$arSection["ID"] => $arSection["UF_CODE_REGION"]];
+//}
+//$arItems = array();
+//foreach ($arResult['SECTIONS'] as $item) {
+//    foreach ($arCODE_region as $item_code) {
+//        foreach ($item_code as $key_1 => $item_code1) {
+//            if ($key_1 == $item["ID"]) {
+//                $item["UF_CODE_REGION"] = $item_code1;
+//                $arItems []= $item;
+//            }
+//        }
+//    }
+//}
+//
+//$arResult["SECTIONS"] = $arItems;
 
 ?>
 <?php
@@ -207,12 +207,12 @@ $arResult["SECTIONS"] = $arItems;
                     array('IBLOCK_ID' => 9, "GLOBAL_ACTIVE" => "Y", "DEPTH_LEVEL" => 1,
                         "!ID" => $arResult['SECTION']['ID']),
                     false,
-                    array('ID','NAME',"UF_CODE_REGION"),
+                    array('ID','NAME'),
                     false
                 );
                 while ($ar_result = $db_list->GetNext()) { ?>
 
-                                    <li value="<?=$ar_result['ID']?>" class="custom-serach__items_item region"><?php echo $ar_result["UF_CODE_REGION"] .' '. $ar_result['NAME']?></li>
+                                    <li value="<?=$ar_result['ID']?>" class="custom-serach__items_item region"><?php echo  $ar_result['NAME']?></li>
                                 <?php }?>
 
                         </ul>
@@ -275,7 +275,7 @@ $arResult["SECTIONS"] = $arItems;
 
                         ?>
                             <?php if ($arSection['DEPTH_LEVEL'] == 1) { ?>
-                                <li value="<?=$arSection["ID"]?>" class="custom-serach__items_item region "><?php echo $arSection["UF_CODE_REGION"] ." " . $arSection['NAME']?></li>
+                                <li value="<?=$arSection["ID"]?>" class="custom-serach__items_item region "><?php echo  $arSection['NAME']?></li>
                             <?php }?>
                         <?php } ?>
                     </ul>

@@ -54,27 +54,19 @@ $(document).ready(function() {
 
         $('#region_name').text(select_region);
         $('#hosptital_name').html('Не выбрано');
+        $('#street_name').html('Не выбрано');
+        $('#boss_name').html('Не выбрано');
         search_region();
         search_hospital();
       },
     }).done(function(msg) {
     });
   });
-  $(document).mouseup(function(e) {
-    var div = $('#search_result');
-    var input = $('#referal');
-    if (div.text() == '' || $('#referal').attr('data-region_check') != 'check') {
-      if (!div.is(e.target) && div.has(e.target).length === 0 &&
-          !input.is(e.target)) {
-        $('#referal').text('');
-        $('#referal').val('');
-      }
-    }
-  });
+
  function search_region() {
-   console.log("23");
+
    $('#referal').on('keyup', function() {
-console.log("3232");
+
      var $this = $(this);
      var delay = 500;
      if ($this.val() == '') {
@@ -95,10 +87,10 @@ console.log("3232");
 
            if ($('.error_region').length != 0) {
              $('.error_region').remove();
-             $('#search_result').append('<li class="error_region" >Город не найден</li>');
+             $('#search_result').append('<li class="error_region" >Регион не найден</li>');
            } else {
-          console.log(   $("#search_result"));
-             $("#search_result").append('<li class="error_region" >Город не найден</li>');
+
+             $("#search_result").append('<li class="error_region" >Регион не найден</li>');
            }
          } else {
            setTimeout(function() {
@@ -427,7 +419,14 @@ function search_hospital() {
       $('#choose_class').removeAttr('style');
     }
   });
-
+  $(document).on('click', '.error_region', function() {
+    $.magnificPopup.open({
+      items: {
+        src: '<div class="white-popup custom_styles_popup">Если среди диагнозов вы не нашли свой, значит заболевание не относится к числу тех, что оплачитваются из средства ОМС. Случай не является страховым.</div>',
+        type: 'inline',
+      },
+    });
+  });
   $(document).on('click', '#empty_class', function() {
     $.magnificPopup.open({
       items: {
