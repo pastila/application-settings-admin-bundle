@@ -73,19 +73,29 @@ if ($_FILES['import_file']) {
 
 $true = $user->Update($USER->GetID(), $array_field);
 
+
 $arFields_user = array(
     "IBLOCK_ID" => 13,
     "NAME" => $person["EMAIL"]
 );
 $rsSections = CIBlockSection::GetList(array('LEFT_MARGIN' => 'ASC'), $arFields_user);
 $rsSections_res = $rsSections->GetNext();
-
-
 $arFields = array(
     "NAME" => $_POST["email"]
 );
-
 $bs->Update($rsSections_res["ID"], $arFields, true, true, false);
+
+$arFields_user = array(
+    "IBLOCK_ID" => 11,
+    "NAME" => $person["EMAIL"]
+);
+$rsSections = CIBlockSection::GetList(array('LEFT_MARGIN' => 'ASC'), $arFields_user);
+$rsSections_res = $rsSections->GetNext();
+$arFields = array(
+    "NAME" => $_POST["email"]
+);
+$bs->Update($rsSections_res["ID"], $arFields, true, true, false);
+
 
 if ($user->LAST_ERROR != "") {
     echo $strError .= $user->LAST_ERROR;

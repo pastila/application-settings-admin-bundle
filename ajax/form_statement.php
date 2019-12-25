@@ -97,7 +97,7 @@ if($USER->IsAuthorized()) {
         $idElement = $oElement->Add($arFields_el);
     } else {
 
-        $arFields = array("IBLOCK_ID" => 11, "NAME" => $USER->GetLogin(), "UF_USER_ID" => $USER->GetID());
+        $arFields = array("IBLOCK_ID" => 11, "NAME" => $USER->GetEmail(), "UF_USER_ID" => $USER->GetID());
         $bs = new CIBlockSection;
         $ID = $bs->Add($arFields);
         if ($ID > 0) {
