@@ -119,7 +119,7 @@ $(document).ready(function() {
               setTimeout(function() {
                 $.magnificPopup.open({
                   items: {
-                    src: '<div class="white-popup custom_styles_popup">Регистрация  успешно завершена . Теперь вы можете проверить свой диагноз</div>',
+                    src: '<div class="white-popup custom_styles_popup">Регистрация  успешно завершена . Теперь вы можете проверить свой диагноз.</div>',
                     type: 'inline'
                   }
                 });
