@@ -29,9 +29,7 @@ $rsSections = CIBlockSection::GetList(array(), $arFilter, false, $arSelect, fals
 $rsUser = CUser::GetByID($USER->GetID());
 $arUser = $rsUser->Fetch();
 $phone = $arUser['PERSONAL_PHONE'];
-echo '<pre>';
-print_r($phone);
-echo '</pre>';
+
 $arName = $arUser['NAME'] . ' ' . $arUser['LAST_NAME'] . ' ' . $arUser['SECOND_NAME'];
 $arAppeal = $_SESSION["APPEAL"];
 
