@@ -51,7 +51,7 @@ $(document).ready(function() {
     });
     $('.accept-phone-js').click(function() {
       if ($('#phone')['0'].validity.valid === true) {
-        $(this).css('display', 'none');
+        $('.hidden_wrap_phone').css('display', 'none');
         $('#sms_confirm_error').css('display','none');
         $('#sms_confirm').css('display', 'block');
         $.ajax({
