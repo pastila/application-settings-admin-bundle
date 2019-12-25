@@ -40,7 +40,7 @@ if ((!empty($_POST['APPEAL_VALUE']) and !empty($_POST['HOSPITAL'])) and json_dec
 
 
         $id_company = $person["UF_INSURANCE_COMPANY"];
-        $prop=CIBlockElement::GetByID($id_company)->GetNextElement()->GetProperties();
+       $prop=CIBlockElement::GetByID($id_company)->GetNextElement()->GetProperties();
         $file_comment = CFile::ResizeImageGet($prop["LOGO_IMG"]["VALUE"], array('width'=>300, 'height'=>600), BX_RESIZE_IMAGE_PROPORTIONAL, true);
         $url_logo_company = $file_comment["src"];
 

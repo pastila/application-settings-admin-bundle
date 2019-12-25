@@ -2,6 +2,7 @@
 
 use Bitrix\Main\Page\Asset;
 $asset = Asset::getInstance();
+
 $asset->addCss(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/main.min.css");
 $asset->addCss(SITE_TEMPLATE_PATH . "/pages/stax-sluchay/main.min.css");
 $asset->addJs(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/main.min.js");

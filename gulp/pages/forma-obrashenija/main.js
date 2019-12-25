@@ -1,5 +1,4 @@
-//= ../../node_modules/jquery/dist/jquery.min.js
-//= ../../node_modules/magnific-popup/dist/jquery.magnific-popup.min.js
+
 
 $(document).ready(function() {
   search_region();
@@ -243,10 +242,6 @@ function search_hospital() {
     let $form = $('#appeal-form');
     let $title = $('#page-title');
 
-
-
-
-
     let region = $('#referal').attr('data-id_region');
     if(region == "" || region == undefined){
       $('#referal').after(
@@ -309,35 +304,37 @@ function search_hospital() {
     }else {
 
       if ($('#choose_diagnoz_elem').val() != 'Здесь нет моего диагноза') {
-        $.post('/ajax/diagnoz.php',
-            {
-              APPEAL_VALUE: appeal,
-              YEARS: years,
-              REGION: region,
-              HOSPITAL: hospital,
-              CLASS: choose_class,
-              GROUP: choose_group,
-              SUBGROUP: choose_subgroup,
-              DIAGNOZ: choose_diagnoz,
-            },
-            function(result) {
-              let diagnoz = jQuery.parseJSON(result);
-              if (diagnoz !== 'error') {
 
-                $form.replaceWith(diagnoz['DIAGNOZ']);
-                $title.html(diagnoz['FULL_NAME']);
+        if ($('.header__r_auth_reg').length == 1  && ($(".header__r_auth_reg").attr("data-rigstration") == 0)) {
 
-                document.body.scrollTop = document.documentElement.scrollTop = 0;
+            $('.header__r_auth_reg').trigger('click');
+            setTimeout(function() {
+              $('.register_before_review').removeClass('hidden');
+            }, 700);
 
-                if ($('.header__r_auth_reg').length == 1) {
-                  $('#generate_form').removeAttr('href');
-                  $('#generate_form').click(function() {
-                    $('.header__r_auth_reg').trigger('click');
-                    setTimeout(function() {
-                      $('.register_before_review').removeClass('hidden');
-                    }, 700);
-                  });
-                } else {
+        } else {
+
+
+          $.post('/ajax/diagnoz.php',
+              {
+                APPEAL_VALUE: appeal,
+                YEARS: years,
+                REGION: region,
+                HOSPITAL: hospital,
+                CLASS: choose_class,
+                GROUP: choose_group,
+                SUBGROUP: choose_subgroup,
+                DIAGNOZ: choose_diagnoz,
+              },
+              function(result) {
+                let diagnoz = jQuery.parseJSON(result);
+                if (diagnoz !== 'error') {
+
+                  $form.replaceWith(diagnoz['DIAGNOZ']);
+                  $title.html(diagnoz['FULL_NAME']);
+
+                  document.body.scrollTop = document.documentElement.scrollTop = 0;
+
                   $('#generate_form').magnificPopup({
                     type: 'ajax',
                     modal: true,
@@ -357,17 +354,18 @@ function search_hospital() {
                       },
                     },
                   });
-                }
-              } else {
-                $.magnificPopup.open({
-                  items: {
-                    src: '<div class="white-popup custom_styles_popup">Вы заполнили не все данные</div>',
-                    type: 'inline',
-                  },
-                });
 
-              }
-            }, 'html');
+                } else {
+                  $.magnificPopup.open({
+                    items: {
+                      src: '<div class="white-popup custom_styles_popup">Вы заполнили не все данные</div>',
+                      type: 'inline',
+                    },
+                  });
+
+                }
+              }, 'html');
+        }
       } else {
         $.magnificPopup.open({
           items: {

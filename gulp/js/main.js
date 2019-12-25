@@ -72,7 +72,7 @@ $(document).ready(function() {
 
     $('#auth-form-reg').validator().on('submit', function(e) {
        e.preventDefault();
-      if($("#generate_form").length != 0){
+      if($("#strax-sluchay").length != 0){
         $('#auth-form-reg').append("<input type='hidden'  name='review' value='review'>")
       }
         var data_form = $('#auth-form-reg').serializeArray();
@@ -112,14 +112,14 @@ $(document).ready(function() {
 
             } else if (suc.review == "register_with_review") {
 
-              $(".close-modal").trigger("click");
-              $("#generate_form").attr("href", "/ajax/form_statement.php");
+            $("#auth-form-reg").find($(".close-modal")).trigger("click");
+
+              $(".header__r_auth_reg").attr("data-rigstration","1");
               $("body").css({"overflow": "hidden"});
               setTimeout(function() {
                 $.magnificPopup.open({
                   items: {
-                    src: '<div class="white-popup custom_styles_popup">Регистрация и создание обращения успешно завершены.' +
-                    'Для перехода в личный кабинет нажмите <a href="/obrashcheniya/" >сюда</a></div>',
+                    src: '<div class="white-popup custom_styles_popup">Регистрация  успешно завершена . Теперь вы можете проверить свой диагноз</div>',
                     type: 'inline'
                   }
                 });
