@@ -10,6 +10,7 @@ $(document).ready(function() {
     if (!div.is(e.target)) {
       div.remove();
     }
+    $('.error_step-card').removeClass('error_block');
   });
 
   //authorization
