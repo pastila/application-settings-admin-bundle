@@ -182,9 +182,18 @@
         }
     }
 }
-.error_step-card{
+.error_step-card-1,
+.error_step-card-3,
+.error_step-card-4 {
     &.error_block{
-        box-shadow: 0 0 2rem rgba(242, 38, 19, .8);
+        box-shadow: 0 0 1.4rem rgba(242, 38, 19, .8);
+    }
+}
+.error_step-card-4{
+    .absolute_label{
+        position: absolute;
+        top: 100%;
+        left: 0;
     }
 }
 

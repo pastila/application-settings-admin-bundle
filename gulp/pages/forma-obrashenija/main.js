@@ -239,42 +239,42 @@ function search_hospital() {
       $('#referal').after(
           '<p class="label danger"  >Выберите регион</p>');
       error.push("error");
-      $('.error_step-card').addClass('error_block');
+      $('.error_step-card-3').addClass('error_block');
     }
     let hospital = $('#referal_two').attr('data-id_region');
     if(hospital == "" || hospital == undefined){
       $('#referal_two').after(
           '<p class="label danger"  >Выберите больницу</p>');
       error.push("error");
-      $('.error_step-card').addClass('error_block');
+      $('.error_step-card-3').addClass('error_block');
     }
     let choose_class = $('#class_input').attr('data-id_class');
     if(choose_class == "" || choose_class == undefined){
       $('#class_input').after(
-          '<p class="label danger"  >Выберите класс</p>');
+          '<p class="label danger absolute_label">Выберите класс</p>');
       error.push("error");
-      $('.error_step-card').addClass('error_block');
+      $('.error_step-card-4').addClass('error_block');
     }
     let choose_group = $('#group_input').attr('data-id_group');
     if(choose_group == "" || choose_group == undefined){
       $('#group_input').after(
-          '<p class="label danger"  >Выберите группу</p>');
+          '<p class="label danger absolute_label">Выберите группу</p>');
       error.push("error");
-      $('.error_step-card').addClass('error_block');
+      $('.error_step-card-4').addClass('error_block');
     }
     let choose_subgroup = $('#subgroup_input').attr('data-id_subgroup');
     if(choose_subgroup == "" || choose_subgroup == undefined){
       $('#subgroup_input').after(
-          '<p class="label danger"  >Выберите подгруппу</p>');
+          '<p class="label danger absolute_label">Выберите подгруппу</p>');
       error.push("error");
-      $('.error_step-card').addClass('error_block');
+      $('.error_step-card-4').addClass('error_block');
     }
     let choose_diagnoz = $('#diagnoz_input').attr('data-id_diagnoz');
     if(choose_diagnoz == "" || choose_diagnoz == undefined){
       $('#diagnoz_input').after(
-          '<p class="label danger"  >Выберите диагноз</p>');
+          '<p class="label danger absolute_label">Выберите диагноз</p>');
       error.push("error");
-      $('.error_step-card').addClass('error_block');
+      $('.error_step-card-4').addClass('error_block');
     }
     let years = [];
 

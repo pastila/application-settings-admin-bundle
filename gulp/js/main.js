@@ -10,7 +10,9 @@ $(document).ready(function() {
     if (!div.is(e.target)) {
       div.remove();
     }
-    $('.error_step-card').removeClass('error_block');
+    $('.error_step-card-1').removeClass('error_block');
+    $('.error_step-card-3').removeClass('error_block');
+    $('.error_step-card-4').removeClass('error_block');
   });
 
   //authorization

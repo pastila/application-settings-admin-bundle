@@ -132,7 +132,7 @@ while($ob = $res->GetNextElement()){
         <!-- 3 Step -->
         <section class="form-obrashcheniya__step_three">
             <div class="form-obrashcheniya__step_three_l">
-                <div id="hospitals" class="card error_step-card">
+                <div id="hospitals" class="card error_step-card-3">
                     <?php
                     $APPLICATION->IncludeComponent(
                         "bitrix:catalog.section.list",
@@ -208,7 +208,7 @@ while($ob = $res->GetNextElement()){
 
         <!-- 4 Step -->
         <section class="form-obrashcheniya__step_four">
-            <div class="card error_step-card">
+            <div class="card error_step-card-4">
                 <p class="form-obrashcheniya__step_four_text"><?=$arResult_block[8]?></p>
 
                 <a class="link-underline" href="#">Ссылка на статью в блоге</a>
