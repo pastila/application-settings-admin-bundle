@@ -195,7 +195,7 @@ while($ob = $res->GetNextElement()){
                    <span class="label" data-js-label>.png .jpeg</span>
                    <span class="label error-inputs block-error-label">Максимальный размер файла 10mb</span>
                    <span class="label error-inputs block-error-label_size" style="display: none" >Размер файла превышен</span>
-                   <span class="label error-inputs block-error-label_format" style="display: none" >Не первый формат</span>
+                   <span class="label error-inputs block-error-label_format" style="display: none" >Не вервый формат</span>
                </div>
            </div>
                <div class="feedback__top">
