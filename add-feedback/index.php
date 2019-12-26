@@ -34,34 +34,35 @@ global $USER;?>
                     <div class="white_block">
 
                         <div class="feedback__top">
-                            <div class="custom-select custom-select-js-cite">
-                                <div class="title-select" data-select="city">Ваш Город</div>
-                                <div class="danger" style="display: none" >Выбирете город</div>
-                                <select>
-                                    <option value="0">Выберите регион</option>
 
+                            <label class="title-select" for="user_pass">Выбор региона: </label>
+                            <div class="input__wrap">
+                                <div class="input__ico">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                                </div>
+                                <input id="referal" type="text" placeholder="Поиск по региону" autocomplete="off"/>
+                                <ul style="cursor: pointer;" class="custom-serach__items" id="search_result">
                                     <?
                                     $arOrder = Array("name"=>"asc");
-                                    $arFilter = Array("IBLOCK_ID"=>16);
+                                    $arFilter = Array("IBLOCK_ID"=>9);
                                     $res = CIBlockSection::GetList($arOrder, $arFilter, false );
                                     while($ob = $res->GetNext()){
 
                                         ?>
-                                        <option value="<?=$ob["ID"]?>" data-id-city="<?=$ob["ID"]?>"><?=$ob["NAME"]?></option>
+                                        <li value="<?=$ob["ID"]?>" class="custom-serach__items_item region " data-id-city="<?=$ob["ID"]?>"><?=$ob["NAME"]?></li>
 
                                     <?  }?>
-
-                                </select>
+                                </ul>
                             </div>
+                            <label class="title-select" for="user_pass">Список больниц : </label>
+                            <div class="input__wrap">
+                                <div class="input__ico">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                                </div>
+                                <input id="referal_two" type="text" placeholder="Поиск по региону" autocomplete="off"/>
+                                <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_hospital">
 
-                            <div class="custom-select  custom-select-js  no_click">
-
-                                <div class="title-select" data-select="company">Страховая компания</div>
-                                <div class="danger" style="display: none">Выбирете компанию</div>
-                                <select>
-                                    <option value="0" >Выберите регион: </option>
-                                </select>
-
+                                </ul>
                             </div>
                         </div>
 

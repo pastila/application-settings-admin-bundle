@@ -101,40 +101,224 @@ $(".star").click(function() {
   data.star = $(this).attr("data-value");
 })
 
-$(document).on("click",".custom-select-js-cite > .select-items > div",function() {
+// $(document).on("click",".custom-select-js-cite > .select-items > div",function() {
+//
+//   data.id_city = $(this).attr('data-id-cite');
+//
+//   $.ajax({
+//     url: "/ajax/form_city.php",
+//     type: 'POST',
+//     data: data,
+//     dataType: "html",
+//     beforeSend: function() {
+//       $(".item_select").each(function() {
+//         $(this).remove();
+//       })
+//     }
+//   }).done(function(msg) {
+//     let list_compani = JSON.parse(msg);
+//
+//     list_compani.forEach(function(item) {
+//         $(".select-items").append('<div class="item_select" data-id-company="'+item.ID+'" >'+item.NAME+'</div>');
+//      });
+//         $(".custom-select-js").removeClass("no_click");
+//   });
+//
+//
+// });
+// $(document).on("click",".item_select",function() {
+//     let name_company_div = $(this).text();
+//     $(".select-arrow-active").text(name_company_div);
+//
+//   data.id_compani = $(this).attr('data-id-company');
+//
+// });
 
-  data.id_city = $(this).attr('data-id-cite');
 
-  $.ajax({
-    url: "/ajax/form_city.php",
-    type: 'POST',
-    data: data,
-    dataType: "html",
-    beforeSend: function() {
-      $(".item_select").each(function() {
-        $(this).remove();
-      })
+
+
+
+
+
+$(document).ready(function() {
+  $(document).on('click', '#search_result li', function() {
+    $('#referal').val($(this).text());
+    $('#search_result').fadeOut();
+  });
+  $(document).on('click', '#referal', function() {
+
+    $('#search_result').css({'display': 'block'});
+  });
+  $(document).mouseup(function(e) {
+    let container = $('#referal');
+    if (container.has(e.target).length === 0) {
+      $('#search_result').fadeOut();
     }
-  }).done(function(msg) {
-    let list_compani = JSON.parse(msg);
+  });
+  $(document).on('click', '#search_result_hospital li', function() {
+    $('#referal_two').val($(this).text());
+    $('#search_result_hospital').fadeOut();
+  });
+  $(document).on('click', '#referal_two', function() {
+    $('#search_result_hospital').css({'display': 'block'});
+  });
 
-    list_compani.forEach(function(item) {
-        $(".select-items").append('<div class="item_select" data-id-company="'+item.ID+'" >'+item.NAME+'</div>');
-     })
-        $(".custom-select-js").removeClass("no_click");
+  $(document).mouseup(function(e) {
+    let container = $('#referal_two');
+    if (container.has(e.target).length === 0) {
+      $('#search_result_hospital').fadeOut();
+    }
   });
 
 
-})
-$(document).on("click",".item_select",function() {
-    let name_company_div = $(this).text();
-    $(".select-arrow-active").text(name_company_div);
-
-  data.id_compani = $(this).attr('data-id-company');
 
 
-})
-$(document).ready(function() {
+
+
+    $('#referal').on('keyup', function() {
+      var $this = $(this);
+      var delay = 500;
+      if ($this.val() == '') {
+        $this.attr("data-id_region","");
+        $(".hospital").each(function(){
+         $(this).remove();
+        });
+        $("#hospital").remove();
+        $("#referal_two").val("");
+        $("#referal_two").attr("data-id_region","");
+      }
+      clearTimeout($this.data('timer'));
+      $this.data('timer', setTimeout(function() {
+        $this.removeData('timer');
+        $.post('/ajax/smart_search.php', {name_city: $this.val()}, function(msg) {
+          if ($('.error_region').length != 0) {
+            $('.error_region').remove();
+          }
+          $('.region').each(function() {
+            $(this).remove();
+          });
+          if (msg == 'error_region') {
+
+            if ($('.error_region').length != 0) {
+              $('.error_region').remove();
+              $('#search_result').append('<li class="error_region" >Регион не найден</li>');
+            } else {
+              $("#search_result").append('<li class="error_region" >Регион не найден</li>');
+            }
+          } else {
+            setTimeout(function() {
+              $('#search_result').append(msg);
+            }, 100);
+          }
+        });
+      }, delay));
+    });
+
+
+
+
+
+
+  $(document).on('click', '.region', function() {
+
+    let id_region = $(this).attr('value');
+    $('#referal').attr('data-id_region', id_region);
+    $('#referal').attr('data-region_check', 'check');
+    $.post('/ajax/smart_search_hospital.php', {region_id:$("#referal").attr("data-id_region") }, function(msg) {
+      if ($('.error_region').length != 0) {
+        $('.error_region').remove();
+      }
+      $('.hospital').each(function() {
+        $(this).remove();
+      });
+      $('.hospital-empty').remove();
+        setTimeout(function() {
+          $('#search_result_hospital').append(msg);
+        }, 100);
+
+    });
+  });
+
+
+
+
+
+    $(document).on('click', '.hospital', function() {
+      let id_region = $(this).attr('value');
+      let select_region = $(this).text();
+      $('#referal_two').val(select_region);
+      $('#referal_two').attr('data-id_region', id_region);
+      $('#referal_two').attr('data-region_check', 'check');
+    });
+
+    $('#referal_two').on('keyup', function() {
+      var $this = $(this);
+      var delay = 500;
+      if ($this.val() == '') {
+        $this.attr("data-id_region","");
+      }
+      clearTimeout($this.data('timer'));
+      $this.data('timer', setTimeout(function() {
+        $this.removeData('timer');
+        $.post('/ajax/smart_search_hospital.php', {name_hospital: $this.val(), region_id:$("#referal").attr("data-id_region") }, function(msg) {
+          if ($('.error_region').length != 0) {
+            $('.error_region').remove();
+          }
+          $('.hospital').each(function() {
+            $(this).remove();
+          });
+          $('.hospital-empty').remove();
+          if (msg == 'error_hospital') {
+            keyup_class();
+            if ($('.error_region').length != 0) {
+              $('.error_region').remove();
+              $('#search_result_hospital').append('<li class="error_region" >Больница не найдена</li>');
+              $('.hospital-empty').remove();
+
+            } else {
+              $('#search_result_hospital').append('<li class="error_region" >Больница не найдена</li>');
+              $('.hospital-empty').remove();
+            }
+          } else {
+            setTimeout(function() {
+              $('#search_result_hospital').append(msg);
+            }, 100);
+
+          }
+        });
+      }, delay));
+    });
+
+
+  $(document).on('click', '.hospital', function() {
+    let id_region = $(this).attr('value');
+    let select_region = $(this).text();
+    $('#referal_two').val(select_region);
+    $('#referal_two').attr('data-id_region', id_region);
+    $('#referal_two').attr('data-region_check', 'check');
+
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 $("#form-comments").validator().on('submit', function(e) {
@@ -142,6 +326,31 @@ $("#form-comments").validator().on('submit', function(e) {
 
   var data_form = $('#form-comments').serializeArray();
   let empty = [];
+
+
+
+
+  let region = $('#referal').attr('data-id_region');
+  if(region == "" || region == undefined){
+    $('#referal').after(
+        '<span class="label danger"  >Выберете регион</span>');
+    empty.push("error");
+  }else{
+    data.id_city = region;
+  }
+  let hospital = $('#referal_two').attr('data-id_region');
+  if(hospital == "" || hospital == undefined){
+    $('#referal_two').after(
+        '<span class="label danger"  >Выберете больницу</span>');
+    empty.push("error");
+  }else{
+    data.id_compani = hospital;
+  }
+
+
+
+
+
   data.head =data_form[0]["value"];
   data.text =data_form[1]["value"];
   if(data.id_city == 0){
