@@ -378,12 +378,30 @@ $(document).ready(function() {
     },
   });
 
+  //feedback modal
+  $('#write-us_modal').magnificPopup({
+    type: 'ajax',
+    modal: true,
+    focus: '#name',
+
+    callbacks: {
+      beforeOpen: function() {
+        if ($(window).width() < 700) {
+          this.st.focus = false;
+        } else {
+          this.st.focus = '#name';
+        }
+      },
+    },
+  });
+
 });
 
 $(document).on('click', '.close-modal', function(e) {
   e.preventDefault();
   $.magnificPopup.close();
 });
+
 
 // Star rating
 $(document).ready(function() {
