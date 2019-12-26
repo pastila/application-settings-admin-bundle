@@ -433,6 +433,45 @@ function search_hospital() {
       },
     });
   });
+
+
+
+  $(document).on('click', '.error_class', function() {
+    $.magnificPopup.open({
+      items: {
+        src: '<div class="white-popup custom_styles_popup">Если среди диагнозов вы не нашли свой, значит заболевание не относится к числу тех, что оплачитваются из средства ОМС. Случай не является страховым.</div>',
+        type: 'inline',
+      },
+    });
+  });
+  $(document).on('click', '.error_group', function() {
+    $.magnificPopup.open({
+      items: {
+        src: '<div class="white-popup custom_styles_popup">Если среди диагнозов вы не нашли свой, значит заболевание не относится к числу тех, что оплачитваются из средства ОМС. Случай не является страховым.</div>',
+        type: 'inline',
+      },
+    });
+  });
+  $(document).on('click', '.error_subgroup', function() {
+    $.magnificPopup.open({
+      items: {
+        src: '<div class="white-popup custom_styles_popup">Если среди диагнозов вы не нашли свой, значит заболевание не относится к числу тех, что оплачитваются из средства ОМС. Случай не является страховым.</div>',
+        type: 'inline',
+      },
+    });
+  });
+  $(document).on('click', '.error_diagnoz', function() {
+    $.magnificPopup.open({
+      items: {
+        src: '<div class="white-popup custom_styles_popup">Если среди диагнозов вы не нашли свой, значит заболевание не относится к числу тех, что оплачитваются из средства ОМС. Случай не является страховым.</div>',
+        type: 'inline',
+      },
+    });
+  });
+
+
+
+
   $(document).on('click', '#empty_class', function() {
     $.magnificPopup.open({
       items: {

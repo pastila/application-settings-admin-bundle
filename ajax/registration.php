@@ -22,7 +22,7 @@ if($_POST) {
     $nomer_polica = $_POST["number_polic"];
     $id_company = $_POST["company"];
     $parol = $_POST["password"];
-
+    $id_region = $_POST["id_region"];
     global $USER;
     global $DB;
 
@@ -57,7 +57,8 @@ if($_POST) {
             "CONFIRM_PASSWORD" => $parol,
             "PERSONAL_PHONE" => $tel,
             "UF_INSURANCE_POLICY" => $nomer_polica,
-            "UF_INSURANCE_COMPANY" => $id_company
+            "UF_INSURANCE_COMPANY" => $id_company,
+            "UF_REGION" => $id_region
         );
         $ID = $USER->Add($arFields);
         $ID_user = array("user"=> $ID);

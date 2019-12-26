@@ -93,31 +93,35 @@ CModule::IncludeModule("iblock");
         <div class="popup__wrap_bottom">
             <!-- Input -->
             <div class="input__wrap select_block">
-                <label class="input__wrap_label">Регион в котором заключали договор</label>
+                <label class="title-select " for="user_pass">Регион в котором заключали договор </label>
+                <div class="input__wrap">
+                    <div class="input__ico">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                    </div>
+                    <input id="referal"  value="" type="text" placeholder="Поиск по региону" autocomplete="off"/>
+                    <ul style="cursor: pointer;" class="custom-serach__items" id="search_result">
+                        <?
+                        $arOrder = Array("name"=>"asc");
+                        $arFilter = Array("IBLOCK_ID"=>16);
+                        $res = CIBlockSection::GetList($arOrder, $arFilter, false );
+                        while($ob = $res->GetNext()){
 
-                <select  class="select-selected" id="sel_reg" required>
-                    <option>Выберите регион</option>
-                    <?php
-                    $arSelect = Array("ID", "IBLOCK_ID", "NAME");
-                    $arFilter = Array("IBLOCK_ID"=> 16, "ACTIVE"=>"Y" ,"%NAME"=>$_POST["name"]);
-                    $res = CIBlockSection::GetList(false, $arFilter, false, $arSelect,false);
-                    while($ob = $res->GetNext()) {
-                        $arFields = $ob;
-                        echo '<option class="region_reg" value="' . $arFields['ID'] . '">' . $arFields["NAME"] . '</option>';
-                    }
-                    ?>
-                </select>
+                            ?>
+                            <li value="<?=$ob["ID"]?>" class="custom-serach__items_item region " data-id-city="<?=$ob["ID"]?>"><?=$ob["NAME"]?></li>
 
-                <div class="search_company scrollbar"></div>
-            </div>
+                        <?  }?>
+                    </ul>
+                </div>
+                <label class="title-select" for="user_pass">Укажите свою страховую компанию </label>
+                <div class="input__wrap">
+                    <div class="input__ico">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                    </div>
+                    <input id="referal_two" value="" type="text" placeholder="Поиск по компаниям" autocomplete="off"/>
+                    <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_hospital">
 
-            <div class="input__wrap select_block">
-                <label class="input__wrap_label">Укажите свою страховую компанию</label>
-                <select class="select-selected" id="oms_company" required>
-                    <option>Вы не выбрали регион</option>
-                </select>
-                <input value="" id="company" type="hidden" name="company" required>
-            </div>
+                    </ul>
+                </div>
         </div>
         <div class="wrap-chrckbox checkbox_registration">
                                             <label class="check-label">

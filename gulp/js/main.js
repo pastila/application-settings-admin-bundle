@@ -4,9 +4,8 @@
 //= ../../node_modules/air-datepicker/dist/js/datepicker.min.js
 $(document).ready(function() {
 
-
-  $(document).mouseup(function (e){
-    var div = $(".danger");
+  $(document).mouseup(function(e) {
+    var div = $('.danger');
     if (!div.is(e.target)) {
       div.remove();
     }
@@ -32,30 +31,156 @@ $(document).ready(function() {
 
     $('#phone').mask('+7(000)000-00-00');
 
-     $(".datepicker-here").datepicker();
-     $("#datepickers-container").css({"z-index":"9999"});
+    $('.datepicker-here').datepicker();
+    $('#datepickers-container').css({'z-index': '9999'});
 
-    $('#sel_reg').change(function() {
-      let sVal = $(this).val();
-      $.ajax({
-        dataType: 'html',
-        url: '/ajax/search_company.php',
-        type: 'POST',
-        data: {id :sVal},
-      }).done(function(html) {
-        $('#oms_company').html(html);
-        console.log('html');
-        $('#oms_company').change(function() {
-          let company = $(this).val();
-          console.log(company);
-          $('#company').attr('value', company);
-        })
-      });
+    $(document).on('click', '#search_result li', function() {
+      $('#referal').val($(this).text());
+      $('#search_result').fadeOut();
     });
+    $(document).on('click', '#referal', function() {
+
+      $('#search_result').css({'display': 'block'});
+    });
+    $(document).mouseup(function(e) {
+      let container = $('#referal');
+      if (container.has(e.target).length === 0) {
+        $('#search_result').fadeOut();
+      }
+    });
+    $(document).on('click', '#search_result_hospital li', function() {
+      $('#referal_two').val($(this).text());
+      $('#search_result_hospital').fadeOut();
+    });
+    $(document).on('click', '#referal_two', function() {
+      $('#search_result_hospital').css({'display': 'block'});
+    });
+
+    $(document).mouseup(function(e) {
+      let container = $('#referal_two');
+      if (container.has(e.target).length === 0) {
+        $('#search_result_hospital').fadeOut();
+      }
+    });
+    $('#referal').on('keyup', function() {
+      var $this = $(this);
+      var delay = 500;
+      if ($this.val() == '') {
+        $this.attr('data-id_region', '');
+        $('.hospital').each(function() {
+          $(this).remove();
+        });
+        $('#hospital').remove();
+        $('#referal_two').val('');
+        $('#referal_two').attr('data-id_region', '');
+      }
+      clearTimeout($this.data('timer'));
+      $this.data('timer', setTimeout(function() {
+        $this.removeData('timer');
+        $.post('/ajax/personal-cabinet/search_region.php',
+            {name_city: $this.val()}, function(msg) {
+              if ($('.error_region').length != 0) {
+                $('.error_region').remove();
+              }
+              $('.region').each(function() {
+                $(this).remove();
+              });
+              if (msg == 'error_region') {
+
+                if ($('.error_region').length != 0) {
+                  $('.error_region').remove();
+                  $('#search_result').
+                      append('<li class="error_region" >Регион не найден</li>');
+                } else {
+                  $('#search_result').
+                      append('<li class="error_region" >Регион не найден</li>');
+                }
+              } else {
+                setTimeout(function() {
+                  $('#search_result').append(msg);
+                }, 100);
+              }
+            });
+      }, delay));
+    });
+
+    $(document).on('click', '.region', function() {
+
+      let id_region = $(this).attr('value');
+      $('#referal').attr('data-id_region', id_region);
+      $('#referal').attr('data-region_check', 'check');
+      $.post('/ajax/personal-cabinet/search_company.php',
+          {region_id: $('#referal').attr('data-id_region')}, function(msg) {
+            if ($('.error_region').length != 0) {
+              $('.error_region').remove();
+            }
+            $('.hospital').each(function() {
+              $(this).remove();
+            });
+            $('.hospital-empty').remove();
+            setTimeout(function() {
+              $('#search_result_hospital').append(msg);
+            }, 100);
+
+          });
+    });
+
+    $(document).on('click', '.hospital', function() {
+      let id_region = $(this).attr('value');
+      let select_region = $(this).text();
+      $('#referal_two').val(select_region);
+      $('#referal_two').attr('data-id_region', id_region);
+      $('#referal_two').attr('data-region_check', 'check');
+    });
+
+    $('#referal_two').on('keyup', function() {
+      var $this = $(this);
+      var delay = 500;
+      if ($this.val() == '') {
+        $this.attr('data-id_region', '');
+      }
+      clearTimeout($this.data('timer'));
+      $this.data('timer', setTimeout(function() {
+        $this.removeData('timer');
+        $.post('/ajax/personal-cabinet/search_company.php', {
+          name_hospital: $this.val(),
+          region_id: $('#referal').attr('data-id_region'),
+        }, function(msg) {
+          if ($('.error_region').length != 0) {
+            $('.error_region').remove();
+          }
+          $('.hospital').each(function() {
+            $(this).remove();
+          });
+          $('.hospital-empty').remove();
+          if (msg == 'error_company') {
+
+            if ($('.error_region').length != 0) {
+              $('.error_region').remove();
+              $('#search_result_hospital').
+                  append('<li class="error_region" >Компания не найдена</li>');
+              $('.hospital-empty').remove();
+
+            } else {
+              $('#search_result_hospital').
+                  append('<li class="error_region" >Компания не найдена</li>');
+              $('.hospital-empty').remove();
+            }
+          } else {
+            console.log('2323');
+            setTimeout(function() {
+              $('#search_result_hospital').append(msg);
+            }, 100);
+
+          }
+        });
+      }, delay));
+    });
+
     $('.accept-phone-js').click(function() {
       if ($('#phone')['0'].validity.valid === true) {
         $('.hidden_wrap_phone').css('display', 'none');
-        $('#sms_confirm_error').css('display','none');
+        $('#sms_confirm_error').css('display', 'none');
         $('#sms_confirm').css('display', 'block');
         $.ajax({
           url: '/ajax/sms_code_generate.php',
@@ -63,30 +188,56 @@ $(document).ready(function() {
           data: {phone: $('#phone').val()},
           success: function(code) {
             console.log(code);
-          }
+          },
         });
       } else {
-        $('#sms_confirm_error').css('display','block');
+        $('#sms_confirm_error').css('display', 'block');
       }
     });
 
-    document.getElementById("password").onchange = validatePassword;
-    document.getElementById("pass_conf").onchange = validatePassword;
+    document.getElementById('password').onchange = validatePassword;
+    document.getElementById('pass_conf').onchange = validatePassword;
 
     $('#auth-form-reg').validator().on('submit', function(e) {
-       e.preventDefault();
-      if($("#strax-sluchay").length != 0){
-        $('#auth-form-reg').append("<input type='hidden'  name='review' value='review'>")
+      e.preventDefault();
+      if ($('#strax-sluchay').length != 0) {
+        $('#auth-form-reg').
+            append('<input type=\'hidden\'  name=\'review\' value=\'review\'>');
       }
-        var data_form = $('#auth-form-reg').serializeArray();
-      var vozrast =  $(".datepicker-here").val();
-      var vozrast_split = vozrast.split(".");
-      var new_vozrast_data = vozrast_split[1] +'.'+ vozrast_split[0] +'.'+ vozrast_split [2];
-      var y =   Date.parse(new_vozrast_data);
+
+
+
+
+
+      var data_form = $('#auth-form-reg').serializeArray();
+
+      let region = $('#referal').attr('data-id_region');
+      if (region == '' || region == undefined) {
+        $('#referal').after(
+            '<span class="label danger"  >Выберете регион</span>');
+        empty.push('error');
+      } else {
+
+        data_form.push({"name":"id_region","value":region});
+      }
+      let company = $('#referal_two').attr('data-id_region');
+      if (company == '' || company == undefined) {
+        $('#referal_two').after(
+            '<span class="label danger"  >Выберете компанию</span>');
+        empty.push('error');
+      } else {
+        data_form.push({"name":"company","value":company});
+      }
+
+      var vozrast = $('.datepicker-here').val();
+      var vozrast_split = vozrast.split('.');
+      var new_vozrast_data = vozrast_split[1] + '.' + vozrast_split[0] + '.' +
+          vozrast_split [2];
+      var y = Date.parse(new_vozrast_data);
       var now = new Date();
       var total = parseInt(now) - parseInt(568036800000);
-      if( total < y ){
-        $(".date").css({"display":"block"})
+      if (total < y) {
+        $('.date').css({'display': 'block'});
       } else {
         $.ajax({
           url: '/ajax/registration.php',
@@ -99,35 +250,36 @@ $(document).ready(function() {
             if (suc.error !== undefined) {
               var email = $('#phone');
               email.after(
-                  '<div class="danger" data-danger-email>'+suc.error+'</div>');
+                  '<div class="danger" data-danger-email>' + suc.error +
+                  '</div>');
 
             } else if (suc.user == 'Уже существует') {
               var email = $('#email');
               email.after(
                   '<div class="danger" data-danger-email>Пользовватель с таким эмейлом уже сущесвуте</div>');
-            } else if (suc.company == "Нет компании") {
+            } else if (suc.company == 'Нет компании') {
               var email = $('#company');
               email.after(
                   '<div class="danger" data-danger-company>В нашей базе нет этой компании ,мы не можем вас зарегестрировать </div>');
             }
-            else if (suc.user != 0 && suc.review != "register_with_review") {
-              location.reload()
+            else if (suc.user != 0 && suc.review != 'register_with_review') {
+              location.reload();
 
-            } else if (suc.review == "register_with_review") {
+            } else if (suc.review == 'register_with_review') {
 
-            $("#auth-form-reg").find($(".close-modal")).trigger("click");
+              $('#auth-form-reg').find($('.close-modal')).trigger('click');
 
-              $(".header__r_auth_reg").attr("data-rigstration","1");
-              $("body").css({"overflow": "hidden"});
+              $('.header__r_auth_reg').attr('data-rigstration', '1');
+              $('body').css({'overflow': 'hidden'});
               setTimeout(function() {
                 $.magnificPopup.open({
                   items: {
                     src: '<div class="white-popup custom_styles_popup">Регистрация  успешно завершена . Теперь вы можете проверить свой диагноз.</div>',
-                    type: 'inline'
-                  }
+                    type: 'inline',
+                  },
                 });
-                $("body").css({"overflow": "initial"});
-              }, 1000)
+                $('body').css({'overflow': 'initial'});
+              }, 1000);
             }
           },
         });
@@ -135,8 +287,6 @@ $(document).ready(function() {
 
       }
     });
-
-
 
     // $('#company').on('input', function(ev) { // скрипт для подгрузки компаний
     //   if ($(ev.target).val().length > 2) {
@@ -165,33 +315,35 @@ $(document).ready(function() {
       $('.primer_company').remove();
     });
   }
-function FormAuth() {
+
+  function FormAuth() {
 
     console.log('auth');
     $('#auth-form-login').validator().on('submit', function(e) {
       e.preventDefault();
-    $.ajax({
-      type: 'POST',
-      url: '/ajax/authorization.php',
-      data: {
-        mode: 'login',
-        login: $('#auth-form-login input[name=login]').val(),
-        password: $('#auth-form-login input[name=password]').val(),
-      },
-      dataType: 'json',
-      success: function(result) {
-        if (result.status)
-          location.reload();
-        else {
-          $('.message.error').html(result.message);
-          $('.message.error').show();
-        }
-      },
-    });
+      $.ajax({
+        type: 'POST',
+        url: '/ajax/authorization.php',
+        data: {
+          mode: 'login',
+          login: $('#auth-form-login input[name=login]').val(),
+          password: $('#auth-form-login input[name=password]').val(),
+        },
+        dataType: 'json',
+        success: function(result) {
+          if (result.status)
+            location.reload();
+          else {
+            $('.message.error').html(result.message);
+            $('.message.error').show();
+          }
+        },
+      });
 
-    return false;
-  });
-}
+      return false;
+    });
+  }
+
   // end authorization
 
   $('#login-link').magnificPopup({
@@ -338,52 +490,52 @@ if (theToggle) {
   };
 }
 
-
 function lazyloadImage() {
-  const images = document.querySelectorAll("[data-src]");
-  const imagesSource = document.querySelectorAll("[data-srcset]");
+  const images = document.querySelectorAll('[data-src]');
+  const imagesSource = document.querySelectorAll('[data-srcset]');
 
   function preloadImage(img) {
-      const src = img.getAttribute("data-src");
-      const dataSrc = img.getAttribute("data-srcset");
-      if (!src) {
-          img.srcset = dataSrc;
-      }
-      img.src = src;
+    const src = img.getAttribute('data-src');
+    const dataSrc = img.getAttribute('data-srcset');
+    if (!src) {
+      img.srcset = dataSrc;
+    }
+    img.src = src;
   }
 
   const imgOptions = {
-      threshold: 0,
-      rootMargin: "0px 0px 0px 0px"
+    threshold: 0,
+    rootMargin: '0px 0px 0px 0px',
   };
 
-  const imgObserver = new IntersectionObserver(function (entries, imgObserver) {
-      entries.forEach(entrie => {
-          if (!entrie.isIntersecting) {
-              return;
-          } else {
-              entrie.target.classList.remove("lazy-kdteam");
-              preloadImage(entrie.target);
-              imgObserver.unobserve(entrie.target);
-          }
-      });
+  const imgObserver = new IntersectionObserver(function(entries, imgObserver) {
+    entries.forEach(entrie => {
+      if (!entrie.isIntersecting) {
+        return;
+      } else {
+        entrie.target.classList.remove('lazy-kdteam');
+        preloadImage(entrie.target);
+        imgObserver.unobserve(entrie.target);
+      }
+    });
   }, imgOptions);
 
   images.forEach(image => {
-      imgObserver.observe(image);
+    imgObserver.observe(image);
   });
 
   imagesSource.forEach(image => {
-      imgObserver.observe(image);
+    imgObserver.observe(image);
   });
 }
 
-function validatePassword(){
-  let pass2=document.getElementById("pass_conf").value;
-  let pass1=document.getElementById("password").value;
-  if(pass1 != pass2)
-    document.getElementById("pass_conf").setCustomValidity("Пароли не совпадают");
+function validatePassword() {
+  let pass2 = document.getElementById('pass_conf').value;
+  let pass1 = document.getElementById('password').value;
+  if (pass1 != pass2)
+    document.getElementById('pass_conf').
+        setCustomValidity('Пароли не совпадают');
   else
-    document.getElementById("pass_conf").setCustomValidity('');
+    document.getElementById('pass_conf').setCustomValidity('');
 //empty string means no validation error
 }
