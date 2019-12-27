@@ -26,6 +26,7 @@
         right: 2rem;
         top: 50%;
         transform: translateY(-50%);
+        pointer-events: none;
 
         svg {
             width: 100%;

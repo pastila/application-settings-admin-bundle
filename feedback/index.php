@@ -153,11 +153,12 @@ $sort_url = $_GET;
 
             ?>
             <div class="white_block">
+                <?php if($arProps["REVIEW_LETTER"]["VALUE"] == "1"){ ?>
+                    <div class="feedback__title">Возврат денежных средств</div>
+                <?php } ?>
                 <!-- Company Name -->
                 <div class="feedback__block_company-name">
-                    <?php if($arProps["REVIEW_LETTER"]["VALUE"] == "1"){ ?>
-                        <span>Возврат денежных средств</span>
-                    <?php } ?>
+
                     <img src="<?= $file["src"] ?>">
                 </div>
                 <!-- top -->
@@ -188,9 +189,6 @@ $sort_url = $_GET;
                     <!--                <div class="feedback__block_top_data">-->
                     <!--                    05 сент, 2019-->
                     <!--                </div>-->
-                    <?php if($USER->IsAdmin()){ ?>
-                    <div data-id="<?php echo  $arFields["ID"]; ?>" class="dalete_review" >Удалить</div>
-                    <?php } ?>
                 </div>
                 <!-- Title -->
                 <div class="feedback__title">
@@ -342,6 +340,12 @@ $sort_url = $_GET;
                         </div>
                     <? } ?>
                 </div>
+
+                <?php if($USER->IsAdmin()){ ?>
+                    <div class="right_content-reviews">
+                        <div title="Удалить отзыв" data-id="<?php echo  $arFields["ID"]; ?>" class="dalete_review inline_block" >Удалить отзыв</div>
+                    </div>
+                <?php } ?>
 
             </div><!-- FeedBack block END -->
         <? }
