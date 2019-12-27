@@ -81,6 +81,7 @@ main.main {
     background: white;
     padding: 2rem;
     margin-bottom: 2rem;
+    position: relative;
     border: solid 0.1rem $accentColor;
 
     &:hover {
@@ -303,4 +304,15 @@ input{
  .title_medium{
      font-size: 2.6rem;
      margin: 2rem 0;
+ }
+ .right_content-reviews{
+     text-align: right;
+ }
+ .inline_block{
+     display: inline-block;
+ }
+ .dalete_review {
+     cursor: pointer;
+     color: red;
+     font-weight: bold;
  }

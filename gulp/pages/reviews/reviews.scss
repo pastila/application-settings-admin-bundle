@@ -314,7 +314,7 @@
 }
 .bottom_change-block{
     align-items: baseline;
-    margin: 1rem 0;
+    margin: 1rem 0 0 0;
     .feedback_change_star{
         cursor: pointer;
         margin-right: 1rem;
@@ -327,4 +327,24 @@
             font-size: 1rem;
         }
     }
+}
+.form-change_star{
+    margin-top: 2rem;
+    #stars{
+        margin: 1rem 0;
+    }
+    .rating-stars{
+        @media(min-width: 576px){
+            display: inline-block;
+            margin-right: 2rem;
+        }
+    }
+    .change_count_star{
+        @media(min-width: 576px){
+            display: inline-flex;
+        }
+    }
+}
+#result_change{
+
 }
