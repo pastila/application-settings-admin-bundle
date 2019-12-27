@@ -87,7 +87,7 @@
 
 /* If the user clicks anywhere outside the select box,
 then close all select boxes: */
-document.addEventListener('click', closeAllSelect);
+// document.addEventListener('click', closeAllSelect);
 
 var data = {
   'id_city': '0',
@@ -210,7 +210,10 @@ $(document).ready(function() {
     let id_region = $(this).attr('value');
     $('#referal').attr('data-id_region', id_region);
     $('#referal').attr('data-region_check', 'check');
-    $.post('/ajax/smart_search_hospital.php',
+    $('#referal_two').attr('data-id_region', '0');
+    $('#referal_two').val("");
+
+    $.post('/ajax/search_company.php',
         {region_id: $('#referal').attr('data-id_region')}, function(msg) {
           if ($('.error_region').length != 0) {
             $('.error_region').remove();
@@ -243,7 +246,7 @@ $(document).ready(function() {
     clearTimeout($this.data('timer'));
     $this.data('timer', setTimeout(function() {
       $this.removeData('timer');
-      $.post('/ajax/smart_search_hospital.php', {
+      $.post('/ajax/personal-cabinet/search_company.php', {
         name_hospital: $this.val(),
         region_id: $('#referal').attr('data-id_region'),
       }, function(msg) {

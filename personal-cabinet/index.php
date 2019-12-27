@@ -207,7 +207,7 @@ $prop=CIBlockSection::GetByID($person["UF_REGION"])->GetNextElement()->GetFields
                            <div class="input__ico">
                                <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                            </div>
-                           <input id="referal"  value="<?php echo $prop["NAME"] ?>" type="text" placeholder="Поиск по региону" autocomplete="off"/>
+                           <input id="referal"  value="<?php echo $prop["NAME"] ?>" type="text" data-id_region="0" placeholder="Поиск по региону" autocomplete="off"/>
                            <ul style="cursor: pointer;" class="custom-serach__items" id="search_result">
                                <?
                                $arOrder = Array("name"=>"asc");
@@ -221,12 +221,12 @@ $prop=CIBlockSection::GetByID($person["UF_REGION"])->GetNextElement()->GetFields
                                <?  }?>
                            </ul>
                        </div>
-                       <label class="title-select" for="user_pass">Список больниц : </label>
+                       <label class="title-select" for="user_pass">Список страховых компаний : </label>
                        <div class="input__wrap">
                            <div class="input__ico">
                                <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                            </div>
-                           <input id="referal_two" value="<?= $arFields["NAME"]?>" type="text" placeholder="Поиск по компаниям" autocomplete="off"/>
+                           <input id="referal_two" value="<?= $arFields["NAME"]?>" type="text" data-id_region="0" placeholder="Поиск страховых компаний :" autocomplete="off"/>
                            <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_hospital">
 
                            </ul>
