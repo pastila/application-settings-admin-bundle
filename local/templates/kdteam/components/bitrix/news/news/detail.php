@@ -14,6 +14,7 @@
 /** @var CBitrixComponent $component */
 $this->setFrameMode(true);
 ?>
+<p class="back_link-block"><a class="back_link" href="<?=$arResult["FOLDER"] . $arResult["URL_TEMPLATES"]["news"]?>"><?=GetMessage("T_NEWS_DETAIL_BACK")?></a></p>
 <?php
 
 $ElementID = $APPLICATION->IncludeComponent(
@@ -72,5 +73,4 @@ $ElementID = $APPLICATION->IncludeComponent(
     ),
     $component
 );?>
-<p><a href="<?=$arResult["FOLDER"] . $arResult["URL_TEMPLATES"]["news"]?>"><?=GetMessage("T_NEWS_DETAIL_BACK")?></a></p>
 
