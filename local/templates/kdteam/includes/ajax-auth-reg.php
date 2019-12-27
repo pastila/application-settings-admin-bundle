@@ -90,11 +90,10 @@ CModule::IncludeModule("iblock");
                 <input id="pass_conf" minlength="6" type="password" name="pass_conf" required>
             </div>
         </div>
-        <div class="popup__wrap_bottom">
-            <!-- Input -->
-            <div class="input__wrap select_block">
-                <label class="title-select " for="user_pass">Регион в котором заключали договор </label>
-                <div class="input__wrap">
+        <div class="popup__wrap_middle">
+            <div class="input__wrap">
+                <label class="input__wrap_label" for="user_pass">Регион в котором заключали договор </label>
+                <div class="block_relative">
                     <div class="input__ico">
                         <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                     </div>
@@ -112,8 +111,10 @@ CModule::IncludeModule("iblock");
                         <?  }?>
                     </ul>
                 </div>
-                <label class="title-select" for="user_pass">Укажите свою страховую компанию </label>
-                <div class="input__wrap">
+            </div>
+            <div class="input__wrap">
+                <label class="input__wrap_label" for="user_pass">Укажите свою страховую компанию </label>
+                <div class="block_relative">
                     <div class="input__ico">
                         <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                     </div>
@@ -122,14 +123,16 @@ CModule::IncludeModule("iblock");
 
                     </ul>
                 </div>
+            </div>
         </div>
         <div class="wrap-chrckbox checkbox_registration">
-                                            <label class="check-label">
-                                                Я ознакомлен и согласен с условиями <a href="/terms-of-use/">пользовательского соглашения</a> и
-                                                <a href="/personal-data-processing/">политикой по обработке персональных данных</a>
-                                                <input type="checkbox" value="" />
-                                                <span class="check-img"></span>
+            <label class="check-label">
+                Я ознакомлен и согласен с условиями <a href="/terms-of-use/">пользовательского соглашения</a> и
+                <a href="/personal-data-processing/">политикой по обработке персональных данных</a>
+                <input type="checkbox" value="" />
+                <span class="check-img"></span>
         </div>
+        <div class="popup__wrap_bottom">
         <button type="submit" id="registration" class="mainBtn">Регистрация</button>
     </div>
 </form>
