@@ -131,14 +131,12 @@ $sort_url = $_GET;
         while ($ob = $res->GetNextElement()) {
 
             $arFields = $ob->GetFields();
-
             $arProps = $ob->GetProperties();
-
             $newDate = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_ACTIVE_FROM"]));
             $ID_USER = $arProps["NAME_USER"]["VALUE"];
             $rsUser = CUser::GetByID($ID_USER);
             $arUser = $rsUser->Fetch();
-
+            $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_CHANGE_BY_USER"]));
 
             $name_user = $arUser["NAME"];
             if (is_array($arProps["COMMENTS_TO_REWIEW"]["VALUE"])) {
@@ -216,7 +214,7 @@ $sort_url = $_GET;
                                 </span>
                         комментариев
                     </a>
-
+                    <span><?php echo $Date_change_user; ?></span>
                     <?
                     if ($USER->IsAuthorized()) { ?>
                         <a rel="nofollow" class="toggle_comment_dropdown opacity_block">Оставить комментарий</a>
@@ -258,7 +256,7 @@ $sort_url = $_GET;
                         <div class="hidenComments__top">
                             <img src="<?php echo $file_comment["src"] ?>" alt="OMS">
 
-                            <img src="./local/templates/kdteam/images/svg/image_block_three.svg" alt="OMS">
+
                             <?if($arPropsComments["REPRESENTATIVE"]["VALUE"] == "1"){?>
                                 <div class="feedback_strah_user">
                                     <p class="text_user">Представитель страховой службы</p>
@@ -318,7 +316,7 @@ $sort_url = $_GET;
 
                                         <img src="<?php echo $file_quote["src"]; ?>" alt="OMS">
 
-                                        <img src="./local/templates/kdteam/images/svg/image_block_three.svg" alt="OMS">
+
                                         <?if($arPropsQuote["REPRESENTATIVE"]["VALUE"] == "1"){?>
                                             <div class="feedback_strah_user">
                                                 <p class="text_user">Представитель страховой службы</p>
