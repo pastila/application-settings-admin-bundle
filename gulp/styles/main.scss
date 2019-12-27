@@ -352,3 +352,8 @@ input{
      color: red;
      font-weight: bold;
  }
+ .add_reviews-select{
+     @media(min-width: 992px){
+         margin-right: 2rem;
+     }
+ }
