@@ -119,9 +119,10 @@ $arUser = $rsUser->Fetch();
                             комментариев
                         </a>
                     </div>
-
-                    <div class="feedback_change_star" data-id-rewiev="<?=$arFields["ID"]?>" >Редактировать оценку</div>
-                    <span><?php echo $Date_change_user; ?></span>
+                    <div class="feedback__bottom bottom_change-block">
+                        <span class="feedback_change_star" data-id-rewiev="<?=$arFields["ID"]?>" >Редактировать оценку</span>
+                        <span class="date_review">Дата изменения <?php echo $Date_change_user; ?></span>
+                    </div>
                     <form action="" id="form_change_count_star" data-form-id="<?=$arFields["ID"]?>" class="hidden">
                         <div class='rating-stars text-center' data-select="star">
                             <ul id='stars'>
