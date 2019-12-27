@@ -202,34 +202,38 @@ $prop=CIBlockSection::GetByID($person["UF_REGION"])->GetNextElement()->GetFields
                    <div class="custom-select custom-select-js-cite">
 
 
-                       <label class="title-select " for="user_pass">Выбор региона: </label>
                        <div class="input__wrap">
-                           <div class="input__ico">
-                               <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                           <label class="input__wrap_label" for="user_pass">Выбор региона: </label>
+                           <div class="block_relative">
+                               <div class="input__ico">
+                                   <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                               </div>
+                               <input id="referal"  value="<?php echo $prop["NAME"] ?>" type="text" data-id_region="0" placeholder="Поиск по региону" autocomplete="off"/>
+                               <ul style="cursor: pointer;" class="custom-serach__items" id="search_result">
+                                   <?
+                                   $arOrder = Array("name"=>"asc");
+                                   $arFilter = Array("IBLOCK_ID"=>16);
+                                   $res = CIBlockSection::GetList($arOrder, $arFilter, false );
+                                   while($ob = $res->GetNext()){
+
+                                       ?>
+                                       <li value="<?=$ob["ID"]?>" class="custom-serach__items_item region " data-id-city="<?=$ob["ID"]?>"><?=$ob["NAME"]?></li>
+
+                                   <?  }?>
+                               </ul>
                            </div>
-                           <input id="referal"  value="<?php echo $prop["NAME"] ?>" type="text" data-id_region="0" placeholder="Поиск по региону" autocomplete="off"/>
-                           <ul style="cursor: pointer;" class="custom-serach__items" id="search_result">
-                               <?
-                               $arOrder = Array("name"=>"asc");
-                               $arFilter = Array("IBLOCK_ID"=>16);
-                               $res = CIBlockSection::GetList($arOrder, $arFilter, false );
-                               while($ob = $res->GetNext()){
-
-                                   ?>
-                                   <li value="<?=$ob["ID"]?>" class="custom-serach__items_item region " data-id-city="<?=$ob["ID"]?>"><?=$ob["NAME"]?></li>
-
-                               <?  }?>
-                           </ul>
                        </div>
-                       <label class="title-select" for="user_pass">Список страховых компаний : </label>
                        <div class="input__wrap">
-                           <div class="input__ico">
-                               <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
-                           </div>
-                           <input id="referal_two" value="<?= $arFields["NAME"]?>" type="text" data-id_region="0" placeholder="Поиск страховых компаний :" autocomplete="off"/>
-                           <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_hospital">
+                           <label class="input__wrap_label" for="user_pass">Список страховых компаний : </label>
+                           <div class="block_relative">
+                               <div class="input__ico">
+                                   <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                               </div>
+                               <input id="referal_two" value="<?= $arFields["NAME"]?>" type="text" data-id_region="0" placeholder="Поиск страховых компаний :" autocomplete="off"/>
+                               <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_hospital">
 
-                           </ul>
+                               </ul>
+                           </div>
                        </div>
 
 
