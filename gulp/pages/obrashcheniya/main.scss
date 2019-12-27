@@ -146,6 +146,71 @@ label {
             }
         }
     }
+    .tumbler_users-tab{
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        display: block;
+        text-align: right;
+        .user_block{
+            &.tab_element{
+                cursor: pointer;
+                padding: .5rem 0;
+            }
+        }
+    }
+    .hidden_child-block{
+        display: none;
+        &.active{
+            display: block;
+
+        }
+    }
+    .select_toggle {
+        position: relative;
+        cursor: pointer;
+        display: inline-block;
+        .select-dropdown-child{
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: auto;
+            right: 0;
+            flex-direction: column;
+            z-index: 2;
+            min-width: 22rem;
+        }
+        .arrow_link{
+            position: relative;
+            margin-right: 2rem;
+            &::after {
+                content: '';
+                position: absolute;
+                content: "";
+                top: 60%;
+                width: 0;
+                height: 0;
+                right: -2rem;
+                border: .5rem solid transparent;
+                -webkit-transform: translateY(-50%);
+                transform: translateY(-50%);
+                border-color: #3a4552 transparent transparent transparent;
+                transition: all .2s;
+            }
+        }
+
+        &.active {
+            .arrow_link::after {
+                top: 50%;
+                -webkit-transform: translateY(-50%);
+                transform: translateY(-50%);
+                border-color: transparent transparent #3a4552 transparent;
+            }
+            .select-dropdown-child{
+                display: flex;
+            }
+        }
+    }
 }
 
 @media screen and (min-width: 576px) {

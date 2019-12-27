@@ -75,6 +75,7 @@
                     -webkit-transform: translateY(-50%);
                     transform: translateY(-50%);
                     border-color: #3a4552 transparent transparent transparent;
+                    transition: all .2s;
                 }
 
                 &.active {

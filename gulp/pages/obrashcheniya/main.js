@@ -3,6 +3,48 @@
 //= ../../node_modules/magnific-popup/dist/jquery.magnific-popup.min.js
 
 $(document).ready(function() {
+  $('.select_toggle').click(function() {
+    $(this).toggleClass('active');
+  });
+  function addChild() {
+    const items = document.querySelectorAll('.obrashcheniya__content');
+
+    items.forEach(function(item) {
+      const btn = item.querySelector('#add_child-button');
+      const hideButton = item.querySelector('#remove_child-button');
+      const showBlock = item.querySelector('.hidden_child-block');
+
+
+        if (btn) {
+          btn.addEventListener('click', function(e) {
+
+            this.classList.add('active');
+
+            if (btn.classList.contains('active')) {
+              showBlock.classList.add('active');
+            } else {
+              showBlock.classList.remove('active');
+            }
+          });
+        }
+       else {
+        return
+      }
+      if (hideButton) {
+        hideButton.addEventListener('click', function(e) {
+
+          showBlock.classList.remove('active');
+
+        });
+      }
+      else {
+        return
+      }
+    });
+  }
+
+  addChild();
+
   //Загрузка изображений
   $( "input[type='file']" ).change(function() {
     let element = this.id;
@@ -105,7 +147,7 @@ function edit(ed) {
   let time_p = $('#time_' + element[1]);
 
 
-  $('#save_' + element[1]).css('display', 'block');
+  $('#save_' + element[1]).css('display', 'inline-block');
 
   cur_el.find(usrname).css('display', 'block');
   cur_el.find(policy).css('display', 'block');
@@ -169,7 +211,7 @@ function save(sv) {
           policy_p.html(cur_el.find(policy).val());
           time_p.html(cur_el.find(time).val());
 
-          $('#edit_' + element[1]).css('display', 'block');
+          $('#edit_' + element[1]).css('display', 'inline-block');
 
           $('#success_' + element[1]).html(result);
           $('#error_' + element[1]).html('');
