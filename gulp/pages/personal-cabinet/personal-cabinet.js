@@ -84,6 +84,9 @@ $(document).ready(function() {
     let id_region = $(this).attr('value');
     $('#referal').attr('data-id_region', id_region);
     $('#referal').attr('data-region_check', 'check');
+    $('#referal_two').val('');
+
+
     $.post('/ajax/personal-cabinet/search_company.php', {region_id:$("#referal").attr("data-id_region") }, function(msg) {
       if ($('.error_region').length != 0) {
         $('.error_region').remove();
@@ -191,14 +194,17 @@ $("#save_data").click(function(e) {
       error.push("error");
     }
   }
-  let region = $('#referal').attr('data-id_region');
 
-  if(region != "" || region != undefined){
+
+
+  let region = $('#referal').attr('data-id_region');
+  console.log(region);
+  if(region != "" || region != undefined || region != "0"){
     fd.append("town",region );
   }
   let hospital = $('#referal_two').attr('data-id_region');
 
-  if(hospital != "" || hospital != undefined){
+  if(hospital != "" || hospital != undefined || region != "0"){
     fd.append("id_company",hospital);
   }
 
@@ -214,7 +220,7 @@ $("#save_data").click(function(e) {
           '<span class="label danger  error-policy-min "  >Введен короткий номер полиса</span>');
       error.push("error");
     }
-    console.log(data_FORM[3]['value'].length );
+
 
     if(data_FORM[3]['value'].length <16){
       $('[name=personal_phone]').after(
