@@ -222,14 +222,7 @@ while($ob = $res->GetNextElement()){
                                 <div class="input__ico">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                                 </div>
-                                <input data-id_diagnoz="" id="diagnoz_input" type="text"
-                                       placeholder="Поиск по диагнозу" autocomplete="off" value=""/>
-                                <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_diagnoz">
-                                    <li value="" id="empty_diagnoz" class="custom-serach__items_item diagnoz-js">Здесь нет моего диагноза</li>
-                                    <?php foreach ($arFields as $arItem) {?>
-                                        <li value="<?=$arItem['ID']?>" class="custom-serach__items_item  diagnoz-js"><?php echo $arItem['NAME']?></li>
-                                    <?php }?>
-                                </ul>
+                                <input />
                             </div>
                         </div>
                         <div class="wrap-chrckbox checkbox_registration">
