@@ -230,6 +230,7 @@ function search_hospital() {
   });
 
   $(document).on('click', '#strax-sluchay', function() {
+
     let error = [];
     let $form = $('#appeal-form');
     let $title = $('#page-title');
@@ -238,42 +239,42 @@ function search_hospital() {
     if(region == "" || region == undefined){
       $('#referal').after(
           '<p class="label danger"  >Выберите регион</p>');
-      error.push("error");
+      error.push("error1");
       $('.error_step-card-3').addClass('error_block');
     }
     let hospital = $('#referal_two').attr('data-id_region');
     if(hospital == "" || hospital == undefined){
       $('#referal_two').after(
           '<p class="label danger"  >Выберите больницу</p>');
-      error.push("error");
+      error.push("erro2");
       $('.error_step-card-3').addClass('error_block');
     }
     let choose_class = $('#class_input').attr('data-id_class');
     if(choose_class == "" || choose_class == undefined){
       $('#class_input').after(
           '<p class="label danger absolute_label">Выберите класс</p>');
-      error.push("error");
+      error.push("error3");
       $('.error_step-card-4').addClass('error_block');
     }
     let choose_group = $('#group_input').attr('data-id_group');
     if(choose_group == "" || choose_group == undefined){
       $('#group_input').after(
           '<p class="label danger absolute_label">Выберите группу</p>');
-      error.push("error");
+      error.push("error4");
       $('.error_step-card-4').addClass('error_block');
     }
     let choose_subgroup = $('#subgroup_input').attr('data-id_subgroup');
     if(choose_subgroup == "" || choose_subgroup == undefined){
       $('#subgroup_input').after(
           '<p class="label danger absolute_label">Выберите подгруппу</p>');
-      error.push("error");
+      error.push("error5");
       $('.error_step-card-4').addClass('error_block');
     }
     let choose_diagnoz = $('#diagnoz_input').attr('data-id_diagnoz');
     if(choose_diagnoz == "" || choose_diagnoz == undefined){
       $('#diagnoz_input').after(
           '<p class="label danger absolute_label">Выберите диагноз</p>');
-      error.push("error");
+      error.push("error6");
       $('.error_step-card-4').addClass('error_block');
     }
     let years = [];
@@ -285,33 +286,35 @@ function search_hospital() {
     if(years.length == 0 ){
       $(".wrap-chrckbox:first").after(
           '<p class="label danger"  >Выберите год</p>');
-      error.push("error");
+      error.push("error7");
     }
     let plan=[];
-    let div_last = $('.wrap-chrckbox').last();
+    let div_last = $('.plannet');
     $(div_last).find('input:checked').each(function() {
       plan.push(this.value);
     });
+
     if(plan.length == 0 ){
       div_last.after(
           '<p class="label danger"  >Не выбранно</p>');
-      error.push("error");
+      error.push("error8");
       $('.error_step-card-1').addClass('error_block');
     }
+    console.log(error);
     if(error.length > 0){
 
     }else {
       if ($('#choose_diagnoz_elem').val() != 'Здесь нет моего диагноза') {
 
         if ($('.header__r_auth_reg').length == 1  && ($(".header__r_auth_reg").attr("data-rigstration") == 0)) {
-
+console.log("2222");
             $('.header__r_auth_reg').trigger('click');
             setTimeout(function() {
               $('.register_before_review').removeClass('hidden');
             }, 700);
 
         } else {
-
+console.log("33333");
 
           $.post('/ajax/diagnoz.php',
               {

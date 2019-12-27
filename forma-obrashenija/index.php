@@ -97,7 +97,7 @@ while($ob = $res->GetNextElement()){
                     Каким было ваше обращение ?
                 </div>
 
-                <div class="wrap-chrckbox">
+                <div class="wrap-chrckbox plannet">
                     <label id="planned_label" class="check-label">
                         Плановое
                         <input id="planned" type="checkbox" value="" />

@@ -298,7 +298,7 @@ $(document).ready(function() {
     let region = $('#referal').attr('data-id_region');
     if (region == '' || region == undefined) {
       $('#referal').after(
-          '<span class="label danger"  >Выберете регион</span>');
+          '<span class="label danger"  >Выберите регион</span>');
       empty.push('error');
     } else {
       data.id_city = region;
@@ -306,7 +306,7 @@ $(document).ready(function() {
     let hospital = $('#referal_two').attr('data-id_region');
     if (hospital == '' || hospital == undefined) {
       $('#referal_two').after(
-          '<span class="label danger"  >Выберете больницу</span>');
+          '<span class="label danger"  >Выберите больницу</span>');
       empty.push('error');
     } else {
       data.id_compani = hospital;
