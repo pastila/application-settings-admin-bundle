@@ -46,7 +46,21 @@ if (count($arResult["ITEMS"]) > 0) {
                 <div class="obrashcheniya__content">
                     <!-- Контент левая сторона -->
                     <div class="obrashcheniya__content_left">
-
+                        <div class="tumbler_users-tab">
+                            <div class="user_block tab_element select_toggle">
+                                <p class="arrow_link">Мои обращения</p>
+                                <div class="select-dropdown-child white_block">
+                                    <ul>
+                                        <li>
+                                            <p class="user_block tab_element" id="remove_child-button">Мои обращения</p>
+                                        </li>
+                                        <li>
+                                            <p class="user_block tab_element" id="add_child-button">Для опекаемого человека</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                         <!-- Внутри контента Верхняя часть -->
                         <div class="obrashcheniya__content_left_top">
                             <div class="obrashcheniya__content_left_top_text">
@@ -149,6 +163,82 @@ if (count($arResult["ITEMS"]) > 0) {
                                        name="time"
                                        value="<?= $arItem["PROPERTIES"]["VISIT_DATE"]["VALUE"] ?>">
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Контент левая сторона c данными ребёнка -->
+                    <div class="obrashcheniya__content_left hidden_child-block">
+                        <!-- Внутри контента Верхняя часть -->
+                        <div class="obrashcheniya__content_left_top">
+                            <div class="obrashcheniya__content_left_top_link">
+                                <a>Редактировать</a>
+                                <a>Удалить</a>
+                            </div>
+                        </div>
+
+                        <!-- Внутри контента центральная часть с данными ребёнка -->
+                        <div class="obrashcheniya__content_left_center child_block-items">
+
+                            <!-- Item -->
+                            <div class="obrashcheniya__content_left_center_item">
+                                <div class="obrashcheniya__content_left_center_item_text">
+                                    ФИО
+                                </div>
+
+                                <p
+                                        class="obrashcheniya__content_left_center_item_text-full">
+                                    Имя ребёнка
+                                </p>
+                            </div>
+                            <div class="obrashcheniya__content_left_center_item">
+                                <div class="obrashcheniya__content_left_center_item_text">
+                                    Мобильный номер
+                                </div>
+
+                                <p class="obrashcheniya__content_left_center__item_text-full">
+                                    Номер ребёнка
+                                </p>
+                            </div>
+
+                            <!-- Item -->
+                            <div class="obrashcheniya__content_left_center_item">
+                                <div class="obrashcheniya__content_left_center_item_text">
+                                    Больница:
+                                </div>
+
+                                <p class="obrashcheniya__content_left_center_item_text-full">Больница ребёнка</p>
+                            </div>
+
+                            <!-- Item -->
+                            <div class="obrashcheniya__content_left_center_item">
+                                <div class="obrashcheniya__content_left_center_item_text">
+                                    Адрес:
+                                </div>
+
+                                <p class="obrashcheniya__content_left_center__item_text-full">
+                                    Адрес ребёнка
+                                </p>
+                            </div>
+
+                            <div class="obrashcheniya__content_left_center_item">
+                                <div class="obrashcheniya__content_left_center_item_text">
+                                    Полис:
+                                </div>
+
+                                <p class="obrashcheniya__content_left_center__item_text-full">
+                                    Полис ребёнка
+                                </p>
+                            </div>
+
+                            <div class="obrashcheniya__content_left_center_item">
+                                <div class="obrashcheniya__content_left_center_item_text">
+                                    Дата оплаты медицинских услуг:
+                                </div>
+
+                                <p class="obrashcheniya__content_left_center__item_text-full">
+                                    Дата оплаты ребёнка
+                                </p>
                             </div>
                         </div>
                     </div>

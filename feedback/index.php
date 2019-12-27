@@ -398,15 +398,15 @@ $sort_url = $_GET;
                         }
                         ++$i;
                         ?>
-                        <li class="sidebar__item_lists_list">
-                            <span><?=$i?></span>
-                            <a href="?property_name_company=<?= $fields["ID"] ?>" class="sidebar__item_lists_list_link"
+                        <li class="sidebar__item_lists_list list_numbered-items">
+                            <span class="sidebar_count number"><?=$i?></span>
+                            <a title="<?= $fields["NAME"] ?>" href="?property_name_company=<?= $fields["ID"] ?>" class="sidebar__item_lists_list_link"
                                id="company"
                                data-amount-star="<?= $fields["PROPERTY_AMOUNT_STAR_VALUE"] ?>"
                                data-id="<?= $fields["ID"] ?>">
                                 <?= $fields["NAME"] ?>
                             </a>
-                            <span><?=$fields["PROPERTY_AMOUNT_STAR_VALUE"]?></span>
+                            <span class="sidebar_count rating"><?=$fields["PROPERTY_AMOUNT_STAR_VALUE"]?></span>
                         </li>
                     <? } ?>
 

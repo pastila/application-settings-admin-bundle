@@ -213,6 +213,28 @@ while($ob = $res->GetNextElement()){
 
                 <a class="link-underline" href="#">Ссылка на статью в блоге</a>
 
+                <div class="smart_search-block">
+                    <p class="title-select bold">Начните вводить наименование заболевания, с которым вы обратились в медицинскую организацию.</p>
+                    <form action="">
+                        <div class="input-with-search">
+                            <label class="title-select" for="user_pass">Выберите диагноз: </label>
+                            <div class="input__wrap">
+                                <div class="input__ico">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                                </div>
+                                <input />
+                            </div>
+                        </div>
+                        <div class="wrap-chrckbox checkbox_registration">
+                            <label class="check-label">
+                                Я не знаю своего диагноза
+                                <input type="checkbox" value="">
+                                <span class="check-img"></span>
+                            </label></div>
+                    </form>
+                </div>
+
+                <p class="title-select bold">Или найдите диагноз в перечне заболеваний, структурированном в соответствии с международной классификацией болезней (МКБ-10).</p>
                 <div id="grid" class="grid" action="">
                     <?php
                     $APPLICATION->IncludeComponent(

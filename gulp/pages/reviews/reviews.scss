@@ -312,3 +312,19 @@
         font-weight: bold;
     }
 }
+.bottom_change-block{
+    align-items: baseline;
+    margin: 1rem 0;
+    .feedback_change_star{
+        cursor: pointer;
+        margin-right: 1rem;
+        font-weight: bold;
+    }
+    .date_review{
+        opacity: .5;
+        font-size: 1.2rem;
+        @media(max-width: 991px){
+            font-size: 1rem;
+        }
+    }
+}

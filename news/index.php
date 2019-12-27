@@ -21,7 +21,7 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/news/news.min.js");
 );?>
     <h1 class="page-title">Читать про ОМС</h1>
 
-    <div class="news_container">
+    <div class="container">
         <?php
         $APPLICATION->IncludeComponent(
             "bitrix:news",
