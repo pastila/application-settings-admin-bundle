@@ -312,3 +312,24 @@
         font-weight: bold;
     }
 }
+.list_numbered-items{
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    .sidebar__item_lists_list_link{
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: block;
+        width: 100%;
+    }
+    .sidebar_count{
+        font-weight: bold;
+        &.number{
+            margin-right: .5rem;
+        }
+        &.rating{
+            margin-left: .5rem;
+        }
+    }
+}
