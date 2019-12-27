@@ -45,6 +45,8 @@ $arUser = $rsUser->Fetch();
                 $arFields = $ob->GetFields();
                 $arProps = $ob->GetProperties();
                 $newDate = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_ACTIVE_FROM"]));
+                $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_CHANGE_BY_USER"]));
+
                 $ID_USER = $arProps["NAME_USER"]["VALUE"];
                 $rsUser = CUser::GetByID($ID_USER);
                 $arUser = $rsUser->Fetch();
@@ -119,7 +121,7 @@ $arUser = $rsUser->Fetch();
                     </div>
 
                     <div class="feedback_change_star" data-id-rewiev="<?=$arFields["ID"]?>" >Редактировать оценку</div>
-
+                    <span><?php echo $Date_change_user; ?></span>
                     <form action="" id="form_change_count_star" data-form-id="<?=$arFields["ID"]?>" class="hidden">
                         <div class='rating-stars text-center' data-select="star">
                             <ul id='stars'>
@@ -280,6 +282,7 @@ $arUser = $rsUser->Fetch();
                 $arFields = $ob->GetFields();
                 $arProps = $ob->GetProperties();
                 $newDate = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_ACTIVE_FROM"]));
+                $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_CHANGE_BY_USER"]));
                 $ID_USER = $arProps["NAME_USER"]["VALUE"];
                 $rsUser = CUser::GetByID($ID_USER);
                 $arUser = $rsUser->Fetch();
@@ -351,6 +354,7 @@ $arUser = $rsUser->Fetch();
                                 </span>
                             комментариев
                         </a>
+                        <span><?php echo $Date_change_user; ?></span>
                     </div>
 
 
@@ -506,7 +510,7 @@ $arUser = $rsUser->Fetch();
 
                 $ID_rewievs[] = $arFields["ID"];
             }
-
+            $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_CHANGE_BY_USER"]));
             $ID_comments = array();
             $arSelect2 = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM");
             $arFilter2 = Array(
@@ -605,6 +609,7 @@ $arUser = $rsUser->Fetch();
                                                 </span>
                                             комментариев
                                         </a>
+                                        <span><?php echo $Date_change_user; ?></span>
                                     </div>
                                     <!-- COMMETNS -->
                                     <div class="hidenComments">
