@@ -145,7 +145,7 @@ $arUser = $rsUser->Fetch();
                         </div>
                         <button type="submit" class="change_count_star smallMainBtn" data-id-rewiev="<?=$arFields["ID"]?>">Сохранить</button>
                     </form>
-                    <div id="result_change hidden" data-result-id="<?=$arFields["ID"]?>"></div>
+                    <div class="result-styles" id="result_change hidden" data-result-id="<?=$arFields["ID"]?>"></div>
 
                     <!-- COMMETNS -->
                     <div class="hidenComments">
@@ -382,7 +382,7 @@ $arUser = $rsUser->Fetch();
                         </div>
                         <button type="submit" class="change_count_star smallMainBtn" data-id-rewiev="<?=$arFields["ID"]?>">Сохранить</button>
                     </form>
-                    <div id="result_change hidden" data-result-id="<?=$arFields["ID"]?>"></div>
+                    <div class="result-styles" id="result_change hidden" data-result-id="<?=$arFields["ID"]?>"></div>
 
                     <!-- COMMETNS -->
                     <div class="hidenComments">
@@ -494,8 +494,8 @@ $arUser = $rsUser->Fetch();
 
     </div>
 <?}?>
+    <h2 class="page-title">Ваша активность в обсуждениях</h2>
     <div class="feedback">
-        <h2>Ваша активность в обсуждениях</h2>
         <div class="feedback__wrap_white-blocks">
             <!-- FeedBack block -->
 

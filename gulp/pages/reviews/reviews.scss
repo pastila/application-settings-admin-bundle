@@ -345,6 +345,17 @@
         }
     }
 }
-#result_change{
-
+.feedback__block_top_star{
+    display: flex;
+    margin-bottom: 0;
+    align-items: center;
+    .star{
+        &:not(:last-of-type) {
+            margin-right: .2rem;
+        }
+    }
+}
+.result-styles {
+    color: #03cc25;
+    font-weight: bold;
 }
