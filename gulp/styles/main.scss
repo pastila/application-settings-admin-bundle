@@ -357,3 +357,17 @@ input{
          margin-right: 2rem;
      }
  }
+ .info_block{
+     a{
+         text-decoration: underline;
+     }
+     .border{
+         border-bottom: 1px dashed $mainColor;
+     }
+     .bold{
+         font-weight: bold;
+     }
+     .block_image{
+         margin: 2rem 0;
+     }
+ }

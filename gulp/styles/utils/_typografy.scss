@@ -29,6 +29,16 @@ html {
 p {
     font-size: 1.2rem;
 }
+.list_block{
+    li{
+        font-size: 1.1rem;
+    }
+}
+.list_block{
+    li{
+        padding-left: 1rem;
+    }
+}
 
 .title-select {
     display: block;
@@ -39,6 +49,11 @@ p {
 @media screen and (min-width: 992px) {
     p {
         font-size: 1.6vmax;
+    }
+    .list_block{
+        li{
+            font-size: 1.5vmax;
+        }
     }
 }
 
@@ -58,5 +73,10 @@ p {
 @media screen and (min-width: 1400px) {
     p {
         font-size: 1.6rem;
+    }
+    .list_block{
+        li{
+            font-size: 1.5rem;
+        }
     }
 }
