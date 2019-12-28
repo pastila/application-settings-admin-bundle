@@ -45,7 +45,7 @@ CModule::IncludeModule("iblock");
         <div class="popup__wrap_middle">
             <div class="input__wrap">
                 <label class="input__wrap_label">Дата рождения</label>
-                <input class="datepicker-here" type="text" name="time"  >
+                <input class="datepicker-here" type="text" name="time" autocomplete="off"  >
                 <div class="danger date" style="display: none;">Регистрация лиц, не достигших 18 лет, не допускается</div>
             </div>
             <!-- Input -->
@@ -106,7 +106,7 @@ CModule::IncludeModule("iblock");
                         while($ob = $res->GetNext()){
 
                             ?>
-                            <li value="<?=$ob["ID"]?>" class="custom-serach__items_item region " data-id-city="<?=$ob["ID"]?>"><?=$ob["NAME"]?></li>
+                            <li value="<?=$ob["ID"]?>" class="custom-serach__items_item region_reg " data-id-city="<?=$ob["ID"]?>"><?=$ob["NAME"]?></li>
 
                         <?  }?>
                     </ul>

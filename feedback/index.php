@@ -163,6 +163,7 @@ $sort_url = $_GET;
                 </div>
                 <!-- top -->
                 <div class="feedback__block_top">
+                    <?php if($arProps["EVALUATION"]["VALUE"] != ""){ ?>
                     <div class="feedback__block_top_star">
 
                         <? for ($i = 1; $i <= $arProps["EVALUATION"]["VALUE"]; ++$i) { ?>
@@ -183,6 +184,7 @@ $sort_url = $_GET;
 
                         <? } ?>
                     </div>
+                    <? } ?>
                     <div class="feedback__block_top_name">
                         <?= $name_user ?>, <?= $city["NAME"] ?>, <?= $newDate ?>
                     </div>

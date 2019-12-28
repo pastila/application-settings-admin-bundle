@@ -4,6 +4,14 @@
 //= ../../node_modules/air-datepicker/dist/js/datepicker.min.js
 $(document).ready(function() {
 
+ var url =  window.location.pathname;
+
+  if(url.search("/forma-obrashenija/") == -1){
+    if($(".header__r_auth_reg").length != 0) {
+      $(".header__r_auth_reg").attr("data-rigstration", "2");
+    }
+  }
+
   $(document).mouseup(function(e) {
     var div = $('.danger');
     if (!div.is(e.target)) {
@@ -67,7 +75,7 @@ $(document).ready(function() {
       var delay = 500;
       if ($this.val() == '') {
         $this.attr('data-id_region', '');
-        $('.hospital').each(function() {
+        $('.hospital_reg').each(function() {
           $(this).remove();
         });
         $('#hospital').remove();
@@ -77,12 +85,12 @@ $(document).ready(function() {
       clearTimeout($this.data('timer'));
       $this.data('timer', setTimeout(function() {
         $this.removeData('timer');
-        $.post('/ajax/personal-cabinet/search_region.php',
+        $.post('/ajax/search_for_reg/search_region.php',
             {name_city: $this.val()}, function(msg) {
               if ($('.error_region').length != 0) {
                 $('.error_region').remove();
               }
-              $('.region').each(function() {
+              $('.region_reg').each(function() {
                 $(this).remove();
               });
               if (msg == 'error_region') {
@@ -104,17 +112,17 @@ $(document).ready(function() {
       }, delay));
     });
 
-    $(document).on('click', '.region', function() {
+    $(document).on('click', '.region_reg', function() {
 
       let id_region = $(this).attr('value');
       $('#referal').attr('data-id_region', id_region);
       $('#referal').attr('data-region_check', 'check');
-      $.post('/ajax/personal-cabinet/search_company.php',
+      $.post('/ajax/search_for_reg/search_company.php',
           {region_id: $('#referal').attr('data-id_region')}, function(msg) {
             if ($('.error_region').length != 0) {
               $('.error_region').remove();
             }
-            $('.hospital').each(function() {
+            $('.hospital_reg').each(function() {
               $(this).remove();
             });
             $('.hospital-empty').remove();
@@ -125,7 +133,7 @@ $(document).ready(function() {
           });
     });
 
-    $(document).on('click', '.hospital', function() {
+    $(document).on('click', '.hospital_reg', function() {
       let id_region = $(this).attr('value');
       let select_region = $(this).text();
       $('#referal_two').val(select_region);
@@ -142,14 +150,14 @@ $(document).ready(function() {
       clearTimeout($this.data('timer'));
       $this.data('timer', setTimeout(function() {
         $this.removeData('timer');
-        $.post('/ajax/personal-cabinet/search_company.php', {
+        $.post('/ajax/search_for_reg/search_company.php', {
           name_hospital: $this.val(),
           region_id: $('#referal').attr('data-id_region'),
         }, function(msg) {
           if ($('.error_region').length != 0) {
             $('.error_region').remove();
           }
-          $('.hospital').each(function() {
+          $('.hospital_reg').each(function() {
             $(this).remove();
           });
           $('.hospital-empty').remove();
@@ -197,7 +205,9 @@ $(document).ready(function() {
 
     document.getElementById('password').onchange = validatePassword;
     document.getElementById('pass_conf').onchange = validatePassword;
-
+    $(".check-img").click(function() {
+      $(this).toggleClass("click");
+    })
     $('#auth-form-reg').validator().on('submit', function(e) {
       e.preventDefault();
       if ($('#strax-sluchay').length != 0) {
@@ -205,55 +215,66 @@ $(document).ready(function() {
             append('<input type=\'hidden\'  name=\'review\' value=\'review\'>');
       }
 
+      var errors = [];
+      var vozrast = $('.datepicker-here').val();
 
+      if (vozrast == '' || vozrast == undefined) {
+        $('.datepicker-here').after(
+            '<span class="label danger"  >Выберите дату рождения</span>');
+        errors.push('error');
+      } else {
 
-
+      }
+      if($(".check-img").hasClass("click") === false){
+        $(".check-img").after(
+            '<span class="label danger"  >Подтвердите свое согласие</span>');
+        errors.push('error');
+      }
 
       var data_form = $('#auth-form-reg').serializeArray();
 
       let region = $('#referal').attr('data-id_region');
-      if (region == '' || region == undefined) {
+      if (region == '' || region == undefined || region == "0") {
         $('#referal').after(
-            '<span class="label danger"  >Выберете регион</span>');
-        empty.push('error');
+            '<span class="label danger"  >Выберите регион</span>');
+        errors.push('error');
       } else {
 
-        data_form.push({"name":"id_region","value":region});
+        data_form.push({'name': 'id_region', 'value': region});
       }
       let company = $('#referal_two').attr('data-id_region');
-      if (company == '' || company == undefined) {
+      if (company == '' || company == undefined || company == "0") {
         $('#referal_two').after(
-            '<span class="label danger"  >Выберете компанию</span>');
-        empty.push('error');
+            '<span class="label danger"  >Выберите компанию</span>');
+        errors.push('error');
       } else {
-        data_form.push({"name":"company","value":company});
+        data_form.push({'name': 'company', 'value': company});
       }
 
-      var vozrast = $('.datepicker-here').val();
-      var vozrast_split = vozrast.split('.');
-      var new_vozrast_data = vozrast_split[1] + '.' + vozrast_split[0] + '.' +
-          vozrast_split [2];
-      var y = Date.parse(new_vozrast_data);
-      var now = new Date();
-      var total = parseInt(now) - parseInt(568036800000);
-      if (total < y) {
-        $('.date').css({'display': 'block'});
-      } else {
+
+      if (errors.length == 0) {
+
         $.ajax({
           url: '/ajax/registration.php',
           type: 'POST',
           data: data_form,
           success: function(msg) {
-            console.log(msg);
-            console.log('sssss');
+
             var suc = JSON.parse(msg);
+            console.log(suc);
             if (suc.error !== undefined) {
               var email = $('#phone');
               email.after(
                   '<div class="danger" data-danger-email>' + suc.error +
                   '</div>');
 
-            } else if (suc.user == 'Уже существует') {
+            } else if (suc.birthday == '18'){
+
+              $('.datepicker-here').after(
+                  '<span class="label danger"  >Регистрация лиц, не достигших 18 лет, не допускается</span>');
+
+
+            }else if (suc.user == 'Уже существует') {
               var email = $('#email');
               email.after(
                   '<div class="danger" data-danger-email>Пользовватель с таким эмейлом уже сущесвуте</div>');
@@ -262,30 +283,33 @@ $(document).ready(function() {
               email.after(
                   '<div class="danger" data-danger-company>В нашей базе нет этой компании ,мы не можем вас зарегестрировать </div>');
             }
-            else if (suc.user != 0 && suc.review != 'register_with_review') {
-              location.reload();
+            else if (suc.user != 0 ) {
 
-            } else if (suc.review == 'register_with_review') {
+              if ($('.header__r_auth_reg').attr('data-rigstration') == "0") {
 
-              $('#auth-form-reg').find($('.close-modal')).trigger('click');
+                $('#auth-form-reg').find($('.close-modal')).trigger('click');
 
-              $('.header__r_auth_reg').attr('data-rigstration', '1');
-              $('body').css({'overflow': 'hidden'});
-              setTimeout(function() {
-                $.magnificPopup.open({
-                  items: {
-                    src: '<div class="white-popup custom_styles_popup">Регистрация  успешно завершена . Теперь вы можете проверить свой диагноз.</div>',
-                    type: 'inline',
-                  },
-                });
-                $('body').css({'overflow': 'initial'});
-              }, 1000);
+                $('.header__r_auth_reg').attr('data-rigstration', '1');
+                $('body').css({'overflow': 'hidden'});
+                setTimeout(function() {
+                  $.magnificPopup.open({
+                    items: {
+                      src: '<div class="white-popup custom_styles_popup">Регистрация  успешно завершена . Теперь вы можете проверить свой диагноз.</div>',
+                      type: 'inline',
+                    },
+                  });
+                  $('body').css({'overflow': 'initial'});
+                }, 1000);
+
+              } else {
+                 location.reload();
+              }
             }
           },
         });
-        return false;
 
       }
+      return false;
     });
 
     // $('#company').on('input', function(ev) { // скрипт для подгрузки компаний
@@ -401,7 +425,6 @@ $(document).on('click', '.close-modal', function(e) {
   e.preventDefault();
   $.magnificPopup.close();
 });
-
 
 // Star rating
 $(document).ready(function() {
