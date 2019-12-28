@@ -128,6 +128,13 @@ $sort_url = $_GET;
         if (!$sort_url["comments"] == "all") {
             $res->NavStart(0);
         }
+
+         if($res->SelectedRowsCount() == 0){?>
+
+             <div><p class="error" style="color: red">Отзывы не найдены</p></div>
+
+
+   <?      }
         while ($ob = $res->GetNextElement()) {
 
             $arFields = $ob->GetFields();
@@ -378,6 +385,7 @@ $sort_url = $_GET;
                         if ($fields["PROPERTY_AMOUNT_STAR_VALUE"] == "" || $fields["PROPERTY_AMOUNT_STAR_VALUE"] == 0) {
                             continue;
                         }
+                        ++$i;
                         $url_for_filter = "?";
 
                         foreach ($sort_url as $key => $filter) {
@@ -386,13 +394,15 @@ $sort_url = $_GET;
                             }
                         }
                         ?>
-                        <li class="sidebar__item_lists_list">
+                        <li class="sidebar__item_lists_list list_numbered-items">
+                            <span class="sidebar_count number"><?=$i?></span>
                             <a href="<?= $url_for_filter ?>property_name_company=<?= $fields["ID"] ?>"
                                class="sidebar__item_lists_list_link" id="company"
                                data-amount-star="<?= $fields["PROPERTY_AMOUNT_STAR_VALUE"] ?>"
                                data-id="<?= $fields["ID"] ?>">
                                 <?= $fields["NAME"] ?>
                             </a>
+                            <span class="sidebar_count rating"><?=$fields["PROPERTY_AMOUNT_STAR_VALUE"]?></span>
                         </li>
                     <? } ?>
                 <? } else {

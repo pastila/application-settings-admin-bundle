@@ -172,10 +172,12 @@ $(document).ready(function() {
       $('.hospital').each(function() {
         $(this).remove();
       });
+
       $('#hospital').remove();
       $('#referal_two').val('');
       $('#referal_two').attr('data-id_region', '');
     }
+    $('#search_result').css({'display': 'block'});
     clearTimeout($this.data('timer'));
     $this.data('timer', setTimeout(function() {
       $this.removeData('timer');
@@ -243,6 +245,7 @@ $(document).ready(function() {
     if ($this.val() == '') {
       $this.attr('data-id_region', '');
     }
+    $('#search_result_hospital').css({'display': 'block'});
     clearTimeout($this.data('timer'));
     $this.data('timer', setTimeout(function() {
       $this.removeData('timer');
@@ -257,17 +260,17 @@ $(document).ready(function() {
           $(this).remove();
         });
         $('.hospital-empty').remove();
-        if (msg == 'error_hospital') {
-          keyup_class();
+        if (msg == 'error_company') {
+
           if ($('.error_region').length != 0) {
             $('.error_region').remove();
             $('#search_result_hospital').
-                append('<li class="error_region" >Больница не найдена</li>');
+                append('<li class="error_region" >Компания не найдена</li>');
             $('.hospital-empty').remove();
 
           } else {
             $('#search_result_hospital').
-                append('<li class="error_region" >Больница не найдена</li>');
+                append('<li class="error_region" >Компания не найдена</li>');
             $('.hospital-empty').remove();
           }
         } else {

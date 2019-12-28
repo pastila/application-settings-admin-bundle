@@ -78,6 +78,7 @@ $(document).ready(function() {
         $('.hospital_reg').each(function() {
           $(this).remove();
         });
+        $('#search_result').css({'display': 'block'});
         $('#hospital').remove();
         $('#referal_two').val('');
         $('#referal_two').attr('data-id_region', '');
@@ -147,6 +148,7 @@ $(document).ready(function() {
       if ($this.val() == '') {
         $this.attr('data-id_region', '');
       }
+      $('#search_result_hospital').css({'display': 'block'});
       clearTimeout($this.data('timer'));
       $this.data('timer', setTimeout(function() {
         $this.removeData('timer');

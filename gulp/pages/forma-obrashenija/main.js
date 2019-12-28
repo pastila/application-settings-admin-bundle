@@ -68,7 +68,7 @@ $(document).ready(function() {
    $('#referal_forma').on('keyup', function() {
 
      var $this = $(this);
-
+     $('#search_result').css({'display': 'block'});
      var delay = 500;
      if ($this.val() == '') {
        $('#region_name').text('НЕ ВЫБРАНО');
@@ -155,7 +155,7 @@ function search_hospital() {
       $('#boss_name').text('НЕ ВЫБРАНО');
 
     }
-
+    $('#search_result_hospital').css({'display': 'block'});
     clearTimeout($this.data('timer'));
     $this.data('timer', setTimeout(function() {
       $this.removeData('timer');
@@ -632,6 +632,7 @@ function keyup_class() {
   $('#class_input').on('keyup', function() {
     var $this = $(this);
     var delay = 500;
+    $('#search_result_class').css({'display': 'block'});
     clearTimeout($this.data('timer'));
     $this.data('timer', setTimeout(function() {
       $this.removeData('timer');
@@ -689,6 +690,7 @@ function keyup_group(id_class) {
   $('#group_input').on('keyup', function() {
     var $this = $(this);
     var delay = 500;
+    $('#search_result_group').css({'display': 'block'});
     clearTimeout($this.data('timer'));
     $this.data('timer', setTimeout(function() {
       $this.removeData('timer');
@@ -747,6 +749,7 @@ function keyup_subgroup(id_group) {
   $('#subgroup_input').on('keyup', function() {
     var $this = $(this);
     var delay = 500;
+    $('#search_result_subgroup').css({'display': 'block'});
     clearTimeout($this.data('timer'));
     $this.data('timer', setTimeout(function() {
       $this.removeData('timer');
@@ -807,6 +810,7 @@ function keyup_diagnoz(id_subgroup) {
   $('#diagnoz_input').on('keyup', function() {
     var $this = $(this);
     var delay = 500;
+    $('#search_result_diagnoz').css({'display': 'block'});
     clearTimeout($this.data('timer'));
     $this.data('timer', setTimeout(function() {
       $this.removeData('timer');
