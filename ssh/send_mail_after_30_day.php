@@ -54,19 +54,22 @@ while ($Section = $section->GetNext()) {
 
         $arSelect = Array("ID", "IBLOCK_ID", "NAME", "CREATED_DATE","IBLOCK_SECTION_ID", "PROPERTY_SEND_MESSAGE");
         $arFilter = Array("IBLOCK_ID" => 11 , "SECTION_ID" => $Section["ID"]);
-        $Element = CIBlockElement::GetList(Array("PROPERTY_SEND_MESSAGE" => "asc"), $arFilter, false, false, $arSelect); //получили обращения юзера
+        $Element = CIBlockElement::GetList(Array("PROPERTY_SEND_MESSAGE" => "desc"), $arFilter, false, false, $arSelect); //получили обращения юзера
 
         if($obElement = $Element->GetNextElement()) {
 
             $arFields = $obElement->GetFields();
 
             if ($arFields["PROPERTY_SEND_MESSAGE_VALUE"]) {
+
                 $newDate = FormatDate("d.m.Y", MakeTimeStamp($arFields["PROPERTY_SEND_MESSAGE_VALUE"]));
                 $time = strtotime($newDate);
                 $Difference_time = (int)$_SERVER["REQUEST_TIME"] - (int)$time;
 
-                if ($Difference_time > 2592000) {    //больше чем 30 дней 2592000
-
+                if ($Difference_time > 1) {    //больше чем 30 дней 2592000
+                echo '<pre>';
+                print_r($arFields["ID"]);
+                echo '</pre>';
                     $url = "devdoc1.kdteam.su/feedback/?letter";
                     $arEventFields = array(
                         "MAIL" => $arUser["EMAIL"],
