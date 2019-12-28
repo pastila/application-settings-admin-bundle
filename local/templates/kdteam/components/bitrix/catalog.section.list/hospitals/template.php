@@ -184,7 +184,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
 
             <p class="form-obrashcheniya__step_three_l_text"><?=$arResult_block[6]?></p>
 
-            <a class="link-underline" href="#">Ссылка на статью в блоге</a>
+            <a class="link-underline" href="/news/kakie-byvayut-bolnitsy/">Ссылка на статью в блоге</a>
 
 
         <?php
