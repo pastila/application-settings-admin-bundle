@@ -5,30 +5,30 @@ $(document).ready(function() {
   search_class();
   keyup_class();
   $(document).on('click', '#search_result li', function() {
-    $('#referal').val($(this).text());
+    $('#referal_forma').val($(this).text());
     $('#search_result').fadeOut();
   });
-  $(document).on('click', '#referal', function() {
+  $(document).on('click', '#referal_forma', function() {
 
     $('#search_result').css({'display': 'block'});
   });
   $(document).mouseup(function(e) {
-    let container = $('#referal');
+    let container = $('#referal_forma');
     if (container.has(e.target).length === 0) {
       $('#search_result').fadeOut();
     }
   });
   $(document).on('click', '#search_result_hospital li', function() {
-    $('#referal_two').val($(this).text());
+    $('#referal_two_forma').val($(this).text());
     $('#search_result_hospital').fadeOut();
   });
 
-  $(document).on('click', '#referal_two', function() {
+  $(document).on('click', '#referal_two_forma', function() {
     $('#search_result_hospital').css({'display': 'block'});
   });
 
   $(document).mouseup(function(e) {
-    let container = $('#referal_two');
+    let container = $('#referal_two_forma');
     if (container.has(e.target).length === 0) {
       $('#search_result_hospital').fadeOut();
     }
@@ -37,10 +37,10 @@ $(document).ready(function() {
 
     let id_region = $(this).attr('value');
     let select_region = $(this).text();
-    $('#referal').val(select_region);
-    $('#referal').attr('data-id_region', id_region);
+    $('#referal_forma').val(select_region);
+    $('#referal_forma').attr('data-id_region', id_region);
     $('#region_name').text(select_region);
-    $('#referal').attr('data-region_check', 'check');
+    $('#referal_forma').attr('data-region_check', 'check');
     let component = $('#hospitals');
     $.ajax({
       dataType: 'html',
@@ -65,9 +65,10 @@ $(document).ready(function() {
 
  function search_region() {
 
-   $('#referal').on('keyup', function() {
+   $('#referal_forma').on('keyup', function() {
 
      var $this = $(this);
+     $('#search_result').css({'display': 'block'});
      var delay = 500;
      if ($this.val() == '') {
        $('#region_name').text('НЕ ВЫБРАНО');
@@ -100,9 +101,9 @@ $(document).ready(function() {
 
              let id_region = $(this).attr('value');
              let select_region = $(this).text();
-             $('#referal').val(select_region);
-             $('#referal').attr('data-id_region', id_region);
-             $('#referal').attr('data-region_check', 'check');
+             $('#referal_forma').val(select_region);
+             $('#referal_forma').attr('data-id_region', id_region);
+             $('#referal_forma').attr('data-region_check', 'check');
              $('#region_name').text(select_region);
              let component = $('#hospitals');
              $.ajax({
@@ -134,9 +135,9 @@ function search_hospital() {
     let select_region = $(this).text();
     let name_boss = $(this).attr("data-name-boss");
     let name_street = $(this).attr("data-street");
-    $('#referal_two').val(select_region);
-    $('#referal_two').attr('data-id_region', id_region);
-    $('#referal_two').attr('data-region_check', 'check');
+    $('#referal_two_forma').val(select_region);
+    $('#referal_two_forma').attr('data-id_region', id_region);
+    $('#referal_two_forma').attr('data-region_check', 'check');
     $('#hosptital_name').text(select_region);
     $('#street_name').text(name_street);
     $('#boss_name').text(name_boss);
@@ -144,7 +145,7 @@ function search_hospital() {
 
 
   });
-  $('#referal_two').on('keyup', function() {
+  $('#referal_two_forma').on('keyup', function() {
     var $this = $(this);
     var delay = 500;
     if ($this.val() == '') {
@@ -154,11 +155,11 @@ function search_hospital() {
       $('#boss_name').text('НЕ ВЫБРАНО');
 
     }
-
+    $('#search_result_hospital').css({'display': 'block'});
     clearTimeout($this.data('timer'));
     $this.data('timer', setTimeout(function() {
       $this.removeData('timer');
-      $.post('/ajax/smart_search_hospital.php', {name_hospital: $this.val(), region_id:$("#referal").attr("data-id_region") }, function(msg) {
+      $.post('/ajax/smart_search_hospital.php', {name_hospital: $this.val(), region_id:$("#referal_forma").attr("data-id_region") }, function(msg) {
         if ($('.error_region').length != 0) {
           $('.error_region').remove();
         }
@@ -188,9 +189,9 @@ function search_hospital() {
             let select_region = $(this).text();
             let name_boss = $(this).attr("data-name-boss");
             let name_street = $(this).attr("data-street");
-            $('#referal_two').val(select_region);
-            $('#referal_two').attr('data-id_region', id_region);
-            $('#referal_two').attr('data-region_check', 'check');
+            $('#referal_two_forma').val(select_region);
+            $('#referal_two_forma').attr('data-id_region', id_region);
+            $('#referal_two_forma').attr('data-region_check', 'check');
             $('#hosptital_name').text(select_region);
             $('#street_name').text(name_street);
             $('#boss_name').text(name_boss);
@@ -230,50 +231,51 @@ function search_hospital() {
   });
 
   $(document).on('click', '#strax-sluchay', function() {
+
     let error = [];
     let $form = $('#appeal-form');
     let $title = $('#page-title');
 
-    let region = $('#referal').attr('data-id_region');
+    let region = $('#referal_forma').attr('data-id_region');
     if(region == "" || region == undefined){
-      $('#referal').after(
+      $('#referal_forma').after(
           '<p class="label danger"  >Выберите регион</p>');
-      error.push("error");
+      error.push("error1");
       $('.error_step-card-3').addClass('error_block');
     }
-    let hospital = $('#referal_two').attr('data-id_region');
+    let hospital = $('#referal_two_forma').attr('data-id_region');
     if(hospital == "" || hospital == undefined){
-      $('#referal_two').after(
+      $('#referal_two_forma').after(
           '<p class="label danger"  >Выберите больницу</p>');
-      error.push("error");
+      error.push("erro2");
       $('.error_step-card-3').addClass('error_block');
     }
     let choose_class = $('#class_input').attr('data-id_class');
     if(choose_class == "" || choose_class == undefined){
       $('#class_input').after(
           '<p class="label danger absolute_label">Выберите класс</p>');
-      error.push("error");
+      error.push("error3");
       $('.error_step-card-4').addClass('error_block');
     }
     let choose_group = $('#group_input').attr('data-id_group');
     if(choose_group == "" || choose_group == undefined){
       $('#group_input').after(
           '<p class="label danger absolute_label">Выберите группу</p>');
-      error.push("error");
+      error.push("error4");
       $('.error_step-card-4').addClass('error_block');
     }
     let choose_subgroup = $('#subgroup_input').attr('data-id_subgroup');
     if(choose_subgroup == "" || choose_subgroup == undefined){
       $('#subgroup_input').after(
           '<p class="label danger absolute_label">Выберите подгруппу</p>');
-      error.push("error");
+      error.push("error5");
       $('.error_step-card-4').addClass('error_block');
     }
     let choose_diagnoz = $('#diagnoz_input').attr('data-id_diagnoz');
     if(choose_diagnoz == "" || choose_diagnoz == undefined){
       $('#diagnoz_input').after(
           '<p class="label danger absolute_label">Выберите диагноз</p>');
-      error.push("error");
+      error.push("error6");
       $('.error_step-card-4').addClass('error_block');
     }
     let years = [];
@@ -285,33 +287,35 @@ function search_hospital() {
     if(years.length == 0 ){
       $(".wrap-chrckbox:first").after(
           '<p class="label danger"  >Выберите год</p>');
-      error.push("error");
+      error.push("error7");
     }
     let plan=[];
-    let div_last = $('.wrap-chrckbox').last();
+    let div_last = $('.plannet');
     $(div_last).find('input:checked').each(function() {
       plan.push(this.value);
     });
+
     if(plan.length == 0 ){
       div_last.after(
           '<p class="label danger"  >Не выбранно</p>');
-      error.push("error");
+      error.push("error8");
       $('.error_step-card-1').addClass('error_block');
     }
+    console.log(error);
     if(error.length > 0){
 
     }else {
       if ($('#choose_diagnoz_elem').val() != 'Здесь нет моего диагноза') {
 
         if ($('.header__r_auth_reg').length == 1  && ($(".header__r_auth_reg").attr("data-rigstration") == 0)) {
-
+console.log("2222");
             $('.header__r_auth_reg').trigger('click');
             setTimeout(function() {
               $('.register_before_review').removeClass('hidden');
             }, 700);
 
         } else {
-
+console.log("33333");
 
           $.post('/ajax/diagnoz.php',
               {
@@ -433,6 +437,45 @@ function search_hospital() {
       },
     });
   });
+
+
+
+  $(document).on('click', '.error_class', function() {
+    $.magnificPopup.open({
+      items: {
+        src: '<div class="white-popup custom_styles_popup">Если среди диагнозов вы не нашли свой, значит заболевание не относится к числу тех, что оплачитваются из средства ОМС. Случай не является страховым.</div>',
+        type: 'inline',
+      },
+    });
+  });
+  $(document).on('click', '.error_group', function() {
+    $.magnificPopup.open({
+      items: {
+        src: '<div class="white-popup custom_styles_popup">Если среди диагнозов вы не нашли свой, значит заболевание не относится к числу тех, что оплачитваются из средства ОМС. Случай не является страховым.</div>',
+        type: 'inline',
+      },
+    });
+  });
+  $(document).on('click', '.error_subgroup', function() {
+    $.magnificPopup.open({
+      items: {
+        src: '<div class="white-popup custom_styles_popup">Если среди диагнозов вы не нашли свой, значит заболевание не относится к числу тех, что оплачитваются из средства ОМС. Случай не является страховым.</div>',
+        type: 'inline',
+      },
+    });
+  });
+  $(document).on('click', '.error_diagnoz', function() {
+    $.magnificPopup.open({
+      items: {
+        src: '<div class="white-popup custom_styles_popup">Если среди диагнозов вы не нашли свой, значит заболевание не относится к числу тех, что оплачитваются из средства ОМС. Случай не является страховым.</div>',
+        type: 'inline',
+      },
+    });
+  });
+
+
+
+
   $(document).on('click', '#empty_class', function() {
     $.magnificPopup.open({
       items: {
@@ -589,6 +632,7 @@ function keyup_class() {
   $('#class_input').on('keyup', function() {
     var $this = $(this);
     var delay = 500;
+    $('#search_result_class').css({'display': 'block'});
     clearTimeout($this.data('timer'));
     $this.data('timer', setTimeout(function() {
       $this.removeData('timer');
@@ -646,6 +690,7 @@ function keyup_group(id_class) {
   $('#group_input').on('keyup', function() {
     var $this = $(this);
     var delay = 500;
+    $('#search_result_group').css({'display': 'block'});
     clearTimeout($this.data('timer'));
     $this.data('timer', setTimeout(function() {
       $this.removeData('timer');
@@ -704,6 +749,7 @@ function keyup_subgroup(id_group) {
   $('#subgroup_input').on('keyup', function() {
     var $this = $(this);
     var delay = 500;
+    $('#search_result_subgroup').css({'display': 'block'});
     clearTimeout($this.data('timer'));
     $this.data('timer', setTimeout(function() {
       $this.removeData('timer');
@@ -764,6 +810,7 @@ function keyup_diagnoz(id_subgroup) {
   $('#diagnoz_input').on('keyup', function() {
     var $this = $(this);
     var delay = 500;
+    $('#search_result_diagnoz').css({'display': 'block'});
     clearTimeout($this.data('timer'));
     $this.data('timer', setTimeout(function() {
       $this.removeData('timer');

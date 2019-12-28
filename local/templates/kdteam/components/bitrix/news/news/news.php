@@ -14,6 +14,9 @@
 /** @var CBitrixComponent $component */
 $this->setFrameMode(true);
 ?>
+<div class="news_container">
+
+
 <?php
 $APPLICATION->IncludeComponent(
     "bitrix:news.list",
@@ -67,4 +70,5 @@ $APPLICATION->IncludeComponent(
     "CHECK_DATES" => $arParams["CHECK_DATES"],
 ),
     $component
-);
+);?>
+</div>

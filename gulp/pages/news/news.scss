@@ -34,26 +34,90 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .name_news{
-    margin-bottom: 1rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-weight: bold;
-  }
-  .date_news{
-    opacity: .5;
-    font-size: 1.2rem;
-    margin-bottom: .2rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
   .readmore_news{
     border-bottom: 1px dashed;
+  }
+}
+.name_news{
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+.date_news{
+  opacity: .5;
+  font-size: 1.2rem;
+  margin-bottom: .2rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.news_detail_element{
+  margin: 2rem 0;
+  .flex-detail-news{
+    @media(min-width: 576px){
+      display: flex;
+      flex-direction: row;
+    }
+  }
+  .image_detail{
+    max-width: 40rem;
+    margin-bottom: 2rem;
+    @media(min-width: 576px){
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 0;
+    }
+    img{
+      max-width: 100%;
+      height: auto;
+      width: auto;
+    }
+  }
+  .content-news_detail{
+    @media(min-width: 576px){
+      padding-left: 3rem;
+      flex: 3;
+    }
+  }
+}
+.back_link-block{
+  margin: 2rem 0;
+}
+.back_link{
+  position: relative;
+  margin-left: 2rem;
+  &::before{
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    transform: translateY(-50%);
+    left: -2rem;
+    right: auto;
+    border: .5rem solid transparent;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    border-color:  transparent #3a4552 transparent transparent;
+    -webkit-transition: all .2s;
+    -o-transition: all .2s;
+    transition: all .2s;
+  }
+}
+.name_news-detail{
+  font-size: 2.4rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  @media(min-width: 992px){
+    font-size: 3rem;
   }
 }

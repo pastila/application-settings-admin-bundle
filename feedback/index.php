@@ -128,17 +128,22 @@ $sort_url = $_GET;
         if (!$sort_url["comments"] == "all") {
             $res->NavStart(0);
         }
+
+         if($res->SelectedRowsCount() == 0){?>
+
+             <div><p class="error" style="color: red">Отзывы не найдены</p></div>
+
+
+   <?      }
         while ($ob = $res->GetNextElement()) {
 
             $arFields = $ob->GetFields();
-
             $arProps = $ob->GetProperties();
-
             $newDate = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_ACTIVE_FROM"]));
             $ID_USER = $arProps["NAME_USER"]["VALUE"];
             $rsUser = CUser::GetByID($ID_USER);
             $arUser = $rsUser->Fetch();
-
+            $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_CHANGE_BY_USER"]));
 
             $name_user = $arUser["NAME"];
             if (is_array($arProps["COMMENTS_TO_REWIEW"]["VALUE"])) {
@@ -155,15 +160,18 @@ $sort_url = $_GET;
 
             ?>
             <div class="white_block">
+                <span class="date_review">Дата изменения <?php echo $Date_change_user; ?></span>
+                <?php if($arProps["REVIEW_LETTER"]["VALUE"] == "1"){ ?>
+                    <div class="feedback__title">Возврат денежных средств</div>
+                <?php } ?>
                 <!-- Company Name -->
                 <div class="feedback__block_company-name">
-                    <?php if($arProps["REVIEW_LETTER"]["VALUE"] == "1"){ ?>
-                        <span>Возврат денежных средств</span>
-                    <?php } ?>
+
                     <img src="<?= $file["src"] ?>">
                 </div>
                 <!-- top -->
                 <div class="feedback__block_top">
+                    <?php if($arProps["EVALUATION"]["VALUE"] != ""){ ?>
                     <div class="feedback__block_top_star">
 
                         <? for ($i = 1; $i <= $arProps["EVALUATION"]["VALUE"]; ++$i) { ?>
@@ -184,15 +192,13 @@ $sort_url = $_GET;
 
                         <? } ?>
                     </div>
+                    <? } ?>
                     <div class="feedback__block_top_name">
                         <?= $name_user ?>, <?= $city["NAME"] ?>, <?= $newDate ?>
                     </div>
                     <!--                <div class="feedback__block_top_data">-->
                     <!--                    05 сент, 2019-->
                     <!--                </div>-->
-                    <?php if($USER->IsAdmin()){ ?>
-                    <div data-id="<?php echo  $arFields["ID"]; ?>" class="dalete_review" >Удалить</div>
-                    <?php } ?>
                 </div>
                 <!-- Title -->
                 <div class="feedback__title">
@@ -216,7 +222,6 @@ $sort_url = $_GET;
                                 </span>
                         комментариев
                     </a>
-
                     <?
                     if ($USER->IsAuthorized()) { ?>
                         <a rel="nofollow" class="toggle_comment_dropdown opacity_block">Оставить комментарий</a>
@@ -258,7 +263,7 @@ $sort_url = $_GET;
                         <div class="hidenComments__top">
                             <img src="<?php echo $file_comment["src"] ?>" alt="OMS">
 
-                            <img src="./local/templates/kdteam/images/svg/image_block_three.svg" alt="OMS">
+
                             <?if($arPropsComments["REPRESENTATIVE"]["VALUE"] == "1"){?>
                                 <div class="feedback_strah_user">
                                     <p class="text_user">Представитель страховой службы</p>
@@ -318,7 +323,7 @@ $sort_url = $_GET;
 
                                         <img src="<?php echo $file_quote["src"]; ?>" alt="OMS">
 
-                                        <img src="./local/templates/kdteam/images/svg/image_block_three.svg" alt="OMS">
+
                                         <?if($arPropsQuote["REPRESENTATIVE"]["VALUE"] == "1"){?>
                                             <div class="feedback_strah_user">
                                                 <p class="text_user">Представитель страховой службы</p>
@@ -345,6 +350,12 @@ $sort_url = $_GET;
                     <? } ?>
                 </div>
 
+                <?php if($USER->IsAdmin()){ ?>
+                    <div class="right_content-reviews">
+                        <div title="Удалить отзыв" data-id="<?php echo  $arFields["ID"]; ?>" class="dalete_review inline_block" >Удалить отзыв</div>
+                    </div>
+                <?php } ?>
+
             </div><!-- FeedBack block END -->
         <? }
         if (!$sort_url["comments"] == "all") {
@@ -352,7 +363,32 @@ $sort_url = $_GET;
             echo $navStr;
         }
         ?>
-
+        <div class="info_block">
+            <p>Существующая в России система обязательного медицинского страхования состоит из одних лишь плюсов и в
+                теории должна являться примером эффективного государственного социального страхования. Принцип
+                солидарной взаимопомощи; страховые медицинские организации, заинтересованные в повышении качества
+                медицинской помощи; исчерпывающий перечень заболеваний, лечение которых включено в программу ОМС – все
+                это присутствует в системе. Однако на практике все чаще полис ОМС оказывается бесполезен и получатель
+                медицинской помощи – гражданин, застрахованный по ОМС, не имеет возможности получить необходимую
+                медицинскую помощь бесплатно. </p>
+            <p>Для решения проблем, с которыми сталкиваются граждане при получении медицинской помощи, в системе ОМС с
+                недавних пор присутствует понятие «страховой представитель». Это специалист страховой компании, в
+                обязанности которого входит сопровождение застрахованных граждан в процессе получения помощи. Все
+                проблемы граждан на пути к доступной и качественной медицинской помощи должны решаться страховыми
+                представителями. На сегодняшний день в стране насчитывается более 14 000 страховых представителей.
+                <span class="border">Территориальные фонды ОМС регулярно проводят конкурсы на звание лучшего страхового представителя, в
+                которых моделируют различные конфликтные ситуации и даже приглашают студентов в качестве актеров на роль
+                застрахованных.</span> Мы же считаем, что в реальной жизни, практически в любой день в любой медицинской
+                организации достаточно поводов для настоящего, а не выдуманного обращения к страховому представителю. И
+                результат работы по такому обращению объективнее оценит тот, для кого эта работа выполнялась – сам
+                застрахованный гражданин, а не жюри с представителями минздрава и территориального фонда.</p>
+            <p>Если у вас есть опыт обращения к своему страховому представителю, опишите его, вне зависимости от того,
+                положительный он или отрицательный. Так вы внесете свой вклад в формирование рейтинга страховых компаний
+                и возможно именно ваш отзыв станет решающим для посетителей сайта при выборе страховой компании. </p>
+            <p>Дополнительная информация по
+                <a href="http://www.ffoms.ru/news/regionalnye-novosti/v-khabarovskom-krae-vybrali-luchshikh-strakhovykh-predstaviteley/">ссылке.</a>
+            </p>
+        </div>
     </div>
 
     <div class="sidebar">
@@ -374,6 +410,7 @@ $sort_url = $_GET;
                         if ($fields["PROPERTY_AMOUNT_STAR_VALUE"] == "" || $fields["PROPERTY_AMOUNT_STAR_VALUE"] == 0) {
                             continue;
                         }
+                        ++$i;
                         $url_for_filter = "?";
 
                         foreach ($sort_url as $key => $filter) {
@@ -382,13 +419,15 @@ $sort_url = $_GET;
                             }
                         }
                         ?>
-                        <li class="sidebar__item_lists_list">
+                        <li class="sidebar__item_lists_list list_numbered-items">
+                            <span class="sidebar_count number"><?=$i?></span>
                             <a href="<?= $url_for_filter ?>property_name_company=<?= $fields["ID"] ?>"
                                class="sidebar__item_lists_list_link" id="company"
                                data-amount-star="<?= $fields["PROPERTY_AMOUNT_STAR_VALUE"] ?>"
                                data-id="<?= $fields["ID"] ?>">
                                 <?= $fields["NAME"] ?>
                             </a>
+                            <span class="sidebar_count rating"><?=$fields["PROPERTY_AMOUNT_STAR_VALUE"]?></span>
                         </li>
                     <? } ?>
                 <? } else {
@@ -400,15 +439,15 @@ $sort_url = $_GET;
                         }
                         ++$i;
                         ?>
-                        <li class="sidebar__item_lists_list">
-                            <span><?=$i?></span>
-                            <a href="?property_name_company=<?= $fields["ID"] ?>" class="sidebar__item_lists_list_link"
+                        <li class="sidebar__item_lists_list list_numbered-items">
+                            <span class="sidebar_count number"><?=$i?></span>
+                            <a title="<?= $fields["NAME"] ?>" href="?property_name_company=<?= $fields["ID"] ?>" class="sidebar__item_lists_list_link"
                                id="company"
                                data-amount-star="<?= $fields["PROPERTY_AMOUNT_STAR_VALUE"] ?>"
                                data-id="<?= $fields["ID"] ?>">
                                 <?= $fields["NAME"] ?>
                             </a>
-                            <span><?=$fields["PROPERTY_AMOUNT_STAR_VALUE"]?></span>
+                            <span class="sidebar_count rating"><?=$fields["PROPERTY_AMOUNT_STAR_VALUE"]?></span>
                         </li>
                     <? } ?>
 

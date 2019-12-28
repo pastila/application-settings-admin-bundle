@@ -38,6 +38,7 @@ preg_match("/(\d+)\/$/",$url,$result_id);
 
             $arFields = $ob->GetFields();
             $arProps = $ob->GetProperties();
+            $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_CHANGE_BY_USER"]));
             $newDate = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_ACTIVE_FROM"]));
             $ID_USER = $arProps["NAME_USER"]["VALUE"];
             $rsUser = CUser::GetByID($ID_USER);
@@ -61,16 +62,28 @@ preg_match("/(\d+)\/$/",$url,$result_id);
                 <div class="feedback__block_company-name"><img src="<?= $file["src"] ?>"></div>
                 <!-- top -->
                 <div class="feedback__block_top">
-                    <div class="feedback__block_top_star">
-                        <? for ($i = 1; $i <= $arProps["EVALUATION"]["VALUE"]; ++$i) { ?>
-                            <svg class="star star-active" xmlns="http://www.w3.org/2000/svg"
-                                 viewBox="0 0 47.94 47.94">
-                                <path
-                                        d="M26.285 2.486l5.407 10.956a2.58 2.58 0 0 0 1.944 1.412l12.091 1.757c2.118.308 2.963 2.91 1.431 4.403l-8.749 8.528a2.582 2.582 0 0 0-.742 2.285l2.065 12.042c.362 2.109-1.852 3.717-3.746 2.722l-10.814-5.685a2.585 2.585 0 0 0-2.403 0l-10.814 5.685c-1.894.996-4.108-.613-3.746-2.722l2.065-12.042a2.582 2.582 0 0 0-.742-2.285L.783 21.014c-1.532-1.494-.687-4.096 1.431-4.403l12.091-1.757a2.58 2.58 0 0 0 1.944-1.412l5.407-10.956c.946-1.919 3.682-1.919 4.629 0z"
-                                        fill="#ed8a19"/>
-                            </svg>
-                        <? } ?>
-                    </div>
+                    <?php if($arProps["EVALUATION"]["VALUE"] != ""){ ?>
+                        <div class="feedback__block_top_star">
+
+                            <? for ($i = 1; $i <= $arProps["EVALUATION"]["VALUE"]; ++$i) { ?>
+                                <svg class="star star-active" xmlns="http://www.w3.org/2000/svg"
+                                     viewBox="0 0 47.94 47.94">
+                                    <path
+                                            d="M26.285 2.486l5.407 10.956a2.58 2.58 0 0 0 1.944 1.412l12.091 1.757c2.118.308 2.963 2.91 1.431 4.403l-8.749 8.528a2.582 2.582 0 0 0-.742 2.285l2.065 12.042c.362 2.109-1.852 3.717-3.746 2.722l-10.814-5.685a2.585 2.585 0 0 0-2.403 0l-10.814 5.685c-1.894.996-4.108-.613-3.746-2.722l2.065-12.042a2.582 2.582 0 0 0-.742-2.285L.783 21.014c-1.532-1.494-.687-4.096 1.431-4.403l12.091-1.757a2.58 2.58 0 0 0 1.944-1.412l5.407-10.956c.946-1.919 3.682-1.919 4.629 0z"
+                                        <?if($arProps["VERIFIED"]["VALUE"] == ""){?>
+                                            fill="#c5d2e0"
+                                        <?php }elseif($arProps["REJECTED"]["VALUE"] != "" && $arProps["VERIFIED"]["VALUE"] != ""){?>
+                                            fill="#3a4552"
+                                        <?}elseif($arProps["VERIFIED"]["VALUE"] !=""){ ?>
+                                            fill="#ed8a19"
+                                        <?php } ?>/>
+                                </svg>
+
+
+
+                            <? } ?>
+                        </div>
+                    <? } ?>
                     <div class="feedback__block_top_name">
                         <?= $name_user ?>, <?= $city["NAME"] ?>, <?= $newDate ?>
                     </div>
@@ -98,7 +111,7 @@ preg_match("/(\d+)\/$/",$url,$result_id);
                                 </span>
                         комментариев
                     </a>
-
+                    <span class="date_review">Дата изменения <?php echo $Date_change_user; ?></span>
                 </div>
                 <!-- COMMETNS -->
                 <div class="hidenComments">
@@ -116,10 +129,11 @@ preg_match("/(\d+)\/$/",$url,$result_id);
                         $rsUserComments = CUser::GetByID($arPropsComments["AVTOR_COMMENTS"]["VALUE"]);
                         $arUserComments = $rsUserComments->Fetch();
                         $name_userComments = $arUserComments["NAME"];
+                        $file_comment = CFile::ResizeImageGet($arUserComments["PERSONAL_PHOTO"], array('width'=>50, 'height'=>50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
                         ?>
 
                         <div class="hidenComments__top">
-                            <img src="./local/templates/kdteam/images/svg/image_block_three.svg" alt="OMS">
+                            <img src="<?php echo $file_comment["src"] ?>" alt="OMS">
 
                             <div class="hidenComments__top_wrap">
                                 <div class="hidenComments__top_name"><?= $name_userComments ?></div>
@@ -163,11 +177,12 @@ preg_match("/(\d+)\/$/",$url,$result_id);
                                     $ID_USERQuote = $arPropsQuote["AVTOR_CIATION"]["VALUE"];
                                     $rsUserQuote = CUser::GetByID($ID_USERQuote);
                                     $arUserQuote = $rsUserQuote->Fetch();
-                                    $name_userQuote = $arUserQuote["NAME"]; ?>
+                                    $name_userQuote = $arUserQuote["NAME"];
+                                    $file_quote = CFile::ResizeImageGet($arUserQuote["PERSONAL_PHOTO"], array('width'=>50, 'height'=>50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
+                                    ?>
                                     <div class="hidenComments__top">
 
-                                        <img src="./local/templates/kdteam/images/svg/image_block_three.svg" alt="OMS">
-
+                                        <img src="<?php echo $file_quote["src"]; ?>" alt="OMS">
                                         <div class="hidenComments__top_wrap">
                                             <div class="hidenComments__top_name"><?= $name_userQuote ?></div>
                                             <div class="hidenComments__top_data"><?= $newDateQuote ?></div>

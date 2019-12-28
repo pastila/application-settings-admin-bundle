@@ -75,6 +75,7 @@
                     -webkit-transform: translateY(-50%);
                     transform: translateY(-50%);
                     border-color: #3a4552 transparent transparent transparent;
+                    transition: all .2s;
                 }
 
                 &.active {
@@ -102,7 +103,6 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                background-color: $accentColor;
                 margin-left: 2rem;
                 img {
                     max-height: 100%;
@@ -184,6 +184,78 @@
             }
         }
     }
+}
+#feedback_modal{
+    max-width: 70rem;
+    .block_padd-modal{
+        @media(min-width: 992px){
+            padding: 1rem;
+        }
+        .mainBtn {
+            max-width: 100%;
+            width: 100%;
+        }
+        textarea{
+            min-height: 10rem;
+        }
+    }
+}
+.file-input {
+    display: inline-block;
+    position: relative;
+    font-weight: bold;
+}
+.file-input > [type='file'] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: 10;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+}
+
+.file-input > .button {
+    display: block;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    padding: 2rem 1rem;
+}
+.file_input_half{
+    .button{
+        @media(min-width: 992px){
+            width: 50%;
+            display: inline-block;
+        }
+    }
+    .label{
+        &.label_name{
+            @media(min-width: 992px){
+                max-width: 40%;
+                display: inline-block;
+            }
+        }
+    }
+}
+.file-input > .label {
+    color: #333;
+    white-space: nowrap;
+    opacity: .3;
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 0 0 .6em;
+}
+.file-input > .label.block-error-label {
+    display: block;
+    overflow: initial;
+    color: #f12323;
+    opacity: 1;
+    margin: .5rem 0;
+    padding: 0;
 }
 #auth-form-login {
     max-width: 50rem;

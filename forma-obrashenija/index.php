@@ -28,7 +28,16 @@ while($ob = $res->GetNextElement()){
     </ul>
 
     <!-- Pages Title -->
-    <h2 id="page-title" class="page-title">Проверить свой дигноз</h2>
+    <section>
+        <h2 id="page-title" class="page-title">Проверить свой дигноз</h2>
+        <p>Страховым случаем в системе ОМС является случай оказания медицинской помощи, который должен быть оплачен
+            из средств ОМС страховой компанией, а не личными средствами пациента. Страховыми являются случаи, которые
+            соответствуют условиям, прописанным в программе государственных гарантий. Ниже приведены вопросы, по вашим
+            ответам на которые мы сможем определить, является ли ваш случай лечения страховым. Если вы когда-либо
+            оплачивали медицинскую помощь или в данный момент получаете медицинскую помощь на платной основе, пройдите
+            ниже и ответьте на вопросы. Возможно, это поможет вам избежать оплаты тех медицинских услуг, которые должны
+            выполняться бесплатно, или даже вернуть средства, которые вы уже заплатили.</p>
+    </section>
 
     <!-- ALL STEPS IN FORM -->
     <form id="appeal-form" action="">
@@ -97,7 +106,7 @@ while($ob = $res->GetNextElement()){
                     Каким было ваше обращение ?
                 </div>
 
-                <div class="wrap-chrckbox">
+                <div class="wrap-chrckbox plannet">
                     <label id="planned_label" class="check-label">
                         Плановое
                         <input id="planned" type="checkbox" value="" />
@@ -211,8 +220,30 @@ while($ob = $res->GetNextElement()){
             <div class="card error_step-card-4">
                 <p class="form-obrashcheniya__step_four_text"><?=$arResult_block[8]?></p>
 
-                <a class="link-underline" href="#">Ссылка на статью в блоге</a>
+                <a class="link-underline" href="/news/chto-oplachivaetsya-po-polisu/">Ссылка на статью в блоге</a>
 
+                <div class="smart_search-block">
+                    <p class="title-select bold">Начните вводить наименование заболевания, с которым вы обратились в медицинскую организацию.</p>
+                    <form action="">
+                        <div class="input-with-search">
+                            <label class="title-select" for="user_pass">Выберите диагноз: </label>
+                            <div class="input__wrap">
+                                <div class="input__ico">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                                </div>
+                                <input />
+                            </div>
+                        </div>
+                        <div class="wrap-chrckbox checkbox_registration">
+                            <label class="check-label">
+                                Я не знаю своего диагноза
+                                <input type="checkbox" value="">
+                                <span class="check-img"></span>
+                            </label></div>
+                    </form>
+                </div>
+
+                <p class="title-select bold">Или найдите диагноз в перечне заболеваний, структурированном в соответствии с международной классификацией болезней (МКБ-10).</p>
                 <div id="grid" class="grid" action="">
                     <?php
                     $APPLICATION->IncludeComponent(
@@ -243,6 +274,5 @@ while($ob = $res->GetNextElement()){
 
         <span id="strax-sluchay" class="mainBtn">проверить диагноз</span>
     </form>
-
 
 <?php require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php");?>

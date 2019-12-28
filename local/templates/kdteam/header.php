@@ -191,9 +191,9 @@ $asset = Asset::getInstance();
                         </a>
                     </div>
 
-                    <button class="header__r_mainBtn mainBtn">
+                    <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-feedback.php"?>" class="header__r_mainBtn mainBtn" id="write-us_modal">
                         Написать нам
-                    </button>
+                    </a>
                 </div>
             <?php } ?>
         </div>

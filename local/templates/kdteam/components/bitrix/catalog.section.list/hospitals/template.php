@@ -184,7 +184,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
 
             <p class="form-obrashcheniya__step_three_l_text"><?=$arResult_block[6]?></p>
 
-            <a class="link-underline" href="#">Ссылка на статью в блоге</a>
+            <a class="link-underline" href="/news/kakie-byvayut-bolnitsy/">Ссылка на статью в блоге</a>
 
 
         <?php
@@ -199,7 +199,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                         <div class="input__ico">
                             <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                         </div>
-                        <input id="referal" type="text" data-region_check="check" data-id_region="<?=$arResult['SECTION']['ID']?>" placeholder="Поиск по региону" value="<?php echo $arResult['SECTION']['NAME']?>" autocomplete="off"/>
+                        <input id="referal_forma" type="text" data-region_check="check" data-id_region="<?=$arResult['SECTION']['ID']?>" placeholder="Поиск по региону" value="<?php echo $arResult['SECTION']['NAME']?>" autocomplete="off"/>
                         <ul style="cursor: pointer;" class="custom-serach__items" id="search_result">
                 <?php
                 $db_list = CIBlockSection::GetList(
@@ -236,7 +236,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                         <div class="input__ico">
                             <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                         </div>
-                        <input id="referal_two" type="text" placeholder="Поиск по региону" autocomplete="off"/>
+                        <input id="referal_two_forma" type="text" placeholder="Поиск по региону" autocomplete="off"/>
                         <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_hospital">
                             <?
                                  $i = 1;
@@ -268,7 +268,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                     <div class="input__ico">
                         <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                     </div>
-                    <input id="referal" type="text" placeholder="Поиск по региону" autocomplete="off"/>
+                    <input id="referal_forma" type="text" placeholder="Поиск по региону" autocomplete="off"/>
                     <ul style="cursor: pointer;" class="custom-serach__items" id="search_result">
                         <?php
                         foreach ($arResult['SECTIONS'] as &$arSection) {

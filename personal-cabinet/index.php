@@ -34,7 +34,7 @@ while($ob = $res->GetNextElement()){
   $logo_company = CFile::GetFileArray($arFields["PROPERTY_LOGO_IMG_VALUE"]);
 
 }
-
+$prop=CIBlockSection::GetByID($person["UF_REGION"])->GetNextElement()->GetFields();
 
 ?>
 
@@ -182,55 +182,56 @@ while($ob = $res->GetNextElement()){
                    <span class="label" data-js-label>.png .jpeg</span>
                    <span class="label error-inputs block-error-label">Максимальный размер файла 10mb</span>
                    <span class="label error-inputs block-error-label_size" style="display: none" >Размер файла превышен</span>
-                   <span class="label error-inputs block-error-label_format" style="display: none" >Не первый формат</span>
+                   <span class="label error-inputs block-error-label_format" style="display: none" >Не вервый формат</span>
                </div>
            </div>
                <div class="feedback__top">
                    <div class="custom-select custom-select-js-cite">
-                       <div class="title-select" data-select="city">Ваш Город</div>
+
+
+                       <div class="input__wrap">
+                           <label class="input__wrap_label" for="user_pass">Выбор региона: </label>
+                           <div class="block_relative">
+                               <div class="input__ico">
+                                   <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                               </div>
+                               <input id="referal"  value="<?php echo $prop["NAME"] ?>" type="text" data-id_region="0" placeholder="Поиск по региону" autocomplete="off"/>
+                               <ul style="cursor: pointer;" class="custom-serach__items" id="search_result">
+                                   <?
+                                   $arOrder = Array("name"=>"asc");
+                                   $arFilter = Array("IBLOCK_ID"=>16);
+                                   $res = CIBlockSection::GetList($arOrder, $arFilter, false );
+                                   while($ob = $res->GetNext()){
+
+                                       ?>
+                                       <li value="<?=$ob["ID"]?>" class="custom-serach__items_item region " data-id-city="<?=$ob["ID"]?>"><?=$ob["NAME"]?></li>
+
+                                   <?  }?>
+                               </ul>
+                           </div>
+                       </div>
+                       <div class="input__wrap">
+                           <label class="input__wrap_label" for="user_pass">Список страховых компаний : </label>
+                           <div class="block_relative search-second" style="pointer-events: none">
+                               <div class="input__ico">
+                                   <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                               </div>
+                               <input id="referal_two" value="<?= $arFields["NAME"]?>" type="text" data-id_region="0" placeholder="Поиск страховых компаний " autocomplete="off"/>
+                               <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_hospital">
+
+                               </ul>
+                           </div>
+                       </div>
 
 
 
-                       <div class="danger" style="display: none" >Выбирете город</div>
-                       <select style="display:none;">
-                           <?php
-                           $db_list=   CIBlockSection::GetList(
-                               Array("SORT"=>"ASC"), Array('IBLOCK_ID'=>16,"ID"=>$person["UF_REGION"]), false);
-                           $ar_result = $db_list->GetNext();
 
-                           ?>
-                           <option value="0" ><?=$ar_result["NAME"]?></option>
 
-                           <?
-                           $arOrder = Array("name"=>"asc");
-                           $arFilter = Array("IBLOCK_ID"=>16);
-                           $res = CIBlockSection::GetList($arOrder, $arFilter, false );
-                           while($ob = $res->GetNext()){
 
-                               ?>
-                               <option value="<?=$ob["ID"]?>" data-id-city="<?=$ob["ID"]?>"><?=$ob["NAME"]?></option>
 
-                           <?  }?>
-
-                       </select>
                    </div>
 
-                   <div class="custom-select  custom-select-js  no_click">
 
-                       <div class="title-select" data-select="company">Страховая компания</div>
-                       <div class="danger" style="display: none">Выбирете компанию</div>
-                       <select style="display:none;">
-                           <?php $arSelect = Array("ID", "IBLOCK_ID", "NAME");
-                           $arFilter = Array("IBLOCK_ID"=>16,"ID"=>$person["UF_INSURANCE_COMPANY"] );
-                           $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
-                           while($ob = $res->GetNextElement()){
-                               $arProps = $ob->GetFields();
-
-                           } ?>
-                           <option value="0" ><?=$arProps["NAME"]?> </option>
-                       </select>
-
-                   </div>
                </div>
               <div class="submit_button">
                   <button class="mainBtn" type="submit" id="save_data">Сохранить</button>
