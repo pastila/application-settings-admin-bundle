@@ -22,7 +22,8 @@ global $USER;?>
             <!-- Breadcrumbs -->
             <ul class="breadcrumbs">
                 <li>Главная</li>
-                <li>Отзывы</li>
+                <li>Отзыва</li>
+                <li>Добавление отзыва</li>
             </ul>
 
             <!-- Pages Title -->
