@@ -41,11 +41,12 @@ $arUser = $rsUser->Fetch();
                 $res->NavStart(0);
             }
             while ($ob = $res->GetNextElement()) {
-
+                $Date_change_user ="";
                 $arFields = $ob->GetFields();
                 $arProps = $ob->GetProperties();
                 $newDate = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_ACTIVE_FROM"]));
-                $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_CHANGE_BY_USER"]));
+
+                $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arProps["DATE_CHANGE_BY_USER"]["VALUE"]));
 
                 $ID_USER = $arProps["NAME_USER"]["VALUE"];
                 $rsUser = CUser::GetByID($ID_USER);
@@ -73,6 +74,7 @@ $arUser = $rsUser->Fetch();
 
                     <!-- top -->
                     <div class="feedback__block_top">
+                        <?php if($arProps["EVALUATION"]["VALUE"] != "") {?>
                         <div class="feedback__block_top_star" data-block-star="<?=$arFields["ID"]?>">
                             <? for ($i = 1; $i <= $arProps["EVALUATION"]["VALUE"]; ++$i) { ?>
                                 <svg class="star star-active" xmlns="http://www.w3.org/2000/svg"
@@ -89,6 +91,7 @@ $arUser = $rsUser->Fetch();
                                 </svg>
                             <? } ?>
                         </div>
+                    <?php } ?>
                         <div class="feedback__block_top_name">
                             <?= $name_user ?>, <?= $city["NAME"] ?>, <?= $newDate ?>
                         </div>
@@ -121,7 +124,9 @@ $arUser = $rsUser->Fetch();
                     </div>
                     <div class="feedback__bottom bottom_change-block">
                         <span class="feedback_change_star" data-id-rewiev="<?=$arFields["ID"]?>" >Редактировать оценку</span>
+                        <?php if($Date_change_user != ""){ ?>
                         <span class="date_review">Дата изменения <?php echo $Date_change_user; ?></span>
+                    <?php } ?>
                     </div>
                     <form action="" id="form_change_count_star" data-form-id="<?=$arFields["ID"]?>" class="hidden form-change_star">
                         <div class='rating-stars text-center' data-select="star">
@@ -279,11 +284,13 @@ $arUser = $rsUser->Fetch();
                 $res->NavStart(0);
             }
             while ($ob = $res->GetNextElement()) {
-
+                $Date_change_user ="";
                 $arFields = $ob->GetFields();
                 $arProps = $ob->GetProperties();
                 $newDate = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_ACTIVE_FROM"]));
-                $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_CHANGE_BY_USER"]));
+                if($arFields["DATE_CHANGE_BY_USER"]  != "") {
+                    $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arProps["DATE_CHANGE_BY_USER"]["VALUE"]));
+                }
                 $ID_USER = $arProps["NAME_USER"]["VALUE"];
                 $rsUser = CUser::GetByID($ID_USER);
                 $arUser = $rsUser->Fetch();
@@ -310,6 +317,7 @@ $arUser = $rsUser->Fetch();
 
                     <!-- top -->
                     <div class="feedback__block_top">
+                <?php if($arProps["EVALUATION"]["VALUE"] != "") {?>
                         <div class="feedback__block_top_star" data-block-star="<?=$arFields["ID"]?>">
                             <? for ($i = 1; $i <= $arProps["EVALUATION"]["VALUE"]; ++$i) { ?>
                                 <svg class="star star-active" xmlns="http://www.w3.org/2000/svg"
@@ -326,6 +334,7 @@ $arUser = $rsUser->Fetch();
                                 </svg>
                             <? } ?>
                         </div>
+                <? } ?>
                         <div class="feedback__block_top_name">
                             <?= $name_user ?>, <?= $city["NAME"] ?>, <?= $newDate ?>
                         </div>
@@ -355,7 +364,9 @@ $arUser = $rsUser->Fetch();
                                 </span>
                             комментариев
                         </a>
-                        <span><?php echo $Date_change_user; ?></span>
+                        <?php if($Date_change_user){ ?>
+                            <span><?php echo $Date_change_user; ?></span>
+                        <?php } ?>
                     </div>
 
 
@@ -494,10 +505,6 @@ $arUser = $rsUser->Fetch();
 
     </div>
 <?}?>
-    <h2 class="page-title">Ваша активность в обсуждениях</h2>
-    <div class="feedback">
-        <div class="feedback__wrap_white-blocks">
-            <!-- FeedBack block -->
 
             <?php
 
@@ -511,7 +518,7 @@ $arUser = $rsUser->Fetch();
 
                 $ID_rewievs[] = $arFields["ID"];
             }
-            $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_CHANGE_BY_USER"]));
+
             $ID_comments = array();
             $arSelect2 = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM");
             $arFilter2 = Array(
@@ -539,11 +546,24 @@ $arUser = $rsUser->Fetch();
             if (!$sort_url["comments"] == "all") {
                 $res->NavStart(0);
             }
+            if($res->SelectedRowsCount() > 0 ){
+                ?>
+
+                <h2 class="page-title">Ваша активность в обсуждениях</h2>
+                <div class="feedback">
+                <div class="feedback__wrap_white-blocks">
+                <!-- FeedBack block -->
+
+                <?
+            }
             while ($ob = $res->GetNextElement()) {
 
                 $arFields = $ob->GetFields();
                 $arProps = $ob->GetProperties();
                 $newDate = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_ACTIVE_FROM"]));
+                if($arFields["DATE_CHANGE_BY_USER"]  != "") {
+                    $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arProps["DATE_CHANGE_BY_USER"]["VALUE"]));
+                }
                 $ID_USER = $arProps["NAME_USER"]["VALUE"];
                 $rsUser = CUser::GetByID($ID_USER);
                 $arUser = $rsUser->Fetch();
@@ -566,6 +586,7 @@ $arUser = $rsUser->Fetch();
                                     <div class="feedback__block_company-name"><img src="<?= $file["src"] ?>"></div>
                                     <!-- top -->
                                     <div class="feedback__block_top">
+                <?php if($arProps["EVALUATION"]["VALUE"] != "") {?>
                                         <div class="feedback__block_top_star">
                                             <? for ($i = 1; $i <= $arProps["EVALUATION"]["VALUE"]; ++$i) { ?>
                                                 <svg class="star star-active" xmlns="http://www.w3.org/2000/svg"
@@ -582,6 +603,7 @@ $arUser = $rsUser->Fetch();
                                                 </svg>
                                             <? } ?>
                                         </div>
+                <? } ?>
                                         <div class="feedback__block_top_name">
                                             <?= $name_user ?>, <?= $city["NAME"] ?>, <?= $newDate ?>
                                         </div>
@@ -610,7 +632,9 @@ $arUser = $rsUser->Fetch();
                                                 </span>
                                             комментариев
                                         </a>
+                                       <?php if($Date_change_user){ ?>
                                         <span><?php echo $Date_change_user; ?></span>
+                    <?php } ?>
                                     </div>
                                     <!-- COMMETNS -->
                                     <div class="hidenComments">
