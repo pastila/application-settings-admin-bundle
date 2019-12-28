@@ -340,8 +340,10 @@
 }
 .feedback__block_top_star{
     display: flex;
-    margin-bottom: 0;
     align-items: center;
+    @media(min-width: 991px){
+        margin-bottom: 0;
+    }
     .star{
         &:not(:last-of-type) {
             margin-right: .2rem;
