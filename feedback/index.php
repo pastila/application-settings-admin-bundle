@@ -160,6 +160,7 @@ $sort_url = $_GET;
 
             ?>
             <div class="white_block">
+                <span class="date_review">Дата изменения <?php echo $Date_change_user; ?></span>
                 <?php if($arProps["REVIEW_LETTER"]["VALUE"] == "1"){ ?>
                     <div class="feedback__title">Возврат денежных средств</div>
                 <?php } ?>
@@ -221,7 +222,6 @@ $sort_url = $_GET;
                                 </span>
                         комментариев
                     </a>
-                    <span><?php echo $Date_change_user; ?></span>
                     <?
                     if ($USER->IsAuthorized()) { ?>
                         <a rel="nofollow" class="toggle_comment_dropdown opacity_block">Оставить комментарий</a>

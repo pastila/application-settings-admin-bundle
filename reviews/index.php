@@ -66,6 +66,9 @@ $arUser = $rsUser->Fetch();
 
                 ?>
                 <div class="white_block" data-id-review="<?=$arFields["ID"]?>">
+                    <?php if($Date_change_user != ""){ ?>
+                        <span class="date_review">Дата изменения <?php echo $Date_change_user; ?></span>
+                    <?php } ?>
                     <!-- Company Name -->
                     <div class="feedback__block_company-name"><img src="<?= $file["src"] ?>"></div>
 
@@ -126,9 +129,6 @@ $arUser = $rsUser->Fetch();
                     </div>
                     <div class="feedback__bottom bottom_change-block">
                         <span class="feedback_change_star" data-id-rewiev="<?=$arFields["ID"]?>" >Редактировать оценку</span>
-                        <?php if($Date_change_user != ""){ ?>
-                        <span class="date_review">Дата изменения <?php echo $Date_change_user; ?></span>
-                    <?php } ?>
                     </div>
                     <form action="" id="form_change_count_star" data-form-id="<?=$arFields["ID"]?>" class="hidden form-change_star">
                         <div class='rating-stars text-center' data-select="star">
@@ -311,6 +311,9 @@ $arUser = $rsUser->Fetch();
 
                 ?>
                 <div class="white_block">
+                    <?php if($Date_change_user){ ?>
+                        <span class="date_review">Дата изменения <?php echo $Date_change_user; ?></span>
+                    <?php } ?>
                     <!-- Company Name -->
                     <div class="feedback__block_company-name"><img src="<?= $file["src"] ?>"></div>
 
@@ -368,9 +371,6 @@ $arUser = $rsUser->Fetch();
                                 </span>
                             комментариев
                         </a>
-                        <?php if($Date_change_user){ ?>
-                            <span><?php echo $Date_change_user; ?></span>
-                        <?php } ?>
                     </div>
 
 
@@ -586,6 +586,9 @@ $arUser = $rsUser->Fetch();
 
                 ?>
                                 <div class="white_block">
+                                    <?php if($Date_change_user){ ?>
+                                        <span class="date_review">Дата изменения <?php echo $Date_change_user; ?></span>
+                                    <?php } ?>
                                     <!-- Company Name -->
                                     <div class="feedback__block_company-name"><img src="<?= $file["src"] ?>"></div>
                                     <!-- top -->
@@ -638,9 +641,6 @@ $arUser = $rsUser->Fetch();
                                                 </span>
                                             комментариев
                                         </a>
-                                       <?php if($Date_change_user){ ?>
-                                        <span><?php echo $Date_change_user; ?></span>
-                    <?php } ?>
                                     </div>
                                     <!-- COMMETNS -->
                                     <div class="hidenComments">

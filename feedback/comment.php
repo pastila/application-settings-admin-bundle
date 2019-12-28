@@ -111,7 +111,7 @@ preg_match("/(\d+)\/$/",$url,$result_id);
                                 </span>
                         комментариев
                     </a>
-                    <span><?php echo $Date_change_user; ?></span>
+                    <span class="date_review">Дата изменения <?php echo $Date_change_user; ?></span>
                 </div>
                 <!-- COMMETNS -->
                 <div class="hidenComments">
