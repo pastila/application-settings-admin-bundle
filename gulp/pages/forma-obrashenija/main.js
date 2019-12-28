@@ -5,30 +5,30 @@ $(document).ready(function() {
   search_class();
   keyup_class();
   $(document).on('click', '#search_result li', function() {
-    $('#referal').val($(this).text());
+    $('#referal_forma').val($(this).text());
     $('#search_result').fadeOut();
   });
-  $(document).on('click', '#referal', function() {
+  $(document).on('click', '#referal_forma', function() {
 
     $('#search_result').css({'display': 'block'});
   });
   $(document).mouseup(function(e) {
-    let container = $('#referal');
+    let container = $('#referal_forma');
     if (container.has(e.target).length === 0) {
       $('#search_result').fadeOut();
     }
   });
   $(document).on('click', '#search_result_hospital li', function() {
-    $('#referal_two').val($(this).text());
+    $('#referal_two_forma').val($(this).text());
     $('#search_result_hospital').fadeOut();
   });
 
-  $(document).on('click', '#referal_two', function() {
+  $(document).on('click', '#referal_two_forma', function() {
     $('#search_result_hospital').css({'display': 'block'});
   });
 
   $(document).mouseup(function(e) {
-    let container = $('#referal_two');
+    let container = $('#referal_two_forma');
     if (container.has(e.target).length === 0) {
       $('#search_result_hospital').fadeOut();
     }
@@ -37,10 +37,10 @@ $(document).ready(function() {
 
     let id_region = $(this).attr('value');
     let select_region = $(this).text();
-    $('#referal').val(select_region);
-    $('#referal').attr('data-id_region', id_region);
+    $('#referal_forma').val(select_region);
+    $('#referal_forma').attr('data-id_region', id_region);
     $('#region_name').text(select_region);
-    $('#referal').attr('data-region_check', 'check');
+    $('#referal_forma').attr('data-region_check', 'check');
     let component = $('#hospitals');
     $.ajax({
       dataType: 'html',
@@ -65,9 +65,10 @@ $(document).ready(function() {
 
  function search_region() {
 
-   $('#referal').on('keyup', function() {
+   $('#referal_forma').on('keyup', function() {
 
      var $this = $(this);
+
      var delay = 500;
      if ($this.val() == '') {
        $('#region_name').text('НЕ ВЫБРАНО');
@@ -100,9 +101,9 @@ $(document).ready(function() {
 
              let id_region = $(this).attr('value');
              let select_region = $(this).text();
-             $('#referal').val(select_region);
-             $('#referal').attr('data-id_region', id_region);
-             $('#referal').attr('data-region_check', 'check');
+             $('#referal_forma').val(select_region);
+             $('#referal_forma').attr('data-id_region', id_region);
+             $('#referal_forma').attr('data-region_check', 'check');
              $('#region_name').text(select_region);
              let component = $('#hospitals');
              $.ajax({
@@ -134,9 +135,9 @@ function search_hospital() {
     let select_region = $(this).text();
     let name_boss = $(this).attr("data-name-boss");
     let name_street = $(this).attr("data-street");
-    $('#referal_two').val(select_region);
-    $('#referal_two').attr('data-id_region', id_region);
-    $('#referal_two').attr('data-region_check', 'check');
+    $('#referal_two_forma').val(select_region);
+    $('#referal_two_forma').attr('data-id_region', id_region);
+    $('#referal_two_forma').attr('data-region_check', 'check');
     $('#hosptital_name').text(select_region);
     $('#street_name').text(name_street);
     $('#boss_name').text(name_boss);
@@ -144,7 +145,7 @@ function search_hospital() {
 
 
   });
-  $('#referal_two').on('keyup', function() {
+  $('#referal_two_forma').on('keyup', function() {
     var $this = $(this);
     var delay = 500;
     if ($this.val() == '') {
@@ -158,7 +159,7 @@ function search_hospital() {
     clearTimeout($this.data('timer'));
     $this.data('timer', setTimeout(function() {
       $this.removeData('timer');
-      $.post('/ajax/smart_search_hospital.php', {name_hospital: $this.val(), region_id:$("#referal").attr("data-id_region") }, function(msg) {
+      $.post('/ajax/smart_search_hospital.php', {name_hospital: $this.val(), region_id:$("#referal_forma").attr("data-id_region") }, function(msg) {
         if ($('.error_region').length != 0) {
           $('.error_region').remove();
         }
@@ -188,9 +189,9 @@ function search_hospital() {
             let select_region = $(this).text();
             let name_boss = $(this).attr("data-name-boss");
             let name_street = $(this).attr("data-street");
-            $('#referal_two').val(select_region);
-            $('#referal_two').attr('data-id_region', id_region);
-            $('#referal_two').attr('data-region_check', 'check');
+            $('#referal_two_forma').val(select_region);
+            $('#referal_two_forma').attr('data-id_region', id_region);
+            $('#referal_two_forma').attr('data-region_check', 'check');
             $('#hosptital_name').text(select_region);
             $('#street_name').text(name_street);
             $('#boss_name').text(name_boss);
@@ -235,16 +236,16 @@ function search_hospital() {
     let $form = $('#appeal-form');
     let $title = $('#page-title');
 
-    let region = $('#referal').attr('data-id_region');
+    let region = $('#referal_forma').attr('data-id_region');
     if(region == "" || region == undefined){
-      $('#referal').after(
+      $('#referal_forma').after(
           '<p class="label danger"  >Выберите регион</p>');
       error.push("error1");
       $('.error_step-card-3').addClass('error_block');
     }
-    let hospital = $('#referal_two').attr('data-id_region');
+    let hospital = $('#referal_two_forma').attr('data-id_region');
     if(hospital == "" || hospital == undefined){
-      $('#referal_two').after(
+      $('#referal_two_forma').after(
           '<p class="label danger"  >Выберите больницу</p>');
       error.push("erro2");
       $('.error_step-card-3').addClass('error_block');

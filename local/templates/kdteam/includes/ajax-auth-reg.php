@@ -106,7 +106,7 @@ CModule::IncludeModule("iblock");
                         while($ob = $res->GetNext()){
 
                             ?>
-                            <li value="<?=$ob["ID"]?>" class="custom-serach__items_item region " data-id-city="<?=$ob["ID"]?>"><?=$ob["NAME"]?></li>
+                            <li value="<?=$ob["ID"]?>" class="custom-serach__items_item region_reg " data-id-city="<?=$ob["ID"]?>"><?=$ob["NAME"]?></li>
 
                         <?  }?>
                     </ul>

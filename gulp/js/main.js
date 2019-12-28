@@ -75,7 +75,7 @@ $(document).ready(function() {
       var delay = 500;
       if ($this.val() == '') {
         $this.attr('data-id_region', '');
-        $('.hospital').each(function() {
+        $('.hospital_reg').each(function() {
           $(this).remove();
         });
         $('#hospital').remove();
@@ -85,12 +85,12 @@ $(document).ready(function() {
       clearTimeout($this.data('timer'));
       $this.data('timer', setTimeout(function() {
         $this.removeData('timer');
-        $.post('/ajax/personal-cabinet/search_region.php',
+        $.post('/ajax/search_for_reg/search_region.php',
             {name_city: $this.val()}, function(msg) {
               if ($('.error_region').length != 0) {
                 $('.error_region').remove();
               }
-              $('.region').each(function() {
+              $('.region_reg').each(function() {
                 $(this).remove();
               });
               if (msg == 'error_region') {
@@ -112,17 +112,17 @@ $(document).ready(function() {
       }, delay));
     });
 
-    $(document).on('click', '.region', function() {
+    $(document).on('click', '.region_reg', function() {
 
       let id_region = $(this).attr('value');
       $('#referal').attr('data-id_region', id_region);
       $('#referal').attr('data-region_check', 'check');
-      $.post('/ajax/personal-cabinet/search_company.php',
+      $.post('/ajax/search_for_reg/search_company.php',
           {region_id: $('#referal').attr('data-id_region')}, function(msg) {
             if ($('.error_region').length != 0) {
               $('.error_region').remove();
             }
-            $('.hospital').each(function() {
+            $('.hospital_reg').each(function() {
               $(this).remove();
             });
             $('.hospital-empty').remove();
@@ -133,7 +133,7 @@ $(document).ready(function() {
           });
     });
 
-    $(document).on('click', '.hospital', function() {
+    $(document).on('click', '.hospital_reg', function() {
       let id_region = $(this).attr('value');
       let select_region = $(this).text();
       $('#referal_two').val(select_region);
@@ -150,14 +150,14 @@ $(document).ready(function() {
       clearTimeout($this.data('timer'));
       $this.data('timer', setTimeout(function() {
         $this.removeData('timer');
-        $.post('/ajax/personal-cabinet/search_company.php', {
+        $.post('/ajax/search_for_reg/search_company.php', {
           name_hospital: $this.val(),
           region_id: $('#referal').attr('data-id_region'),
         }, function(msg) {
           if ($('.error_region').length != 0) {
             $('.error_region').remove();
           }
-          $('.hospital').each(function() {
+          $('.hospital_reg').each(function() {
             $(this).remove();
           });
           $('.hospital-empty').remove();
@@ -300,8 +300,9 @@ $(document).ready(function() {
                   });
                   $('body').css({'overflow': 'initial'});
                 }, 1000);
+
               } else {
-                location.reload();
+                 location.reload();
               }
             }
           },

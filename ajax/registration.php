@@ -78,8 +78,7 @@ if($_POST) {
                 $ID_user = array("user" => $ID);
                 $result = array_merge($result, $ID_user);
                 $USER->Authorize($ID);
-                $msg = array("review" => "register_with_review");
-                $result = array_merge($result, $msg);
+
 //        if($_POST["review"]){
 //
 //            $res = CIBlockElement::GetByID($_SESSION["HOSPITAL"]);
