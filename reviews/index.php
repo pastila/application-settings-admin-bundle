@@ -103,7 +103,9 @@ $arUser = $rsUser->Fetch();
                     </div>
                     <!-- Title -->
                     <div class="feedback__title">
-                        <?= $arFields["NAME"] ?>
+                        <a href="/reviews/comment-<?=$arFields["ID"]?>/">
+                            <?= $arFields["NAME"] ?>
+                        </a>
                     </div>
 
                     <!-- Text -->
@@ -346,7 +348,9 @@ $arUser = $rsUser->Fetch();
                     </div>
                     <!-- Title -->
                     <div class="feedback__title">
-                        <?= $arFields["NAME"] ?>
+                        <a href="/reviews/comment-<?=$arFields["ID"]?>/">
+                            <?= $arFields["NAME"] ?>
+                        </a>
                     </div>
 
                     <!-- Text -->
@@ -614,7 +618,9 @@ $arUser = $rsUser->Fetch();
                                     </div>
                                     <!-- Title -->
                                     <div class="feedback__title">
-                                        <?= $arFields["NAME"] ?>
+                                        <a href="/reviews/comment-<?=$arFields["ID"]?>/">
+                                            <?= $arFields["NAME"] ?>
+                                        </a>
                                     </div>
 
                                     <!-- Text -->
