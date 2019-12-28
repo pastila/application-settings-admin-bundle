@@ -14,4 +14,11 @@ $arUrlRewrite = array (
             'PATH' => '/feedback/comment.php',
             'SORT' => 100,
         ),
+   3 =>
+        array (
+            'CONDITION' => '#^/reviews/comment-([0-9]*)/#',
+            'RULE' => '',
+            'PATH' => '/feedback/comment.php',
+            'SORT' => 100,
+        ),
 );
