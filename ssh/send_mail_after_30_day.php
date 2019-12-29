@@ -54,7 +54,7 @@ while ($Section = $section->GetNext()) {
 
         $arSelect = Array("ID", "IBLOCK_ID", "NAME", "CREATED_DATE","IBLOCK_SECTION_ID", "PROPERTY_SEND_MESSAGE");
         $arFilter = Array("IBLOCK_ID" => 11 , "SECTION_ID" => $Section["ID"]);
-        $Element = CIBlockElement::GetList(Array("PROPERTY_SEND_MESSAGE" => "asc"), $arFilter, false, false, $arSelect); //получили обращения юзера
+        $Element = CIBlockElement::GetList(Array("PROPERTY_SEND_MESSAGE" => "desc"), $arFilter, false, false, $arSelect); //получили обращения юзера
 
         if($obElement = $Element->GetNextElement()) {
 

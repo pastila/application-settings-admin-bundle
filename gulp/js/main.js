@@ -4,6 +4,17 @@
 //= ../../node_modules/air-datepicker/dist/js/datepicker.min.js
 $(document).ready(function() {
 
+  $("#write-us_modal").click(function() {
+   setTimeout(function() {
+     form_us();
+   },)
+  });
+
+
+
+
+
+
  var url =  window.location.pathname;
 
   if(url.search("/forma-obrashenija/") == -1){
@@ -581,4 +592,92 @@ function validatePassword() {
   else
     document.getElementById('pass_conf').setCustomValidity('');
 //empty string means no validation error
+}
+function form_us(){
+  console.log("323");
+    $(document).on("click","#ask",function(e) {
+
+    console.log("Dsd");
+    e.preventDefault();
+      var fd = new FormData();
+
+      var error = [];
+    var  data_FORM = $("#feedback_modal").serializeArray();
+
+    var input_file = $('.file-simple');
+
+    if (input_file.prop('files')[0] != undefined) {
+      fd.append('import_file1', input_file.prop('files')[0]);
+    }
+    if (input_file.prop('files')[1] != undefined) {
+      fd.append('import_file2', input_file.prop('files')[1]);
+    }
+    if (input_file.prop('files')[2] != undefined) {
+      fd.append('import_file3', input_file.prop('files')[2]);
+    }
+    if (input_file.prop('files')[3] != undefined) {
+      fd.append('import_file4', input_file.prop('files')[3]);
+    }
+    if (input_file.prop('files')[4] != undefined) {
+      fd.append('import_file5', input_file.prop('files')[4]);
+    }
+    if(data_FORM[0]['value'] === ''){
+      $("#name").after(
+          '<span class="label danger   "  >Введите имя</span>');
+      error.push("error");
+    }
+
+
+
+    if(data_FORM[1]['value'] === ""){
+      $("#email").after(
+          '<span class="label danger   "  >Введите почту</span>');
+      error.push("error");
+    }else{
+    var test_email =   isValidEmailAddress(data_FORM[1]['value']);
+      if(!test_email){
+        error.push("error");
+      }
+    }
+
+   var new_str_text =  data_FORM[2]['value'].replaceAll(" ","");
+console.log(new_str_text);
+    if( new_str_text === ""){
+      $("#text").after(
+          '<span class="label danger   "  >Введите текст</span>');
+      error.push("error");
+    }else if (new_str_text <= 10 ){
+      $("#text").after(
+          '<span class="label danger   "  >Короткий текст</span>');
+      error.push("error");
+    }
+      if(error.length == "0") {
+
+        fd.append('name', data_FORM[0]['value']);
+        fd.append('email', data_FORM[1]['value']);
+        fd.append('text', data_FORM[2]['value']);
+
+        $.ajax({
+
+          url: '/ajax/form_ask/ask.php',
+          type: 'POST',
+          data: fd,
+          processData: false,
+          contentType: false,
+          beforeSend: function() {
+
+          },
+          success: function(msg) {
+
+          },
+        }).done(function(msg) {
+
+        });
+      }
+    return false;
+  });
+}
+function isValidEmailAddress(emailAddress) {
+  var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+  return pattern.test(emailAddress);
 }
