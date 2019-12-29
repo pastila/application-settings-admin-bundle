@@ -18,6 +18,17 @@ $this->setFrameMode(true);
 
 <!-- Pages Title -->
 <h2 class="page-title">Ваши обращения</h2>
+<?php
+global $USER;
+
+$arSelect = array("ID", "NAME", "PROPERTY_SURNAME", "PROPERTY_PARTONYMIC", "PROPERTY_POLICY" , "PROPERTY_COMPANY");
+$arFilter = array("IBLOCK_ID" => 21, 'SECTION_CODE' => $USER->GetID());
+
+$res = CIBlockElement::GetList(array(), $arFilter, false, false, $arSelect);
+while ($ob = $res->GetNextElement()) {
+    $arFields[] = $ob->GetFields();
+}
+?>
 
 
 <?php
@@ -25,6 +36,7 @@ if (count($arResult["ITEMS"]) > 0) {
     foreach ($arResult["ITEMS"] as $arItem) {
         $date = explode(" ", $arItem['TIMESTAMP_X']);
         $hospital = htmlspecialchars_decode($arItem["PROPERTIES"]["HOSPITAL"]["VALUE"]);
+
         ?>
         <!-- Обращение -->
         <div id="appeal_<?= $arItem["ID"] ?>" class="obrashcheniya">
@@ -167,79 +179,32 @@ if (count($arResult["ITEMS"]) > 0) {
                         </div>
                     </div>
 
+
+
                     <!-- Контент левая сторона c данными ребёнка -->
                     <div class="obrashcheniya__content_left hidden_child-block">
-                        <!-- Внутри контента Верхняя часть -->
-                        <div class="obrashcheniya__content_left_top">
-                            <div class="obrashcheniya__content_left_top_link">
-                                <a>Редактировать</a>
-                                <a>Удалить</a>
+                        <?php if (count($arFields) > 0) { ?>
+                            <div class="input-with-search">
+                                <label class="title-select" for="user_pass">Выбор опекаемого человека: </label>
+                                <div class="input__wrap">
+                                    <div class="input__ico">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                                    </div>
+                                    <input id="children_input_<?=$arItem['ID']?>" class="children_input" data-value="<?=$arItem['ID']?>" data-id_child="" name="region_input" type="text" placeholder="Не выбрано" autocomplete="off"/>
+                                    <!--                                <span style="display: none" class="error_search-js">Выберете опекаемого человека</span>-->
+                                    <ul style="cursor: pointer;" class="custom-serach__items" id="searchul_<?=$arItem['ID']?>">
+                                        <?php
+                                        foreach ($arFields as &$arSection) {?>
+                                            <li value="<?=$arSection["ID"]?>" class="custom-serach__items_item childrenjs_<?=$arItem['ID']?>"><?php echo $arSection['PROPERTY_SURNAME_VALUE']?> <?php echo $arSection['NAME']?> <?php echo $arSection['PROPERTY_PARTONYMIC_VALUE']?></li>
+                                        <?php } ?>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-
+                        <?php } else { ?>
+                            <a href="/personal-cabinet/">Для добавления ребенка перейдите в личный кабинет</a>
+                        <?php } ?>
                         <!-- Внутри контента центральная часть с данными ребёнка -->
-                        <div class="obrashcheniya__content_left_center child_block-items">
-
-                            <!-- Item -->
-                            <div class="obrashcheniya__content_left_center_item">
-                                <div class="obrashcheniya__content_left_center_item_text">
-                                    ФИО
-                                </div>
-
-                                <p
-                                        class="obrashcheniya__content_left_center_item_text-full">
-                                    Имя ребёнка
-                                </p>
-                            </div>
-                            <div class="obrashcheniya__content_left_center_item">
-                                <div class="obrashcheniya__content_left_center_item_text">
-                                    Мобильный номер
-                                </div>
-
-                                <p class="obrashcheniya__content_left_center__item_text-full">
-                                    Номер ребёнка
-                                </p>
-                            </div>
-
-                            <!-- Item -->
-                            <div class="obrashcheniya__content_left_center_item">
-                                <div class="obrashcheniya__content_left_center_item_text">
-                                    Больница:
-                                </div>
-
-                                <p class="obrashcheniya__content_left_center_item_text-full">Больница ребёнка</p>
-                            </div>
-
-                            <!-- Item -->
-                            <div class="obrashcheniya__content_left_center_item">
-                                <div class="obrashcheniya__content_left_center_item_text">
-                                    Адрес:
-                                </div>
-
-                                <p class="obrashcheniya__content_left_center__item_text-full">
-                                    Адрес ребёнка
-                                </p>
-                            </div>
-
-                            <div class="obrashcheniya__content_left_center_item">
-                                <div class="obrashcheniya__content_left_center_item_text">
-                                    Полис:
-                                </div>
-
-                                <p class="obrashcheniya__content_left_center__item_text-full">
-                                    Полис ребёнка
-                                </p>
-                            </div>
-
-                            <div class="obrashcheniya__content_left_center_item">
-                                <div class="obrashcheniya__content_left_center_item_text">
-                                    Дата оплаты медицинских услуг:
-                                </div>
-
-                                <p class="obrashcheniya__content_left_center__item_text-full">
-                                    Дата оплаты ребёнка
-                                </p>
-                            </div>
+                        <div id="selected-child_<?=$arItem['ID']?>" class="obrashcheniya__content_left_center child_block-items">
                         </div>
                     </div>
 

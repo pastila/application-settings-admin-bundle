@@ -72,3 +72,38 @@
     font-weight: bold;
   }
 }
+.region_child{
+  @media(min-width: 576px){
+    display: flex;
+    justify-content: space-between;
+  }
+  .input-with-search{
+    @media(min-width: 576px){
+      width: 49%;
+    }
+  }
+  .title-select{
+    margin-bottom: 1rem;
+  }
+}
+.submit_button-child{
+  display: flex;
+  margin-top: 2rem;
+  @media(max-width: 575px){
+    flex-direction: column;
+  }
+  .margin-button{
+    margin-right: 2rem;
+  }
+  .main-button-styles{
+    margin-left: 0;
+  }
+}
+.absolute-error{
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+#add_children_btn{
+  margin-left: 0;
+}
