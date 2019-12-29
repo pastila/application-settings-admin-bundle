@@ -7,7 +7,7 @@
 
       $.ajax({
         type: 'POST',
-        url: '/pdf/file_pdf.php',
+        url: '/pdf/file_children_pdf.php',
         data: "sd",
 
         success: function(result){

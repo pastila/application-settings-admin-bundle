@@ -125,12 +125,12 @@ CModule::IncludeModule("iblock");
                 </div>
             </div>
         </div>
-        <div class="wrap-chrckbox checkbox_registration">
+        <div class="wrap-chrckbox checkbox_registration checkbox_registration_modal">
             <label class="check-label">
-                Я ознакомлен и согласен с условиями <a href="/terms-of-use/">пользовательского соглашения</a> и
-                <a href="/personal-data-processing/">политикой по обработке персональных данных</a>
+                Я ознакомлен и согласен с условиями <a target="_blank" href="/terms-of-use/">пользовательского соглашения</a> и
+                <a target="_blank" href="/personal-data-processing/">политикой по обработке персональных данных</a>
                 <input type="checkbox" value="" />
-                <span class="check-img"></span>
+                <span class="check-img check-img_reg"></span>
         </div>
         <div class="popup__wrap_bottom">
         <button type="submit" id="registration" class="mainBtn">Регистрация</button>

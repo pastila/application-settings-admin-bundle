@@ -1,5 +1,18 @@
 <!-- Popup Always at the bottom -->
-<form id="feedback_modal" class="auth-form">
+<?php
+ require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
+ require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/classes/general/captcha.php");
+$cpt = new CCaptcha();
+
+$captchaPass = COption::GetOptionString("main","captcha_password","");
+if(strlen($captchaPass) <= 0){
+    $captchaPass = randString(10);
+    COption::SetOptionString("main","captcha_password",$captchaPass);
+}
+$cpt->SetCodeCrypt($captchaPass);
+?>
+
+<form id="feedback_modal" class="auth-form" enctype="multipart/form-data" >
     <div class="close-modal">
         <img src="/local/templates/kdteam/images/svg/close_modal.svg" alt="">
     </div>
@@ -14,34 +27,38 @@
             <!-- Input -->
             <div class="input__wrap">
                 <label class="input__wrap_label">Имя</label>
-                <input id="" type="text" name="login" required>
+                <input id="name" type="text" name="name" required>
             </div>
             <!-- Input -->
             <div class="input__wrap">
                 <label class="input__wrap_label">Электронная почта</label>
-                <input id="" type="email" name="email" required>
+                <input id="email" type="email" name="email" required>
             </div>
         </div>
         <div class="block_padd-modal">
             <div class="input__wrap">
-                <textarea minlength="10" name="" required></textarea>
+                <textarea minlength="10" name="text" required></textarea>
             </div>
         </div>
         <div class="input__wrap block_padd-modal">
             <label class="input__wrap_label">Прикрепить к сообщению файлы(максимум 5):</label>
             <div class="file-input file_input_half">
                 <input type="file" name="file" class="file-simple"
-                       accept="image/*">
+                       accept="image/*" multiple>
                 <span class="button smallAccentBtn">Выберите файл</span>
                 <span class="label label_name" data-js-label>.png .jpeg</span>
                 <span class="label block-error-label">Максимальный размер файла 10mb</span>
             </div>
         </div>
         <div class="block_captcha block_padd-modal">
+            <input type="hidden" name="captcha_code" value="<?php echo htmlspecialcharsbx($cpt->GetCodeCrypt()) ?>">
+            <img src="/bitrix/tools/captcha.php?captcha_code=<?php echo htmlspecialcharsbx($cpt->GetCodeCrypt()) ?>" alt="">
+            <input type="text" name="captcha_word" id="captcha_word">
             <p>здесь будет каптча</p>
+
         </div>
         <div class="block_padd-modal">
-            <button class="mainBtn">Отправить</button>
+            <button type="submit" class="mainBtn" id="ask">Отправить</button>
         </div>
     </div>
 </form>
