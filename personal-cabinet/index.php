@@ -186,10 +186,10 @@ $prop=CIBlockSection::GetByID($person["UF_REGION"])->GetNextElement()->GetFields
                </div>
            </div>
                <div class="feedback__top">
-                   <div class="custom-select custom-select-js-cite">
+                   <div class="custom-select custom-select-js-cite styles-select-personal">
 
 
-                       <div class="input__wrap">
+                       <div class="input__wrap half-wrap_input">
                            <label class="input__wrap_label" for="user_pass">Выбор региона: </label>
                            <div class="block_relative">
                                <div class="input__ico">
@@ -210,7 +210,7 @@ $prop=CIBlockSection::GetByID($person["UF_REGION"])->GetNextElement()->GetFields
                                </ul>
                            </div>
                        </div>
-                       <div class="input__wrap">
+                       <div class="input__wrap half-wrap_input">
                            <label class="input__wrap_label" for="user_pass">Список страховых компаний : </label>
                            <div class="block_relative search-second" style="pointer-events: none">
                                <div class="input__ico">
@@ -327,7 +327,7 @@ $prop=CIBlockSection::GetByID($person["UF_REGION"])->GetNextElement()->GetFields
 
         </div>
     </div>
-    <div class="flex_personal" id="cur_children">
+    <div id="cur_children">
         <?php
         $APPLICATION->IncludeComponent(
             "bitrix:news.list",

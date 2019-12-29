@@ -89,7 +89,7 @@
 .submit_button-child{
   display: flex;
   margin-top: 2rem;
-  @media(max-width: 575px){
+  @media(max-width: 991px){
     flex-direction: column;
   }
   .margin-button{
@@ -109,4 +109,16 @@
 }
 .info_child{
   margin: 2rem 0;
+}
+.styles-select-personal{
+  @media(min-width: 576px){
+    display: flex;
+    justify-content: space-between;
+  }
+  .half-wrap_input{
+    @media(min-width: 576px){
+      width: 49%;
+    }
+  }
+
 }
