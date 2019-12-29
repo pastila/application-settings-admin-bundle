@@ -330,6 +330,7 @@ console.log("33333");
               },
               function(result) {
                 let diagnoz = jQuery.parseJSON(result);
+                $("#strax-sluchay").remove();
                 if (diagnoz !== 'error') {
 
                   $form.replaceWith(diagnoz['DIAGNOZ']);
