@@ -61,14 +61,14 @@ if($arResult["PHONE_REGISTRATION"])
                                 </div>
                             </div>
                         <?else:?>
-                            <div class="bx-authform-formgroup-container input-style d-none">
+                            <div class="bx-authform-formgroup-container input-style d-none" style="display: none">
                                 <label><?=GetMessage("AUTH_LOGIN")?></label>
-                                <div class="bx-authform-input-container">
+                                <div class="bx-authform-input-container" >
                                     <input type="text" name="USER_LOGIN" maxlength="255" value="<?=$arResult["LAST_LOGIN"]?>" />
                                 </div>
                             </div>
 
-                            <div class="bx-authform-formgroup-container input-style d-none">
+                            <div class="bx-authform-formgroup-container input-style d-none" style="display: none">
                                 <label><?=GetMessage("AUTH_CHECKWORD")?></label>
                                 <div class="bx-authform-input-container">
                                     <input type="text" name="USER_CHECKWORD" maxlength="255" value="<?=$arResult["USER_CHECKWORD"]?>" autocomplete="off" />
