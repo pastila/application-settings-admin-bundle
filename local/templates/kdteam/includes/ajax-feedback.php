@@ -55,6 +55,7 @@ $cpt->SetCodeCrypt($captchaPass);
             <img src="/bitrix/tools/captcha.php?captcha_code=<?php echo htmlspecialcharsbx($cpt->GetCodeCrypt()) ?>" alt="">
             <input type="text" name="captcha_word" id="captcha_word">
             <p>здесь будет каптча</p>
+
         </div>
         <div class="block_padd-modal">
             <button type="submit" class="mainBtn" id="ask">Отправить</button>
