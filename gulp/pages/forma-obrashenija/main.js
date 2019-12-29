@@ -295,6 +295,7 @@ function search_hospital() {
       plan.push(this.value);
     });
 
+
     if(plan.length == 0 ){
       div_last.after(
           '<p class="label danger"  >Не выбранно</p>');
