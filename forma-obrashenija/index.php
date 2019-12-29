@@ -232,6 +232,12 @@ while($ob = $res->GetNextElement()){
                                     <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                                 </div>
                                 <input />
+                                <ul style="cursor: pointer;" class="custom-serach__items" id="">
+                                    <?php
+                                    foreach ($arFields as &$arSection) {?>
+                                        <li> </li>
+                                    <?php } ?>
+                                </ul>
                             </div>
                         </div>
                         <div class="wrap-chrckbox checkbox_registration">
