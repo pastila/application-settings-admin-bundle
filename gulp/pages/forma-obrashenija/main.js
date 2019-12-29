@@ -309,14 +309,14 @@ function search_hospital() {
       if ($('#choose_diagnoz_elem').val() != 'Здесь нет моего диагноза') {
 
         if ($('.header__r_auth_reg').length == 1  && ($(".header__r_auth_reg").attr("data-rigstration") == 0)) {
-console.log("2222");
+
             $('.header__r_auth_reg').trigger('click');
             setTimeout(function() {
               $('.register_before_review').removeClass('hidden');
             }, 700);
 
         } else {
-console.log("33333");
+
 
           $.post('/ajax/diagnoz.php',
               {
