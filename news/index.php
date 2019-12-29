@@ -42,7 +42,7 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/news/news.min.js");
                 "USE_REVIEW" => "Y",
                 "USE_FILTER" => "Y",
                 "SORT_BY1" => "ACTIVE_FROM",
-                "SORT_ORDER1" => "DESC",
+                "SORT_ORDER1" => "ASC",
                 "SORT_BY2" => "SORT",
                 "SORT_ORDER2" => "ASC",
                 "CHECK_DATES" => "Y",
