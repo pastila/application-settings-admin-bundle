@@ -222,30 +222,32 @@ while($ob = $res->GetNextElement()){
 
                 <a class="link-underline" href="/news/chto-oplachivaetsya-po-polisu/">Ссылка на статью в блоге</a>
 
-                <div class="smart_search-block">
+                <div class="smart_search-block" >
                     <p class="title-select bold">Начните вводить наименование заболевания, с которым вы обратились в медицинскую организацию.</p>
                     <form action="">
                         <div class="input-with-search">
                             <label class="title-select" for="user_pass">Выберите диагноз: </label>
-                            <div class="input__wrap">
+                            <div class="input__wrap" id="reload_div">
                                 <div class="input__ico">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                                 </div>
-                                <input />
-                                <ul style="cursor: pointer;" class="custom-serach__items" id="">
-                                    <?php
-                                    foreach ($arFields as &$arSection) {?>
-                                        <li> </li>
+                                <?php
+                                $arSelect = array("ID", "NAME", "IBLOCK_ID");
+                                $arFilter = array("IBLOCK_ID" => 8);
+                                $res = CIBlockElement::GetList(array(), $arFilter, false, false, $arSelect);
+                                while ($ob = $res->GetNextElement()) {
+                                    $arFields[] = $ob->GetFields();
+                                }
+                                ?>
+                                <input type="text" id="search_diagnoz_input" placeholder="Начните вводить наименование заболевания, с которым вы обратились в медицинскую организацию."/>
+                                <ul style="cursor: pointer;" data-value="" class="custom-serach__items" id="search_diagnoz_global">
+                                    <li value="" id="empty_diagnoz" class="custom-serach__items_item diagnoz_search_js">Здесь нет моего диагноза</li>
+                                    <?php foreach ($arFields as &$arItem) {?>
+                                        <li value="<?=$arItem['ID']?>" class="custom-serach__items_item  diagnoz_search_js"><?php echo $arItem['NAME']?></li>
                                     <?php } ?>
                                 </ul>
                             </div>
                         </div>
-                        <div class="wrap-chrckbox checkbox_registration">
-                            <label class="check-label">
-                                Я не знаю своего диагноза
-                                <input type="checkbox" value="">
-                                <span class="check-img"></span>
-                            </label></div>
                     </form>
                 </div>
 
