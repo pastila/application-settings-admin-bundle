@@ -14,7 +14,7 @@ if (empty($_POST['hospital'])) {
     $arSelect = array("ID");
     $rsSections = CIBlockSection::GetList(array(), $arFilter, false, $arSelect, false)->GetNext();
     if (empty($rsSections)) {
-        $arFields = array("IBLOCK_ID" => 21, "NAME" => $USER->GetID());
+        $arFields = array("IBLOCK_ID" => 21, "NAME" => $USER->GetID(), "CODE" => $USER->GetID());
         $bs = new CIBlockSection();
         $ID = $bs->Add($arFields);
         if ($ID > 0) {

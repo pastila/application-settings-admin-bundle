@@ -102,6 +102,29 @@ $(document).ready(function() {
       success.text('');
     }
   });
+  // ------ choose_class ------
+  $(document).on('click', '.children_input', function() {
+    let idItem = $(this).attr('data-value');
+    search(idItem);
+    $('#searchul_'+idItem).css('display', 'block');
+  });
+  function search(idItem) {
+    $(document).on('click', '#searchul_'+idItem+' li', function() {
+      $('#children_input_'+idItem).val($(this).text());
+      $('#children_input_'+idItem).attr('data-id_child', $(this).attr('value'));
+      $('#searchul_'+idItem).fadeOut();
+      $.post('/ajax/obrasheniya/selected_child.php', {ID: $(this).attr('value')}, function(result) {
+        $('#selected-child_'+idItem).html(result);
+      }, 'html');
+    });
+    $(document).mouseup(function(e) {
+      let container = $('#class_input_'+idItem);
+      if (container.has(e.target).length === 0) {
+        $('#searchul_'+idItem).fadeOut();
+      }
+    });
+
+  }
 });
 
 function del(f) {
