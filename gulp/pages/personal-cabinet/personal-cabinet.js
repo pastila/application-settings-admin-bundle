@@ -480,18 +480,18 @@ function search_hospital_edit(id) {
 
 function search_hospital() {
   // ------ choose_hospital ------
-  $(document).on('click', '#search_result_hospital li', function() {
+  $(document).on('click', '#search_result_hospital_down li', function() {
     $('#hospital_input').val($(this).text());
     $('#hospital_input').attr('data-id_hospital', $(this).attr('value'));
-    $('#search_result_hospital').fadeOut()
+    $('#search_result_hospital_down').fadeOut()
   });
   $(document).on('click', '#hospital_input', function() {
-    $('#search_result_hospital').css('display', 'block');
+    $('#search_result_hospital_down').css('display', 'block');
   });
   $(document).mouseup(function(e) {
     let container = $('#hospital_input');
     if (container.has(e.target).length === 0) {
-      $('#search_result_hospital').fadeOut();
+      $('#search_result_hospital_down').fadeOut();
     }
   });
   keyup_region();
@@ -622,7 +622,7 @@ function keyup_hospital(id_region) {
     clearTimeout($this.data('timer'));
     $this.data('timer', setTimeout(function() {
       $this.removeData('timer');
-      $('#search_result_hospital').css('display', 'block');
+      $('#search_result_hospital_down').css('display', 'block');
       $.post('/ajax/smart_search_hosp.php', {name_hospital: $this.val(), region_id: id_region
       }, function(msg) {
         if ($('.error_hospital').length != 0) {
@@ -634,15 +634,15 @@ function keyup_hospital(id_region) {
         if (msg == 'error_hospital') {
           if ($('.error_hospital').length != 0) {
             $('.error_hospital').remove();
-            $('#search_result_hospital').
+            $('#search_result_hospital_down').
                 append('<li class="error_hospital">Больница не найдена</li>');
           } else {
-            $('#search_result_hospital').
+            $('#search_result_hospital_down').
                 append('<li class="error_hospital">Больница не найдена</li>');
           }
         } else {
           setTimeout(function() {
-            $('#search_result_hospital').append(msg);
+            $('#search_result_hospital_down').append(msg);
           }, 100);
           $(document).on('click', '.hospital-js', function() {
             let id = $(this).attr('value');

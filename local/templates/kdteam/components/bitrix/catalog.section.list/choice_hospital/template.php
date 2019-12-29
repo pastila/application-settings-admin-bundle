@@ -192,7 +192,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                         </div>
                         <input id="hospital_input" data-id_hospital="" type="text" placeholder="Поиск по больницам" autocomplete="off"/>
                         <p style="display: none" class="error_search-js error absolute-error">Выберите больницу</p>
-                        <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_hospital">
+                        <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_hospital_down">
                             <?php foreach ($arFields as &$arItem) {?>
                                 <li value="<?=$arItem['ID']?>" class="custom-serach__items_item  hospital-js"><?php echo $arItem['NAME']?></li>
                             <?php } ?>
