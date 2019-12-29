@@ -66,8 +66,10 @@ $this->setFrameMode(true);
                 <p><?=$hospital?></p>
             </div>
         </div>
-        <button id="del_<?=$arItem['ID']?>" class="del_js">Удалить</button>
-        <button id="edit_<?=$arItem['ID']?>" class="edit_js">Редактировать</button>
+        <div class="submit_button submit_button-child">
+            <button id="edit_<?=$arItem['ID']?>" class="edit_js mainBtn margin-button main-button-styles">Редактировать</button>
+            <button id="del_<?=$arItem['ID']?>" class="del_js mainBtn  main-button-styles">Удалить</button>
+        </div>
     </div>
     <div class="personal_data" id="edit_children_<?=$arItem['ID']?>" style="display: none">
         <form  onsubmit="return false" id="edit_children_form_<?=$arItem['ID']?>" action="" enctype="multipart/form-data">
@@ -107,7 +109,7 @@ $this->setFrameMode(true);
                            name="uf_insurance_policy" value="<?=$arItem["PROPERTIES"]['POLICY']['VALUE'];?>">
                 </div>
             </div>
-            <div id="hospitals_<?=$arItem['ID']?>" class="card">
+            <div id="hospitals_<?=$arItem['ID']?>" class="region_child">
                 <?php
                 $APPLICATION->IncludeComponent(
                     "bitrix:catalog.section.list",
@@ -135,11 +137,14 @@ $this->setFrameMode(true);
                     )
                 );?>
             </div>
-            <div class="submit_button">
-                <button class="mainBtn" type="submit" id="save_edit_<?=$arItem['ID']?>">Сохранить</button>
-                <button class="mainBtn" type="submit" id="cancel_edit_<?=$arItem['ID']?>">Отмена</button>
+            <div class="submit_button submit_button-child">
+                <button class="mainBtn margin-button main-button-styles" type="submit" id="save_edit_<?=$arItem['ID']?>">Сохранить</button>
+                <button class="mainBtn main-button-styles" type="submit" id="cancel_edit_<?=$arItem['ID']?>">Отмена</button>
             </div>
         </form>
+    </div>
+    <div class="edit_block">
+
     </div>
 
 

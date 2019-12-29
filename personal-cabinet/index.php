@@ -246,10 +246,11 @@ $prop=CIBlockSection::GetByID($person["UF_REGION"])->GetNextElement()->GetFields
            </div>
        </div>
    </div>
-    <a class="mainBtn" id="add_children_btn">Добавить ребенка</a>
+    <a class="mainBtn main-button-styles" id="add_children_btn">Добавить ребенка</a>
     <div class="flex_personal">
         <div class="personal_data" id="add_children" style="display: none">
             <form  onsubmit="return false" id="add_children_form" action="" enctype="multipart/form-data">
+                <h2 class="small-page-title">Заполните данные опекаемого человека</h2>
                 <div class="flex_data">
                     <div class="item_data">
                         <p>Имя</p>
@@ -283,7 +284,7 @@ $prop=CIBlockSection::GetByID($person["UF_REGION"])->GetNextElement()->GetFields
                         <input required type="text" id="child_policy_add"  minlength="16" maxlength="16" name="uf_insurance_policy" value="">
                     </div>
                 </div>
-                <div id="hospitals" class="card">
+                <div id="hospitals" class="region_child">
                     <?php
                     $APPLICATION->IncludeComponent(
                         "bitrix:catalog.section.list",
@@ -308,11 +309,14 @@ $prop=CIBlockSection::GetByID($person["UF_REGION"])->GetNextElement()->GetFields
                         )
                     );?>
                 </div>
-                <div class="submit_button">
-                    <button class="mainBtn" type="submit" id="save_children">Сохранить</button>
+                <div class="submit_button submit_button-child">
+                    <button class="mainBtn margin-button" type="submit" id="save_children">Сохранить</button>
                     <button class="mainBtn" type="submit" id="cancel">Отмена</button>
                 </div>
             </form>
+        </div>
+        <div class="edit_block">
+
         </div>
     </div>
     <div class="flex_personal" id="cur_children">

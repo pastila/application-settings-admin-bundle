@@ -191,7 +191,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                             <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                         </div>
                         <input id="hospital_input" data-id_hospital="" type="text" placeholder="Поиск по больницам" autocomplete="off"/>
-                        <span style="display: none" class="error_search-js">Выберете больницу</span>
+                        <p style="display: none" class="error_search-js error absolute-error">Выберите больницу</p>
                         <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_hospital">
                             <?php foreach ($arFields as &$arItem) {?>
                                 <li value="<?=$arItem['ID']?>" class="custom-serach__items_item  hospital-js"><?php echo $arItem['NAME']?></li>
@@ -209,7 +209,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                         <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                     </div>
                     <input id="region_input" name="region_input" type="text" placeholder="Поиск по региону" autocomplete="off"/>
-                    <span style="display: none" class="error_search-js">Выберете регион</span>
+                    <p style="display: none" class="error_search-js error absolute-error">Выберите регион</p>
                     <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_region">
                         <?php
                         foreach ($arResult['SECTIONS'] as &$arSection) {?>
