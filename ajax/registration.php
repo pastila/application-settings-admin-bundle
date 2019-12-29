@@ -59,6 +59,7 @@ if($_POST) {
                 $msg = array("user" => "Уже существует");
                 $result = array_merge($result, $msg);
             } else {
+
                 $arFields = Array(
                     "NAME" => $name,
                     "LAST_NAME" => $familia,
@@ -72,7 +73,8 @@ if($_POST) {
                     "PERSONAL_PHONE" => $tel,
                     "UF_INSURANCE_POLICY" => $nomer_polica,
                     "UF_INSURANCE_COMPANY" => $id_company,
-                    "UF_REGION" => $id_region
+                    "UF_REGION" => $id_region,
+                    "PERSONAL_BIRTHDAY"=>$_POST["time"],
                 );
                 $ID = $USER->Add($arFields);
                 $ID_user = array("user" => $ID);

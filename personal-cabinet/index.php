@@ -40,10 +40,11 @@ $prop=CIBlockSection::GetByID($person["UF_REGION"])->GetNextElement()->GetFields
 
 <div class="personal_cabinet">
     <h1 class="page-title">Мои данные</h1>
-    <?php if($person["UF_REPRESENTATIVE"] == "1"){ ?>
+    <?php if ($person["UF_REPRESENTATIVE"] == "1") { ?>
     <div class="user_vip"><p class="text_vip">Аккаунт представителя страховой службы</p></div>
-        <?}?>
-   <div class="flex_personal">
+    <?php } ?>
+
+    <div class="flex_personal">
        <div class="personal_data" id="true_data_person">
             <div class="flex_data">
                 <div class="item_data">
@@ -72,7 +73,7 @@ $prop=CIBlockSection::GetByID($person["UF_REGION"])->GetNextElement()->GetFields
 
            <div class="flex_data">
                <div class="item_data">
-                   <p>Ваш Номер телефона</p>
+                   <p>Номер телефона</p>
                </div>
                <div class="item_data">
                    <p><?=$person["PERSONAL_PHONE"];?></p>
@@ -80,7 +81,7 @@ $prop=CIBlockSection::GetByID($person["UF_REGION"])->GetNextElement()->GetFields
            </div>
             <div class="flex_data">
                 <div class="item_data">
-                    <p>Ваш e-mail</p>
+                    <p>E-mail</p>
                 </div>
                 <div class="item_data">
                     <p><?=$person["EMAIL"];?></p>
@@ -88,7 +89,7 @@ $prop=CIBlockSection::GetByID($person["UF_REGION"])->GetNextElement()->GetFields
             </div>
            <div class="flex_data">
                <div class="item_data">
-                   <p>Ваш страховой полис</p>
+                   <p>Cтраховой полис</p>
                </div>
                <div class="item_data">
                    <p><?=$person["UF_INSURANCE_POLICY"];?></p>
@@ -96,9 +97,12 @@ $prop=CIBlockSection::GetByID($person["UF_REGION"])->GetNextElement()->GetFields
            </div>
            <div class="flex_data">
                <div class="item_data">
-                   <p>Ваша страховая компания</p>
+                   <p>Cтраховая компания</p>
                </div>
                <div class="item_data">
+                   <div class="logo_block">
+                       <img src="<?=$logo_company["SRC"]?>">
+                   </div>
                    <p><?=$arFields["NAME"]?></p>
                </div>
            </div>
@@ -110,24 +114,7 @@ $prop=CIBlockSection::GetByID($person["UF_REGION"])->GetNextElement()->GetFields
                   <p><?=$arFields["PROPERTY_MOBILE_NUMBER_VALUE"]?></p>
                </div>
            </div>
-           <div class="flex_data">
-               <div class="item_data">
-                   <p>Логотип вашей компании</p>
-               </div>
-               <div class="item_data">
-                   <div class="logo_block">
-                       <img src="<?=$logo_company["SRC"]?>">
-                   </div>
-               </div>
-           </div>
        </div>
-
-
-
-
-
-
-
        <div class="personal_data" id="for_change_person" style="display: none">
            <form id="form_change_data" action="" enctype="multipart/form-data">
            <div class="flex_data">
@@ -158,7 +145,7 @@ $prop=CIBlockSection::GetByID($person["UF_REGION"])->GetNextElement()->GetFields
 
            <div class="flex_data">
                <div class="item_data">
-                   <p>Ваш номер телефона</p>
+                   <p>Номер телефона</p>
                </div>
                <div class="item_data input__wrap">
                    <input type="text" name="personal_phone" maxlength="16" data-mask="+7 (000) 000 00 00" placeholder="+7 (___) ___ __ __" value="<?=$person["PERSONAL_PHONE"];?>">
@@ -166,7 +153,7 @@ $prop=CIBlockSection::GetByID($person["UF_REGION"])->GetNextElement()->GetFields
            </div>
            <div class="flex_data">
                <div class="item_data">
-                   <p>Ваш e-mail</p>
+                   <p>E-mail</p>
                </div>
                <div class="item_data input__wrap">
                    <input type="text" name="email" class="input_email" value="<?=$person["EMAIL"];?>">
@@ -175,7 +162,7 @@ $prop=CIBlockSection::GetByID($person["UF_REGION"])->GetNextElement()->GetFields
            </div>
            <div class="flex_data">
                <div class="item_data">
-                   <p>Ваш страховой полис</p>
+                   <p>Cтраховой полис</p>
                </div>
                <div class="item_data input__wrap">
 
@@ -186,7 +173,7 @@ $prop=CIBlockSection::GetByID($person["UF_REGION"])->GetNextElement()->GetFields
 
                <div class="flex_data">
                <div class="item_data">
-                   <p>Ваша аватарка</p>
+                   <p>Аватарка</p>
                </div>
                <div class="item_data file-input">
                    <input type="file" name="file" class="input_file"
@@ -259,6 +246,132 @@ $prop=CIBlockSection::GetByID($person["UF_REGION"])->GetNextElement()->GetFields
            </div>
        </div>
    </div>
+    <a class="mainBtn" id="add_children_btn">Добавить ребенка</a>
+    <div class="flex_personal">
+        <div class="personal_data" id="add_children" style="display: none">
+            <form  onsubmit="return false" id="add_children_form" action="" enctype="multipart/form-data">
+                <div class="flex_data">
+                    <div class="item_data">
+                        <p>Имя</p>
+                    </div>
+                    <div class="item_data input__wrap">
+                        <input id="children_name_add" required type="text" name="name" value="">
+                    </div>
+                </div>
+                <div class="flex_data">
+                    <div class="item_data">
+                        <p>Фамилия</p>
+                    </div>
+                    <div class="item_data input__wrap">
+                        <input id="children_last_name_add" required type="text" name="last_name" value="">
+                    </div>
+                </div>
+                <div class="flex_data">
+                    <div class="item_data">
+                        <p>Отчество</p>
+                    </div>
+                    <div class="item_data input__wrap">
+                        <input id="children_second_name_add" required type="text" name="second_name" value="">
+
+                    </div>
+                </div>
+                <div class="flex_data">
+                    <div class="item_data">
+                        <p>Cтраховой полис</p>
+                    </div>
+                    <div class="item_data input__wrap">
+                        <input required type="text" id="child_policy_add"  minlength="16" maxlength="16" name="uf_insurance_policy" value="">
+                    </div>
+                </div>
+                <div id="hospitals" class="card">
+                    <?php
+                    $APPLICATION->IncludeComponent(
+                        "bitrix:catalog.section.list",
+                        "choice_hospital",
+                        array(
+                            "VIEW_MODE" => "LIST",
+                            "SHOW_PARENT_NAME" => "N",
+                            "IBLOCK_TYPE" => "",
+                            "IBLOCK_ID" => "9",
+                            "SECTION_ID" => "",
+                            "SECTION_CODE" => "",
+                            "SECTION_URL" => "",
+                            "COUNT_ELEMENTS" => "N",
+                            "TOP_DEPTH" => "1",
+                            "SECTION_FIELDS" => "",
+                            "SECTION_USER_FIELDS" => "",
+                            "ADD_SECTIONS_CHAIN" => "N",
+                            "CACHE_TYPE" => "A",
+                            "CACHE_TIME" => "36000000",
+                            "CACHE_NOTES" => "",
+                            "CACHE_GROUPS" => "Y"
+                        )
+                    );?>
+                </div>
+                <div class="submit_button">
+                    <button class="mainBtn" type="submit" id="save_children">Сохранить</button>
+                    <button class="mainBtn" type="submit" id="cancel">Отмена</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="flex_personal" id="cur_children">
+        <?php
+        $APPLICATION->IncludeComponent(
+            "bitrix:news.list",
+            "add_child",
+            array(
+                "DISPLAY_DATE" => "Y",
+                "DISPLAY_NAME" => "Y",
+                "DISPLAY_PICTURE" => "Y",
+                "DISPLAY_PREVIEW_TEXT" => "Y",
+                "AJAX_MODE" => "N",
+                "IBLOCK_TYPE" => "",
+                "IBLOCK_ID" => "21",
+                "FILTER_NAME" => "arrFilter",
+                "NEWS_COUNT" => "100",
+                "SORT_BY1" => "SORT",
+                "SORT_ORDER1" => "ASC",
+                "CHECK_DATES" => "Y",
+                "SET_TITLE" => "N",
+                "SET_BROWSER_TITLE" => "N",
+                "SET_META_KEYWORDS" => "N",
+                "SET_META_DESCRIPTION" => "N",
+                "SET_LAST_MODIFIED" => "N",
+                "INCLUDE_IBLOCK_INTO_CHAIN" => "N",
+                "ADD_SECTIONS_CHAIN" => "N",
+                "HIDE_LINK_WHEN_NO_DETAIL" => "N",
+                "PARENT_SECTION" => $arSection["ID"],
+                "PARENT_SECTION_CODE" => "",
+                "INCLUDE_SUBSECTIONS" => "Y",
+                "CACHE_TYPE" => "A",
+                "CACHE_TIME" => "3600",
+                "CACHE_FILTER" => "Y",
+                "CACHE_GROUPS" => "Y",
+                "DISPLAY_TOP_PAGER" => "Y",
+                "DISPLAY_BOTTOM_PAGER" => "Y",
+                "PAGER_TITLE" => "Новости",
+                "PAGER_SHOW_ALWAYS" => "Y",
+                "PAGER_TEMPLATE" => "",
+                "PAGER_DESC_NUMBERING" => "Y",
+                "PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
+                "PAGER_SHOW_ALL" => "Y",
+                "PAGER_BASE_LINK_ENABLE" => "Y",
+                "SET_STATUS_404" => "Y",
+                "SHOW_404" => "Y",
+                "MESSAGE_404" => "",
+                "PAGER_BASE_LINK" => "",
+                "PAGER_PARAMS_NAME" => "arrPager",
+                "AJAX_OPTION_JUMP" => "N",
+                "AJAX_OPTION_STYLE" => "N",
+                "AJAX_OPTION_HISTORY" => "N",
+                "AJAX_OPTION_ADDITIONAL" => "",
+                "PROPERTY_CODE" => array("PROPERTY_*")
+            )
+        );
+        ?>
+    </div>
+
 </div>
     <?}else{
    LocalRedirect("/",false,"301 Moved permanently");
