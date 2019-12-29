@@ -218,9 +218,11 @@ $(document).ready(function() {
 
     document.getElementById('password').onchange = validatePassword;
     document.getElementById('pass_conf').onchange = validatePassword;
-    $(".check-img").click(function() {
-      $(this).toggleClass("click");
-    })
+    // $(".check-img").click(function() {
+    //   $(this).toggleClass("click");
+    // })
+
+
     $('#auth-form-reg').validator().on('submit', function(e) {
       e.preventDefault();
       if ($('#strax-sluchay').length != 0) {
@@ -238,11 +240,7 @@ $(document).ready(function() {
       } else {
 
       }
-      if($(".check-img").hasClass("click") === false){
-        $(".check-img").after(
-            '<span class="label danger"  >Подтвердите свое согласие</span>');
-        errors.push('error');
-      }
+
 
       var data_form = $('#auth-form-reg').serializeArray();
 
@@ -263,8 +261,17 @@ $(document).ready(function() {
       } else {
         data_form.push({'name': 'company', 'value': company});
       }
+         let plan =[];
+        let input = $('.checkbox_registration_modal');
+        $(input).find('input:checked').each(function() {
+            plan.push(this.value);
+        });
 
-
+        if(plan.length == 0 ){
+            input.after(
+                '<p class="label danger"  >Подтвердите свое согласие</p>');
+            errors.push("error8");
+        }
       if (errors.length == 0) {
 
         $.ajax({
