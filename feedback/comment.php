@@ -38,7 +38,12 @@ preg_match("/(\d+)\/$/",$url,$result_id);
 
             $arFields = $ob->GetFields();
             $arProps = $ob->GetProperties();
-            $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_CHANGE_BY_USER"]));
+            if($arProps["DATE_CHANGE_BY_USER"]["VALUE"] != "") {
+                $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arProps["DATE_CHANGE_BY_USER"]["VALUE"]));
+            }else{
+
+                $Date_change_user =  "";
+            }
             $newDate = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_ACTIVE_FROM"]));
             $ID_USER = $arProps["NAME_USER"]["VALUE"];
             $rsUser = CUser::GetByID($ID_USER);
@@ -75,7 +80,7 @@ preg_match("/(\d+)\/$/",$url,$result_id);
                                         <?php }elseif($arProps["REJECTED"]["VALUE"] != "" && $arProps["VERIFIED"]["VALUE"] != ""){?>
                                             fill="#3a4552"
                                         <?}elseif($arProps["VERIFIED"]["VALUE"] !=""){ ?>
-                                            fill="#ed8a19"
+                                            fill="#1000ff"
                                         <?php } ?>/>
                                 </svg>
 
@@ -111,7 +116,9 @@ preg_match("/(\d+)\/$/",$url,$result_id);
                                 </span>
                         комментариев
                     </a>
-                    <span class="date_review">Дата изменения <?php echo $Date_change_user; ?></span>
+                    <?php if($Date_change_user != ""){ ?>
+                        <span class="date_review">Дата изменения <?php echo $Date_change_user; ?></span>
+                    <?php } ?>
                 </div>
                 <!-- COMMETNS -->
                 <div class="hidenComments">

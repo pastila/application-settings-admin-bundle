@@ -11,18 +11,6 @@ $(document).ready(function() {
   });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
  var url =  window.location.pathname;
 
   if(url.search("/forma-obrashenija/") == -1){
@@ -280,6 +268,15 @@ $(document).ready(function() {
                 '<p class="label danger"  >Подтвердите свое согласие</p>');
             errors.push("error8");
         }
+      var data = $(".datepicker-here").val();
+      var re = /^(\d+)[.](\d+)[.](\d+)/;
+      if (re.test( data ) ) {
+      }else{
+        $(".datepicker-here").after(
+            '<p class="label danger"  >Выберите дату рождения</p>');
+        errors.push("error9");
+      }
+
       if (errors.length == 0) {
 
         $.ajax({
