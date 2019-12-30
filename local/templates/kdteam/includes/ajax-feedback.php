@@ -51,7 +51,7 @@ $cpt->SetCodeCrypt($captchaPass);
             </div>
         </div>
         <div class="block_captcha block_padd-modal">
-            <div class="input__wrap input-initial_wrap">
+            <div class="input__wrap input-initial_wrap" id="captcha-error_parent">
                 <input type="hidden" name="captcha_code" value="<?php echo htmlspecialcharsbx($cpt->GetCodeCrypt()) ?>">
                 <img class="image-captcha" src="/bitrix/tools/captcha.php?captcha_code=<?php echo htmlspecialcharsbx($cpt->GetCodeCrypt()) ?>" alt="">
                 <input type="text" name="captcha_word" id="captcha_word">

@@ -752,7 +752,7 @@ function form_us(){
                       },
                   });
               } else if(suc.captcha == "1"){
-                $("#captcha_word").after(
+                $("#captcha-error_parent").after(
                     '<p class="label danger"  >Код капчи не верный</p>');
 
               }else {
