@@ -46,7 +46,12 @@ $arUser = $rsUser->Fetch();
                 $arProps = $ob->GetProperties();
                 $newDate = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_ACTIVE_FROM"]));
 
-                $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arProps["DATE_CHANGE_BY_USER"]["VALUE"]));
+                if($arProps["DATE_CHANGE_BY_USER"]["VALUE"] != "") {
+                    $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arProps["DATE_CHANGE_BY_USER"]["VALUE"]));
+                }else{
+
+                    $Date_change_user =  "";
+                }
 
                 $ID_USER = $arProps["NAME_USER"]["VALUE"];
                 $rsUser = CUser::GetByID($ID_USER);
@@ -290,8 +295,11 @@ $arUser = $rsUser->Fetch();
                 $arFields = $ob->GetFields();
                 $arProps = $ob->GetProperties();
                 $newDate = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_ACTIVE_FROM"]));
-                if($arFields["DATE_CHANGE_BY_USER"]  != "") {
+                if($arProps["DATE_CHANGE_BY_USER"]["VALUE"] != "") {
                     $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arProps["DATE_CHANGE_BY_USER"]["VALUE"]));
+                }else{
+
+                    $Date_change_user =  "";
                 }
                 $ID_USER = $arProps["NAME_USER"]["VALUE"];
                 $rsUser = CUser::GetByID($ID_USER);
@@ -311,7 +319,7 @@ $arUser = $rsUser->Fetch();
 
                 ?>
                 <div class="white_block">
-                    <?php if($Date_change_user){ ?>
+                    <?php if($Date_change_user != ""){ ?>
                         <span class="date_review">Дата изменения <?php echo $Date_change_user; ?></span>
                     <?php } ?>
                     <!-- Company Name -->
@@ -565,8 +573,11 @@ $arUser = $rsUser->Fetch();
                 $arFields = $ob->GetFields();
                 $arProps = $ob->GetProperties();
                 $newDate = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_ACTIVE_FROM"]));
-                if($arFields["DATE_CHANGE_BY_USER"]  != "") {
+                if($arProps["DATE_CHANGE_BY_USER"]["VALUE"] != "") {
                     $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arProps["DATE_CHANGE_BY_USER"]["VALUE"]));
+                }else{
+
+                    $Date_change_user =  "";
                 }
                 $ID_USER = $arProps["NAME_USER"]["VALUE"];
                 $rsUser = CUser::GetByID($ID_USER);
@@ -586,7 +597,7 @@ $arUser = $rsUser->Fetch();
 
                 ?>
                                 <div class="white_block">
-                                    <?php if($Date_change_user){ ?>
+                                    <?php if($Date_change_user != ""){ ?>
                                         <span class="date_review">Дата изменения <?php echo $Date_change_user; ?></span>
                                     <?php } ?>
                                     <!-- Company Name -->
