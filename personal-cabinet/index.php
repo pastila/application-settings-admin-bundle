@@ -34,7 +34,7 @@ while($ob = $res->GetNextElement()){
   $logo_company = CFile::GetFileArray($arFields["PROPERTY_LOGO_IMG_VALUE"]);
 
 }
-$prop=CIBlockSection::GetByID($person["UF_REGION"])->GetNextElement()->GetFields();
+$prop=CIBlockSection::GetByID($person["UF_REGION"])->GetNextElement();
 
 ?>
 
