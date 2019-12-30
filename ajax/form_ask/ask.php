@@ -14,22 +14,22 @@ if(!$APPLICATION->CaptchaCheckCode($_POST["captcha_word"],$_POST["captcha_code"]
     echo json_encode($result);
     die();
 }else {
+    
+  if(!empty($_FILES)) {
+      foreach ($_FILES as $item) {
 
+          $file_result = can_upload($item);
 
-
-    foreach ($_FILES as $item) {
-
-        $file_result = can_upload($item);
-
-        if ($file_result != 1) {
-            if ($file_result == 'Файл слишком большой') {
-                $result['size'] = '1';
-            }
-            if ($file_result == 'Недопустимый тип файла.') {
-                $result['format'] = '1';
-            }
-        }
-    }
+          if ($file_result != 1) {
+              if ($file_result == 'Файл слишком большой') {
+                  $result['size'] = '1';
+              }
+              if ($file_result == 'Недопустимый тип файла.') {
+                  $result['format'] = '1';
+              }
+          }
+      }
+  }
 
     if (!empty($result)) {
 
