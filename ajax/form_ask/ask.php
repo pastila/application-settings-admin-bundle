@@ -14,7 +14,7 @@ if(!$APPLICATION->CaptchaCheckCode($_POST["captcha_word"],$_POST["captcha_code"]
     echo json_encode($result);
     die();
 }else {
-    
+
   if(!empty($_FILES)) {
       foreach ($_FILES as $item) {
 

@@ -16,6 +16,20 @@ function IBlockElementAfterSaveHandler($arg1, $arg2 = false, $bInternal = false)
 {
 
     if ($arg1['IBLOCK_ID'] == 13) {
+
+
+
+    $arSelect = Array("ID", "IBLOCK_ID", "NAME");
+    $arFilter = Array("IBLOCK_ID"=>16 );
+    $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+    while($ob = $res->GetNextElement()){
+        $arProps = $ob->GetFields();
+        $star_clear = Array(
+            "AMOUNT_STAR" => "",
+        );
+        CIBlockElement::SetPropertyValuesEx($arProps["ID"], 16, $star_clear);
+    }
+
         $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM");
         $arFilter = Array("IBLOCK_ID"=>16 );
         $resComp = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
@@ -31,6 +45,7 @@ function IBlockElementAfterSaveHandler($arg1, $arg2 = false, $bInternal = false)
             $all_otzev= $res->SelectedRowsCount();
 
             while($ob = $res->GetNextElement()){
+
                 $arPropsElement = $ob->GetProperties();
 
                 ++$count;// просто счетчик
