@@ -10,7 +10,7 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.
 CModule::IncludeModule("iblock");
 $arSelect = Array("ID", "IBLOCK_ID", "NAME");
 $arFilter = Array("IBLOCK_ID"=> 16, "SECTION_ID" => $_POST['region_id']);
-$res = CIBlockElement::GetList(false, $arFilter, false, false, $arSelect);
+$res = CIBlockElement::GetList(Array("NAME"=>"ASC"), $arFilter, false, false, $arSelect);
 ?>
 
 <?php

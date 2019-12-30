@@ -7,8 +7,16 @@ $(document).ready(function() {
   $("#write-us_modal").click(function() {
    setTimeout(function() {
      form_us();
-   },)
+   },1500)
   });
+
+
+
+
+
+
+
+
 
 
 
@@ -687,14 +695,14 @@ function isValidEmailAddress(emailAddress) {
   return pattern.test(emailAddress);
 }
 function form_us(){
-  console.log("323");
-    $(document).on("click","#ask",function(e) {
 
-    console.log("Dsd");
+    $('#feedback_modal').validator().on('submit', function(e) {
+
+
     e.preventDefault();
       var fd = new FormData();
 
-      var error = [];
+
     var  data_FORM = $("#feedback_modal").serializeArray();
 
     var input_file = $('.file-simple');
@@ -714,41 +722,14 @@ function form_us(){
     if (input_file.prop('files')[4] != undefined) {
       fd.append('import_file5', input_file.prop('files')[4]);
     }
-    if(data_FORM[0]['value'] === ''){
-      $("#name").after(
-          '<span class="label danger   "  >Введите имя</span>');
-      error.push("error");
-    }
 
 
-
-    if(data_FORM[1]['value'] === ""){
-      $("#email").after(
-          '<span class="label danger   "  >Введите почту</span>');
-      error.push("error");
-    }else{
-    var test_email =   isValidEmailAddress(data_FORM[1]['value']);
-      if(!test_email){
-        error.push("error");
-      }
-    }
-
-   var new_str_text =  data_FORM[2]['value'].replaceAll(" ","");
-console.log(new_str_text);
-    if( new_str_text === ""){
-      $("#text").after(
-          '<span class="label danger   "  >Введите текст</span>');
-      error.push("error");
-    }else if (new_str_text <= 10 ){
-      $("#text").after(
-          '<span class="label danger   "  >Короткий текст</span>');
-      error.push("error");
-    }
-      if(error.length == "0") {
 
         fd.append('name', data_FORM[0]['value']);
         fd.append('email', data_FORM[1]['value']);
         fd.append('text', data_FORM[2]['value']);
+        fd.append('captcha_code', data_FORM[3]['value']);
+        fd.append('captcha_word', data_FORM[4]['value']);
 
         $.ajax({
 
@@ -761,12 +742,38 @@ console.log(new_str_text);
 
           },
           success: function(msg) {
+              var suc = JSON.parse(msg);
+
+              if(suc.suc == "1"){
+                  $.magnificPopup.open({
+                      items: {
+                          src: '<div class="white-popup custom_styles_popup">Ваше письмо отправленно успешно</div>',
+                          type: 'inline',
+                      },
+                  });
+              } else if(suc.captcha == "1"){
+                $("#captcha_word").after(
+                    '<p class="label danger"  >Код капчи не верный</p>');
+
+              }else {
+                console.log(suc);
+                if(suc.size == "1"){
+                    $(".file_input_half").after(
+                        '<p class="label danger"  >Файлы с недопустимым размером</p>');
+                }
+                  if(suc.format == "1"){
+                      $(".file_input_half").after(
+                          '<p class="label danger"  >Файлы с недопустимым форматом</p>');
+                  }
+              }
+
+
 
           },
         }).done(function(msg) {
 
         });
-      }
+
     return false;
   });
 }

@@ -4,6 +4,8 @@ $(document).ready(function() {
   search_region();
   search_class();
   keyup_class();
+  search_diagnoz_global();
+  keyup_diagnoz_global();
   $(document).on('click', '#search_result li', function() {
     $('#referal_forma').val($(this).text());
     $('#search_result').fadeOut();
@@ -250,33 +252,37 @@ function search_hospital() {
       error.push("erro2");
       $('.error_step-card-3').addClass('error_block');
     }
-    let choose_class = $('#class_input').attr('data-id_class');
-    if(choose_class == "" || choose_class == undefined){
-      $('#class_input').after(
-          '<p class="label danger absolute_label">Выберите класс</p>');
-      error.push("error3");
-      $('.error_step-card-4').addClass('error_block');
-    }
-    let choose_group = $('#group_input').attr('data-id_group');
-    if(choose_group == "" || choose_group == undefined){
-      $('#group_input').after(
-          '<p class="label danger absolute_label">Выберите группу</p>');
-      error.push("error4");
-      $('.error_step-card-4').addClass('error_block');
-    }
-    let choose_subgroup = $('#subgroup_input').attr('data-id_subgroup');
-    if(choose_subgroup == "" || choose_subgroup == undefined){
-      $('#subgroup_input').after(
-          '<p class="label danger absolute_label">Выберите подгруппу</p>');
-      error.push("error5");
-      $('.error_step-card-4').addClass('error_block');
-    }
-    let choose_diagnoz = $('#diagnoz_input').attr('data-id_diagnoz');
-    if(choose_diagnoz == "" || choose_diagnoz == undefined){
-      $('#diagnoz_input').after(
-          '<p class="label danger absolute_label">Выберите диагноз</p>');
-      error.push("error6");
-      $('.error_step-card-4').addClass('error_block');
+    if ($('#search_diagnoz_input').attr('data-value') === undefined) {
+      var choose_class = $('#class_input').attr('data-id_class');
+      if(choose_class == "" || choose_class == undefined){
+        $('#class_input').after(
+            '<p class="label danger absolute_label">Выберите класс</p>');
+        error.push("error3");
+        $('.error_step-card-4').addClass('error_block');
+      }
+      var choose_group = $('#group_input').attr('data-id_group');
+      if(choose_group == "" || choose_group == undefined){
+        $('#group_input').after(
+            '<p class="label danger absolute_label">Выберите группу</p>');
+        error.push("error4");
+        $('.error_step-card-4').addClass('error_block');
+      }
+      var choose_subgroup = $('#subgroup_input').attr('data-id_subgroup');
+      if(choose_subgroup == "" || choose_subgroup == undefined){
+        $('#subgroup_input').after(
+            '<p class="label danger absolute_label">Выберите подгруппу</p>');
+        error.push("error5");
+        $('.error_step-card-4').addClass('error_block');
+      }
+      var choose_diagnoz = $('#diagnoz_input').attr('data-id_diagnoz');
+      if(choose_diagnoz == "" || choose_diagnoz == undefined){
+        $('#diagnoz_input').after(
+            '<p class="label danger absolute_label">Выберите диагноз</p>');
+        error.push("error6");
+        $('.error_step-card-4').addClass('error_block');
+      }
+    } else {
+      choose_diagnoz = $('#search_diagnoz_input').attr('data-value');
     }
     let years = [];
 
@@ -305,7 +311,7 @@ function search_hospital() {
     console.log(error);
     if(error.length > 0){
 
-    }else {
+    } else {
       if ($('#choose_diagnoz_elem').val() != 'Здесь нет моего диагноза') {
 
         if ($('.header__r_auth_reg').length == 1  && ($(".header__r_auth_reg").attr("data-rigstration") == 0)) {
@@ -848,5 +854,59 @@ function keyup_diagnoz(id_subgroup) {
     }, delay));
   });
 }
-
-
+function search_diagnoz_global() {
+  // ------ choose_class ------
+  $(document).on('click', '#search_diagnoz_global li', function() {
+    $('#search_diagnoz_input').val($(this).text());
+    $('#search_diagnoz_input').attr('data-value', $(this).attr('value'));
+    $('#search_diagnoz_global').fadeOut()
+  });
+  $(document).on('click', '#search_diagnoz_input', function() {
+    $('#search_diagnoz_global').css('display', 'block');
+  });
+  $(document).mouseup(function(e) {
+    let container = $('#search_diagnoz_input');
+    if (container.has(e.target).length === 0) {
+      $('#search_diagnoz_global').fadeOut();
+    }
+  });
+}
+function keyup_diagnoz_global() {
+  $('#search_diagnoz_input').on('keyup', function() {
+    var $this = $(this);
+    var delay = 500;
+    clearTimeout($this.data('timer'));
+    $this.data('timer', setTimeout(function() {
+      $this.removeData('timer');
+      $('#search_diagnoz_global').css('display', 'block');
+      $.post('/ajax/forma-obrashenija/keyup_diagnoz_global.php', {name: $this.val(),
+      }, function(msg) {
+        if ($('.error_diagnoz').length != 0) {
+          $('.error_diagnoz').remove();
+        }
+        $('.diagnoz_search_js').each(function() {
+          $(this).remove();
+        });
+        console.log(msg);
+        if (msg == 'error') {
+          if ($('.error_diagnoz').length != 0) {
+            $('.error_diagnoz').remove();
+            $('#search_diagnoz_global').
+                append('<li class="error_diagnoz">Диагноз не найден</li>');
+          } else {
+            $('#search_diagnoz_global').
+                append('<li class="error_diagnoz">Диагноз не найден</li>');
+          }
+        } else {
+          setTimeout(function() {
+            $('#search_diagnoz_global').append(msg);
+          }, 100);
+          $(document).on('click', '.diagnoz_search_js', function() {
+            $('#search_diagnoz_input').val($(this).text());
+            $('#search_diagnoz_input').attr('data-value', $(this).attr('value'));
+          });
+        }
+      });
+    }, delay));
+  });
+}
