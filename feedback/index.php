@@ -143,7 +143,13 @@ $sort_url = $_GET;
             $ID_USER = $arProps["NAME_USER"]["VALUE"];
             $rsUser = CUser::GetByID($ID_USER);
             $arUser = $rsUser->Fetch();
-            $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_CHANGE_BY_USER"]));
+
+            if($arProps["DATE_CHANGE_BY_USER"]["VALUE"] != "") {
+                $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arProps["DATE_CHANGE_BY_USER"]["VALUE"]));
+            }else{
+
+                $Date_change_user =  "";
+            }
 
             $name_user = $arUser["NAME"];
             if (is_array($arProps["COMMENTS_TO_REWIEW"]["VALUE"])) {
@@ -160,7 +166,9 @@ $sort_url = $_GET;
 
             ?>
             <div class="white_block">
+                <?php if($Date_change_user != ""){ ?>
                 <span class="date_review">Дата изменения <?php echo $Date_change_user; ?></span>
+                <?php } ?>
                 <?php if($arProps["REVIEW_LETTER"]["VALUE"] == "1"){ ?>
                     <div class="feedback__title">Возврат денежных средств</div>
                 <?php } ?>
