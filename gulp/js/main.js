@@ -271,6 +271,10 @@ $(document).ready(function() {
       var data = $(".datepicker-here").val();
       var re = /^(\d+)[.](\d+)[.](\d+)/;
       if (re.test( data ) ) {
+      }else{
+        $(".datepicker-here").after(
+            '<p class="label danger"  >Выберите дату рождения</p>');
+        errors.push("error9");
       }
 
       if (errors.length == 0) {

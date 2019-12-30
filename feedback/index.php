@@ -184,7 +184,7 @@ $sort_url = $_GET;
                                    <?php }elseif($arProps["REJECTED"]["VALUE"] != "" && $arProps["VERIFIED"]["VALUE"] != ""){?>
                                        fill="#3a4552"
                                    <?}elseif($arProps["VERIFIED"]["VALUE"] !=""){ ?>
-                                       fill="#ed8a19"
+                                       fill="#1000ff"
                                    <?php } ?>/>
                             </svg>
 

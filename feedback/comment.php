@@ -75,7 +75,7 @@ preg_match("/(\d+)\/$/",$url,$result_id);
                                         <?php }elseif($arProps["REJECTED"]["VALUE"] != "" && $arProps["VERIFIED"]["VALUE"] != ""){?>
                                             fill="#3a4552"
                                         <?}elseif($arProps["VERIFIED"]["VALUE"] !=""){ ?>
-                                            fill="#ed8a19"
+                                            fill="#1000ff"
                                         <?php } ?>/>
                                 </svg>
 

@@ -40,7 +40,7 @@ function IBlockElementAfterSaveHandler($arg1, $arg2 = false, $bInternal = false)
             $arProps = $ob->GetFields();
             $ID_company  = $arProps["ID"];
             $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_*");
-            $arFilter = Array("IBLOCK_ID"=>13, "PROPERTY_NAME_COMPANY"=> $ID_company,"!PROPERTY_VERIFIED" => false ,"PROPERTY_REJECTED" => false);
+            $arFilter = Array("IBLOCK_ID"=>13, "PROPERTY_NAME_COMPANY"=> $ID_company,"!PROPERTY_VERIFIED" => false ,"!PROPERTY_REJECTED" => false);
             $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
             $all_otzev= $res->SelectedRowsCount();
 
