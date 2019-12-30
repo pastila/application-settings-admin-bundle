@@ -267,7 +267,11 @@ $sort_url = $_GET;
                         $file_comment = CFile::ResizeImageGet($arUserComments["PERSONAL_PHOTO"], array('width'=>50, 'height'=>50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
 
                         ?>
-
+                        <?php if($USER->IsAdmin()){ ?>
+                            <div class="block_remove">
+                                <div data-id="<?php echo  $arFieldsComments["ID"]; ?>" class="delet_comment remove_comment" >Удалить комментарий</div>
+                            </div>
+                        <?php } ?>
                         <div class="hidenComments__top">
                             <img src="<?php echo $file_comment["src"] ?>" alt="OMS">
 
@@ -282,9 +286,6 @@ $sort_url = $_GET;
 
                                 <div class="hidenComments__top_data"><?= $newDateComments ?></div>
                             </div>
-                            <?php if($USER->IsAdmin()){ ?>
-                                <div data-id="<?php echo  $arFieldsComments["ID"]; ?>" class="delet_comment" >Удалить</div>
-                            <?php } ?>
 
                         </div>
 
@@ -309,6 +310,11 @@ $sort_url = $_GET;
                         <!-- Цитаты-->
                         <?php  if ($arPropsComments["CITED"]["VALUE"] != "") {  // цитаты к коментариям ?>
                         <div class="block_quotes">
+                            <?php if($USER->IsAdmin()){ ?>
+                            <div class="block_remove">
+                                <div  class="delet_cation remove_comment" data-id="<?php echo  $arFieldsQuote["ID"]; ?>" >Удалить цитату</div>
+                            </div>
+                            <?php } ?>
                             <?
 
                                 $ID_Quote = $arPropsComments["CITED"]["VALUE"];
@@ -342,10 +348,6 @@ $sort_url = $_GET;
                                             <div class="hidenComments__top_name"><?= $name_userQuote ?></div>
                                             <div class="hidenComments__top_data"><?= $newDateQuote ?></div>
                                         </div>
-                                        <?php if($USER->IsAdmin()){ ?>
-                                            <div  class="delet_cation" data-id="<?php echo  $arFieldsQuote["ID"]; ?>" >Удалить</div>
-                                        <?php } ?>
-
 
 
                                     </div>
