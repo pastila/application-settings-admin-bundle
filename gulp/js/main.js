@@ -719,6 +719,13 @@ function form_us(){
     if (input_file.prop('files')[4] != undefined) {
       fd.append('import_file5', input_file.prop('files')[4]);
     }
+      if (input_file.prop('files')[5] != undefined) {
+        $(".file_input_half").after(
+            '<p class="label danger"  >Максимально 5 картинок</p>');
+        error.push("mane_img");
+      }
+
+
 
 
 
@@ -727,50 +734,49 @@ function form_us(){
         fd.append('text', data_FORM[2]['value']);
         fd.append('captcha_code', data_FORM[3]['value']);
         fd.append('captcha_word', data_FORM[4]['value']);
+  if(error.length  == "0") {
+    $.ajax({
 
-        $.ajax({
+      url: '/ajax/form_ask/ask.php',
+      type: 'POST',
+      data: fd,
+      processData: false,
+      contentType: false,
+      beforeSend: function() {
 
-          url: '/ajax/form_ask/ask.php',
-          type: 'POST',
-          data: fd,
-          processData: false,
-          contentType: false,
-          beforeSend: function() {
+      },
+      success: function(msg) {
+        var suc = JSON.parse(msg);
 
-          },
-          success: function(msg) {
-              var suc = JSON.parse(msg);
+        if (suc.suc == "1") {
+          $.magnificPopup.open({
+            items: {
+              src: '<div class="white-popup custom_styles_popup"><button title="Закрыть" type="button" class="mfp-close">×</button>' +
+              'Ваше письмо отправленно успешно</div>',
+              type: 'inline',
+            },
+          });
+        } else if (suc.captcha == "1") {
+          $("#captcha-error_parent").after(
+              '<p class="label danger"  >Код капчи не верный</p>');
 
-              if(suc.suc == "1"){
-                  $.magnificPopup.open({
-                      items: {
-                          src: '<div class="white-popup custom_styles_popup"><button title="Закрыть" type="button" class="mfp-close">×</button>' +
-                          'Ваше письмо отправленно успешно</div>',
-                          type: 'inline',
-                      },
-                  });
-              } else if(suc.captcha == "1"){
-                $("#captcha-error_parent").after(
-                    '<p class="label danger"  >Код капчи не верный</p>');
+        } else {
+          console.log(suc);
+          if (suc.size == "1") {
+            $(".file_input_half").after(
+                '<p class="label danger"  >Файлы с недопустимым размером</p>');
+          }
+          if (suc.format == "1") {
+            $(".file_input_half").after(
+                '<p class="label danger"  >Файлы с недопустимым форматом</p>');
+          }
+        }
 
-              }else {
-                console.log(suc);
-                if(suc.size == "1"){
-                    $(".file_input_half").after(
-                        '<p class="label danger"  >Файлы с недопустимым размером</p>');
-                }
-                  if(suc.format == "1"){
-                      $(".file_input_half").after(
-                          '<p class="label danger"  >Файлы с недопустимым форматом</p>');
-                  }
-              }
+      },
+    }).done(function(msg) {
 
-
-
-          },
-        }).done(function(msg) {
-
-        });
+    });
+  }
 
     return false;
   });
