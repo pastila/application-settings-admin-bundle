@@ -37,7 +37,7 @@ $cpt->SetCodeCrypt($captchaPass);
         </div>
         <div class="block_padd-modal">
             <div class="input__wrap">
-                <textarea minlength="10" name="text" required></textarea>
+                <textarea class="textarea_input" minlength="10" name="text" required></textarea>
             </div>
         </div>
         <div class="input__wrap block_padd-modal">
@@ -51,11 +51,11 @@ $cpt->SetCodeCrypt($captchaPass);
             </div>
         </div>
         <div class="block_captcha block_padd-modal">
-            <input type="hidden" name="captcha_code" value="<?php echo htmlspecialcharsbx($cpt->GetCodeCrypt()) ?>">
-            <img src="/bitrix/tools/captcha.php?captcha_code=<?php echo htmlspecialcharsbx($cpt->GetCodeCrypt()) ?>" alt="">
-            <input type="text" name="captcha_word" id="captcha_word">
-            <p>здесь будет каптча</p>
-
+            <div class="input__wrap input-initial_wrap" id="captcha-error_parent">
+                <input type="hidden" name="captcha_code" value="<?php echo htmlspecialcharsbx($cpt->GetCodeCrypt()) ?>">
+                <img class="image-captcha" src="/bitrix/tools/captcha.php?captcha_code=<?php echo htmlspecialcharsbx($cpt->GetCodeCrypt()) ?>" alt="">
+                <input type="text" name="captcha_word" id="captcha_word">
+            </div>
         </div>
         <div class="block_padd-modal">
             <button type="submit" class="mainBtn" id="ask">Отправить</button>

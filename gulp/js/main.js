@@ -744,12 +744,13 @@ function form_us(){
               if(suc.suc == "1"){
                   $.magnificPopup.open({
                       items: {
-                          src: '<div class="white-popup custom_styles_popup">Ваше письмо отправленно успешно</div>',
+                          src: '<div class="white-popup custom_styles_popup"><button title="Закрыть" type="button" class="mfp-close">×</button>' +
+                          'Ваше письмо отправленно успешно</div>',
                           type: 'inline',
                       },
                   });
               } else if(suc.captcha == "1"){
-                $("#captcha_word").after(
+                $("#captcha-error_parent").after(
                     '<p class="label danger"  >Код капчи не верный</p>');
 
               }else {
