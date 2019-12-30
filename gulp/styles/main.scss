@@ -371,3 +371,30 @@ input{
          margin: 2rem 0;
      }
  }
+ textarea{
+     font-family: 'Rubik', sans-serif;
+ }
+ .input__wrap{
+     .textarea_input{
+         padding: 2rem;
+     }
+ }
+.input-initial_wrap{
+    @media(min-width: 576px){
+        flex-direction: initial;
+        align-items: center;
+    }
+    @media(max-width: 575px){
+        align-items: baseline;
+    }
+    #captcha_word{
+        width: 100%;
+    }
+    .image-captcha{
+        margin-right: 2rem;
+        @media(max-width: 575px){
+            margin-right: 0;
+            margin-bottom: 2rem;
+        }
+    }
+}
