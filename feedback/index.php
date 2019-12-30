@@ -307,9 +307,10 @@ $sort_url = $_GET;
                             <? } ?>
                         <? } ?>
                         <!-- Цитаты-->
+                        <?php  if ($arPropsComments["CITED"]["VALUE"] != "") {  // цитаты к коментариям ?>
                         <div class="block_quotes">
                             <?
-                            if ($arPropsComments["CITED"]["VALUE"] != "") {  // цитаты к коментариям
+
                                 $ID_Quote = $arPropsComments["CITED"]["VALUE"];
                                 $arSelectQuote = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
                                 $arFilterQuote = Array("IBLOCK_ID" => 15, "ACTIVE" => "Y", "ID" => $ID_Quote);
@@ -353,8 +354,9 @@ $sort_url = $_GET;
 
 
                                 <? } ?>
-                            <? } ?>
+
                         </div>
+                        <? } ?>
                     <? } ?>
                 </div>
 
