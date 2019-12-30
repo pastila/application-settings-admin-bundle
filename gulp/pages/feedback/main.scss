@@ -347,3 +347,18 @@
         font-size: 1rem;
     }
 }
+.block_remove{
+    display: block;
+    text-align: right;
+    margin-bottom: 1rem;
+    .remove_comment {
+        display: inline-block;
+        cursor: pointer;
+        color: red;
+        font-weight: 700;
+        font-size: 1.2rem;
+        @media(max-width: 991px){
+            font-size: .9rem;
+        }
+    }
+}
