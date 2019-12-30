@@ -398,3 +398,12 @@ input{
         }
     }
 }
+#btn_myFileInput{
+    font-weight: bold;
+}
+.label_parent-elements{
+    display: block;
+    .element-file{
+        display: block;
+    }
+}
