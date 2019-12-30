@@ -24,6 +24,7 @@ $rsUser = CUser::GetByID($ID_USER);
 $person = $rsUser->Fetch();
 
 $ID_company = $person["UF_INSURANCE_COMPANY"];
+
     $logo_user = CFile::GetFileArray($person["PERSONAL_PHOTO"]);
 $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_LOGO_IMG","PROPERTY_MOBILE_NUMBER");
 $arFilter = Array("IBLOCK_ID"=>16, "ID"=>$ID_company);
@@ -34,7 +35,11 @@ while($ob = $res->GetNextElement()){
   $logo_company = CFile::GetFileArray($arFields["PROPERTY_LOGO_IMG_VALUE"]);
 
 }
-
+    $arFilter = Array('IBLOCK_ID'=>16, 'ID'=>$person["UF_REGION"]);
+    $db_list = CIBlockSection::GetList(Array($by=>$order), $arFilter, true);
+    if($ar_result = $db_list->GetNext()){
+      
+    }
 ?>
 
 <div class="personal_cabinet">
@@ -194,7 +199,11 @@ while($ob = $res->GetNextElement()){
                                <div class="input__ico">
                                    <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                                </div>
-                               <input id="referal"  value="" type="text" data-id_region="0" placeholder="Поиск по региону" autocomplete="off"/>
+
+
+
+
+                               <input id="referal"  value="<?php echo $ar_result["NAME"]  ?>" type="text" data-id_region="0" placeholder="Поиск по региону" autocomplete="off"/>
                                <ul style="cursor: pointer;" class="custom-serach__items" id="search_result">
                                    <?
                                    $arOrder = Array("name"=>"asc");
