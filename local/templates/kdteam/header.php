@@ -173,6 +173,9 @@ $asset = Asset::getInstance();
             <?php } else { ?>
                 <div class="header__r" style="display: flex;">
                     <div class="header__r_auth">
+                        <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-feedback.php"?>" class="header_mob--write header__r_auth_write" id="write-us_modal">
+                            <img class="header__r_auth_login_img" src="/local/templates/kdteam/images/svg/header/write-us/contract.svg" alt="">
+                        </a>
                         <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-login.php"?>" id="login-link"
                            class="header__r_auth_login">
                             <img class="header__r_auth_login_img"
