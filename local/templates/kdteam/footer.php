@@ -9,11 +9,7 @@ if (defined("B_PROLOG_INCLUDED") && B_PROLOG_INCLUDED === true) {
 <footer class="footer">
     <div class="footer__container">
         <div class="footer__logo">
-            <img src="/local/templates/kdteam/images/svg/header/logo/logo_header.svg" alt="OMS">
-
-            <div class="footer__logo_name">
-                Company Name
-            </div>
+            <img src="/local/templates/kdteam/images/png/header/logo-oms.png" alt="OMS">
         </div>
 
         <ul class="footer__menu">
