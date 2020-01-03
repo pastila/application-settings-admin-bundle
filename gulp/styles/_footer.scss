@@ -20,6 +20,9 @@
         display: flex;
         align-items: center;
         margin-bottom: 2rem;
+        @media(max-width: 991px){
+            justify-content: center;
+        }
 
         img {
             margin-right: 1rem;
