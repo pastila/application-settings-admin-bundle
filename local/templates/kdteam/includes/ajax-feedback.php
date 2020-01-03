@@ -47,6 +47,7 @@ $cpt->SetCodeCrypt($captchaPass);
                 <label class="label_parent-elements" for="btn_myFileInput">Вы не выбрали файлы</label>
                 <input class="file-simple"  accept="image/*" type="file" id="myFileInput" multiple />
                 <span class="label block-error-label">Максимальный размер файла 10mb</span>
+                <span class="label block-error-label">Для выбора нескольких картинок зажмите Ctrl</span>
             </div>
         </div>
         <div class="block_captcha block_padd-modal">
