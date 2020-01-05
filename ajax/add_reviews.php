@@ -37,6 +37,7 @@ if ($_POST) {
                     "EVALUATION" => $_POST["star"],
                     "NAME_USER" => $id_user,
                     "REVIEW_LETTER"=> $REVIEW_LETTER,
+                    "KPP"=> $_POST["kpp"],
                 ),
                 "NAME" => $name,
                 "CODE" => $trans,

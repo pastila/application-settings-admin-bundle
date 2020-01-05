@@ -96,6 +96,7 @@ var data = {
   'text': '0',
   'star': '0',
   'letter': '0',
+  'kpp': '0',
 };
 $('.star').click(function() {
   data.star = $(this).attr('data-value');
@@ -213,6 +214,7 @@ $(document).ready(function() {
     $('#referal').attr('data-id_region', id_region);
     $('#referal').attr('data-region_check', 'check');
     $('#referal_two').attr('data-id_region', '0');
+    $('#referal_two').attr('data-id_region_kpp', '0');
     $('#referal_two').val("");
 
     $.post('/ajax/search_company.php',
@@ -233,9 +235,11 @@ $(document).ready(function() {
 
   $(document).on('click', '.hospital', function() {
     let id_region = $(this).attr('value');
+    let kpp_region = $(this).attr('data-kpp');
     let select_region = $(this).text();
     $('#referal_two').val(select_region);
     $('#referal_two').attr('data-id_region', id_region);
+    $('#referal_two').attr('data-id_region_kpp', kpp_region);
     $('#referal_two').attr('data-region_check', 'check');
   });
 
@@ -306,12 +310,17 @@ $(document).ready(function() {
     } else {
       data.id_city = region;
     }
+
+
+
     let hospital = $('#referal_two').attr('data-id_region');
     if (hospital == '' || hospital == undefined) {
       $('#referal_two').after(
           '<span class="label danger"  >Выберите больницу</span>');
       empty.push('error');
     } else {
+      let kpp = $('#referal_two').attr('data-id_region_kpp');
+      data.kpp = kpp;
       data.id_compani = hospital;
     }
 
@@ -325,6 +334,7 @@ $(document).ready(function() {
       $('[data-select=company]').next().css({'display': 'block'});
       empty.push('company');
     }
+
 
     function getCookie(name) {
       let matches = document.cookie.match(new RegExp(
@@ -346,6 +356,7 @@ $(document).ready(function() {
         data: data,
         dataType: 'html',
         beforeSend: function() {
+          delete_cookie("letter");
 
         },
 
@@ -368,3 +379,9 @@ $(document).ready(function() {
 
   });
 });
+function delete_cookie ( cookie_name )
+{
+  var cookie_date = new Date ( );  // Текущая дата и время
+  cookie_date.setTime ( cookie_date.getTime() - 1 );
+  document.cookie = cookie_name += "=; expires=" + cookie_date.toGMTString();
+}

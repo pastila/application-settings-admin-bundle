@@ -16,14 +16,17 @@ window.addEventListener('DOMContentLoaded', () => {
         b.setAttribute("onchange", "select-items select-hide");
 
         for (j = 1; j < selElmnt.length; j++) {
-
+              console.log(selElmnt.options[j].attributes.class);
             /* For each option in the original select element,
             create a new DIV that will act as an option item: */
             c = document.createElement("DIV");
 
             c.innerHTML = selElmnt.options[j].innerHTML;
             c.innerVALUE= selElmnt.options[j].value;
-
+            if(selElmnt.options[j].attributes.class !== undefined){
+             var attr_class =  selElmnt.options[j].attributes.class.value;
+              c.setAttribute("class",attr_class);
+            }
             c.setAttribute("data-value",c.innerVALUE);
 
             c.addEventListener("click", function (e) {
