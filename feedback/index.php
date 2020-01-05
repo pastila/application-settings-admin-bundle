@@ -12,6 +12,20 @@ global $USER;
 
 $sort_url = $_GET;
 
+$array_all_company = array();
+
+$order = Array("name" => "asc");
+$arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_KPP", "CODE");
+$arFilter = Array("IBLOCK_ID" => 16);
+$res = CIBlockElement::GetList($order, $arFilter, false, false, $arSelect);
+while ($ob = $res->GetNextElement()) {
+
+    $arProps = $ob->GetFields();
+
+    $allReviews[$arProps['PROPERTY_KPP_VALUE']] = $arProps;
+}
+$countReviews = count($allReviews);
+
 ?>
 <!-- Breadcrumbs -->
 <ul class="breadcrumbs">
@@ -34,24 +48,12 @@ $sort_url = $_GET;
     <div class="feedback__filter">
         <div class="custom-select">
             <select style="display: none">
-                <option value="">Все отзывы <span><?= 34 ?></span></option>
+                <option value="">Все отзывы <span><?= $countReviews ?></span></option>
                 <?
-                $array_all_company = array();
-
-                $order = Array("name" => "asc");
-                $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_KPP");
-                $arFilter = Array("IBLOCK_ID" => 16);
-                $res = CIBlockElement::GetList($order, $arFilter, false, false, $arSelect);
-
-                while ($ob = $res->GetNextElement()) {
-                    $arProps = $ob->GetFields();
-                    $result_search_kpp = array_search($arProps["PROPERTY_KPP_VALUE"], $array_all_company);
-                    if ($result_search_kpp === false) {
-
-                        array_push($array_all_company, $arProps["PROPERTY_KPP_VALUE"]);
+                foreach ($allReviews as $review) {
 
                         if (isset($_GET["property_evaluation"]) || isset($_GET["property_kpp"]) || isset($_GET["property_region"])) {
-                            if ($_GET["property_kpp"] != $arProps["PROPERTY_KPP_VALUE"]) {
+                            if ($_GET["property_kpp"] != $review["PROPERTY_KPP_VALUE"]) {
 
                                 $url_for_filter = "?";
 
@@ -61,29 +63,37 @@ $sort_url = $_GET;
                                         $url_for_filter .= "$key=$filter&";
                                     }
                                 }
+
                                 ?>
-                                <option value="<?= $url_for_filter ?>property_kpp=<?= $arProps["PROPERTY_KPP_VALUE"] ?>"><?= $arProps["NAME"] ?></option>
+                                <option value="<?= $url_for_filter ?>property_kpp=<?= $review["PROPERTY_KPP_VALUE"] ?>"><?= $review["NAME"] ?></option>
 
                             <? } else {
                                 $url_for_filter = "?";
 
+
                                 foreach ($sort_url as $key => $filter) {
 
                                     if ($key != "property_kpp") {
                                         $url_for_filter .= "$key=$filter&";
                                     }
                                 }
+                                if ($url_for_filter == "?") {
+                                    $url_for_filter = "";
+                                }
+
                                 ?>
                                 <option value="<?= $url_for_filter ?>"
-                                        class="activ_filter"><?= $arProps["NAME"] ?></option>
+                                        class="activ_filter"><?= $review["NAME"] ?></option>
                             <? }
 
                         } else { ?>
 
-                            <option value="?property_kpp=<?= $arProps["PROPERTY_KPP_VALUE"] ?>"><?= $arProps["NAME"] ?></option>
+                            <option value="?property_kpp=<?= $review["PROPERTY_KPP_VALUE"] ?>"><?= $review["NAME"] ?></option>
                         <? }
-                    }
-                } ?>
+
+                }
+
+                ?>
             </select>
         </div>
 
@@ -112,7 +122,10 @@ $sort_url = $_GET;
                             <option value="<?= $url_for_filter ?>property_evaluation=<?= $i ?>" class="number_star">
                                 Оценки <?= $i ?>
                             </option>
-                        <?php } else { ?>
+                        <?php } else {
+                            if($url_for_filter == "?"){
+                                $url_for_filter = "";
+                            }?>
                             <option value="<?= $url_for_filter ?>" class="number_star activ_filter">
                                 Оценки <?= $i ?>
                             </option>
@@ -460,67 +473,113 @@ $sort_url = $_GET;
 
             <ul class="sidebar__item_lists scrollbar">
                 <?php
+                $arFilter = array(
+                    "IBLOCK_ID" => 16,
+                    "!PROPERTY_AMOUNT_STAR" => false,
+                    "!PROPERTY_ALL_AMOUNT_STAR" => false,
+                );
+                if(isset($_GET["property_region"])){
+                    $arFilter +=["SECTION_ID"=>$_GET["property_region"]];
+                }
+                $array_all_company = array();
                 $order = Array("PROPERTY_AMOUNT_STAR" => "desc", "name" => "asc");
-                $elementselect = Array("ID", "IBLOCK_ID", "NAME", "CODE", "DATE_ACTIVE_FROM", "PROPERTY_AMOUNT_STAR");
-                $arFilter = Array("IBLOCK_ID" => 16);
+                $elementselect = Array("ID", "IBLOCK_ID", "NAME", "CODE", "PROPERTY_AMOUNT_STAR","PROPERTY_KPP","PROPERTY_ALL_AMOUNT_STAR");
                 $Element_filter = CIBlockElement::GetList($order, $arFilter, false, false, $elementselect);
                 $i = 0;
                 if (isset($_GET["property_evaluation"]) || isset($_GET["property_name_company"]) || isset($_GET["property_region"])) {
+
                     while ($ob_element_filter = $Element_filter->GetNextElement()) {
                         $fields = $ob_element_filter->GetFields();
 
-                        if ($fields["PROPERTY_AMOUNT_STAR_VALUE"] == "" || $fields["PROPERTY_AMOUNT_STAR_VALUE"] == 0) {
-                            continue;
-                        }
-                        ++$i;
-                        $url_for_filter = "?";
+                        $result_search_kpp = array_search($fields["PROPERTY_KPP_VALUE"], $array_all_company);
 
-                        foreach ($sort_url as $key => $filter) {
-                            if ($key != "property_name_company") {
-                                $url_for_filter .= "$key=$filter&";
+                        if ($result_search_kpp === false) {
+
+                            array_push($array_all_company, $fields["PROPERTY_KPP_VALUE"]);
+                            ++$i;
+                            $url_for_filter = "?";
+
+                            foreach ($sort_url as $key => $filter) {
+                                if ($key != "property_name_company") {
+                                    $url_for_filter .= "$key=$filter&";
+                                }
                             }
-                        }
-                        ?>
-                        <li class="sidebar__item_lists_list list_numbered-items">
-                            <span class="sidebar_count number"><?= $i ?></span>
-                            <a href="<?= $url_for_filter ?>property_name_company=<?= $fields["ID"] ?>"
-                               class="sidebar__item_lists_list_link" id="company"
-                               data-amount-star="<?= $fields["PROPERTY_AMOUNT_STAR_VALUE"] ?>"
-                               data-id="<?= $fields["ID"] ?>">
-                                <?= $fields["NAME"] ?>
-                            </a>
-                            <span class="sidebar_count rating"><?= $fields["PROPERTY_AMOUNT_STAR_VALUE"] ?></span>
-                        </li>
-                    <? } ?>
+                            ?>
+                            <li class="sidebar__item_lists_list list_numbered-items">
+                                <span class="sidebar_count number"><?= $i ?></span>
+                                <a href="<?= $url_for_filter ?>property_name_company=<?= $fields["ID"] ?>"
+                                   class="sidebar__item_lists_list_link" id="company"
+                                   data-amount-star="
+                                   <?php if(isset($_GET["property_region"])){
+                                  echo  $fields["PROPERTY_AMOUNT_STAR_VALUE"] ;
+                                                }else{
+                                       echo $fields["PROPERTY_ALL_AMOUNT_STAR_VALUE"];} ?>
+
+"
+                                   data-id="<?= $fields["ID"] ?>">
+                                    <?= $fields["NAME"] ?>
+                                </a>
+                                <span class="sidebar_count rating"><?php if(isset($_GET["property_region"])){
+
+                                        echo  $fields["PROPERTY_AMOUNT_STAR_VALUE"] ;
+                                    }else{
+
+                                        echo $fields["PROPERTY_ALL_AMOUNT_STAR_VALUE"];} ?></span>
+                            </li>
+                        <? }
+                    }?>
                 <? } else {
                     while ($ob_element_filter = $Element_filter->GetNextElement()) {
                         $fields = $ob_element_filter->GetFields();
 
-                        if ($fields["PROPERTY_AMOUNT_STAR_VALUE"] == "" || $fields["PROPERTY_AMOUNT_STAR_VALUE"] == 0) {
-                            continue;
-                        }
-                        ++$i;
-                        ?>
+                        $result_search_kpp = array_search($fields["PROPERTY_KPP_VALUE"], $array_all_company);
+                        if ($result_search_kpp === false) {
+                            ++$i;
+                            array_push($array_all_company, $fields["PROPERTY_KPP_VALUE"]);
 
-                        <li class="sidebar__item_lists_list list_numbered-items">
-                            <span class="sidebar_count number"><?= $i ?></span>
-                            <a title="<?= $fields["NAME"] ?>" href="?property_name_company=<?= $fields["ID"] ?>"
-                               class="sidebar__item_lists_list_link"
-                               id="company"
-                               data-amount-star="<?= $fields["PROPERTY_AMOUNT_STAR_VALUE"] ?>"
-                               data-id="<?= $fields["ID"] ?>">
-                                <?= $fields["NAME"] ?>
-                            </a>
-                            <span class="sidebar_count rating"><?= $fields["PROPERTY_AMOUNT_STAR_VALUE"] ?></span>
-                        </li>
-                    <? } ?>
+                            ?>
 
-                <? } ?>
+                            <li class="sidebar__item_lists_list list_numbered-items">
+                                <span class="sidebar_count number"><?= $i ?></span>
+                                <a title="<?= $fields["NAME"] ?>" href="?property_name_company=<?= $fields["ID"] ?>"
+                                   class="sidebar__item_lists_list_link"
+                                   id="company"
+                                   data-amount-star=" <?php if(isset($_GET["property_region"])){
+
+                                       echo  $fields["PROPERTY_AMOUNT_STAR_VALUE"] ;
+                                   }else{
+
+                                       echo $fields["PROPERTY_ALL_AMOUNT_STAR_VALUE"];} ?>"
+                                   data-id="<?= $fields["ID"] ?>">
+                                    <?= $fields["NAME"] ?>
+                                </a>
+                                <span class="sidebar_count rating"><?php if(isset($_GET["property_region"])){
+
+                                        echo  $fields["PROPERTY_AMOUNT_STAR_VALUE"] ;
+                                    }else{
+
+                                        echo $fields["PROPERTY_ALL_AMOUNT_STAR_VALUE"];} ?></span>
+                            </li>
+                        <? }
+                    }
+               } ?>
 
 
                 <ul>
+<? if (isset($_GET["property_region"])) {
+    $url_for_filter = "?";
 
-                    <button class="smallAccentBtn">Весь рейтинг</button>
+    foreach ($sort_url as $key => $filter) {
+        if ($key != "property_region") {
+            $url_for_filter .= "$key=$filter&";
+        }
+    }
+    if($url_for_filter == "?"){
+        $url_for_filter = "/feedback/";
+    }
+
+} ?>
+                    <button  class="smallAccentBtn"><a href="<?= $url_for_filter ?>">Весь рейтинг</a></button>
         </div>
 
         <!-- Second Sidebar block -->
@@ -536,6 +595,7 @@ $sort_url = $_GET;
                 $Section_filter = CIBlockSection::GetList($order, $arFilter, false);
                 if (isset($_GET["property_evaluation"]) || isset($_GET["property_name_company"]) || isset($_GET["property_region"]) || isset($_GET["property_kpp"])) {
                     while ($ob_section_filter = $Section_filter->GetNext()) {
+
                         if ($_GET["property_region"] != $ob_section_filter["ID"]) {
                             $url_for_filter = "?";
 
@@ -543,6 +603,10 @@ $sort_url = $_GET;
                                 if ($key != "property_region") {
                                     $url_for_filter .= "$key=$filter&";
                                 }
+                            }
+
+                            if($url_for_filter == "?"){
+                                $url_for_filter = "/feedback/";
                             }
                             ?>
                             <li class="sidebar__item_lists_list">
@@ -561,6 +625,9 @@ $sort_url = $_GET;
                                 if ($key != "property_region") {
                                     $url_for_filter .= "$key=$filter&";
                                 }
+                            }
+                            if($url_for_filter == "?"){
+                                $url_for_filter = "/feedback/";
                             }
                             ?>
                             <li class="sidebar__item_lists_list">
