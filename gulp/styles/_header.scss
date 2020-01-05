@@ -27,6 +27,16 @@
         @media screen and(max-width: 992px){
             max-height: calc(100vw / 12);
         }
+        @media(max-width: 575px){
+            max-height: 100%;
+            width: 10rem;
+        }
+    }
+    .header_mob--write{
+        margin-right: 4rem;
+        @media(min-width: 576px){
+            display: none;
+        }
     }
 
     &__r {
@@ -38,7 +48,7 @@
             display: flex;
             align-items: center;
     
-            &_login, &_reg {
+            &_login, &_reg  {
                 display: flex;
                 align-items: center;
                 cursor: pointer;
@@ -147,8 +157,22 @@
         }
     
         &_mainBtn {
-            display: none;
-            text-transform: capitalize;
+            .hidden-desk--image{
+                display: none;
+                @media(max-width: 575px){
+                    display: flex;
+                }
+            }
+            @media(max-width: 575px){
+                display: flex;
+                text-transform: capitalize;
+                background: transparent;
+                padding: 0;
+                margin-left: 4rem;
+                .hidden-text-mob{
+                    display: none;
+                }
+            }
         }
     }
 }
