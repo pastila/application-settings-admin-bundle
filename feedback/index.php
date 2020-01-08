@@ -597,6 +597,7 @@ $countReviews = count($allReviews);
                     while ($ob_section_filter = $Section_filter->GetNext()) {
 
                         if ($_GET["property_region"] != $ob_section_filter["ID"]) {
+
                             $url_for_filter = "?";
 
                             foreach ($sort_url as $key => $filter) {
@@ -604,10 +605,8 @@ $countReviews = count($allReviews);
                                     $url_for_filter .= "$key=$filter&";
                                 }
                             }
+                     
 
-                            if($url_for_filter == "?"){
-                                $url_for_filter = "/feedback/";
-                            }
                             ?>
                             <li class="sidebar__item_lists_list">
                                 <a href="<?= $url_for_filter ?>property_region=<?= $ob_section_filter["ID"] ?>"
