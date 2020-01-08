@@ -29,7 +29,7 @@ $countReviews = count($allReviews);
 ?>
 <!-- Breadcrumbs -->
 <ul class="breadcrumbs">
-    <li>Главная</li>
+    <li><a href="/">Главная</a></li>
     <li>Отзывы</li>
 </ul>
 

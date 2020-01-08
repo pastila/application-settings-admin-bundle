@@ -21,8 +21,8 @@ global $USER;?>
 
             <!-- Breadcrumbs -->
             <ul class="breadcrumbs">
-                <li>Главная</li>
-                <li>Отзыва</li>
+                <li><a href="/">Главная</a></li>
+                <li><a href="/feedback/">Отзывы</a></li>
                 <li>Добавление отзыва</li>
             </ul>
 

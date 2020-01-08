@@ -43,6 +43,10 @@ while($ob = $res->GetNextElement()){
 ?>
 
 <div class="personal_cabinet">
+    <ul class="breadcrumbs">
+        <li><a href="/">Главная</a></li>
+        <li>Личный кабинет</li>
+    </ul>
     <h1 class="page-title">Мои данные</h1>
     <?php if ($person["UF_REPRESENTATIVE"] == "1") { ?>
     <div class="user_vip"><p class="text_vip">Аккаунт представителя страховой службы</p></div>

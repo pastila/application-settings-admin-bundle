@@ -12,7 +12,7 @@ if ($USER->IsAuthorized()) { ?>
     <!-- Breadcrumbs -->
     <ul class="breadcrumbs">
         <li><a href="/">Главная</a></li>
-        <li>обращения</li>
+        <li>Обращения</li>
     </ul>
 
 

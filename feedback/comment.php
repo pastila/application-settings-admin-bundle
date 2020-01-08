@@ -8,14 +8,20 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/feedback/main.min.js");
 CModule::IncludeModule("iblock");
 global $USER;
 $url = $_SERVER["REQUEST_URI"];
-//$url = "feedback/comment-37994/";
+
 
 preg_match("/(\d+)\/$/",$url,$result_id);
 
 
 ?>
 <div class="feedback">
+
     <div class="feedback__wrap_white-blocks">
+        <ul class="breadcrumbs">
+            <li><a href="/">Главная</a></li>
+            <li><a href="/feedback/">Отзывы</a></li>
+            <li>Отзыв</li>
+        </ul>
         <!-- FeedBack block -->
 
         <?php
