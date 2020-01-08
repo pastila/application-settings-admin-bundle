@@ -12,7 +12,7 @@ CModule::IncludeModule("iblock");
 <!-- Breadcrumbs -->
 <ul class="breadcrumbs">
     <li><a href="/">Главная</a></li>
-    <li>Отрпавленные обращения</li>
+    <li>Отправленные обращения</li>
 </ul>
 
 <!-- Pages Title -->
