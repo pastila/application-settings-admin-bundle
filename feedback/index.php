@@ -116,8 +116,11 @@ $countReviews = count($allReviews);
                     }
 
                     for ($i = 1; $i <= 5; ++$i) {
-
+                        if($url_for_filter == ""){
+                            $url_for_filter = "?";
+                        }
                         if ($_GET["property_evaluation"] != $i) {
+
                             ?>
                             <option value="<?= $url_for_filter ?>property_evaluation=<?= $i ?>" class="number_star">
                                 Оценки <?= $i ?>
@@ -605,7 +608,7 @@ $countReviews = count($allReviews);
                                     $url_for_filter .= "$key=$filter&";
                                 }
                             }
-                     
+
 
                             ?>
                             <li class="sidebar__item_lists_list">
