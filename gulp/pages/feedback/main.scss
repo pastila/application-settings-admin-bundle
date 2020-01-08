@@ -362,22 +362,21 @@
         }
     }
 }
-.select-items{
-    .active-refresh__block{
-        position: relative;
-        padding-right: 3rem;
-        &::after{
-            position: absolute;
-            content: '';
-            background-image: url('/local/templates/kdteam/images/svg/cross-remove-sign.svg');
-            background-size: 100%;
-            background-repeat: no-repeat;
-            width: 1.5rem;
-            height: 1.5rem;
-            top: 50%;
-            transform: translateY(-50%);
-            left: auto;
-            right: 1rem;
-        }
+.activ_filter{
+    position: relative;
+    padding-right: 3rem;
+    display: block;
+    &::after{
+        position: absolute;
+        content: '';
+        background-image: url('/local/templates/kdteam/images/svg/cross-remove-sign.svg');
+        background-size: 100%;
+        background-repeat: no-repeat;
+        width: 1.5rem;
+        height: 1.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        left: auto;
+        right: 1rem;
     }
 }
