@@ -52,44 +52,44 @@ $countReviews = count($allReviews);
                 <?
                 foreach ($allReviews as $review) {
 
-                        if (isset($_GET["property_evaluation"]) || isset($_GET["property_kpp"]) || isset($_GET["property_region"])) {
-                            if ($_GET["property_kpp"] != $review["PROPERTY_KPP_VALUE"]) {
+                    if (isset($_GET["property_evaluation"]) || isset($_GET["property_kpp"]) || isset($_GET["property_region"])) {
+                        if ($_GET["property_kpp"] != $review["PROPERTY_KPP_VALUE"]) {
 
-                                $url_for_filter = "?";
+                            $url_for_filter = "?";
 
-                                foreach ($sort_url as $key => $filter) {
+                            foreach ($sort_url as $key => $filter) {
 
-                                    if ($key != "property_kpp") {
-                                        $url_for_filter .= "$key=$filter&";
-                                    }
+                                if ($key != "property_kpp") {
+                                    $url_for_filter .= "$key=$filter&";
                                 }
+                            }
 
-                                ?>
-                                <option value="<?= $url_for_filter ?>property_kpp=<?= $review["PROPERTY_KPP_VALUE"] ?>"><?= $review["NAME"] ?></option>
+                            ?>
+                            <option value="<?= $url_for_filter ?>property_kpp=<?= $review["PROPERTY_KPP_VALUE"] ?>"><?= $review["NAME"] ?></option>
 
-                            <? } else {
-                                $url_for_filter = "?";
+                        <? } else {
+                            $url_for_filter = "?";
 
 
-                                foreach ($sort_url as $key => $filter) {
+                            foreach ($sort_url as $key => $filter) {
 
-                                    if ($key != "property_kpp") {
-                                        $url_for_filter .= "$key=$filter&";
-                                    }
+                                if ($key != "property_kpp") {
+                                    $url_for_filter .= "$key=$filter&";
                                 }
-                                if ($url_for_filter == "?") {
-                                    $url_for_filter = "";
-                                }
+                            }
+                            if ($url_for_filter == "?") {
+                                $url_for_filter = "";
+                            }
 
-                                ?>
-                                <option value="<?= $url_for_filter ?>"
-                                        class="activ_filter"><?= $review["NAME"] ?></option>
-                            <? }
-
-                        } else { ?>
-
-                            <option value="?property_kpp=<?= $review["PROPERTY_KPP_VALUE"] ?>"><?= $review["NAME"] ?></option>
+                            ?>
+                            <option value="<?= $url_for_filter ?>"
+                                    class="activ_filter"><?= $review["NAME"] ?></option>
                         <? }
+
+                    } else { ?>
+
+                        <option value="?property_kpp=<?= $review["PROPERTY_KPP_VALUE"] ?>"><?= $review["NAME"] ?></option>
+                    <? }
 
                 }
 
@@ -116,7 +116,7 @@ $countReviews = count($allReviews);
                     }
 
                     for ($i = 1; $i <= 5; ++$i) {
-                        if($url_for_filter == ""){
+                        if ($url_for_filter == "") {
                             $url_for_filter = "?";
                         }
                         if ($_GET["property_evaluation"] != $i) {
@@ -126,14 +126,14 @@ $countReviews = count($allReviews);
                                 Оценки <?= $i ?>
                             </option>
                         <?php } else {
-                            if($url_for_filter == "?"){
+                            if ($url_for_filter == "?") {
                                 $url_for_filter = "";
-                            }?>
+                            } ?>
                             <option value="<?= $url_for_filter ?>" class="number_star activ_filter">
                                 Оценки <?= $i ?>
                             </option>
 
-                        <?
+                            <?
                         }
                     }
                 } else {
@@ -481,15 +481,23 @@ $countReviews = count($allReviews);
                     "!PROPERTY_AMOUNT_STAR" => false,
                     "!PROPERTY_ALL_AMOUNT_STAR" => false,
                 );
-                if(isset($_GET["property_region"])){
-                    $arFilter +=["SECTION_ID"=>$_GET["property_region"]];
+                if (isset($_GET["property_region"])) {
+                    $arFilter += ["SECTION_ID" => $_GET["property_region"]];
                 }
                 $array_all_company = array();
                 $order = Array("PROPERTY_AMOUNT_STAR" => "desc", "name" => "asc");
-                $elementselect = Array("ID", "IBLOCK_ID", "NAME", "CODE", "PROPERTY_AMOUNT_STAR","PROPERTY_KPP","PROPERTY_ALL_AMOUNT_STAR");
+                $elementselect = Array(
+                    "ID",
+                    "IBLOCK_ID",
+                    "NAME",
+                    "CODE",
+                    "PROPERTY_AMOUNT_STAR",
+                    "PROPERTY_KPP",
+                    "PROPERTY_ALL_AMOUNT_STAR"
+                );
                 $Element_filter = CIBlockElement::GetList($order, $arFilter, false, false, $elementselect);
                 $i = 0;
-                if (isset($_GET["property_evaluation"]) || isset($_GET["property_name_company"]) || isset($_GET["property_region"])) {
+                if (isset($_GET["property_evaluation"]) || isset($_GET["property_name_company"]) || isset($_GET["property_kpp"])) {
 
                     while ($ob_element_filter = $Element_filter->GetNextElement()) {
                         $fields = $ob_element_filter->GetFields();
@@ -503,34 +511,36 @@ $countReviews = count($allReviews);
                             $url_for_filter = "?";
 
                             foreach ($sort_url as $key => $filter) {
-                                if ($key != "property_name_company") {
+                                if ($key != "property_kpp") {
                                     $url_for_filter .= "$key=$filter&";
                                 }
                             }
                             ?>
                             <li class="sidebar__item_lists_list list_numbered-items">
                                 <span class="sidebar_count number"><?= $i ?></span>
-                                <a href="<?= $url_for_filter ?>property_name_company=<?= $fields["ID"] ?>"
+                                <a href="<?= $url_for_filter ?>property_kpp=<?= $fields["PROPERTY_KPP_VALUE"] ?>"
                                    class="sidebar__item_lists_list_link" id="company"
                                    data-amount-star="
-                                   <?php if(isset($_GET["property_region"])){
-                                  echo  $fields["PROPERTY_AMOUNT_STAR_VALUE"] ;
-                                                }else{
-                                       echo $fields["PROPERTY_ALL_AMOUNT_STAR_VALUE"];} ?>
+                                   <?php if (isset($_GET["property_region"])) {
+                                       echo $fields["PROPERTY_AMOUNT_STAR_VALUE"];
+                                   } else {
+                                       echo $fields["PROPERTY_ALL_AMOUNT_STAR_VALUE"];
+                                   } ?>
 
 "
                                    data-id="<?= $fields["ID"] ?>">
                                     <?= $fields["NAME"] ?>
                                 </a>
-                                <span class="sidebar_count rating"><?php if(isset($_GET["property_region"])){
+                                <span class="sidebar_count rating"><?php if (isset($_GET["property_region"])) {
 
-                                        echo  $fields["PROPERTY_AMOUNT_STAR_VALUE"] ;
-                                    }else{
+                                        echo $fields["PROPERTY_AMOUNT_STAR_VALUE"];
+                                    } else {
 
-                                        echo $fields["PROPERTY_ALL_AMOUNT_STAR_VALUE"];} ?></span>
+                                        echo $fields["PROPERTY_ALL_AMOUNT_STAR_VALUE"];
+                                    } ?></span>
                             </li>
                         <? }
-                    }?>
+                    } ?>
                 <? } else {
                     while ($ob_element_filter = $Element_filter->GetNextElement()) {
                         $fields = $ob_element_filter->GetFields();
@@ -544,45 +554,47 @@ $countReviews = count($allReviews);
 
                             <li class="sidebar__item_lists_list list_numbered-items">
                                 <span class="sidebar_count number"><?= $i ?></span>
-                                <a title="<?= $fields["NAME"] ?>" href="?property_name_company=<?= $fields["ID"] ?>"
+                                <a title="<?= $fields["NAME"] ?>" href="?property_kpp=<?= $fields["PROPERTY_KPP_VALUE"] ?>"
                                    class="sidebar__item_lists_list_link"
                                    id="company"
-                                   data-amount-star=" <?php if(isset($_GET["property_region"])){
+                                   data-amount-star=" <?php if (isset($_GET["property_region"])) {
 
-                                       echo  $fields["PROPERTY_AMOUNT_STAR_VALUE"] ;
-                                   }else{
+                                       echo $fields["PROPERTY_AMOUNT_STAR_VALUE"];
+                                   } else {
 
-                                       echo $fields["PROPERTY_ALL_AMOUNT_STAR_VALUE"];} ?>"
+                                       echo $fields["PROPERTY_ALL_AMOUNT_STAR_VALUE"];
+                                   } ?>"
                                    data-id="<?= $fields["ID"] ?>">
                                     <?= $fields["NAME"] ?>
                                 </a>
-                                <span class="sidebar_count rating"><?php if(isset($_GET["property_region"])){
+                                <span class="sidebar_count rating"><?php if (isset($_GET["property_region"])) {
 
-                                        echo  $fields["PROPERTY_AMOUNT_STAR_VALUE"] ;
-                                    }else{
+                                        echo $fields["PROPERTY_AMOUNT_STAR_VALUE"];
+                                    } else {
 
-                                        echo $fields["PROPERTY_ALL_AMOUNT_STAR_VALUE"];} ?></span>
+                                        echo $fields["PROPERTY_ALL_AMOUNT_STAR_VALUE"];
+                                    } ?></span>
                             </li>
                         <? }
                     }
-               } ?>
+                } ?>
 
 
                 <ul>
-<? if (isset($_GET["property_region"])) {
-    $url_for_filter = "?";
+                    <? if (isset($_GET["property_region"])) {
+                        $url_for_filter = "?";
 
-    foreach ($sort_url as $key => $filter) {
-        if ($key != "property_region") {
-            $url_for_filter .= "$key=$filter&";
-        }
-    }
-    if($url_for_filter == "?"){
-        $url_for_filter = "/feedback/";
-    }
+                        foreach ($sort_url as $key => $filter) {
+                            if ($key != "property_region") {
+                                $url_for_filter .= "$key=$filter&";
+                            }
+                        }
+                        if ($url_for_filter == "?") {
+                            $url_for_filter = "/feedback/";
+                        }
 
-} ?>
-                    <button  class="smallAccentBtn"><a href="<?= $url_for_filter ?>">Весь рейтинг</a></button>
+                    } ?>
+                    <button class="smallAccentBtn"><a href="<?= $url_for_filter ?>">Весь рейтинг</a></button>
         </div>
 
         <!-- Second Sidebar block -->
@@ -628,7 +640,7 @@ $countReviews = count($allReviews);
                                     $url_for_filter .= "$key=$filter&";
                                 }
                             }
-                            if($url_for_filter == "?"){
+                            if ($url_for_filter == "?") {
                                 $url_for_filter = "/feedback/";
                             }
                             ?>
