@@ -126,7 +126,7 @@ $countReviews = count($allReviews);
                             if($url_for_filter == "?"){
                                 $url_for_filter = "";
                             }?>
-                            <option value="<?= $url_for_filter ?>" class="number_star activ_filter">
+                            <option value="<?= $url_for_filter ?>" class="number_star activ_filter active-refresh__block">
                                 Оценки <?= $i ?>
                             </option>
 
