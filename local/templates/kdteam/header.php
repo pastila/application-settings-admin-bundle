@@ -35,7 +35,10 @@ $asset = Asset::getInstance();
 <?php $APPLICATION->ShowPanel(); ?>
 
 <!-- Start Wrap -->
-<div class="wrap">
+<div class="wrap"
+    <?php if ($APPLICATION->GetCurDir() === '/') {?>
+        style="background-image: url('/local/templates/kdteam/images/jpg/home/main-image_2x.jpg')"
+    <?php } ?>>
     <!-- Header -->
     <header class="header">
         <div class="header__container">
