@@ -3,7 +3,7 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.
 CModule::IncludeModule("iblock");
 
 $arSelect = array("ID", "IBLOCK_ID", "NAME");
-$arFilter = array("IBLOCK_ID" => 9, "SECTION_ID" => $_POST["region_id"], "%NAME" => $_POST["name_hospital"]);
+$arFilter = array("IBLOCK_ID" => 16, "SECTION_ID" => $_POST["region_id"], "%NAME" => $_POST["name_hospital"]);
 $res = CIBlockElement::GetList(array(), $arFilter, false, false, $arSelect);
 if ($res->SelectedRowsCount() > 0) {
     while ($ob = $res->GetNextElement()) {
