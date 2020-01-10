@@ -51,7 +51,7 @@ $countReviews = count($allReviews);
                 <option value="">Все отзывы <span><?= $countReviews ?></span></option>
                 <?
                 $bool_check_kpp = false;
-
+                $name_company = "";
                 foreach ($allReviews as $review) {
 
                     if (isset($_GET["property_evaluation"]) || isset($_GET["property_kpp"]) || isset($_GET["property_region"])) {
@@ -82,7 +82,7 @@ $countReviews = count($allReviews);
                             if ($url_for_filter == "?") {
                                 $url_for_filter = "";
                             }
-
+                            $name_company = $review["NAME"];
                             ?>
                             <option value="<?= $url_for_filter ?>"
                                     class="activ_filter"><?= $review["NAME"] ?></option>
@@ -111,7 +111,7 @@ $countReviews = count($allReviews);
                     }
                     ?>
                     <a data-tooltip="Очистить отзывы" data-position="bottom"  class="refresh_active-link bottom" href="<?= $url_for_filter ?>"><p  class="activ_filter after-select_activ-filter" >
-                           <?= $review["NAME"] ?></p></a>
+                           <?= $name_company ?></p></a>
                 <? }
             } ?>
 

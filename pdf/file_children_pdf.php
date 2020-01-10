@@ -52,7 +52,7 @@ $BIRTHDAY= $arFields_child["PROPERTY_BIRTHDAY_VALUE_ID"];
 
 
 $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_*");
-$arFilter = Array("IBLOCK_ID"=>9,"ID"=> $id_company);
+$arFilter = Array("IBLOCK_ID"=>16,"ID"=> $id_company);
 $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
 $ob = $res->GetNextElement();
 $arProps = $ob->GetProperties();
@@ -61,9 +61,8 @@ $arFields = $ob->GetFields();
 
 $name_hospital = $arFields["NAME"];// название компании
 
-$SECOND_NAME = $arProps["SECOND_NAME"]["VALUE"];// руководитель компании
-$PERSON_NAME = $arProps["PERSON_NAME"]["VALUE"];// руководитель компании
-$MIDDLE_NAME = $arProps["MIDDLE_NAME"]["VALUE"];// руководитель компании
+$NAME_BOSS = $arProps["NAME_BOSS"]["VALUE"];// руководитель компании
+
 
 
 $html ='
@@ -80,9 +79,8 @@ $html ='
                         <span class="bold-text" style="font-weight: bold;">Руководителю страховой медицинской организации</span>
                         <div class="blue-text cursive" style="font-style: italic;">
                             '.$name_hospital.',<br>
-                            '.$SECOND_NAME.'
-                            '.$PERSON_NAME.'
-                            '.$MIDDLE_NAME.'
+                            '.$NAME_BOSS.'
+                            
                         </div>
                     </div>
                 </div>
