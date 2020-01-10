@@ -194,6 +194,89 @@ $countReviews = count($allReviews);
 
         </div>
 
+
+
+
+        <div class="custom-select">
+            <select style="display: none" onchange="window.open(this.value)">
+                <option value="0">Отзывы о страховых в городах</option>
+                <?php
+                $name_region = "";
+                $order = Array("name" => "asc");
+                $arFilter = Array("IBLOCK_ID" => 16);
+                $Section_filter = CIBlockSection::GetList($order, $arFilter, false);
+                if (isset($_GET["property_evaluation"]) || isset($_GET["property_name_company"]) || isset($_GET["property_region"]) || isset($_GET["property_kpp"])) {
+                    while ($ob_section_filter = $Section_filter->GetNext()) {
+                        if ($_GET["property_region"] != $ob_section_filter["ID"]) {
+                            $url_for_filter = "?";
+                            foreach ($sort_url as $key => $filter) {
+                                if ($key != "property_region") {
+                                    $url_for_filter .= "$key=$filter&";
+                                }
+                            }
+                            ?>
+                            <option class="sidebar__item_lists_list"
+                                    value="<?= $url_for_filter ?>property_region=<?= $ob_section_filter["ID"] ?>">
+                                <?= $ob_section_filter["NAME"] ?>
+                            </option>
+                        <? } else {
+                            $url_for_filter = "?";
+                            $bool_check_region = true;
+
+                            $name_region = $ob_section_filter["NAME"];
+                            foreach ($sort_url as $key => $filter) {
+                                if ($key != "property_region") {
+                                    $url_for_filter .= "$key=$filter&";
+                                }
+                            }
+                            if ($url_for_filter == "?") {
+                                $url_for_filter = "/feedback/";
+                            }
+                            ?>
+                            <option class="activ_filter" value="<?= $url_for_filter ?>">
+                                <?= $ob_section_filter["NAME"] ?>
+                            </option>
+                        <? }
+
+                    }
+                    ?>
+                <? } else {
+                    while ($ob_section_filter = $Section_filter->GetNext()) {
+                        ?>
+                        <option class="sidebar__item_lists_list"
+                                value="?property_region=<?= $ob_section_filter["ID"] ?>">
+                            <?= $ob_section_filter["NAME"] ?>
+                        </option>
+                    <? } ?>
+
+                <? } ?>
+            </select>
+            <?php if (isset($_GET["property_evaluation"]) || isset($_GET["property_kpp"]) || isset($_GET["property_region"])) {
+                if ($bool_check_region === true) {
+
+                    $url_for_filter = "?";
+                    foreach ($sort_url as $key => $filter) {
+
+                        if ($key != "property_region") {
+                            $url_for_filter .= "$key=$filter&";
+                        }
+                    }
+                    if ($url_for_filter == "?") {
+                        $url_for_filter = "/feedback/";
+                    }
+                    ?>
+                    <a href="<?= $url_for_filter ?>">  <div  class="activ_filter">
+                            <?= $name_region ?></div></a>
+                <? }
+            } ?>
+
+
+
+        </div>
+
+
+
+
         <div class="reset_block">
             <a class="smallAccentBtn" href="/feedback/">Сбросить</a>
         </div>
@@ -517,7 +600,12 @@ $countReviews = count($allReviews);
     <div class="sidebar">
         <!-- First Sidebar block -->
         <div class="white_block">
-            <div class="sidebar__item_title">Народный Рейтинг Страховых</div>
+            <?php  if (isset($_GET["property_region"])) {  ?>
+
+            <div class="sidebar__item_title">Рейтинг Страховых(В регионе)</div>
+            <?php }else{ ?>
+            <div class="sidebar__item_title">Рейтинг Страховых</div>
+            <?php } ?>
 
             <ul class="sidebar__item_lists scrollbar">
                 <?php
@@ -643,87 +731,11 @@ $countReviews = count($allReviews);
                     <button class="smallAccentBtn"><a href="<?= $url_for_filter ?>">Весь рейтинг</a></button>
         </div>
 
-        <!-- Second Sidebar block -->
-        <div class="white_block">
-            <div class="sidebar__item_title">Отзывы о страховых в городах</div>
 
-            <ul class="sidebar__item_lists scrollbar">
-                <?php
-
-
-                $order = Array("name" => "asc");
-                $arFilter = Array("IBLOCK_ID" => 16);
-                $Section_filter = CIBlockSection::GetList($order, $arFilter, false);
-                if (isset($_GET["property_evaluation"]) || isset($_GET["property_name_company"]) || isset($_GET["property_region"]) || isset($_GET["property_kpp"])) {
-                    while ($ob_section_filter = $Section_filter->GetNext()) {
-
-                        if ($_GET["property_region"] != $ob_section_filter["ID"]) {
-
-                            $url_for_filter = "?";
-
-                            foreach ($sort_url as $key => $filter) {
-                                if ($key != "property_region") {
-                                    $url_for_filter .= "$key=$filter&";
-                                }
-                            }
-
-
-                            ?>
-                            <li class="sidebar__item_lists_list">
-                                <a href="<?= $url_for_filter ?>property_region=<?= $ob_section_filter["ID"] ?>"
-                                   class="sidebar__item_lists_list_link" id="city"
-                                   data-id="<?= $ob_section_filter["ID"] ?>">
-                                    <?= $ob_section_filter["NAME"] ?>
-                                </a>
-                            </li>
-                        <? } else {
-
-
-                            $url_for_filter = "?";
-
-                            foreach ($sort_url as $key => $filter) {
-                                if ($key != "property_region") {
-                                    $url_for_filter .= "$key=$filter&";
-                                }
-                            }
-                            if ($url_for_filter == "?") {
-                                $url_for_filter = "/feedback/";
-                            }
-                            ?>
-                            <li class="sidebar__item_lists_list">
-                                <a href="<?= $url_for_filter ?>"
-                                   class="sidebar__item_lists_list_link activ_filter" id="city"
-                                   data-id="<?= $ob_section_filter["ID"] ?>">
-                                    <?= $ob_section_filter["NAME"] ?>
-                                </a>
-                            </li>
-
-                        <? }
-
-                    }
-                    ?>
-                <? } else {
-                    while ($ob_section_filter = $Section_filter->GetNext()) {
-                        ?>
-                        <li class="sidebar__item_lists_list">
-                            <a href="?property_region=<?= $ob_section_filter["ID"] ?>"
-                               class="sidebar__item_lists_list_link" id="city"
-                               data-id="<?= $ob_section_filter["ID"] ?>">
-                                <?= $ob_section_filter["NAME"] ?>
-                            </a>
-                        </li>
-                    <? } ?>
-
-                <? } ?>
-
-
-            </ul>
-
-            <button class="smallAccentBtn">Все отзывы</button>
-        </div>
     </div>
 </div>
 
 
 <?php require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>
 
+<!-- Second Sidebar block -->
