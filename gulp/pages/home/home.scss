@@ -72,7 +72,7 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        height: 50vmin;
+        min-height: 50vmin;
     
         &__l {
             width: 33%;

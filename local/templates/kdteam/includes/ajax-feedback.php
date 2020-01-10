@@ -43,11 +43,11 @@ $cpt->SetCodeCrypt($captchaPass);
         <div class="input__wrap block_padd-modal">
             <label class="input__wrap_label">Прикрепить к сообщению файлы(максимум 5):</label>
             <div class="file-input file_input_half">
-                <input type="file" name="file" class="file-simple"
-                       accept="image/*" multiple>
-                <span class="button smallAccentBtn">Выберите файл</span>
-                <span class="label label_name" data-js-label>.png .jpeg</span>
+                <button class="button smallAccentBtn"  id="btn_myFileInput">.png .jpeg</button>
+                <label class="label_parent-elements" for="btn_myFileInput">Вы не выбрали файлы</label>
+                <input class="file-simple"  accept="image/*" type="file" id="myFileInput" multiple />
                 <span class="label block-error-label">Максимальный размер файла 10mb</span>
+                <span class="label block-error-label">Для выбора нескольких картинок зажмите Ctrl</span>
             </div>
         </div>
         <div class="block_captcha block_padd-modal">
@@ -66,24 +66,21 @@ $cpt->SetCodeCrypt($captchaPass);
 
   /*add file input*/
   $(document).ready(function() {
-    var inputs = document.querySelectorAll('.file-input')
-
-    for (var i = 0, len = inputs.length; i < len; i++) {
-      customInput(inputs[i])
-    }
-
-    function customInput (el) {
-      const fileInput = el.querySelector('[type="file"]')
-      const label = el.querySelector('[data-js-label]')
-
-      fileInput.onchange =
-          fileInput.onmouseout = function () {
-            if (!fileInput.value) return
-
-            var value = fileInput.value.replace(/^.*[\\\/]/, '')
-            el.className += ' -chosen'
-            label.innerText = value
-          }
-    };
+    $(function () {
+      $('#btn_myFileInput').data('default', $('label[for=btn_myFileInput]').text()).click(function () {
+        $('#myFileInput').click()
+      });
+      $('#myFileInput').on('change', function () {
+        var files = this.files;
+        if (!files.length) {
+          $('label[for=btn_myFileInput]').text($('#btn_myFileInput').data('default'));
+          return;
+        }
+        $('label[for=btn_myFileInput]').empty();
+        for (var i = 0, l = files.length; i < l; i++) {
+          $('label[for=btn_myFileInput]').append('<span class="element-file">'  + files[i].name + '</span>' + '\n');
+        }
+      });
+    });
   });
 </script>

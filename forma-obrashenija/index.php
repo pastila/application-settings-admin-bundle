@@ -23,7 +23,7 @@ while($ob = $res->GetNextElement()){
 
     <!-- Breadcrumbs -->
     <ul class="breadcrumbs">
-        <li>Главная</li>
+        <li><a href="/">Главная</a></li>
         <li>Диагноз</li>
     </ul>
 

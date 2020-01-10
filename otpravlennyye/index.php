@@ -11,8 +11,8 @@ CModule::IncludeModule("iblock");
 
 <!-- Breadcrumbs -->
 <ul class="breadcrumbs">
-    <li><a href="/index.html">Главная</a></li>
-    <li>Личный кабинет</li>
+    <li><a href="/">Главная</a></li>
+    <li>Отправленные обращения</li>
 </ul>
 
 <!-- Pages Title -->

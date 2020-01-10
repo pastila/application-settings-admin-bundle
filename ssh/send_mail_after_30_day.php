@@ -70,7 +70,7 @@ while ($Section = $section->GetNext()) {
                 echo '<pre>';
                 print_r($arFields["ID"]);
                 echo '</pre>';
-                    $url = "devdoc1.kdteam.su/feedback/?letter";
+                    $url = "devdoc1.kdteam.su/add-feedback/?letter";
                     $arEventFields = array(
                         "MAIL" => $arUser["EMAIL"],
                         "DATE_APPEAL" => $newDate,

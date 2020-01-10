@@ -8,14 +8,16 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/feedback/main.min.js");
 CModule::IncludeModule("iblock");
 global $USER;
 $url = $_SERVER["REQUEST_URI"];
-//$url = "feedback/comment-37994/";
+
 
 preg_match("/(\d+)\/$/",$url,$result_id);
 
 
 ?>
 <div class="feedback">
+
     <div class="feedback__wrap_white-blocks">
+
         <!-- FeedBack block -->
 
         <?php
@@ -26,18 +28,22 @@ preg_match("/(\d+)\/$/",$url,$result_id);
             "ID"=>$result_id[1],
         );
 
-
         $order = Array("created" => "desc");
         $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
 
-
-
         $res = CIBlockElement::GetList($order, $arFilter, false, $pagen, $arSelect);
 
-        while ($ob = $res->GetNextElement()) {
+        if ($ob = $res->GetNextElement()) {
 
             $arFields = $ob->GetFields();
             $arProps = $ob->GetProperties();
+            ?>
+            <ul class="breadcrumbs">
+                <li><a href="/">Главная</a></li>
+                <li><a href="/feedback/">Отзывы</a></li>
+                <li><?php echo $arFields["NAME"] ?></li>
+            </ul>
+            <?
             if($arProps["DATE_CHANGE_BY_USER"]["VALUE"] != "") {
                 $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arProps["DATE_CHANGE_BY_USER"]["VALUE"]));
             }else{

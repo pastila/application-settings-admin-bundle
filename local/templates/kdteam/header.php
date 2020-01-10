@@ -192,7 +192,9 @@ $asset = Asset::getInstance();
                     </div>
 
                     <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-feedback.php"?>" class="header__r_mainBtn mainBtn" id="write-us_modal">
-                        Написать нам
+                        <img class="header__r_auth_login_img hidden-desk--image" src="/local/templates/kdteam/images/svg/header/write-us/contract.svg" alt="">  <div class="hidden-text-mob">
+                            Написать нам
+                        </div>
                     </a>
                 </div>
             <?php } ?>

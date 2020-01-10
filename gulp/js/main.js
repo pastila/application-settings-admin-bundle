@@ -605,92 +605,7 @@ function validatePassword() {
     document.getElementById('pass_conf').setCustomValidity('');
 //empty string means no validation error
 }
-function form_us(){
-  console.log("323");
-  var fd = new FormData();
 
-  $('#ask').on('click', function(e) {
-    e.preventDefault();
-    var error = [];
-    var  data_FORM = $("#feedback_modal").serializeArray();
-
-    var input_file = $('.file-simple');
-
-    if (input_file.prop('files')[0] != undefined) {
-      fd.append('import_file', input_file.prop('files')[0]);
-    }
-    if (input_file.prop('files')[1] != undefined) {
-      fd.append('import_file', input_file.prop('files')[1]);
-    }
-    if (input_file.prop('files')[2] != undefined) {
-      fd.append('import_file', input_file.prop('files')[2]);
-    }
-    if (input_file.prop('files')[3] != undefined) {
-      fd.append('import_file', input_file.prop('files')[3]);
-    }
-    if (input_file.prop('files')[4] != undefined) {
-      fd.append('import_file', input_file.prop('files')[4]);
-    }
-    if(data_FORM[0]['value'] === ''){
-      $("#name").after(
-          '<span class="label danger   "  >Введите имя</span>');
-      error.push("error");
-    }
-
-
-
-    if(data_FORM[1]['value'] === ""){
-      $("#email").after(
-          '<span class="label danger   "  >Введите почту</span>');
-      error.push("error");
-    }else{
-    var test_email =   isValidEmailAddress(data_FORM[1]['value']);
-      if(!test_email){
-        error.push("error");
-      }
-    }
-
-   var new_str_text =  data_FORM[2]['value'].replaceAll(" ","");
-console.log(new_str_text);
-    if( new_str_text === ""){
-      $("#text").after(
-          '<span class="label danger   "  >Введите текст</span>');
-      error.push("error");
-    }else if (new_str_text <= 10 ){
-      $("#text").after(
-          '<span class="label danger   "  >Короткий текст</span>');
-      error.push("error");
-    }
-      if(error.length == "0") {
-
-        fd.append('name', data_FORM[0]['value']);
-        fd.append('email', data_FORM[1]['value']);
-        fd.append('text', data_FORM[2]['value']);
-
-        $.ajax({
-
-          url: '/ajax/form_ask/ask.php',
-          type: 'POST',
-          data: fd,
-          processData: false,
-          contentType: false,
-          beforeSend: function() {
-
-          },
-          success: function(msg) {
-
-          },
-        }).done(function(msg) {
-
-        });
-      }
-    return false;
-  });
-}
-function isValidEmailAddress(emailAddress) {
-  var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
-  return pattern.test(emailAddress);
-}
 function form_us(){
 
     $('#feedback_modal').validator().on('submit', function(e) {
@@ -698,6 +613,7 @@ function form_us(){
 
     e.preventDefault();
       var fd = new FormData();
+      var error = [];
 
 
     var  data_FORM = $("#feedback_modal").serializeArray();
@@ -719,58 +635,60 @@ function form_us(){
     if (input_file.prop('files')[4] != undefined) {
       fd.append('import_file5', input_file.prop('files')[4]);
     }
-
-
+      if (input_file.prop('files')[5] != undefined) {
+        $(".file_input_half").after(
+            '<p class="label danger"  >Максимально 5 картинок</p>');
+        error.push("mane_img");
+      }
 
         fd.append('name', data_FORM[0]['value']);
         fd.append('email', data_FORM[1]['value']);
         fd.append('text', data_FORM[2]['value']);
         fd.append('captcha_code', data_FORM[3]['value']);
         fd.append('captcha_word', data_FORM[4]['value']);
+  if(error.length  == "0") {
+    $.ajax({
 
-        $.ajax({
+      url: '/ajax/form_ask/ask.php',
+      type: 'POST',
+      data: fd,
+      processData: false,
+      contentType: false,
+      beforeSend: function() {
 
-          url: '/ajax/form_ask/ask.php',
-          type: 'POST',
-          data: fd,
-          processData: false,
-          contentType: false,
-          beforeSend: function() {
+      },
+      success: function(msg) {
+        var suc = JSON.parse(msg);
 
-          },
-          success: function(msg) {
-              var suc = JSON.parse(msg);
+        if (suc.suc == "1") {
+          $.magnificPopup.open({
+            items: {
+              src: '<div class="white-popup custom_styles_popup"><button title="Закрыть" type="button" class="mfp-close">×</button>' +
+              'Ваше письмо отправленно успешно</div>',
+              type: 'inline',
+            },
+          });
+        } else if (suc.captcha == "1") {
+          $("#captcha-error_parent").after(
+              '<p class="label danger"  >Код капчи не верный</p>');
 
-              if(suc.suc == "1"){
-                  $.magnificPopup.open({
-                      items: {
-                          src: '<div class="white-popup custom_styles_popup"><button title="Закрыть" type="button" class="mfp-close">×</button>' +
-                          'Ваше письмо отправленно успешно</div>',
-                          type: 'inline',
-                      },
-                  });
-              } else if(suc.captcha == "1"){
-                $("#captcha-error_parent").after(
-                    '<p class="label danger"  >Код капчи не верный</p>');
+        } else {
+          console.log(suc);
+          if (suc.size == "1") {
+            $(".file_input_half").after(
+                '<p class="label danger"  >Файлы с недопустимым размером</p>');
+          }
+          if (suc.format == "1") {
+            $(".file_input_half").after(
+                '<p class="label danger"  >Файлы с недопустимым форматом</p>');
+          }
+        }
 
-              }else {
-                console.log(suc);
-                if(suc.size == "1"){
-                    $(".file_input_half").after(
-                        '<p class="label danger"  >Файлы с недопустимым размером</p>');
-                }
-                  if(suc.format == "1"){
-                      $(".file_input_half").after(
-                          '<p class="label danger"  >Файлы с недопустимым форматом</p>');
-                  }
-              }
+      },
+    }).done(function(msg) {
 
-
-
-          },
-        }).done(function(msg) {
-
-        });
+    });
+  }
 
     return false;
   });
