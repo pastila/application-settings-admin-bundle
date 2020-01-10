@@ -24,7 +24,6 @@ $asset = Asset::getInstance();
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <?php $APPLICATION->ShowHead(); ?>
     <?php
-    $asset->addCss("https://fonts.googleapis.com/css?family=Rubik:400,700&display=swap");
     $asset->addCss(SITE_TEMPLATE_PATH . "/styles/main.min.css");
     $asset->addJs(SITE_TEMPLATE_PATH . "/js/main.min.js");
     CModule::IncludeModule("iblock");
