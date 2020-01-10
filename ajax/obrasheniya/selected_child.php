@@ -1,7 +1,8 @@
 <?php require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
 CModule::IncludeModule("iblock");
 
-$arSelect = array("ID", "NAME", "PROPERTY_SURNAME", "PROPERTY_PARTONYMIC", "PROPERTY_POLICY" , "PROPERTY_COMPANY");
+$arSelect = array("ID", "NAME", "PROPERTY_SURNAME", "PROPERTY_PARTONYMIC", "PROPERTY_POLICY",
+    "PROPERTY_COMPANY", "PROPERTY_BIRTHDAY");
 $arFilter = array("IBLOCK_ID" => 21, 'ID' => $_POST['ID']);
 
 
@@ -21,6 +22,15 @@ if ($ob = $res->GetNextElement()) {
 
         <p class="obrashcheniya__content_left_center_item_text-full fio-js">
             <?php echo $arFields['PROPERTY_SURNAME_VALUE']?> <?php echo $arFields['NAME']?> <?php echo $arFields['PROPERTY_PARTONYMIC_VALUE']?>
+        </p>
+    </div>
+    <div class="obrashcheniya__content_left_center_item">
+        <div class="obrashcheniya__content_left_center_item_text">
+            Дата рождения
+        </div>
+
+        <p class="obrashcheniya__content_left_center_item_text-full fio-js">
+            <?php echo $arFields['PROPERTY_BIRTHDAY_VALUE']?>
         </p>
     </div>
     <div class="obrashcheniya__content_left_center_item">

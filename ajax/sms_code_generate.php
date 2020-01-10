@@ -23,10 +23,8 @@ $_SESSION['SMS_CODE'] = $sms_code;
 //$result = $apiSms->execCommad("sendSMS", array(
 //    'sender' => "OMS",
 //    'text' => "Ваш код - $sms_code",
-//    'phone' => '79312100362',
+//    'phone' => $_POST['phone'],
 //    'datetime' => "",
 //    'sms_lifetime' => "0"
 //));
-//
-//print_r($result)
 ?>

@@ -14,15 +14,12 @@ if ($USER->IsAuthorized()) { ?>
         <li><a href="/">Главная</a></li>
         <li>обращения</li>
     </ul>
-
-
     <?php
     if (CModule::IncludeModule("iblock")) {
         $arFilter = array("IBLOCK_ID" => 11, "UF_USER_ID" => $USER->GetID());
         $arSelect = array("ID");
         $rsSections = CIBlockSection::GetList(array(), $arFilter, false, $arSelect, false);
     }
-
     if ($arSection = $rsSections->GetNext()) {
         global $arrFilter;
         $arrFilter = array("!PROPERTY_SEND_REVIEW" => 3);

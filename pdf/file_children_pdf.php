@@ -15,7 +15,7 @@ global $USER;
 
 $ID_child = $_POST["id"];
 //$ID_child = "58480";
-//$data_user_oplata_POST = $_POST["oplata"];
+$data_user_oplata_POST = $_POST["oplata"];
 $data_user_oformlenie_POST = date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time());
 
 
@@ -29,7 +29,7 @@ $person_INSURANCE_POLICY = $person["UF_INSURANCE_POLICY"];
 $person_EMAIL = $person["EMAIL"];
 $person_PERSONAL_PHONE = $person["PERSONAL_PHONE"];
 $person_LAST_NAME = $person["LAST_NAME"];
-$PERSONAL_BIRTHDAT= $person["PERSONAL_BIRTHDAY"];
+$PERSONAL_BIRTHDAT = $person["PERSONAL_BIRTHDAY"];
 
 $full_name_user = $person_SECOND_NAME.' '. $person_NAME .' '. $person_LAST_NAME;
 
@@ -129,17 +129,11 @@ $html ='
                     </div>
                 </div>
             </div>
-               <div class="header__items_item" style="margin-bottom: 10px;">
-                <div class="header__items_item_wrap">
-                    <div class="header__items_item--label" >
-                        <span style="font-weight: bold;">Действую в интересах лица, законным
-                         представителем которого являюсь</span>
-                    </div>
-                </div>
-            </div>
                 <div class="header__items_item" style="margin-bottom: 10px;">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label" >
+                      <span style="font-weight: bold;">Действую в интересах лица, законным
+                         представителем которого являюсь</span>
                         <span style="font-weight: bold;">Сведения о лице, получившем медицинскую помощь:</span>
                     </div>
                       <div class="header__items_item--text blue-text cursive" style=" font-style: italic;">

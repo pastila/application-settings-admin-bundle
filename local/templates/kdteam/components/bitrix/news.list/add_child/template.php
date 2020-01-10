@@ -53,6 +53,14 @@ $this->setFrameMode(true);
             </div>
             <div class="flex_data">
                 <div class="item_data">
+                    <p>Дата рождения</p>
+                </div>
+                <div class="item_data">
+                    <p><?=$arItem["PROPERTIES"]['BIRTHDAY']['VALUE'];?></p>
+                </div>
+            </div>
+            <div class="flex_data">
+                <div class="item_data">
                     <p>Cтраховой полис</p>
                 </div>
                 <div class="item_data">
@@ -103,6 +111,18 @@ $this->setFrameMode(true);
                 </div>
                 <div class="flex_data">
                     <div class="item_data">
+                        <p>Дата рождения</p>
+                    </div>
+                    <div class="item_data input__wrap">
+                        <input class="datepicker-here" required type="text" name="time"
+                               value="<?=$arItem["PROPERTIES"]['BIRTHDAY']['VALUE'];?>"
+                               id="children_birthday_add_<?=$arItem['ID']?>"
+                               placeholder="DD.MM.YYYY"
+                               pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}">
+                    </div>
+                </div>
+                <div class="flex_data">
+                    <div class="item_data">
                         <p>Cтраховой полис</p>
                     </div>
                     <div class="item_data input__wrap">
@@ -110,6 +130,7 @@ $this->setFrameMode(true);
                                name="uf_insurance_policy" value="<?=$arItem["PROPERTIES"]['POLICY']['VALUE'];?>">
                     </div>
                 </div>
+
                 <div id="hospitals_<?=$arItem['ID']?>" class="region_child">
                     <?php
                     $APPLICATION->IncludeComponent(

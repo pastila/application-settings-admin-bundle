@@ -29,6 +29,7 @@ if (empty($_POST['hospital'])) {
                     "SURNAME" => $_POST['surname'],
                     "PARTONYMIC" => $_POST['patronymic'],
                     "POLICY" => $_POST['policy'],
+                    "BIRTHDAY" => $_POST['birthday'],
                 )
             );
             $el_id = $el->Add($arFields_el);
@@ -51,6 +52,7 @@ if (empty($_POST['hospital'])) {
                 "SURNAME" => $_POST['surname'],
                 "PARTONYMIC" => $_POST['patronymic'],
                 "POLICY" => $_POST['policy'],
+                "BIRTHDAY" => $_POST['birthday'],
             )
         );
         $el_id = $el->Add($arFields_el);

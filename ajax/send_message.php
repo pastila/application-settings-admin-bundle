@@ -104,32 +104,86 @@ if (CModule::IncludeModule("iblock")) {
                     $mail_company = $arOMS["EMAIL_FIRST"]["VALUE"];// имйл компании
 
                     if (!empty($email)) {
-                        CEvent::Send(
-                            'SEND_MESSAGE',
-                            's1',
-                            array(
-                                'MESSAGE' => $message,
-                                'NAME_COMPANY' => $name_company,
-                                'BOSS_COMPANY' => $boss_company,
-                                'MAIL_COMPANY' => $mail_company,
-                                'EMAIL' => $email,
-                                'USER_MAIL' => $user_email,
-                                'FULLNAME' => $arFields['PROPERTY_FULL_NAME_VALUE'],
-                                'POLICY' => $arFields['PROPERTY_POLICY_VALUE'],
-                                'PHONE' => $mobail_number,
-                                'HOSPITAL' => htmlspecialchars_decode($arFields['PROPERTY_HOSPITAL_VALUE']),
-                                'DATE_SEND' => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time()),
-                                'DATE_PAY' => $arFields['PROPERTY_VISIT_DATE_VALUE'],
-                            )
-                        );
-                        CIBlockElement::SetPropertyValuesEx(
-                            $_POST['ID'],
-                            11,
-                            array("SEND_REVIEW" => 3,
-                                "SEND_MESSAGE" => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time()))
-                        );
-                        $result['success'] = 'Обращение успешно отправлено в страховую компанию.
+                        if (!empty($_POST['CHILD'])) {
+                            $arSelect_child = array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_SURNAME",
+                                "PROPERTY_PARTONYMIC","PROPERTY_POLICY","PROPERTY_COMPANY","PROPERTY_BIRTHDAY");
+                            $arFilter_child = array("IBLOCK_ID" => 21, "ID" => $_POST['CHILD']);
+                            $res_child = CIBlockElement::GetList(
+                                array(),
+                                $arFilter_child,
+                                false,
+                                false,
+                                $arSelect_child
+                            );
+                            $ob_child = $res_child->GetNextElement();
+                            $arFields_child = $ob_child->GetFields();
+
+                            $SURNAME = $arFields_child["PROPERTY_SURNAME_VALUE"];
+                            $NAME = $arFields_child["NAME"];
+                            $PARTONYMIC = $arFields_child["PROPERTY_SURNAME_VALUE"];
+                            $id_company = $arFields_child["PROPERTY_COMPANY_VALUE"];
+                            $polic = $arFields_child["PROPERTY_POLICY_VALUE_ID"];
+                            $BIRTHDAY = $arFields_child["PROPERTY_BIRTHDAY_VALUE_ID"];
+
+                            $full_name_child = $SURNAME . ' ' . $NAME . ' ' . $PARTONYMIC;
+
+                            CEvent::Send(
+                                'SEND_MESSAGE_CHILD',
+                                's1',
+                                array(
+                                    'MESSAGE' => $message,
+                                    'NAME_COMPANY' => $name_company,
+                                    'BOSS_COMPANY' => $boss_company,
+                                    'MAIL_COMPANY' => $mail_company,
+                                    'EMAIL' => $email,
+                                    'USER_MAIL' => $user_email,
+                                    'FULLNAME' => $arFields['PROPERTY_FULL_NAME_VALUE'],
+                                    'FULLNAME_CHILD' => $full_name_child,
+                                    'POLICY' => $arFields['PROPERTY_POLICY_VALUE'],
+                                    'POLICY_CHILD' => $polic,
+                                    'PHONE' => $mobail_number,
+                                    'HOSPITAL' => htmlspecialchars_decode($arFields['PROPERTY_HOSPITAL_VALUE']),
+                                    'DATE_SEND' => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time()),
+                                    'DATE_PAY' => $arFields['PROPERTY_VISIT_DATE_VALUE'],
+                                )
+                            );
+                            CIBlockElement::SetPropertyValuesEx(
+                                $_POST['ID'],
+                                11,
+                                array("SEND_REVIEW" => 3,
+                                    "SEND_MESSAGE" => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time()))
+                            );
+                            $result['success'] = 'Обращение успешно отправлено в страховую компанию.
                          Ваше обращение находится в личном кабинете «Отправленные»';
+                        } else {
+                            CEvent::Send(
+                                'SEND_MESSAGE',
+                                's1',
+                                array(
+                                    'MESSAGE' => $message,
+                                    'NAME_COMPANY' => $name_company,
+                                    'BOSS_COMPANY' => $boss_company,
+                                    'MAIL_COMPANY' => $mail_company,
+                                    'EMAIL' => $email,
+                                    'USER_MAIL' => $user_email,
+                                    'FULLNAME' => $arFields['PROPERTY_FULL_NAME_VALUE'],
+                                    'POLICY' => $arFields['PROPERTY_POLICY_VALUE'],
+                                    'PHONE' => $mobail_number,
+                                    'HOSPITAL' => htmlspecialchars_decode($arFields['PROPERTY_HOSPITAL_VALUE']),
+                                    'DATE_SEND' => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time()),
+                                    'DATE_PAY' => $arFields['PROPERTY_VISIT_DATE_VALUE'],
+                                )
+                            );
+                            CIBlockElement::SetPropertyValuesEx(
+                                $_POST['ID'],
+                                11,
+                                array("SEND_REVIEW" => 3,
+                                    "SEND_MESSAGE" => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time()))
+                            );
+                            $result['success'] = 'Обращение успешно отправлено в страховую компанию.
+                         Ваше обращение находится в личном кабинете «Отправленные»';
+
+                        }
                     }
 
                 } else {

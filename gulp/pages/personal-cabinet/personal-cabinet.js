@@ -324,7 +324,8 @@ $(document).ready(function() {
             surname: $('#children_last_name_add').val(),
             patronymic: $('#children_second_name_add').val(),
             policy: $('#child_policy_add').val(),
-            hospital: id
+            hospital: id,
+            birthday: $('#children_birthday_add').val(),
           },
           function(result) {
             if (result === 'error') {
@@ -392,6 +393,7 @@ function save(id) {
             patronymic: $('#children_second_name_add_'+id).val(),
             policy: $('#child_policy_add_'+id).val(),
             hospital: id_el,
+            birthday: $('#children_birthday_add_'+id).val(),
             id: id
           },
           function(result) {
