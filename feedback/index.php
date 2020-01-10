@@ -46,7 +46,7 @@ $countReviews = count($allReviews);
     </div>
 
     <div class="feedback__filter">
-        <div class="custom-select">
+        <div class="custom-select column-reverse_select">
             <select style="display: none">
                 <option value="">Все отзывы <span><?= $countReviews ?></span></option>
                 <?
@@ -110,20 +110,17 @@ $countReviews = count($allReviews);
                         $url_for_filter = "/feedback/";
                     }
                     ?>
-                    <a href="<?= $url_for_filter ?>"><div  class="activ_filter">
-                           <?= $review["NAME"] ?></div></a>
+                    <a data-tooltip="Очистить отзывы" data-position="bottom"  class="refresh_active-link bottom" href="<?= $url_for_filter ?>"><p  class="activ_filter after-select_activ-filter" >
+                           <?= $review["NAME"] ?></p></a>
                 <? }
             } ?>
 
         </div>
 
-        <div class="custom-select">
+        <div class="custom-select column-reverse_select">
             <select style="display: none" onchange="window.open(this.value)">
 
-                <option value="0">Оценка <?
-                    if (isset($_GET["property_evaluation"])) {
-                        echo $_GET["property_evaluation"];
-                    } ?></option>
+                <option value="0">Оценка </option>
                 <?php
                 $bool_check_evalution = false;
                 $check_evalution = "";
@@ -187,8 +184,8 @@ $countReviews = count($allReviews);
                         $url_for_filter = "/feedback/";
                     }
                     ?>
-                  <a href="<?= $url_for_filter ?>">  <div  class="activ_filter tttt">
-                            <?= $check_evalution ?></div></a>
+                  <a data-tooltip="Очистить оценку" data-position="bottom" class="refresh_active-link bottom" href="<?= $url_for_filter ?>">  <p  class="activ_filter after-select_activ-filter">
+                            Оценка <?= $check_evalution ?></p></a>
                 <? }
             } ?>
 
@@ -197,7 +194,7 @@ $countReviews = count($allReviews);
 
 
 
-        <div class="custom-select">
+        <div class="custom-select column-reverse_select">
             <select style="display: none" onchange="window.open(this.value)">
                 <option value="0">Отзывы о страховых в городах</option>
                 <?php
@@ -265,8 +262,8 @@ $countReviews = count($allReviews);
                         $url_for_filter = "/feedback/";
                     }
                     ?>
-                    <a href="<?= $url_for_filter ?>">  <div  class="activ_filter">
-                            <?= $name_region ?></div></a>
+                    <a data-tooltip="Очистить город" data-position="bottom" class="refresh_active-link bottom" href="<?= $url_for_filter ?>"> <p  class="activ_filter after-select_activ-filter">
+                            <?= $name_region ?></p></a>
                 <? }
             } ?>
 
@@ -278,7 +275,7 @@ $countReviews = count($allReviews);
 
 
         <div class="reset_block">
-            <a class="smallAccentBtn" href="/feedback/">Сбросить</a>
+            <a class="smallAccentBtn feedback-button_reset" href="/feedback/">Сбросить</a>
         </div>
     </div>
 
@@ -318,7 +315,7 @@ $countReviews = count($allReviews);
         if ($res->SelectedRowsCount() == 0) {
             ?>
 
-            <div><p class="error" style="color: red">Отзывы не найдены</p></div>
+            <div><p class="error title-medium" style="color: red">Отзывы не найдены</p></div>
 
 
         <? }
