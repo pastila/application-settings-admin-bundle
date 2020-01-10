@@ -31,7 +31,17 @@ $person_PERSONAL_PHONE = $person["PERSONAL_PHONE"];
 $person_LAST_NAME = $person["LAST_NAME"];
 $PERSONAL_BIRTHDAT = $person["PERSONAL_BIRTHDAY"];
 
-$full_name_user = $person_SECOND_NAME.' '. $person_NAME .' '. $person_LAST_NAME;
+if ($_POST['id_obr']) {
+    $arSel = array("ID", "IBLOCK_ID", "NAME", "PROPERTY_FULL_NAME");
+    $arFil = array("IBLOCK_ID" => 11,"ID" => $_POST['id_obr']);
+    $res = CIBlockElement::GetList(Array(), $arFil, false, false, $arSel);
+    $ob = $res->GetNextElement();
+    $arFields = $ob->GetFields();
+    $full_name_user = $arFields['PROPERTY_FULL_NAME_VALUE'];
+} else {
+    $full_name_user = $person_SECOND_NAME.' '. $person_NAME .' '. $person_LAST_NAME;
+
+}
 
 
 $arSelect_child = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_SURNAME","PROPERTY_PARTONYMIC","PROPERTY_POLICY","PROPERTY_COMPANY","PROPERTY_BIRTHDAY");
@@ -235,7 +245,7 @@ $arProperty = Array(
     "PDF" => $arFile,
 );
 
-CIBlockElement::SetPropertyValuesEx($ID_child, 21, $arProperty);
+CIBlockElement::SetPropertyValuesEx($ID_child, 11, $arProperty);
 
 echo $url_pdf_for_user;
 

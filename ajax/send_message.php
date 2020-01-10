@@ -118,23 +118,40 @@ if (CModule::IncludeModule("iblock")) {
                             $ob_child = $res_child->GetNextElement();
                             $arFields_child = $ob_child->GetFields();
 
+                            $arSelect_comp = array("ID", "IBLOCK_ID", "PROPERTY_NAME_BOSS", "NAME");
+                            $arFilter_comp = array("IBLOCK_ID" => 16, "ID" => $arFields_child["PROPERTY_COMPANY_VALUE"]);
+                            $res_comp = CIBlockElement::GetList(
+                                array(),
+                                $arFilter_comp,
+                                false,
+                                false,
+                                $arSelect_comp
+                            );
+                            $ob_comp = $res_comp->GetNextElement();
+                            $arFields_comp = $ob_comp->GetFields();
+
+
+
+
+
+
+
                             $SURNAME = $arFields_child["PROPERTY_SURNAME_VALUE"];
                             $NAME = $arFields_child["NAME"];
                             $PARTONYMIC = $arFields_child["PROPERTY_SURNAME_VALUE"];
-                            $id_company = $arFields_child["PROPERTY_COMPANY_VALUE"];
-                            $polic = $arFields_child["PROPERTY_POLICY_VALUE_ID"];
+                            $polic = $arFields_child["PROPERTY_POLICY_VALUE"];
                             $BIRTHDAY = $arFields_child["PROPERTY_BIRTHDAY_VALUE_ID"];
 
                             $full_name_child = $SURNAME . ' ' . $NAME . ' ' . $PARTONYMIC;
+
 
                             CEvent::Send(
                                 'SEND_MESSAGE_CHILD',
                                 's1',
                                 array(
                                     'MESSAGE' => $message,
-                                    'NAME_COMPANY' => $name_company,
-                                    'BOSS_COMPANY' => $boss_company,
-                                    'MAIL_COMPANY' => $mail_company,
+                                    'NAME_COMPANY' => $arFields_comp['NAME'],
+                                    'BOSS_COMPANY' => $arFields_comp['PROPERTY_NAME_BOSS_VALUE'],
                                     'EMAIL' => $email,
                                     'USER_MAIL' => $user_email,
                                     'FULLNAME' => $arFields['PROPERTY_FULL_NAME_VALUE'],
