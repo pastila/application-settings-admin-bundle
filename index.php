@@ -24,19 +24,9 @@ CModule::IncludeModule("iblock");
     <!-- Slider -->
     <div class="slider">
         <div class="slider__l">
-            <? foreach ($arProps["IMG_SLIDER"]["VALUE"] as $item_img) {
-                      $url_img =  CFile::GetPath($item_img); ?>
-            <picture>
-                <img src="<?=$url_img?>" class="slider__l_img"
-                     alt="OMS">
-            </picture>
-                <? }?>
-        </div>
-
-        <div class="slider__r">
-            <div class="slider__r_title">
+        <h1 class="home-title">
                 <?=$arFields["PREVIEW_TEXT"]?>
-            </div>
+            </h1>
 
             <div class="slider__r_descr">
                <?=$arFields["DETAIL_TEXT"]?>

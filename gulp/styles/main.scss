@@ -1,8 +1,7 @@
-@import './utils/fonts';
-
 @import './utils/reset';
 @import './utils/vars';
 @import './utils/mixins';
+@import './utils/fonts';
 @import './utils/typografy';
 
 @import './components/btns/btns';
@@ -39,7 +38,8 @@ html,body {
 }
 
 h1 {
-    font-size: 3.2rem;
+    font-size: 5rem;
+    font-family: $main-font-semibold;
 }
 
 a {
