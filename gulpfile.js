@@ -120,10 +120,10 @@ function imageToWebp() {
   .pipe(dest(path.images.dist))
 }
 
-// function fonts() {
-//   return src(path.fonts.src)
-//   .pipe(dest(path.fonts.dist))
-// }
+function fonts() {
+  return src(path.fonts.src)
+  .pipe(dest(path.fonts.dist))
+}
 
 // function fontawesomeIcon() {
 //   return src('node_modules/@fortawesome/fontawesome-free/webfonts/*')
@@ -160,7 +160,8 @@ function watchFiles() {
   watch(path.scripts.watch, series(cleanScript, script));
   watch(path.images.watch, series(cleanImages, images, imageToWebp));
   //watch(path.fonts.watch, series(fonts, fontawesomeIcon));
+  watch(path.fonts.watch, series(fonts));
 }
   
 // export tasks
-exports.default = series(cleanAll, parallel(style, script, images, imageToWebp, watchFiles));
+exports.default = series(cleanAll, parallel(fonts, style, script, images, imageToWebp, watchFiles));

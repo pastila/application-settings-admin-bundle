@@ -140,7 +140,7 @@ $this->setFrameMode(true);
                             "VIEW_MODE" => "LIST",
                             "SHOW_PARENT_NAME" => "N",
                             "IBLOCK_TYPE" => "",
-                            "IBLOCK_ID" => "9",
+                            "IBLOCK_ID" => "16",
                             "SECTION_ID" => $sect_id,
                             "SECTION_CODE" => "",
                             "SECTION_URL" => "",

@@ -123,7 +123,8 @@ $(document).ready(function() {
           url: '/pdf/file_children_pdf.php',
           data: {
             id: $('#children_input_'+idItem).attr('data-id_child'),
-            oplata: $('#time_' + idItem).text()
+            oplata: $('#time_' + idItem).text(),
+            id_obr: idItem
           },
           type: 'post',
           success: function(result) {
@@ -183,7 +184,6 @@ function delete_el(el) {
 }
 
 function edit(ed) {
-  console.log('edit');
   let element = $(ed)[0].id.split('_');
   let cur_el = $('#appeal_' + element[1]);
   console.log(cur_el);
@@ -280,35 +280,31 @@ function save(sv) {
             if (time_p_str.length <= 3 || policy_str.length <= 1 || usrname_str.length <= 3) {
 
             } else {
-              let data = {
-                "number_polic": cur_el.find(policy).val(),
-                "data_user_oplata_POST": time_p.text(),
-                "data_checkout": "1",
-                "usrname": cur_el.find(usrname).val(),
-                "id": element[1],
-                "hospitl": cur_el.find(hospitl).text(),
-              };
-              $.ajax({
-                url: '/pdf/file_pdf.php',
-                type: 'POST',
-                data: data,
-                success: function(msg) {
-
-                  $('[data-obrashenie-id=' + element[1] + ']').
-                      find(".pdf").
-                      attr("href", msg);
-                  $('[data-obrashenie-id=' + element[1] + ']').
-                      find(".pdf").
-                      removeClass("error");
-                  $('[data-obrashenie-id=' + element[1] + ']').
-                      find(".pdf").
-                      text("Просмотреть");
-                  $(".ready_pdf").removeClass("hidden");
-                  $(".with_out_pdf").addClass("hidden")
-                },
-              }).done(function(msg) {
-
-              });
+              if ($('#children_input_' + element[1]).attr('data-id_child').length > 0) {
+                $.ajax({
+                  url: '/pdf/file_children_pdf.php',
+                  data: {
+                    id: $('#children_input_' + element[1]).attr('data-id_child'),
+                    oplata: $('#time_' + element[1]).text(),
+                    id_obr: element[1]
+                  },
+                  type: 'post',
+                  success: function(result) {
+                    console.log('success');
+                    $('[data-obrashenie-id=' + element[1] + ']').
+                        find(".pdf").
+                        attr("href", result);
+                    $('[data-obrashenie-id=' + element[1] + ']').
+                        find(".pdf").
+                        removeClass("error");
+                    $('[data-obrashenie-id=' + element[1] + ']').
+                        find(".pdf").
+                        text("Просмотреть");
+                    $(".ready_pdf").removeClass("hidden");
+                    $(".with_out_pdf").addClass("hidden");
+                  }
+                });
+              }
             }
           }
 
@@ -369,30 +365,36 @@ function save(sv) {
             if (time_p_str.length <= 3 || policy_str.length <= 1 || usrname_str.length <= 3) {
 
             } else {
-              if ($('#children_input_' + element[1]).attr('data-id_child').length > 0) {
-                $.ajax({
-                  url: '/pdf/file_children_pdf.php',
-                  data: {
-                    id: $('#children_input_' + element[1]).attr('data-id_child'),
-                    oplata: $('#time_' + element[1]).text()
-                  },
-                  type: 'post',
-                  success: function(result) {
-                    console.log('success');
-                    $('[data-obrashenie-id=' + element[1] + ']').
-                        find(".pdf").
-                        attr("href", result);
-                    $('[data-obrashenie-id=' + element[1] + ']').
-                        find(".pdf").
-                        removeClass("error");
-                    $('[data-obrashenie-id=' + element[1] + ']').
-                        find(".pdf").
-                        text("Просмотреть");
-                    $(".ready_pdf").removeClass("hidden");
-                    $(".with_out_pdf").addClass("hidden");
-                  }
-                });
-              }
+              let data = {
+                "number_polic": cur_el.find(policy).val(),
+                "data_user_oplata_POST": time_p.text(),
+                "data_checkout": "1",
+                "usrname": cur_el.find(usrname).val(),
+                "id": element[1],
+                "hospitl": cur_el.find(hospitl).text(),
+              };
+              $.ajax({
+                url: '/pdf/file_pdf.php',
+                type: 'POST',
+                data: data,
+                success: function(msg) {
+
+                  $('[data-obrashenie-id=' + element[1] + ']').
+                      find(".pdf").
+                      attr("href", msg);
+                  $('[data-obrashenie-id=' + element[1] + ']').
+                      find(".pdf").
+                      removeClass("error");
+                  $('[data-obrashenie-id=' + element[1] + ']').
+                      find(".pdf").
+                      text("Просмотреть");
+                  $(".ready_pdf").removeClass("hidden");
+                  $(".with_out_pdf").addClass("hidden")
+                },
+              }).done(function(msg) {
+
+              });
+
             }
           }
 
@@ -472,7 +474,8 @@ function send_ms(sd) {
         url: '/pdf/file_children_pdf.php',
         data: {
           id: $('#children_input_' + element[1]).attr('data-id_child'),
-          oplata: $('#time_' + element[1]).text()
+          oplata: $('#time_' + element[1]).text(),
+          id_obr: element[1]
         },
         type: 'post',
         success: function(result) {
@@ -522,7 +525,8 @@ function commutator(ajax, id) {
         url: '/pdf/file_children_pdf.php',
         data: {
           id: $('#children_input_' + id).attr('data-id_child'),
-          oplata: $('#time_' + id).text()
+          oplata: $('#time_' + id).text(),
+          id_obr: id
         },
         type: 'post',
         success: function(result) {

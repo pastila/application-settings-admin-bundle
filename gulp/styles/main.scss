@@ -1,6 +1,7 @@
 @import './utils/reset';
 @import './utils/vars';
 @import './utils/mixins';
+@import './utils/fonts';
 @import './utils/typografy';
 
 @import './components/btns/btns';
@@ -25,19 +26,24 @@
 
 // Styles for all pages
 html {
-    font-family: 'Rubik', sans-serif;
+    font-family: $main-font-regular;
 }
 
 html,body {
     overflow-x: hidden;
     min-height: 100vh;
     background: $bgColor;
-    color: $mainColor;
+    color: $text-color;
     line-height: 1.6;
 }
 
+h1, h2, h3, h4, h5 {
+    color: $title-color;
+    font-family: $main-font-semibold;
+}
+
 h1 {
-    font-size: 3.2rem;
+    font-size: 5rem;
 }
 
 a {

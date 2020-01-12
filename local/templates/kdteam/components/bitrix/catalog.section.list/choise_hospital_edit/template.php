@@ -161,7 +161,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                 <?php
                 $db_list = CIBlockSection::GetList(
                     array("name" => "asc"),
-                    array('IBLOCK_ID' => 9, "GLOBAL_ACTIVE" => "Y", "DEPTH_LEVEL" => 1,
+                    array('IBLOCK_ID' => 16, "GLOBAL_ACTIVE" => "Y", "DEPTH_LEVEL" => 1,
                         "!ID" => $arResult['SECTION']['ID']),
                     false,
                     array('ID','NAME'),
@@ -174,7 +174,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                     </div>
                 </div>
                 <?php
-                $arFilter = array("IBLOCK_ID" => 9, "ACTIVE"=>"Y", "IBLOCK_SECTION_ID" => $arResult['SECTION']['ID']);
+                $arFilter = array("IBLOCK_ID" => 16, "ACTIVE"=>"Y", "IBLOCK_SECTION_ID" => $arResult['SECTION']['ID']);
                 $arSelect = Array("ID", "NAME", "IBLOCK_ID","PROPERTY_LOCATION","PROPERTY_NAME_BOSS","PROPERTY_STREET");
                 $res = CIBlockElement::GetList(array("name" => "asc"), $arFilter, false, false, $arSelect);
                 while($ob = $res->GetNextElement())
@@ -183,7 +183,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                 }
                 ?>
                 <div class="input-with-search">
-                    <label class="title-select" for="user_pass">Список больниц : </label>
+                    <label class="title-select" for="user_pass">Список страховых компаний: </label>
                     <div class="input__wrap">
                         <div class="input__ico">
                             <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
