@@ -182,7 +182,7 @@ $(document).ready(function() {
     clearTimeout($this.data('timer'));
     $this.data('timer', setTimeout(function() {
       $this.removeData('timer');
-      $.post('/ajax/smart_search.php', {name_city: $this.val()}, function(msg) {
+      $.post('/ajax/personal-cabinet/search_region.php', {name_city: $this.val()}, function(msg) {
         if ($('.error_region').length != 0) {
           $('.error_region').remove();
         }
@@ -217,7 +217,7 @@ $(document).ready(function() {
     $('#referal_two').attr('data-id_region_kpp', '0');
     $('#referal_two').val("");
 
-    $.post('/ajax/search_company.php',
+    $.post('/ajax/personal-cabinet/search_company.php',
         {region_id: $('#referal').attr('data-id_region')}, function(msg) {
           if ($('.error_region').length != 0) {
             $('.error_region').remove();

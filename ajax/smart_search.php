@@ -5,7 +5,7 @@ CModule::IncludeModule("iblock");
 //print_r($_POST["name_city"]);
 //echo '</pre>';
 
-$arOrder = Array("name "=>"ASC");
+$arOrder = Array("name"=>"ASC");
 $arFilter = Array("IBLOCK_ID" => 9,  "%NAME" => $_POST["name_city"]);
 $res = CIBlockSection::GetList(
     $arOrder, $arFilter, false, Array("UF_CODE_REGION"));
