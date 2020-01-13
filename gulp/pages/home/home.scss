@@ -109,6 +109,26 @@
     }
 }
 
+@media screen and (max-width: 440px) {
+    .slider {
+        &__l {
+            &_descr {
+                margin-top: 2rem;
+            }
+        }
+
+        &__details {
+            margin-top: 3rem;
+        }
+    }
+
+    .buttons {
+        &__items {
+            margin-top: 5rem;
+        }
+    }
+}
+
 @media screen and (max-width: 576px) {
     .slider {
         &__l {
