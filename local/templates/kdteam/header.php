@@ -178,7 +178,7 @@ $asset = Asset::getInstance();
                         <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-login.php"?>" id="login-link"
                            class="header__r_auth_login">
                             <img class="header__r_auth_login_img"
-                                 src="/local/templates/kdteam/images/svg/header/login/man-user.svg" alt="OMS">
+                                 src="/local/templates/kdteam/images/svg/header/login/enter.svg" alt="OMS">
                             <div class="header__r_auth_login_text">
                                 Вход
                             </div>
@@ -186,7 +186,7 @@ $asset = Asset::getInstance();
 
                         <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-reg.php"?>" id="reg-link" data-rigstration="0" class="header__r_auth_reg">
                             <img class="header__r_auth_login_img"
-                                 src="/local/templates/kdteam/images/svg/header/reg/key.svg" alt="OMS">
+                                 src="/local/templates/kdteam/images/svg/header/reg/edit.svg" alt="OMS">
                             <div class="header__r_auth_login_text">
                                 Регистрация
                             </div>

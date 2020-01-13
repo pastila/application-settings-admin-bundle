@@ -13,14 +13,14 @@
         padding-right: 1.5rem;
         margin: 0 auto;
         width: 100%;
-        max-width: 137.5rem;
+        max-width: 80vw;
     }
 
     &__logo {
         display: inline-flex;
         align-items: center;
         color: $mainColor;
-        width: 15rem;
+        width: 17rem;
         max-height: calc(100vw / 6);
         @media screen and(max-width: 992px){
             max-height: calc(100vw / 12);
@@ -52,8 +52,8 @@
                 cursor: pointer;
                 
                 &_img {
-                    width: 2rem;
-                    height: 2rem;
+                    width: 3rem;
+                    height: 3rem;
                 }
         
                 &_text {
