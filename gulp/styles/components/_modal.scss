@@ -93,24 +93,14 @@
         display: flex;
         justify-content: flex-end;
     }
-    .main_btn-parent{
-        margin-top: 1rem;
-        .mainBtn{
-            @media(min-width: 992px){
-                font-size: 1.6rem;
-            }
-            background-color: $mainColor;
-            max-width: 100%;
-            padding: 2rem;
-            white-space: initial;
-            font-size: 1rem;
-            justify-content: center;
-        }
-    }
 }
 .block_relative{
     position: relative;
     input{
         width: 100%;
     }
+}
+
+.blue-bg {
+    background-color: $mainColor;
 }
