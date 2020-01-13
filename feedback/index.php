@@ -447,8 +447,10 @@ $countReviews = count($allReviews);
                         $rsUserComments = CUser::GetByID($arPropsComments["AVTOR_COMMENTS"]["VALUE"]);
                         $arUserComments = $rsUserComments->Fetch();
                         $name_userComments = $arUserComments["NAME"];
-                        $file_comment = CFile::ResizeImageGet($arUserComments["PERSONAL_PHOTO"],
-                            array('width' => 50, 'height' => 50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
+
+                            $file_comment = CFile::ResizeImageGet($arUserComments["PERSONAL_PHOTO"],
+                                array('width' => 50, 'height' => 50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
+
 
                         ?>
                         <?php if ($USER->IsAdmin()) { ?>
@@ -614,8 +616,16 @@ $countReviews = count($allReviews);
                 if (isset($_GET["property_region"])) {
                     $arFilter += ["SECTION_ID" => $_GET["property_region"]];
                 }
+                $order = array();
+                if(!isset($_GET["property_region"])){
+                    $order += ["PROPERTY_ALL_AMOUNT_STAR" => "desc"];
+                    $order += ["name" => "asc"];
+                }else{
+                    $order += ["PROPERTY_AMOUNT_STAR" => "desc"];
+                    $order += ["name" => "asc"];
+                }
                 $array_all_company = array();
-                $order = Array("PROPERTY_AMOUNT_STAR" => "desc", "name" => "asc");
+
                 $elementselect = Array(
                     "ID",
                     "IBLOCK_ID",
