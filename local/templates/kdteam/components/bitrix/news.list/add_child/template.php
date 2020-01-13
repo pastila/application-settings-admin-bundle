@@ -76,8 +76,8 @@ $this->setFrameMode(true);
                 </div>
             </div>
             <div class="submit_button submit_button-child">
-                <button id="edit_<?=$arItem['ID']?>" class="edit_js mainBtn margin-button main-button-styles">Редактировать</button>
-                <button id="del_<?=$arItem['ID']?>" class="del_js mainBtn  main-button-styles">Удалить</button>
+                <button id="edit_<?=$arItem['ID']?>" class="edit_js mainBtn main-button-styles">Редактировать</button>
+                <button id="del_<?=$arItem['ID']?>" class="del_js accentBtn main-button-styles">Удалить</button>
             </div>
         </div>
         <div class="personal_data" id="edit_children_<?=$arItem['ID']?>" style="display: none">
@@ -160,8 +160,8 @@ $this->setFrameMode(true);
                     );?>
                 </div>
                 <div class="submit_button submit_button-child">
-                    <button class="mainBtn margin-button main-button-styles" type="submit" id="save_edit_<?=$arItem['ID']?>">Сохранить</button>
-                    <button class="mainBtn main-button-styles" type="submit" id="cancel_edit_<?=$arItem['ID']?>">Отмена</button>
+                    <button class="mainBtn main-button-styles" type="submit" id="save_edit_<?=$arItem['ID']?>">Сохранить</button>
+                    <button class="accentBtn main-button-styles" type="submit" id="cancel_edit_<?=$arItem['ID']?>">Отмена</button>
                 </div>
             </form>
         </div>

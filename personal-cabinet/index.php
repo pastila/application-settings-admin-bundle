@@ -252,7 +252,7 @@ while($ob = $res->GetNextElement()){
 
        </div>
        <div class="edit_block">
-           <a  class="mainBtn" id="change-data">Редактировать данные</a>
+           <a  class="accentBtn" id="change-data">Редактировать данные</a>
            <div class="photo_user">
                <img src="<?=$logo_user["SRC"]?>" alt="">
            </div>
@@ -341,8 +341,8 @@ while($ob = $res->GetNextElement()){
                     );?>
                 </div>
                 <div class="submit_button submit_button-child">
-                    <button class="mainBtn margin-button" type="submit" id="save_children">Сохранить</button>
-                    <button class="mainBtn" type="submit" id="cancel">Отмена</button>
+                    <button class="mainBtn" type="submit" id="save_children">Сохранить</button>
+                    <button class="accentBtn" type="submit" id="cancel">Отмена</button>
                 </div>
             </form>
         </div>
