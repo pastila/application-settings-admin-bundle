@@ -102,5 +102,7 @@
 }
 
 .blue-bg {
-    background-color: $mainColor;
+    background-color: $mainColor !important;
+    color: white;
+    cursor: pointer;
 }
