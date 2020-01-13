@@ -1,4 +1,5 @@
 @import '../../styles/utils/vars';
+@import '../../styles/utils/mixins';
 
 .feedback {
     position: relative;
@@ -15,16 +16,17 @@
     &__btns {
         display: flex;
         flex-wrap: wrap;
-
-        .smallMainBtn, .smallAccentBtn {
-            margin-bottom: 2rem;
+        margin-bottom: 2rem;
+        .mainBtn {
+            margin-right: 2rem;
+            @media screen and (max-width: 576px){
+                margin-right: 0;
+            }
         }
     }
 
     &__filter {
-        .custom-select {
-            margin-bottom: 2rem;
-        }
+        margin-bottom: 2rem;
         .select-selected {
             background-color: $mainColor;
             color: white;
@@ -110,6 +112,17 @@
             display: block;
         }
     }
+}
+
+.feedback-button_reset {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 5rem;
+    padding: 0 2rem;
+    background-color: $accentColor;
+    color: white;
 }
 
 .sidebar__item_lists{
@@ -274,15 +287,6 @@
 
         &__wrap_white-blocks {
             grid-column: 1 / 10;
-        }
-
-        &__block {
-            //&_company-name {
-            //    position: relative;
-            //    top: 0;
-            //    right: 0;
-            //    font-size: 1.8rem;
-            //}
         }
 
         &__title {

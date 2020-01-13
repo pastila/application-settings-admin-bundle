@@ -100,6 +100,7 @@ main.main {
     position: relative;
     border-radius: 1rem;
     overflow: hidden;
+    box-shadow: 0 0 1rem rgba(25, 108, 156, 0.205);
 
     &:hover {
         @include boxShadow;
@@ -122,6 +123,9 @@ main.main {
 
 .star {
     height: 1.5rem;
+    path {
+        fill: $accentColor;
+    }
 }
 
 .link-underline {
@@ -278,11 +282,11 @@ Not supports in Firefox and IE */
         padding: .5rem;
         &:hover{
             background-color: #c5d2e0;
-            color: #3a4552;
+            color: $accentColor;
         }
     }
     b{
-        background-color: #3a4552;
+        background-color: $accentColor;
         color: #fff;
         pointer-events: none;
         font-size: 1.4rem;

@@ -3,7 +3,7 @@
 }
 
 .accentBtn {
-    @include btnDesc($accentColor, $mainColor);
+    @include btnDesc($accentColor, white);
 }
 
 @media screen and (max-width: 576px) {

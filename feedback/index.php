@@ -41,8 +41,8 @@ $countReviews = count($allReviews);
 
     <!-- Add and All feedback btns -->
     <div class="feedback__btns">
-        <a href="/add-feedback/" class="smallMainBtn">Добавить отзыв</a>
-        <a href="?comments=all" class="smallAccentBtn">Все отзывы</a>
+        <a href="/add-feedback/" class="mainBtn">Добавить отзыв</a>
+        <a href="?comments=all" class="accentBtn">Все отзывы</a>
     </div>
 
     <div class="feedback__filter">
@@ -67,9 +67,10 @@ $countReviews = count($allReviews);
                             }
 
                             ?>
-                            <option value="<?= $url_for_filter ?>property_kpp=<?= $review["PROPERTY_KPP_VALUE"] ?>"><?= $review["NAME"] ?></option>
+                <option value="<?= $url_for_filter ?>property_kpp=<?= $review["PROPERTY_KPP_VALUE"] ?>">
+                    <?= $review["NAME"] ?></option>
 
-                        <? } else {
+                <? } else {
                             $url_for_filter = "?";
                             $bool_check_kpp = true;
 
@@ -84,14 +85,13 @@ $countReviews = count($allReviews);
                             }
                             $name_company = $review["NAME"];
                             ?>
-                            <option value="<?= $url_for_filter ?>"
-                                    class="activ_filter"><?= $review["NAME"] ?></option>
-                        <? }
+                <option value="<?= $url_for_filter ?>" class="activ_filter"><?= $review["NAME"] ?></option>
+                <? }
 
                     } else { ?>
 
-                        <option value="?property_kpp=<?= $review["PROPERTY_KPP_VALUE"] ?>"><?= $review["NAME"] ?></option>
-                    <? }
+                <option value="?property_kpp=<?= $review["PROPERTY_KPP_VALUE"] ?>"><?= $review["NAME"] ?></option>
+                <? }
 
                 }
 
@@ -110,9 +110,12 @@ $countReviews = count($allReviews);
                         $url_for_filter = "/feedback/";
                     }
                     ?>
-                    <a data-tooltip="Очистить отзывы" data-position="bottom"  class="refresh_active-link bottom" href="<?= $url_for_filter ?>"><p  class="activ_filter after-select_activ-filter" >
-                           <?= $name_company ?></p></a>
-                <? }
+            <a data-tooltip="Очистить отзывы" data-position="bottom" class="refresh_active-link bottom"
+                href="<?= $url_for_filter ?>">
+                <p class="activ_filter after-select_activ-filter">
+                    <?= $name_company ?></p>
+            </a>
+            <? }
             } ?>
 
         </div>
@@ -142,30 +145,30 @@ $countReviews = count($allReviews);
                         if ($_GET["property_evaluation"] != $i) {
 
                             ?>
-                            <option value="<?= $url_for_filter ?>property_evaluation=<?= $i ?>" class="number_star">
-                                Оценки <?= $i ?>
-                            </option>
-                        <?php } else {
+                <option value="<?= $url_for_filter ?>property_evaluation=<?= $i ?>" class="number_star">
+                    Оценки <?= $i ?>
+                </option>
+                <?php } else {
                             if ($url_for_filter == "?") {
                                 $url_for_filter = "";
                             }
                             $bool_check_evalution = true;
                             $check_evalution =  $i;
                             ?>
-                            <option value="<?= $url_for_filter ?>" class="number_star activ_filter">
-                                Оценки <?= $i ?>
-                            </option>
+                <option value="<?= $url_for_filter ?>" class="number_star activ_filter">
+                    Оценки <?= $i ?>
+                </option>
 
-                            <?
+                <?
                         }
                     }
                 } else {
                     for ($i = 1; $i <= 5; ++$i) {
                         ?>
 
-                        <option value="?property_evaluation=<?= $i ?>" class="number_star">Оценки <?= $i ?>
-                        </option>
-                    <? }
+                <option value="?property_evaluation=<?= $i ?>" class="number_star">Оценки <?= $i ?>
+                </option>
+                <? }
                 } ?>
 
 
@@ -184,9 +187,12 @@ $countReviews = count($allReviews);
                         $url_for_filter = "/feedback/";
                     }
                     ?>
-                  <a data-tooltip="Очистить оценку" data-position="bottom" class="refresh_active-link bottom" href="<?= $url_for_filter ?>">  <p  class="activ_filter after-select_activ-filter">
-                            Оценка <?= $check_evalution ?></p></a>
-                <? }
+            <a data-tooltip="Очистить оценку" data-position="bottom" class="refresh_active-link bottom"
+                href="<?= $url_for_filter ?>">
+                <p class="activ_filter after-select_activ-filter">
+                    Оценка <?= $check_evalution ?></p>
+            </a>
+            <? }
             } ?>
 
         </div>
@@ -212,11 +218,11 @@ $countReviews = count($allReviews);
                                 }
                             }
                             ?>
-                            <option class="sidebar__item_lists_list"
-                                    value="<?= $url_for_filter ?>property_region=<?= $ob_section_filter["ID"] ?>">
-                                <?= $ob_section_filter["NAME"] ?>
-                            </option>
-                        <? } else {
+                <option class="sidebar__item_lists_list"
+                    value="<?= $url_for_filter ?>property_region=<?= $ob_section_filter["ID"] ?>">
+                    <?= $ob_section_filter["NAME"] ?>
+                </option>
+                <? } else {
                             $url_for_filter = "?";
                             $bool_check_region = true;
 
@@ -230,21 +236,20 @@ $countReviews = count($allReviews);
                                 $url_for_filter = "/feedback/";
                             }
                             ?>
-                            <option class="activ_filter" value="<?= $url_for_filter ?>">
-                                <?= $ob_section_filter["NAME"] ?>
-                            </option>
-                        <? }
+                <option class="activ_filter" value="<?= $url_for_filter ?>">
+                    <?= $ob_section_filter["NAME"] ?>
+                </option>
+                <? }
 
                     }
                     ?>
                 <? } else {
                     while ($ob_section_filter = $Section_filter->GetNext()) {
                         ?>
-                        <option class="sidebar__item_lists_list"
-                                value="?property_region=<?= $ob_section_filter["ID"] ?>">
-                            <?= $ob_section_filter["NAME"] ?>
-                        </option>
-                    <? } ?>
+                <option class="sidebar__item_lists_list" value="?property_region=<?= $ob_section_filter["ID"] ?>">
+                    <?= $ob_section_filter["NAME"] ?>
+                </option>
+                <? } ?>
 
                 <? } ?>
             </select>
@@ -262,21 +267,17 @@ $countReviews = count($allReviews);
                         $url_for_filter = "/feedback/";
                     }
                     ?>
-                    <a data-tooltip="Очистить город" data-position="bottom" class="refresh_active-link bottom" href="<?= $url_for_filter ?>"> <p  class="activ_filter after-select_activ-filter">
-                            <?= $name_region ?></p></a>
-                <? }
+            <a data-tooltip="Очистить город" data-position="bottom" class="refresh_active-link bottom"
+                href="<?= $url_for_filter ?>">
+                <p class="activ_filter after-select_activ-filter">
+                    <?= $name_region ?></p>
+            </a>
+            <? }
             } ?>
 
-
-
         </div>
 
-
-
-
-        <div class="reset_block">
-            <a class="smallAccentBtn feedback-button_reset" href="/feedback/">Сбросить</a>
-        </div>
+        <a class="feedback-button_reset" href="/feedback/">Сбросить</a>
     </div>
 
 </form>
@@ -315,7 +316,9 @@ $countReviews = count($allReviews);
         if ($res->SelectedRowsCount() == 0) {
             ?>
 
-            <div><p class="error title-medium" style="color: red">Отзывы не найдены</p></div>
+        <div>
+            <p class="error title-medium" style="color: red">Отзывы не найдены</p>
+        </div>
 
 
         <? }
@@ -349,91 +352,90 @@ $countReviews = count($allReviews);
                 BX_RESIZE_IMAGE_PROPORTIONAL, true);
 
             ?>
-            <div class="white_block">
-                <?php if ($Date_change_user != "") { ?>
-                    <span class="date_review">Дата изменения <?php echo $Date_change_user; ?></span>
-                <?php } ?>
-                <?php if ($arProps["REVIEW_LETTER"]["VALUE"] == "1") { ?>
-                    <div class="feedback__title">Возврат денежных средств</div>
-                <?php } ?>
-                <!-- Company Name -->
-                <div class="feedback__block_company-name">
+        <div class="white_block">
+            <?php if ($Date_change_user != "") { ?>
+            <span class="date_review">Дата изменения <?php echo $Date_change_user; ?></span>
+            <?php } ?>
+            <?php if ($arProps["REVIEW_LETTER"]["VALUE"] == "1") { ?>
+            <div class="feedback__title">Возврат денежных средств</div>
+            <?php } ?>
+            <!-- Company Name -->
+            <div class="feedback__block_company-name">
 
-                    <img src="<?= $file["src"] ?>">
-                </div>
-                <!-- top -->
-                <div class="feedback__block_top">
-                    <?php if ($arProps["EVALUATION"]["VALUE"] != "") { ?>
-                        <div class="feedback__block_top_star">
+                <img src="<?= $file["src"] ?>">
+            </div>
+            <!-- top -->
+            <div class="feedback__block_top">
+                <?php if ($arProps["EVALUATION"]["VALUE"] != "") { ?>
+                <div class="feedback__block_top_star">
 
-                            <? for ($i = 1; $i <= $arProps["EVALUATION"]["VALUE"]; ++$i) { ?>
-                                <svg class="star star-active" xmlns="http://www.w3.org/2000/svg"
-                                     viewBox="0 0 47.94 47.94">
-                                    <path
-                                            d="M26.285 2.486l5.407 10.956a2.58 2.58 0 0 0 1.944 1.412l12.091 1.757c2.118.308 2.963 2.91 1.431 4.403l-8.749 8.528a2.582 2.582 0 0 0-.742 2.285l2.065 12.042c.362 2.109-1.852 3.717-3.746 2.722l-10.814-5.685a2.585 2.585 0 0 0-2.403 0l-10.814 5.685c-1.894.996-4.108-.613-3.746-2.722l2.065-12.042a2.582 2.582 0 0 0-.742-2.285L.783 21.014c-1.532-1.494-.687-4.096 1.431-4.403l12.091-1.757a2.58 2.58 0 0 0 1.944-1.412l5.407-10.956c.946-1.919 3.682-1.919 4.629 0z"
-                                        <? if ($arProps["VERIFIED"]["VALUE"] == "") { ?>
-                                            fill="#c5d2e0"
-                                        <?php } elseif ($arProps["REJECTED"]["VALUE"] != "" && $arProps["VERIFIED"]["VALUE"] != "") { ?>
-                                            fill="#3a4552"
-                                        <? } elseif ($arProps["VERIFIED"]["VALUE"] != "") { ?>
-                                            fill="#1000ff"
-                                        <?php } ?>/>
-                                </svg>
+                    <? for ($i = 1; $i <= $arProps["EVALUATION"]["VALUE"]; ++$i) { ?>
+                    <svg class="star star-active" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 47.94 47.94">
+                        <path
+                            d="M26.285 2.486l5.407 10.956a2.58 2.58 0 0 0 1.944 1.412l12.091 1.757c2.118.308 2.963 2.91 1.431 4.403l-8.749 8.528a2.582 2.582 0 0 0-.742 2.285l2.065 12.042c.362 2.109-1.852 3.717-3.746 2.722l-10.814-5.685a2.585 2.585 0 0 0-2.403 0l-10.814 5.685c-1.894.996-4.108-.613-3.746-2.722l2.065-12.042a2.582 2.582 0 0 0-.742-2.285L.783 21.014c-1.532-1.494-.687-4.096 1.431-4.403l12.091-1.757a2.58 2.58 0 0 0 1.944-1.412l5.407-10.956c.946-1.919 3.682-1.919 4.629 0z"
+                            <? if ($arProps["VERIFIED"]["VALUE"]=="" ) { ?>
+                            fill="#c5d2e0"
+                            <?php } elseif ($arProps["REJECTED"]["VALUE"] != "" && $arProps["VERIFIED"]["VALUE"] != "") { ?>
+                            fill="#3a4552"
+                            <? } elseif ($arProps["VERIFIED"]["VALUE"] != "") { ?>
+                            fill="#1000ff"
+                            <?php } ?>/>
+                    </svg>
 
 
-                            <? } ?>
-                        </div>
                     <? } ?>
-                    <div class="feedback__block_top_name">
-                        <?= $name_user ?>, <?= $city["NAME"] ?>, <?= $newDate ?>
-                    </div>
-                    <!--                <div class="feedback__block_top_data">-->
-                    <!--                    05 сент, 2019-->
-                    <!--                </div>-->
                 </div>
-                <!-- Title -->
-                <div class="feedback__title">
-                    <a href="/feedback/comment-<?= $arFields["ID"] ?>/">
-                        <?= $arFields["NAME"] ?>
-                    </a>
+                <? } ?>
+                <div class="feedback__block_top_name">
+                    <?= $name_user ?>, <?= $city["NAME"] ?>, <?= $newDate ?>
                 </div>
+                <!--                <div class="feedback__block_top_data">-->
+                <!--                    05 сент, 2019-->
+                <!--                </div>-->
+            </div>
+            <!-- Title -->
+            <div class="feedback__title">
+                <a href="/feedback/comment-<?= $arFields["ID"] ?>/">
+                    <?= $arFields["NAME"] ?>
+                </a>
+            </div>
 
-                <!-- Text -->
-                <p class="feedback__text"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p>
+            <!-- Text -->
+            <p class="feedback__text"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p>
 
-                <!-- Bottom -->
-                <div class="feedback__bottom">
-                    <div class="feedback__bottom_name opacity_block">OMC</div>
+            <!-- Bottom -->
+            <div class="feedback__bottom">
+                <div class="feedback__bottom_name opacity_block">OMC</div>
 
-                    <a id="show-comments" class="feedback__bottom_link opacity_block">
-                        <img src="" alt="">
+                <a id="show-comments" class="feedback__bottom_link opacity_block">
+                    <img src="" alt="">
 
-                        <span class="comment-count">
-                    <?= $count_comments ?>
-                                </span>
-                        комментариев
-                    </a>
-                    <?
+                    <span class="comment-count">
+                        <?= $count_comments ?>
+                    </span>
+                    комментариев
+                </a>
+                <?
                     if ($USER->IsAuthorized()) { ?>
-                        <a rel="nofollow" class="toggle_comment_dropdown opacity_block">Оставить комментарий</a>
-                        <?
+                <a rel="nofollow" class="toggle_comment_dropdown opacity_block">Оставить комментарий</a>
+                <?
                     } ?>
-                    <div class="block_commented_styles block__commented">
-                        <form action="">
-                            <div class="input__wrap">
-                                <textarea minlength="10" name="comment" required
-                                          data-id-comment="<?= $arFields["ID"] ?>"></textarea>
-                            </div>
-                            <div class="danger hidden">Заполните поле</div>
-                            <button type="submit" class="smallMainBtn button-comments" id="comments"
-                                    data-id-comment="<?= $arFields["ID"] ?>">Комментировать
-                            </button>
-                        </form>
-                    </div>
+                <div class="block_commented_styles block__commented">
+                    <form action="">
+                        <div class="input__wrap">
+                            <textarea minlength="10" name="comment" required
+                                data-id-comment="<?= $arFields["ID"] ?>"></textarea>
+                        </div>
+                        <div class="danger hidden">Заполните поле</div>
+                        <button type="submit" class="smallMainBtn button-comments" id="comments"
+                            data-id-comment="<?= $arFields["ID"] ?>">Комментировать
+                        </button>
+                    </form>
                 </div>
-                <!-- COMMETNS -->
-                <div class="hidenComments">
-                    <?php
+            </div>
+            <!-- COMMETNS -->
+            <div class="hidenComments">
+                <?php
                     $ID_COMMENTS = $arProps["COMMENTS_TO_REWIEW"]["VALUE"]; /// комментарии
                     $order = Array("date_active_from" => "desc");
                     $arSelectComments = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
@@ -453,59 +455,59 @@ $countReviews = count($allReviews);
 
 
                         ?>
-                        <?php if ($USER->IsAdmin()) { ?>
-                            <div class="block_remove">
-                                <div data-id="<?php echo $arFieldsComments["ID"]; ?>"
-                                     class="delet_comment remove_comment">Удалить комментарий
-                                </div>
-                            </div>
-                        <?php } ?>
-                        <div class="hidenComments__top">
-                            <img src="<?php echo $file_comment["src"] ?>" alt="OMS">
+                <?php if ($USER->IsAdmin()) { ?>
+                <div class="block_remove">
+                    <div data-id="<?php echo $arFieldsComments["ID"]; ?>" class="delet_comment remove_comment">Удалить
+                        комментарий
+                    </div>
+                </div>
+                <?php } ?>
+                <div class="hidenComments__top">
+                    <img src="<?php echo $file_comment["src"] ?>" alt="OMS">
 
 
-                            <? if ($arPropsComments["REPRESENTATIVE"]["VALUE"] == "1") { ?>
-                                <div class="feedback_strah_user">
-                                    <p class="text_user">Представитель страховой службы</p>
-                                </div>
-                            <? } ?>
-                            <div class="hidenComments__top_wrap">
-                                <div class="hidenComments__top_name"><?= $name_userComments ?></div>
+                    <? if ($arPropsComments["REPRESENTATIVE"]["VALUE"] == "1") { ?>
+                    <div class="feedback_strah_user">
+                        <p class="text_user">Представитель страховой службы</p>
+                    </div>
+                    <? } ?>
+                    <div class="hidenComments__top_wrap">
+                        <div class="hidenComments__top_name"><?= $name_userComments ?></div>
 
-                                <div class="hidenComments__top_data"><?= $newDateComments ?></div>
-                            </div>
+                        <div class="hidenComments__top_data"><?= $newDateComments ?></div>
+                    </div>
 
+                </div>
+
+                <p><?= $arPropsComments["COMMENTS"]["VALUE"] ?></p>
+                <? if ($USER->IsAuthorized()) { ?>
+                <? if ($arPropsComments["CITED"]["VALUE"] == "") { ?>
+                <!--                        <a id="show-comment" class="hidenComments__link" href="#">Цитировать</a>-->
+                <div class="block_commented_styles">
+                    <form action="">
+                        <div class="input__wrap">
+                            <textarea minlength="10" name="cited" required
+                                data-id-cited="<?= $arFieldsComments["ID"] ?>"></textarea>
                         </div>
-
-                        <p><?= $arPropsComments["COMMENTS"]["VALUE"] ?></p>
-                        <? if ($USER->IsAuthorized()) { ?>
-                            <? if ($arPropsComments["CITED"]["VALUE"] == "") { ?>
-                                <!--                        <a id="show-comment" class="hidenComments__link" href="#">Цитировать</a>-->
-                                <div class="block_commented_styles">
-                                    <form action="">
-                                        <div class="input__wrap">
-                                            <textarea minlength="10" name="cited" required
-                                                      data-id-cited="<?= $arFieldsComments["ID"] ?>"></textarea>
-                                        </div>
-                                        <div class="danger hidden">Заполните поле</div>
-                                        <button type="submit" class="smallMainBtn button-cited" id="comments"
-                                                data-id-cited="<?= $arFieldsComments["ID"] ?>">Цитировать
-                                        </button>
-                                    </form>
-                                </div>
-                            <? } ?>
-                        <? } ?>
-                        <!-- Цитаты-->
-                        <?php if ($arPropsComments["CITED"]["VALUE"] != "") {  // цитаты к коментариям ?>
-                            <div class="block_quotes">
-                                <?php if ($USER->IsAdmin()) { ?>
-                                    <div class="block_remove">
-                                        <div class="delet_cation remove_comment"
-                                             data-id="<?php echo $arFieldsQuote["ID"]; ?>">Удалить цитату
-                                        </div>
-                                    </div>
-                                <?php } ?>
-                                <?
+                        <div class="danger hidden">Заполните поле</div>
+                        <button type="submit" class="smallMainBtn button-cited" id="comments"
+                            data-id-cited="<?= $arFieldsComments["ID"] ?>">Цитировать
+                        </button>
+                    </form>
+                </div>
+                <? } ?>
+                <? } ?>
+                <!-- Цитаты-->
+                <?php if ($arPropsComments["CITED"]["VALUE"] != "") {  // цитаты к коментариям ?>
+                <div class="block_quotes">
+                    <?php if ($USER->IsAdmin()) { ?>
+                    <div class="block_remove">
+                        <div class="delet_cation remove_comment" data-id="<?php echo $arFieldsQuote["ID"]; ?>">Удалить
+                            цитату
+                        </div>
+                    </div>
+                    <?php } ?>
+                    <?
 
                                 $ID_Quote = $arPropsComments["CITED"]["VALUE"];
                                 $arSelectQuote = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
@@ -525,43 +527,43 @@ $countReviews = count($allReviews);
                                         array('width' => 50, 'height' => 50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
 
                                     ?>
-                                    <div class="hidenComments__top">
+                    <div class="hidenComments__top">
 
-                                        <img src="<?php echo $file_quote["src"]; ?>" alt="OMS">
-
-
-                                        <? if ($arPropsQuote["REPRESENTATIVE"]["VALUE"] == "1") { ?>
-                                            <div class="feedback_strah_user">
-                                                <p class="text_user">Представитель страховой службы</p>
-                                            </div>
-                                        <? } ?>
-                                        <div class="hidenComments__top_wrap">
-                                            <div class="hidenComments__top_name"><?= $name_userQuote ?></div>
-                                            <div class="hidenComments__top_data"><?= $newDateQuote ?></div>
-                                        </div>
+                        <img src="<?php echo $file_quote["src"]; ?>" alt="OMS">
 
 
-                                    </div>
-
-                                    <p class="quotes_italic">« <?= $arPropsQuote["CIATION"]["VALUE"] ?> »</p>
-
-
-                                <? } ?>
-
-                            </div>
-                        <? } ?>
-                    <? } ?>
-                </div>
-
-                <?php if ($USER->IsAdmin()) { ?>
-                    <div class="right_content-reviews">
-                        <div title="Удалить отзыв" data-id="<?php echo $arFields["ID"]; ?>"
-                             class="dalete_review inline_block">Удалить отзыв
+                        <? if ($arPropsQuote["REPRESENTATIVE"]["VALUE"] == "1") { ?>
+                        <div class="feedback_strah_user">
+                            <p class="text_user">Представитель страховой службы</p>
                         </div>
-                    </div>
-                <?php } ?>
+                        <? } ?>
+                        <div class="hidenComments__top_wrap">
+                            <div class="hidenComments__top_name"><?= $name_userQuote ?></div>
+                            <div class="hidenComments__top_data"><?= $newDateQuote ?></div>
+                        </div>
 
-            </div><!-- FeedBack block END -->
+
+                    </div>
+
+                    <p class="quotes_italic">« <?= $arPropsQuote["CIATION"]["VALUE"] ?> »</p>
+
+
+                    <? } ?>
+
+                </div>
+                <? } ?>
+                <? } ?>
+            </div>
+
+            <?php if ($USER->IsAdmin()) { ?>
+            <div class="right_content-reviews">
+                <div title="Удалить отзыв" data-id="<?php echo $arFields["ID"]; ?>" class="dalete_review inline_block">
+                    Удалить отзыв
+                </div>
+            </div>
+            <?php } ?>
+
+        </div><!-- FeedBack block END -->
         <? }
         if (!$sort_url["comments"] == "all") {
             $navStr = $res->GetPageNavStringEx($navComponentObject, "Страницы:", ".default");
@@ -581,9 +583,12 @@ $countReviews = count($allReviews);
                 обязанности которого входит сопровождение застрахованных граждан в процессе получения помощи. Все
                 проблемы граждан на пути к доступной и качественной медицинской помощи должны решаться страховыми
                 представителями. На сегодняшний день в стране насчитывается более 14 000 страховых представителей.
-                <span class="border">Территориальные фонды ОМС регулярно проводят конкурсы на звание лучшего страхового представителя, в
-                которых моделируют различные конфликтные ситуации и даже приглашают студентов в качестве актеров на роль
-                застрахованных.</span> Мы же считаем, что в реальной жизни, практически в любой день в любой медицинской
+                <span class="border">Территориальные фонды ОМС регулярно проводят конкурсы на звание лучшего страхового
+                    представителя, в
+                    которых моделируют различные конфликтные ситуации и даже приглашают студентов в качестве актеров на
+                    роль
+                    застрахованных.</span> Мы же считаем, что в реальной жизни, практически в любой день в любой
+                медицинской
                 организации достаточно поводов для настоящего, а не выдуманного обращения к страховому представителю. И
                 результат работы по такому обращению объективнее оценит тот, для кого эта работа выполнялась – сам
                 застрахованный гражданин, а не жюри с представителями минздрава и территориального фонда.</p>
@@ -591,7 +596,8 @@ $countReviews = count($allReviews);
                 положительный он или отрицательный. Так вы внесете свой вклад в формирование рейтинга страховых компаний
                 и возможно именно ваш отзыв станет решающим для посетителей сайта при выборе страховой компании. </p>
             <p>Дополнительная информация по
-                <a href="http://www.ffoms.ru/news/regionalnye-novosti/v-khabarovskom-krae-vybrali-luchshikh-strakhovykh-predstaviteley/">ссылке.</a>
+                <a
+                    href="http://www.ffoms.ru/news/regionalnye-novosti/v-khabarovskom-krae-vybrali-luchshikh-strakhovykh-predstaviteley/">ссылке.</a>
             </p>
         </div>
     </div>
@@ -656,30 +662,28 @@ $countReviews = count($allReviews);
                                 }
                             }
                             ?>
-                            <li class="sidebar__item_lists_list list_numbered-items">
-                                <span class="sidebar_count number"><?= $i ?></span>
-                                <a href="<?= $url_for_filter ?>property_kpp=<?= $fields["PROPERTY_KPP_VALUE"] ?>"
-                                   class="sidebar__item_lists_list_link" id="company"
-                                   data-amount-star="
+                <li class="sidebar__item_lists_list list_numbered-items">
+                    <span class="sidebar_count number"><?= $i ?></span>
+                    <a href="<?= $url_for_filter ?>property_kpp=<?= $fields["PROPERTY_KPP_VALUE"] ?>"
+                        class="sidebar__item_lists_list_link" id="company" data-amount-star="
                                    <?php if (isset($_GET["property_region"])) {
                                        echo $fields["PROPERTY_AMOUNT_STAR_VALUE"];
                                    } else {
                                        echo $fields["PROPERTY_ALL_AMOUNT_STAR_VALUE"];
                                    } ?>
 
-"
-                                   data-id="<?= $fields["ID"] ?>">
-                                    <?= $fields["NAME"] ?>
-                                </a>
-                                <span class="sidebar_count rating"><?php if (isset($_GET["property_region"])) {
+" data-id="<?= $fields["ID"] ?>">
+                        <?= $fields["NAME"] ?>
+                    </a>
+                    <span class="sidebar_count rating"><?php if (isset($_GET["property_region"])) {
 
                                         echo $fields["PROPERTY_AMOUNT_STAR_VALUE"];
                                     } else {
 
                                         echo $fields["PROPERTY_ALL_AMOUNT_STAR_VALUE"];
                                     } ?></span>
-                            </li>
-                        <? }
+                </li>
+                <? }
                     } ?>
                 <? } else {
                     while ($ob_element_filter = $Element_filter->GetNextElement()) {
@@ -692,31 +696,27 @@ $countReviews = count($allReviews);
 
                             ?>
 
-                            <li class="sidebar__item_lists_list list_numbered-items">
-                                <span class="sidebar_count number"><?= $i ?></span>
-                                <a title="<?= $fields["NAME"] ?>"
-                                   href="?property_kpp=<?= $fields["PROPERTY_KPP_VALUE"] ?>"
-                                   class="sidebar__item_lists_list_link"
-                                   id="company"
-                                   data-amount-star=" <?php if (isset($_GET["property_region"])) {
+                <li class="sidebar__item_lists_list list_numbered-items">
+                    <span class="sidebar_count number"><?= $i ?></span>
+                    <a title="<?= $fields["NAME"] ?>" href="?property_kpp=<?= $fields["PROPERTY_KPP_VALUE"] ?>"
+                        class="sidebar__item_lists_list_link" id="company" data-amount-star=" <?php if (isset($_GET["property_region"])) {
 
                                        echo $fields["PROPERTY_AMOUNT_STAR_VALUE"];
                                    } else {
 
                                        echo $fields["PROPERTY_ALL_AMOUNT_STAR_VALUE"];
-                                   } ?>"
-                                   data-id="<?= $fields["ID"] ?>">
-                                    <?= $fields["NAME"] ?>
-                                </a>
-                                <span class="sidebar_count rating"><?php if (isset($_GET["property_region"])) {
+                                   } ?>" data-id="<?= $fields["ID"] ?>">
+                        <?= $fields["NAME"] ?>
+                    </a>
+                    <span class="sidebar_count rating"><?php if (isset($_GET["property_region"])) {
 
                                         echo $fields["PROPERTY_AMOUNT_STAR_VALUE"];
                                     } else {
 
                                         echo $fields["PROPERTY_ALL_AMOUNT_STAR_VALUE"];
                                     } ?></span>
-                            </li>
-                        <? }
+                </li>
+                <? }
                     }
                 } ?>
 
@@ -735,7 +735,7 @@ $countReviews = count($allReviews);
                         }
 
                     } ?>
-                    <button class="smallAccentBtn"><a href="<?= $url_for_filter ?>">Весь рейтинг</a></button>
+                    <a class="accentBtn" href="<?= $url_for_filter ?>">Весь рейтинг</a>
         </div>
 
 
