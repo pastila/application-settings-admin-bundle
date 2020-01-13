@@ -17,7 +17,6 @@
         flex-wrap: wrap;
 
         .smallMainBtn, .smallAccentBtn {
-            width: 100%;
             margin-bottom: 2rem;
         }
     }
@@ -193,7 +192,6 @@
         &__btns {
     
             .smallMainBtn, .smallAccentBtn {
-                width: auto;
                 margin-right: 2rem;
             }
         }

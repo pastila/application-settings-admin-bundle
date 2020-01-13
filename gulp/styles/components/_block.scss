@@ -4,6 +4,7 @@
 .card {
     background:white;
     padding: 2rem;
+    border-radius: 1rem;
     @include boxShadow();
 }
 

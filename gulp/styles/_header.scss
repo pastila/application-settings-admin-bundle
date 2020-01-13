@@ -185,9 +185,6 @@
 #auth-form-reg {
     max-width: 110rem;
 
-    .mainBtn {
-        width: 100%;
-    }
     .check-label{
         margin-right: 0;
     }
@@ -213,10 +210,6 @@
     .block_padd-modal{
         @media(min-width: 992px){
             padding: 1rem;
-        }
-        .mainBtn {
-            max-width: 100%;
-            width: 100%;
         }
         textarea{
             min-height: 10rem;
@@ -282,10 +275,6 @@
 }
 #auth-form-login {
     max-width: 50rem;
-
-    .mainBtn {
-        width: 100%;
-    }
 }
 
 .auth-form {
