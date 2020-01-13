@@ -1,15 +1,28 @@
 html {
-    font-size: calc(100vw / 32);
-    @media (min-width: 576px) and (max-width: 991px)  {
-        font-size: calc(100vw / 57.6);
+    @media (max-width: 320px)  {
+        font-size: calc(100vw / 32);
+    }
+    @media (min-width: 320px) and (max-width: 440px)  {
+        font-size: calc(100vw / 32);
+    }
+    @media (min-width: 440px) and (max-width: 575px)  {
+        font-size: calc(100vw / 50);
+    }
+
+    @media (min-width: 576px) and (max-width: 767px)  {
+        font-size: calc(100vw / 76.7);
+    }
+
+    @media (min-width: 768px) and (max-width: 991px)  {
+        font-size: calc(100vw / 92);
     }
 
     @media (min-width: 992px) and (max-width: 1199px)  {
-        font-size: calc(100vw / 99.2);
+        font-size: calc(100vw / 120);
     }
 
     @media (min-width: 1200px) and (max-width: 1599px)  {
-        font-size: calc(100vw / 120);
+        font-size: calc(100vw / 159);
     }
 
     @media(min-width: 1600px) and (max-width: 1919px) {

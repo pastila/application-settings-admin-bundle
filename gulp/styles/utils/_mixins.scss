@@ -1,15 +1,17 @@
 @mixin btnMobile($bgColor, $color) {
+    width: 3rem;
+    height: 3rem;
     display: flex;
     justify-content: center;
     text-align: center;
     font-size: 1rem;
     background-color: $bgColor;
     color: $color;
-    padding: 2rem 2.7rem;
     cursor: pointer;
     text-transform: uppercase;
     margin: 0 auto;
-    border: none;
+    border: solid 0.1rem $bgColor;
+    border-radius: 20rem;
     
     &:hover {
         background-color:lighten($bgColor, 10%);
@@ -18,7 +20,7 @@
 
 @mixin btnDesc($bgColor, $color) {
     display: flex;
-    max-width: 30vw;
+    width: 14rem;
     font-size: 1.6rem;
     background-color: $bgColor;
     color: $color;
@@ -28,6 +30,8 @@
     margin: 0 auto;
     border: none;
     text-align: center;
+    border: solid 0.1rem $bgColor;
+    border-radius: 20rem;
 
     &:hover {
         background-color:lighten($bgColor, 10%);

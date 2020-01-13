@@ -1,10 +1,13 @@
 .header {
     display: flex;
     align-items: center;
-    height: 6rem;
+    height: 10rem;
     margin-right: -1.5rem;
     margin-left: -1.5rem;
     margin-bottom: 3rem;
+    @media screen and (max-width: 576px){
+        height: 5rem;
+    }
     
     &__container {
         display: flex;
@@ -52,17 +55,25 @@
                 cursor: pointer;
                 
                 &_img {
-                    width: 3rem;
-                    height: 3rem;
+                    width: 2rem;
+                    height: 2rem;
+                    @media screen and (min-width: 576px){
+                        width: 3rem;
+                        height: 3rem;
+                    }
                 }
         
                 &_text {
                     display: none;
+                    color: $text-color;
                 }
             }
 
-            &_reg {
-                margin-left: 4rem;
+            &_login {
+                margin-right: 9rem;
+                @media screen and (max-width: 768px){
+                    margin-right: 3rem;
+                }
             }
 
             &_user {
@@ -162,11 +173,7 @@
                 }
             }
             @media(max-width: 575px){
-                display: flex;
-                text-transform: capitalize;
-                background: transparent;
-                padding: 0;
-                margin-left: 4rem;
+                margin-left: 2rem;
                 .hidden-text-mob{
                     display: none;
                 }
@@ -406,7 +413,7 @@
                 &_login, &_reg {
                     &_text {
                         display: flex;
-                        margin-left: 2.5rem;
+                        margin-left: 1rem;
                         font-size: 1.6rem;
                     }
                 }
