@@ -40,10 +40,14 @@ html,body {
 h1, h2, h3, h4, h5 {
     color: $title-color;
     font-family: $main-font-semibold;
+    line-height: normal;
 }
 
 h1 {
-    font-size: 5rem;
+    font-size: 6rem;
+    @media screen and (max-width: 576px){
+        font-size: 4rem;
+    }
 }
 
 a {
@@ -72,6 +76,7 @@ section {
     padding-right: 1.5rem;
     min-height: 100vh;
     background-position: center top;
+    background-size: cover;
 }
 
 .main {

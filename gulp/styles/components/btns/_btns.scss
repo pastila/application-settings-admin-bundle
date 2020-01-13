@@ -1,33 +1,18 @@
 .mainBtn {
-    @include btnMobile($mainColor, white);
-}
-
-.headerBtn {
-    @include btnMobile($accentColor, white);
+    @include btnDesc($mainColor, white);
 }
 
 .accentBtn {
-    @include btnMobile($accentColor, $mainColor);
+    @include btnDesc($accentColor, $mainColor);
 }
 
-.smallMainBtn {
-    @include smallBtn($mainColor, white);
-}
-
-.smallAccentBtn {
-    @include smallBtn($accentColor, $mainColor);
-}
-
-@media screen and (min-width: 576px) {
-    .mainBtn {
-        @include btnDesc($mainColor, white);
+@media screen and (max-width: 576px) {
+    .headerBtn {
+        @include btnHeaderMobile($accentColor, white);
     }
-
+}
+@media screen and (min-width: 576px) {
     .headerBtn {
         @include btnDesc($accentColor, white);
-    }
-    
-    .accentBtn {
-        @include btnDesc($accentColor, $mainColor);
     }
 }

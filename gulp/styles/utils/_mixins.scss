@@ -1,15 +1,14 @@
-@mixin btnMobile($bgColor, $color) {
+@mixin btnHeaderMobile($bgColor, $color) {
     width: 3rem;
     height: 3rem;
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     text-align: center;
     font-size: 1rem;
     background-color: $bgColor;
     color: $color;
     cursor: pointer;
-    text-transform: uppercase;
-    margin: 0 auto;
+    text-transform: capitalize;
     border: solid 0.1rem $bgColor;
     border-radius: 20rem;
     
@@ -19,19 +18,21 @@
 }
 
 @mixin btnDesc($bgColor, $color) {
-    display: flex;
-    width: 14rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22rem;
+    height: 5.5rem;
     font-size: 1.6rem;
+    font-family: $main-font-semibold;
     background-color: $bgColor;
     color: $color;
-    padding: 2.6rem 4rem;
     cursor: pointer;
-    text-transform: uppercase;
-    margin: 0 auto;
-    border: none;
+    text-transform: capitalize;
     text-align: center;
     border: solid 0.1rem $bgColor;
     border-radius: 20rem;
+    letter-spacing: 0.1rem;
 
     &:hover {
         background-color:lighten($bgColor, 10%);
@@ -39,7 +40,7 @@
 }
 
 @mixin smallBtn($bgColor, $color) {
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     text-align: center;
     font-size: 1.4rem;
@@ -53,7 +54,6 @@
         background-color:lighten($bgColor, 10%);
     }
 }
-
 
 @mixin boxShadow {
     box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.08);
