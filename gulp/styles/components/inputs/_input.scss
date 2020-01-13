@@ -7,11 +7,15 @@
             font-size: 1.6rem;
             margin-bottom: 1rem;
         }
+
+        input {
+            height: 5rem;
+            font-size: 1.6rem;
+            background: $inputColor;
+        }
         
         input, textarea {
-            font-size: 1.6rem;
-            padding: 1rem;
-            background: $inputColor;
+            padding: 0 3rem;
             border: none;
             &:focus, &:visited, &:focus {
                 outline: none;
@@ -38,15 +42,5 @@
         display: block;
         font-size: 1.6rem;
         margin-bottom: 3rem;
-    }
-}
-
-@media (min-width: 992px) {
-    .input {
-        &__wrap {
-            input, textarea {
-                padding: 2rem 1rem;
-            }
-        }
     }
 }

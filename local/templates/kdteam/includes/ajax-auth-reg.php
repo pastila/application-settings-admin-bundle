@@ -64,7 +64,7 @@ CModule::IncludeModule("iblock");
                 <p id="sms_confirm_error" style="display: none" class="error sms-error">Введите номер телефона</p>
             </div>
             <div class="input__wrap hidden_wrap_phone flex_hidden_wrap_phone main_btn-parent">
-                <input type="button" class="accept-phone-js mainBtn" value="Подтвердить номер телефона">
+                <input type="button" class="accept-phone-js blue-bg" value="Подтвердить номер телефона">
             </div>
             <div class="input__wrap" id="sms_confirm" style="display: none">
                 <div class="input_phone-flex">
