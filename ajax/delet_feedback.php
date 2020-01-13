@@ -26,7 +26,7 @@ if($_POST){
         $result = CIBlockElement::Delete($_POST["id"]);
 
 
-        $arSelect_otzev = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
+        $arSelect_otzev = Array("ID", "IBLOCK_ID", "NAME", "PROPERTY_*");
         $arFilter_otzev = Array(
             "IBLOCK_ID" => 13,
             "PROPERTY_NAME_COMPANY" => $id_company,
@@ -36,6 +36,7 @@ if($_POST){
         $res_otzev = CIBlockElement::GetList(Array(), $arFilter_otzev, false, false, $arSelect_otzev);
         $total = 0;
         $count_otzev = $res_otzev->SelectedRowsCount();
+
         if ($count_otzev == "0") {
             $star_clear = Array(
                 "AMOUNT_STAR" => "",
@@ -66,7 +67,7 @@ if($_POST){
                 "ALL_AMOUNT_STAR" => $result,
             );
             foreach ($array_id_company_with_kpp as $key){
-                CIBlockElement::SetPropertyValuesEx($key, 16, $All_star);
+               CIBlockElement::SetPropertyValuesEx($key, 16, $All_star);
             }
 
 

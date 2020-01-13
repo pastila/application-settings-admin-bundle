@@ -48,13 +48,14 @@
                 align-items: center;
                 justify-content: center;
 
-                &:first-child {
-                    margin-bottom: 2rem;
+                &:not(:last-of-type)  {
+                    margin-bottom: 1.5rem;
                 }
 
                 &_title {
                     font-size: 1.2rem;
                     margin-bottom: 2rem;
+                    text-align: center;
                 }
 
                 &_name {
@@ -131,14 +132,14 @@
                 align-self: center;
 
                 &_wrap {
-                    &:first-child {
-                        margin-bottom: 5rem;
+                    &:not(:last-of-type) {
+                        margin-bottom: 3rem;
                     }
     
                     &_title {
                         text-align: center;
                         font-size: 1.6rem;
-                        margin-bottom: 3rem;
+                        margin-bottom: 2rem;
                     }
     
                     &_name {

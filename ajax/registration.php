@@ -59,6 +59,9 @@ if($_POST) {
                 $msg = array("user" => "Уже существует");
                 $result = array_merge($result, $msg);
             } else {
+                $arFile = CFile::MakeFileArray("/images/user.png");
+
+
 
                 $arFields = Array(
                     "NAME" => $name,
@@ -75,6 +78,7 @@ if($_POST) {
                     "UF_INSURANCE_COMPANY" => $id_company,
                     "UF_REGION" => $id_region,
                     "PERSONAL_BIRTHDAY"=>$_POST["time"],
+                    "PERSONAL_PHOTO"=>$arFile,
                 );
                 $ID = $USER->Add($arFields);
                 $ID_user = array("user" => $ID);
