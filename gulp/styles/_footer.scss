@@ -1,11 +1,9 @@
 @import './utils/vars';
 
 .footer {
-    background: $mainColor;
     margin-right: -1.5rem;
     margin-left: -1.5rem;
     padding: 1.5rem 1.5rem 1.5rem 1.5rem;
-    color: white;
 
     &__container {
         display: flex;
@@ -20,6 +18,7 @@
         align-items: center;
         @media(max-width: 991px){
             justify-content: center;
+            margin-bottom: 2rem;
         }
 
         img {
@@ -39,7 +38,10 @@
             font-size: 1.2rem;
             a {
                 display: block;
-                color: white;
+                color: $mainColor;
+                &:hover {
+                    color: lighten($mainColor, 10%);
+                }
             }
         }
     }
@@ -83,8 +85,6 @@
     
         &__menu {
             li {
-                font-size: 1.6rem;
-
                 &:last-child {
                     margin-right: 0;
                 }
