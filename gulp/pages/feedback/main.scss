@@ -338,10 +338,10 @@
     .sidebar_count{
         font-weight: bold;
         &.number{
-            margin-right: .5rem;
+            margin-right: 1.5rem;
         }
         &.rating{
-            margin-left: .5rem;
+            color: $accentColor;
         }
     }
 }
