@@ -16,7 +16,9 @@
         padding-right: 1.5rem;
         margin: 0 auto;
         width: 100%;
-        max-width: 80vw;
+        @media screen and (min-width: 992px){
+            max-width: 80vw;
+        }
     }
 
     &__logo {
@@ -31,6 +33,9 @@
         @media(max-width: 575px){
             max-height: 100%;
             width: 10rem;
+        }
+        &_img{
+            max-width: 10rem;
         }
     }
     .header_mob--write{
@@ -220,7 +225,7 @@
 .file-input {
     display: inline-block;
     position: relative;
-    font-weight: bold;
+    font-family: $main-font-semibold;
 }
 .file-input > [type='file'] {
     position: absolute;

@@ -11,8 +11,13 @@ global $USER;
 if ($USER->IsAuthorized()) { ?>
     <!-- Breadcrumbs -->
     <ul class="breadcrumbs">
-        <li><a href="/">Главная</a></li>
-        <li>Обращения</li>
+        <? if ($detect->isTablet() || $detect->isMobile()) { ?>
+            <li><a href="/" class="">Обращения</a></li>
+        <? } else { ?>
+            <li><a href="/">Главная</a></li>
+            <li>Обращения</li>
+        <? } ?>
+
     </ul>
     <?php
     if (CModule::IncludeModule("iblock")) {

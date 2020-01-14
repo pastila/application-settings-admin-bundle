@@ -91,7 +91,9 @@ section {
 main.main {
     margin: 0 auto;
     width: 100%;
-    max-width: 80vw;
+    @media screen and (min-width: 992px){
+        max-width: 80vw;
+    }
 }
 
 .white_block {
@@ -157,7 +159,7 @@ main.main {
     color: red;
 }
 .bold{
-    font-weight: bold;
+    font-family: $main-font-bold;
 }
 .input__wrap{
     position: relative;
@@ -374,12 +376,14 @@ input{
  }
  .dalete_review {
      cursor: pointer;
-     color: red;
-     font-weight: bold;
+     color: $accentColor;
+     font-family: $main-font-bold;
  }
  .add_reviews-select{
      @media(min-width: 992px){
          margin-right: 2rem;
+         max-width: 100%;
+         width: 100%;
      }
  }
  .info_block{
@@ -390,7 +394,7 @@ input{
          border-bottom: 1px dashed $mainColor;
      }
      .bold{
-         font-weight: bold;
+         font-family: $main-font-bold;
      }
      .block_image{
          margin: 2rem 0;
@@ -424,7 +428,7 @@ input{
     }
 }
 #btn_myFileInput{
-    font-weight: bold;
+    font-family: $main-font-bold;
     border: none;
     background-color: $accentColor;
     color: white;

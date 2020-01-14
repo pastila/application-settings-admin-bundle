@@ -9,7 +9,7 @@ if($_GET){
         setcookie("letter","yes",0);
     }
 }
-
+$detect = new Mobile_Detect();
 $asset = Asset::getInstance();
 ?>
 <!DOCTYPE html>
