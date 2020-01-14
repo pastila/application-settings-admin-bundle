@@ -5,6 +5,7 @@ use Bitrix\Main\Page\Asset;
 $asset = Asset::getInstance();
 $asset->addCss(SITE_TEMPLATE_PATH . "/pages/feedback/main.min.css");
 $asset->addJs(SITE_TEMPLATE_PATH . "/pages/feedback/main.min.js");
+$asset->addJs(SITE_TEMPLATE_PATH . "/js/readmore.min.js");
 
 CModule::IncludeModule("iblock");
 global $USER;
@@ -740,14 +741,25 @@ $countReviews = count($allReviews);
     </div>
 </div>
 
-<script src="https://rawgit.com/jedfoster/Readmore.js/master/readmore.js"></script>
 <script>
   $('.readmore-text').readmore({
     speed: 75, // скорость раскрытия
     collapsedHeight: 150, // высота отзыва
-    moreLink: '<div class="readmore_block"><a class="" href="#"><i class="fa fa-eye" aria-hidden="true"></i> Читать весь отзыв</a></div>', // читать весь отзыв
-    lessLink: '<div class="readmore_block"><a class="readmore_profile" href="#"><i class="fa fa-times" aria-hidden="true"></i> Скрыть</a></div>', // скрыть весь отзыв
+    moreLink: '<div class="readmore-text__block __shadow"><a class="readmore-text__block__link" href="#">Читать весь отзыв...</a></div>', // читать весь отзыв
+    lessLink: '<div class="readmore-text__block hide-comment"><a class="readmore-text__block__link" href="#">Скрыть отзыв</a></div>', // скрыть весь отзыв
   });
+  $(document).ready(function() {
+
+    $('.hide-comment').click(function() {
+      console.log('asdasd');
+      // $('html, body').animate({
+      //   scrollTop: $(this).offset().top - 60 + "px"
+      // }, 400);
+    });
+  })
+  $(document).ready(function() {
+
+  })
 </script>
 
 <?php require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>

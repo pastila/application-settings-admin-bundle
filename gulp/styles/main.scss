@@ -91,7 +91,9 @@ section {
 main.main {
     margin: 0 auto;
     width: 100%;
-    max-width: 80vw;
+    @media screen and (min-width: 992px){
+        max-width: 80vw;
+    }
 }
 
 .white_block {
@@ -378,11 +380,13 @@ input{
  .dalete_review {
      cursor: pointer;
      color: $accentColor;
-     font-weight: bold;
+     font-family: $main-font-semibold;
  }
  .add_reviews-select{
      @media(min-width: 992px){
          margin-right: 2rem;
+         max-width: 100%;
+         width: 100%;
      }
  }
  .info_block{

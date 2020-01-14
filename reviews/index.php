@@ -21,8 +21,8 @@ $arUser = $rsUser->Fetch();
 
 <?php if($arUser["UF_REPRESENTATIVE"] != "1"){ ?>
     <h1 class="page-title">Ваши отзывы</h1>
-    <div class="feedback">
-        <div class="feedback__wrap_white-blocks">
+    <div class="reviews">
+        <div class="reviews__wrap_white-blocks">
             <!-- FeedBack block -->
 
             <?php

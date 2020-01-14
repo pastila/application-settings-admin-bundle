@@ -300,7 +300,7 @@
         background: $lightBg;
         border: 1px dashed $accentColor;
         padding: 0.5rem;
-        font-weight: bold;
+        font-family: $main-font-semibold;
     }
 }
 .bottom_change-block{
@@ -309,7 +309,7 @@
     .feedback_change_star{
         cursor: pointer;
         margin-right: 1rem;
-        font-weight: bold;
+        font-family: $main-font-semibold;
     }
 }
 .form-change_star{
@@ -342,8 +342,8 @@
     }
 }
 .result-styles {
-    color: #03cc25;
-    font-weight: bold;
+    color: $succes;
+    font-family: $main-font-semibold;
 }
 .date_review{
     opacity: .5;
