@@ -38,6 +38,7 @@ AddEventHandler("iblock", "OnBeforeIBlockElementDelete", "OnBeforeIBlockElementD
                 "!PROPERTY_VERIFIED" => false,
                 "PROPERTY_REJECTED" => false,
                 "!ID" => $arFields,
+                "!PROPERTY_EVALUATION"=> 0,
             );
             $res_otzev = CIBlockElement::GetList(Array(), $arFilter_otzev, false, false, $arSelect_otzev);
             $total = 0;
@@ -143,7 +144,8 @@ function IBlockElementAfterSaveHandler($arg1, $arg2 = false, $bInternal = false)
                     "IBLOCK_ID" => 13,
                     "PROPERTY_NAME_COMPANY" => $arProps["NAME_COMPANY"]["VALUE"],
                     "!PROPERTY_VERIFIED" => false,
-                    "PROPERTY_REJECTED" => false
+                    "PROPERTY_REJECTED" => false,
+                    "!PROPERTY_EVALUATION"=> 0,
                 );
                 $res_otzev = CIBlockElement::GetList(Array(), $arFilter_otzev, false, false, $arSelect_otzev);
                 $total = 0;
