@@ -31,7 +31,8 @@ while($ob = $res->GetNextElement()){
               "IBLOCK_ID" => 13,
               "PROPERTY_NAME_COMPANY" => $id_company,
               "!PROPERTY_VERIFIED" => false,
-              "PROPERTY_REJECTED" => false
+              "PROPERTY_REJECTED" => false,
+              "!PROPERTY_EVALUATION"=> 0,
           );
           $res_otzev = CIBlockElement::GetList(Array(), $arFilter_otzev, false, false, $arSelect_otzev);
           $total = 0;
@@ -90,7 +91,8 @@ while($ob = $res->GetNextElement()){
               "IBLOCK_ID" => 13,
               "PROPERTY_NAME_COMPANY" => $id_company,
               "!PROPERTY_VERIFIED" => false,
-              "PROPERTY_REJECTED" => false
+              "PROPERTY_REJECTED" => false,
+              "!PROPERTY_EVALUATION"=> 0,
           );
           $res_otzev = CIBlockElement::GetList(Array(), $arFilter_otzev, false, false, $arSelect_otzev);
           $total = 0;
