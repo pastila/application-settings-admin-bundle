@@ -405,7 +405,10 @@ $countReviews = count($allReviews);
             </div>
 
             <!-- Text -->
+            <div class="srolling--parent">
                 <p class="feedback__text readmore-text"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p>
+            </div>
+
 
             <!-- Bottom -->
             <div class="feedback__bottom">
@@ -751,19 +754,14 @@ $countReviews = count($allReviews);
     speed: 75, // скорость раскрытия
     collapsedHeight: 150, // высота отзыва
     moreLink: '<div class="readmore-text__block __shadow"><a class="readmore-text__block__link" href="#">Читать весь отзыв...</a></div>', // читать весь отзыв
-    lessLink: '<div class="readmore-text__block hide-comment"><a class="readmore-text__block__link" href="#">Скрыть отзыв</a></div>', // скрыть весь отзыв
+    lessLink: '<div class="readmore-text__block" id="hide-comment"><a class="readmore-text__block__link" href="#">Скрыть отзыв</a></div>', // скрыть весь отзыв
   });
-  $(document).ready(function() {
-
-    $('.hide-comment').click(function() {
-      console.log('asdasd');
-      // $('html, body').animate({
-      //   scrollTop: $(this).offset().top - 60 + "px"
-      // }, 400);
+  $(document).on('click',function() {
+    $('#hide-comment').click(function() {
+      $('html, body').animate({
+        scrollTop: $(this).closest('.srolling--parent').offset().top - 60 + "px"
+      }, 400);
     });
-  })
-  $(document).ready(function() {
-
   })
 </script>
 

@@ -336,7 +336,7 @@
         background: $lightBg;
         border: 1px dashed $accentColor;
         padding: 0.5rem;
-        font-weight: bold;
+        font-family: $main-font-bold;
     }
 }
 .list_numbered-items{
@@ -351,7 +351,7 @@
         width: 100%;
     }
     .sidebar_count{
-        font-weight: bold;
+        font-family: $main-font-bold;
         &.number{
             margin-right: 1.5rem;
         }
@@ -510,7 +510,7 @@ a[data-tooltip][data-position="bottom"]:before {
         &__link{
             cursor: pointer;
             color: $accentColor;
-            font-weight: bold;
+            font-family: $main-font-bold;
         }
     }
 }

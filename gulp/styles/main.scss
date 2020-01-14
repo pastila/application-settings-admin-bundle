@@ -159,7 +159,7 @@ main.main {
     color: red;
 }
 .bold{
-    font-weight: bold;
+    font-family: $main-font-bold;
 }
 .input__wrap{
     position: relative;
@@ -377,7 +377,7 @@ input{
  .dalete_review {
      cursor: pointer;
      color: $accentColor;
-     font-family: $main-font-semibold;
+     font-family: $main-font-bold;
  }
  .add_reviews-select{
      @media(min-width: 992px){
@@ -394,7 +394,7 @@ input{
          border-bottom: 1px dashed $mainColor;
      }
      .bold{
-         font-weight: bold;
+         font-family: $main-font-bold;
      }
      .block_image{
          margin: 2rem 0;
@@ -428,7 +428,7 @@ input{
     }
 }
 #btn_myFileInput{
-    font-weight: bold;
+    font-family: $main-font-bold;
     border: none;
     background-color: $accentColor;
     color: white;
