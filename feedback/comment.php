@@ -39,9 +39,14 @@ preg_match("/(\d+)\/$/",$url,$result_id);
             $arProps = $ob->GetProperties();
             ?>
             <ul class="breadcrumbs">
-                <li><a href="/">Главная</a></li>
-                <li><a href="/feedback/">Отзывы</a></li>
-                <li><?php echo $arFields["NAME"] ?></li>
+                <? if ($detect->isTablet() || $detect->isMobile()) { ?>
+                    <li><a href="/feedback/" class=""><?php echo $arFields["NAME"] ?></a></li>
+                <? } else { ?>
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="/feedback/">Отзывы</a></li>
+                    <li><?php echo $arFields["NAME"] ?></li>
+                <? } ?>
+
             </ul>
             <?
             if($arProps["DATE_CHANGE_BY_USER"]["VALUE"] != "") {

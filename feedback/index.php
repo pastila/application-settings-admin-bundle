@@ -30,8 +30,13 @@ $countReviews = count($allReviews);
 ?>
 <!-- Breadcrumbs -->
 <ul class="breadcrumbs">
-    <li><a href="/">Главная</a></li>
-    <li>Отзывы</li>
+    <? if ($detect->isTablet() || $detect->isMobile()) { ?>
+        <li><a href="/" class="">Отзывы</a></li>
+    <? } else { ?>
+        <li><a href="/">Главная</a></li>
+        <li>Отзывы</li>
+    <? } ?>
+
 </ul>
 
 <!-- Pages Title -->

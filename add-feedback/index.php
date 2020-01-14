@@ -10,10 +10,9 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/feedback/add/main.min.js");
 
 
 CModule::IncludeModule("iblock");
-global $USER;?>
+global $USER; ?>
 
     <div class="wrap">
-
 
 
         <!-- Main content -->
@@ -21,13 +20,19 @@ global $USER;?>
 
             <!-- Breadcrumbs -->
             <ul class="breadcrumbs">
-                <li><a href="/">Главная</a></li>
-                <li><a href="/feedback/">Отзывы</a></li>
-                <li>Добавление отзыва</li>
+                <? if ($detect->isTablet() || $detect->isMobile()) { ?>
+                    <li><a href="/feedback/" class="">Добавление отзыва</a></li>
+                <? } else { ?>
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="/feedback/">Отзывы</a></li>
+                    <li>Добавление отзыва</li>
+                <? } ?>
+
+
             </ul>
 
             <!-- Pages Title -->
-            <?if($USER->IsAuthorized()){?>
+            <? if ($USER->IsAuthorized()) { ?>
                 <h2 class="page-title">Добавить отзыв о компании</h2>
 
                 <!-- Wrap -->
@@ -36,23 +41,27 @@ global $USER;?>
 
                         <div class="feedback__top">
                             <div class="block_relative add_reviews-select">
-                            <label class="input__wrap_label" for="user_pass">Выбор региона: </label>
+                                <label class="input__wrap_label" for="user_pass">Выбор региона: </label>
                                 <div class="input__wrap">
                                     <div class="input__ico">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255"
+                                             viewBox="0 0 255 255">
+                                            <path d="M0 63.75l127.5 127.5L255 63.75z"/>
+                                        </svg>
                                     </div>
                                     <input id="referal" type="text" placeholder="Поиск по региону" autocomplete="off"/>
                                     <ul style="cursor: pointer;" class="custom-serach__items" id="search_result">
                                         <?
-                                        $arOrder = Array("name"=>"asc");
-                                        $arFilter = Array("IBLOCK_ID"=>16);
-                                        $res = CIBlockSection::GetList($arOrder, $arFilter, false );
-                                        while($ob = $res->GetNext()){
+                                        $arOrder = Array("name" => "asc");
+                                        $arFilter = Array("IBLOCK_ID" => 16);
+                                        $res = CIBlockSection::GetList($arOrder, $arFilter, false);
+                                        while ($ob = $res->GetNext()) {
 
                                             ?>
-                                            <li value="<?=$ob["ID"]?>" class="custom-serach__items_item region " data-id-city="<?=$ob["ID"]?>"><?=$ob["NAME"]?></li>
+                                            <li value="<?= $ob["ID"] ?>" class="custom-serach__items_item region "
+                                                data-id-city="<?= $ob["ID"] ?>"><?= $ob["NAME"] ?></li>
 
-                                        <?  }?>
+                                        <? } ?>
                                     </ul>
                                 </div>
                             </div>
@@ -60,10 +69,15 @@ global $USER;?>
                                 <label class="input__wrap_label" for="user_pass">Список страховых компаний : </label>
                                 <div class="input__wrap">
                                     <div class="input__ico">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255"
+                                             viewBox="0 0 255 255">
+                                            <path d="M0 63.75l127.5 127.5L255 63.75z"/>
+                                        </svg>
                                     </div>
-                                    <input id="referal_two" type="text" placeholder="Поиск по страховым компаниям" autocomplete="off"/>
-                                    <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_hospital">
+                                    <input id="referal_two" type="text" placeholder="Поиск по страховым компаниям"
+                                           autocomplete="off"/>
+                                    <ul style="cursor: pointer;" class="custom-serach__items"
+                                        id="search_result_hospital">
 
                                     </ul>
                                 </div>
@@ -107,7 +121,7 @@ global $USER;?>
                                     </ul>
                                 </div>
 
-                                <div class="danger" style="display: none" >Дайте оценку компании</div>
+                                <div class="danger" style="display: none">Дайте оценку компании</div>
 
                                 <div class='success-box'>
                                     <div class='text-message'></div>
@@ -129,16 +143,16 @@ global $USER;?>
                         </div>
                 </form>
 
-            <? }else{?>
-                <h2 style="color: red;" class="page-title">Отзывы можно оставлять только авторизованным пользователям!</h2>
-                <p>Для того чтобы вернуться на страницу «отзывы», кликните <a style="text-decoration: underline" href="/feedback/">сюда</a></p>
-         <?   }?>
+            <? } else { ?>
+                <h2 style="color: red;" class="page-title">Отзывы можно оставлять только авторизованным
+                    пользователям!</h2>
+                <p>Для того чтобы вернуться на страницу «отзывы», кликните <a style="text-decoration: underline"
+                                                                              href="/feedback/">сюда</a></p>
+            <? } ?>
         </main>
 
 
-
     </div><!-- END Wrap -->
-
 
 
 <?php require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>

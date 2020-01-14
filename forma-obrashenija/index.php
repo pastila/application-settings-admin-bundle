@@ -23,8 +23,13 @@ while($ob = $res->GetNextElement()){
 
     <!-- Breadcrumbs -->
     <ul class="breadcrumbs">
-        <li><a href="/">Главная</a></li>
-        <li>Диагноз</li>
+        <? if ($detect->isTablet() || $detect->isMobile()) { ?>
+            <li><a href="/" class="">Диагноз</a></li>
+        <? } else { ?>
+            <li><a href="/">Главная</a></li>
+            <li>Диагноз</li>
+        <? } ?>
+
     </ul>
 
     <!-- Pages Title -->
