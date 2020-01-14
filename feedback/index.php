@@ -405,9 +405,7 @@ $countReviews = count($allReviews);
             </div>
 
             <!-- Text -->
-            <div class="srolling--parent">
-                <p class="feedback__text readmore-text"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p>
-            </div>
+            <div class="srolling--parent"> <p class="feedback__text readmore-text"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p></div>
 
 
             <!-- Bottom -->
@@ -748,22 +746,6 @@ $countReviews = count($allReviews);
 
     </div>
 </div>
-
-<script>
-  $('.readmore-text').readmore({
-    speed: 75, // скорость раскрытия
-    collapsedHeight: 150, // высота отзыва
-    moreLink: '<div class="readmore-text__block __shadow"><a class="readmore-text__block__link" href="#">Читать весь отзыв...</a></div>', // читать весь отзыв
-    lessLink: '<div class="readmore-text__block" id="hide-comment"><a class="readmore-text__block__link" href="#">Скрыть отзыв</a></div>', // скрыть весь отзыв
-  });
-  $(document).on('click',function() {
-    $('#hide-comment').click(function() {
-      $('html, body').animate({
-        scrollTop: $(this).closest('.srolling--parent').offset().top - 60 + "px"
-      }, 400);
-    });
-  })
-</script>
 
 <?php require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>
 

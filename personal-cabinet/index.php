@@ -346,7 +346,7 @@ while($ob = $res->GetNextElement()){
                     );?>
                 </div>
                 <div class="submit_button submit_button-child">
-                    <button class="mainBtn" type="submit" id="save_children">Сохранить</button>
+                    <button class="mainBtn main-button-styles" type="submit" id="save_children">Сохранить</button>
                     <button class="accentBtn" type="submit" id="cancel">Отмена</button>
                 </div>
             </form>
