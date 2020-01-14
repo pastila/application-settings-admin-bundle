@@ -428,6 +428,9 @@ input{
 }
 #btn_myFileInput{
     font-weight: bold;
+    border: none;
+    background-color: $accentColor;
+    color: white;
 }
 .label_parent-elements{
     display: block;
