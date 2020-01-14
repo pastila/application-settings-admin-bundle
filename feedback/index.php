@@ -47,8 +47,8 @@ $countReviews = count($allReviews);
 
     <!-- Add and All feedback btns -->
     <div class="feedback__btns">
-        <a href="/add-feedback/" class="mainBtn full-width">Добавить отзыв</a>
-        <a href="?comments=all" class="accentBtn full-width">Все отзывы</a>
+        <a href="/add-feedback/" class="mainBtn">Добавить отзыв</a>
+        <a href="?comments=all" class="accentBtn">Все отзывы</a>
     </div>
 
     <div class="feedback__filter">
