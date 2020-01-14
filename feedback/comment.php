@@ -14,9 +14,9 @@ preg_match("/(\d+)\/$/",$url,$result_id);
 
 
 ?>
-<div class="feedback">
+<div class="feedback-detalil">
 
-    <div class="feedback__wrap_white-blocks">
+    <div class="feedback-detalil__wrap_white-blocks">
 
         <!-- FeedBack block -->
 

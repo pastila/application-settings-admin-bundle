@@ -1,7 +1,9 @@
 .mainBtn {
     @include btnDesc($mainColor, white);
 }
-
+.smallMainBtn{
+    @include btnDesc($mainColor, white);
+}
 .accentBtn {
     @include btnDesc($accentColor, white);
 }

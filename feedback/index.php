@@ -5,6 +5,7 @@ use Bitrix\Main\Page\Asset;
 $asset = Asset::getInstance();
 $asset->addCss(SITE_TEMPLATE_PATH . "/pages/feedback/main.min.css");
 $asset->addJs(SITE_TEMPLATE_PATH . "/pages/feedback/main.min.js");
+$asset->addJs(SITE_TEMPLATE_PATH . "/js/readmore.min.js");
 
 CModule::IncludeModule("iblock");
 global $USER;
@@ -117,8 +118,8 @@ $countReviews = count($allReviews);
                     ?>
             <a data-tooltip="Очистить отзывы" data-position="bottom" class="refresh_active-link bottom"
                 href="<?= $url_for_filter ?>">
-                <p class="activ_filter after-select_activ-filter">
-                    <?= $name_company ?></p>
+                <div class="activ_filter after-select_activ-filter">
+                    <?= $name_company ?></div>
             </a>
             <? }
             } ?>
@@ -194,16 +195,13 @@ $countReviews = count($allReviews);
                     ?>
             <a data-tooltip="Очистить оценку" data-position="bottom" class="refresh_active-link bottom"
                 href="<?= $url_for_filter ?>">
-                <p class="activ_filter after-select_activ-filter">
-                    Оценка <?= $check_evalution ?></p>
+                <div class="activ_filter after-select_activ-filter">
+                    Оценка <?= $check_evalution ?></div>
             </a>
             <? }
             } ?>
 
         </div>
-
-
-
 
         <div class="custom-select column-reverse_select">
             <select style="display: none" onchange="window.open(this.value)">
@@ -274,15 +272,15 @@ $countReviews = count($allReviews);
                     ?>
             <a data-tooltip="Очистить город" data-position="bottom" class="refresh_active-link bottom"
                 href="<?= $url_for_filter ?>">
-                <p class="activ_filter after-select_activ-filter">
-                    <?= $name_region ?></p>
+                <div class="activ_filter after-select_activ-filter">
+                    <?= $name_region ?></div>
             </a>
             <? }
             } ?>
 
         </div>
 
-        <a class="feedback-button_reset" href="/feedback/">Сбросить</a>
+        <a class="feedback__filter__reset" href="/feedback/">Сбросить</a>
     </div>
 
 </form>
@@ -407,7 +405,8 @@ $countReviews = count($allReviews);
             </div>
 
             <!-- Text -->
-            <p class="feedback__text"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p>
+            <div class="srolling--parent"> <p class="feedback__text readmore-text"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p></div>
+
 
             <!-- Bottom -->
             <div class="feedback__bottom">
@@ -747,7 +746,6 @@ $countReviews = count($allReviews);
 
     </div>
 </div>
-
 
 <?php require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>
 
