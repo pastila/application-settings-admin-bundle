@@ -41,8 +41,8 @@ $countReviews = count($allReviews);
 
     <!-- Add and All feedback btns -->
     <div class="feedback__btns">
-        <a href="/add-feedback/" class="mainBtn">Добавить отзыв</a>
-        <a href="?comments=all" class="accentBtn">Все отзывы</a>
+        <a href="/add-feedback/" class="mainBtn full-width">Добавить отзыв</a>
+        <a href="?comments=all" class="accentBtn full-width">Все отзывы</a>
     </div>
 
     <div class="feedback__filter">
@@ -112,8 +112,8 @@ $countReviews = count($allReviews);
                     ?>
             <a data-tooltip="Очистить отзывы" data-position="bottom" class="refresh_active-link bottom"
                 href="<?= $url_for_filter ?>">
-                <p class="activ_filter after-select_activ-filter">
-                    <?= $name_company ?></p>
+                <div class="activ_filter after-select_activ-filter">
+                    <?= $name_company ?></div>
             </a>
             <? }
             } ?>
@@ -189,16 +189,13 @@ $countReviews = count($allReviews);
                     ?>
             <a data-tooltip="Очистить оценку" data-position="bottom" class="refresh_active-link bottom"
                 href="<?= $url_for_filter ?>">
-                <p class="activ_filter after-select_activ-filter">
-                    Оценка <?= $check_evalution ?></p>
+                <div class="activ_filter after-select_activ-filter">
+                    Оценка <?= $check_evalution ?></div>
             </a>
             <? }
             } ?>
 
         </div>
-
-
-
 
         <div class="custom-select column-reverse_select">
             <select style="display: none" onchange="window.open(this.value)">
@@ -269,15 +266,15 @@ $countReviews = count($allReviews);
                     ?>
             <a data-tooltip="Очистить город" data-position="bottom" class="refresh_active-link bottom"
                 href="<?= $url_for_filter ?>">
-                <p class="activ_filter after-select_activ-filter">
-                    <?= $name_region ?></p>
+                <div class="activ_filter after-select_activ-filter">
+                    <?= $name_region ?></div>
             </a>
             <? }
             } ?>
 
         </div>
 
-        <a class="feedback-button_reset" href="/feedback/">Сбросить</a>
+        <a class="feedback__filter__reset" href="/feedback/">Сбросить</a>
     </div>
 
 </form>
@@ -401,7 +398,7 @@ $countReviews = count($allReviews);
             </div>
 
             <!-- Text -->
-            <p class="feedback__text"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p>
+                <p class="feedback__text readmore-text"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p>
 
             <!-- Bottom -->
             <div class="feedback__bottom">
@@ -742,6 +739,15 @@ $countReviews = count($allReviews);
     </div>
 </div>
 
+<script src="https://rawgit.com/jedfoster/Readmore.js/master/readmore.js"></script>
+<script>
+  $('.readmore-text').readmore({
+    speed: 75, // скорость раскрытия
+    collapsedHeight: 150, // высота отзыва
+    moreLink: '<div class="readmore_block"><a class="" href="#"><i class="fa fa-eye" aria-hidden="true"></i> Читать весь отзыв</a></div>', // читать весь отзыв
+    lessLink: '<div class="readmore_block"><a class="readmore_profile" href="#"><i class="fa fa-times" aria-hidden="true"></i> Скрыть</a></div>', // скрыть весь отзыв
+  });
+</script>
 
 <?php require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>
 
