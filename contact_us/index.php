@@ -19,8 +19,13 @@ if($ob = $res->GetNextElement()){
 } ?>
 <!-- Breadcrumbs -->
 <ul class="breadcrumbs">
-    <li><a href="/">Главная</a></li>
-    <li><?= $arProps["NAME"]; ?></li>
+    <? if ($detect->isTablet() || $detect->isMobile()) { ?>
+        <li><a href="/" class=""><?= $arProps["NAME"]; ?></a></li>
+    <? } else { ?>
+        <li><a href="/">Главная</a></li>
+        <li><?= $arProps["NAME"]; ?></li>
+    <? } ?>
+
 </ul>
 
 <!-- Pages Title -->
