@@ -578,7 +578,8 @@ while ($ob = $res->GetNextElement()) {
     $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 100, 'height' => 100),
         BX_RESIZE_IMAGE_PROPORTIONAL, true);
 
-    ?>
+    ?> 
+
     <div class="white_block">
         <?php if ($Date_change_user != "") { ?>
             <span class="date_review">Дата изменения <?php echo $Date_change_user; ?></span>
