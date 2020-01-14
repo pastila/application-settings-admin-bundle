@@ -49,10 +49,13 @@ label {
     }
     &__btns {
         display: flex;
-        align-items: baseline;
         flex-wrap: wrap;
-        .smallMainBtn {
-            margin-bottom: 2rem;
+        margin-bottom: 2rem;
+        &_btn {
+            margin-right: 2rem;
+            @media screen and(max-width: 576px){
+                margin-right: 0;
+            }
         }
     }
 
