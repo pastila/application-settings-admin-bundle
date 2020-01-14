@@ -285,7 +285,9 @@ while($ob = $res->GetNextElement()){
             </div>
         </section>
 
-        <span id="strax-sluchay" class="mainBtn">проверить диагноз</span>
+        <div style="display:flex;">
+            <button style="margin: 0 auto; id="strax-sluchay" class="mainBtn">проверить диагноз</button>
+        </div>
     </form>
 
 <?php require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php");?>
