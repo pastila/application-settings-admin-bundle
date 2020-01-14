@@ -10,10 +10,14 @@
 
         input {
             height: 5rem;
+            padding: 0 3rem;
+        }
+
+        textarea {
+            padding: 3rem;
         }
         
         input, textarea {
-            padding: 0 3rem;
             border: none;
             background: $inputColor;
             font-size: 1.6rem;
