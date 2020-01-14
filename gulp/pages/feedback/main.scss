@@ -26,16 +26,7 @@
         .mainBtn {
             margin-right: 2rem;
             @media screen and (max-width: 575px){
-                margin-right: 0;
-            }
-        }
-        .full-width{
-            @media(max-width: 575px){
-                width: 100%;
-                max-width: 100%;
-                &:not(:last-of-type){
-                    margin-bottom: 1rem;
-                }
+                margin-right: .5rem;
             }
         }
     }
@@ -376,7 +367,7 @@
     .remove_comment {
         display: inline-block;
         cursor: pointer;
-        color: red;
+        color: $accentColor;
         font-weight: 700;
         font-size: 1.2rem;
         @media(max-width: 991px){
