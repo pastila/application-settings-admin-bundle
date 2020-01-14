@@ -10,13 +10,13 @@
 
         input {
             height: 5rem;
-            font-size: 1.6rem;
-            background: $inputColor;
         }
         
         input, textarea {
             padding: 0 3rem;
             border: none;
+            background: $inputColor;
+            font-size: 1.6rem;
             &:focus, &:visited, &:focus {
                 outline: none;
             }

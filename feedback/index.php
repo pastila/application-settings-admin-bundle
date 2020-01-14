@@ -230,7 +230,7 @@ $countReviews = count($allReviews);
                                 }
                             }
                             if ($url_for_filter == "?") {
-                                $url_for_filter = "/feedback/";
+                                $url_for_filter = "";
                             }
                             ?>
                 <option class="activ_filter" value="<?= $url_for_filter ?>">
@@ -363,6 +363,7 @@ $countReviews = count($allReviews);
             </div>
             <!-- top -->
             <div class="feedback__block_top">
+
                 <?php if ($arProps["EVALUATION"]["VALUE"] != "") { ?>
                 <div class="feedback__block_top_star">
 
@@ -375,7 +376,7 @@ $countReviews = count($allReviews);
                             <?php } elseif ($arProps["REJECTED"]["VALUE"] != "" && $arProps["VERIFIED"]["VALUE"] != "") { ?>
                             fill="#3a4552"
                             <? } elseif ($arProps["VERIFIED"]["VALUE"] != "") { ?>
-                            fill="#1000ff"
+                            fill="#00abd8"
                             <?php } ?>/>
                     </svg>
 

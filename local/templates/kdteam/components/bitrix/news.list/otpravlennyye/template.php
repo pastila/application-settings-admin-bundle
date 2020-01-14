@@ -41,13 +41,13 @@ if (count($arResult["ITEMS"]) > 0) {
         <!-- Обращение -->
         <div id="appeal_<?= $arItem["ID"] ?>" class="obrashcheniya">
             <div class="obrashcheniya__btns">
-                <div class="block__button_send">
+                <div class="obrashcheniya__btns_btn block__button_send">
                     <input class="smallMainBtn hidden_browse_input" id="<?= $arItem["ID"] ?>" type="file" multiple
                            name="file">
-                    <label for="<?= $arItem["ID"] ?>" class="btn btn-tertiary js-labelFile smallMainBtn">
+                    <label for="<?= $arItem["ID"] ?>" class="btn btn-tertiary js-labelFile mainBtn">
                         Прикрепить скан или фото</label>
                 </div>
-                <a class="smallMainBtn block_button_mob" onclick="send_ms(this)" id="send_<?= $arItem["ID"] ?>">Отправить</a>
+                <a class="obrashcheniya__btns_btn accentBtn block_button_mob" onclick="send_ms(this)" id="send_<?= $arItem["ID"] ?>">Отправить</a>
             </div>
             <p id="error_<?= $arItem["ID"] ?>" class="error"></p>
             <p id="success_<?= $arItem["ID"] ?>" class="success"></p>
