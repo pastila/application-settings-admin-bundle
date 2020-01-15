@@ -5,6 +5,7 @@ use Bitrix\Main\Page\Asset;
 $asset = Asset::getInstance();
 $asset->addCss(SITE_TEMPLATE_PATH . "/pages/feedback/main.min.css");
 $asset->addJs(SITE_TEMPLATE_PATH . "/pages/feedback/main.min.js");
+$asset->addJs(SITE_TEMPLATE_PATH . "/js/readmore.min.js");
 CModule::IncludeModule("iblock");
 global $USER;
 $url = $_SERVER["REQUEST_URI"];
@@ -113,7 +114,9 @@ preg_match("/(\d+)\/$/",$url,$result_id);
                 </div>
 
                 <!-- Text -->
-                <p class="feedback__text"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p>
+                <div class="srolling--parent">
+                 <p class="feedback__text readmore__parent"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p>
+                </div>
 
                 <!-- Bottom -->
                 <div class="feedback__bottom">

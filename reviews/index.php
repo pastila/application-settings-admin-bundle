@@ -9,6 +9,7 @@ use Bitrix\Main\Page\Asset;
 $asset = Asset::getInstance();
 $asset->addCss(SITE_TEMPLATE_PATH . "/pages/reviews/reviews.min.css");
 $asset->addJs(SITE_TEMPLATE_PATH . "/pages/reviews/reviews.min.js");
+$asset->addJs(SITE_TEMPLATE_PATH . "/js/readmore.min.js");
 
 $rsUser = CUser::GetByID($USER->GetID());
 $arUser = $rsUser->Fetch();
@@ -129,8 +130,9 @@ $arUser = $rsUser->Fetch();
             </div>
 
             <!-- Text -->
-            <p class="feedback__text"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p>
-
+            <div class="srolling--parent">
+                <p class="feedback__text readmore__parent"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p>
+            </div>
             <!-- Bottom -->
             <div class="feedback__bottom">
                 <div class="feedback__bottom_name opacity_block">OMC</div>
