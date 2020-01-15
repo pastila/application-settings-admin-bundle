@@ -1,0 +1,29 @@
+@import '../../styles/utils/vars';
+
+
+.form_contact-us{
+  max-width: 70rem;
+  margin: 2rem 0;
+  @media screen and(min-width: 1200px){
+    margin: 5rem 0;
+  }
+  .writeUs__form__wrap{
+    &__middle{
+      @media screen and (min-width: 992px){
+        flex-wrap: nowrap;
+        display: flex;
+        justify-content: space-between;
+      }
+      .input__wrap{
+        &__half{
+          @media screen and(min-width: 992px){
+            width: 49%;
+          }
+        }
+      }
+    }
+    textarea{
+      min-height: 10rem;
+    }
+  }
+}
