@@ -60,14 +60,14 @@ if (count($arResult["ITEMS"]) > 0) {
                     <div class="obrashcheniya__content_left">
                         <div class="tumbler_users-tab">
                             <div class="user_block tab_element select_toggle">
-                                <p class="arrow_link">Мои обращения</p>
+                                <p class="arrow_link js_text">Мои обращения</p>
                                 <div class="select-dropdown-child white_block">
                                     <ul>
                                         <li>
-                                            <p class="user_block tab_element" data_el="<?=$arItem["ID"]?>" id="remove_child-button">Мои обращения</p>
+                                            <p class="user_block js_click_user tab_element" data_el="<?=$arItem["ID"]?>"  id="remove_child-button">Мои обращения</p>
                                         </li>
                                         <li>
-                                            <p class="user_block tab_element" data_el="<?=$arItem["ID"]?>" id="add_child-button">Для опекаемого человека</p>
+                                            <p class="user_block js_click_user tab_element" data_el="<?=$arItem["ID"]?>" id="add_child-button">Для опекаемого человека</p>
                                         </li>
                                     </ul>
                                 </div>
