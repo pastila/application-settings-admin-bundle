@@ -155,6 +155,7 @@ label {
         margin-bottom: 2rem;
         display: block;
         text-align: right;
+        color: $mainColor;
         .user_block{
             &.tab_element{
                 cursor: pointer;
@@ -175,6 +176,7 @@ label {
         display: inline-block;
         .select-dropdown-child{
             display: none;
+            cursor: initial;
             position: absolute;
             top: 100%;
             left: auto;

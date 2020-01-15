@@ -510,8 +510,6 @@ function responseMessage(msg) {
   $('.success-box div.text-message').html('<span>' + msg + '</span>');
 }
 
-// show menu toggle
-var theToggle = document.getElementById('show-mnu');
 
 // hasClass
 function hasClass(elem, className) {
@@ -549,12 +547,18 @@ function toggleClass(elem, className) {
   }
 }
 
-if (theToggle) {
-  theToggle.onclick = function() {
-    toggleClass(this, 'active');
-    return false;
-  };
-}
+$(document).ready(function() {
+  $('#show-mnu').click(function() {
+    $('#show-mnu').toggleClass('active');
+  });
+  $(document).on('click', function(e) {
+    if (!$(e.target).closest("#show-mnu , #menu ").length) {
+      $('#show-mnu').removeClass('active');
+    }
+    e.stopPropagation();
+  });
+})
+
 
 function lazyloadImage() {
   const images = document.querySelectorAll('[data-src]');

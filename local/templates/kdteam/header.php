@@ -53,7 +53,7 @@ $asset = Asset::getInstance();
             if ($USER->IsAuthorized()) { ?>
                 <div class="header__r" style="display: flex;">
                     <div class="header__r_auth">
-                        <a href="#menu" id="show-mnu" class="header__r_auth_user">
+                        <a rel="nofollow" href="javascript:void(0)" id="show-mnu" class="header__r_auth_user">
                             <span class="header__r_auth_user_hello">
                                 Добрый день,
                             </span>
