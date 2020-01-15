@@ -260,20 +260,6 @@ $(document).ready(function() {
   });
 
 
-  $('.readmore-text').readmore({
-    speed: 75, // скорость раскрытия
-    collapsedHeight: 150, // высота отзыва
-    moreLink: '<div class="readmore-text__block __shadow"><a class="readmore-text__block__link" href="#">Читать весь отзыв...</a></div>', // читать весь отзыв
-    lessLink: '<div class="readmore-text__block" id="hide-comment"><a class="readmore-text__block__link" href="#">Скрыть отзыв</a></div>', // скрыть весь отзыв
-    afterToggle: function(trigger, element, expanded) {
-      if(! expanded) { // кнопка "Скрыть" была нажата
-        $('html, body').animate({
-          scrollTop: element.offset().top
-        },{
-          duration: 100
-        });
-      }
-    }
-  });
+
 });
 
