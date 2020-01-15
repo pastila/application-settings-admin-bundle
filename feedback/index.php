@@ -38,18 +38,7 @@ $countReviews = count($allReviews);
     <? } ?>
 
 </ul>
-<div class="truncate">
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, repellat, vitae! At consectetur deserunt earum est expedita, fugiat nam necessitatibus numquam quis suscipit! Ad adipisci doloribus ea et excepturi laboriosam nam nisi nulla pariatur perspiciatis placeat, qui reiciendis rem repellat soluta tenetur ullam. Alias amet dignissimos neque officia quia quisquam quo repellendus sunt! Ab ad at consequatur deserunt dicta doloremque doloribus eaque excepturi harum id ipsum iusto necessitatibus nemo nisi numquam omnis perspiciatis placeat quae repellendus tempora tenetur, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur dolor enim excepturi ipsam, minus quos rem velit! A accusantium ad animi architecto asperiores atque blanditiis, dignissimos dolorem ea eaque facilis illo iusto laborum molestias nesciunt quam qui quidem quis quo repellat rerum sed sequi sit, unde veniam voluptas voluptatem voluptatum? velit vero? Dolores, illo impedit iste laudantium nesciunt quam quasi ratione reiciendis tempore veritatis. Animi blanditiis doloribus laboriosam nam nihil omnis, tempore.</p>
-</div>
 
-<style>
-    body{animation: fadeIn 1s}
-    @keyframes fadeIn{
-        0%{opacity:0;background:#000}
-        90%{opacity:0}
-        100%{opacity:1;background:#fff}
-    }
-</style>
 <!-- Pages Title -->
 <h2 class="page-title">Отзывы о страховых компаниях</h2>
 
