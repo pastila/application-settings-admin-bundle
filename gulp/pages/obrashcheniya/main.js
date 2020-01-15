@@ -12,6 +12,12 @@ $(document).ready(function() {
   $('.select_toggle').click(function() {
     $(this).toggleClass('active');
   });
+  $(document).on('click', function(e) {
+    if (!$(e.target).closest(".select_toggle , .select-dropdown-child").length) {
+      $('.select_toggle').removeClass('active');
+    }
+    e.stopPropagation();
+  });
   function addChild() {
     const items = document.querySelectorAll('.obrashcheniya__content');
 
