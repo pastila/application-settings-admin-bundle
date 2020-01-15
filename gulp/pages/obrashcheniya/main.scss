@@ -232,13 +232,8 @@ label {
 @media(max-width: 575px){
     .obrashcheniya {
         &__btns {
-            .block__button_send{
-                display: block;
-                width: 100%;
-            }
-            .block_button_mob{
-                display: block;
-                width: 100%;
+            .mainBtn{
+                margin-right: .5rem;
             }
         }
     }
