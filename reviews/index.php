@@ -34,7 +34,7 @@ $arUser = $rsUser->Fetch();
 
 
             $order = Array("created" => "desc");
-            $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
+            $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","CREATED_DATE", "PROPERTY_*");
             $arFilter = Array("IBLOCK_ID" => 13, "ACTIVE" => "Y", "PROPERTY_NAME_USER" => $USER->GetID());
 
             $pagen = Array("nPageSize" => 5);
@@ -49,7 +49,10 @@ $arUser = $rsUser->Fetch();
                 $Date_change_user ="";
                 $arFields = $ob->GetFields();
                 $arProps = $ob->GetProperties();
-                $newDate = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_ACTIVE_FROM"]));
+                $newdata = explode(".",$arFields["CREATED_DATE"]);
+                $newstrDate = $newdata[2].'.' . $newdata[1].'.' .$newdata[0];
+
+                $newDate = FormatDate("d F, Y", MakeTimeStamp($newstrDate));
 
                 if($arProps["DATE_CHANGE_BY_USER"]["VALUE"] != "") {
                     $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arProps["DATE_CHANGE_BY_USER"]["VALUE"]));
@@ -274,7 +277,7 @@ $arUser = $rsUser->Fetch();
     <?php
 
 $order = Array("created" => "desc");
-$arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
+$arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","CREATED_DATE", "PROPERTY_*");
 $arFilter = Array("IBLOCK_ID" => 13, "ACTIVE" => "Y", "PROPERTY_NAME_COMPANY" => $arUser["UF_INSURANCE_COMPANY"]);
 
 $pagen = Array("nPageSize" => 5);
@@ -289,7 +292,10 @@ while ($ob = $res->GetNextElement()) {
 $Date_change_user ="";
 $arFields = $ob->GetFields();
 $arProps = $ob->GetProperties();
-$newDate = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_ACTIVE_FROM"]));
+    $newdata = explode(".",$arFields["CREATED_DATE"]);
+    $newstrDate = $newdata[2].'.' . $newdata[1].'.' .$newdata[0];
+
+    $newDate = FormatDate("d F, Y", MakeTimeStamp($newstrDate));
 if($arProps["DATE_CHANGE_BY_USER"]["VALUE"] != "") {
  $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arProps["DATE_CHANGE_BY_USER"]["VALUE"]));
 }else{
@@ -530,7 +536,7 @@ while ($ob2 = $res2->GetNextElement()) {
 
 
 $order = Array("created" => "desc");
-$arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
+$arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","CREATED_DATE", "PROPERTY_*");
 $arFilter = Array("IBLOCK_ID" => 13, "ACTIVE" => "Y", "PROPERTY_COMMENTS_TO_REWIEW" => $ID_comments);
 
 $pagen = Array("nPageSize" => 5);
@@ -555,7 +561,10 @@ while ($ob = $res->GetNextElement()) {
 
     $arFields = $ob->GetFields();
     $arProps = $ob->GetProperties();
-    $newDate = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_ACTIVE_FROM"]));
+    $newdata = explode(".",$arFields["CREATED_DATE"]);
+    $newstrDate = $newdata[2].'.' . $newdata[1].'.' .$newdata[0];
+
+    $newDate = FormatDate("d F, Y", MakeTimeStamp($newstrDate));
     if ($arProps["DATE_CHANGE_BY_USER"]["VALUE"] != "") {
         $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arProps["DATE_CHANGE_BY_USER"]["VALUE"]));
     } else {

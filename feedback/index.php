@@ -304,7 +304,7 @@ $countReviews = count($allReviews);
         }
 
         $order = Array("created" => "desc");
-        $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
+        $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","CREATED_DATE", "PROPERTY_*");
 
 
         $pagen = Array("nPageSize" => 10);
@@ -329,7 +329,12 @@ $countReviews = count($allReviews);
 
             $arFields = $ob->GetFields();
             $arProps = $ob->GetProperties();
-            $newDate = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_ACTIVE_FROM"]));
+
+          $newdata = explode(".",$arFields["CREATED_DATE"]);
+          $newstrDate = $newdata[2].'.' . $newdata[1].'.' .$newdata[0];
+
+            $newDate = FormatDate("d F, Y", MakeTimeStamp($newstrDate));
+
             $ID_USER = $arProps["NAME_USER"]["VALUE"];
             $rsUser = CUser::GetByID($ID_USER);
             $arUser = $rsUser->Fetch();
