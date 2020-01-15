@@ -3,6 +3,12 @@
 //= ../../node_modules/magnific-popup/dist/jquery.magnific-popup.min.js
 
 $(document).ready(function() {
+
+  $(".js_click_user").click(function() {
+    var text = $(this).text();
+    $(".js_text").text(text);
+  });
+
   $('.select_toggle').click(function() {
     $(this).toggleClass('active');
   });
