@@ -286,7 +286,7 @@ while($ob = $res->GetNextElement()){
         </section>
 
         <div style="display:flex;">
-            <button style="margin: 0 auto; id="strax-sluchay" class="mainBtn">проверить диагноз</button>
+            <button style="margin: 0 auto;" id="strax-sluchay" class="mainBtn">проверить диагноз</button>
         </div>
     </form>
 
