@@ -99,7 +99,7 @@ $arUser = $rsUser->Fetch();
                             <?php }elseif($arProps["REJECTED"]["VALUE"] != "" && $arProps["VERIFIED"]["VALUE"] != ""){?>
                             fill="#3a4552"
                             <?}elseif($arProps["VERIFIED"]["VALUE"] !=""){ ?>
-                            fill="#1000ff"
+                            fill="#00abd8"
                             <?php } ?>/>
                     </svg>
                     <? } ?>
@@ -336,7 +336,7 @@ $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 10
                         <?php }elseif($arProps["REJECTED"]["VALUE"] != "" && $arProps["VERIFIED"]["VALUE"] != ""){?>
                         fill="#3a4552"
                         <?}elseif($arProps["VERIFIED"]["VALUE"] !=""){ ?>
-                        fill="#1000ff"
+                        fill="#00abd8"
                         <?php } ?> />
                 </svg>
                 <? } ?>
