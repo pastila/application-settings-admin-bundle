@@ -359,3 +359,21 @@
         padding-right: 100px;
     }
 }
+
+.grid-reviews{
+    display: grid;
+    margin-bottom: 2rem;
+    @media(min-width: 1200px){
+        margin-bottom: 5rem;
+    }
+    &__left{
+        grid-column: 1/4;
+        .page-title{
+            margin-bottom: 0;
+        }
+    }
+    &__right{
+        grid-column: 4/13;
+        text-align: right;
+    }
+}
