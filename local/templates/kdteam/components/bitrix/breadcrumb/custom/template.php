@@ -26,7 +26,7 @@ for ($index = 0; $index < $itemSize; $index++) {
     $title = htmlspecialcharsex($arResult[$index]["TITLE"]);
 
      if ($detect->isTablet() || $detect->isMobile()) {
-        
+
          if ($arResult[$index]["LINK"] <> "" && $index != $itemSize - 1) {
 
          } else {
