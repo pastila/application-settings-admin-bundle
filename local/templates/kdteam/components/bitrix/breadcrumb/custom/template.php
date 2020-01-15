@@ -26,16 +26,28 @@ for ($index = 0; $index < $itemSize; $index++) {
     $title = htmlspecialcharsex($arResult[$index]["TITLE"]);
 
      if ($detect->isTablet() || $detect->isMobile()) {
+        
          if ($arResult[$index]["LINK"] <> "" && $index != $itemSize - 1) {
 
          } else {
-             $strReturn .= '55
+             if(count($arResult) == 2){
+                 $strReturn .= '
         
 			<li>
-				<a itemprop="item"><span itemprop="name" class="">'.$title.'</span></a>
+				<a itemprop="item" href="/"><span itemprop="name" class="">'.$title.'</span></a>
 
 				<meta itemprop="position" content="'.$itemSize.'" />
 			</li>';
+             }else{
+                 $strReturn .= '
+        
+			<li>
+				<a itemprop="item" href="/news/"><span itemprop="name" class="">'.$title.'</span></a>
+
+				<meta itemprop="position" content="'.$itemSize.'" />
+			</li>';
+             }
+
          }
         } else {
          if ($arResult[$index]["LINK"] <> "" && $index != $itemSize - 1) {
