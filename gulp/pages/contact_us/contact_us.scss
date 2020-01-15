@@ -2,10 +2,12 @@
 
 
 .form_contact-us{
-  max-width: 70rem;
   margin: 2rem 0;
   @media screen and(min-width: 1200px){
     margin: 5rem 0;
+  }
+  @media screen and(min-width: 992px){
+    max-width: 70rem;
   }
   .writeUs__form__wrap{
     &__middle{

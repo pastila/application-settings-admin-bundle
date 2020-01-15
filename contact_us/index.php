@@ -10,6 +10,18 @@ CModule::IncludeModule("iblock");
 
 ?>
 
+<?php
+require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/classes/general/captcha.php");
+$cpt = new CCaptcha();
+
+$captchaPass = COption::GetOptionString("main","captcha_password","");
+if(strlen($captchaPass) <= 0){
+    $captchaPass = randString(10);
+    COption::SetOptionString("main","captcha_password",$captchaPass);
+}
+$cpt->SetCodeCrypt($captchaPass);
+?>
+
 <?$APPLICATION->SetTitle("Связаться с нами");?>
 <?php $arSelect = Array("ID", "IBLOCK_ID", "NAME", "PREVIEW_TEXT");
 $arFilter = Array("IBLOCK_ID"=>23, "CODE"=>"contact_us");
@@ -32,7 +44,7 @@ if($ob = $res->GetNextElement()){
 <?= $arProps["PREVIEW_TEXT"]; ?>
 
 <div class="form_contact-us">
-    <form id="feedback__form" class="writeUs__form" enctype="multipart/form-data" >
+    <form id="feedback_modal_two" class="writeUs__form" enctype="multipart/form-data" >
         <div class="writeUs__form__wrap">
             <h2 class="title_medium"> Напишите нам</h2>
             <div class="writeUs__form__wrap__middle">
@@ -60,7 +72,13 @@ if($ob = $res->GetNextElement()){
                     <span class="label block-error-label">Для выбора нескольких картинок зажмите Ctrl</span>
                 </div>
             </div>
-
+            <div class="block_captcha block_padd-modal">
+                <div class="input__wrap input-initial_wrap" id="captcha-error_parent">
+                    <input type="hidden" name="captcha_code" value="<?php echo htmlspecialcharsbx($cpt->GetCodeCrypt()) ?>">
+                    <img class="image-captcha" src="/bitrix/tools/captcha.php?captcha_code=<?php echo htmlspecialcharsbx($cpt->GetCodeCrypt()) ?>" alt="">
+                    <input type="text" name="captcha_word" id="captcha_word">
+                </div>
+            </div>
             <div class="writeUs__form__button">
                 <button type="submit" class="mainBtn" id="ask">Отправить</button>
             </div>
