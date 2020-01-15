@@ -410,7 +410,7 @@ $countReviews = count($allReviews);
             </div>
 
             <!-- Text -->
-            <div class="srolling--parent"> <p class="feedback__text readmore-text"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p></div>
+            <div class="srolling--parent"> <p class="feedback__text readmore__parent"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p></div>
 
 
             <!-- Bottom -->

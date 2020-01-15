@@ -9,6 +9,7 @@ use Bitrix\Main\Page\Asset;
 $asset = Asset::getInstance();
 $asset->addCss(SITE_TEMPLATE_PATH . "/pages/reviews/reviews.min.css");
 $asset->addJs(SITE_TEMPLATE_PATH . "/pages/reviews/reviews.min.js");
+$asset->addJs(SITE_TEMPLATE_PATH . "/js/readmore.min.js");
 
 $rsUser = CUser::GetByID($USER->GetID());
 $arUser = $rsUser->Fetch();
@@ -25,7 +26,14 @@ $arUser = $rsUser->Fetch();
 </ul>
 
 <?php if($arUser["UF_REPRESENTATIVE"] != "1"){ ?>
-<h1 class="page-title">Ваши отзывы</h1>
+    <div class="grid-reviews">
+        <div class="grid-reviews__left">
+            <h1 class="page-title">Ваши отзывы</h1>
+        </div>
+        <div class="grid-reviews__right">
+            <a href="/feedback/" class="mainBtn">Все отзывы</a>
+        </div>
+    </div>
 <div class="reviews">
     <div class="reviews__wrap_white-blocks">
         <!-- FeedBack block -->
@@ -102,7 +110,7 @@ $arUser = $rsUser->Fetch();
                             <?php }elseif($arProps["REJECTED"]["VALUE"] != "" && $arProps["VERIFIED"]["VALUE"] != ""){?>
                             fill="#3a4552"
                             <?}elseif($arProps["VERIFIED"]["VALUE"] !=""){ ?>
-                            fill="#1000ff"
+                            fill="#00abd8"
                             <?php } ?>/>
                     </svg>
                     <? } ?>
@@ -125,8 +133,9 @@ $arUser = $rsUser->Fetch();
             </div>
 
             <!-- Text -->
-            <p class="feedback__text"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p>
-
+            <div class="srolling--parent">
+                <p class="feedback__text readmore__parent"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p>
+            </div>
             <!-- Bottom -->
             <div class="feedback__bottom">
                 <div class="feedback__bottom_name opacity_block">OMC</div>
@@ -342,7 +351,7 @@ $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 10
                         <?php }elseif($arProps["REJECTED"]["VALUE"] != "" && $arProps["VERIFIED"]["VALUE"] != ""){?>
                         fill="#3a4552"
                         <?}elseif($arProps["VERIFIED"]["VALUE"] !=""){ ?>
-                        fill="#1000ff"
+                        fill="#00abd8"
                         <?php } ?> />
                 </svg>
                 <? } ?>

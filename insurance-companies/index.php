@@ -9,7 +9,7 @@ CModule::IncludeModule("iblock");
 
 ?>
 
-<?$APPLICATION->SetTitle("Пользовательское соглашение");?>
+<?$APPLICATION->SetTitle("Страховым организациям");?>
 <?php $arSelect = Array("ID", "IBLOCK_ID", "NAME", "PREVIEW_TEXT");
 $arFilter = Array("IBLOCK_ID"=>23, "CODE"=>"insurance-companies");
 $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);

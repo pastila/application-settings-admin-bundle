@@ -478,13 +478,13 @@ a[data-tooltip][data-position="bottom"]:before {
 
 //readmore reviews
 .readmore-text{
-    overflow: hidden;
-    &__block{
-        margin: -1rem 0 2rem 0;
-       @media(min-width: 992px){
-           margin-top: -2rem;
-       }
-        &.__shadow{
+    .moreless{
+        cursor: pointer;
+        color: $accentColor;
+        font-family: $main-font-bold;
+        display: block;
+        margin: 1rem 0 0 0;
+        &.more{
             position: relative;
             &:before {
                 content: '';
@@ -497,11 +497,6 @@ a[data-tooltip][data-position="bottom"]:before {
                 height: 2.5rem;
                 background: -webkit-linear-gradient(top,rgba(255,255,255,.6),#fff 70%,#fff 50%,#fff);
             }
-        }
-        &__link{
-            cursor: pointer;
-            color: $accentColor;
-            font-family: $main-font-bold;
         }
     }
 }
