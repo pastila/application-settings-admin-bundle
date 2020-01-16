@@ -132,7 +132,7 @@ CModule::IncludeModule("iblock");
                 <input type="checkbox" value="" />
                 <span class="check-img check-img_reg"></span>
         </div>
-        <div class="popup__wrap_bottom">
+        <div class="popup__wrap_bottom center__child">
         <button type="submit" id="registration" class="mainBtn">Регистрация</button>
     </div>
 </form>

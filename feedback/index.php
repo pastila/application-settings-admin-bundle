@@ -731,7 +731,7 @@ $countReviews = count($allReviews);
                 } ?>
 
 
-                <ul>
+                </ul>
                     <? if (isset($_GET["property_region"])) {
                         $url_for_filter = "?";
 
@@ -745,7 +745,9 @@ $countReviews = count($allReviews);
                         }
 
                     } ?>
-                    <a class="accentBtn" href="<?= $url_for_filter ?>">Весь рейтинг</a>
+                    <div class="center__child">
+                        <a class="accentBtn" href="<?= $url_for_filter ?>">Весь рейтинг</a>
+                    </div>
         </div>
 
 

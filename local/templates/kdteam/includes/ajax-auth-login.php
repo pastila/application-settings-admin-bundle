@@ -31,7 +31,9 @@
                     Забыли пароль ?
                 </a>
 
-                <button class="mainBtn">Вход</button>
+                <div class="center__child">
+                    <button class="mainBtn">Вход</button>
+                </div>
             </div>
 
             <!-- <div id="popup-reg-content" class="popup__wrap_reg"></div> -->
