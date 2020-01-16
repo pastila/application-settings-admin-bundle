@@ -14,11 +14,12 @@ $this->setFrameMode(true);
 ?>
 <div id="years" class="wrap-chrckbox">
     <?php foreach ($arResult["ITEMS"] as $arItem) { ?>
-        <label class="check-label">
+        <label class="check-label years" data-year="<?php echo $arItem["NAME"] ?>">
             <?php echo $arItem["NAME"]?>
-            <input name="years" type="radio" value="<?=$arItem['ID']?>" />
+            <input name="years" type="radio"  value="<?=$arItem['ID']?>" />
             <span class="check-img"></span>
         </label>
     <?php }?>
+    <input type="hidden"  id="selected_year" value="">
 </div>
 

@@ -222,12 +222,14 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
 
 
                 <?php
-                $arFilter = array("IBLOCK_ID" => 9, "ACTIVE"=>"Y", "IBLOCK_SECTION_ID" => $arResult['SECTION']['ID']);
+
+                $arFilter = array("IBLOCK_ID" => 9, "ACTIVE"=>"Y", "IBLOCK_SECTION_ID" => $arResult['SECTION']['ID'],"PROPERTY_YEAR"=> $arParams["YEAR"]);
                 $arSelect = Array("ID", "NAME", "IBLOCK_ID","PROPERTY_SECOND_NAME","PROPERTY_LOCATION","PROPERTY_PERSON_NAME","PROPERTY_MIDDLE_NAME","PROPERTY_FULL_NAME");
                 $res = CIBlockElement::GetList(array("name" => "asc"), $arFilter, false, false, $arSelect);
                 while($ob = $res->GetNextElement())
                 {
                     $arFields[] = $ob->GetFields();
+
                 }
                 ?>
                 <div class="input-with-search">
@@ -240,6 +242,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                         <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_hospital">
                             <?
                                  $i = 1;
+                                    if(isset($arFields)){
                             foreach ($arFields as &$arItem) {?>
                                     <?php  if ($i == 1) { ?>
                                         <li value="" id="hospital" class="custom-serach__items_item hospital-empty">Здесь нет моей больницы</li>
@@ -252,7 +255,9 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                                     <li value="<?=$arItem['ID']?>" class="custom-serach__items_item  hospital" data-name-boss="<?=$arItem["PROPERTY_SECOND_NAME_VALUE"] ." ". $arItem["PROPERTY_PERSON_NAME_VALUE"] ." ". $arItem["PROPERTY_MIDDLE_NAME_VALUE"]?>" data-street="<?=$arItem["PROPERTY_LOCATION_VALUE"]?>"><?php echo $arItem['PROPERTY_FULL_NAME_VALUE']?></li>
                                 <?php }?>
                                 <?php ++$i; ?>
-                            <?php } ?>
+                            <?php } }else{?>
+                                        <li value="" id="hospital" class="custom-serach__items_item hospital-empty">Нет медицинских организаций, работающих по ОМС</li>
+                                        <?php } ?>
                         </ul>
                     </div>
                 </div>

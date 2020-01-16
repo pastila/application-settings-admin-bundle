@@ -138,7 +138,7 @@ if (CModule::IncludeModule("iblock")) {
 
                             $SURNAME = $arFields_child["PROPERTY_SURNAME_VALUE"];
                             $NAME = $arFields_child["NAME"];
-                            $PARTONYMIC = $arFields_child["PROPERTY_SURNAME_VALUE"];
+                            $PARTONYMIC = $arFields_child["PROPERTY_PARTONYMIC_VALUE"];
                             $polic = $arFields_child["PROPERTY_POLICY_VALUE"];
                             $BIRTHDAY = $arFields_child["PROPERTY_BIRTHDAY_VALUE_ID"];
 

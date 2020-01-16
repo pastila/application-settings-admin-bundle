@@ -1,6 +1,40 @@
 
 
 $(document).ready(function() {
+
+  $(".years").click(function(){
+
+    if( $("#selected_year").val() != "" ) {
+      var year = $(this).attr("data-year");
+      $("#selected_year").val(year);
+      let component = $('#hospitals');
+      $.ajax({
+        dataType: 'html',
+        url: '/ajax/form_hospitals.php',
+        type: 'POST',
+        data: {id: "",},
+        beforeSend: function() {
+        },
+        success: function(result) {
+          $(component).html(result);
+          $('#region_name').html('Не выбрано');
+          $('#hosptital_name').html('Не выбрано');
+          $('#street_name').html('Не выбрано');
+          $('#boss_name').html('Не выбрано');
+
+          search_hospital();
+          search_region();
+        },
+      }).done(function(msg) {
+      });
+    }else{
+      var year = $(this).attr("data-year");
+      $("#selected_year").val(year);
+    }
+
+  });
+
+
   search_region();
   search_class();
   keyup_class();
@@ -44,11 +78,12 @@ $(document).ready(function() {
     $('#region_name').text(select_region);
     $('#referal_forma').attr('data-region_check', 'check');
     let component = $('#hospitals');
+
     $.ajax({
       dataType: 'html',
       url: '/ajax/form_hospitals.php',
       type: 'POST',
-      data: {id: id_region},
+      data: {id: id_region,year:$("#selected_year").val()},
       beforeSend: function() {
       },
       success: function(result) {
@@ -79,6 +114,7 @@ $(document).ready(function() {
      clearTimeout($this.data('timer'));
      $this.data('timer', setTimeout(function() {
        $this.removeData('timer');
+
        $.post('/ajax/smart_search.php', {name_city: $this.val()}, function(msg) {
          if ($('.error_region').length != 0) {
            $('.error_region').remove();
@@ -112,13 +148,14 @@ $(document).ready(function() {
                dataType: 'html',
                url: '/ajax/form_hospitals.php',
                type: 'POST',
-               data: {id: id_region},
+               data: {id: id_region,year:$("#selected_year").val()},
                beforeSend: function() {
                },
                success: function(result) {
                  $(component).html(result);
                  $('#region_name').text(select_region);
                  $('#hosptital_name').html('Не выбрано');
+
                  search_hospital();
                  search_region();
                },
@@ -161,7 +198,8 @@ function search_hospital() {
     clearTimeout($this.data('timer'));
     $this.data('timer', setTimeout(function() {
       $this.removeData('timer');
-      $.post('/ajax/smart_search_hospital.php', {name_hospital: $this.val(), region_id:$("#referal_forma").attr("data-id_region") }, function(msg) {
+
+      $.post('/ajax/smart_search_hospital.php', {name_hospital: $this.val(), region_id:$("#referal_forma").attr("data-id_region"),year:$("#selected_year").val() }, function(msg) {
         if ($('.error_region').length != 0) {
           $('.error_region').remove();
         }
