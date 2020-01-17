@@ -21,37 +21,37 @@ while($ob = $res->GetNextElement()){
 ?>
 
 
-    <!-- Breadcrumbs -->
-    <ul class="breadcrumbs">
-        <? if ($detect->isTablet() || $detect->isMobile()) { ?>
-            <li><a href="/" class="">Диагноз</a></li>
-        <? } else { ?>
-            <li><a href="/">Главная</a></li>
-            <li>Диагноз</li>
-        <? } ?>
+<!-- Breadcrumbs -->
+<ul class="breadcrumbs">
+    <? if ($detect->isTablet() || $detect->isMobile()) { ?>
+    <li><a href="/" class="">Страховой случай в ОМС</a></li>
+    <? } else { ?>
+    <li><a href="/">Главная</a></li>
+    <li>Страховой случай в ОМС</li>
+    <? } ?>
 
-    </ul>
+</ul>
 
-    <!-- Pages Title -->
-    <section>
-        <h2 id="page-title" class="page-title">Проверить свой дигноз</h2>
-        <p>Страховым случаем в системе ОМС является случай оказания медицинской помощи, который должен быть оплачен
-            из средств ОМС страховой компанией, а не личными средствами пациента. Страховыми являются случаи, которые
-            соответствуют условиям, прописанным в программе государственных гарантий. Ниже приведены вопросы, по вашим
-            ответам на которые мы сможем определить, является ли ваш случай лечения страховым. Если вы когда-либо
-            оплачивали медицинскую помощь или в данный момент получаете медицинскую помощь на платной основе, пройдите
-            ниже и ответьте на вопросы. Возможно, это поможет вам избежать оплаты тех медицинских услуг, которые должны
-            выполняться бесплатно, или даже вернуть средства, которые вы уже заплатили.</p>
-    </section>
+<!-- Pages Title -->
+<section>
+    <h2 id="page-title" class="page-title">Страховой случай в системе ОМС</h2>
+    <p>Страховым случаем в системе ОМС является случай оказания медицинской помощи, который должен быть оплачен
+        из средств ОМС страховой компанией, а не личными средствами пациента. Страховыми являются случаи, которые
+        соответствуют условиям, прописанным в программе государственных гарантий. Ниже приведены вопросы, по вашим
+        ответам на которые мы сможем определить, является ли ваш случай лечения страховым. Если вы когда-либо
+        оплачивали медицинскую помощь или в данный момент получаете медицинскую помощь на платной основе, пройдите
+        ниже и ответьте на вопросы. Возможно, это поможет вам избежать оплаты тех медицинских услуг, которые должны
+        выполняться бесплатно, или даже вернуть средства, которые вы уже заплатили.</p>
+</section>
 
-    <!-- ALL STEPS IN FORM -->
-    <form id="appeal-form" action="">
-        <!-- 1 Step -->
-        <section class="form-obrashcheniya__step_one">
-            <div class="form-obrashcheniya__step_one_title">
-                Укажите период, в котором вы получали помощь
-            </div>
-            <?php
+<!-- ALL STEPS IN FORM -->
+<form id="appeal-form" action="">
+    <!-- 1 Step -->
+    <section class="form-obrashcheniya__step_one">
+        <div class="form-obrashcheniya__step_one_title">
+            Укажите период, в котором вы получали помощь
+        </div>
+        <?php
             $APPLICATION->IncludeComponent(
                 "bitrix:news.list",
                 "",
@@ -102,52 +102,52 @@ while($ob = $res->GetNextElement()){
                     "AJAX_OPTION_ADDITIONAL" => ""
                 )
             );?>
-        </section>
+    </section>
 
-        <!-- 2 Step -->
-        <section class="form-obrashcheniya__step_two">
-            <div class="card form-obrashcheniya__step_two_l error_step-card-1">
-                <div class="form-obrashcheniya__step_two_l_title">
-                    Каким было ваше обращение ?
-                </div>
-
-                <div class="wrap-chrckbox plannet">
-                    <label id="planned_label" class="check-label">
-                        Плановое
-                        <input id="planned" type="checkbox" value="" />
-                        <span class="check-img"></span>
-                    </label>
-
-                    <label  class="check-label">
-                        Неотложное
-                        <input id="urgent" type="checkbox" value="" />
-                        <span class="check-img"></span>
-                    </label>
-                </div>
+    <!-- 2 Step -->
+    <section class="form-obrashcheniya__step_two">
+        <div class="card form-obrashcheniya__step_two_l error_step-card-1">
+            <div class="form-obrashcheniya__step_two_l_title">
+                Каким было ваше обращение ?
             </div>
 
-            <div class="form-obrashcheniya__step_two_r">
-                <div class="form-obrashcheniya__step_two_r_wrap">
-                    <div class="form-obrashcheniya__step_two_r_wrap_title">
-                       <?=$arResult_block[1]?>
-                    </div>
-                    <p><?=$arResult_block[0]?></p>
-                </div>
+            <div class="wrap-chrckbox plannet">
+                <label id="planned_label" class="check-label">
+                    Плановое
+                    <input id="planned" type="checkbox" value="" />
+                    <span class="check-img"></span>
+                </label>
 
-                <div class="form-obrashcheniya__step_two_r_wrap">
-                    <div class="form-obrashcheniya__step_two_r_wrap_title">
-                        <?=$arResult_block[3]?>
-                    </div>
-                    <p><?=$arResult_block[2]?></p>
-                </div>
+                <label class="check-label">
+                    Неотложное
+                    <input id="urgent" type="checkbox" value="" />
+                    <span class="check-img"></span>
+                </label>
             </div>
-        </section>
+        </div>
 
-        <!-- 3 Step -->
-        <section class="form-obrashcheniya__step_three">
-            <div class="form-obrashcheniya__step_three_l">
-                <div id="hospitals" class="card error_step-card-3">
-                    <?php
+        <div class="form-obrashcheniya__step_two_r">
+            <div class="form-obrashcheniya__step_two_r_wrap">
+                <div class="form-obrashcheniya__step_two_r_wrap_title">
+                    <?=$arResult_block[1]?>
+                </div>
+                <p><?=$arResult_block[0]?></p>
+            </div>
+
+            <div class="form-obrashcheniya__step_two_r_wrap">
+                <div class="form-obrashcheniya__step_two_r_wrap_title">
+                    <?=$arResult_block[3]?>
+                </div>
+                <p><?=$arResult_block[2]?></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3 Step -->
+    <section class="form-obrashcheniya__step_three">
+        <div class="form-obrashcheniya__step_three_l">
+            <div id="hospitals" class="card error_step-card-3">
+                <?php
                     $APPLICATION->IncludeComponent(
                         "bitrix:catalog.section.list",
                         "hospitals",
@@ -170,73 +170,80 @@ while($ob = $res->GetNextElement()){
                             "CACHE_GROUPS" => "Y"
                         )
                     );?>
-                </div>
             </div>
+        </div>
 
-            <div class="form-obrashcheniya__step_three_r">
-                <div class="card">
-                    <div class="form-obrashcheniya__step_three_r_wrap">
-                        <div class="form-obrashcheniya__step_three_r_wrap_title">
-                            Вы выбрали регион:
-                        </div>
-
-                        <div id="region_name" class="form-obrashcheniya__step_three_r_wrap_name">
-                            Не выбрано
-                        </div>
+        <div class="form-obrashcheniya__step_three_r">
+            <div class="card">
+                <div class="form-obrashcheniya__step_three_r_wrap">
+                    <div class="form-obrashcheniya__step_three_r_wrap_title">
+                        Вы выбрали регион:
                     </div>
 
-                    <div class="form-obrashcheniya__step_three_r_wrap">
-                        <div class="form-obrashcheniya__step_three_r_wrap_title">
-                            Вы выбрали медицинскую организацию:
-                        </div>
+                    <div id="region_name" class="form-obrashcheniya__step_three_r_wrap_name">
+                        Не выбрано
+                    </div>
+                </div>
 
-                        <div id="hosptital_name" class="form-obrashcheniya__step_three_r_wrap_name">
-                            Не выбрано
-                        </div>
+                <div class="form-obrashcheniya__step_three_r_wrap">
+                    <div class="form-obrashcheniya__step_three_r_wrap_title">
+                        Вы выбрали медицинскую организацию:
                     </div>
 
-                    <div class="form-obrashcheniya__step_three_r_wrap">
-                        <div class="form-obrashcheniya__step_three_r_wrap_title">
-                            Расположение по адресу
-                        </div>
+                    <div id="hosptital_name" class="form-obrashcheniya__step_three_r_wrap_name">
+                        Не выбрано
+                    </div>
+                </div>
 
-                        <div id="street_name" class="form-obrashcheniya__step_three_r_wrap_name">
-                            Не выбрано
-                        </div>
+                <div class="form-obrashcheniya__step_three_r_wrap">
+                    <div class="form-obrashcheniya__step_three_r_wrap_title">
+                        Расположение по адресу
+                    </div>
 
-                   </div>
-
-                    <div class="form-obrashcheniya__step_three_r_wrap">
-                        <div class="form-obrashcheniya__step_three_r_wrap_title">
-                            Руководитель (главный врач)
-                        </div>
-
-                        <div id="boss_name" class="form-obrashcheniya__step_three_r_wrap_name">
-                            Не выбрано
-                        </div>
+                    <div id="street_name" class="form-obrashcheniya__step_three_r_wrap_name">
+                        Не выбрано
                     </div>
 
                 </div>
+
+                <div class="form-obrashcheniya__step_three_r_wrap">
+                    <div class="form-obrashcheniya__step_three_r_wrap_title">
+                        Руководитель (главный врач)
+                    </div>
+
+                    <div id="boss_name" class="form-obrashcheniya__step_three_r_wrap_name">
+                        Не выбрано
+                    </div>
+                </div>
+
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- 4 Step -->
-        <section class="form-obrashcheniya__step_four">
-            <div class="card error_step-card-4">
-                <p class="form-obrashcheniya__step_four_text"><?=$arResult_block[8]?></p>
+    <!-- 4 Step -->
+    <section class="form-obrashcheniya__step_four">
+        <div class="card error_step-card-4">
+            <p class="form-obrashcheniya__step_four_text"><?=$arResult_block[8]?></p>
 
-                <a class="link-underline" href="/news/chto-oplachivaetsya-po-polisu/">Ссылка на статью в блоге</a>
+            <a class="link-underline" href="/news/chto-oplachivaetsya-po-polisu/">Что оплачивается по полису ОМС</a>
 
-                <div class="smart_search-block" >
-                    <p class="title-select bold">Начните вводить наименование заболевания, с которым вы обратились в медицинскую организацию.</p>
-                    <form action="">
-                        <div class="input-with-search">
-                            <label class="title-select" for="user_pass">Выберите диагноз: </label>
-                            <div class="input__wrap" id="reload_div">
-                                <div class="input__ico">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
-                                </div>
-                                <?php
+            <div class="smart_search-block">
+                <p class="title-select bold">
+                    Начните вводить наименование заболевания, с которым вы обратились в медицинскую организацию.
+                </p>
+                <p class="title-select bold">
+                    «В связи с тем, что список диагнозов очень большой, поиск может работать медленно. Начните вводить
+                    заболевание и дождитесь появления списка заболеваний с похожими названиями, чтобы выбрать нужное»
+                </p>
+                <form action="">
+                    <div class="input-with-search">
+                        <label class="title-select" for="user_pass">Выберите диагноз: </label>
+                        <div class="input__wrap" id="reload_div">
+                            <div class="input__ico">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255">
+                                    <path d="M0 63.75l127.5 127.5L255 63.75z" /></svg>
+                            </div>
+                            <?php
                                 $arSelect = array("ID", "NAME", "IBLOCK_ID");
                                 $arFilter = array("IBLOCK_ID" => 8);
                                 $res = CIBlockElement::GetList(array(), $arFilter, false, false, $arSelect);
@@ -245,21 +252,27 @@ while($ob = $res->GetNextElement()){
                                     $arFields[] = $ob->GetFields();
                                 }
                                 ?>
-                                <input type="text" id="search_diagnoz_input" placeholder="Начните вводить наименование заболевания, с которым вы обратились в медицинскую организацию."/>
-                                <ul style="cursor: pointer;" data-value="" class="custom-serach__items" id="search_diagnoz_global">
-                                    <li value="" id="empty_diagnoz" class="custom-serach__items_item diagnoz_search_js">Здесь нет моего диагноза</li>
-                                    <?php foreach ($arFields as &$arItem) {?>
-                                        <li value="<?=$arItem['ID']?>" class="custom-serach__items_item  diagnoz_search_js"><?php echo $arItem['NAME']?></li>
-                                    <?php } ?>
-                                </ul>
-                            </div>
+                            <input type="text" id="search_diagnoz_input"
+                                placeholder="Начните вводить наименование заболевания, с которым вы обратились в медицинскую организацию." />
+                            <ul style="cursor: pointer;" data-value="" class="custom-serach__items"
+                                id="search_diagnoz_global">
+                                <li value="" id="empty_diagnoz" class="custom-serach__items_item diagnoz_search_js">
+                                    Здесь нет моего диагноза</li>
+                                <?php foreach ($arFields as &$arItem) {?>
+                                <li value="<?=$arItem['ID']?>" class="custom-serach__items_item  diagnoz_search_js">
+                                    <?php echo $arItem['NAME']?></li>
+                                <?php } ?>
+                            </ul>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
+            </div>
 
-                <p class="title-select bold">Или найдите диагноз в перечне заболеваний, структурированном в соответствии с международной классификацией болезней (МКБ-10).</p>
-                <div id="grid" class="grid" action="">
-                    <?php
+            <p class="title-select bold">Или</p>
+            <p class="d-block mb--2rem">Найдите диагноз в перечне заболеваний, структурированном в соответствии с
+                международной классификацией болезней (МКБ-10).</p>
+            <div id="grid" class="grid" action="">
+                <?php
                     $APPLICATION->IncludeComponent(
                         "bitrix:catalog.section.list",
                         "",
@@ -282,13 +295,13 @@ while($ob = $res->GetNextElement()){
                             "CACHE_GROUPS" => "Y"
                         )
                     );?>
-                </div>
             </div>
-        </section>
-
-        <div style="display:flex;">
-            <button style="margin: 0 auto;" id="strax-sluchay" class="mainBtn">проверить диагноз</button>
         </div>
-    </form>
+    </section>
+
+    <div style="display:flex;">
+        <button style="margin: 0 auto;" id="strax-sluchay" class="mainBtn">Готово</button>
+    </div>
+</form>
 
 <?php require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php");?>

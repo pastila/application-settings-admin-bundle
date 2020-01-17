@@ -184,7 +184,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
 
             <p class="form-obrashcheniya__step_three_l_text"><?=$arResult_block[6]?></p>
 
-            <a class="link-underline" href="/news/kakie-byvayut-bolnitsy/">Ссылка на статью в блоге</a>
+            <a class="link-underline d-block mb--2rem" href="/news/kakie-byvayut-bolnitsy/">Какие бывают больницы</a>
 
 
         <?php
@@ -265,12 +265,12 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
         <?php } else { ?>
 
             <div class="input-with-search">
-                <label class="title-select" for="user_pass">Выбор региона: </label>
+                <!-- <label class="title-select" for="user_pass">Выбор региона: </label> -->
                 <div class="input__wrap">
                     <div class="input__ico">
                         <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                     </div>
-                    <input id="referal_forma" type="text" placeholder="Поиск по региону" autocomplete="off"/>
+                    <input id="referal_forma" type="text" placeholder="Выберите регион" autocomplete="off"/>
                     <ul style="cursor: pointer;" class="custom-serach__items" id="search_result">
                         <?php
                         foreach ($arResult['SECTIONS'] as &$arSection) {
@@ -285,12 +285,12 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
             </div>
 
             <div class="input-with-search">
-                <label class="title-select" for="user_pass">Список больниц: </label>
+                <!-- <label class="title-select" for="user_pass">Список больниц: </label> -->
                 <div class="input__wrap" style="pointer-events: none">
                     <div class="input__ico">
 
                     </div>
-                    <input id="" type="text" placeholder="Список больниц" autocomplete="off"/>
+                    <input id="" type="text" placeholder="Выберите медицинскую организацию" autocomplete="off"/>
                     <ul style="cursor: pointer;" class="custom-serach__items" id="">
 
 
