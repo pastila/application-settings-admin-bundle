@@ -48,7 +48,7 @@ while($ob = $res->GetNextElement()){
               $result = $total / $count_otzev;
 
               $star_clear = Array(
-                  "AMOUNT_STAR" =>round($result,1),
+                  "AMOUNT_STAR" =>round($result,2),
               );
               CIBlockElement::SetPropertyValuesEx($id_company, 16, $star_clear);
 
@@ -72,7 +72,7 @@ while($ob = $res->GetNextElement()){
           $result = $total_star / $count_company_with_this_kpp;
 
           $All_star = Array(
-              "ALL_AMOUNT_STAR" => round($result,1),
+              "ALL_AMOUNT_STAR" => round($result,2),
           );
           foreach ($array_id_company_with_kpp as $key){
               CIBlockElement::SetPropertyValuesEx($key, 16, $All_star);
@@ -109,7 +109,7 @@ while($ob = $res->GetNextElement()){
           $result = $total / $count_otzev;
 
           $star_clear = Array(
-              "AMOUNT_STAR" =>round($result,1),
+              "AMOUNT_STAR" =>round($result,2),
           );
           CIBlockElement::SetPropertyValuesEx($id_company, 16, $star_clear);
 
@@ -130,7 +130,7 @@ while($ob = $res->GetNextElement()){
 
           $result = $total_star / $count_company_with_this_kpp;
           $All_star = Array(
-              "ALL_AMOUNT_STAR" => round($result,1),
+              "ALL_AMOUNT_STAR" => round($result,2),
           );
           foreach ($array_id_company_with_kpp as $key){
               CIBlockElement::SetPropertyValuesEx($key, 16, $All_star);

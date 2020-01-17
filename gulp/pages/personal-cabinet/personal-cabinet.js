@@ -312,7 +312,7 @@ $(document).ready(function() {
   });
   $(document).on('click', '#cancel', function() {
     $('#add_children').css('display','none');
-    $('#add_children_btn').css('display','block');
+    $('#add_children_btn').css('display','flex');
     $('#add_children_form')[0].reset();
   });
   $(document).on('click', '#save_children', function(e) {
@@ -332,7 +332,7 @@ $(document).ready(function() {
               $('.error_search-js').css('display', 'block');
             } else if (result === 'success'){
               $('#add_children').css('display','none');
-              $('#add_children_btn').css('display','block');
+              $('#add_children_btn').css('display','flex');
               $('#add_children_form')[0].reset();
 
               $.post('/ajax/cur_children.php', function(e) {
