@@ -22,7 +22,7 @@ if ((!empty($_POST['APPEAL_VALUE']) and !empty($_POST['HOSPITAL'])) and json_dec
         );
         if ($ob = $res->GetNextElement()) {
             $arFields = $ob->GetFields();
-            $result['FULL_NAME'] = "Ваш диагноз " . $USER->GetFullName();
+            // $result['FULL_NAME'] = "Ваш диагноз " . $USER->GetFullName();
             $result['DIAGNOZ'] = $arFields['PREVIEW_TEXT'];
 
         }
