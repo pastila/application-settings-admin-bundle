@@ -12,7 +12,7 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/news/news.min.js");
 <?php $APPLICATION->SetTitle("Читать про ОМС");?>
 <?php $APPLICATION->IncludeComponent(
     "bitrix:breadcrumb",
-    "",
+    "custom",
     array(
         "START_FROM" => "0",
         "PATH" => "",

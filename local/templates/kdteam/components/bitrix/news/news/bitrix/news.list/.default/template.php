@@ -33,15 +33,16 @@ $this->setFrameMode(true);
         <a class="block_image" href="<?=$arItem['DETAIL_PAGE_URL']?>">
             <img src="<?=$file?>" alt="">
         </a>
+
+        <div class="name_news">
+            <a href="<?=$arItem['DETAIL_PAGE_URL']?>"><?php echo $arItem['NAME']?></a>
+        </div>
         <?php if ($arItem['PROPERTIES']['ADD_NAME']['VALUE']) { ?>
             <div class="top_label">
                 <a href="<?=$arItem['DETAIL_PAGE_URL']?>">
                     <?php echo $arItem['PROPERTIES']['ADD_NAME']['VALUE']?></a>
             </div>
         <?php }?>
-        <div class="name_news">
-            <a href="<?=$arItem['DETAIL_PAGE_URL']?>"><?php echo $arItem['NAME']?></a>
-        </div>
         <div class="date_news"><?php echo $arItem['ACTIVE_FROM']?></div>
         <a href="<?=$arItem['DETAIL_PAGE_URL']?>" class="readmore_news">Продолжить чтение</a>
     </div>

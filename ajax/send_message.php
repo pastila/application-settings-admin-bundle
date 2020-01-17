@@ -138,9 +138,9 @@ if (CModule::IncludeModule("iblock")) {
 
                             $SURNAME = $arFields_child["PROPERTY_SURNAME_VALUE"];
                             $NAME = $arFields_child["NAME"];
-                            $PARTONYMIC = $arFields_child["PROPERTY_SURNAME_VALUE"];
+                            $PARTONYMIC = $arFields_child["PROPERTY_PARTONYMIC_VALUE"];
                             $polic = $arFields_child["PROPERTY_POLICY_VALUE"];
-                            $BIRTHDAY = $arFields_child["PROPERTY_BIRTHDAY_VALUE_ID"];
+                            $BIRTHDAY = $arFields_child["PROPERTY_BIRTHDAY_VALUE"];
 
                             $full_name_child = $SURNAME . ' ' . $NAME . ' ' . $PARTONYMIC;
 
@@ -156,6 +156,7 @@ if (CModule::IncludeModule("iblock")) {
                                     'USER_MAIL' => $user_email,
                                     'FULLNAME' => $arFields['PROPERTY_FULL_NAME_VALUE'],
                                     'FULLNAME_CHILD' => $full_name_child,
+                                    "BIRTHDAY" => $BIRTHDAY,
                                     'POLICY' => $arFields['PROPERTY_POLICY_VALUE'],
                                     'POLICY_CHILD' => $polic,
                                     'PHONE' => $mobail_number,

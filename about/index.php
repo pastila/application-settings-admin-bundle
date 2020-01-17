@@ -15,8 +15,10 @@ $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
 if($ob = $res->GetNextElement()){
     $arProps = $ob->GetFields();
 
-} ?>
+}
 
+?>
+<?$APPLICATION->SetTitle("О нас");?>
 
     <!-- Breadcrumbs -->
     <ul class="breadcrumbs">

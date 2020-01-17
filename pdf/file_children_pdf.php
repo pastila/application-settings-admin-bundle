@@ -55,10 +55,11 @@ $arFields_child = $ob_child->GetFields();
 
 $SURNAME = $arFields_child["PROPERTY_SURNAME_VALUE"];
 $NAME = $arFields_child["NAME"];
-$PARTONYMIC = $arFields_child["PROPERTY_SURNAME_VALUE"];
+
+$PARTONYMIC = $arFields_child["PROPERTY_PARTONYMIC_VALUE"];
 $id_company= $arFields_child["PROPERTY_COMPANY_VALUE"];
-$polic = $arFields_child["PROPERTY_POLICY_VALUE_ID"];
-$BIRTHDAY= $arFields_child["PROPERTY_BIRTHDAY_VALUE_ID"];
+$polic = $arFields_child["PROPERTY_POLICY_VALUE"];
+$BIRTHDAY= $arFields_child["PROPERTY_BIRTHDAY_VALUE"];
 
 
 $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_*");
@@ -150,6 +151,8 @@ $html ='
                         '. $PARTONYMIC .'
                     </div>
                     <div class="header__items_item--text blue-text cursive" style=" font-style: italic;">
+                        '. $BIRTHDAY .'
+                    </div>   <div class="header__items_item--text blue-text cursive" style=" font-style: italic;">
                         '. $polic .'
                     </div>
                 </div>
@@ -182,7 +185,7 @@ $html ='
         медицинской помощи бесплатно в
         сроки, установленные Территориальной программой государственных гарантий оказания гражданам бесплатной
         медицинской помощи, что является нарушением условий предоставления платных медицинских услуг. Мне было сообщено,
-        что необходимая мне медицинская помощь может быть оказана только на платной основе, и в случае моего отказа от
+        что необходимая  медицинская помощь может быть оказана только на платной основе, и в случае  отказа от
         оплаты помощь может быть оказана либо в сроки, значительно превышающие установленные Территориальной программой
         государственных гарантий, либо не будет оказана вообще.
     </p>
@@ -231,20 +234,24 @@ $mpdf = new \Mpdf\Mpdf([
 //создаем PDF файл, задаем формат, отступы и.т.д.
 
 //
-$name_file = "/var/www/upload/pdf/PDF_";
-$name_file .= date('Y-m-d-h:i:s');
+$data= date('Y-m-d-h:i:s');
+$name_file = "/var/www/upload/pdf/PDF_child_";
+$name_file .= $data;
 $name_file .= "_". $person_EMAIL. "_";
 $name_file .= "file.pdf";
 
 $mpdf->WriteHTML($html);
 $mpdf->Output($name_file,'F');
 
-$url_pdf_for_user = "/upload/pdf/PDF_". date('Y-m-d-h:i:s')."_". $person_EMAIL. "_file.pdf";
+$url_pdf_for_user = "/upload/pdf/PDF_child_".$data."_". $person_EMAIL. "_file.pdf";
 $arFile = CFile::MakeFileArray($url_pdf_for_user);
+
 $arProperty = Array(
     "PDF" => $arFile,
 );
 
+$ID_appeal = $_POST["id_obr"];
+CIBlockElement::SetPropertyValuesEx($ID_appeal, 11, $arProperty);
 CIBlockElement::SetPropertyValuesEx($ID_child, 11, $arProperty);
 
 echo $url_pdf_for_user;

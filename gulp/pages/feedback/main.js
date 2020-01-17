@@ -258,4 +258,8 @@ $(document).ready(function() {
   $('.toggle_comment_dropdown').on('click', function (e) {
     $(this).parent().toggleClass('openedBlock');
   });
+
+
+
 });
+

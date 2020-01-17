@@ -9,7 +9,7 @@ CModule::IncludeModule("iblock");
 
 ?>
 
-<?$APPLICATION->SetTitle("Пользовательское соглашение");?>
+<?$APPLICATION->SetTitle("Страховым организациям");?>
 <?php $arSelect = Array("ID", "IBLOCK_ID", "NAME", "PREVIEW_TEXT");
 $arFilter = Array("IBLOCK_ID"=>23, "CODE"=>"insurance-companies");
 $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
@@ -19,8 +19,14 @@ if($ob = $res->GetNextElement()){
 } ?>
 <!-- Breadcrumbs -->
 <ul class="breadcrumbs">
-    <li><a href="/">Главная</a></li>
-    <li><?= $arProps["NAME"]; ?></li>
+    <? if ($detect->isTablet() || $detect->isMobile()) { ?>
+        <li><a href="/" class=""><?= $arProps["NAME"]; ?></a></li>
+    <? } else { ?>
+        <li><a href="/">Главная</a></li>
+        <li><?= $arProps["NAME"]; ?></li>
+    <? } ?>
+
+
 </ul>
 
 <!-- Pages Title -->

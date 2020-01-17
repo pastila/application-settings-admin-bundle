@@ -304,7 +304,7 @@ $countReviews = count($allReviews);
         }
 
         $order = Array("created" => "desc");
-        $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
+        $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","CREATED_DATE", "PROPERTY_*");
 
 
         $pagen = Array("nPageSize" => 10);
@@ -329,7 +329,12 @@ $countReviews = count($allReviews);
 
             $arFields = $ob->GetFields();
             $arProps = $ob->GetProperties();
-            $newDate = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_ACTIVE_FROM"]));
+
+          $newdata = explode(".",$arFields["CREATED_DATE"]);
+          $newstrDate = $newdata[2].'.' . $newdata[1].'.' .$newdata[0];
+
+            $newDate = FormatDate("d F, Y", MakeTimeStamp($newstrDate));
+
             $ID_USER = $arProps["NAME_USER"]["VALUE"];
             $rsUser = CUser::GetByID($ID_USER);
             $arUser = $rsUser->Fetch();
@@ -350,6 +355,7 @@ $countReviews = count($allReviews);
             $city = CIBlockSection::GetByID($arProps["REGION"]["VALUE"])->GetNext();
             /* владик */
             $compani = CIBlockElement::GetByID($arProps["NAME_COMPANY"]["VALUE"])->GetNextElement()->GetProperties();
+            $compani_fields = CIBlockElement::GetByID($arProps["NAME_COMPANY"]["VALUE"])->GetNextElement()->GetFields();
 
             $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 100, 'height' => 100),
                 BX_RESIZE_IMAGE_PROPORTIONAL, true);
@@ -405,14 +411,12 @@ $countReviews = count($allReviews);
             </div>
 
             <!-- Text -->
-            <div class="srolling--parent">
-                <p class="feedback__text readmore-text"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p>
-            </div>
+            <div class="srolling--parent"> <p class="feedback__text readmore__parent"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p></div>
 
 
             <!-- Bottom -->
             <div class="feedback__bottom">
-                <div class="feedback__bottom_name opacity_block">OMC</div>
+                <div class="feedback__bottom_name opacity_block"><?= $compani_fields["NAME"]  ?></div>
 
                 <a id="show-comments" class="feedback__bottom_link opacity_block">
                     <img src="" alt="">
@@ -614,7 +618,7 @@ $countReviews = count($allReviews);
         <div class="white_block">
             <?php  if (isset($_GET["property_region"])) {  ?>
 
-            <div class="sidebar__item_title">Рейтинг Страховых(В регионе)</div>
+            <div class="sidebar__item_title">Рейтинг Страховых(<?= $name_region; ?>)</div>
             <?php }else{ ?>
             <div class="sidebar__item_title">Рейтинг Страховых</div>
             <?php } ?>
@@ -728,7 +732,7 @@ $countReviews = count($allReviews);
                 } ?>
 
 
-                <ul>
+                </ul>
                     <? if (isset($_GET["property_region"])) {
                         $url_for_filter = "?";
 
@@ -742,28 +746,14 @@ $countReviews = count($allReviews);
                         }
 
                     } ?>
-                    <a class="accentBtn" href="<?= $url_for_filter ?>">Весь рейтинг</a>
+                    <div class="center__child">
+                        <a class="accentBtn" href="<?= $url_for_filter ?>">Весь рейтинг</a>
+                    </div>
         </div>
 
 
     </div>
 </div>
-
-<script>
-  $('.readmore-text').readmore({
-    speed: 75, // скорость раскрытия
-    collapsedHeight: 150, // высота отзыва
-    moreLink: '<div class="readmore-text__block __shadow"><a class="readmore-text__block__link" href="#">Читать весь отзыв...</a></div>', // читать весь отзыв
-    lessLink: '<div class="readmore-text__block" id="hide-comment"><a class="readmore-text__block__link" href="#">Скрыть отзыв</a></div>', // скрыть весь отзыв
-  });
-  $(document).on('click',function() {
-    $('#hide-comment').click(function() {
-      $('html, body').animate({
-        scrollTop: $(this).closest('.srolling--parent').offset().top - 60 + "px"
-      }, 400);
-    });
-  })
-</script>
 
 <?php require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>
 

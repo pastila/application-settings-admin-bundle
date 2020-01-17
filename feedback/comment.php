@@ -5,6 +5,7 @@ use Bitrix\Main\Page\Asset;
 $asset = Asset::getInstance();
 $asset->addCss(SITE_TEMPLATE_PATH . "/pages/feedback/main.min.css");
 $asset->addJs(SITE_TEMPLATE_PATH . "/pages/feedback/main.min.js");
+$asset->addJs(SITE_TEMPLATE_PATH . "/js/readmore.min.js");
 CModule::IncludeModule("iblock");
 global $USER;
 $url = $_SERVER["REQUEST_URI"];
@@ -29,7 +30,7 @@ preg_match("/(\d+)\/$/",$url,$result_id);
         );
 
         $order = Array("created" => "desc");
-        $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
+        $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","CREATED_DATE", "PROPERTY_*");
 
         $res = CIBlockElement::GetList($order, $arFilter, false, $pagen, $arSelect);
 
@@ -55,7 +56,10 @@ preg_match("/(\d+)\/$/",$url,$result_id);
 
                 $Date_change_user =  "";
             }
-            $newDate = FormatDate("d F, Y", MakeTimeStamp($arFields["DATE_ACTIVE_FROM"]));
+            $newdata = explode(".",$arFields["CREATED_DATE"]);
+            $newstrDate = $newdata[2].'.' . $newdata[1].'.' .$newdata[0];
+
+            $newDate = FormatDate("d F, Y", MakeTimeStamp($newstrDate));
             $ID_USER = $arProps["NAME_USER"]["VALUE"];
             $rsUser = CUser::GetByID($ID_USER);
             $arUser = $rsUser->Fetch();
@@ -91,7 +95,7 @@ preg_match("/(\d+)\/$/",$url,$result_id);
                                         <?php }elseif($arProps["REJECTED"]["VALUE"] != "" && $arProps["VERIFIED"]["VALUE"] != ""){?>
                                             fill="#3a4552"
                                         <?}elseif($arProps["VERIFIED"]["VALUE"] !=""){ ?>
-                                            fill="#1000ff"
+                                            fill="#00abd8"
                                         <?php } ?>/>
                                 </svg>
 
@@ -113,7 +117,9 @@ preg_match("/(\d+)\/$/",$url,$result_id);
                 </div>
 
                 <!-- Text -->
-                <p class="feedback__text"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p>
+                <div class="srolling--parent">
+                 <p class="feedback__text readmore__parent"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p>
+                </div>
 
                 <!-- Bottom -->
                 <div class="feedback__bottom">

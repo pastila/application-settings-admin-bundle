@@ -41,13 +41,13 @@ if (count($arResult["ITEMS"]) > 0) {
         <!-- Обращение -->
         <div id="appeal_<?= $arItem["ID"] ?>" class="obrashcheniya">
             <div class="obrashcheniya__btns">
-                <div class="obrashcheniya__btns_btn block__button_send">
+                <div class="obrashcheniya__btns_btn">
                     <input class="smallMainBtn hidden_browse_input" id="<?= $arItem["ID"] ?>" type="file" multiple
                            name="file">
                     <label for="<?= $arItem["ID"] ?>" class="btn btn-tertiary js-labelFile mainBtn">
                         Прикрепить скан или фото</label>
                 </div>
-                <a class="obrashcheniya__btns_btn accentBtn block_button_mob" onclick="send_ms(this)" id="send_<?= $arItem["ID"] ?>">Отправить</a>
+                <a class="obrashcheniya__btns_btn accentBtn" onclick="send_ms(this)" id="send_<?= $arItem["ID"] ?>">Отправить</a>
             </div>
             <p id="error_<?= $arItem["ID"] ?>" class="error"></p>
             <p id="success_<?= $arItem["ID"] ?>" class="success"></p>
@@ -60,14 +60,14 @@ if (count($arResult["ITEMS"]) > 0) {
                     <div class="obrashcheniya__content_left">
                         <div class="tumbler_users-tab">
                             <div class="user_block tab_element select_toggle">
-                                <p class="arrow_link">Мои обращения</p>
+                                <p class="arrow_link js_text">Мои обращения</p>
                                 <div class="select-dropdown-child white_block">
                                     <ul>
                                         <li>
-                                            <p class="user_block tab_element" data_el="<?=$arItem["ID"]?>" id="remove_child-button">Мои обращения</p>
+                                            <p class="user_block js_click_user tab_element" data_el="<?=$arItem["ID"]?>"  id="remove_child-button">Мои обращения</p>
                                         </li>
                                         <li>
-                                            <p class="user_block tab_element" data_el="<?=$arItem["ID"]?>" id="add_child-button">Для опекаемого человека</p>
+                                            <p class="user_block js_click_user tab_element" data_el="<?=$arItem["ID"]?>" id="add_child-button">Для опекаемого человека</p>
                                         </li>
                                     </ul>
                                 </div>

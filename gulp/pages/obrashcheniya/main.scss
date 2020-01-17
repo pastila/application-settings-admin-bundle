@@ -155,6 +155,7 @@ label {
         margin-bottom: 2rem;
         display: block;
         text-align: right;
+        color: $mainColor;
         .user_block{
             &.tab_element{
                 cursor: pointer;
@@ -175,6 +176,7 @@ label {
         display: inline-block;
         .select-dropdown-child{
             display: none;
+            cursor: initial;
             position: absolute;
             top: 100%;
             left: auto;
@@ -230,13 +232,8 @@ label {
 @media(max-width: 575px){
     .obrashcheniya {
         &__btns {
-            .block__button_send{
-                display: block;
-                width: 100%;
-            }
-            .block_button_mob{
-                display: block;
-                width: 100%;
+            .mainBtn{
+                margin-right: .5rem;
             }
         }
     }

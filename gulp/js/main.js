@@ -13,6 +13,11 @@ $(document).ready(function() {
 
  var url =  window.location.pathname;
 
+  if(url.search("contact_us/") != -1){
+
+      form_us_two();
+
+  }
   if(url.search("/forma-obrashenija/") == -1){
     if($(".header__r_auth_reg").length != 0) {
       $(".header__r_auth_reg").attr("data-rigstration", "2");
@@ -510,8 +515,6 @@ function responseMessage(msg) {
   $('.success-box div.text-message').html('<span>' + msg + '</span>');
 }
 
-// show menu toggle
-var theToggle = document.getElementById('show-mnu');
 
 // hasClass
 function hasClass(elem, className) {
@@ -549,12 +552,18 @@ function toggleClass(elem, className) {
   }
 }
 
-if (theToggle) {
-  theToggle.onclick = function() {
-    toggleClass(this, 'active');
-    return false;
-  };
-}
+$(document).ready(function() {
+  $('#show-mnu').click(function() {
+    $('#show-mnu').toggleClass('active');
+  });
+  $(document).on('click', function(e) {
+    if (!$(e.target).closest("#show-mnu , #menu ").length) {
+      $('#show-mnu').removeClass('active');
+    }
+    e.stopPropagation();
+  });
+})
+
 
 function lazyloadImage() {
   const images = document.querySelectorAll('[data-src]');
@@ -689,6 +698,93 @@ function form_us(){
 
     });
   }
+
+    return false;
+  });
+}
+function form_us_two(){
+console.log("3232");
+  $('#feedback_modal_two').validator().on('submit', function(e) {
+
+
+    e.preventDefault();
+    var fd = new FormData();
+    var error = [];
+
+
+    var  data_FORM = $("#feedback_modal_two").serializeArray();
+
+    var input_file = $('.file-simple');
+
+    if (input_file.prop('files')[0] != undefined) {
+      fd.append('import_file1', input_file.prop('files')[0]);
+    }
+    if (input_file.prop('files')[1] != undefined) {
+      fd.append('import_file2', input_file.prop('files')[1]);
+    }
+    if (input_file.prop('files')[2] != undefined) {
+      fd.append('import_file3', input_file.prop('files')[2]);
+    }
+    if (input_file.prop('files')[3] != undefined) {
+      fd.append('import_file4', input_file.prop('files')[3]);
+    }
+    if (input_file.prop('files')[4] != undefined) {
+      fd.append('import_file5', input_file.prop('files')[4]);
+    }
+    if (input_file.prop('files')[5] != undefined) {
+      $(".file_input_half").after(
+          '<p class="label danger"  >Максимально 5 картинок</p>');
+      error.push("mane_img");
+    }
+
+    fd.append('name', data_FORM[0]['value']);
+    fd.append('email', data_FORM[1]['value']);
+    fd.append('text', data_FORM[2]['value']);
+    fd.append('captcha_code', data_FORM[3]['value']);
+    fd.append('captcha_word', data_FORM[4]['value']);
+    if(error.length  == "0") {
+      $.ajax({
+
+        url: '/ajax/form_ask/ask.php',
+        type: 'POST',
+        data: fd,
+        processData: false,
+        contentType: false,
+        beforeSend: function() {
+
+        },
+        success: function(msg) {
+          var suc = JSON.parse(msg);
+
+          if (suc.suc == "1") {
+            $.magnificPopup.open({
+              items: {
+                src: '<div class="white-popup custom_styles_popup"><button title="Закрыть" type="button" class="mfp-close">×</button>' +
+                'Ваше письмо отправленно успешно</div>',
+                type: 'inline',
+              },
+            });
+          } else if (suc.captcha == "1") {
+            $("#captcha-error_parent").after(
+                '<p class="label danger"  >Код капчи не верный</p>');
+
+          } else {
+            console.log(suc);
+            if (suc.size == "1") {
+              $(".file_input_half").after(
+                  '<p class="label danger"  >Файлы с недопустимым размером</p>');
+            }
+            if (suc.format == "1") {
+              $(".file_input_half").after(
+                  '<p class="label danger"  >Файлы с недопустимым форматом</p>');
+            }
+          }
+
+        },
+      }).done(function(msg) {
+
+      });
+    }
 
     return false;
   });

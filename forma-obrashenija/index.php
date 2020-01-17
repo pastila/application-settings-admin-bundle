@@ -240,6 +240,7 @@ while($ob = $res->GetNextElement()){
                                 $arSelect = array("ID", "NAME", "IBLOCK_ID");
                                 $arFilter = array("IBLOCK_ID" => 8);
                                 $res = CIBlockElement::GetList(array(), $arFilter, false, false, $arSelect);
+
                                 while ($ob = $res->GetNextElement()) {
                                     $arFields[] = $ob->GetFields();
                                 }
@@ -286,7 +287,7 @@ while($ob = $res->GetNextElement()){
         </section>
 
         <div style="display:flex;">
-            <button style="margin: 0 auto; id="strax-sluchay" class="mainBtn">проверить диагноз</button>
+            <button style="margin: 0 auto;" id="strax-sluchay" class="mainBtn">проверить диагноз</button>
         </div>
     </form>
 

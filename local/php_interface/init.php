@@ -73,7 +73,7 @@ AddEventHandler("iblock", "OnBeforeIBlockElementDelete", "OnBeforeIBlockElementD
 
                 $result = $total_star / $count_company_with_this_kpp;
                 $All_star = Array(
-                    "ALL_AMOUNT_STAR" => $result,
+                    "ALL_AMOUNT_STAR" => round($result,2),
                 );
                 foreach ($array_id_company_with_kpp as $key){
                     CIBlockElement::SetPropertyValuesEx($key, 16, $All_star);
@@ -92,7 +92,7 @@ AddEventHandler("iblock", "OnBeforeIBlockElementDelete", "OnBeforeIBlockElementD
                 }
                 $result = $total / $count_otzev;
                 $star_clear = Array(
-                    "AMOUNT_STAR" =>$result,
+                    "AMOUNT_STAR" =>round($result,2),
                 );
                CIBlockElement::SetPropertyValuesEx($id_company, 16, $star_clear);
 
@@ -112,8 +112,9 @@ AddEventHandler("iblock", "OnBeforeIBlockElementDelete", "OnBeforeIBlockElementD
 
 
                 $result = $total_star / $count_company_with_this_kpp;
+
                 $All_star = Array(
-                    "ALL_AMOUNT_STAR" => $result,
+                    "ALL_AMOUNT_STAR" => round($result,2),
                 );
                 foreach ($array_id_company_with_kpp as $key){
                    CIBlockElement::SetPropertyValuesEx($key, 16, $All_star);
@@ -165,7 +166,7 @@ function IBlockElementAfterSaveHandler($arg1, $arg2 = false, $bInternal = false)
 
 
                 $star_clear = Array(
-                    "AMOUNT_STAR" => $result,
+                    "AMOUNT_STAR" => round($result,2),
                 );
 
                 CIBlockElement::SetPropertyValuesEx($arProps["NAME_COMPANY"]["VALUE"], 16, $star_clear);
@@ -189,7 +190,7 @@ function IBlockElementAfterSaveHandler($arg1, $arg2 = false, $bInternal = false)
                 $result = $total_star / $count_company_with_this_kpp;
 
                 $All_star = Array(
-                    "ALL_AMOUNT_STAR" => $result,
+                    "ALL_AMOUNT_STAR" => round($result,2),
                 );
                foreach ($array_id_company_with_kpp as $key){
                    CIBlockElement::SetPropertyValuesEx($key, 16, $All_star);
