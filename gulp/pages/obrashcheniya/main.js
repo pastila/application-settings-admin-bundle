@@ -531,6 +531,8 @@ function send_ms(sd) {
 }
 
 function commutator(ajax, id) {
+  console.log(id);
+
   if (ajax === 'child') {
     if ($('#children_input_' + id).attr('data-id_child').length > 0) {
       $.ajax({

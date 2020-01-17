@@ -309,7 +309,8 @@ while($ob = $res->GetNextElement()){
                         <input class="datepicker-here" required type="text" name="time" value=""
                                id="children_birthday_add"
                                placeholder="DD.MM.YYYY"
-                               pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}">
+                               pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}"
+                               autocomplete="off">
                     </div>
                 </div>
                 <div class="flex_data">

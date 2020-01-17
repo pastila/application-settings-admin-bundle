@@ -66,7 +66,7 @@ while ($Section = $section->GetNext()) {
                 $time = strtotime($newDate);
                 $Difference_time = (int)$_SERVER["REQUEST_TIME"] - (int)$time;
 
-                if ($Difference_time > 1) {    //больше чем 30 дней 2592000
+                if ($Difference_time > 2592000) {    //больше чем 30 дней 2592000
                 echo '<pre>';
                 print_r($arFields["ID"]);
                 echo '</pre>';

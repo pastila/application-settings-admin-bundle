@@ -190,15 +190,16 @@ $mpdf = new \Mpdf\Mpdf([
 //создаем PDF файл, задаем формат, отступы и.т.д.
 
 //
+$data= date('Y-m-d-h:i:s');
 $name_file = "/var/www/upload/pdf/PDF_";
-$name_file .= date('Y-m-d-h:i:s');
+$name_file .= $data;
 $name_file .= "_". $email. "_";
 $name_file .= "file.pdf";
 
 $mpdf->WriteHTML($html);
 $mpdf->Output($name_file,'F');
 
-$url_pdf_for_user = "/upload/pdf/PDF_". date('Y-m-d-h:i:s')."_". $email. "_file.pdf";
+$url_pdf_for_user = "/upload/pdf/PDF_".$data."_". $email. "_file.pdf";
 $arFile = CFile::MakeFileArray($url_pdf_for_user);
 $arProperty = Array(
     "PDF" => $arFile,
