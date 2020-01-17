@@ -40,6 +40,7 @@ while($ob = $res->GetNextElement()){
     if($ar_result = $db_list->GetNext()){
       
     }
+
 ?>
 
 <div class="personal_cabinet">
@@ -59,14 +60,7 @@ while($ob = $res->GetNextElement()){
 
     <div class="flex_personal">
        <div class="personal_data" id="true_data_person">
-            <div class="flex_data">
-                <div class="item_data">
-                    <p>Имя</p>
-                </div>
-                <div class="item_data">
-                     <p><?=$person["NAME"];?></p>
-                </div>
-            </div>
+
             <div class="flex_data">
                 <div class="item_data">
                     <p>Фамилия</p>
@@ -75,6 +69,14 @@ while($ob = $res->GetNextElement()){
                     <p><?=$person["LAST_NAME"];?></p>
                 </div>
             </div>
+           <div class="flex_data">
+               <div class="item_data">
+                   <p>Имя</p>
+               </div>
+               <div class="item_data">
+                   <p><?=$person["NAME"];?></p>
+               </div>
+           </div>
             <div class="flex_data">
                 <div class="item_data">
                     <p>Отчество</p>
@@ -110,6 +112,14 @@ while($ob = $res->GetNextElement()){
            </div>
            <div class="flex_data">
                <div class="item_data">
+                   <p>Регион страхования</p>
+               </div>
+               <div class="item_data">
+                   <p><?=$ar_result["NAME"];?></p>
+               </div>
+           </div>
+           <div class="flex_data">
+               <div class="item_data">
                    <p>Cтраховая компания</p>
                </div>
                <div class="item_data">
@@ -129,7 +139,16 @@ while($ob = $res->GetNextElement()){
            </div>
        </div>
        <div class="personal_data" id="for_change_person" style="display: none">
+
            <form id="form_change_data" action="" enctype="multipart/form-data">
+               <div class="flex_data">
+                   <div class="item_data">
+                       <p>Фамилия</p>
+                   </div>
+                   <div class="item_data input__wrap">
+                       <input type="text" name="last_name" value="<?=$person["LAST_NAME"];?>">
+                   </div>
+               </div>
            <div class="flex_data">
                <div class="item_data">
                    <p>Имя</p>
@@ -138,14 +157,7 @@ while($ob = $res->GetNextElement()){
                    <input type="text" name="name" value="<?=$person["NAME"];?>">
                </div>
            </div>
-           <div class="flex_data">
-               <div class="item_data">
-                   <p>Фамилия</p>
-               </div>
-               <div class="item_data input__wrap">
-                   <input type="text" name="last_name" value="<?=$person["LAST_NAME"];?>">
-               </div>
-           </div>
+
            <div class="flex_data">
                <div class="item_data">
                    <p>Отчество</p>
@@ -276,20 +288,21 @@ while($ob = $res->GetNextElement()){
         <div class="personal_data" id="add_children" style="display: none">
             <form  onsubmit="return false" id="add_children_form" action="" enctype="multipart/form-data">
                 <h2 class="small-page-title">Заполните данные опекаемого человека</h2>
-                <div class="flex_data">
-                    <div class="item_data">
-                        <p>Имя</p>
-                    </div>
-                    <div class="item_data input__wrap">
-                        <input id="children_name_add" required type="text" name="name" value="">
-                    </div>
-                </div>
+
                 <div class="flex_data">
                     <div class="item_data">
                         <p>Фамилия</p>
                     </div>
                     <div class="item_data input__wrap">
                         <input id="children_last_name_add" required type="text" name="last_name" value="">
+                    </div>
+                </div>
+                <div class="flex_data">
+                    <div class="item_data">
+                        <p>Имя</p>
+                    </div>
+                    <div class="item_data input__wrap">
+                        <input id="children_name_add" required type="text" name="name" value="">
                     </div>
                 </div>
                 <div class="flex_data">

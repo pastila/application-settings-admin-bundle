@@ -323,6 +323,7 @@ $(document).ready(function() {
             name: $('#children_name_add').val(),
             surname: $('#children_last_name_add').val(),
             patronymic: $('#children_second_name_add').val(),
+            town:$(".id_region").val(),
             policy: $('#child_policy_add').val(),
             hospital: id,
             birthday: $('#children_birthday_add').val(),
