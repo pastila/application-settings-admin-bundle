@@ -153,13 +153,13 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
             if ($arResult['SECTION']['DEPTH_LEVEL'] == 1) {
                 ?>
                 <div class="input-with-search">
-                    <label class="title-select" for="user_pass">Выберите класс: </label>
+                    
                     <div class="input__wrap">
                         <div class="input__ico">
                             <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                         </div>
                         <input id="class_input" type="text" data-id_class="<?=$arResult['SECTION']['ID']?>"
-                               placeholder="Поиск по классу" value="<?php echo $arResult['SECTION']['NAME']?>"
+                               placeholder="Выберите класс" value="<?php echo $arResult['SECTION']['NAME']?>"
                                autocomplete="off"/>
                         <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_class">
                             <?php
@@ -186,12 +186,11 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                     </div>
                 </div>
                 <div class="input-with-search">
-                    <label class="title-select" for="user_pass">Выберите группу: </label>
                     <div class="input__wrap">
                         <div class="input__ico">
                             <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                         </div>
-                        <input id="group_input" type="text" placeholder="Поиск по группе" autocomplete="off"/>
+                        <input id="group_input" type="text" placeholder="Выберите группу" autocomplete="off"/>
                         <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_group">
                             <li value="" id="empty_group" class="custom-serach__items_item group-js">Здесь нет моей группы</li>
                             <?php
@@ -207,12 +206,11 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                     </div>
                 </div>
                 <div style="pointer-events: none" class="input-with-search">
-                    <label class="title-select" for="user_pass">Выберите подгруппу: </label>
                     <div class="input__wrap">
                         <div class="input__ico">
                             <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                         </div>
-                        <input  id="subgroup_input"  type="text" placeholder="Поиск по подгруппе" autocomplete="off" value=""/>
+                        <input  id="subgroup_input"  type="text" placeholder="Выберите подгруппу" autocomplete="off" value=""/>
                     </div>
                 </div>
             <?php
@@ -238,13 +236,12 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                     );
                     ?>
                     <div class="input-with-search">
-                        <label class="title-select" for="user_pass">Выберите класс: </label>
                         <div class="input__wrap">
                             <div class="input__ico">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                             </div>
                             <input id="class_input" type="text" data-id_class="<?=$ar_cur_class['ID']?>"
-                                   placeholder="Поиск по классу" value="<?php echo $ar_cur_class['NAME']?>"
+                                   placeholder="Выберите класс" value="<?php echo $ar_cur_class['NAME']?>"
                                    autocomplete="off"/>
                             <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_class">
                                 <?php
@@ -263,14 +260,13 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                         </div>
                     </div>
                     <div class="input-with-search">
-                        <label class="title-select" for="user_pass">Выберите группу: </label>
                         <div class="input__wrap">
                             <div class="input__ico">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                             </div>
                             <input data-id_group="<?=$arResult['SECTION']['ID']?>" id="group_input"
                                    value="<?php echo $arResult['SECTION']['NAME']?>" type="text"
-                                   placeholder="Поиск по группе" autocomplete="off"/>
+                                   placeholder="Выберите группу" autocomplete="off"/>
                             <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_group">
                                 <li value="" id="empty_group" class="custom-serach__items_item group-js">Здесь нет моей группы</li>
                                 <?php
@@ -283,12 +279,11 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                         </div>
                     </div>
                     <div class="input-with-search">
-                        <label class="title-select" for="user_pass">Выберите подгруппу: </label>
                         <div class="input__wrap">
                             <div class="input__ico">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                             </div>
-                            <input id="subgroup_input" type="text" placeholder="Поиск по подгруппе" autocomplete="off"/>
+                            <input id="subgroup_input" type="text" placeholder="Выберите подгруппу" autocomplete="off"/>
                             <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_subgroup">
                                 <li value="" id="empty_subgroup" class="custom-serach__items_item subgroup-js">Здесь нет моей подгруппы</li>
                                 <?php
@@ -338,13 +333,12 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
 
 
                         <div class="input-with-search">
-                            <label class="title-select" for="user_pass">Выберите класс: </label>
                             <div class="input__wrap">
                                 <div class="input__ico">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                                 </div>
                                 <input id="class_input" type="text" data-id_class="<?=$arClass['ID']?>"
-                                       placeholder="Поиск по классу" value="<?php echo $arClass['NAME']?>"
+                                       placeholder="Выберите класс" value="<?php echo $arClass['NAME']?>"
                                        autocomplete="off"/>
                                 <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_class">
                                     <li value="" id="empty_class" class="custom-serach__items_item class-js">Здесь нет моего класса</li>
@@ -358,14 +352,13 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                             </div>
                         </div>
                         <div class="input-with-search">
-                            <label class="title-select" for="user_pass">Выберите группу: </label>
                             <div class="input__wrap">
                                 <div class="input__ico">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                                 </div>
                                 <input data-id_group="<?=$arGroup['ID']?>" id="group_input"
                                        value="<?php echo $arGroup['NAME']?>" type="text"
-                                       placeholder="Поиск по группе" autocomplete="off"/>
+                                       placeholder="Выберите группу" autocomplete="off"/>
                                 <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_group">
                                     <li value="" id="empty_group" class="custom-serach__items_item group-js">Здесь нет моей группы</li>
                                     <?php
@@ -378,13 +371,12 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                             </div>
                         </div>
                         <div class="input-with-search">
-                            <label class="title-select" for="user_pass">Выберите подгруппу: </label>
                             <div class="input__wrap">
                                 <div class="input__ico">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                                 </div>
                                 <input data-id_subgroup="<?=$arResult['SECTION']['ID']?>" id="subgroup_input" type="text"
-                                       placeholder="Поиск по подгруппе" autocomplete="off" value="<?=$arResult['SECTION']['NAME']?>"/>
+                                       placeholder="Выберите подгруппу" autocomplete="off" value="<?=$arResult['SECTION']['NAME']?>"/>
                                 <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_subgroup">
                                     <li value="" id="empty_subgroup" class="custom-serach__items_item subgroup-js">Здесь нет моей подгруппы</li>
                                     <?php
@@ -412,13 +404,12 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                 }
                 ?>
                 <div class="input-with-search">
-                    <label class="title-select" for="user_pass">Выберите диагноз: </label>
                     <div class="input__wrap">
                         <div class="input__ico">
                             <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                         </div>
                         <input data-id_diagnoz="" id="diagnoz_input" type="text"
-                               placeholder="Поиск по диагнозу" autocomplete="off" value=""/>
+                               placeholder="Выберите диагноз" autocomplete="off" value=""/>
                         <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_diagnoz">
                             <li value="" id="empty_diagnoz" class="custom-serach__items_item diagnoz-js">Здесь нет моего диагноза</li>
                             <?php foreach ($arFields as $arItem) {?>
@@ -430,24 +421,22 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
             <?php
             } else { ?>
                 <div style="pointer-events: none" class="input-with-search">
-                    <label class="title-select" for="user_pass">Выберите диагноз: </label>
                     <div class="input__wrap">
                         <div class="input__ico">
                             <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                         </div>
                         <input data-id_diagnoz="" id="diagnoz_input" type="text"
-                               placeholder="Поиск по диагнозу" autocomplete="off" value=""/>
+                               placeholder="Выберите диагноз" autocomplete="off" value=""/>
                     </div>
                 </div>
             <?php } ?>
         <?php } else { ?>
             <div class="input-with-search">
-                <label class="title-select" for="user_pass">Выберите класс: </label>
                 <div class="input__wrap">
                     <div class="input__ico">
                         <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                     </div>
-                    <input id="class_input" type="text" placeholder="Поиск по классу" autocomplete="off"/>
+                    <input id="class_input" type="text" placeholder="Выберите класс" autocomplete="off"/>
                     <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_class">
                         <?php
                         $i= 1;
@@ -467,30 +456,27 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                 </div>
             </div>
             <div style="pointer-events: none" class="input-with-search">
-                <label class="title-select" for="user_pass">Выберите группу: </label>
                 <div class="input__wrap">
                     <div class="input__ico">
                         <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                     </div>
-                    <input type="text" placeholder="Поиск по группе" autocomplete="off" value=""/>
+                    <input type="text" placeholder="Выберите группу" autocomplete="off" value=""/>
                 </div>
             </div>
             <div style="pointer-events: none" class="input-with-search">
-                <label class="title-select" for="user_pass">Выберите подгруппу: </label>
                 <div class="input__wrap">
                     <div class="input__ico">
                         <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                     </div>
-                    <input type="text" placeholder="Поиск по подгруппе" autocomplete="off" value=""/>
+                    <input type="text" placeholder="Выберите подгруппу" autocomplete="off" value=""/>
                 </div>
             </div>
             <div style="pointer-events: none" class="input-with-search">
-                <label class="title-select" for="user_pass">Выберите диагноз: </label>
                 <div class="input__wrap">
                     <div class="input__ico">
                         <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                     </div>
-                    <input type="text" placeholder="Поиск по диагнозу" autocomplete="off" value=""/>
+                    <input type="text" placeholder="Выберите диагноз" autocomplete="off" value=""/>
                 </div>
             </div>
         <?php }

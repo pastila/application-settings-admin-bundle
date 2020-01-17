@@ -40,7 +40,7 @@ $countReviews = count($allReviews);
 </ul>
 
 <!-- Pages Title -->
-<h2 class="page-title">Отзывы о страховых компаниях</h2>
+<h2 class="page-title">Отзывы о страховых медицинских организациях</h2>
 
 <!-- ALL STEPS IN FORM -->
 <form action="">
@@ -54,7 +54,7 @@ $countReviews = count($allReviews);
     <div class="feedback__filter">
         <div class="custom-select column-reverse_select">
             <select style="display: none">
-                <option value="">Все отзывы <span><?= $countReviews ?></span></option>
+                <option value="">Страховая компания <span>( <?= $countReviews ?> )</span></option>
                 <?
                 $bool_check_kpp = false;
                 $name_company = "";
@@ -205,7 +205,7 @@ $countReviews = count($allReviews);
 
         <div class="custom-select column-reverse_select">
             <select style="display: none" onchange="window.open(this.value)">
-                <option value="0">Отзывы о страховых в городах</option>
+                <option value="0">Регион</option>
                 <?php
                 $name_region = "";
                 $order = Array("name" => "asc");
@@ -280,7 +280,7 @@ $countReviews = count($allReviews);
 
         </div>
 
-        <a class="feedback__filter__reset" href="/feedback/">Сбросить</a>
+        <a class="feedback__filter__reset" href="/feedback/">Сбросить фильтры</a>
     </div>
 
 </form>

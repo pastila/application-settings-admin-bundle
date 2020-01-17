@@ -78,7 +78,7 @@ CModule::IncludeModule("iblock");
         </div>
         <div class="popup__wrap_middle">
             <div class="input__wrap">
-                <label class="input__wrap_label">Номер страхового полиса</label>
+                <label class="input__wrap_label">Номер страхового полиса (6ти значный)</label>
                 <input id="number_polic" type="text" minlength="16" maxlength="16" name="number_polic" required>
             </div>
             <div class="input__wrap">
@@ -92,7 +92,7 @@ CModule::IncludeModule("iblock");
         </div>
         <div class="popup__wrap_middle">
             <div class="input__wrap">
-                <label class="input__wrap_label" for="user_pass">Регион в котором заключали договор </label>
+                <label class="input__wrap_label" for="user_pass">Регион в котором застрахованы по ОМС</label>
                 <div class="block_relative">
                     <div class="input__ico">
                         <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
