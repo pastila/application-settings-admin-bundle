@@ -235,11 +235,10 @@ function save(sv) {
 
   let regExp = /^[А-ЯЁ][а-яё]*([-][А-ЯЁ][а-яё]*)?\s[А-ЯЁ][а-яё]*\s[А-ЯЁ][а-яё]*$/;
   let regExp2 = /^(\d+)[.](\d+)[.](\d+)/;
-
+console.log(cur_el.find(usrname).val());
 if(cur_el.find(policy).val().length === 16) {
-  if (cur_el.find(time).val() === "" || regExp2.test(cur_el.find(time).val())) {
-    if (cur_el.find(usrname).val() === '' ||
-        regExp.test(cur_el.find(usrname).val())) {
+  if (cur_el.find(time).val() !== "" || regExp2.test(cur_el.find(time).val())) {
+    if (cur_el.find(usrname).val() !== "" && regExp.test(cur_el.find(usrname).val())) {
       if ($('#selected_sender_' + element[1]).val() === 'child') {
         $.ajax({
           url: '/ajax/edit_appeal.php',
