@@ -190,7 +190,20 @@ function delete_el(el) {
     data: {ID: element},
     type: 'post',
     success: function(result) {
-      $('#appeal_' + result).remove();
+      var suc = JSON.parse(result);
+
+      if(suc.delete !== "") {
+        $('#appeal_' + suc.delete).remove();
+        if(suc.count == 1){
+          $('.page-title').after(
+              '<div class="obrashcheniya"></div>');
+          $(".obrashcheniya").append('<p>У вас нет готовых обращений. Сформировать обращение на возврат средств за медицинскую помощь по программе ОМС можно\n' +
+              '           </p>');
+        }
+
+        }
+
+
     }
   });
 }
