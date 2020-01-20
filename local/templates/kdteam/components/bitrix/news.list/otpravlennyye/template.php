@@ -105,7 +105,7 @@ if (count($arResult["ITEMS"]) > 0) {
                                 <p id="usrname_<?= $arItem['ID'] ?>"
                                    class="obrashcheniya__content_left_center_item_text-full">
                                     <?php echo $arItem["PROPERTIES"]["FULL_NAME"]["VALUE"] ?></p>
-                                <div class="input__wrap no_margin">
+                                <div class="input__wrap no_margin input__wrap_width">
                                     <input style="display: none" type="text" name="usrname"
                                            value="<?= $arItem["PROPERTIES"]["FULL_NAME"]["VALUE"] ?>">
                                 </div>
@@ -118,7 +118,7 @@ if (count($arResult["ITEMS"]) > 0) {
                                 <p id="phone_<?= $arItem['ID'] ?>"
                                    class="obrashcheniya__content_left_center__item_text-full">
                                     <?php echo $arItem["PROPERTIES"]["MOBAIL_PHONE"]["VALUE"] ?></p>
-                                <div class="input__wrap no_margin">
+                                <div class="input__wrap no_margin input__wrap_width">
                                     <input style="display: none"
                                            type="text"
                                            name="phone"
@@ -154,7 +154,7 @@ if (count($arResult["ITEMS"]) > 0) {
                                 <p id="policy_<?= $arItem['ID'] ?>"
                                    class="obrashcheniya__content_left_center__item_text-full">
                                     <?php echo $arItem["PROPERTIES"]["POLICY"]["VALUE"] ?></p>
-                                <div class="input__wrap no_margin">
+                                <div class="input__wrap no_margin input__wrap_width">
                                 <input style="display: none"
                                        type="text"
                                        name="policy"
@@ -172,7 +172,7 @@ if (count($arResult["ITEMS"]) > 0) {
                                 <p id="time_<?= $arItem['ID'] ?>"
                                    class="obrashcheniya__content_left_center__item_text-full">
                                     <?php echo $arItem["PROPERTIES"]["VISIT_DATE"]["VALUE"] ?></p>
-                                <div class="input__wrap no_margin">
+                                <div class="input__wrap no_margin input__wrap_width">
                                 <input style="display: none" class="datepicker-here"
                                        type="text"
                                        name="time"
