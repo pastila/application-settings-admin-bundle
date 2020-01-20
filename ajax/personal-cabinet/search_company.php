@@ -14,11 +14,13 @@ if($res->SelectedRowsCount() > 0) {
 
     while($ob = $res->GetNextElement()) {
         $arProps = $ob->GetFields();
+        $allReviews[$arProps['PROPERTY_KPP_VALUE']] = $arProps;
 
-        echo '<li value="' . $arProps['ID'] . '" data-kpp="' . $arProps['PROPERTY_KPP_VALUE'] . '" class="custom-serach__items_item hospital "  >'.$arProps["NAME"].'</li>';
     }
 }else{
     echo 'error_company';
 }
 
-
+foreach ($allReviews as $key){
+    echo '<li value="' . $key['ID'] . '" data-kpp="' . $key['PROPERTY_KPP_VALUE'] . '" class="custom-serach__items_item hospital "  >'.$key["NAME"].'</li>';
+}
