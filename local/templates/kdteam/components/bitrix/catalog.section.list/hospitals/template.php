@@ -194,7 +194,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
             if ($arResult['SECTION']['DEPTH_LEVEL'] == 1) {
                 ?>
                 <div class="input-with-search">
-                    <label class="title-select" for="user_pass">Выбор региона: </label>
+                   
                     <div class="input__wrap">
                         <div class="input__ico">
                             <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
@@ -233,12 +233,9 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                 }
                 ?>
                 <div class="input-with-search">
-                    <label class="title-select" for="user_pass">Список больниц : </label>
+
                     <div class="input__wrap">
-                        <div class="input__ico">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
-                        </div>
-                        <input id="referal_two_forma" type="text" placeholder="Поиск по региону" autocomplete="off"/>
+                        <input id="referal_two_forma" type="text" placeholder="Выберите медицинскую организацию" autocomplete="off"/>
                         <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_hospital">
                             <?
 
