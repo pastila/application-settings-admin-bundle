@@ -310,6 +310,12 @@ label {
             margin-top: 1rem;
         }
     }
+    &_width{
+        @media(min-width: 992px){
+            width: 100%;
+            max-width: 50rem;
+        }
+    }
 }
 
 @media screen and (min-width: 1400px) {
