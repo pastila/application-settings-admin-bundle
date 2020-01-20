@@ -158,6 +158,8 @@ if (count($arResult["ITEMS"]) > 0) {
                                 <input style="display: none"
                                        type="text"
                                        name="policy"
+                                       maxlength="16"
+                                       minlength="16"
                                        value="<?= $arItem["PROPERTIES"]["POLICY"]["VALUE"] ?>">
                                 </div>
                             </div>
