@@ -24,7 +24,8 @@
         }
 
         img {
-            max-width: 10rem;
+            width: 10rem;
+            max-width: 100%;
            @media sreen and(min-width: 992px){
                margin-right: 1rem;
            }
@@ -32,6 +33,22 @@
 
         &_name {
             font-size: 1.4rem;
+        }
+    }
+
+    &__developer{
+        max-width: 12rem;
+        width: 100%;
+        margin-left: auto;
+        text-align: right;
+        @media(max-width: 991px){
+            margin: 0 auto;
+            text-align: center;
+        }
+        &_title{
+            font-size: 1.2rem;
+            margin-bottom: .5rem;
+            display: inline-block;
         }
     }
 
@@ -65,7 +82,7 @@
         }
     
         &__menu {
-            width: 90%;
+            width: 80%;
             display: flex;
             align-items: center;
             justify-content: center;
