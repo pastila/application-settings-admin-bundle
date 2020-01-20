@@ -67,7 +67,7 @@ if($USER->IsAuthorized()) {
     $arUser = $rsUser->Fetch();
     $phone = $arUser['PERSONAL_PHONE'];
 
-    $arName = $arUser['NAME'] . ' ' . $arUser['LAST_NAME'] . ' ' . $arUser['SECOND_NAME'];
+    $arName = $arUser['LAST_NAME'] . ' ' . $arUser['NAME'] . ' ' . $arUser['SECOND_NAME'];
 
     if ($arSection = $rsSections->GetNext()) {
 

@@ -16,31 +16,46 @@ $this->setFrameMode(true);
 
 ?>
 <?php foreach ($arResult["ITEMS"] as $arItem) {
+    $sect_id = "";
     if (CModule::IncludeModule("iblock")) {
+
         $res = CIBlockElement::GetByID($arItem["PROPERTIES"]['COMPANY']['VALUE']);
         if ($ar_res = $res->GetNext()) {
             $hospital_id = $ar_res['ID'];
             $hospital = $ar_res['~NAME'];
             $sect_id = $ar_res['IBLOCK_SECTION_ID'];
+
         }
     }
+
+    $arFilter = array("IBLOCK_ID" => 16, 'ID' => $sect_id);
+    $res_reg = CIBlockSection::GetList(
+        array(),
+        $arFilter,
+        false,
+        array()
+    );
+        if($ob = $res_reg->GetNext()) {
+          
+            }
     ?>
     <div class="flex_personal">
         <div id="element_<?=$arItem['ID']?>" class="personal_data">
-            <div class="flex_data">
-                <div class="item_data">
-                    <p>Имя</p>
-                </div>
-                <div class="item_data">
-                    <p><?=$arItem["NAME"];?></p>
-                </div>
-            </div>
+
             <div class="flex_data">
                 <div class="item_data">
                     <p>Фамилия</p>
                 </div>
                 <div class="item_data">
                     <p><?=$arItem["PROPERTIES"]['SURNAME']['VALUE'];?></p>
+                </div>
+            </div>
+            <div class="flex_data">
+                <div class="item_data">
+                    <p>Имя</p>
+                </div>
+                <div class="item_data">
+                    <p><?=$arItem["NAME"];?></p>
                 </div>
             </div>
             <div class="flex_data">
@@ -65,6 +80,14 @@ $this->setFrameMode(true);
                 </div>
                 <div class="item_data">
                     <p><?=$arItem["PROPERTIES"]['POLICY']['VALUE'];?></p>
+                </div>
+            </div>
+            <div class="flex_data">
+                <div class="item_data">
+                    <p>Город страхования</p>
+                </div>
+                <div class="item_data">
+                    <p><?=$ob["NAME"]?></p>
                 </div>
             </div>
             <div class="flex_data">

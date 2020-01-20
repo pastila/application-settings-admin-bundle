@@ -228,12 +228,12 @@ $(document).ready(function() {
           '<span class="label danger  error-personal_phone "  >Введен короткий номер телефона</span>');
       error.push("error");
     }
-    if(data_FORM[0]['value'].length <2){
+    if(data_FORM[1]['value'].length <2){
       $('[name=name]').after(
           '<span class="label danger  error-name "  >Введите имя</span>');
       error.push("error");
     }
-    if(data_FORM[1]['value'].length <2){
+    if(data_FORM[0]['value'].length <2){
       $('[name=last_name]').after(
           '<span class="label danger  error-last_name "  >Введите фамилию</span>');
       error.push("error");
@@ -249,8 +249,8 @@ $(document).ready(function() {
     error.push("error");
   }
   fd.append('import_file', input_file.prop('files')[0]);
-  fd.append('name', data_FORM[0]['value']);
-  fd.append('last_name', data_FORM[1]['value']);
+  fd.append('name', data_FORM[1]['value']);
+  fd.append('last_name', data_FORM[0]['value']);
   fd.append('second_name', data_FORM[2]['value']);
   fd.append('personal_phone', data_FORM[3]['value']);
   fd.append('email', data_FORM[4]['value']);
@@ -323,6 +323,7 @@ $(document).ready(function() {
             name: $('#children_name_add').val(),
             surname: $('#children_last_name_add').val(),
             patronymic: $('#children_second_name_add').val(),
+            town:$(".id_region").val(),
             policy: $('#child_policy_add').val(),
             hospital: id,
             birthday: $('#children_birthday_add').val(),

@@ -157,7 +157,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                         <div class="input__ico">
                             <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                         </div>
-                        <input id="region_input" type="text" data-id_region="<?=$arResult['SECTION']['ID']?>" placeholder="Поиск по региону" value="<?php echo $arResult['SECTION']['NAME']?>" autocomplete="off"/>
+                        <input id="region_input" type="text" class="id_region" data-id_region="<?=$arResult['SECTION']['ID']?>" placeholder="Поиск по региону" value="<?php echo $arResult['SECTION']['NAME']?>" autocomplete="off"/>
                         <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_region">
                 <?php
                 $db_list = CIBlockSection::GetList(
@@ -190,7 +190,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                         <div class="input__ico">
                             <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                         </div>
-                        <input id="hospital_input" data-id_hospital="" type="text" placeholder="Поиск по больницам" autocomplete="off"/>
+                        <input id="hospital_input" data-id_hospital="" type="text" placeholder="Поиск по СМО" autocomplete="off"/>
                         <p style="display: none" class="error_search-js error absolute-error">Выберите больницу</p>
                         <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_hospital_down">
                             <?php foreach ($arFields as &$arItem) {?>
@@ -226,7 +226,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                 <div class="input__wrap" style="pointer-events: none">
                     <div class="input__ico">
                     </div>
-                    <input id="" type="text" placeholder="Список больниц" autocomplete="off"/>
+                    <input id="" type="text" placeholder="Поиск по СМО" autocomplete="off"/>
                     <ul style="cursor: pointer;" class="custom-serach__items" id="">
                     </ul>
                 </div>

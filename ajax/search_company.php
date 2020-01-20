@@ -17,5 +17,8 @@ $res = CIBlockElement::GetList(Array("NAME"=>"ASC"), $arFilter, false, false, $a
 while($ob = $res->GetNextElement()){
     $arFields = $ob->GetFields();
 
-    echo '<li value="' . $arFields['ID'] . '" data-kpp="' . $arFields['PROPERTY_KPP_VALUE'] . '" class="custom-serach__items_item hospital "  >'.$arFields["NAME"].'</li>';
+    $allReviews[$arProps['PROPERTY_KPP_VALUE']] = $arFields;
+}
+foreach ($allReviews as $key){
+    echo '<li value="' . $key['ID'] . '" data-kpp="' . $key['PROPERTY_KPP_VALUE'] . '" class="custom-serach__items_item hospital "  >'.$key["NAME"].'</li>';
 }

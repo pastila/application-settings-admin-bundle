@@ -126,7 +126,7 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '.region_reg', function() {
-
+      console.log("3232");
       let id_region = $(this).attr('value');
       $('#referal').attr('data-id_region', id_region);
       $('#referal').attr('data-region_check', 'check');

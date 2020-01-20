@@ -105,7 +105,7 @@ if (count($arResult["ITEMS"]) > 0) {
                                 <p id="usrname_<?= $arItem['ID'] ?>"
                                    class="obrashcheniya__content_left_center_item_text-full">
                                     <?php echo $arItem["PROPERTIES"]["FULL_NAME"]["VALUE"] ?></p>
-                                <div class="input__wrap no_margin">
+                                <div class="input__wrap no_margin input__wrap_width">
                                     <input style="display: none" type="text" name="usrname"
                                            value="<?= $arItem["PROPERTIES"]["FULL_NAME"]["VALUE"] ?>">
                                 </div>
@@ -118,7 +118,7 @@ if (count($arResult["ITEMS"]) > 0) {
                                 <p id="phone_<?= $arItem['ID'] ?>"
                                    class="obrashcheniya__content_left_center__item_text-full">
                                     <?php echo $arItem["PROPERTIES"]["MOBAIL_PHONE"]["VALUE"] ?></p>
-                                <div class="input__wrap no_margin">
+                                <div class="input__wrap no_margin input__wrap_width">
                                     <input style="display: none"
                                            type="text"
                                            name="phone"
@@ -154,10 +154,12 @@ if (count($arResult["ITEMS"]) > 0) {
                                 <p id="policy_<?= $arItem['ID'] ?>"
                                    class="obrashcheniya__content_left_center__item_text-full">
                                     <?php echo $arItem["PROPERTIES"]["POLICY"]["VALUE"] ?></p>
-                                <div class="input__wrap no_margin">
+                                <div class="input__wrap no_margin input__wrap_width">
                                 <input style="display: none"
                                        type="text"
                                        name="policy"
+                                       maxlength="16"
+                                       minlength="16"
                                        value="<?= $arItem["PROPERTIES"]["POLICY"]["VALUE"] ?>">
                                 </div>
                             </div>
@@ -170,7 +172,7 @@ if (count($arResult["ITEMS"]) > 0) {
                                 <p id="time_<?= $arItem['ID'] ?>"
                                    class="obrashcheniya__content_left_center__item_text-full">
                                     <?php echo $arItem["PROPERTIES"]["VISIT_DATE"]["VALUE"] ?></p>
-                                <div class="input__wrap no_margin">
+                                <div class="input__wrap no_margin input__wrap_width">
                                 <input style="display: none" class="datepicker-here"
                                        type="text"
                                        name="time"
@@ -345,8 +347,8 @@ if (count($arResult["ITEMS"]) > 0) {
 
                                 <?php
                                 $url_pdf = CFile::GetPath($arItem["PROPERTIES"]["PDF"]["VALUE"]); ?>
-                                <a target="_blank" class="obrashcheniya__content_sidebar_blocks_text_link pdf <?php if ($url_pdf == "") { ?>error<?}?>" <?php if ($url_pdf != "") { ?> href="<?= $url_pdf ?>"<? } ?> >
-                                  <?php if ($url_pdf != "") { ?>  просмотреть <? }else{ ?> Заполните все поля для формирования pdf файла<?}?>
+                                <a target="_blank" class=" pdf <?php if ($url_pdf == "") { ?>success<?}?>" <?php if ($url_pdf != "") { ?> href="<?= $url_pdf ?>"<? } ?> >
+                                  <?php if ($url_pdf != "") { ?>  просмотреть <? }else{ ?> Заполните все поля для формирования заявления, нажав "редактировать"<?}?>
                                 </a>
                                 <div class="hidden ready_pdf success"> Файл пдф сформирован</div>
                                 <div class="hidden updata_pdf success"> Файл пдф обновлен</div>
@@ -360,7 +362,7 @@ if (count($arResult["ITEMS"]) > 0) {
     <?php }
 } else { ?>
     <div class="obrashcheniya">
-        <p> У вас нету обращений. Пройдите проверку своего диагноза
+        <p> У вас нет готовых обращений. Сформировать обращение на возврат средств за медицинскую помощь по программе ОМС можно
             <a class="link-underline" href="/forma-obrashenija/">здесь</a>.</p>
     </div>
 <?php } ?>

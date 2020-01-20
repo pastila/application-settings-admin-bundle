@@ -141,18 +141,22 @@ $html ='
                 <div class="header__items_item" style="margin-bottom: 10px;">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label" >
+                    <div>
                       <span style="font-weight: bold;">Действую в интересах лица, законным
-                         представителем которого являюсь</span>
-                        <span style="font-weight: bold;">Сведения о лице, получившем медицинскую помощь:</span>
+                         представителем которого являюсь.</span>
+        </div>
+        <div>
+                       <span style="font-weight: bold;">
+                       Сведения о лице, получившем медицинскую помощь:</span>
+                   </div>
                     </div>
                       <div class="header__items_item--text blue-text cursive" style=" font-style: italic;">
                         '. $SURNAME .'
                         '. $NAME .'
                         '. $PARTONYMIC .'
-                    </div>
-                    <div class="header__items_item--text blue-text cursive" style=" font-style: italic;">
-                        '. $BIRTHDAY .'
-                    </div>   <div class="header__items_item--text blue-text cursive" style=" font-style: italic;">
+                         '. $BIRTHDAY .'
+                    </div>   
+                      <div class="header__items_item--text blue-text cursive" style=" font-style: italic;">
                         '. $polic .'
                     </div>
                 </div>
@@ -163,7 +167,7 @@ $html ='
         <p style="text-align: center; margin-bottom: 15px; font-size: 22px; font-weight: bold;">ПРЕТЕНЗИЯ</p>
          <p>
         <span class="red-text cursive" style="font-style: italic;">«'.$data_user_oplata_POST.'</span> г. в медицинской организации <span
-            class="blue-text cursive" style="font-style: italic;">'.$arHospital.'</span> мною
+            class="blue-text cursive" style="font-style: italic;">'.$name_hospital.'</span> мною
         была совершена
         оплата медицинских услуг, что подтверждается прилагаемыми к настоящему письму документами.
     </p>
@@ -180,7 +184,7 @@ $html ='
         организацию, выбранную для получения первичной медико-санитарной помощи.
     </p>
     <p>
-При обращении в <span class="blue-text cursive" style="font-style: italic;">'.$arHospital.'</span> мне не сообщили о возможности
+При обращении в <span class="blue-text cursive" style="font-style: italic;">'.$name_hospital.'</span> мне не сообщили о возможности
         получения
         медицинской помощи бесплатно в
         сроки, установленные Территориальной программой государственных гарантий оказания гражданам бесплатной
