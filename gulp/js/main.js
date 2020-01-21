@@ -176,7 +176,6 @@ $(document).ready(function() {
           });
           $('.hospital-empty').remove();
           if (msg == 'error_company') {
-
             if ($('.error_region').length != 0) {
               $('.error_region').remove();
               $('#search_result_hospital').
@@ -189,7 +188,6 @@ $(document).ready(function() {
               $('.hospital-empty').remove();
             }
           } else {
-            console.log('2323');
             setTimeout(function() {
               $('#search_result_hospital').append(msg);
             }, 100);

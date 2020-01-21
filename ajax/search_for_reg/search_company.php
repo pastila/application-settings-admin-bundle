@@ -8,7 +8,8 @@ CModule::IncludeModule("iblock");
 
 
 $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_KPP","PROPERTY_LOGO_SMO");
-$arFilter = Array("IBLOCK_ID"=>16, "SECTION_ID"=>$_POST["region_id"] , "%NAME"=>$_POST["name_hospital"] );
+$arFilter = Array("IBLOCK_ID"=>16,  "ACTIVE" => "Y", "SECTION_ID"=>$_POST["region_id"],
+    "%NAME"=>$_POST["name_hospital"] );
 $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
 if($res->SelectedRowsCount() > 0) {
 
@@ -16,8 +17,8 @@ if($res->SelectedRowsCount() > 0) {
         $arProps = $ob->GetFields();
         $allReviews[$arProps['PROPERTY_KPP_VALUE']] = $arProps;
     }
-}else{
-    echo 'error_company';
+} else {
+    echo '<li class="error_region">Компания не найдена</li>';
 }
 
 foreach ($allReviews as $key){

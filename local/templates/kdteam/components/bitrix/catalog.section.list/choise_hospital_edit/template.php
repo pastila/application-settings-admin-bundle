@@ -197,9 +197,13 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                         <?php } ?>
                         <span style="display: none" class="error_search-js_<?=$arParams['ID_ELEM']?>">Выберете больницу</span>
                         <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_hospital_<?=$arParams['ID_ELEM']?>">
-                            <?php foreach ($arFields as &$arItem) {?>
-                                <li value="<?=$arItem['ID']?>" class="custom-serach__items_item  hospital-js_<?=$arParams['ID_ELEM']?>"><?php echo $arItem['NAME']?></li>
-                            <?php } ?>
+                            <?php if ($res->SelectedRowsCount() > 0) { ?>
+                                <?php foreach ($arFields as &$arItem) {?>
+                                    <li value="<?=$arItem['ID']?>" class="custom-serach__items_item  hospital-js_<?=$arParams['ID_ELEM']?>"><?php echo $arItem['NAME']?></li>
+                                <?php } ?>
+                            <?php } else { ?>
+                                <li class="error_region error_hospital_<?=$arParams['ID_ELEM']?>">Компания не найдена</li>
+                            <? } ?>
                         </ul>
                     </div>
                 </div>

@@ -193,9 +193,13 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                         <input id="hospital_input" data-id_hospital="" type="text" placeholder="Поиск по СМО" autocomplete="off"/>
                         <p style="display: none" class="error_search-js error absolute-error">Выберите больницу</p>
                         <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_hospital_down">
-                            <?php foreach ($arFields as &$arItem) {?>
-                                <li value="<?=$arItem['ID']?>" class="custom-serach__items_item  hospital-js"><?php echo $arItem['NAME']?></li>
-                            <?php } ?>
+                            <?php if ($res->SelectedRowsCount() > 0) { ?>
+                                <?php foreach ($arFields as &$arItem) { ?>
+                                    <li value="<?=$arItem['ID']?>" class="custom-serach__items_item  hospital-js"><?php echo $arItem['NAME']?></li>
+                                <?php } ?>
+                            <?php } else { ?>
+                                <li class="error_region error_hospital">Компания не найдена</li>
+                            <? } ?>
                         </ul>
                     </div>
                 </div>

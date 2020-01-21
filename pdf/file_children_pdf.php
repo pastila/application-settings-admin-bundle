@@ -86,11 +86,9 @@ $html = '
             <div class="header__items_item">
                 <div class="header__items_item_wrap" style="margin-bottom: 5px;">
                     <div class="header__items_item--label" style="font-weight: bold;">
-                        Кому:
+                        Кому: Руководителю страховой медицинской организации
                     </div>
                     <div class="header__items_item--text" style="margin-bottom: 5px;">
-                        <span class="bold-text" style="font-weight: bold;">
-                        Руководителю страховой медицинской организации</span>
                         <div class="blue-text cursive" style="font-style: italic;">
                             ' . $name_hospital . '<br>
                             ' . $NAME_BOSS . '<br>

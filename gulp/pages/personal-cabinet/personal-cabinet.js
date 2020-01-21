@@ -638,10 +638,10 @@ function keyup_hospital(id_region) {
           if ($('.error_hospital').length != 0) {
             $('.error_hospital').remove();
             $('#search_result_hospital_down').
-                append('<li class="error_hospital">Больница не найдена</li>');
+                append('<li class="error_region error_hospital">Компания не найдена</li>');
           } else {
             $('#search_result_hospital_down').
-                append('<li class="error_hospital">Больница не найдена</li>');
+                append('<li class="error_region error_hospital">Компания не найдена</li>');
           }
         } else {
           setTimeout(function() {
@@ -678,10 +678,10 @@ function keyup_hospital_edit(id_region, id) {
           if ($('.error_hospital_'+id).length != 0) {
             $('.error_hospital_'+id).remove();
             $('#search_result_hospital_'+id).
-                append('<li class="error_hospital_'+id+'">Больница не найдена</li>');
+                append('<li class="error_region error_hospital_'+id+'">Компания не найдена</li>');
           } else {
             $('#search_result_hospital_'+id).
-                append('<li class="error_hospital_'+id+'">Больница не найдена</li>');
+                append('<li class="error_region error_hospital_'+id+'">Компания не найдена</li>');
           }
         } else {
           setTimeout(function() {
