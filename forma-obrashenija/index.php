@@ -225,7 +225,7 @@ while($ob = $res->GetNextElement()){
         <div class="card error_step-card-4">
             <p class="form-obrashcheniya__step_four_text"><?=$arResult_block[8]?></p>
 
-            <a class="link-underline" href="/news/chto-oplachivaetsya-po-polisu/">Что оплачивается по полису ОМС</a>
+            <a class="link-underline" target="_blank" href="/news/chto-oplachivaetsya-po-polisu/">Что оплачивается по полису ОМС</a>
 
             <div class="smart_search-block">
                 <p class="title-select bold">
