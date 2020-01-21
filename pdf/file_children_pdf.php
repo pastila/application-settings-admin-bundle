@@ -79,14 +79,14 @@ $NAME_BOSS = $arProps["NAME_BOSS"]["VALUE"];// руководитель комп
 $html ='
 
 <page>
- <div class="header" style="width: 100%; padding: 40px 200px 0 200px; margin: 0 auto;">
-        <div class="header__items" style="width: 100%;">
+ <div class="header" style="padding: 0 50px;">
+        <div class="header__items">
             <div class="header__items_item">
-                <div class="header__items_item_wrap" style="margin-bottom: 15px;">
+                <div class="header__items_item_wrap" style="margin-bottom: 5px;">
                     <div class="header__items_item--label" style="font-weight: bold;">
                         Кому:
                     </div>
-                    <div class="header__items_item--text" style="margin-bottom: 10px;">
+                    <div class="header__items_item--text" style="margin-bottom: 5px;">
                         <span class="bold-text" style="font-weight: bold;">Руководителю страховой медицинской организации</span>
                         <div class="blue-text cursive" style="font-style: italic;">
                             '.$name_hospital.',<br>
@@ -96,7 +96,7 @@ $html ='
                     </div>
                 </div>
             </div>
-            <div class="header__items_item" style="margin-bottom: 15px;">
+            <div class="header__items_item" style="margin-bottom: 5px;">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label">
                         <span style="font-weight: bold;">От:</span>
@@ -107,7 +107,7 @@ $html ='
                     </div>
                 </div>
             </div>
-               <div class="header__items_item" style="margin-bottom: 15px;">
+               <div class="header__items_item" style="margin-bottom: 5px;">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label">
                         <span style="font-weight: bold;">Номер полиса:</span>
@@ -117,7 +117,7 @@ $html ='
                     </div>
                 </div>
             </div>
-               <div class="header__items_item" style="margin-bottom: 15px;">
+               <div class="header__items_item" style="margin-bottom: 5px;">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label" >
                         <span style="font-weight: bold;">Адрес электронной почты:</span>
@@ -128,7 +128,7 @@ $html ='
                 </div>
             </div>
 
-            <div class="header__items_item" style="margin-bottom: 10px;">
+            <div class="header__items_item" style="margin-bottom: 5px;">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label" >
                         <span style="font-weight: bold;">Телефон:</span>
@@ -138,7 +138,7 @@ $html ='
                     </div>
                 </div>
             </div>
-                <div class="header__items_item" style="margin-bottom: 10px;">
+                <div class="header__items_item" style="margin-bottom: 5px;">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label" >
                     <div>
@@ -163,8 +163,8 @@ $html ='
             </div>
         </div>
     </div>
-​   <div style="width: 100%; padding: 0 40px 40px 40px; margin: 0 auto;">
-        <p style="text-align: center; margin-bottom: 15px; font-size: 22px; font-weight: bold;">ПРЕТЕНЗИЯ</p>
+​   <div>
+        <p style="text-align: center; margin-bottom: 5px; font-size: 18px; font-weight: bold;>ПРЕТЕНЗИЯ</p>
          <p>
         <span class="red-text cursive" style="font-style: italic;">«'.$data_user_oplata_POST.'</span> г. в медицинской организации <span
             class="blue-text cursive" style="font-style: italic;">'.$name_hospital.'</span> мною
@@ -220,7 +220,7 @@ $html ='
     <p>
 Приложение: документы, подтверждающие факт оплаты медицинских услуг – в электронном виде.
     </p>
-    <span class="blue-text cursive" style="font-style: italic; margin-top: 15px;"> Дата формирования заявления ' . $data_user_oformlenie_POST.'</span>
+    <span class="blue-text cursive" style="font-style: italic; margin-top: 5px;"> Дата формирования заявления ' . $data_user_oformlenie_POST.'</span>
     </div>
 </page>
 
@@ -229,11 +229,12 @@ $html ='
 $mpdf = new \Mpdf\Mpdf([
     'mode' => 'utf-8',
     'format' => 'A4',
-    'orientation' => 'L',
-    'margin_top' => 0,
+    'orientation' => 'P',
+    'margin_top' => 9,
     'margin_bottom' => 0,
-    'margin_left' => 0,
-    'margin_right' => 0,
+    'margin_left' => 15,
+    'margin_right' => 15,
+    'default_font_size' => 10,
 ]);
 //создаем PDF файл, задаем формат, отступы и.т.д.
 
