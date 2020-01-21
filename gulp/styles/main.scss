@@ -382,8 +382,11 @@ input{
      }
  }
  .title_medium{
-     font-size: 2.6rem;
+     font-size: 2rem;
      margin: 2rem 0;
+     @media(min-width: 1200px){
+         font-size: 2.6rem;
+     }
  }
  .right_content-reviews{
      text-align: right;
