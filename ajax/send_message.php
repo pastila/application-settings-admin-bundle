@@ -95,6 +95,7 @@ if (CModule::IncludeModule("iblock")) {
                     $rsUser = CUser::GetByID($ID_user);
                     $person = $rsUser->Fetch();
 
+                    $PERSONAL_BIRTHDAT = $person["PERSONAL_BIRTHDAY"];
                     $user_email = $person["EMAIL"];
                     $mobail_number = $person["PERSONAL_PHONE"];
                     $full_name_user = $USER->GetFullName();
@@ -163,6 +164,7 @@ if (CModule::IncludeModule("iblock")) {
                                     'HOSPITAL' => htmlspecialchars_decode($arFields['PROPERTY_HOSPITAL_VALUE']),
                                     'DATE_SEND' => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time()),
                                     'DATE_PAY' => $arFields['PROPERTY_VISIT_DATE_VALUE'],
+                                    'PERSONAL_BIRTHDAT' => $PERSONAL_BIRTHDAT
                                 )
                             );
                             CIBlockElement::SetPropertyValuesEx(
@@ -202,6 +204,8 @@ if (CModule::IncludeModule("iblock")) {
                          Ваше обращение находится в личном кабинете «Отправленные»';
 
                         }
+                    } else {
+                        $result['error'] = 'Нет почтового адреса';
                     }
 
                 } else {

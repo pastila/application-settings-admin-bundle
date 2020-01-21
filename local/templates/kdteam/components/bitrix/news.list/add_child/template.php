@@ -84,7 +84,7 @@ $this->setFrameMode(true);
             </div>
             <div class="flex_data">
                 <div class="item_data">
-                    <p>Город страхования</p>
+                    <p>Регион страхования</p>
                 </div>
                 <div class="item_data">
                     <p><?=$ob["NAME"]?></p>
