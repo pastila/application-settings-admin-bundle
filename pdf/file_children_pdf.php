@@ -98,12 +98,10 @@ $html ='
             </div>
             <div class="header__items_item" style="margin-bottom: 5px;">
                 <div class="header__items_item_wrap">
+                   
+                   
                     <div class="header__items_item--label">
-                        <span style="font-weight: bold;">От:</span>
-                    </div>
-                    <div class="header__items_item--text blue-text cursive" style="font-style: italic;">
-                        '.$PERSONAL_BIRTHDAT.'
-                        '.$full_name_user.'
+                        <span style="font-weight: bold;">От:</span> ' . $full_name_user . ' ' . $PERSONAL_BIRTHDAT . '
                     </div>
                 </div>
             </div>
@@ -155,16 +153,16 @@ $html ='
                         '. $NAME .'
                         '. $PARTONYMIC .'
                          '. $BIRTHDAY .'
-                    </div>   
-                      <div class="header__items_item--text blue-text cursive" style=" font-style: italic;">
-                        '. $polic .'
                     </div>
+                    <div class="header__items_item--label">
+                        <span style="font-weight: bold;">Номер полиса:</span> ' . $polic . '
+                    </div>   
                 </div>
             </div>
         </div>
     </div>
 ​   <div>
-        <p style="text-align: center; margin-bottom: 5px; font-size: 18px; font-weight: bold;>ПРЕТЕНЗИЯ</p>
+        <p style="text-align: center; margin-bottom: 5px; font-size: 18px; font-weight: bold;">ПРЕТЕНЗИЯ</p>
          <p>
         <span class="red-text cursive" style="font-style: italic;">«'.$data_user_oplata_POST.'</span> г. в медицинской организации <span
             class="blue-text cursive" style="font-style: italic;">'.$name_hospital.'</span> мною
@@ -172,7 +170,7 @@ $html ='
         оплата медицинских услуг, что подтверждается прилагаемыми к настоящему письму документами.
     </p>
     <p>
-Медицинские услуги были оказаны мне в связи с заболеванием, лечение которого, согласно Программе государственных
+Медицинские услуги были оказаны в связи с заболеванием, лечение которого, согласно Программе государственных
         гарантий бесплатного оказания гражданам медицинской помощи, финансируется из средств обязательного медицинского
         страхования.
     </p>
