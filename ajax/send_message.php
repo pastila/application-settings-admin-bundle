@@ -119,7 +119,7 @@ if (CModule::IncludeModule("iblock")) {
                             $ob_child = $res_child->GetNextElement();
                             $arFields_child = $ob_child->GetFields();
 
-                            $arSelect_comp = array("ID", "IBLOCK_ID", "PROPERTY_NAME_BOSS", "NAME");
+                            $arSelect_comp = array("ID", "IBLOCK_ID", "PROPERTY_NAME_BOSS", "NAME", "PROPERTY_EMAIL_FIRST");
                             $arFilter_comp = array("IBLOCK_ID" => 16, "ID" => $arFields_child["PROPERTY_COMPANY_VALUE"]);
                             $res_comp = CIBlockElement::GetList(
                                 array(),
@@ -131,17 +131,12 @@ if (CModule::IncludeModule("iblock")) {
                             $ob_comp = $res_comp->GetNextElement();
                             $arFields_comp = $ob_comp->GetFields();
 
-
-
-
-
-
-
                             $SURNAME = $arFields_child["PROPERTY_SURNAME_VALUE"];
                             $NAME = $arFields_child["NAME"];
                             $PARTONYMIC = $arFields_child["PROPERTY_PARTONYMIC_VALUE"];
                             $polic = $arFields_child["PROPERTY_POLICY_VALUE"];
                             $BIRTHDAY = $arFields_child["PROPERTY_BIRTHDAY_VALUE"];
+                            $mail_cmo = $arFields_comp["PROPERTY_EMAIL_FIRST_VALUE"];
 
                             $full_name_child = $SURNAME . ' ' . $NAME . ' ' . $PARTONYMIC;
 
@@ -164,7 +159,9 @@ if (CModule::IncludeModule("iblock")) {
                                     'HOSPITAL' => htmlspecialchars_decode($arFields['PROPERTY_HOSPITAL_VALUE']),
                                     'DATE_SEND' => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time()),
                                     'DATE_PAY' => $arFields['PROPERTY_VISIT_DATE_VALUE'],
-                                    'PERSONAL_BIRTHDAT' => $PERSONAL_BIRTHDAT
+                                    'PERSONAL_BIRTHDAT' => $PERSONAL_BIRTHDAT,
+                                    'MAIL_CMO' => $mail_cmo
+
                                 )
                             );
                             CIBlockElement::SetPropertyValuesEx(

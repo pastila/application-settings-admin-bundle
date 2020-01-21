@@ -32,12 +32,13 @@ $person_LAST_NAME = $person["LAST_NAME"];
 $PERSONAL_BIRTHDAT = $person["PERSONAL_BIRTHDAY"];
 
 if ($_POST['id_obr']) {
-    $arSel = array("ID", "IBLOCK_ID", "NAME", "PROPERTY_FULL_NAME");
+    $arSel = array("ID", "IBLOCK_ID", "NAME", "PROPERTY_FULL_NAME", "PROPERTY_HOSPITAL");
     $arFil = array("IBLOCK_ID" => 11,"ID" => $_POST['id_obr']);
     $res = CIBlockElement::GetList(Array(), $arFil, false, false, $arSel);
     $ob = $res->GetNextElement();
     $arFields = $ob->GetFields();
     $full_name_user = $arFields['PROPERTY_FULL_NAME_VALUE'];
+    $hospital = $arFields['PROPERTY_HOSPITAL_VALUE'];
 } else {
     $full_name_user = $person_SECOND_NAME.' '. $person_NAME .' '. $person_LAST_NAME;
 
@@ -73,10 +74,11 @@ $arFields = $ob->GetFields();
 $name_hospital = $arFields["NAME"];// название компании
 
 $NAME_BOSS = $arProps["NAME_BOSS"]["VALUE"];// руководитель компании
+$email_CMO = $arProps["EMAIL_FIRST"]["VALUE"];// электронный адрес СМО
 
 
 
-$html ='
+$html = '
 
 <page>
  <div class="header" style="padding: 0 50px;">
@@ -87,35 +89,33 @@ $html ='
                         Кому:
                     </div>
                     <div class="header__items_item--text" style="margin-bottom: 5px;">
-                        <span class="bold-text" style="font-weight: bold;">Руководителю страховой медицинской организации</span>
+                        <span class="bold-text" style="font-weight: bold;">
+                        Руководителю страховой медицинской организации</span>
                         <div class="blue-text cursive" style="font-style: italic;">
-                            '.$name_hospital.',<br>
-                            '.$NAME_BOSS.'
-                            
+                            ' . $name_hospital . '<br>
+                            ' . $NAME_BOSS . '<br>
+                            ' . $email_CMO . '
                         </div>
                     </div>
                 </div>
             </div>
             <div class="header__items_item" style="margin-bottom: 5px;">
                 <div class="header__items_item_wrap">
-                   
-                   
                     <div class="header__items_item--label">
-                        <span style="font-weight: bold;">От:</span> ' . $full_name_user . ' ' . $PERSONAL_BIRTHDAT . '
+                        <span style="font-weight: bold;">От:</span> <span style="font-style: italic;">
+                         ' . $full_name_user . ', ' . $PERSONAL_BIRTHDAT . '</span>
                     </div>
                 </div>
             </div>
                <div class="header__items_item" style="margin-bottom: 5px;">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label">
-                        <span style="font-weight: bold;">Номер полиса:</span>
-                    </div>
-                    <div class="header__items_item--text red-text cursive" style="font-style: italic;">
-                        '. $person_INSURANCE_POLICY .'
+                        <span style="font-weight: bold;">Номер полиса:</span> <span style="font-style: italic;">
+                         ' . $person_INSURANCE_POLICY . '</span>
                     </div>
                 </div>
             </div>
-               <div class="header__items_item" style="margin-bottom: 5px;">
+           <div class="header__items_item" style="margin-bottom: 5px;">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label" >
                         <span style="font-weight: bold;">Адрес электронной почты:</span>
@@ -129,33 +129,36 @@ $html ='
             <div class="header__items_item" style="margin-bottom: 5px;">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label" >
-                        <span style="font-weight: bold;">Телефон:</span>
-                    </div>
-                    <div class="header__items_item--text blue-text cursive" style=" font-style: italic;">
-                        '. $person_PERSONAL_PHONE .'
+                        <span style="font-weight: bold;">Телефон:</span> <span style="font-style: italic;">
+                         ' . $person_PERSONAL_PHONE . '</span>
                     </div>
                 </div>
             </div>
-                <div class="header__items_item" style="margin-bottom: 5px;">
+            <div class="header__items_item" style="margin-bottom: 5px;">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label" >
                     <div>
                       <span style="font-weight: bold;">Действую в интересах лица, законным
                          представителем которого являюсь.</span>
-        </div>
-        <div>
+                    </div>
+                    <div>
                        <span style="font-weight: bold;">
                        Сведения о лице, получившем медицинскую помощь:</span>
-                   </div>
+                    </div>
                     </div>
                       <div class="header__items_item--text blue-text cursive" style=" font-style: italic;">
-                        '. $SURNAME .'
-                        '. $NAME .'
-                        '. $PARTONYMIC .'
-                         '. $BIRTHDAY .'
+                        ' . $SURNAME . '
+                        ' . $NAME . '
+                        ' . $PARTONYMIC . ',
+                        ' . $BIRTHDAY . '
                     </div>
+                </div>
+            </div>
+            <div class="header__items_item" style="margin-bottom: 5px;">
+                <div class="header__items_item_wrap">
                     <div class="header__items_item--label">
-                        <span style="font-weight: bold;">Номер полиса:</span> ' . $polic . '
+                        <span style="font-weight: bold;">Полис:</span> <span style="font-style: italic;">
+                         ' . $polic . '</span>
                     </div>   
                 </div>
             </div>
@@ -163,11 +166,10 @@ $html ='
     </div>
 ​   <div>
         <p style="text-align: center; margin-bottom: 5px; font-size: 18px; font-weight: bold;">ПРЕТЕНЗИЯ</p>
-         <p>
-        <span class="red-text cursive" style="font-style: italic;">«'.$data_user_oplata_POST.'</span> г. в медицинской организации <span
-            class="blue-text cursive" style="font-style: italic;">'.$name_hospital.'</span> мною
-        была совершена
-        оплата медицинских услуг, что подтверждается прилагаемыми к настоящему письму документами.
+    <p>
+        <span class="red-text cursive" style="font-style: italic;">«' . $data_user_oplata_POST . '</span> г. в медицинской организации 
+        <span class="blue-text cursive" style="font-style: italic;">'.$hospital.'</span> мною была совершена оплата медицинских
+         услуг, что подтверждается прилагаемыми к настоящему письму документами.
     </p>
     <p>
 Медицинские услуги были оказаны в связи с заболеванием, лечение которого, согласно Программе государственных
@@ -182,12 +184,12 @@ $html ='
         организацию, выбранную для получения первичной медико-санитарной помощи.
     </p>
     <p>
-При обращении в <span class="blue-text cursive" style="font-style: italic;">'.$name_hospital.'</span> мне не сообщили о возможности
+При обращении в <span class="blue-text cursive" style="font-style: italic;">'.$hospital.'</span> мне не сообщили о возможности
         получения
         медицинской помощи бесплатно в
         сроки, установленные Территориальной программой государственных гарантий оказания гражданам бесплатной
         медицинской помощи, что является нарушением условий предоставления платных медицинских услуг. Мне было сообщено,
-        что необходимая  медицинская помощь может быть оказана только на платной основе, и в случае  отказа от
+        что необходимая  медицинская помощь может быть оказана только на платной основе, и в случае отказа от
         оплаты помощь может быть оказана либо в сроки, значительно превышающие установленные Территориальной программой
         государственных гарантий, либо не будет оказана вообще.
     </p>
@@ -200,7 +202,7 @@ $html ='
         вынужден оплатить медицинскую помощь, которая предусмотрена программой обязательного медицинского страхования.
     </p>
     <p>
-В связи с изложенным, в рамках работы по защите  прав на получение медицинской помощи по программе
+В связи с изложенным, в рамках работы по защите прав на получение медицинской помощи по программе
         обязательного медицинского страхования, прошу организовать взаимодействие с медицинской организацией по возврату
         оплаченных мною средств.
     </p>
