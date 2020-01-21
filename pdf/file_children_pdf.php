@@ -232,7 +232,7 @@ $mpdf = new \Mpdf\Mpdf([
     'margin_bottom' => 0,
     'margin_left' => 15,
     'margin_right' => 15,
-    'default_font_size' => 10,
+    'default_font_size' => 9.5,
 ]);
 //создаем PDF файл, задаем формат, отступы и.т.д.
 
