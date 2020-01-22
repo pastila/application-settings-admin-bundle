@@ -49,7 +49,7 @@ $arProps = $ob->GetProperties();
 $arFields = $ob->GetFields();
 
 
-$name_company = htmlspecialchars($arFields["NAME"]);// название компании
+$name_company = $arFields["NAME"];// название компании
 $boss_compani = $arProps["NAME_BOSS"]["VALUE"];// руководитель компании
 $mail_compani = $arProps["EMAIL_FIRST"]["VALUE"];// имйл компании
 
@@ -66,8 +66,8 @@ $html ='
                     <div class="header__items_item--text" style="margin-bottom: 5px;">
                         <span class="bold-text" style="font-weight: bold;">Руководителю страховой медицинской организации</span>
                         <div class="blue-text cursive" style="font-style: italic;">
-                            '.$name_company.',
-                            '.$boss_compani.'
+                            '.$name_company.'<br>
+                            '.$boss_compani.'<br>
                             '.$mail_compani.'
                         </div>
                     </div>
