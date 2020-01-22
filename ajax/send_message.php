@@ -184,7 +184,8 @@ if (CModule::IncludeModule("iblock")) {
                                     'PERSONAL_BIRTHDAT' => $PERSONAL_BIRTHDAT,
                                     'MAIL_CMO' => $mail_cmo,
                                     'FULL_NAME_HOSPITAL' => $FULL_NAME_HOSPITAL,
-                                    'MEDICAL_CODE' => $MEDICAL_CODE
+                                    'MEDICAL_CODE' => $MEDICAL_CODE,
+                                    'HOSPITAL_ADRESS' => $hospital_adress
 
                                 )
                             );
@@ -214,7 +215,8 @@ if (CModule::IncludeModule("iblock")) {
                                     'DATE_SEND' => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time()),
                                     'DATE_PAY' => $arFields['PROPERTY_VISIT_DATE_VALUE'],
                                     'FULL_NAME_HOSPITAL' => $FULL_NAME_HOSPITAL,
-                                    'MEDICAL_CODE' => $MEDICAL_CODE
+                                    'MEDICAL_CODE' => $MEDICAL_CODE,
+                                    'HOSPITAL_ADRESS' => $hospital_adress
                                 )
                             );
                             CIBlockElement::SetPropertyValuesEx(
