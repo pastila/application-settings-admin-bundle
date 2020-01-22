@@ -434,7 +434,7 @@ if(cur_el.find(policy).val().length === 16) {
       }
     } else {
       $('#success_' + element[1]).html('');
-      $('#error_' + element[1]).html('Введите корректно ФИО');
+      $('#error_' + element[1]).html('Введите ФИО в формате: "Фамилия Имя Отчество"');
     }
   } else {
     $('#success_' + element[1]).html('');
