@@ -38,7 +38,7 @@ if ($_POST['id_obr']) {
     $ob = $res->GetNextElement();
     $arFields = $ob->GetFields();
     $full_name_user = $arFields['PROPERTY_FULL_NAME_VALUE'];
-    $hospital = $arFields['PROPERTY_HOSPITAL_VALUE'];
+    $hospital = htmlspecialchars($arFields['PROPERTY_HOSPITAL_VALUE']);
 } else {
     $full_name_user = $person_SECOND_NAME.' '. $person_NAME .' '. $person_LAST_NAME;
 
@@ -71,7 +71,7 @@ $arProps = $ob->GetProperties();
 $arFields = $ob->GetFields();
 
 
-$name_hospital = $arFields["NAME"];// название компании
+$name_hospital = htmlspecialchars($arFields["NAME"]);// название компании
 
 $NAME_BOSS = $arProps["NAME_BOSS"]["VALUE"];// руководитель компании
 $email_CMO = $arProps["EMAIL_FIRST"]["VALUE"];// электронный адрес СМО

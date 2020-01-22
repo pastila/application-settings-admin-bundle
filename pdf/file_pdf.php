@@ -49,7 +49,7 @@ $arProps = $ob->GetProperties();
 $arFields = $ob->GetFields();
 
 
-$name_company = $arFields["NAME"];// название компании
+$name_company = htmlspecialchars($arFields["NAME"]);// название компании
 $boss_compani = $arProps["NAME_BOSS"]["VALUE"];// руководитель компании
 $mail_compani = $arProps["EMAIL_FIRST"]["VALUE"];// имйл компании
 
