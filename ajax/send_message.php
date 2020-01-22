@@ -17,6 +17,29 @@ if (CModule::IncludeModule("iblock")) {
         $arFields = $ob->GetFields();
         $arProps = $ob->GetProperties();
     }
+    //Проверка на дублировние
+    $hospital_name = str_replace('&amp;', '', str_replace('quot;', '"', $arFields['PROPERTY_HOSPITAL_VALUE']));
+    $hospital_adress = $arFields['PROPERTY_ADDRESS_VALUE'];
+    $res_hospital = CIBlockElement::GetList(
+        array(),
+        array('NAME' => $hospital_name, 'IBLOCK_ID' => 9),
+        false,
+        false,
+        array("ID", "IBLOCK_ID", "NAME", "PROPERTY_FULL_NAME", "PROPERTY_MEDICAL_CODE", "IBLOCK_SECTION_ID")
+    );
+    while ($ob_hospital = $res_hospital->GetNextElement()) {
+        $arFields_hospital = $ob_hospital->GetFields();
+        $res = CIBlockSection::GetByID($arFields_hospital['IBLOCK_SECTION_ID']);
+        if ($ar_res = $res->GetNext()) {
+            if ($ar_res['NAME'] == $hospital_adress) {
+                $FULL_NAME_HOSPITAL = htmlspecialchars_decode($arFields_hospital['PROPERTY_FULL_NAME_VALUE']);
+                $MEDICAL_CODE = $arFields_hospital['PROPERTY_MEDICAL_CODE_VALUE'];
+            }
+        }
+
+    }
+    //Проверка на дублировние
+
     if (!empty($arFields['PROPERTY_FULL_NAME_VALUE'])) {
         if (!empty($arFields['PROPERTY_POLICY_VALUE'])) {
             if (!empty($arFields['PROPERTY_VISIT_DATE_VALUE'])) {
@@ -159,7 +182,9 @@ if (CModule::IncludeModule("iblock")) {
                                     'DATE_SEND' => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time()),
                                     'DATE_PAY' => $arFields['PROPERTY_VISIT_DATE_VALUE'],
                                     'PERSONAL_BIRTHDAT' => $PERSONAL_BIRTHDAT,
-                                    'MAIL_CMO' => $mail_cmo
+                                    'MAIL_CMO' => $mail_cmo,
+                                    'FULL_NAME_HOSPITAL' => $FULL_NAME_HOSPITAL,
+                                    'MEDICAL_CODE' => $MEDICAL_CODE
 
                                 )
                             );
@@ -188,6 +213,8 @@ if (CModule::IncludeModule("iblock")) {
                                     'HOSPITAL' => htmlspecialchars_decode($arFields['PROPERTY_HOSPITAL_VALUE']),
                                     'DATE_SEND' => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time()),
                                     'DATE_PAY' => $arFields['PROPERTY_VISIT_DATE_VALUE'],
+                                    'FULL_NAME_HOSPITAL' => $FULL_NAME_HOSPITAL,
+                                    'MEDICAL_CODE' => $MEDICAL_CODE
                                 )
                             );
                             CIBlockElement::SetPropertyValuesEx(

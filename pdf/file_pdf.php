@@ -14,6 +14,33 @@ require '/var/www/vendor/autoload.php';
 global $USER;
 
 $arHospital = $_POST["hospitl"];
+//Проверка на дублировние
+$arSel = array("ID", "IBLOCK_ID", "NAME", "PROPERTY_FULL_NAME", "PROPERTY_HOSPITAL", "PROPERTY_ADDRESS");
+$arFil = array("IBLOCK_ID" => 11,"ID" => $_POST['id']);
+$res = CIBlockElement::GetList(array(), $arFil, false, false, $arSel);
+$ob = $res->GetNextElement();
+$arFields = $ob->GetFields();
+$hospital_adress = $arFields['PROPERTY_ADDRESS_VALUE'];
+
+$res_hospital = CIBlockElement::GetList(
+    array(),
+    array('NAME' => $arHospital, 'IBLOCK_ID' => 9),
+    false,
+    false,
+    array("ID", "IBLOCK_ID", "NAME", "PROPERTY_FULL_NAME", "PROPERTY_MEDICAL_CODE", "IBLOCK_SECTION_ID")
+);
+while ($ob_hospital = $res_hospital->GetNextElement()) {
+    $arFields = $ob_hospital->GetFields();
+    $res = CIBlockSection::GetByID($arFields['IBLOCK_SECTION_ID']);
+    if ($ar_res = $res->GetNext()) {
+        if ($ar_res['NAME'] == $hospital_adress) {
+            $FULL_NAME_HOSPITAL = $arFields['PROPERTY_FULL_NAME_VALUE'];
+            $MEDICAL_CODE = $arFields['PROPERTY_MEDICAL_CODE_VALUE'];
+        }
+    }
+
+}
+//Проверка на дублировние
 
 if($_POST["data_checkout"] == 1){
     $data_user_oformlenie_POST = "(Дата запишеться как только вы отправите обращение)";
@@ -24,8 +51,6 @@ if($_POST["data_checkout"] == 1){
 $data_user_oplata_POST = $_POST["data_user_oplata_POST"];
 
 $number_polic_POST = $_POST["number_polic"];
-
-
 
 
 $ID_user = $USER->GetID();
@@ -116,9 +141,10 @@ $html ='
         <p style="text-align: center; margin-bottom: 5px; font-size: 18px; font-weight: bold;">ПРЕТЕНЗИЯ</p>
          <p>
         <span class="red-text cursive" style="font-style: italic;">«'.$data_user_oplata_POST.'</span> г. в медицинской организации <span
-            class="blue-text cursive" style="font-style: italic;">'.$arHospital.'</span> мною
-        была совершена
-        оплата медицинских услуг, что подтверждается прилагаемыми к настоящему письму документами.
+            class="blue-text cursive" style="font-style: italic;">' . $FULL_NAME_HOSPITAL . '</span> (код в реестре медицинских
+             организаций, осуществляющих деятельность в сфере ОМС ' . $MEDICAL_CODE . '),
+              мною была совершена оплата медицинских услуг, что подтверждается прилагаемыми к настоящему письму
+              документами.
     </p>
     <p>
 Медицинские услуги были оказаны мне в связи с заболеванием, лечение которого, согласно Программе государственных

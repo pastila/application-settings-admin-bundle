@@ -32,17 +32,41 @@ $person_LAST_NAME = $person["LAST_NAME"];
 $PERSONAL_BIRTHDAT = $person["PERSONAL_BIRTHDAY"];
 
 if ($_POST['id_obr']) {
-    $arSel = array("ID", "IBLOCK_ID", "NAME", "PROPERTY_FULL_NAME", "PROPERTY_HOSPITAL");
+    $arSel = array("ID", "IBLOCK_ID", "NAME", "PROPERTY_FULL_NAME", "PROPERTY_HOSPITAL", "PROPERTY_ADDRESS");
     $arFil = array("IBLOCK_ID" => 11,"ID" => $_POST['id_obr']);
     $res = CIBlockElement::GetList(Array(), $arFil, false, false, $arSel);
     $ob = $res->GetNextElement();
     $arFields = $ob->GetFields();
     $full_name_user = $arFields['PROPERTY_FULL_NAME_VALUE'];
     $hospital = $arFields['PROPERTY_HOSPITAL_VALUE'];
+    $hospital_adress = $arFields['PROPERTY_ADDRESS_VALUE'];
 } else {
     $full_name_user = $person_SECOND_NAME.' '. $person_NAME .' '. $person_LAST_NAME;
+}
+
+//Проверка на дублировние
+$hospital_name = str_replace('&amp;', '', str_replace('quot;', '"', $hospital));
+
+$res_hospital = CIBlockElement::GetList(
+    array(),
+    array('NAME' => $hospital_name, 'IBLOCK_ID' => 9),
+    false,
+    false,
+    array("ID", "IBLOCK_ID", "NAME", "PROPERTY_FULL_NAME", "PROPERTY_MEDICAL_CODE", "IBLOCK_SECTION_ID")
+);
+while ($ob_hospital = $res_hospital->GetNextElement()) {
+    $arFields = $ob_hospital->GetFields();
+    $res = CIBlockSection::GetByID($arFields['IBLOCK_SECTION_ID']);
+    if ($ar_res = $res->GetNext()) {
+        if ($ar_res['NAME'] == $hospital_adress) {
+            $FULL_NAME_HOSPITAL = $arFields['PROPERTY_FULL_NAME_VALUE'];
+            $MEDICAL_CODE = $arFields['PROPERTY_MEDICAL_CODE_VALUE'];
+        }
+    }
 
 }
+//Проверка на дублировние
+
 
 
 $arSelect_child = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_SURNAME","PROPERTY_PARTONYMIC","PROPERTY_POLICY","PROPERTY_COMPANY","PROPERTY_BIRTHDAY");
@@ -166,7 +190,10 @@ $html = '
         <p style="text-align: center; margin-bottom: 5px; font-size: 18px; font-weight: bold;">ПРЕТЕНЗИЯ</p>
     <p>
         <span class="red-text cursive" style="font-style: italic;">«' . $data_user_oplata_POST . '</span> г. в медицинской организации 
-        <span class="blue-text cursive" style="font-style: italic;">'.$hospital.'</span> мною была совершена оплата медицинских
+        <span class="blue-text cursive" style="font-style: italic;">'.$FULL_NAME_HOSPITAL.'</span>
+         (код в реестре медицинских организаций, осуществляющих деятельность в сфере ОМС 
+         ' . $MEDICAL_CODE . '),
+         мною была совершена оплата медицинских
          услуг, что подтверждается прилагаемыми к настоящему письму документами.
     </p>
     <p>
@@ -182,7 +209,7 @@ $html = '
         организацию, выбранную для получения первичной медико-санитарной помощи.
     </p>
     <p>
-При обращении в <span class="blue-text cursive" style="font-style: italic;">'.$hospital.'</span> мне не сообщили о возможности
+При обращении в <span class="blue-text cursive" style="font-style: italic;">'.$hospital_name.'</span> мне не сообщили о возможности
         получения
         медицинской помощи бесплатно в
         сроки, установленные Территориальной программой государственных гарантий оказания гражданам бесплатной
