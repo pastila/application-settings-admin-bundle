@@ -40,8 +40,7 @@ if (CModule::IncludeModule("iblock")) {
                     $rsUser = CUser::GetByID($USER->GetID());
                     $arUser = $rsUser->Fetch();
 
-                    $arSel = array("ID", "IBLOCK_ID", "NAME", "PROPERTY_EMAIL_FIRST", "PROPERTY_EMAIL_SECOND",
-                        "PROPERTY_EMAIL_THIRD");
+                    $arSel = array("ID", "IBLOCK_ID", "NAME", "PROPERTY_EMAIL_FIRST", "PROPERTY_NAME_BOSS");
                     $arFil = array("IBLOCK_ID" => 16, "ID" => $arUser['UF_INSURANCE_COMPANY']);
                     $rs = CIBlockElement::GetList(array(), $arFil, false, false, $arSel);
                     if ($obs = $rs->GetNextElement()) {
@@ -101,8 +100,8 @@ if (CModule::IncludeModule("iblock")) {
                     $full_name_user = $USER->GetFullName();
 
                     $name_company = $arOMS["NAME"];// название компании
-                    $boss_company = $arOMS["NAME_BOSS"]["VALUE"];// руководитель компании
-                    $mail_company = $arOMS["EMAIL_FIRST"]["VALUE"];// имйл компании
+                    $boss_company = $arOMS["PROPERTY_NAME_BOSS_VALUE"];// руководитель компании
+                    $mail_company = $arOMS["PROPERTY_EMAIL_FIRST_VALUE"];// имйл компании
 
                     if (!empty($email)) {
                         if (!empty($_POST['CHILD'])) {
