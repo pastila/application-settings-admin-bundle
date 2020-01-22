@@ -192,7 +192,7 @@ $html = '
         <span class="red-text cursive" style="font-style: italic;">«' . $data_user_oplata_POST . '</span> г. в медицинской организации 
         <span class="blue-text cursive" style="font-style: italic;">'.$FULL_NAME_HOSPITAL.'</span>
          (код в реестре медицинских организаций, осуществляющих деятельность в сфере ОМС 
-         ' . $MEDICAL_CODE . '),
+         ' . $MEDICAL_CODE . ', ' . $hospital_adress . '),
          мною была совершена оплата медицинских
          услуг, что подтверждается прилагаемыми к настоящему письму документами.
     </p>
