@@ -9,9 +9,6 @@
             align-items: center;
             margin-bottom: 5vmin;
 
-            &.succes {
-                color: $succes;
-            }
 
             img {
                 margin-right: 2rem;
@@ -20,6 +17,7 @@
 
             &_text {
                 font-size: 1.6rem;
+                color: $succes;
             }
         }
     }
