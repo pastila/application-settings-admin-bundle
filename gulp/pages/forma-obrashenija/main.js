@@ -2,6 +2,11 @@
 
 $(document).ready(function() {
 
+  $(document).on("click",".diagnoz_search_js",function() {
+
+    $("#grid").css({"pointer-events":"none"})
+  });
+  
   $(".years").click(function(){
 
     if( $("#selected_year").val() != "" ) {
@@ -574,6 +579,10 @@ function search_class() {
 
   $(document).on('click', '.class-js', function() {
     let id_class = $(this).attr('value');
+
+    if($(this).val() !== ""){
+      $("#search_diagnoz_input").css({"pointer-events":"none"})
+    }
     let component = $('#grid');
     $.post('/ajax/main_form_oms.php', {id: id_class}, function(result) {
       $(component).html(result);
@@ -685,6 +694,12 @@ function keyup_class() {
   console.log('keyup_class');
   $('#class_input').on('keyup', function() {
     var $this = $(this);
+    if($this.val() !== ""){
+      $("#search_diagnoz_input").css({"pointer-events":"none"})
+    }else{
+      $("#search_diagnoz_input").css({"pointer-events":"auto"})
+    }
+
     var delay = 500;
     $('#search_result_class').css({'display': 'block'});
     clearTimeout($this.data('timer'));
@@ -713,6 +728,10 @@ function keyup_class() {
           }, 100);
           $(document).on('click', '.class-js', function() {
             let id = $(this).attr('value');
+
+            if($(this).val() !== ""){
+              $("#search_diagnoz_input").css({"pointer-events":"none"})
+            }
             let select_region = $(this).text();
             $('#class_input').val(select_region);
             $('#class_input').attr('data-id_class', id);
@@ -926,6 +945,9 @@ function search_diagnoz_global() {
 function keyup_diagnoz_global() {
   $('#search_diagnoz_input').on('keyup', function() {
     var $this = $(this);
+    if($this.val() === ""){
+      $("#grid").css({"pointer-events":"auto"})
+    }
     var delay = 500;
     clearTimeout($this.data('timer'));
     $this.data('timer', setTimeout(function() {
