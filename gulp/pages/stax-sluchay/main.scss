@@ -12,7 +12,7 @@
 
             img {
                 margin-right: 2rem;
-                max-height: 5vmax;
+                max-height: 15vmin;
             }
 
             &_text {
@@ -178,8 +178,6 @@
         }
 
         &__four {
-            display: flex;
-            flex-direction: row;
 
             &_l {
                 display: flex;
@@ -228,6 +226,27 @@
     
                 &_text {
                     font-size: 3.6rem;
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width: 575px) {
+    .block {
+
+        &__two {
+            &_item {
+                flex-direction: column;
+                display: flex;
+                img {
+                    display: block;
+                    margin: 0 auto 5vmin auto;
+                    max-height: 30vmin;
+                }
+                &_r {
+                    &_title {
+                        text-align: center;
+                    }
                 }
             }
         }

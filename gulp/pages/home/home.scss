@@ -94,17 +94,17 @@
     .buttons {
         &__items {
             &_item {
+                height: 13rem;
+                padding: 2rem 0;
                 flex-direction: column;
                 &_image-block {
-                    width: 100%;
+                    width: auto;
                     height: 10rem;
-                    padding: 1.5rem;
-                    box-sizing: border-box;
                 }
 
                 &_img {
                     max-width: 100%;
-                    max-height: 100%;
+                    max-height: 8rem;
                 }
 
                 &_title-block {
