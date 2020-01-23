@@ -17,7 +17,7 @@ $array_all_company = array();
 
 $order = Array("name" => "asc");
 $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_KPP", "CODE");
-$arFilter = Array("IBLOCK_ID" => 16);
+$arFilter = Array("IBLOCK_ID" => 16 ,"ACTIVE"=> "Y");
 $res = CIBlockElement::GetList($order, $arFilter, false, false, $arSelect);
 while ($ob = $res->GetNextElement()) {
 
@@ -26,6 +26,11 @@ while ($ob = $res->GetNextElement()) {
     $allReviews[$arProps['PROPERTY_KPP_VALUE']] = $arProps;
 }
 $countReviews = count($allReviews);
+
+
+
+
+
 
 ?>
 <!-- Breadcrumbs -->

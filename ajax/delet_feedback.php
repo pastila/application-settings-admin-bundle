@@ -49,7 +49,7 @@ if($_POST){
             CIBlockElement::SetPropertyValuesEx($id_company, 16, $star_clear);
 
             $arSelect = Array("ID", "IBLOCK_ID", "NAME","PROPERTY_AMOUNT_STAR");
-            $arFilter = Array("IBLOCK_ID"=>16, "PROPERTY_KPP"=> $prop["KPP"]["VALUE"],"!PROPERTY_AMOUNT_STAR"=> false);
+            $arFilter = Array("IBLOCK_ID"=>16,"ACTIVE"=> "Y", "PROPERTY_KPP"=> $prop["KPP"]["VALUE"],"!PROPERTY_AMOUNT_STAR"=> false);
             $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
             $count_company_with_this_kpp =  $res->SelectedRowsCount();
             $total_star = 0;
@@ -87,7 +87,7 @@ if($_POST){
             CIBlockElement::SetPropertyValuesEx($id_company, 16, $star_clear);
 
             $arSelect = Array("ID", "IBLOCK_ID", "NAME","PROPERTY_AMOUNT_STAR");
-            $arFilter = Array("IBLOCK_ID"=>16, "PROPERTY_KPP"=> $prop["KPP"]["VALUE"],"!PROPERTY_AMOUNT_STAR"=> false);
+            $arFilter = Array("IBLOCK_ID"=>16,"ACTIVE"=> "Y", "PROPERTY_KPP"=> $prop["KPP"]["VALUE"],"!PROPERTY_AMOUNT_STAR"=> false);
             $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
             $count_company_with_this_kpp =  $res->SelectedRowsCount();
             $total_star = 0;
