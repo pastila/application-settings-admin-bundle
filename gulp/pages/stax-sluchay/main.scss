@@ -178,7 +178,8 @@
         }
 
         &__four {
-
+            display: flex;
+            flex-direction: row;
             &_l {
                 display: flex;
                 flex-direction: column;
