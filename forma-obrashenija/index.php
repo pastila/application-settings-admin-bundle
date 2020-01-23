@@ -259,8 +259,9 @@ while($ob = $res->GetNextElement()){
                                 <li value="" id="empty_diagnoz" class="custom-serach__items_item diagnoz_search_js">
                                     Здесь нет моего диагноза</li>
                                 <?php foreach ($arFields as &$arItem) {?>
-                                <li value="<?=$arItem['ID']?>" class="custom-serach__items_item  diagnoz_search_js">
-                                    <?php echo $arItem['NAME']?></li>
+                                <li value="<?=$arItem['ID']?>"
+                                    class="custom-serach__items_item  diagnoz_search_js"><?php echo $arItem['NAME']?>
+                                </li>
                                 <?php } ?>
                             </ul>
                         </div>
