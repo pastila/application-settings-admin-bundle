@@ -433,7 +433,6 @@ function search_hospital() {
     if (!!classID && id === 'option') {
       $.post('/ajax/main_form_oms.php', {id: classID}, function(result) {
         $(component).html(result);
-        console.log('stage 1');
         update_select();
       }, 'html');
     }
@@ -579,6 +578,9 @@ function search_class() {
     $.post('/ajax/main_form_oms.php', {id: id_class}, function(result) {
       $(component).html(result);
       search_group();
+      $('#search_diagnoz_input').val('');
+      $('#search_diagnoz_input').attr('data-value', '');
+      $('#search_diagnoz_global').empty();
     }, 'html');
   });
 }
@@ -602,8 +604,10 @@ function search_group() {
     let component = $('#grid');
     $.post('/ajax/main_form_oms.php', {id: id_group}, function(result) {
       $(component).html(result);
-      console.log('stage 2');
-      search_subgroup()
+      search_subgroup();
+      $('#search_diagnoz_input').val('');
+      $('#search_diagnoz_input').attr('data-value', '');
+      $('#search_diagnoz_global').empty();
     }, 'html');
   });
 
@@ -633,8 +637,10 @@ function search_subgroup() {
     let component = $('#grid');
     $.post('/ajax/main_form_oms.php', {id: id_subgroup}, function(result) {
       $(component).html(result);
-      console.log('stage 3');
       search_diagnoz()
+      $('#search_diagnoz_input').val('');
+      $('#search_diagnoz_input').attr('data-value', '');
+      $('#search_diagnoz_global').empty();
     }, 'html');
   });
   keyup_class();
@@ -651,7 +657,9 @@ function search_diagnoz() {
     $('#diagnoz_input').val($(this).text());
     $('#diagnoz_input').attr('data-id_diagnoz', $(this).attr('value'));
     $('#search_result_diagnoz').fadeOut();
-
+    $('#search_diagnoz_input').val($(this).text());
+    $('#search_diagnoz_input').attr('data-value', $(this).attr('value'));
+    $('#search_diagnoz_global').empty();
   });
   $(document).on('click', '#diagnoz_input', function() {
     $('#search_result_diagnoz').css('display', 'block');
@@ -897,7 +905,13 @@ function search_diagnoz_global() {
   $(document).on('click', '#search_diagnoz_global li', function() {
     $('#search_diagnoz_input').val($(this).text());
     $('#search_diagnoz_input').attr('data-value', $(this).attr('value'));
-    $('#search_diagnoz_global').fadeOut()
+    $('#search_diagnoz_global').fadeOut();
+    after_global_search(
+        $(this).attr('data-section'),
+        $(this).text(),
+        $(this).attr('value'));
+    $('#diagnoz_input').val($(this).text());
+    $('#diagnoz_input').attr('data-id_diagnoz', $(this).attr('value'));
   });
   $(document).on('click', '#search_diagnoz_input', function() {
     $('#search_diagnoz_global').css('display', 'block');
@@ -925,7 +939,6 @@ function keyup_diagnoz_global() {
         $('.diagnoz_search_js').each(function() {
           $(this).remove();
         });
-        console.log(msg);
         if (msg == 'error') {
           if ($('.error_diagnoz').length != 0) {
             $('.error_diagnoz').remove();
@@ -942,9 +955,27 @@ function keyup_diagnoz_global() {
           $(document).on('click', '.diagnoz_search_js', function() {
             $('#search_diagnoz_input').val($(this).text());
             $('#search_diagnoz_input').attr('data-value', $(this).attr('value'));
+            after_global_search(
+                $(this).attr('data-section'),
+                $(this).text(),
+                $(this).attr('value'));
           });
         }
       });
     }, delay));
   });
+}
+
+function after_global_search (SECTION_ID, TEXT, VALUE) {
+  let component = $('#grid');
+  $.post('/ajax/main_form_oms.php', {id: SECTION_ID},
+      function(result) {
+          $(component).html(result);
+          $('#diagnoz_input').val(TEXT);
+          $('#diagnoz_input').attr('data-id_diagnoz', VALUE);
+          search_group();
+          search_subgroup();
+          search_diagnoz();
+  }, 'html');
+
 }

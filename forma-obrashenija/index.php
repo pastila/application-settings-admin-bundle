@@ -243,25 +243,10 @@ while($ob = $res->GetNextElement()){
                                 <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255">
                                     <path d="M0 63.75l127.5 127.5L255 63.75z" /></svg>
                             </div>
-                            <?php
-                                $arSelect = array("ID", "NAME", "IBLOCK_ID");
-                                $arFilter = array("IBLOCK_ID" => 8);
-                                $res = CIBlockElement::GetList(array(), $arFilter, false, false, $arSelect);
-
-                                while ($ob = $res->GetNextElement()) {
-                                    $arFields[] = $ob->GetFields();
-                                }
-                                ?>
                             <input type="text" id="search_diagnoz_input"
                                 placeholder="Начните вводить наименование заболевания, с которым вы обратились в медицинскую организацию." />
                             <ul style="cursor: pointer;" data-value="" class="custom-serach__items"
                                 id="search_diagnoz_global">
-                                <li value="" id="empty_diagnoz" class="custom-serach__items_item diagnoz_search_js">
-                                    Здесь нет моего диагноза</li>
-                                <?php foreach ($arFields as &$arItem) {?>
-                                <li value="<?=$arItem['ID']?>" class="custom-serach__items_item  diagnoz_search_js">
-                                    <?php echo $arItem['NAME']?></li>
-                                <?php } ?>
                             </ul>
                         </div>
                     </div>
