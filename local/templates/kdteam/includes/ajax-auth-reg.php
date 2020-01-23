@@ -81,9 +81,9 @@ CModule::IncludeModule("iblock");
         </div>
         <div class="popup__wrap_middle">
             <div class="input__wrap">
-                <label class="input__wrap_label">Номер страхового полиса (6ти значный)</label>
-                <input id="number_polic" type="text" maxlength="6" name="number_polic"
-                       pattern="[0-9]{6}" placeholder="000000" required>
+                <label class="input__wrap_label">Номер страхового полиса (16ти значный)</label>
+                <input id="number_polic" type="text" maxlength="16" name="number_polic"
+                       pattern="[0-9]{16}" placeholder="0000000000000000" required>
             </div>
             <div class="input__wrap">
                 <label class="input__wrap_label">Пароль</label>
