@@ -84,7 +84,7 @@ $html ='
 <table width="100%" style="margin-bottom: 10px;">
   <thead>
     <tr>
-      <th width="20%" styles="text-align: left;" ><img style="width: 100px" src="logo_oms.png"/></th>
+      <th width="20%" styles="text-align: left;" ><img style="width: 60px" src="logo_oms.png"/></th>
       <th width="auto" styles="margin-left: auto;" >
       <span class="header__items_item--label" style="font-weight: bold;">
                      Подготовлено с помощью сервиса безбахил
