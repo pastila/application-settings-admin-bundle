@@ -4,7 +4,8 @@ $(document).ready(function() {
 
   $(document).on("click",".diagnoz_search_js",function() {
 
-    $("#grid").css({"pointer-events":"none"})
+    $("#grid").css({"pointer-events":"none"});
+    $("#grid").addClass('disabled')
   });
   
   $(".years").click(function(){
@@ -581,7 +582,8 @@ function search_class() {
     let id_class = $(this).attr('value');
 
     if($(this).val() !== ""){
-      $("#search_diagnoz_input").css({"pointer-events":"none"})
+      $("#search_diagnoz_input").css({"pointer-events":"none"});
+      $("#reload_div").addClass('disabled')
     }
     let component = $('#grid');
     $.post('/ajax/main_form_oms.php', {id: id_class}, function(result) {
@@ -695,9 +697,11 @@ function keyup_class() {
   $('#class_input').on('keyup', function() {
     var $this = $(this);
     if($this.val() !== ""){
-      $("#search_diagnoz_input").css({"pointer-events":"none"})
+      $("#search_diagnoz_input").css({"pointer-events":"none"});
+      $("#reload_div").addClass('disabled')
     }else{
-      $("#search_diagnoz_input").css({"pointer-events":"auto"})
+      $("#search_diagnoz_input").css({"pointer-events":"auto"});
+      $("#reload_div").removeClass('disabled')
     }
 
     var delay = 500;
@@ -730,7 +734,8 @@ function keyup_class() {
             let id = $(this).attr('value');
 
             if($(this).val() !== ""){
-              $("#search_diagnoz_input").css({"pointer-events":"none"})
+              $("#search_diagnoz_input").css({"pointer-events":"none"});
+              $("#reload_div").addClass('disabled')
             }
             let select_region = $(this).text();
             $('#class_input').val(select_region);
@@ -946,7 +951,8 @@ function keyup_diagnoz_global() {
   $('#search_diagnoz_input').on('keyup', function() {
     var $this = $(this);
     if($this.val() === ""){
-      $("#grid").css({"pointer-events":"auto"})
+      $("#grid").css({"pointer-events":"auto"});
+      $("#grid").removeClass('disabled')
     }
     var delay = 500;
     clearTimeout($this.data('timer'));

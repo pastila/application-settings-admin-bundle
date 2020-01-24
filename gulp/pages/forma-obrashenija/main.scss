@@ -1,3 +1,6 @@
+@import '../../styles/utils/vars';
+
+
 .form-obrashcheniya {
     &__step_one {
         display: flex;
@@ -71,6 +74,14 @@
     &__step_four {
         &_text {
             margin-bottom: 2rem;
+        }
+        .disabled{
+            filter: blur(2px);
+            cursor: not-allowed;
+            .input__ico{
+                visibility: hidden;
+                opacity: 0;
+            }
         }
     }
 }
