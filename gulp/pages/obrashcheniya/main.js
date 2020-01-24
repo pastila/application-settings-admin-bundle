@@ -3,21 +3,15 @@
 //= ../../node_modules/magnific-popup/dist/jquery.magnific-popup.min.js
 
 $(document).ready(function() {
-
-  $(".js_click_user").click(function() {
-    var text = $(this).text();
-    $(".js_text").text(text);
+  $('.add-user__js').click(function (){
+    $(this).addClass('current');
+    $(this).next().removeClass('current');
+  });
+  $('.add-child__js').click(function (){
+    $(this).addClass('current');
+    $(this).prev().removeClass('current');
   });
 
-  $('.select_toggle').click(function() {
-    $(this).toggleClass('active');
-  });
-  $(document).on('click', function(e) {
-    if (!$(e.target).closest(".select_toggle , .select-dropdown-child").length) {
-      $('.select_toggle').removeClass('active');
-    }
-    e.stopPropagation();
-  });
   function addChild() {
     const items = document.querySelectorAll('.obrashcheniya__content');
 
