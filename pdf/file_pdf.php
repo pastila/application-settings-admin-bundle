@@ -83,7 +83,7 @@ $html ='
 <page>
  <div class="header" style="padding: 0 0 0 50px;">
  <div class="header__items_item--label" style="font-weight: bold; text-align: center; margin-bottom: 10px">
-                     Подготовлено с помощью сервиса безбахил
+                     Подготовлено с помощью сервиса Безбахил
                 </div>
 <table class="table" width="100%" style="margin-bottom: 10px;">
       <thead>
