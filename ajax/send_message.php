@@ -185,8 +185,8 @@ if (CModule::IncludeModule("iblock")) {
                                     'MAIL_CMO' => $mail_cmo,
                                     'FULL_NAME_HOSPITAL' => $FULL_NAME_HOSPITAL,
                                     'MEDICAL_CODE' => $MEDICAL_CODE,
-                                    'HOSPITAL_ADRESS' => $hospital_adress
-
+                                    'HOSPITAL_ADRESS' => $hospital_adress,
+                                    'SRC_LOGO'=> $_SERVER["REQUEST_SCHEME"]."://". $_SERVER["SERVER_NAME"]."/pdf/logo_oms.png",
                                 )
                             );
                             CIBlockElement::SetPropertyValuesEx(
@@ -216,7 +216,8 @@ if (CModule::IncludeModule("iblock")) {
                                     'DATE_PAY' => $arFields['PROPERTY_VISIT_DATE_VALUE'],
                                     'FULL_NAME_HOSPITAL' => $FULL_NAME_HOSPITAL,
                                     'MEDICAL_CODE' => $MEDICAL_CODE,
-                                    'HOSPITAL_ADRESS' => $hospital_adress
+                                    'HOSPITAL_ADRESS' => $hospital_adress,
+                                    'SRC_LOGO'=> $_SERVER["REQUEST_SCHEME"]."://". $_SERVER["SERVER_NAME"]."/pdf/logo_oms.png",
                                 )
                             );
                             CIBlockElement::SetPropertyValuesEx(
