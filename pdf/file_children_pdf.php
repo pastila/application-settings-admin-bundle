@@ -15,9 +15,8 @@ global $USER;
 
 $ID_child = $_POST["id"];
 //$ID_child = "58480";
-$data_user_oplata_POST = $_POST["data_user_oplata_POST"];
+$data_user_oplata_POST = $_POST["oplata"];
 $data_user_oformlenie_POST = date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time());
-
 
 $rsUser = CUser::GetByID($USER->GetID());
 $person = $rsUser->Fetch();
