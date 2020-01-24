@@ -50,12 +50,9 @@ label {
     &__btns {
         display: flex;
         flex-wrap: wrap;
-        margin-bottom: 2rem;
+        justify-content: center;
         &_btn {
             margin-right: 2rem;
-            @media screen and(max-width: 576px){
-                margin-right: 0;
-            }
         }
     }
 
@@ -80,6 +77,9 @@ label {
 
                 &_link {
                     text-transform: lowercase;
+                    font-weight: bold;
+                    display: flex;
+                    align-items: center;
                 }
             }
 
@@ -150,16 +150,24 @@ label {
         }
     }
     .tumbler_users-tab{
-        font-size: 1.6rem;
         font-weight: 700;
         margin-bottom: 2rem;
-        display: block;
-        text-align: right;
+        display: flex;
         color: $mainColor;
-        .user_block{
-            &.tab_element{
-                cursor: pointer;
-                padding: .5rem 0;
+        &__item{
+            font-size: 1.2rem;
+            cursor: pointer;
+            @media(min-width: 440px){
+                font-size: 1.6rem;
+            }
+            &_line{
+                font-size: 1.2rem;
+                margin: 0 .2rem;
+                color: $mainColor;
+                @media(min-width: 440px){
+                    margin: 0 .5rem;
+                    font-size: 1.6rem;
+                }
             }
         }
     }
@@ -168,52 +176,6 @@ label {
         &.active{
             display: block;
 
-        }
-    }
-    .select_toggle {
-        position: relative;
-        cursor: pointer;
-        display: inline-block;
-        .select-dropdown-child{
-            display: none;
-            cursor: initial;
-            position: absolute;
-            top: 100%;
-            left: auto;
-            right: 0;
-            flex-direction: column;
-            z-index: 2;
-            min-width: 22rem;
-        }
-        .arrow_link{
-            position: relative;
-            margin-right: 2rem;
-            &::after {
-                content: '';
-                position: absolute;
-                content: "";
-                top: 60%;
-                width: 0;
-                height: 0;
-                right: -2rem;
-                border: .5rem solid transparent;
-                -webkit-transform: translateY(-50%);
-                transform: translateY(-50%);
-                border-color: #3a4552 transparent transparent transparent;
-                transition: all .2s;
-            }
-        }
-
-        &.active {
-            .arrow_link::after {
-                top: 50%;
-                -webkit-transform: translateY(-50%);
-                transform: translateY(-50%);
-                border-color: transparent transparent #3a4552 transparent;
-            }
-            .select-dropdown-child{
-                display: flex;
-            }
         }
     }
 }
@@ -229,17 +191,21 @@ label {
         }
     }
 }
-@media(max-width: 575px){
+@media(max-width: 440px){
     .obrashcheniya {
         &__btns {
+            &_btn{
+                margin: 0;
+            }
             .mainBtn{
-                margin-right: .5rem;
+                margin-right: 0;
+                margin-bottom: 1rem;
             }
         }
     }
 }
 
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 576px) {
     .obrashcheniya {
         margin-bottom: 4rem;
 
@@ -275,10 +241,6 @@ label {
                         top: 0;
                         right: 0;
                         font-size: 1.4rem;
-
-                        a {
-                            margin-left: 2rem;
-                        }
                     }
                 }
 

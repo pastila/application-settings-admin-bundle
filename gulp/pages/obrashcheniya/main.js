@@ -4,20 +4,6 @@
 
 $(document).ready(function() {
 
-  $(".js_click_user").click(function() {
-    var text = $(this).text();
-    $(".js_text").text(text);
-  });
-
-  $('.select_toggle').click(function() {
-    $(this).toggleClass('active');
-  });
-  $(document).on('click', function(e) {
-    if (!$(e.target).closest(".select_toggle , .select-dropdown-child").length) {
-      $('.select_toggle').removeClass('active');
-    }
-    e.stopPropagation();
-  });
   function addChild() {
     const items = document.querySelectorAll('.obrashcheniya__content');
 

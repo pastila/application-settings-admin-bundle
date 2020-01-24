@@ -40,18 +40,9 @@ if (count($arResult["ITEMS"]) > 0) {
         ?>
         <!-- Обращение -->
         <div id="appeal_<?= $arItem["ID"] ?>" class="obrashcheniya">
-            <div class="obrashcheniya__btns">
-                <div class="obrashcheniya__btns_btn">
-                    <input class="smallMainBtn hidden_browse_input" id="<?= $arItem["ID"] ?>" type="file" multiple
-                           name="file">
-                    <label for="<?= $arItem["ID"] ?>" class="btn btn-tertiary js-labelFile mainBtn">
-                        Прикрепить скан или фото</label>
-                </div>
-                <a class="obrashcheniya__btns_btn accentBtn" onclick="send_ms(this)" id="send_<?= $arItem["ID"] ?>">Отправить</a>
-            </div>
-            <p id="error_<?= $arItem["ID"] ?>" class="error"></p>
-            <p id="success_<?= $arItem["ID"] ?>" class="success"></p>
-            <div class="obrashcheniya__content_left_center_item_text-full hidden with_out_pdf error">Без  сформированного документа PDF нельзя отрпавить обращение</div>
+            <p id="semi-bold error_<?= $arItem["ID"] ?>" class="error"></p>
+            <p id="semi-bold success_<?= $arItem["ID"] ?>" class="success"></p>
+            <p class="semi-bold obrashcheniya__content_left_center_item_text-full hidden with_out_pdf error">Без  сформированного документа PDF нельзя отрпавить обращение</p>
             <div id="card_<?= $arItem["ID"] ?>" class="card">
 
                 <!-- Контент -->
@@ -59,20 +50,10 @@ if (count($arResult["ITEMS"]) > 0) {
                     <!-- Контент левая сторона -->
                     <div class="obrashcheniya__content_left">
                         <div class="tumbler_users-tab">
-                            <div class="user_block tab_element select_toggle">
-                                <p class="arrow_link js_text">Мои обращения</p>
-                                <div class="select-dropdown-child white_block">
-                                    <ul>
-                                        <li>
-                                            <p class="user_block js_click_user tab_element" data_el="<?=$arItem["ID"]?>"  id="remove_child-button">Мои обращения</p>
-                                        </li>
-                                        <li>
-                                            <p class="user_block js_click_user tab_element" data_el="<?=$arItem["ID"]?>" id="add_child-button">Для опекаемого человека</p>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <input value="my" id="selected_sender_<?=$arItem["ID"]?>" type="hidden">
-                            </div>
+                            <p class="tumbler_users-tab__item" data_el="<?=$arItem["ID"]?>"  id="remove_child-button">Мои обращения</p>
+                            <p class="tumbler_users-tab__item_line">/</p>
+                            <p class="tumbler_users-tab__item" data_el="<?=$arItem["ID"]?>" id="add_child-button">Для опекаемого человека</p>
+                            <input value="my" id="selected_sender_<?=$arItem["ID"]?>" type="hidden">
                         </div>
                         <!-- Внутри контента Верхняя часть -->
                         <div class="obrashcheniya__content_left_top">
@@ -88,7 +69,7 @@ if (count($arResult["ITEMS"]) > 0) {
                                 <a onclick="edit(this)" id="edit_<?= $arItem["ID"] ?>">Редактировать</a>
                                 <a style="display: none" onclick="save(this)"
                                    id="save_<?= $arItem["ID"] ?>">Сохранить</a>
-
+                                <p class="tumbler_users-tab__item_line">/</p>
                                 <a onclick="delete_el(this)" id="delete_el_<?= $arItem["ID"] ?>">Удалить</a>
                             </div>
                         </div>
@@ -356,6 +337,15 @@ if (count($arResult["ITEMS"]) > 0) {
 
                         </div>
                     </div>
+                </div>
+                <div class="obrashcheniya__btns">
+                    <div class="obrashcheniya__btns_btn">
+                        <input class="smallMainBtn hidden_browse_input" id="<?= $arItem["ID"] ?>" type="file" multiple
+                               name="file">
+                        <label for="<?= $arItem["ID"] ?>" class="btn btn-tertiary js-labelFile mainBtn">
+                            Прикрепить скан или фото</label>
+                    </div>
+                    <a class="obrashcheniya__btns_btn accentBtn" onclick="send_ms(this)" id="send_<?= $arItem["ID"] ?>">Отправить</a>
                 </div>
             </div>
         </div>
