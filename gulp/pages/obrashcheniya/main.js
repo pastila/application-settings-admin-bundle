@@ -3,6 +3,14 @@
 //= ../../node_modules/magnific-popup/dist/jquery.magnific-popup.min.js
 
 $(document).ready(function() {
+  $('.add-user__js').click(function (){
+    $(this).addClass('current');
+    $(this).next().removeClass('current');
+  });
+  $('.add-child__js').click(function (){
+    $(this).addClass('current');
+    $(this).prev().removeClass('current');
+  });
 
   function addChild() {
     const items = document.querySelectorAll('.obrashcheniya__content');

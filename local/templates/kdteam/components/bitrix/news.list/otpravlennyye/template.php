@@ -40,19 +40,18 @@ if (count($arResult["ITEMS"]) > 0) {
         ?>
         <!-- Обращение -->
         <div id="appeal_<?= $arItem["ID"] ?>" class="obrashcheniya">
-            <p id="semi-bold error_<?= $arItem["ID"] ?>" class="error"></p>
-            <p id="semi-bold success_<?= $arItem["ID"] ?>" class="success"></p>
-            <p class="semi-bold obrashcheniya__content_left_center_item_text-full hidden with_out_pdf error">Без  сформированного документа PDF нельзя отрпавить обращение</p>
             <div id="card_<?= $arItem["ID"] ?>" class="card">
+                <p id="error_<?= $arItem["ID"] ?>" class="semi-bold error mb-2"></p>
+                <p id="success_<?= $arItem["ID"] ?>" class="semi-bold success mb-2"></p>
+                <p class="semi-bold obrashcheniya__content_left_center_item_text-full hidden with_out_pdf error mb-2">Без  сформированного документа PDF нельзя отрпавить обращение</p>
 
                 <!-- Контент -->
                 <div class="obrashcheniya__content">
                     <!-- Контент левая сторона -->
                     <div class="obrashcheniya__content_left">
                         <div class="tumbler_users-tab">
-                            <p class="tumbler_users-tab__item" data_el="<?=$arItem["ID"]?>"  id="remove_child-button">Мои обращения</p>
-                            <p class="tumbler_users-tab__item_line">/</p>
-                            <p class="tumbler_users-tab__item" data_el="<?=$arItem["ID"]?>" id="add_child-button">Для опекаемого человека</p>
+                            <p class="tumbler_users-tab__item mainBtn add-user__js current" data_el="<?=$arItem["ID"]?>"  id="remove_child-button">Мои обращения</p>
+                            <p class="tumbler_users-tab__item mainBtn add-child__js" data_el="<?=$arItem["ID"]?>" id="add_child-button">Для опекаемого человека</p>
                             <input value="my" id="selected_sender_<?=$arItem["ID"]?>" type="hidden">
                         </div>
                         <!-- Внутри контента Верхняя часть -->
@@ -66,11 +65,13 @@ if (count($arResult["ITEMS"]) > 0) {
                             </div>
 
                             <div class="obrashcheniya__content_left_top_link">
-                                <a onclick="edit(this)" id="edit_<?= $arItem["ID"] ?>">Редактировать</a>
-                                <a style="display: none" onclick="save(this)"
-                                   id="save_<?= $arItem["ID"] ?>">Сохранить</a>
-                                <p class="tumbler_users-tab__item_line">/</p>
-                                <a onclick="delete_el(this)" id="delete_el_<?= $arItem["ID"] ?>">Удалить</a>
+                                <a title="Редактировать обращение" class="obrashcheniya__content_left_top_link__icon" onclick="edit(this)" id="edit_<?= $arItem["ID"] ?>"><img
+                                            src="<?=SITE_TEMPLATE_PATH?>/images/svg/edit.svg" alt=""></a>
+                                <a title="Сохранить обращение" class="obrashcheniya__content_left_top_link__icon" style="display: none" onclick="save(this)"
+                                   id="save_<?= $arItem["ID"] ?>"><img
+                                            src="<?=SITE_TEMPLATE_PATH?>/images/svg/save.svg" alt=""></a>
+                                <a title="Удалить обращение" class="obrashcheniya__content_left_top_link__icon" onclick="delete_el(this)" id="delete_el_<?= $arItem["ID"] ?>"><img
+                                            src="<?=SITE_TEMPLATE_PATH?>/images/svg/remove_file.svg" alt=""></a>
                             </div>
                         </div>
 
@@ -146,7 +147,7 @@ if (count($arResult["ITEMS"]) > 0) {
                             </div>
 
                             <div class="obrashcheniya__content_left_center_item">
-                                <div class="obrashcheniya__content_left_center_item_text">
+                                <div class="obrashcheniya__content_left_center_item_text blue">
                                     Дата оплаты медицинских услуг:
                                 </div>
 

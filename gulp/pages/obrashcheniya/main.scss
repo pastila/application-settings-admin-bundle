@@ -80,6 +80,13 @@ label {
                     font-weight: bold;
                     display: flex;
                     align-items: center;
+                    &__icon{
+                        width: 3rem;
+                        height: 3rem;
+                        &:not(:last-of-type) {
+                            margin-right: 2.5rem;
+                        }
+                    }
                 }
             }
 
@@ -150,24 +157,17 @@ label {
         }
     }
     .tumbler_users-tab{
-        font-weight: 700;
         margin-bottom: 2rem;
         display: flex;
-        color: $mainColor;
         &__item{
-            font-size: 1.2rem;
-            cursor: pointer;
-            @media(min-width: 440px){
-                font-size: 1.6rem;
+            transition: all .2s;
+            &:not(:last-of-type) {
+                margin-right: 1.5rem;
             }
-            &_line{
-                font-size: 1.2rem;
-                margin: 0 .2rem;
-                color: $mainColor;
-                @media(min-width: 440px){
-                    margin: 0 .5rem;
-                    font-size: 1.6rem;
-                }
+            &.current{
+                pointer-events: none;
+                background-color: $accentColor;
+                border-color: $accentColor;
             }
         }
     }
@@ -284,4 +284,33 @@ label {
     .obrashcheniya {
         margin-bottom: 5rem;
     }
+}
+@media screen and (max-width: 575px){
+    .obrashcheniya {
+
+        &__content {
+
+            &_left {
+
+                &_top {
+                    &_link {
+                        margin: 1rem 0;
+                        &__icon{
+                            width: 2rem;
+                            height: 2rem;
+                            &:not(:last-of-type) {
+                                margin-right: 1.5rem;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+.mb-2{
+    margin-bottom: 2rem;
+}
+.blue{
+    color: $accentColor;
 }
