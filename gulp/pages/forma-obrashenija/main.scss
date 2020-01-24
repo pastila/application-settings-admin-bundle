@@ -82,6 +82,11 @@
                 visibility: hidden;
                 opacity: 0;
             }
+            .input-with-search{
+                filter: grayscale(100%);
+                cursor: not-allowed !important;
+                pointer-events: none;
+            }
         }
     }
 }
