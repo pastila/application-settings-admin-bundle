@@ -15,9 +15,8 @@ global $USER;
 
 $ID_child = $_POST["id"];
 //$ID_child = "58480";
-$data_user_oplata_POST = $_POST["data_user_oplata_POST"];
+$data_user_oplata_POST = $_POST["oplata"];
 $data_user_oformlenie_POST = date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time());
-
 
 $rsUser = CUser::GetByID($USER->GetID());
 $person = $rsUser->Fetch();
@@ -247,6 +246,9 @@ $html = '
     </p>
     <span class="blue-text cursive" style="font-style: italic; margin-top: 5px;"> Дата формирования заявления ' . $data_user_oformlenie_POST.'</span>
     </div>
+  </div>
+       <div>Подготовлено с помощью сервиса безбахил</div> <img src="logo_oms.png"/><div> Контактные данные
+info@bezbahil.ru</div>
 </page>
 
 ';

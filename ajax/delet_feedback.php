@@ -33,6 +33,7 @@ if($_POST){
             "!PROPERTY_VERIFIED" => false,
             "PROPERTY_REJECTED" => false,
             "!PROPERTY_EVALUATION"=> 0,
+            "ACTIVE" => "Y",
         );
         $res_otzev = CIBlockElement::GetList(Array(), $arFilter_otzev, false, false, $arSelect_otzev);
         $total = 0;

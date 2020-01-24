@@ -174,7 +174,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                             $i = 1;
                             while ($ar_result = $db_list->GetNext()) {
                                 if ($i == 1) {?>
-                                    <li value="" id="empty_class" class="custom-serach__items_item class-js">Здесь нет моего класса</li>
+                                    <li value="" id="empty_class" class="custom-serach__items_item ">Здесь нет моего класса</li>
                                 <? } else {?>
                                     <li value="<?=$ar_result['ID']?>" class="custom-serach__items_item  class-js"><?php echo $ar_result['NAME']?></li>
                                     <?php
@@ -248,7 +248,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                                 $i = 0;
                                 while ($ar_result = $db_list->GetNext()) {
                                     if($i == 1){?>
-                                        <li value="" id="empty_class" class="custom-serach__items_item class-js">Здесь нет моего класса</li>
+                                        <li value="" id="empty_class" class="custom-serach__items_item ">Здесь нет моего класса</li>
                                     <?  }else {?>
                                         <li value="<?=$ar_result['ID']?>" class="custom-serach__items_item  class-js"><?php echo $ar_result['NAME']?></li>
                                         <?php
@@ -341,7 +341,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                                        placeholder="Выберите класс" value="<?php echo $arClass['NAME']?>"
                                        autocomplete="off"/>
                                 <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_class">
-                                    <li value="" id="empty_class" class="custom-serach__items_item class-js">Здесь нет моего класса</li>
+                                    <li value="" id="empty_class" class="custom-serach__items_item ">Здесь нет моего класса</li>
                                     <?php
                                     while ($ar_result = $db_list->GetNext()) { ?>
                                         <li value="<?=$ar_result['ID']?>" class="custom-serach__items_item  class-js"><?php echo $ar_result['NAME']?></li>
@@ -443,7 +443,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                         foreach ($arResult['SECTIONS'] as &$arSection) { ?>
                             <?php if ($arSection['DEPTH_LEVEL'] == 1) { ?>
                                 <?php if ($i == 1) { ?>
-                                    <li value="" id="empty_class" class="custom-serach__items_item class-js">Здесь нет моего класса</li>
+                                    <li value="" id="empty_class" class="custom-serach__items_item ">Здесь нет моего класса</li>
                                 <?php } else { ?>
                                     <li value="<?=$arSection['ID']?>" class="custom-serach__items_item  class-js"><?php echo $arSection['NAME']?></li>
                                     <?php

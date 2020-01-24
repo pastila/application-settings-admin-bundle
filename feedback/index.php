@@ -31,7 +31,6 @@ $countReviews = count($allReviews);
 
 
 
-
 ?>
 <!-- Breadcrumbs -->
 <ul class="breadcrumbs">
