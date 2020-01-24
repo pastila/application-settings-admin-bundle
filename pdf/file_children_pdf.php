@@ -104,22 +104,21 @@ $email_CMO = $arProps["EMAIL_FIRST"]["VALUE"];// электронный адре
 $html = '
 
 <page>
-<table width="100%" style="margin-bottom: 10px;">
-  <thead>
-    <tr>
-      <th width="20%" styles="text-align: left;" ><img style="width: 60px" src="logo_oms.png"/></th>
-      <th width="auto" styles="margin-left: auto;" >
-      <span class="header__items_item--label" style="font-weight: bold;">
+ <div class="header" style="padding: 0 0 0 50px;">
+ <div class="header__items_item--label" style="font-weight: bold; text-align: center; margin-bottom: 10px">
                      Подготовлено с помощью сервиса безбахил
-                </span>
-                <br/>
-                <span class="header__items_item--label" style="font-weight: bold;">
+                </div>
+<table class="table" width="100%" style="margin-bottom: 10px;">
+      <thead>
+        <tr>
+          <th scope="col" style="text-align: left;"> <img style="width: 75px" src="logo_oms.png"/></th>
+          <th scope="col" style="float:right;     text-align: right;"> <span class="header__items_item--label" style="font-weight: normal;">
                     Контактные данные - info@bezbahil.ru
-                </span></th>
-    </tr>
-  </thead>
-  </table>
- <div class="header" style="padding: 0 50px;">
+                </span>
+           </th>
+        </tr>
+      </thead>
+</table>
         <div class="header__items">
             <div class="header__items_item">
                 <div class="header__items_item_wrap" style="margin-bottom: 5px;">
