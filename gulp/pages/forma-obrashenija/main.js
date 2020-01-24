@@ -528,6 +528,9 @@ function search_hospital() {
 
 
   $(document).on('click', '#empty_class', function() {
+    $("#reload_div").css({"pointer-events":"auto"});
+    $("#search_diagnoz_input").css({"pointer-events":"auto"});
+    $("#reload_div").removeClass('disabled');
     $.magnificPopup.open({
       items: {
         src: '<div class="white-popup custom_styles_popup">Если среди диагнозов вы не нашли свой, значит заболевание не относится к числу тех, что оплачитваются из средства ОМС. Случай не является страховым.</div>',
