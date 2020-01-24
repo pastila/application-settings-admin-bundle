@@ -48,9 +48,9 @@ while($ob = $res->GetNextElement()){
 <form id="appeal-form" action="">
     <!-- 1 Step -->
     <section class="form-obrashcheniya__step_one">
-        <div class="form-obrashcheniya__step_one_title">
+        <h3 class="form-obrashcheniya__step_one_title">
             Укажите период, в котором вы получали помощь
-        </div>
+        </h3>
         <?php
             $APPLICATION->IncludeComponent(
                 "bitrix:news.list",
@@ -128,16 +128,16 @@ while($ob = $res->GetNextElement()){
 
         <div class="form-obrashcheniya__step_two_r">
             <div class="form-obrashcheniya__step_two_r_wrap">
-                <div class="form-obrashcheniya__step_two_r_wrap_title">
+                <h3 class="form-obrashcheniya__step_two_r_wrap_title">
                     <?=$arResult_block[1]?>
-                </div>
+                </h3>
                 <p><?=$arResult_block[0]?></p>
             </div>
 
             <div class="form-obrashcheniya__step_two_r_wrap">
-                <div class="form-obrashcheniya__step_two_r_wrap_title">
+                <h3 class="form-obrashcheniya__step_two_r_wrap_title">
                     <?=$arResult_block[3]?>
-                </div>
+                </h3>
                 <p><?=$arResult_block[2]?></p>
             </div>
         </div>
@@ -176,9 +176,9 @@ while($ob = $res->GetNextElement()){
         <div class="form-obrashcheniya__step_three_r">
             <div class="card">
                 <div class="form-obrashcheniya__step_three_r_wrap">
-                    <div class="form-obrashcheniya__step_three_r_wrap_title">
+                    <h3 class="form-obrashcheniya__step_three_r_wrap_title">
                         Вы выбрали регион:
-                    </div>
+                    </h3>
 
                     <div id="region_name" class="form-obrashcheniya__step_three_r_wrap_name">
                         Не выбрано
@@ -186,9 +186,9 @@ while($ob = $res->GetNextElement()){
                 </div>
 
                 <div class="form-obrashcheniya__step_three_r_wrap">
-                    <div class="form-obrashcheniya__step_three_r_wrap_title">
+                    <h3 class="form-obrashcheniya__step_three_r_wrap_title">
                         Вы выбрали медицинскую организацию:
-                    </div>
+                    </h3>
 
                     <div id="hosptital_name" class="form-obrashcheniya__step_three_r_wrap_name">
                         Не выбрано
@@ -196,9 +196,9 @@ while($ob = $res->GetNextElement()){
                 </div>
 
                 <div class="form-obrashcheniya__step_three_r_wrap">
-                    <div class="form-obrashcheniya__step_three_r_wrap_title">
+                    <h3 class="form-obrashcheniya__step_three_r_wrap_title">
                         Расположение по адресу
-                    </div>
+                    </h3>
 
                     <div id="street_name" class="form-obrashcheniya__step_three_r_wrap_name">
                         Не выбрано
@@ -207,9 +207,9 @@ while($ob = $res->GetNextElement()){
                 </div>
 
                 <div class="form-obrashcheniya__step_three_r_wrap">
-                    <div class="form-obrashcheniya__step_three_r_wrap_title">
+                    <h3 class="form-obrashcheniya__step_three_r_wrap_title">
                         Руководитель (главный врач)
-                    </div>
+                    </h3>
 
                     <div id="boss_name" class="form-obrashcheniya__step_three_r_wrap_name">
                         Не выбрано

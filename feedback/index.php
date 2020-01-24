@@ -622,9 +622,9 @@ $countReviews = count($allReviews);
         <div class="white_block">
             <?php  if (isset($_GET["property_region"])) {  ?>
 
-            <div class="sidebar__item_title">Рейтинг Страховых(<?= $name_region; ?>)</div>
+            <h3 class="sidebar__item_title">Рейтинг Страховых(<?= $name_region; ?>)</h3>
             <?php }else{ ?>
-            <div class="sidebar__item_title">Рейтинг Страховых</div>
+            <h3 class="sidebar__item_title">Рейтинг Страховых</h3>
             <?php } ?>
 
             <ul class="sidebar__item_lists scrollbar">

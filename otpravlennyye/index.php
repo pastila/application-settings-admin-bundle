@@ -46,7 +46,7 @@ if ($Section = $section->GetNext()) {
                         <?= $arFields["NAME"] . ' № ' . $arFields["ID"]?>
                     </div>
 
-                    <p class="success">Направлено в страховую компанию</p>
+                    <h3 class="success title-medium">Направлено в страховую компанию</h3>
 
                     <div class="otpravlennyye__item_data">
                         дата: <?= $arFields['PROPERTY_SEND_MESSAGE_VALUE'] ?>

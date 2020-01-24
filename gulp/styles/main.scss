@@ -258,7 +258,7 @@ Not supports in Firefox and IE */
     .select-items{
         overflow-x: hidden;
         overflow-y: auto;
-        max-height: 33rem;
+        max-height: 25rem;
         &::-webkit-scrollbar {
             background-color:#fff;
             width:16px
