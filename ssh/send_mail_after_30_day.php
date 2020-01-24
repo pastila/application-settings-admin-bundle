@@ -73,7 +73,7 @@ while ($Section = $section->GetNext()) {
                     $url = "devdoc1.kdteam.su/add-feedback/?letter";
                     $arEventFields = array(
                         "MAIL" => $arUser["EMAIL"],
-                        "DATE_APPEAL" => $newDate,
+
                         "URL_COMMENTS" => $url ,
                     );
 

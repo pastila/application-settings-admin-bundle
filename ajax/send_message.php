@@ -197,6 +197,14 @@ if (CModule::IncludeModule("iblock")) {
                             );
                             $result['success'] = 'Обращение успешно отправлено в страховую компанию.
                          Ваше обращение находится в личном кабинете «Отправленные»';
+                            CEvent::Send(
+                                'SEND_MASSEGE_AFTER_SEND_APPEAL',
+                                's1',
+                                array(
+                                    'EMAIL' => $email,
+
+                                )
+                            );
                         } else {
                             CEvent::Send(
                                 'SEND_MESSAGE',
@@ -228,6 +236,15 @@ if (CModule::IncludeModule("iblock")) {
                             );
                             $result['success'] = 'Обращение успешно отправлено в страховую компанию.
                          Ваше обращение находится в личном кабинете «Отправленные»';
+
+                            CEvent::Send(
+                                'SEND_MASSEGE_AFTER_SEND_APPEAL',
+                                's1',
+                                array(
+                                    'EMAIL' => $email,
+
+                                )
+                            );
 
                         }
                     } else {
