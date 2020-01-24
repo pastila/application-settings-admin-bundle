@@ -246,6 +246,9 @@ $html = '
     </p>
     <span class="blue-text cursive" style="font-style: italic; margin-top: 5px;"> Дата формирования заявления ' . $data_user_oformlenie_POST.'</span>
     </div>
+  </div>
+       <div>Подготовлено с помощью сервиса безбахил</div> <img src="logo_oms.png"/><div> Контактные данные
+info@bezbahil.ru</div>
 </page>
 
 ';
