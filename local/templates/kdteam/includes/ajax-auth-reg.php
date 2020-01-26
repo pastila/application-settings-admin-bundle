@@ -18,9 +18,9 @@ CModule::IncludeModule("iblock");
             Для создания обращение вам необходимо зарегистрироваться
         </p>
         <div id="auth__form" class="popup__wrap_tabs">
-            <div class="popup__wrap_tabs_title">
+            <h3 class="popup__wrap_tabs_title">
                 Регистрация
-            </div>
+            </h3>
         </div>
 
         <div class="popup__wrap_top">

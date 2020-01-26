@@ -3,8 +3,6 @@
 $(document).ready(function() {
 
   $(document).on("click",".diagnoz_search_js",function() {
-
-    $("#grid").css({"pointer-events":"none"});
     $("#grid").addClass('disabled')
   });
   
@@ -954,7 +952,6 @@ function keyup_diagnoz_global() {
   $('#search_diagnoz_input').on('keyup', function() {
     var $this = $(this);
     if($this.val() === ""){
-      $("#grid").css({"pointer-events":"auto"});
       $("#grid").removeClass('disabled')
     }
     var delay = 500;

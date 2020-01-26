@@ -81,7 +81,23 @@ $mail_compani = $arProps["EMAIL_FIRST"]["VALUE"];// имйл компании
 $html ='
 
 <page>
- <div class="header" style="padding: 0 50px;">
+ <div class="header" style="padding: 0 0 0 50px;">
+ <div class="header__items_item--label" style="font-weight: bold; text-align: center; margin-bottom: 10px">
+                     Подготовлено с помощью сервиса Безбахил
+                </div>
+<table class="table" width="100%" style="margin-bottom: 10px;">
+      <thead>
+        <tr>
+          <th scope="col" style="text-align: left;"> <img style="width: 75px" src="logo_oms.png"/></th>
+          <th scope="col" style="float:right;     text-align: right;"> <span class="header__items_item--label" style="font-weight: normal">
+                    Контактные данные - info@bezbahil.ru
+                </span>
+           </th>
+        </tr>
+      </thead>
+</table>
+
+ 
         <div class="header__items">
             <div class="header__items_item">
                 <div class="header__items_item_wrap" style="margin-bottom: 5px;">
@@ -197,8 +213,6 @@ $html ='
     </p>
     <span class="blue-text cursive" style="font-style: italic; margin-top: 5px;"> Дата формирования заявления ' . $data_user_oformlenie_POST.'</span>
     </div>
-       <div>Подготовлено с помощью сервиса безбахил</div> <img src="logo_oms.png"/><div> Контактные данные
-info@bezbahil.ru</div>
 </page>
 
 ';

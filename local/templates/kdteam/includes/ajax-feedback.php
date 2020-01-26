@@ -19,9 +19,9 @@ $cpt->SetCodeCrypt($captchaPass);
 
     <div class="popup__wrap">
         <div class="popup__wrap_tabs">
-            <div class="popup__wrap_tabs_title">
+            <h3 class="popup__wrap_tabs_title">
                 Напишите нам
-            </div>
+            </h3>
         </div>
         <div class="popup__wrap_middle">
             <!-- Input -->
