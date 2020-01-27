@@ -86,7 +86,7 @@ $polic = $arFields_child["PROPERTY_POLICY_VALUE"];
 $BIRTHDAY= $arFields_child["PROPERTY_BIRTHDAY_VALUE"];
 
 
-$arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_*");
+$arSelect = Array("ID", "IBLOCK_ID", "NAME", "IBLOCK_SECTION_ID","PROPERTY_*");
 $arFilter = Array("IBLOCK_ID"=>16,"ID"=> $id_company);
 $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
 $ob = $res->GetNextElement();
@@ -94,12 +94,24 @@ $arProps = $ob->GetProperties();
 $arFields = $ob->GetFields();
 
 
+
+
+
 $name_hospital = $arFields["NAME"];// название компании
 
 $NAME_BOSS = $arProps["NAME_BOSS"]["VALUE"];// руководитель компании
 $email_CMO = $arProps["EMAIL_FIRST"]["VALUE"];// электронный адрес СМО
+$email_CMO2 = $arProps["EMAIL_SECOND"]["VALUE"];// электронный адрес СМО
+$email_CMO3 = $arProps["EMAIL_THIRD"]["VALUE"];// электронный адрес СМО
+
+$res = CIBlockSection::GetByID($arFields['IBLOCK_SECTION_ID']);
+$name_rerion = "";
+if ($ar_res = $res->GetNext()) {
+
+    $name_rerion = "(" .$ar_res["NAME"] . ")";
 
 
+}
 
 $html = '
 
@@ -127,9 +139,11 @@ $html = '
                     </div>
                     <div class="header__items_item--text" style="margin-bottom: 5px;">
                         <div class="blue-text cursive" style="font-style: italic;">
-                            ' . $name_hospital . '<br>
+                            ' . $name_hospital  . $name_rerion . '<br>
                             ' . $NAME_BOSS . '<br>
-                            ' . $email_CMO . '
+                            ' . $email_CMO . '<br>
+                            ' . $email_CMO2 . '<br>
+                            ' . $email_CMO3 . '
                         </div>
                     </div>
                 </div>

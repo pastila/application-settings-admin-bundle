@@ -32,13 +32,13 @@ foreach ($arFields["PROPERTY_VALUES"]['145'] as $key => $region_id){
                 "NAME" => $arFields["NAME"],
 
                 "PROPERTY_VALUES" => array(
-                    "NAME_BOSS" => $arFields["PROPERTY_VALUES"]['140']["n0"]["VALUE"],
-                    "MOBILE_NUMBER" => $arFields["PROPERTY_VALUES"]['134']["n0"]["VALUE"],
-                    "MOBILE_NUMBER2" => $arFields["PROPERTY_VALUES"]['142']["n0"]["VALUE"],
-                    "MOBILE_NUMBER3" => $arFields["PROPERTY_VALUES"]['143']["n0"]["VALUE"],
-                    "EMAIL_FIRST" => $arFields["PROPERTY_VALUES"]['135']["n0"]["VALUE"],
-                    "EMAIL_SECOND" => $arFields["PROPERTY_VALUES"]['136']["n0"]["VALUE"],
-                    "EMAIL_THIRD" => $arFields["PROPERTY_VALUES"]['137']["n0"]["VALUE"],
+//                    "NAME_BOSS" => $arFields["PROPERTY_VALUES"]['140']["n0"]["VALUE"],
+//                    "MOBILE_NUMBER" => $arFields["PROPERTY_VALUES"]['134']["n0"]["VALUE"],
+//                    "MOBILE_NUMBER2" => $arFields["PROPERTY_VALUES"]['142']["n0"]["VALUE"],
+//                    "MOBILE_NUMBER3" => $arFields["PROPERTY_VALUES"]['143']["n0"]["VALUE"],
+//                    "EMAIL_FIRST" => $arFields["PROPERTY_VALUES"]['135']["n0"]["VALUE"],
+//                    "EMAIL_SECOND" => $arFields["PROPERTY_VALUES"]['136']["n0"]["VALUE"],
+//                    "EMAIL_THIRD" => $arFields["PROPERTY_VALUES"]['137']["n0"]["VALUE"],
                     "KPP" => $arFields["PROPERTY_VALUES"]['144']["n0"]["VALUE"],
                     "LOGO_IMG" => $arFields["PROPERTY_VALUES"]['139']["n0"]["VALUE"],
 
@@ -262,13 +262,13 @@ function IBlockElementAfterSaveHandler($arg1, $arg2 = false, $bInternal = false)
             $arFields = $ob->GetFields();
            $file =    CFile::MakeFileArray($arProps["LOGO_IMG"]['VALUE']);
             $arField = array(
-                    "NAME_BOSS" => $arProps["NAME_BOSS"]['VALUE'],
-                    "MOBILE_NUMBER" => $arProps["MOBILE_NUMBER"]['VALUE'],
-                    "MOBILE_NUMBER2" => $arProps["MOBILE_NUMBER2"]['VALUE'],
-                    "MOBILE_NUMBER3" => $arProps["MOBILE_NUMBER3"]['VALUE'],
-                    "EMAIL_FIRST" => $arProps["EMAIL_FIRST"]['VALUE'],
-                    "EMAIL_SECOND" => $arProps["EMAIL_SECOND"]['VALUE'],
-                    "EMAIL_THIRD" => $arProps["EMAIL_THIRD"]['VALUE'],
+//                    "NAME_BOSS" => $arProps["NAME_BOSS"]['VALUE'],
+//                    "MOBILE_NUMBER" => $arProps["MOBILE_NUMBER"]['VALUE'],
+//                    "MOBILE_NUMBER2" => $arProps["MOBILE_NUMBER2"]['VALUE'],
+//                    "MOBILE_NUMBER3" => $arProps["MOBILE_NUMBER3"]['VALUE'],
+//                    "EMAIL_FIRST" => $arProps["EMAIL_FIRST"]['VALUE'],
+//                    "EMAIL_SECOND" => $arProps["EMAIL_SECOND"]['VALUE'],
+//                    "EMAIL_THIRD" => $arProps["EMAIL_THIRD"]['VALUE'],
                     "KPP" => $arProps["KPP"]['VALUE'],
                     "LOGO_IMG" => $file,
 
@@ -302,13 +302,13 @@ function IBlockElementAfterSaveHandler($arg1, $arg2 = false, $bInternal = false)
                         "IBLOCK_SECTION_ID" => $region_id,
                         "NAME" => $name,
                         "PROPERTY_VALUES" => array(
-                            "NAME_BOSS" => $arProps["NAME_BOSS"]['VALUE'],
-                            "MOBILE_NUMBER" => $arProps["MOBILE_NUMBER"]['VALUE'],
-                            "MOBILE_NUMBER2" => $arProps["MOBILE_NUMBER2"]['VALUE'],
-                            "MOBILE_NUMBER3" => $arProps["MOBILE_NUMBER3"]['VALUE'],
-                            "EMAIL_FIRST" => $arProps["EMAIL_FIRST"]['VALUE'],
-                            "EMAIL_SECOND" => $arProps["EMAIL_SECOND"]['VALUE'],
-                            "EMAIL_THIRD" => $arProps["EMAIL_THIRD"]['VALUE'],
+//                            "NAME_BOSS" => $arProps["NAME_BOSS"]['VALUE'],
+//                            "MOBILE_NUMBER" => $arProps["MOBILE_NUMBER"]['VALUE'],
+//                            "MOBILE_NUMBER2" => $arProps["MOBILE_NUMBER2"]['VALUE'],
+//                            "MOBILE_NUMBER3" => $arProps["MOBILE_NUMBER3"]['VALUE'],
+//                            "EMAIL_FIRST" => $arProps["EMAIL_FIRST"]['VALUE'],
+//                            "EMAIL_SECOND" => $arProps["EMAIL_SECOND"]['VALUE'],
+//                            "EMAIL_THIRD" => $arProps["EMAIL_THIRD"]['VALUE'],
                             "KPP" => $arProps["KPP"]['VALUE'],
                             "LOGO_IMG" => $file,
 

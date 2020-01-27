@@ -66,18 +66,28 @@ $strahovay_compani = $person["UF_INSURANCE_COMPANY"];
 
 
 
-$arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_*");
+$arSelect = Array("ID", "IBLOCK_ID", "NAME", "IBLOCK_SECTION_ID","PROPERTY_*");
 $arFilter = Array("IBLOCK_ID"=>16,"ID"=> $strahovay_compani);
 $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
 $ob = $res->GetNextElement();
 $arProps = $ob->GetProperties();
 $arFields = $ob->GetFields();
 
-
 $name_company = $arFields["NAME"];// название компании
 $boss_compani = $arProps["NAME_BOSS"]["VALUE"];// руководитель компании
 $mail_compani = $arProps["EMAIL_FIRST"]["VALUE"];// имйл компании
+$mail_compani2 = $arProps["EMAIL_SECOND"]["VALUE"];// имйл компании
+$mail_compani3 = $arProps["EMAIL_THIRD"]["VALUE"];// имйл компании
 
+
+$res = CIBlockSection::GetByID($arFields['IBLOCK_SECTION_ID']);
+$name_rerion = "";
+if ($ar_res = $res->GetNext()) {
+
+    $name_rerion = "(" .$ar_res["NAME"] . ")";
+
+
+}
 $html ='
 
 <page>
@@ -107,9 +117,11 @@ $html ='
                     <div class="header__items_item--text" style="margin-bottom: 5px;">
                       
                         <div class="blue-text cursive" style="font-style: italic;">
-                            '.$name_company.'<br>
+                            '.$name_company . $name_rerion .'<br>
                             '.$boss_compani.'<br>
-                            '.$mail_compani.'
+                            '.$mail_compani.' <br>
+                            '.$mail_compani2.'<br>
+                            '.$mail_compani3.'
                         </div>
                     </div>
                 </div>
