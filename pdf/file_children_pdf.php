@@ -104,53 +104,58 @@ $email_CMO = $arProps["EMAIL_FIRST"]["VALUE"];// электронный адре
 $html = '
 
 <page>
- <div class="header" style="padding: 0 0 0 50px;">
- <div class="header__items_item--label" style="font-weight: bold; text-align: center; margin-bottom: 10px">
-                     Подготовлено с помощью сервиса Безбахил
-                </div>
-<table class="table" width="100%" style="margin-bottom: 10px;">
+ <div class="header">
+ <table class="table" width="100%" style="margin-bottom: 10px;">
       <thead>
         <tr>
-          <th scope="col" style="text-align: left;"> <img style="width: 75px" src="logo_oms.png"/></th>
-          <th scope="col" style="float:right;     text-align: right;"> <span class="header__items_item--label" style="font-weight: normal;">
+          <th valign="baseline" scope="col" style="text-align: left;">
+           <div class="header__items_item--label">
+                     Подготовлено с помощью сервиса bezbahil.ru
+                </div>
+                  <br>
+                <div><img style="width: 75px;" src="logo_oms.png"/></div>
+                  <br>
+          <div class="header__items_item--label" style="font-weight: normal;">
                     Контактные данные - info@bezbahil.ru
-                </span>
-           </th>
-        </tr>
-      </thead>
-</table>
-        <div class="header__items">
+                </div>
+          </th>
+           <th valign="baseline" style="float: right; text-align: right;">
+ <div class="header__items">
             <div class="header__items_item">
-                <div class="header__items_item_wrap" style="margin-bottom: 5px;">
+                <div class="header__items_item_wrap">
                     <div class="header__items_item--label" style="font-weight: bold;">
                         Кому: Руководителю страховой медицинской организации
                     </div>
-                    <div class="header__items_item--text" style="margin-bottom: 5px;">
+                      <br>
+                    <div class="header__items_item--text">
                         <div class="blue-text cursive" style="font-style: italic;">
                             ' . $name_hospital . '<br>
                             ' . $NAME_BOSS . '<br>
                             ' . $email_CMO . '
                         </div>
                     </div>
+                      <br>
                 </div>
             </div>
-            <div class="header__items_item" style="margin-bottom: 5px;">
+            <div class="header__items_item">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label">
                         <span style="font-weight: bold;">От:</span> <span style="font-style: italic;">
                          ' . $full_name_user . ', ' . $PERSONAL_BIRTHDAT . '</span>
                     </div>
                 </div>
+                  <br>
             </div>
-               <div class="header__items_item" style="margin-bottom: 5px;">
+               <div class="header__items_item">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label">
                         <span style="font-weight: bold;">Номер полиса:</span> <span style="font-style: italic;">
                          ' . $person_INSURANCE_POLICY . '</span>
                     </div>
                 </div>
+                  <br>
             </div>
-           <div class="header__items_item" style="margin-bottom: 5px;">
+           <div class="header__items_item">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label" >
                         <span style="font-weight: bold;">Адрес электронной почты:</span>
@@ -159,17 +164,19 @@ $html = '
                         '. $person_EMAIL .'
                     </div>
                 </div>
+                  <br>
             </div>
 
-            <div class="header__items_item" style="margin-bottom: 5px;">
+            <div class="header__items_item">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label" >
                         <span style="font-weight: bold;">Телефон:</span> <span style="font-style: italic;">
                          ' . $person_PERSONAL_PHONE . '</span>
                     </div>
                 </div>
+                  <br>
             </div>
-            <div class="header__items_item" style="margin-bottom: 5px;">
+            <div class="header__items_item" >
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label" >
                     <div>
@@ -177,6 +184,7 @@ $html = '
                          представителем которого являюсь.</span>
                     </div>
                     <div>
+                      <br>
                        <span style="font-weight: bold;">
                        Сведения о лице, получившем медицинскую помощь:</span>
                     </div>
@@ -188,8 +196,9 @@ $html = '
                         ' . $BIRTHDAY . '
                     </div>
                 </div>
+                  <br>
             </div>
-            <div class="header__items_item" style="margin-bottom: 5px;">
+            <div class="header__items_item">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label">
                         <span style="font-weight: bold;">Полис:</span> <span style="font-style: italic;">
@@ -198,6 +207,12 @@ $html = '
                 </div>
             </div>
         </div>
+            
+           </th>
+        </tr>
+      </thead>
+</table>
+   
     </div>
 ​   <div>
         <p style="text-align: center; margin-bottom: 5px; font-size: 18px; font-weight: bold;">ПРЕТЕНЗИЯ</p>
