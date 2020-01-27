@@ -11,6 +11,10 @@ if($_GET){
 }
 $detect = new Mobile_Detect();
 $asset = Asset::getInstance();
+
+$url = $APPLICATION->GetCurDir();
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +36,8 @@ $asset = Asset::getInstance();
 </head>
 
 <body>
-<?php $APPLICATION->ShowPanel(); ?>
+<?php $APPLICATION->ShowPanel();
+?>
 
 <!-- Start Wrap -->
 <div class="wrap"
@@ -163,6 +168,57 @@ $asset = Asset::getInstance();
                             $person = $rsUser->Fetch();
 
                             $file = CFile::ResizeImageGet($person["PERSONAL_PHOTO"], array('width'=>50, 'height'=>50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
+                            if($url != "/personal-cabinet/") {
+                                if ($person['UF_INSURANCE_COMPANY'] != '') {
+                                if (CIBlockElement::GetByID($person['UF_INSURANCE_COMPANY'])->SelectedRowsCount() != 0) {
+                                    $res = CIBlockElement::GetByID($person['UF_INSURANCE_COMPANY'])->GetNextElement()->GetFields();
+                                if ($res["ACTIVE"] != "Y") {
+                                    ?>
+
+                                    <script> $('body').css({'overflow': 'hidden'});
+                                      setTimeout(function() {
+                                        $.magnificPopup.open({
+                                          items: {
+                                            src: '<div class="white-popup custom_styles_popup">Уважаемый пользователь. Ваша, выбранная компания при регистрации больше не сотрудничает с нами . Для ' +
+                                            'дальшнеего использования функционалом (обращения) нужно в <a href="/personal-cabinet/"> личном кабинете </a>выбрать страховую компанию </div>',
+                                            type: 'inline',
+                                          },
+                                        });
+                                        $('body').css({'overflow': 'initial'});
+                                      }, 1000);</script>
+                                <? }
+                                }else{
+                                ?>
+                                    <script> $('body').css({'overflow': 'hidden'});
+                                      setTimeout(function() {
+                                        $.magnificPopup.open({
+                                          items: {
+                                            src: '<div class="white-popup custom_styles_popup">Уважаемый пользователь. Ваша, выбранная компания при регистрации больше не сотрудничает с нами . Для ' +
+                                            'дальшнеего использования функционалом (обращения) нужно в <a href="/personal-cabinet/"> личном кабинете </a>выбрать страховую компанию </div>',
+                                            type: 'inline',
+                                          },
+                                        });
+                                        $('body').css({'overflow': 'initial'});
+                                      }, 1000);</script>
+                                <?
+                                } ?>
+
+                                <? }else{
+                                ?>
+                                    <script> $('body').css({'overflow': 'hidden'});
+                                      setTimeout(function() {
+                                        $.magnificPopup.open({
+                                          items: {
+                                            src: '<div class="white-popup custom_styles_popup">Уважаемый пользователь. Ваша, выбранная компания при регистрации больше не сотрудничает с нами . Для ' +
+                                            'дальшнеего использования функционалом (обращения) нужно в <a href="/personal-cabinet/"> личном кабинете </a>выбрать страховую компанию </div>',
+                                            type: 'inline',
+                                          },
+                                        });
+                                        $('body').css({'overflow': 'initial'});
+                                      }, 1000);</script>
+                                <?
+                                }
+                            }
 
                             ?>
 
