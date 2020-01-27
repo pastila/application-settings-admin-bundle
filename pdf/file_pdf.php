@@ -91,30 +91,30 @@ if ($ar_res = $res->GetNext()) {
 $html ='
 
 <page>
- <div class="header" style="padding: 0 0 0 50px;">
- <div class="header__items_item--label" style="font-weight: bold; text-align: center; margin-bottom: 10px">
-                     Подготовлено с помощью сервиса Безбахил
-                </div>
+ <div class="header">
 <table class="table" width="100%" style="margin-bottom: 10px;">
       <thead>
         <tr>
-          <th scope="col" style="text-align: left;"> <img style="width: 75px" src="logo_oms.png"/></th>
-          <th scope="col" style="float:right;     text-align: right;"> <span class="header__items_item--label" style="font-weight: normal">
+          <th valign="baseline" scope="col" style="text-align: left;">
+           <div class="header__items_item--label">
+                     Подготовлено с помощью сервиса bezbahil.ru
+                </div>
+                  <br>
+                <div><img style="width: 75px;" src="logo_oms.png"/></div>
+                  <br>
+          <div class="header__items_item--label" style="font-weight: normal;">
                     Контактные данные - info@bezbahil.ru
-                </span>
-           </th>
-        </tr>
-      </thead>
-</table>
-
- 
-        <div class="header__items">
+                </div>
+          </th>
+           <th valign="baseline" style="float: right; text-align: right;">
+                <div class="header__items">
             <div class="header__items_item">
-                <div class="header__items_item_wrap" style="margin-bottom: 5px;">
+                <div class="header__items_item_wrap">
                     <div class="header__items_item--label" style="font-weight: bold;">
                         Кому: Руководителю страховой медицинской организации
                     </div>
-                    <div class="header__items_item--text" style="margin-bottom: 5px;">
+                    <br>
+                    <div class="header__items_item--text">
                       
                         <div class="blue-text cursive" style="font-style: italic;">
                             '.$name_company . $name_rerion .'<br>
@@ -123,19 +123,29 @@ $html ='
                             '.$mail_compani2.'<br>
                             '.$mail_compani3.'
                         </div>
+                          <br>
                     </div>
                 </div>
             </div>
-            <div class="header__items_item" style="margin-bottom: 5px;">
+            <div class="header__items_item">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label">
                         <span style="font-weight: bold;">От: </span> 
                         <span class="header__items_item--text blue-text cursive" style="font-style: italic;">
                         '.$full_name_user.'</span>
                     </div>
+                      <br>
                 </div>
             </div>
-             <div class="header__items_item" style="margin-bottom: 5px;">
+            
+        </div>
+           </th>
+        </tr>
+      </thead>
+</table>
+<div style="text-align: right; float: right;">
+
+ <div class="header__items_item">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label">
                         <span style="font-weight: bold;">Номер полиса:</span> 
@@ -143,9 +153,10 @@ $html ='
                         '. $number_polic_POST .'
                     </span>
                     </div>
+                      <br>
                 </div>
             </div>
-               <div class="header__items_item" style="margin-bottom: 5px;">
+               <div class="header__items_item">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label" >
                         <span style="font-weight: bold;">Адрес электронной почты:</span>
@@ -153,6 +164,7 @@ $html ='
                     <div class="header__items_item--text blue-text cursive" style=" font-style: italic;">
                         '. $email .'
                     </div>
+                      <br>
                 </div>
             </div>
             <div class="header__items_item">
@@ -163,10 +175,13 @@ $html ='
                     </div>
                 </div>
             </div>
-        </div>
+</div>
+
+ 
+        
     </div>
 ​   <div>
-        <p style="text-align: center; margin-bottom: 5px; font-size: 18px; font-weight: bold;">ПРЕТЕНЗИЯ</p>
+        <p style="text-align: center; margin-bottom: 5px; font-size: 15px; font-weight: bold;">ПРЕТЕНЗИЯ</p>
          <p>
         <span class="red-text cursive" style="font-style: italic;">«'.$data_user_oplata_POST.'</span> г. в медицинской организации <span
             class="blue-text cursive" style="font-style: italic;">' . $FULL_NAME_HOSPITAL . '</span> (код в реестре медицинских
@@ -235,9 +250,9 @@ $mpdf = new \Mpdf\Mpdf([
     'orientation' => 'P',
     'margin_top' => 9,
     'margin_bottom' => 0,
-    'margin_left' => 15,
-    'margin_right' => 15,
-    'default_font_size' => 9.5,
+    'margin_left' => 9,
+    'margin_right' => 9,
+    'default_font_size' => 9,
 ]);
 //создаем PDF файл, задаем формат, отступы и.т.д.
 
