@@ -125,7 +125,15 @@ $html ='
                       <br>
                 </div>
             </div>
-             <div class="header__items_item">
+            
+        </div>
+           </th>
+        </tr>
+      </thead>
+</table>
+<div style="text-align: right; float: right;">
+
+ <div class="header__items_item">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label">
                         <span style="font-weight: bold;">Номер полиса:</span> 
@@ -155,17 +163,13 @@ $html ='
                     </div>
                 </div>
             </div>
-        </div>
-           </th>
-        </tr>
-      </thead>
-</table>
+</div>
 
  
         
     </div>
 ​   <div>
-        <p style="text-align: center; margin-bottom: 5px; font-size: 18px; font-weight: bold;">ПРЕТЕНЗИЯ</p>
+        <p style="text-align: center; margin-bottom: 5px; font-size: 15px; font-weight: bold;">ПРЕТЕНЗИЯ</p>
          <p>
         <span class="red-text cursive" style="font-style: italic;">«'.$data_user_oplata_POST.'</span> г. в медицинской организации <span
             class="blue-text cursive" style="font-style: italic;">' . $FULL_NAME_HOSPITAL . '</span> (код в реестре медицинских
@@ -236,7 +240,7 @@ $mpdf = new \Mpdf\Mpdf([
     'margin_bottom' => 0,
     'margin_left' => 9,
     'margin_right' => 9,
-    'default_font_size' => 9.5,
+    'default_font_size' => 9,
 ]);
 //создаем PDF файл, задаем формат, отступы и.т.д.
 
