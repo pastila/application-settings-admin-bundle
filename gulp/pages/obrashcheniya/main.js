@@ -586,6 +586,7 @@ function commutator(ajax, id) {
       });
     }
   } else if (ajax === 'my') {
+
       let cur_el = $('#appeal_' + id);
       let usrname = $("input[name='usrname']");
       let policy = $("input[name='policy']");
@@ -599,25 +600,29 @@ function commutator(ajax, id) {
         "id": id,
         "hospitl": cur_el.find(hospitl).text(),
       };
-      $.ajax({
-        url: '/pdf/file_pdf.php',
-        type: 'POST',
-        data: data,
-        success: function(msg) {
 
-          $('[data-obrashenie-id=' + id + ']').
-              find(".pdf").
-              attr("href", msg);
-          $('[data-obrashenie-id=' + id + ']').
-              find(".pdf").
-              removeClass("error");
-          $('[data-obrashenie-id=' + id + ']').
-              find(".pdf").
-              text("Просмотреть");
-          $(".ready_pdf").removeClass("hidden");
-          $(".with_out_pdf").addClass("hidden")
-        },
-      })
+      if(time_p.text().search(".20") !==  -1 ) {
+
+        $.ajax({
+          url: '/pdf/file_pdf.php',
+          type: 'POST',
+          data: data,
+          success: function(msg) {
+
+            $('[data-obrashenie-id=' + id + ']').
+                find(".pdf").
+                attr("href", msg);
+            $('[data-obrashenie-id=' + id + ']').
+                find(".pdf").
+                removeClass("error");
+            $('[data-obrashenie-id=' + id + ']').
+                find(".pdf").
+                text("Просмотреть");
+            $(".ready_pdf").removeClass("hidden");
+            $(".with_out_pdf").addClass("hidden")
+          },
+        })
+      }
   }
 }
 
