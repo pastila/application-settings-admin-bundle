@@ -11,7 +11,13 @@
         width: 100%;
         margin: 0 auto;
         @media screen and (min-width: 992px){
-            max-width: 1170px;
+            max-width: 80vw;
+        }
+        @media screen and (min-width: 1200px){
+            max-width: 70vw;
+        }
+        @media screen and (min-width: 1440px){
+            max-width: 60vw;
         }
     }
 
