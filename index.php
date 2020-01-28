@@ -32,52 +32,51 @@ CModule::IncludeModule("iblock");
         <div class="slider__l_descr">
             <?=$arFields["DETAIL_TEXT"]?>
         </div>
-
-        <a href="/news/" class="slider__details mainBtn">Подробнее</a>
     </div>
 </div>
 <?}?>
+
 <!-- Block buttons links to pages -->
 <div class="buttons__items">
     <!-- Item -->
     <a href="/forma-obrashenija/" class="buttons__items_item">
         <div class="buttons__items_item_image-block">
-            <img class="buttons__items_item_img"
-                src="./local/templates/kdteam/images/png/strah_sluchay.png" alt="">
+            <img class="buttons__items_item_img" src="./local/templates/kdteam/images/png/strah_sluchay.png" alt="">
         </div>
 
         <div class="buttons__items_item_title-block">
-            <h3 class="buttons__items_item_title">
-                Страховой случай в ОМС
-            </h3>
+            <h2 class="buttons__items_item_title">
+                Не платите
+            </h2>
+            <p>за то, что уже оплачено. Нужно всего несколько минут, чтобы соотнести свое лечение с программой ОМС и запустить процесс возврата денег, если оплата была незаконной.</p>
         </div>
     </a>
 
     <!-- Item -->
     <a href="/feedback/" class="buttons__items_item">
         <div class="buttons__items_item_image-block">
-            <img class="buttons__items_item_img"
-                 src="./local/templates/kdteam/images/png/reviews_strah.png" alt="">
+            <img class="buttons__items_item_img" src="./local/templates/kdteam/images/png/reviews_strah.png" alt="">
         </div>
 
         <div class="buttons__items_item_title-block">
-            <h3 class="buttons__items_item_title">
-                Отзывы о представителях
-            </h3>
+            <h2 class="buttons__items_item_title">
+            Выбирайте лучшую
+            </h2>
+            <p>страховую компанию и участвуйте в создании народного рейтинга компаний. Ваши отзывы помогают выявить компании, которым действительно дорого здоровье своих застрахованных.</p>
         </div>
     </a>
 
     <!-- Item -->
     <a href="/news/" class="buttons__items_item">
         <div class="buttons__items_item_image-block">
-            <img class="buttons__items_item_img"
-                 src="./local/templates/kdteam/images/png/read_strah.png" alt="">
+            <img class="buttons__items_item_img" src="./local/templates/kdteam/images/png/read_strah.png" alt="">
         </div>
 
         <div class="buttons__items_item_title-block">
-            <h3 class="buttons__items_item_title">
-                Читать про ОМС
-            </h3>
+            <h2 class="buttons__items_item_title">
+            Узнавайте больше
+            </h2>
+            <p>о возможностях полиса ОМС чтобы получать максимум пользы для себя и своих близких.</p>
         </div>
     </a>
 </div>
