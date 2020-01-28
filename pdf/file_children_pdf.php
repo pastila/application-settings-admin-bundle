@@ -131,16 +131,16 @@ $html = '
                     Контактные данные - info@bezbahil.ru
                 </div>
           </th>
-           <th valign="baseline" style="float: right; text-align: right;">
+           <th valign="baseline" style="float: right; text-align: left;">
  <div class="header__items">
             <div class="header__items_item">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label" style="font-weight: bold;">
-                        Кому: Руководителю страховой медицинской организации
+                        Кому: <span style="font-weight: normal;">Руководителю страховой медицинской организации</span>
                     </div>
                       <br>
                     <div class="header__items_item--text">
-                        <div class="blue-text cursive" style="font-style: italic;">
+                        <div class="blue-text cursive" style="font-style: italic; font-weight: normal;">
                             ' . $name_hospital  . $name_rerion . '<br>
                             ' . $NAME_BOSS . '<br>
                             ' . $email_CMO . '<br>
@@ -154,24 +154,16 @@ $html = '
             <div class="header__items_item">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label">
-                        <span style="font-weight: bold;">От:</span> <span style="font-style: italic;">
+                        <span style="font-weight: bold;">От:</span> <span style="font-style: italic; font-weight: normal; font-weight: normal;">
                          ' . $full_name_user . ', ' . $PERSONAL_BIRTHDAT . '</span>
                     </div>
                 </div>
                   <br>
             </div>
-             
-        </div>
-            
-           </th>
-        </tr>
-      </thead>
-</table>
-<div style="text-align: right; float: right;">
-  <div class="header__items_item">
+            <div class="header__items_item">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label">
-                        <span style="font-weight: bold;">Номер полиса:</span> <span style="font-style: italic;">
+                        <span style="font-weight: bold;">Номер полиса:</span> <span style="font-style: italic; font-weight: normal;">
                          ' . $person_INSURANCE_POLICY . '</span>
                     </div>
                 </div>
@@ -182,7 +174,7 @@ $html = '
                     <div class="header__items_item--label" >
                         <span style="font-weight: bold;">Адрес электронной почты:</span>
                     </div>
-                    <div class="header__items_item--text blue-text cursive" style=" font-style: italic;">
+                    <div class="header__items_item--text blue-text cursive" style=" font-style: italic; font-weight: normal;">
                         '. $person_EMAIL .'
                     </div>
                 </div>
@@ -192,7 +184,7 @@ $html = '
             <div class="header__items_item">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label" >
-                        <span style="font-weight: bold;">Телефон:</span> <span style="font-style: italic;">
+                        <span style="font-weight: bold;">Телефон:</span> <span style="font-style: italic; font-weight: normal;">
                          ' . $person_PERSONAL_PHONE . '</span>
                     </div>
                 </div>
@@ -211,7 +203,7 @@ $html = '
                        Сведения о лице, получившем медицинскую помощь:</span>
                     </div>
                     </div>
-                      <div class="header__items_item--text blue-text cursive" style=" font-style: italic;">
+                      <div class="header__items_item--text blue-text cursive" style=" font-style: italic; font-weight: normal;">
                         ' . $SURNAME . '
                         ' . $NAME . '
                         ' . $PARTONYMIC . ',
@@ -223,14 +215,19 @@ $html = '
             <div class="header__items_item">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label">
-                        <span style="font-weight: bold;">Полис:</span> <span style="font-style: italic;">
+                        <span style="font-weight: bold;">Полис:</span> <span style="font-style: italic; font-weight: normal;">
                          ' . $polic . '</span>
                     </div>   
                 </div>
             </div>
+        </div>
+            
+           </th>
+        </tr>
+      </thead>
+</table>
 </div>
-   
-    </div>
+
 ​   <div>
         <p style="text-align: center; margin-bottom: 5px; font-size: 15px; font-weight: bold;">ПРЕТЕНЗИЯ</p>
     <p>

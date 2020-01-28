@@ -106,17 +106,17 @@ $html ='
                     Контактные данные - info@bezbahil.ru
                 </div>
           </th>
-           <th valign="baseline" style="float: right; text-align: right;">
+           <th valign="baseline" style="float: right; text-align: left;">
                 <div class="header__items">
             <div class="header__items_item">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label" style="font-weight: bold;">
-                        Кому: Руководителю страховой медицинской организации
+                        Кому: <span style="font-weight: normal;">Руководителю страховой медицинской организации</span>
                     </div>
                     <br>
                     <div class="header__items_item--text">
                       
-                        <div class="blue-text cursive" style="font-style: italic;">
+                        <div class="blue-text cursive" style="font-style: italic; font-weight: normal;">
                             '.$name_company . $name_rerion .'<br>
                             '.$boss_compani.'<br>
                             '.$mail_compani.' <br>
@@ -131,25 +131,17 @@ $html ='
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label">
                         <span style="font-weight: bold;">От: </span> 
-                        <span class="header__items_item--text blue-text cursive" style="font-style: italic;">
+                        <span class="header__items_item--text blue-text cursive" style="font-style: italic; font-weight: normal;">
                         '.$full_name_user.'</span>
                     </div>
                       <br>
                 </div>
             </div>
-            
-        </div>
-           </th>
-        </tr>
-      </thead>
-</table>
-<div style="text-align: right; float: right;">
-
- <div class="header__items_item">
+             <div class="header__items_item">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label">
                         <span style="font-weight: bold;">Номер полиса:</span> 
-                         <span class="header__items_item--text red-text cursive" style="font-style: italic;">
+                         <span class="header__items_item--text red-text cursive" style="font-style: italic; font-weight: normal;">
                         '. $number_polic_POST .'
                     </span>
                     </div>
@@ -161,7 +153,7 @@ $html ='
                     <div class="header__items_item--label" >
                         <span style="font-weight: bold;">Адрес электронной почты:</span>
                     </div>
-                    <div class="header__items_item--text blue-text cursive" style=" font-style: italic;">
+                    <div class="header__items_item--text blue-text cursive" style=" font-style: italic; font-weight: normal;">
                         '. $email .'
                     </div>
                       <br>
@@ -171,13 +163,19 @@ $html ='
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label" >
                         <span style="font-weight: bold;">Телефон:</span>  <span class="header__items_item--text
-                         blue-text cursive" style=" font-style: italic;">'. $mobail_number .'</span>
+                         blue-text cursive" style=" font-style: italic; font-weight: normal;">'. $mobail_number .'</span>
                     </div>
                 </div>
             </div>
-</div>
+        </div>
+        
+           </th>
+        </tr>
+      </thead>
+</table>
 
- 
+
+
         
     </div>
 ​   <div>
