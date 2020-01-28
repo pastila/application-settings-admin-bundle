@@ -30,6 +30,7 @@ $url = $APPLICATION->GetCurDir();
     <?php
     $asset->addCss(SITE_TEMPLATE_PATH . "/styles/main.min.css");
     $asset->addJs(SITE_TEMPLATE_PATH . "/js/main.min.js");
+
     CModule::IncludeModule("iblock");
     ?>
 

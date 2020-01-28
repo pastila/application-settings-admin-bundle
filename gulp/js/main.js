@@ -56,7 +56,7 @@ $(document).ready(function() {
     console.log(date1);
     $('.datepicker-here').datepicker({
       // Можно выбрать тольо даты, идущие за сегодняшним днем, включая сегодня
-      // minDate: new Date(),
+       minDate: "1995-12-17T03:24:00",
       maxDate: new Date(),
     });
     $('#datepickers-container').css({'z-index': '9999'});
