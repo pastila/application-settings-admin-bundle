@@ -69,7 +69,7 @@ CModule::IncludeModule("iblock");
     <!-- Item -->
     <a href="/news/" class="buttons__items_item">
         <div class="buttons__items_item_image-block">
-            <img class="buttons__items_item_img" src="./local/templates/kdteam/images/png/read_strah.png" alt="">
+            <img class="buttons__items_item_img" src="./local/templates/kdteam/images/pages/home/blog.svg" alt="">
         </div>
 
         <div class="buttons__items_item_title-block">
