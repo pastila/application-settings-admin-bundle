@@ -34,14 +34,21 @@ while ($ob = $res->GetNextElement()) {
 <?php
 if (count($arResult["ITEMS"]) > 0) {
     foreach ($arResult["ITEMS"] as $arItem) {
+
         $date = explode(" ", $arItem['TIMESTAMP_X']);
         $hospital = htmlspecialchars_decode($arItem["PROPERTIES"]["HOSPITAL"]["VALUE"]);
 
         ?>
+
         <!-- Обращение -->
         <div id="appeal_<?= $arItem["ID"] ?>" class="obrashcheniya">
             <div id="card_<?= $arItem["ID"] ?>" class="card">
+
+
                 <p id="error_<?= $arItem["ID"] ?>" class="semi-bold error mb-2"></p>
+                <?php if($arItem["PROPERTIES"]["VISIT_DATE"]["VALUE"] == ""){ ?>
+                    <p id="error_<?= $arItem["ID"] ?>" class="semi-bold error mb-2 start_<?= $arItem["ID"] ?>">Введите дату оплаты</p>
+<?php } ?>
                 <p id="success_<?= $arItem["ID"] ?>" class="semi-bold success mb-2"></p>
                 <p class="semi-bold obrashcheniya__content_left_center_item_text-full hidden with_out_pdf error mb-2">Без  сформированного документа PDF нельзя отрпавить обращение</p>
 
@@ -68,8 +75,10 @@ if (count($arResult["ITEMS"]) > 0) {
                                 <a title="Редактировать обращение" class="obrashcheniya__content_left_top_link__icon" onclick="edit(this)" id="edit_<?= $arItem["ID"] ?>"><img
                                             src="<?=SITE_TEMPLATE_PATH?>/images/svg/edit.svg" alt=""></a>
                                 <a title="Сохранить обращение" class="obrashcheniya__content_left_top_link__icon" style="display: none" onclick="save(this)"
-                                   id="save_<?= $arItem["ID"] ?>"><img
-                                            src="<?=SITE_TEMPLATE_PATH?>/images/svg/save.svg" alt=""></a>
+                                   id="save_<?= $arItem["ID"] ?>">
+                                    <img src="<?=SITE_TEMPLATE_PATH?>/images/svg/save.svg" alt="">
+<!--                                    <img src="/images/gif/loading.gif"  style="display: none" alt="" id="gif_save_--><?//= $arItem['ID'] ?><!--">-->
+                                </a>
                                 <a title="Удалить обращение" class="obrashcheniya__content_left_top_link__icon" onclick="delete_el(this)" id="delete_el_<?= $arItem["ID"] ?>"><img
                                             src="<?=SITE_TEMPLATE_PATH?>/images/svg/remove_file.svg" alt=""></a>
                             </div>
@@ -154,12 +163,24 @@ if (count($arResult["ITEMS"]) > 0) {
                                 <p id="time_<?= $arItem['ID'] ?>"
                                    class="obrashcheniya__content_left_center__item_text-full">
                                     <?php echo $arItem["PROPERTIES"]["VISIT_DATE"]["VALUE"] ?></p>
-                                <div class="input__wrap no_margin input__wrap_width">
+                                <div class="input__wrap no_margin input__wrap_width ">
                                 <input style="display: none" class="datepicker-here"
                                        type="text"
                                        name="time"
-                                       value="<?= $arItem["PROPERTIES"]["VISIT_DATE"]["VALUE"] ?>">
+                                       value="<?= $arItem["PROPERTIES"]["VISIT_DATE"]["VALUE"] ?>"
+                                        id="date_picker_<?= $arItem['ID'] ?>">
+
                                 </div>
+
+                                <div class="" data-id-date_picker_edit="<?= $arItem['ID'] ?>" onclick="edit_date(this)">
+                                    <img src="<?= SITE_TEMPLATE_PATH ?>/images/svg/edit.svg" alt="" id="svg_edit_<?= $arItem['ID'] ?>" width="30px" height="30px">
+                                </div>
+
+                                <div class="" data-id-date_picker_save="<?= $arItem['ID'] ?>" onclick="save_date(this)" style="display: none">
+                                    <img src="<?= SITE_TEMPLATE_PATH ?>/images/svg/save.svg" alt=""   id="svg_save_<?= $arItem['ID'] ?>" width="30px" height="30px">
+                                    <img src="/images/gif/loading.gif"  style="display: none" alt="" id="gif_<?= $arItem['ID'] ?>">
+                                </div>
+
                             </div>
                         </div>
                     </div>

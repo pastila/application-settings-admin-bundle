@@ -3,7 +3,8 @@
 use Bitrix\Main\Page\Asset;
 $asset = Asset::getInstance();
 $asset->addCss(SITE_TEMPLATE_PATH . "/pages/obrashcheniya/main.min.css");
-$asset->addJs(SITE_TEMPLATE_PATH . "/pages/obrashcheniya/main.min.js");
+$asset->addJs("/gulp/pages/obrashcheniya/main.js");
+//$asset->addJs(SITE_TEMPLATE_PATH . "/pages/obrashcheniya/main.min.js");
 ?>
 <?php
 global $USER;

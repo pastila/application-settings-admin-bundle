@@ -113,42 +113,59 @@ $(document).ready(function() {
     }
   });
   // ------ choose_class ------
+
   $(document).on('click', '.children_input', function() {
     let idItem = $(this).attr('data-value');
-    search(idItem);
-    $('#searchul_'+idItem).css('display', 'block');
+
+      search(idItem);
+
+    $('#searchul_' + idItem).css('display', 'block');
   });
+
+
+
+
+
+
   function search(idItem) {
     $(document).on('click', '#searchul_'+idItem+' li', function() {
-      $('#children_input_'+idItem).val($(this).text());
-      $('#children_input_'+idItem).attr('data-id_child', $(this).attr('value'));
-      $('#searchul_'+idItem).fadeOut();
-      $.post('/ajax/obrasheniya/selected_child.php', {ID: $(this).attr('value')}, function(result) {
-        $('#selected-child_'+idItem).html(result);
-        // $.ajax({
-        //   url: '/pdf/file_children_pdf.php',
-        //   data: {
-        //     id: $('#children_input_'+idItem).attr('data-id_child'),
-        //     oplata: $('#time_' + idItem).text(),
-        //     id_obr: idItem
-        //   },
-        //   type: 'post',
-        //   success: function(result) {
-        //     console.log('success');
-        //     $('[data-obrashenie-id=' + idItem + ']').
-        //         find(".pdf").
-        //         attr("href", result);
-        //     $('[data-obrashenie-id=' + idItem + ']').
-        //         find(".pdf").
-        //         removeClass("error");
-        //     $('[data-obrashenie-id=' + idItem + ']').
-        //         find(".pdf").
-        //         text("Просмотреть");
-        //     $(".ready_pdf").removeClass("hidden");
-        //     $(".with_out_pdf").addClass("hidden");
-        //   }
-        // });
-      }, 'html');
+
+        $('#children_input_' + idItem).val($(this).text());
+        $('#children_input_' + idItem).
+            attr('data-id_child', $(this).attr('value'));
+        $('#searchul_' + idItem).fadeOut();
+
+
+
+      if($("#time_"+idItem).text().search(".20") !== -1) {
+        $.post('/ajax/obrasheniya/selected_child.php',
+            {ID: $(this).attr('value')}, function(result) {
+              $('#selected-child_' + idItem).html(result);
+              $.ajax({
+                url: '/pdf/file_children_pdf.php',
+                data: {
+                  id: $('#children_input_' + idItem).attr('data-id_child'),
+                  oplata: $('#time_' + idItem).text(),
+                  id_obr: idItem
+                },
+                type: 'post',
+                success: function(result) {
+                  console.log('success');
+                  $('[data-obrashenie-id=' + idItem + ']').
+                      find(".pdf").
+                      attr("href", result);
+                  $('[data-obrashenie-id=' + idItem + ']').
+                      find(".pdf").
+                      removeClass("error");
+                  $('[data-obrashenie-id=' + idItem + ']').
+                      find(".pdf").
+                      text("Просмотреть");
+                  $(".ready_pdf").removeClass("hidden");
+                  $(".with_out_pdf").addClass("hidden");
+                }
+              });
+            }, 'html');
+      }
     });
     $(document).mouseup(function(e) {
       let container = $('#class_input_'+idItem);
@@ -205,7 +222,8 @@ function delete_el(el) {
 function edit(ed) {
   let element = $(ed)[0].id.split('_');
   let cur_el = $('#appeal_' + element[1]);
-  console.log(cur_el);
+
+  $("[data-id-date_picker_edit="+element[1]+"]").removeAttr("onclick");
   let usrname = $("input[name='usrname']");
   let policy = $("input[name='policy']");
   let time = $("input[name='time']");
@@ -228,8 +246,10 @@ function edit(ed) {
   time_p.css('display', 'none');
 }
 function save(sv) {
+console.log(sv);
 
   let element = $(sv)[0].id.split('_');
+  console.log(element);
   let cur_el = $('#appeal_' + element[1]);
   let usrname = $("input[name='usrname']");
   let policy = $("input[name='policy']");
@@ -242,7 +262,6 @@ function save(sv) {
 
   let regExp = /^[А-ЯЁ][а-яё]*([-][А-ЯЁ][а-яё]*)?\s[А-ЯЁ][а-яё]*\s[А-ЯЁ][а-яё]*$/;
   let regExp2 = /^(\d+)[.](\d+)[.](\d+)/;
-console.log(cur_el.find(usrname).val());
 if(cur_el.find(policy).val().length === 16) {
   if (cur_el.find(time).val() !== "" || regExp2.test(cur_el.find(time).val())) {
     if (cur_el.find(usrname).val() !== "" && regExp.test(cur_el.find(usrname).val())) {
@@ -256,7 +275,10 @@ if(cur_el.find(policy).val().length === 16) {
             TIME: cur_el.find(time).val()
           },
           type: 'post',
-          success: function(result) {
+          beforeSend: function() {
+          // $("#gif_save_"+element[1]).css({"display":"block"})
+          },
+         success: function(result) {
             if (result === 'false') {
               $('#success_' + element[1]).html('');
               $('#error_' + element[1]).html('Заполните дату оплаты услуг');
@@ -269,9 +291,11 @@ if(cur_el.find(policy).val().length === 16) {
                 },
                 type: 'post',
                 success: function(result) {
+                  $("[data-id-date_picker_edit="+element[1]+"]").attr("onclick","edit_date(this)");
                   console.log(result)
                 }
               });
+
               $('#save_' + element[1]).css('display', 'none');
 
               cur_el.find(usrname).css('display', 'none');
@@ -326,6 +350,7 @@ if(cur_el.find(policy).val().length === 16) {
                           text("Просмотреть");
                       $(".ready_pdf").removeClass("hidden");
                       $(".with_out_pdf").addClass("hidden");
+                      // $("#gif_save_"+element[1]).css({"display":"none"})
                     }
                   });
                 }
@@ -356,8 +381,12 @@ if(cur_el.find(policy).val().length === 16) {
                   "number_polic": cur_el.find(policy).val(),
                 },
                 type: 'post',
+                beforeSend: function() {
+                  // $("#gif_save_"+element[1]).css({"display":"block"})
+                },
                 success: function(result) {
                   console.log(result)
+                  $("[data-id-date_picker_edit="+element[1]+"]").attr("onclick","edit_date(this)");
                 }
               });
               $('#save_' + element[1]).css('display', 'none');
@@ -417,7 +446,7 @@ if(cur_el.find(policy).val().length === 16) {
                     $(".with_out_pdf").addClass("hidden")
                   },
                 }).done(function(msg) {
-
+                  // $("#gif_save_"+element[1]).css({"display":"none"})
                 });
 
               }
@@ -625,6 +654,250 @@ function commutator(ajax, id) {
       }
   }
 }
+function edit_date(element) {
+  var _ = $(element);
+  var id = _.attr("data-id-date_picker_edit");
+  $("[data-id-date_picker_edit="+id+"]").css({"display":"none"});
+  $("[data-id-date_picker_save="+id+"]").css({"display":"block"});
+  $("#date_picker_"+id).css({"display":"block"});
+  $("#edit_"+id).removeAttr("onclick");
+  $("#time_"+id).css({"display":"none"});
+  $(".start_"+id).remove();
+}
+function save_date(sv) {
+
+  var _ = $(sv);
+  var id = _.attr("data-id-date_picker_save");
+
+
+
+
+
+
+  let usrname = $("input[name='usrname']");
+  let cur_el = $('#appeal_' + id);
+  let policy = $("input[name='policy']");
+  let time = $("input[name='time']");
+
+  let usrname_p = $('#usrname_' + id);
+  let policy_p = $('#policy_' + id);
+  let time_p = $('#time_' + id);
+  let hospitl = $('#hospitl_' + id);
+
+
+  let regExp2 = /^(\d+)[.](\d+)[.](\d+)/;
+
+    if (cur_el.find(time).val() !== "" || regExp2.test(cur_el.find(time).val())) {
+
+      if ($('#selected_sender_' + id).val() === 'child') {
+        $.ajax({
+          url: '/ajax/edit_appeal.php',
+          data: {
+            ID: id,
+            TIME: cur_el.find(time).val(),
+            CASE:"case",
+          },
+          type: 'post',
+
+          beforeSend: function() {
+            $("#gif_"+id).css({"display":"block"});
+          },
+          success: function(result) {
+            if (result === 'false') {
+              $('#success_' + id).html('');
+              $('#error_' + id).html('Заполните дату оплаты услуг');
+              $("#gif_"+id).css({"display":"none"});
+            } else {
+              // $.ajax({
+              //   url: '/pdf/file_pdf.php',
+              //   data: {
+              //     "data_user_oplata_POST": cur_el.find(time).val(),
+              //     "number_polic": cur_el.find(policy).val(),
+              //   },
+              //   type: 'post',
+              //   success: function(result) {
+              //     console.log(result)
+              //   }
+              // });
+
+
+              cur_el.find(usrname).css('display', 'none');
+              cur_el.find(policy).css('display', 'none');
+              cur_el.find(time).css('display', 'none');
+
+              usrname_p.html(cur_el.find(usrname).val());
+              policy_p.html(cur_el.find(policy).val());
+              time_p.html(cur_el.find(time).val());
+
+              $('#edit_' + id).css('display', 'inline-block');
+
+              $('#success_' + id).html(result);
+              $('#error_' + id).html('');
+
+              usrname_p.css('display', 'block');
+              policy_p.css('display', 'block');
+              time_p.css('display', 'block');
+              var time_p_str = time_p.text().replace(/\s/g, '');
+
+              var policy_str = cur_el.find(policy).val();
+              policy_str = policy_str.replace(/\s/g, '');
+
+              var usrname_str = cur_el.find(usrname).val();
+              usrname_str = usrname_str.replace(/\s/g, '');
+
+              if (time_p_str.length <= 3 || policy_str.length <= 1 ||
+                  usrname_str.length <= 3) {
+
+              } else {
+                if ($('#children_input_' + id).
+                    attr('data-id_child').length > 0) {
+                  $.ajax({
+                    url: '/pdf/file_children_pdf.php',
+                    data: {
+                      id: $('#children_input_' + id).
+                          attr('data-id_child'),
+                      oplata: $('#time_' + id).text(),
+                      id_obr: id
+                    },
+                    type: 'post',
+                    success: function(result) {
+                      console.log('success');
+                      $('[data-obrashenie-id=' + id + ']').
+                          find(".pdf").
+                          attr("href", result);
+                      $('[data-obrashenie-id=' + id + ']').
+                          find(".pdf").
+                          removeClass("error");
+                      $('[data-obrashenie-id=' + id + ']').
+                          find(".pdf").
+                          text("Просмотреть");
+                      $(".ready_pdf").removeClass("hidden");
+                      $(".with_out_pdf").addClass("hidden");
+                      $("#gif_"+id).css({"display":"none"});
+                      $("[data-id-date_picker_save="+id+"]").css({"display":"none"});
+                      $("[data-id-date_picker_edit="+id+"]").css({"display":"block"});
+
+                      $("#date_picker_"+id).css({"display":"none"});
+                      $("#edit_"+id).attr("onclick","edit(this)");
+
+                    }
+                  });
+                }
+              }
+            }
+
+          }
+        });
+      } else if ($('#selected_sender_' + id).val() === 'my') {
+        $.ajax({
+          url: '/ajax/edit_appeal.php',
+          data: {
+            ID: id,
+            CASE:"case",
+            TIME: cur_el.find(time).val()
+          },
+          type: 'post',
+          beforeSend: function() {
+          $("#gif_"+id).css({"display":"block"});
+          },
+          success: function(result) {
+            if (result === 'false') {
+              $('#success_' + id).html('');
+              $('#error_' +id).html('Заполните дату оплаты услуг');
+              $("#gif_"+id).css({"display":"none"});
+            } else {
+              // $.ajax({
+              //   url: '/pdf/file_pdf.php',
+              //   data: {
+              //     "data_user_oplata_POST": cur_el.find(time).val(),
+              //     "number_polic": cur_el.find(policy).val(),
+              //   },
+              //   type: 'post',
+              //   success: function(result) {
+              //     console.log(result)
+              //
+              //   }
+              // });
+
+
+              cur_el.find(usrname).css('display', 'none');
+              cur_el.find(policy).css('display', 'none');
+              cur_el.find(time).css('display', 'none');
+
+              usrname_p.html(cur_el.find(usrname).val());
+              policy_p.html(cur_el.find(policy).val());
+              time_p.html(cur_el.find(time).val());
+
+              $('#edit_' + id).css('display', 'inline-block');
+
+              $('#success_' + id).html(result);
+              $('#error_' + id).html('');
+
+              usrname_p.css('display', 'block');
+              policy_p.css('display', 'block');
+              time_p.css('display', 'block');
+              var time_p_str = time_p.text().replace(/\s/g, '');
+
+              var policy_str = cur_el.find(policy).val();
+              policy_str = policy_str.replace(/\s/g, '');
+
+              var usrname_str = cur_el.find(usrname).val();
+              usrname_str = usrname_str.replace(/\s/g, '');
+
+              if (time_p_str.length <= 3 || policy_str.length <= 1 ||
+                  usrname_str.length <= 3) {
+
+              } else {
+                let data = {
+                  "number_polic": cur_el.find(policy).val(),
+                  "data_user_oplata_POST": time_p.text(),
+                  "data_checkout": "1",
+                  "usrname": cur_el.find(usrname).val(),
+                  "id": id,
+                  "hospitl": cur_el.find(hospitl).text(),
+                };
+                $.ajax({
+                  url: '/pdf/file_pdf.php',
+                  type: 'POST',
+                  data: data,
+                  success: function(msg) {
+
+                    $('[data-obrashenie-id=' + id + ']').
+                        find(".pdf").
+                        attr("href", msg);
+                    $('[data-obrashenie-id=' + id + ']').
+                        find(".pdf").
+                        removeClass("error");
+                    $('[data-obrashenie-id=' + id + ']').
+                        find(".pdf").
+                        text("Просмотреть");
+                    $(".ready_pdf").removeClass("hidden");
+                    $(".with_out_pdf").addClass("hidden")
+                  },
+                }).done(function(msg) {
+                  $("#gif_"+id).css({"display":"none"});
+                  $("[data-id-date_picker_save="+id+"]").css({"display":"none"});
+                  $("[data-id-date_picker_edit="+id+"]").css({"display":"block"});
+
+                  $("#date_picker_"+id).css({"display":"none"});
+                  $("#edit_"+id).attr("onclick","edit(this)");
+
+                });
+
+              }
+            }
+
+          }
+        });
+      }
+
+  } else {
+    $('#success_' + id).html('');
+    $('#error_' + id).html('Введите корректно дату');
+  }
+
+}
+
 
 
 
