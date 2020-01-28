@@ -45,23 +45,20 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            &:nth-child(even) {
-                flex-direction: row-reverse;
-            }
 
             &_image-block {
                 display: flex;
-                width: 35rem;
+                width: 50rem;
                 height: 35rem;
                 img {
                     margin: 0 auto;
                     max-height: 100%;
+                    object-fit: contain;
                 }
             }
 
             &_title-block {
-                width: 45%;
-                margin-left: 10rem;
+                width: 50rem;
             }
 
             &_title {
@@ -78,7 +75,36 @@
 // Home Desktop Small
 
 @media screen and (max-width: 440px) {
-    //
+    .slider {
+    
+        &__l {
+            padding-top: 0;
+            margin-bottom: 5rem;
+        }
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .buttons {
+        &__items {
+            padding-top: 0;
+
+            &_item {
+                flex-direction: column;
+
+                &_image-block {
+                    width: 20rem;
+                    height: auto;
+                    margin: 0 auto;
+                }
+    
+                &_title-block {
+                    width: 100%;
+                    height: auto;
+                }
+            }
+        }
+    }
 }
 
 @media screen and (max-width: 992px) {
@@ -87,6 +113,39 @@
         &__l {
             width: 100%;
             padding-top: 4rem;
+            text-align: center;
+        }
+    }
+
+    .buttons {
+        &__items {
+            &_item {
+                margin-bottom: 5rem;
+                flex-direction: column;
+
+                &_image-block {
+                    width: auto;
+                    max-width: 20rem;
+                    height: auto;
+                    margin: 0 auto;
+                }
+
+                &_title-block {
+                    text-align: center;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width:992px) {
+    .buttons {
+        &__items {
+            &_item {
+                &:nth-child(even) {
+                    flex-direction: row-reverse;
+                }
+            }
         }
     }
 }

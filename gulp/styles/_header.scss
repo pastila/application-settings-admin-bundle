@@ -18,7 +18,13 @@
         margin: 0 auto;
         width: 100%;
         @media screen and (min-width: 992px){
-            max-width: 1170px;
+            max-width: 80vw;
+        }
+        @media screen and (min-width: 1200px){
+            max-width: 70vw;
+        }
+        @media screen and (min-width: 1440px){
+            max-width: 60vw;
         }
     }
 
@@ -78,10 +84,7 @@
             }
 
             &_login {
-                margin-right: 9rem;
-                @media screen and (max-width: 768px){
-                    margin-right: 3rem;
-                }
+                margin-right: 3rem;
             }
 
             &_user {
@@ -337,6 +340,26 @@
             border: none;
             option{
                 background-color: #fff;
+            }
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .header {
+        padding: 1rem;
+
+        &__r {
+            &_auth {
+                &_login_img {
+                    width: 3rem;
+                    height: 3rem;
+                }
+
+                &_reg_img {
+                    width: 3rem;
+                    height: 3rem;
+                }
             }
         }
     }
