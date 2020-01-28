@@ -1,7 +1,7 @@
 //= ../../node_modules/jquery/dist/jquery.min.js
 
 //= ../../node_modules/magnific-popup/dist/jquery.magnific-popup.min.js
-
+//= ../../node_modules/air-datepicker/dist/js/datepicker.min.js
 $(document).ready(function() {
   $('.add-user__js').click(function (){
     $(this).addClass('current');
@@ -11,6 +11,17 @@ $(document).ready(function() {
     $(this).addClass('current');
     $(this).prev().removeClass('current');
   });
+ var arr_date_picker =   $("[class *=datepicker-here_obrashcheniya]");
+  arr_date_picker.each(function() {
+   var min_year =$(this).attr("data-date");
+
+
+   $(this).datepicker({
+     minDate: new Date(min_year+".01.01"),
+     maxDate: new Date(min_year+".12.31"),
+   });
+  });
+
 
   function addChild() {
     const items = document.querySelectorAll('.obrashcheniya__content');

@@ -51,13 +51,9 @@ $(document).ready(function() {
 
     $('#phone').mask('+7(000)000-00-00');
 
-    console.log(new Date());
-    const date1 = new Date('December 17, 1995 03:24:00');
-    console.log(date1);
+
     $('.datepicker-here').datepicker({
-      // Можно выбрать тольо даты, идущие за сегодняшним днем, включая сегодня
-       minDate: "1995-12-17T03:24:00",
-      maxDate: new Date(),
+
     });
     $('#datepickers-container').css({'z-index': '9999'});
 

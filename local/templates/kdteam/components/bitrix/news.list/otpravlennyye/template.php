@@ -47,7 +47,7 @@ if (count($arResult["ITEMS"]) > 0) {
 
                 <p id="error_<?= $arItem["ID"] ?>" class="semi-bold error mb-2"></p>
                 <?php if($arItem["PROPERTIES"]["VISIT_DATE"]["VALUE"] == ""){ ?>
-                    <p id="error_<?= $arItem["ID"] ?>" class="semi-bold error mb-2 start_<?= $arItem["ID"] ?>">Введите дату оплаты</p>
+                    <p id="error_<?= $arItem["ID"] ?>" class="semi-bold error mb-2 datepicker-here<?= $arItem["ID"] ?>">Введите дату оплаты</p>
 <?php } ?>
                 <p id="success_<?= $arItem["ID"] ?>" class="semi-bold success mb-2"></p>
                 <p class="semi-bold obrashcheniya__content_left_center_item_text-full hidden with_out_pdf error mb-2">Без  сформированного документа PDF нельзя отрпавить обращение</p>
@@ -163,8 +163,23 @@ if (count($arResult["ITEMS"]) > 0) {
                                 <p id="time_<?= $arItem['ID'] ?>"
                                    class="obrashcheniya__content_left_center__item_text-full">
                                     <?php echo $arItem["PROPERTIES"]["VISIT_DATE"]["VALUE"] ?></p>
+
                                 <div class="input__wrap no_margin input__wrap_width ">
-                                <input style="display: none" class="datepicker-here"
+
+                                    <?php
+                                    $year  ="";
+                                    $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_*");
+                                    $arFilter = Array("IBLOCK_ID"=>17, "ACTIVE"=>"Y",  "ID"=> $arItem["PROPERTIES"]["YEARS"]["VALUE"][0]);
+                                    $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+                                    while($ob = $res->GetNextElement()){
+                                        $arProps = $ob->GetFields();
+                                     $year = $arProps["NAME"];
+                                    }
+
+
+                                    ?>
+                                <input style="display: none" class="datepicker-here_obrashcheniya_<?=$arItem['ID'] ?>"
+                                       data-date="<?= $year; ?>"
                                        type="text"
                                        name="time"
                                        value="<?= $arItem["PROPERTIES"]["VISIT_DATE"]["VALUE"] ?>"
