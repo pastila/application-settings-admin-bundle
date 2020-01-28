@@ -13,6 +13,49 @@ CModule::AddAutoloadClasses(
 AddEventHandler("iblock", "OnAfterIBlockElementUpdate", "IBlockElementAfterSaveHandler");
 
 AddEventHandler("iblock", "OnBeforeIBlockElementDelete", "OnBeforeIBlockElementDeleteHandler");
+AddEventHandler("iblock", "OnBeforeIBlockElementAdd", "OnBeforeIBlockElementAddHandler");
+
+
+
+    function OnBeforeIBlockElementAddHandler(&$arFields)
+    {
+
+        if($arFields["IBLOCK_ID"] == "24"){
+
+
+foreach ($arFields["PROPERTY_VALUES"]['145'] as $key => $region_id){
+
+            $arFields_add = array(
+                "ACTIVE" => "Y",
+                "IBLOCK_ID" => 16,
+                "IBLOCK_SECTION_ID" => $region_id["VALUE"],
+                "NAME" => $arFields["NAME"],
+
+                "PROPERTY_VALUES" => array(
+//                    "NAME_BOSS" => $arFields["PROPERTY_VALUES"]['140']["n0"]["VALUE"],
+//                    "MOBILE_NUMBER" => $arFields["PROPERTY_VALUES"]['134']["n0"]["VALUE"],
+//                    "MOBILE_NUMBER2" => $arFields["PROPERTY_VALUES"]['142']["n0"]["VALUE"],
+//                    "MOBILE_NUMBER3" => $arFields["PROPERTY_VALUES"]['143']["n0"]["VALUE"],
+//                    "EMAIL_FIRST" => $arFields["PROPERTY_VALUES"]['135']["n0"]["VALUE"],
+//                    "EMAIL_SECOND" => $arFields["PROPERTY_VALUES"]['136']["n0"]["VALUE"],
+//                    "EMAIL_THIRD" => $arFields["PROPERTY_VALUES"]['137']["n0"]["VALUE"],
+                    "KPP" => $arFields["PROPERTY_VALUES"]['144']["n0"]["VALUE"],
+                    "LOGO_IMG" => $arFields["PROPERTY_VALUES"]['139']["n0"]["VALUE"],
+
+                )
+            );
+            $oElement = new CIBlockElement();
+            $idElement = $oElement->Add($arFields_add, false, false, true);
+            if (!$idElement) {
+                echo $oElement->LAST_ERROR;
+            }
+
+
+
+            }
+
+        }
+}
 
 
 
@@ -40,6 +83,7 @@ AddEventHandler("iblock", "OnBeforeIBlockElementDelete", "OnBeforeIBlockElementD
                 "PROPERTY_REJECTED" => false,
                 "!ID" => $arFields,
                 "!PROPERTY_EVALUATION"=> 0,
+                "ACTIVE"=> "Y"
             );
             $res_otzev = CIBlockElement::GetList(Array(), $arFilter_otzev, false, false, $arSelect_otzev);
             $total = 0;
@@ -57,7 +101,7 @@ AddEventHandler("iblock", "OnBeforeIBlockElementDelete", "OnBeforeIBlockElementD
                 CIBlockElement::SetPropertyValuesEx($id_company, 16, $star_clear);
 
                 $arSelect = Array("ID", "IBLOCK_ID", "NAME","PROPERTY_AMOUNT_STAR");
-                $arFilter = Array("IBLOCK_ID"=>16, "PROPERTY_KPP"=> $kpp,"!PROPERTY_AMOUNT_STAR"=> false);
+                $arFilter = Array("IBLOCK_ID"=>16,"ACTIVE"=> "Y", "PROPERTY_KPP"=> $kpp,"!PROPERTY_AMOUNT_STAR"=> false);
                 $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
                 $count_company_with_this_kpp =  $res->SelectedRowsCount();
                 $total_star = 0;
@@ -97,7 +141,7 @@ AddEventHandler("iblock", "OnBeforeIBlockElementDelete", "OnBeforeIBlockElementD
                CIBlockElement::SetPropertyValuesEx($id_company, 16, $star_clear);
 
                 $arSelect = Array("ID", "IBLOCK_ID", "NAME","PROPERTY_AMOUNT_STAR");
-                $arFilter = Array("IBLOCK_ID"=>16, "PROPERTY_KPP"=> $kpp,"!PROPERTY_AMOUNT_STAR"=> false);
+                $arFilter = Array("IBLOCK_ID"=>16,"ACTIVE"=> "Y", "PROPERTY_KPP"=> $kpp,"!PROPERTY_AMOUNT_STAR"=> false);
                 $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
                 $count_company_with_this_kpp =  $res->SelectedRowsCount();
                 $total_star = 0;
@@ -133,6 +177,7 @@ function IBlockElementAfterSaveHandler($arg1, $arg2 = false, $bInternal = false)
         $arFilter = Array(
             "IBLOCK_ID" => 13,
             "ID" => $arg1["ID"],
+            "ACTIVE"=> "Y",
         );
         $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
         if ($ob = $res->GetNextElement()) {
@@ -148,6 +193,7 @@ function IBlockElementAfterSaveHandler($arg1, $arg2 = false, $bInternal = false)
                     "!PROPERTY_VERIFIED" => false,
                     "PROPERTY_REJECTED" => false,
                     "!PROPERTY_EVALUATION"=> 0,
+                    "ACTIVE"=> "Y",
                 );
                 $res_otzev = CIBlockElement::GetList(Array(), $arFilter_otzev, false, false, $arSelect_otzev);
                 $total = 0;
@@ -174,7 +220,7 @@ function IBlockElementAfterSaveHandler($arg1, $arg2 = false, $bInternal = false)
 
 
                 $arSelect = Array("ID", "IBLOCK_ID", "NAME","PROPERTY_AMOUNT_STAR");
-                $arFilter = Array("IBLOCK_ID"=>16, "PROPERTY_KPP"=> $arProps["KPP"]["VALUE"],"!PROPERTY_AMOUNT_STAR"=> false);
+                $arFilter = Array("IBLOCK_ID"=>16, "ACTIVE"=> "Y", "PROPERTY_KPP"=> $arProps["KPP"]["VALUE"],"!PROPERTY_AMOUNT_STAR"=> false);
                 $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
                 $count_company_with_this_kpp =  $res->SelectedRowsCount();
                 $total_star = 0;
@@ -201,6 +247,84 @@ function IBlockElementAfterSaveHandler($arg1, $arg2 = false, $bInternal = false)
         }
 
 
+    }
+
+    if ($arg1['IBLOCK_ID'] == 24) {
+        $arSelect = Array("ID", "IBLOCK_ID","ACTIVE","CODE", "NAME", "PROPERTY_*");
+        $arFilter = Array(
+            "IBLOCK_ID" => 24,
+            "ID" => $arg1["ID"],
+
+        );
+        $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+        if ($ob = $res->GetNextElement()) {
+            $arProps = $ob->GetProperties();
+            $arFields = $ob->GetFields();
+           $file =    CFile::MakeFileArray($arProps["LOGO_IMG"]['VALUE']);
+            $arField = array(
+//                    "NAME_BOSS" => $arProps["NAME_BOSS"]['VALUE'],
+//                    "MOBILE_NUMBER" => $arProps["MOBILE_NUMBER"]['VALUE'],
+//                    "MOBILE_NUMBER2" => $arProps["MOBILE_NUMBER2"]['VALUE'],
+//                    "MOBILE_NUMBER3" => $arProps["MOBILE_NUMBER3"]['VALUE'],
+//                    "EMAIL_FIRST" => $arProps["EMAIL_FIRST"]['VALUE'],
+//                    "EMAIL_SECOND" => $arProps["EMAIL_SECOND"]['VALUE'],
+//                    "EMAIL_THIRD" => $arProps["EMAIL_THIRD"]['VALUE'],
+                    "KPP" => $arProps["KPP"]['VALUE'],
+                    "LOGO_IMG" => $file,
+
+
+            );
+
+            $name =    htmlspecialchars_decode($arFields["NAME"]);
+
+            $arSelect = Array("ID", "IBLOCK_ID", "NAME");
+            $arFilter = Array("IBLOCK_ID"=>16,"PROPERTY_KPP"=> $arProps["KPP"]['VALUE'] );
+            $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+            while($ob = $res->GetNextElement()){
+                $arProperty = $ob->GetFields();
+
+            $el = new \CIBlockElement;
+            $el->Update($arProperty["ID"], ['ACTIVE' => $arFields["ACTIVE"],"NAME"=> $name]);
+            CIBlockElement::SetPropertyValuesEx($arProperty["ID"], 16, $arField);
+            }
+
+
+            foreach ($arProps["REGION"]["VALUE"] as $region_id) {
+
+
+                $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
+                $arFilter = Array("IBLOCK_ID" => 16, "SECTION_ID" => $region_id, "PROPERTY_KPP"=>$arProps["KPP"]['VALUE']);
+                $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+                if($ob = $res->SelectedRowsCount() == 0){
+                    $arFields_add = array(
+                        "ACTIVE" => "Y",
+                        "IBLOCK_ID" => 16,
+                        "IBLOCK_SECTION_ID" => $region_id,
+                        "NAME" => $name,
+                        "PROPERTY_VALUES" => array(
+//                            "NAME_BOSS" => $arProps["NAME_BOSS"]['VALUE'],
+//                            "MOBILE_NUMBER" => $arProps["MOBILE_NUMBER"]['VALUE'],
+//                            "MOBILE_NUMBER2" => $arProps["MOBILE_NUMBER2"]['VALUE'],
+//                            "MOBILE_NUMBER3" => $arProps["MOBILE_NUMBER3"]['VALUE'],
+//                            "EMAIL_FIRST" => $arProps["EMAIL_FIRST"]['VALUE'],
+//                            "EMAIL_SECOND" => $arProps["EMAIL_SECOND"]['VALUE'],
+//                            "EMAIL_THIRD" => $arProps["EMAIL_THIRD"]['VALUE'],
+                            "KPP" => $arProps["KPP"]['VALUE'],
+                            "LOGO_IMG" => $file,
+
+                        )
+                    );
+
+                    $oElement = new CIBlockElement();
+                    $idElement = $oElement->Add($arFields_add, false, false, true);
+                    if (!$idElement) {
+                        echo $oElement->LAST_ERROR;
+                    }
+                }
+
+            }
+
+        }
     }
 
 

@@ -51,7 +51,14 @@ $(document).ready(function() {
 
     $('#phone').mask('+7(000)000-00-00');
 
-    $('.datepicker-here').datepicker();
+    console.log(new Date());
+    const date1 = new Date('December 17, 1995 03:24:00');
+    console.log(date1);
+    $('.datepicker-here').datepicker({
+      // Можно выбрать тольо даты, идущие за сегодняшним днем, включая сегодня
+      // minDate: new Date(),
+      maxDate: new Date(),
+    });
     $('#datepickers-container').css({'z-index': '9999'});
 
     $(document).on('click', '#search_result li', function() {
@@ -176,7 +183,6 @@ $(document).ready(function() {
           });
           $('.hospital-empty').remove();
           if (msg == 'error_company') {
-
             if ($('.error_region').length != 0) {
               $('.error_region').remove();
               $('#search_result_hospital').
@@ -189,7 +195,6 @@ $(document).ready(function() {
               $('.hospital-empty').remove();
             }
           } else {
-            console.log('2323');
             setTimeout(function() {
               $('#search_result_hospital').append(msg);
             }, 100);

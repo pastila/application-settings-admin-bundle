@@ -58,6 +58,9 @@
 
             &_image-block {
                 width: 40%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
 
             &_title-block {
@@ -68,8 +71,8 @@
             }
 
             &_img {
-                height: 100%;
-                object-fit: cover;
+                max-width: 100%;
+                max-height: 12rem;
             }
 
             &_title {
@@ -91,13 +94,17 @@
     .buttons {
         &__items {
             &_item {
+                height: 13rem;
+                padding: 2rem 0;
                 flex-direction: column;
                 &_image-block {
-                    width: 100%;
+                    width: auto;
                     height: 10rem;
                 }
+
                 &_img {
-                    width: 100%;
+                    max-width: 100%;
+                    max-height: 8rem;
                 }
 
                 &_title-block {

@@ -17,6 +17,29 @@ if (CModule::IncludeModule("iblock")) {
         $arFields = $ob->GetFields();
         $arProps = $ob->GetProperties();
     }
+    //Проверка на дублировние
+    $hospital_name = str_replace('&amp;', '', str_replace('quot;', '"', $arFields['PROPERTY_HOSPITAL_VALUE']));
+    $hospital_adress = $arFields['PROPERTY_ADDRESS_VALUE'];
+    $res_hospital = CIBlockElement::GetList(
+        array(),
+        array('NAME' => $hospital_name, 'IBLOCK_ID' => 9),
+        false,
+        false,
+        array("ID", "IBLOCK_ID", "NAME", "PROPERTY_FULL_NAME", "PROPERTY_MEDICAL_CODE", "IBLOCK_SECTION_ID")
+    );
+    while ($ob_hospital = $res_hospital->GetNextElement()) {
+        $arFields_hospital = $ob_hospital->GetFields();
+        $res = CIBlockSection::GetByID($arFields_hospital['IBLOCK_SECTION_ID']);
+        if ($ar_res = $res->GetNext()) {
+            if ($ar_res['NAME'] == $hospital_adress) {
+                $FULL_NAME_HOSPITAL = htmlspecialchars_decode($arFields_hospital['PROPERTY_FULL_NAME_VALUE']);
+                $MEDICAL_CODE = $arFields_hospital['PROPERTY_MEDICAL_CODE_VALUE'];
+            }
+        }
+
+    }
+    //Проверка на дублировние
+
     if (!empty($arFields['PROPERTY_FULL_NAME_VALUE'])) {
         if (!empty($arFields['PROPERTY_POLICY_VALUE'])) {
             if (!empty($arFields['PROPERTY_VISIT_DATE_VALUE'])) {
@@ -40,8 +63,7 @@ if (CModule::IncludeModule("iblock")) {
                     $rsUser = CUser::GetByID($USER->GetID());
                     $arUser = $rsUser->Fetch();
 
-                    $arSel = array("ID", "IBLOCK_ID", "NAME", "PROPERTY_EMAIL_FIRST", "PROPERTY_EMAIL_SECOND",
-                        "PROPERTY_EMAIL_THIRD");
+                    $arSel = array("ID", "IBLOCK_ID", "NAME", "IBLOCK_SECTION_ID", "PROPERTY_EMAIL_FIRST","PROPERTY_EMAIL_SECOND","PROPERTY_EMAIL_THIRD", "PROPERTY_NAME_BOSS");
                     $arFil = array("IBLOCK_ID" => 16, "ID" => $arUser['UF_INSURANCE_COMPANY']);
                     $rs = CIBlockElement::GetList(array(), $arFil, false, false, $arSel);
                     if ($obs = $rs->GetNextElement()) {
@@ -101,8 +123,35 @@ if (CModule::IncludeModule("iblock")) {
                     $full_name_user = $USER->GetFullName();
 
                     $name_company = $arOMS["NAME"];// название компании
-                    $boss_company = $arOMS["NAME_BOSS"]["VALUE"];// руководитель компании
-                    $mail_company = $arOMS["EMAIL_FIRST"]["VALUE"];// имйл компании
+                    $boss_company = $arOMS["PROPERTY_NAME_BOSS_VALUE"];// руководитель компании
+
+
+
+                    if (!empty($arOMS['PROPERTY_EMAIL_FIRST_VALUE'])) {
+                        $mail_company .= $arOMS['PROPERTY_EMAIL_FIRST_VALUE'];
+                    }
+                    if (!empty($arOMS['PROPERTY_EMAIL_SECOND_VALUE'])) {
+                        $mail_company .= '<br> ' . $arOMS['PROPERTY_EMAIL_SECOND_VALUE'];
+                    }
+                    if (!empty($arOMS['PROPERTY_EMAIL_THIRD_VALUE'])) {
+                        $mail_company .= '<br> ' . $arOMS['PROPERTY_EMAIL_THIRD_VALUE'];
+                    }
+
+
+
+                    $res = CIBlockSection::GetByID($arOMS['IBLOCK_SECTION_ID']);
+
+                    if ($ar_res = $res->GetNext()) {
+
+                        $name_company .= "(" .$ar_res["NAME"] . ")";
+
+
+                    }
+
+
+
+
+
 
                     if (!empty($email)) {
                         if (!empty($_POST['CHILD'])) {
@@ -119,7 +168,7 @@ if (CModule::IncludeModule("iblock")) {
                             $ob_child = $res_child->GetNextElement();
                             $arFields_child = $ob_child->GetFields();
 
-                            $arSelect_comp = array("ID", "IBLOCK_ID", "PROPERTY_NAME_BOSS", "NAME");
+                            $arSelect_comp = array("ID", "IBLOCK_ID", "IBLOCK_SECTION_ID", "PROPERTY_NAME_BOSS", "NAME", "PROPERTY_EMAIL_FIRST","PROPERTY_EMAIL_SECOND","PROPERTY_EMAIL_THIRD");
                             $arFilter_comp = array("IBLOCK_ID" => 16, "ID" => $arFields_child["PROPERTY_COMPANY_VALUE"]);
                             $res_comp = CIBlockElement::GetList(
                                 array(),
@@ -131,27 +180,41 @@ if (CModule::IncludeModule("iblock")) {
                             $ob_comp = $res_comp->GetNextElement();
                             $arFields_comp = $ob_comp->GetFields();
 
-
-
-
-
-
-
                             $SURNAME = $arFields_child["PROPERTY_SURNAME_VALUE"];
                             $NAME = $arFields_child["NAME"];
                             $PARTONYMIC = $arFields_child["PROPERTY_PARTONYMIC_VALUE"];
                             $polic = $arFields_child["PROPERTY_POLICY_VALUE"];
                             $BIRTHDAY = $arFields_child["PROPERTY_BIRTHDAY_VALUE"];
+                            if (!empty($arFields_comp['PROPERTY_EMAIL_FIRST_VALUE'])) {
+                                $mail_cmo .= $arFields_comp['PROPERTY_EMAIL_FIRST_VALUE'];
+                            }
+                            if (!empty($arFields_comp['PROPERTY_EMAIL_SECOND_VALUE'])) {
+                                $mail_cmo .= '<br> ' . $arFields_comp['PROPERTY_EMAIL_SECOND_VALUE'];
+                            }
+                            if (!empty($arFields_comp['PROPERTY_EMAIL_THIRD_VALUE'])) {
+                                $mail_cmo .= '<br> ' . $arFields_comp['PROPERTY_EMAIL_THIRD_VALUE'];
+                            }
 
+
+
+                            $name_rerion = $arFields_comp['NAME'];
                             $full_name_child = $SURNAME . ' ' . $NAME . ' ' . $PARTONYMIC;
 
+                            $res = CIBlockSection::GetByID($arFields_comp['IBLOCK_SECTION_ID']);
+
+                            if ($ar_res = $res->GetNext()) {
+
+                                $name_rerion .= "(" .$ar_res["NAME"] . ")";
+
+
+                            }
 
                             CEvent::Send(
                                 'SEND_MESSAGE_CHILD',
                                 's1',
                                 array(
                                     'MESSAGE' => $message,
-                                    'NAME_COMPANY' => $arFields_comp['NAME'],
+                                    'NAME_COMPANY' => $name_rerion,
                                     'BOSS_COMPANY' => $arFields_comp['PROPERTY_NAME_BOSS_VALUE'],
                                     'EMAIL' => $email,
                                     'USER_MAIL' => $user_email,
@@ -164,7 +227,12 @@ if (CModule::IncludeModule("iblock")) {
                                     'HOSPITAL' => htmlspecialchars_decode($arFields['PROPERTY_HOSPITAL_VALUE']),
                                     'DATE_SEND' => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time()),
                                     'DATE_PAY' => $arFields['PROPERTY_VISIT_DATE_VALUE'],
-                                    'PERSONAL_BIRTHDAT' => $PERSONAL_BIRTHDAT
+                                    'PERSONAL_BIRTHDAT' => $PERSONAL_BIRTHDAT,
+                                    'MAIL_CMO' => $mail_cmo,
+                                    'FULL_NAME_HOSPITAL' => $FULL_NAME_HOSPITAL,
+                                    'MEDICAL_CODE' => $MEDICAL_CODE,
+                                    'HOSPITAL_ADRESS' => $hospital_adress,
+                                    'SRC_LOGO'=> $_SERVER["REQUEST_SCHEME"]."://". $_SERVER["SERVER_NAME"]."/pdf/logo_oms.png",
                                 )
                             );
                             CIBlockElement::SetPropertyValuesEx(
@@ -175,6 +243,14 @@ if (CModule::IncludeModule("iblock")) {
                             );
                             $result['success'] = 'Обращение успешно отправлено в страховую компанию.
                          Ваше обращение находится в личном кабинете «Отправленные»';
+                            CEvent::Send(
+                                'SEND_MASSEGE_AFTER_SEND_APPEAL',
+                                's1',
+                                array(
+                                    'EMAIL' => $email,
+
+                                )
+                            );
                         } else {
                             CEvent::Send(
                                 'SEND_MESSAGE',
@@ -192,6 +268,10 @@ if (CModule::IncludeModule("iblock")) {
                                     'HOSPITAL' => htmlspecialchars_decode($arFields['PROPERTY_HOSPITAL_VALUE']),
                                     'DATE_SEND' => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time()),
                                     'DATE_PAY' => $arFields['PROPERTY_VISIT_DATE_VALUE'],
+                                    'FULL_NAME_HOSPITAL' => $FULL_NAME_HOSPITAL,
+                                    'MEDICAL_CODE' => $MEDICAL_CODE,
+                                    'HOSPITAL_ADRESS' => $hospital_adress,
+                                    'SRC_LOGO'=> $_SERVER["REQUEST_SCHEME"]."://". $_SERVER["SERVER_NAME"]."/pdf/logo_oms.png",
                                 )
                             );
                             CIBlockElement::SetPropertyValuesEx(
@@ -202,6 +282,15 @@ if (CModule::IncludeModule("iblock")) {
                             );
                             $result['success'] = 'Обращение успешно отправлено в страховую компанию.
                          Ваше обращение находится в личном кабинете «Отправленные»';
+
+                            CEvent::Send(
+                                'SEND_MASSEGE_AFTER_SEND_APPEAL',
+                                's1',
+                                array(
+                                    'EMAIL' => $email,
+
+                                )
+                            );
 
                         }
                     } else {

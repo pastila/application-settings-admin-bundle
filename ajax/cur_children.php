@@ -1,4 +1,14 @@
 <?php require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
+global $USER;
+$USER->GetID();
+CModule::IncludeModule("iblock");
+$arSection = CIBlockSection::GetList(
+    array(),
+    array("NAME" => $USER->GetID()),
+    false,
+    array('ID'),
+    false
+)->GetNext();
     $APPLICATION->IncludeComponent(
         "bitrix:news.list",
         "add_child",

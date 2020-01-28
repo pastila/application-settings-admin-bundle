@@ -4,7 +4,7 @@ CModule::IncludeModule("iblock");
 
 
 $arOrder = array("name" => "ASC");
-$arFilter = array("IBLOCK_ID" => 9, "%NAME" => $_POST["name_city"]);
+$arFilter = array("IBLOCK_ID" => 16, "%NAME" => $_POST["name_city"]);
 $res = CIBlockSection::GetList($arOrder, $arFilter, false, array());
 
 if ($res->SelectedRowsCount() > 0) {

@@ -26,7 +26,7 @@ $person = $rsUser->Fetch();
 $ID_company = $person["UF_INSURANCE_COMPANY"];
 
     $logo_user = CFile::GetFileArray($person["PERSONAL_PHOTO"]);
-$arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_LOGO_IMG","PROPERTY_MOBILE_NUMBER");
+$arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_LOGO_IMG","PROPERTY_MOBILE_NUMBER","PROPERTY_MOBILE_NUMBER2","PROPERTY_MOBILE_NUMBER3");
 $arFilter = Array("IBLOCK_ID"=>16, "ID"=>$ID_company);
 $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
 while($ob = $res->GetNextElement()){
@@ -135,6 +135,8 @@ while($ob = $res->GetNextElement()){
                </div>
                <div class="item_data">
                   <p><?=$arFields["PROPERTY_MOBILE_NUMBER_VALUE"]?></p>
+                  <p><?=$arFields["PROPERTY_MOBILE_NUMBER2_VALUE"]?></p>
+                  <p><?=$arFields["PROPERTY_MOBILE_NUMBER3_VALUE"]?></p>
                </div>
            </div>
        </div>

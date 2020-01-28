@@ -8,7 +8,7 @@ $date_change = date("d.m.Y H:i:s");
 
 $date["DATE_CHANGE_BY_USER"] = $date_change;
 $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_EVALUATION");
-$arFilter = Array("IBLOCK_ID"=>13,"ID"=> $_POST['id_rewievs'] );
+$arFilter = Array("IBLOCK_ID"=>13, "ID"=> $_POST['id_rewievs'] );
 $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
 while($ob = $res->GetNextElement()){
     $arProps = $ob->GetFields();
@@ -33,6 +33,7 @@ while($ob = $res->GetNextElement()){
               "!PROPERTY_VERIFIED" => false,
               "PROPERTY_REJECTED" => false,
               "!PROPERTY_EVALUATION"=> 0,
+              "ACTIVE" => "Y",
           );
           $res_otzev = CIBlockElement::GetList(Array(), $arFilter_otzev, false, false, $arSelect_otzev);
           $total = 0;
@@ -53,7 +54,7 @@ while($ob = $res->GetNextElement()){
               CIBlockElement::SetPropertyValuesEx($id_company, 16, $star_clear);
 
           $arSelect = Array("ID", "IBLOCK_ID", "NAME","PROPERTY_AMOUNT_STAR");
-          $arFilter = Array("IBLOCK_ID"=>16, "PROPERTY_KPP"=> $prop["KPP"]["VALUE"],"!PROPERTY_AMOUNT_STAR"=> false);
+          $arFilter = Array("IBLOCK_ID"=>16, "ACTIVE"=> "Y","PROPERTY_KPP"=> $prop["KPP"]["VALUE"],"!PROPERTY_AMOUNT_STAR"=> false);
           $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
           $count_company_with_this_kpp =  $res->SelectedRowsCount();
 
@@ -94,6 +95,7 @@ while($ob = $res->GetNextElement()){
               "!PROPERTY_VERIFIED" => false,
               "PROPERTY_REJECTED" => false,
               "!PROPERTY_EVALUATION"=> 0,
+              "ACTIVE" => "Y",
           );
           $res_otzev = CIBlockElement::GetList(Array(), $arFilter_otzev, false, false, $arSelect_otzev);
           $total = 0;
@@ -114,7 +116,7 @@ while($ob = $res->GetNextElement()){
           CIBlockElement::SetPropertyValuesEx($id_company, 16, $star_clear);
 
           $arSelect = Array("ID", "IBLOCK_ID", "NAME","PROPERTY_AMOUNT_STAR");
-          $arFilter = Array("IBLOCK_ID"=>16, "PROPERTY_KPP"=> $prop["KPP"]["VALUE"],"!PROPERTY_AMOUNT_STAR"=> false);
+          $arFilter = Array("IBLOCK_ID"=>16,"ACTIVE"=> "Y", "PROPERTY_KPP"=> $prop["KPP"]["VALUE"],"!PROPERTY_AMOUNT_STAR"=> false);
           $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
           $count_company_with_this_kpp =  $res->SelectedRowsCount();
           $total_star = 0;

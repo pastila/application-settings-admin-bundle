@@ -3,21 +3,15 @@
 //= ../../node_modules/magnific-popup/dist/jquery.magnific-popup.min.js
 
 $(document).ready(function() {
-
-  $(".js_click_user").click(function() {
-    var text = $(this).text();
-    $(".js_text").text(text);
+  $('.add-user__js').click(function (){
+    $(this).addClass('current');
+    $(this).next().removeClass('current');
+  });
+  $('.add-child__js').click(function (){
+    $(this).addClass('current');
+    $(this).prev().removeClass('current');
   });
 
-  $('.select_toggle').click(function() {
-    $(this).toggleClass('active');
-  });
-  $(document).on('click', function(e) {
-    if (!$(e.target).closest(".select_toggle , .select-dropdown-child").length) {
-      $('.select_toggle').removeClass('active');
-    }
-    e.stopPropagation();
-  });
   function addChild() {
     const items = document.querySelectorAll('.obrashcheniya__content');
 
@@ -131,29 +125,29 @@ $(document).ready(function() {
       $('#searchul_'+idItem).fadeOut();
       $.post('/ajax/obrasheniya/selected_child.php', {ID: $(this).attr('value')}, function(result) {
         $('#selected-child_'+idItem).html(result);
-        $.ajax({
-          url: '/pdf/file_children_pdf.php',
-          data: {
-            id: $('#children_input_'+idItem).attr('data-id_child'),
-            oplata: $('#time_' + idItem).text(),
-            id_obr: idItem
-          },
-          type: 'post',
-          success: function(result) {
-            console.log('success');
-            $('[data-obrashenie-id=' + idItem + ']').
-                find(".pdf").
-                attr("href", result);
-            $('[data-obrashenie-id=' + idItem + ']').
-                find(".pdf").
-                removeClass("error");
-            $('[data-obrashenie-id=' + idItem + ']').
-                find(".pdf").
-                text("Просмотреть");
-            $(".ready_pdf").removeClass("hidden");
-            $(".with_out_pdf").addClass("hidden");
-          }
-        });
+        // $.ajax({
+        //   url: '/pdf/file_children_pdf.php',
+        //   data: {
+        //     id: $('#children_input_'+idItem).attr('data-id_child'),
+        //     oplata: $('#time_' + idItem).text(),
+        //     id_obr: idItem
+        //   },
+        //   type: 'post',
+        //   success: function(result) {
+        //     console.log('success');
+        //     $('[data-obrashenie-id=' + idItem + ']').
+        //         find(".pdf").
+        //         attr("href", result);
+        //     $('[data-obrashenie-id=' + idItem + ']').
+        //         find(".pdf").
+        //         removeClass("error");
+        //     $('[data-obrashenie-id=' + idItem + ']').
+        //         find(".pdf").
+        //         text("Просмотреть");
+        //     $(".ready_pdf").removeClass("hidden");
+        //     $(".with_out_pdf").addClass("hidden");
+        //   }
+        // });
       }, 'html');
     });
     $(document).mouseup(function(e) {
@@ -434,7 +428,7 @@ if(cur_el.find(policy).val().length === 16) {
       }
     } else {
       $('#success_' + element[1]).html('');
-      $('#error_' + element[1]).html('Введите корректно ФИО');
+      $('#error_' + element[1]).html('Введите ФИО в формате: "Фамилия Имя Отчество"');
     }
   } else {
     $('#success_' + element[1]).html('');
@@ -464,93 +458,99 @@ function send_ms(sd) {
       "id": element[1],
     };
 
-    $.ajax({
-      url: '/pdf/file_pdf.php',
-      type: 'POST',
-      data: data,
-      success: function(msg) {
 
-        $('[data-obrashenie-id=' + element[1] + ']').
-            find(".pdf").
-            attr("href", msg);
-        if ($(".ready_pdf").is(":visible")) {
-          $(".ready_pdf").addClass("hidden");
-        }
-        $(".updata_pdf").removeClass("hidden");
+if(time_p.text() != "") {
+  $.ajax({
+    url: '/pdf/file_pdf.php',
+    type: 'POST',
+    data: data,
+    success: function(msg) {
+if(time_p.text().search("2") != -1) {
+  $('[data-obrashenie-id=' + element[1] + ']').
+      find(".pdf").
+      attr("href", msg);
 
-
-
-        $.ajax({
-          url: '/ajax/send_message.php',
-          data: {
-            ID: element[1],
-          },
-          type: 'post',
-          success: function(result) {
-            let result2 = JSON.parse(result);
-            console.log(result2);
-            let error = $('#error_' + element[1]);
-            let success = $('#success_' + element[1]);
-            if (result2.error !== undefined) {
-              error.text(result2.error);
-              success.text('');
-            } else if (result2.success !== undefined) {
-              $('#appeal_' + element[1]).addClass(" sended");
-              error.text('');
-              success.text(result2.success);
-            }
-
-
-          }
-        });
-      },
-    });
-  } else if ($('#selected_sender_'+element[1]).val() === 'child') {
-    console.log('here');
-    if ($('#children_input_' + element[1]).attr('data-id_child').length > 0) {
+  if ($(".ready_pdf").is(":visible")) {
+    $(".ready_pdf").addClass("hidden");
+  }
+  $(".updata_pdf").removeClass("hidden");
+}
       $.ajax({
-        url: '/pdf/file_children_pdf.php',
+        url: '/ajax/send_message.php',
         data: {
-          id: $('#children_input_' + element[1]).attr('data-id_child'),
-          oplata: $('#time_' + element[1]).text(),
-          id_obr: element[1]
+          ID: element[1],
         },
         type: 'post',
         success: function(result) {
-          $('[data-obrashenie-id=' + element[1] + ']').
-              find(".pdf").
-              attr("href", result);
-          if ($(".ready_pdf").is(":visible")) {
-            $(".ready_pdf").addClass("hidden");
+          let result2 = JSON.parse(result);
+          let error = $('#error_' + element[1]);
+
+          let success = $('#success_' + element[1]);
+          if (result2.error !== undefined) {
+            error.text(result2.error);
+            success.text('');
+          } else if (result2.success !== undefined) {
+            $('#appeal_' + element[1]).addClass("sended");
+            error.text('');
+            success.text(result2.success);
           }
-          $(".updata_pdf").removeClass("hidden");
-          $.ajax({
-            url: '/ajax/send_message.php',
-            data: {
-              ID: element[1],
-              CHILD: $('#children_input_' + element[1]).attr('data-id_child')
-            },
-            type: 'post',
-            success: function(result) {
-              let result2 = JSON.parse(result);
-              console.log(result2);
-              let error = $('#error_' + element[1]);
-              let success = $('#success_' + element[1]);
-              if (result2.error !== undefined) {
-                error.text(result2.error);
-                success.text('');
-              } else if (result2.success !== undefined) {
-                $('#appeal_' + element[1]).addClass(" sended");
-                error.text('');
-                success.text(result2.success);
-              }
-
-
-            }
-          });
 
         }
       });
+    },
+  });
+}
+  } else if ($('#selected_sender_'+element[1]).val() === 'child') {
+    console.log('here');
+    if ($('#children_input_' + element[1]).attr('data-id_child').length > 0) {
+console.log($('#time_' + element[1]).text());
+      if($('#time_' + element[1]).text() !=="") {
+        $.ajax({
+          url: '/pdf/file_children_pdf.php',
+          data: {
+            id: $('#children_input_' + element[1]).attr('data-id_child'),
+            oplata: $('#time_' + element[1]).text(),
+            id_obr: element[1]
+          },
+          type: 'post',
+          success: function(result) {
+
+            if($('#time_' + element[1]).text().search("2") !== -1) {
+              $('[data-obrashenie-id=' + element[1] + ']').
+                  find(".pdf").
+                  attr("href", result);
+              if ($(".ready_pdf").is(":visible")) {
+                $(".ready_pdf").addClass("hidden");
+              }
+              $(".updata_pdf").removeClass("hidden");
+            }
+            $.ajax({
+              url: '/ajax/send_message.php',
+              data: {
+                ID: element[1],
+                CHILD: $('#children_input_' + element[1]).attr('data-id_child')
+              },
+              type: 'post',
+              success: function(result) {
+                let result2 = JSON.parse(result);
+                console.log(result2);
+                let error = $('#error_' + element[1]);
+                let success = $('#success_' + element[1]);
+                if (result2.error !== undefined) {
+                  error.text(result2.error);
+                  success.text('');
+                } else if (result2.success !== undefined) {
+                  $('#appeal_' + element[1]).addClass(" sended");
+                  error.text('');
+                  success.text(result2.success);
+                }
+
+              }
+            });
+
+          }
+        });
+      }
     }
 
   }
@@ -586,6 +586,7 @@ function commutator(ajax, id) {
       });
     }
   } else if (ajax === 'my') {
+
       let cur_el = $('#appeal_' + id);
       let usrname = $("input[name='usrname']");
       let policy = $("input[name='policy']");
@@ -599,25 +600,29 @@ function commutator(ajax, id) {
         "id": id,
         "hospitl": cur_el.find(hospitl).text(),
       };
-      $.ajax({
-        url: '/pdf/file_pdf.php',
-        type: 'POST',
-        data: data,
-        success: function(msg) {
 
-          $('[data-obrashenie-id=' + id + ']').
-              find(".pdf").
-              attr("href", msg);
-          $('[data-obrashenie-id=' + id + ']').
-              find(".pdf").
-              removeClass("error");
-          $('[data-obrashenie-id=' + id + ']').
-              find(".pdf").
-              text("Просмотреть");
-          $(".ready_pdf").removeClass("hidden");
-          $(".with_out_pdf").addClass("hidden")
-        },
-      })
+      if(time_p.text().search(".20") !==  -1 ) {
+
+        $.ajax({
+          url: '/pdf/file_pdf.php',
+          type: 'POST',
+          data: data,
+          success: function(msg) {
+
+            $('[data-obrashenie-id=' + id + ']').
+                find(".pdf").
+                attr("href", msg);
+            $('[data-obrashenie-id=' + id + ']').
+                find(".pdf").
+                removeClass("error");
+            $('[data-obrashenie-id=' + id + ']').
+                find(".pdf").
+                text("Просмотреть");
+            $(".ready_pdf").removeClass("hidden");
+            $(".with_out_pdf").addClass("hidden")
+          },
+        })
+      }
   }
 }
 

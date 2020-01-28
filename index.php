@@ -43,7 +43,7 @@ CModule::IncludeModule("iblock");
     <a href="/forma-obrashenija/" class="buttons__items_item">
         <div class="buttons__items_item_image-block">
             <img class="buttons__items_item_img"
-                src="./local/templates/kdteam/images/jpg/home/buttons_menu/item1/img.jpg" alt="">
+                src="./local/templates/kdteam/images/png/strah_sluchay.png" alt="">
         </div>
 
         <div class="buttons__items_item_title-block">
@@ -57,7 +57,7 @@ CModule::IncludeModule("iblock");
     <a href="/feedback/" class="buttons__items_item">
         <div class="buttons__items_item_image-block">
             <img class="buttons__items_item_img"
-                src="./local/templates/kdteam/images/jpg/home/buttons_menu/item2/img.jpg" alt="">
+                 src="./local/templates/kdteam/images/png/reviews_strah.png" alt="">
         </div>
 
         <div class="buttons__items_item_title-block">
@@ -71,7 +71,7 @@ CModule::IncludeModule("iblock");
     <a href="/news/" class="buttons__items_item">
         <div class="buttons__items_item_image-block">
             <img class="buttons__items_item_img"
-                src="./local/templates/kdteam/images/jpg/home/buttons_menu/item3/img.jpg" alt="">
+                 src="./local/templates/kdteam/images/png/read_strah.png" alt="">
         </div>
 
         <div class="buttons__items_item_title-block">

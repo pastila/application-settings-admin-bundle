@@ -2,6 +2,10 @@
 
 $(document).ready(function() {
 
+  $(document).on("click",".diagnoz_search_js",function() {
+    $("#grid").addClass('disabled')
+  });
+  
   $(".years").click(function(){
 
     if( $("#selected_year").val() != "" ) {
@@ -433,7 +437,6 @@ function search_hospital() {
     if (!!classID && id === 'option') {
       $.post('/ajax/main_form_oms.php', {id: classID}, function(result) {
         $(component).html(result);
-        console.log('stage 1');
         update_select();
       }, 'html');
     }
@@ -523,6 +526,9 @@ function search_hospital() {
 
 
   $(document).on('click', '#empty_class', function() {
+    $("#reload_div").css({"pointer-events":"auto"});
+    $("#search_diagnoz_input").css({"pointer-events":"auto"});
+    $("#reload_div").removeClass('disabled');
     $.magnificPopup.open({
       items: {
         src: '<div class="white-popup custom_styles_popup">Если среди диагнозов вы не нашли свой, значит заболевание не относится к числу тех, что оплачитваются из средства ОМС. Случай не является страховым.</div>',
@@ -575,10 +581,18 @@ function search_class() {
 
   $(document).on('click', '.class-js', function() {
     let id_class = $(this).attr('value');
+
+    if($(this).val() !== ""){
+      $("#search_diagnoz_input").css({"pointer-events":"none"});
+      $("#reload_div").addClass('disabled')
+    }
     let component = $('#grid');
     $.post('/ajax/main_form_oms.php', {id: id_class}, function(result) {
       $(component).html(result);
       search_group();
+      $('#search_diagnoz_input').val('');
+      $('#search_diagnoz_input').attr('data-value', '');
+      $('#search_diagnoz_global').empty();
     }, 'html');
   });
 }
@@ -602,8 +616,10 @@ function search_group() {
     let component = $('#grid');
     $.post('/ajax/main_form_oms.php', {id: id_group}, function(result) {
       $(component).html(result);
-      console.log('stage 2');
-      search_subgroup()
+      search_subgroup();
+      $('#search_diagnoz_input').val('');
+      $('#search_diagnoz_input').attr('data-value', '');
+      $('#search_diagnoz_global').empty();
     }, 'html');
   });
 
@@ -633,8 +649,10 @@ function search_subgroup() {
     let component = $('#grid');
     $.post('/ajax/main_form_oms.php', {id: id_subgroup}, function(result) {
       $(component).html(result);
-      console.log('stage 3');
       search_diagnoz()
+      $('#search_diagnoz_input').val('');
+      $('#search_diagnoz_input').attr('data-value', '');
+      $('#search_diagnoz_global').empty();
     }, 'html');
   });
   keyup_class();
@@ -651,7 +669,9 @@ function search_diagnoz() {
     $('#diagnoz_input').val($(this).text());
     $('#diagnoz_input').attr('data-id_diagnoz', $(this).attr('value'));
     $('#search_result_diagnoz').fadeOut();
-
+    $('#search_diagnoz_input').val($(this).text());
+    $('#search_diagnoz_input').attr('data-value', $(this).attr('value'));
+    $('#search_diagnoz_global').empty();
   });
   $(document).on('click', '#diagnoz_input', function() {
     $('#search_result_diagnoz').css('display', 'block');
@@ -677,6 +697,14 @@ function keyup_class() {
   console.log('keyup_class');
   $('#class_input').on('keyup', function() {
     var $this = $(this);
+    if($this.val() !== ""){
+      $("#search_diagnoz_input").css({"pointer-events":"none"});
+      $("#reload_div").addClass('disabled')
+    }else{
+      $("#search_diagnoz_input").css({"pointer-events":"auto"});
+      $("#reload_div").removeClass('disabled')
+    }
+
     var delay = 500;
     $('#search_result_class').css({'display': 'block'});
     clearTimeout($this.data('timer'));
@@ -705,6 +733,11 @@ function keyup_class() {
           }, 100);
           $(document).on('click', '.class-js', function() {
             let id = $(this).attr('value');
+
+            if($(this).val() !== ""){
+              $("#search_diagnoz_input").css({"pointer-events":"none"});
+              $("#reload_div").addClass('disabled')
+            }
             let select_region = $(this).text();
             $('#class_input').val(select_region);
             $('#class_input').attr('data-id_class', id);
@@ -897,7 +930,13 @@ function search_diagnoz_global() {
   $(document).on('click', '#search_diagnoz_global li', function() {
     $('#search_diagnoz_input').val($(this).text());
     $('#search_diagnoz_input').attr('data-value', $(this).attr('value'));
-    $('#search_diagnoz_global').fadeOut()
+    $('#search_diagnoz_global').fadeOut();
+    after_global_search(
+        $(this).attr('data-section'),
+        $(this).text(),
+        $(this).attr('value'));
+    $('#diagnoz_input').val($(this).text());
+    $('#diagnoz_input').attr('data-id_diagnoz', $(this).attr('value'));
   });
   $(document).on('click', '#search_diagnoz_input', function() {
     $('#search_diagnoz_global').css('display', 'block');
@@ -912,6 +951,9 @@ function search_diagnoz_global() {
 function keyup_diagnoz_global() {
   $('#search_diagnoz_input').on('keyup', function() {
     var $this = $(this);
+    if($this.val() === ""){
+      $("#grid").removeClass('disabled')
+    }
     var delay = 500;
     clearTimeout($this.data('timer'));
     $this.data('timer', setTimeout(function() {
@@ -925,7 +967,6 @@ function keyup_diagnoz_global() {
         $('.diagnoz_search_js').each(function() {
           $(this).remove();
         });
-        console.log(msg);
         if (msg == 'error') {
           if ($('.error_diagnoz').length != 0) {
             $('.error_diagnoz').remove();
@@ -942,9 +983,27 @@ function keyup_diagnoz_global() {
           $(document).on('click', '.diagnoz_search_js', function() {
             $('#search_diagnoz_input').val($(this).text());
             $('#search_diagnoz_input').attr('data-value', $(this).attr('value'));
+            after_global_search(
+                $(this).attr('data-section'),
+                $(this).text(),
+                $(this).attr('value'));
           });
         }
       });
     }, delay));
   });
+}
+
+function after_global_search (SECTION_ID, TEXT, VALUE) {
+  let component = $('#grid');
+  $.post('/ajax/main_form_oms.php', {id: SECTION_ID},
+      function(result) {
+          $(component).html(result);
+          $('#diagnoz_input').val(TEXT);
+          $('#diagnoz_input').attr('data-id_diagnoz', VALUE);
+          search_group();
+          search_subgroup();
+          search_diagnoz();
+  }, 'html');
+
 }

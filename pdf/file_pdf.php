@@ -14,6 +14,33 @@ require '/var/www/vendor/autoload.php';
 global $USER;
 
 $arHospital = $_POST["hospitl"];
+//Проверка на дублировние
+$arSel = array("ID", "IBLOCK_ID", "NAME", "PROPERTY_FULL_NAME", "PROPERTY_HOSPITAL", "PROPERTY_ADDRESS");
+$arFil = array("IBLOCK_ID" => 11,"ID" => $_POST['id']);
+$res = CIBlockElement::GetList(array(), $arFil, false, false, $arSel);
+$ob = $res->GetNextElement();
+$arFields = $ob->GetFields();
+$hospital_adress = $arFields['PROPERTY_ADDRESS_VALUE'];
+
+$res_hospital = CIBlockElement::GetList(
+    array(),
+    array('NAME' => $arHospital, 'IBLOCK_ID' => 9),
+    false,
+    false,
+    array("ID", "IBLOCK_ID", "NAME", "PROPERTY_FULL_NAME", "PROPERTY_MEDICAL_CODE", "IBLOCK_SECTION_ID")
+);
+while ($ob_hospital = $res_hospital->GetNextElement()) {
+    $arFields = $ob_hospital->GetFields();
+    $res = CIBlockSection::GetByID($arFields['IBLOCK_SECTION_ID']);
+    if ($ar_res = $res->GetNext()) {
+        if ($ar_res['NAME'] == $hospital_adress) {
+            $FULL_NAME_HOSPITAL = $arFields['PROPERTY_FULL_NAME_VALUE'];
+            $MEDICAL_CODE = $arFields['PROPERTY_MEDICAL_CODE_VALUE'];
+        }
+    }
+
+}
+//Проверка на дублировние
 
 if($_POST["data_checkout"] == 1){
     $data_user_oformlenie_POST = "(Дата запишеться как только вы отправите обращение)";
@@ -24,8 +51,6 @@ if($_POST["data_checkout"] == 1){
 $data_user_oplata_POST = $_POST["data_user_oplata_POST"];
 
 $number_polic_POST = $_POST["number_polic"];
-
-
 
 
 $ID_user = $USER->GetID();
@@ -41,49 +66,97 @@ $strahovay_compani = $person["UF_INSURANCE_COMPANY"];
 
 
 
-$arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_*");
+$arSelect = Array("ID", "IBLOCK_ID", "NAME", "IBLOCK_SECTION_ID","PROPERTY_*");
 $arFilter = Array("IBLOCK_ID"=>16,"ID"=> $strahovay_compani);
 $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
 $ob = $res->GetNextElement();
 $arProps = $ob->GetProperties();
 $arFields = $ob->GetFields();
 
-
 $name_company = $arFields["NAME"];// название компании
 $boss_compani = $arProps["NAME_BOSS"]["VALUE"];// руководитель компании
 $mail_compani = $arProps["EMAIL_FIRST"]["VALUE"];// имйл компании
+$mail_compani2 = $arProps["EMAIL_SECOND"]["VALUE"];// имйл компании
+$mail_compani3 = $arProps["EMAIL_THIRD"]["VALUE"];// имйл компании
 
+
+$res = CIBlockSection::GetByID($arFields['IBLOCK_SECTION_ID']);
+$name_rerion = "";
+if ($ar_res = $res->GetNext()) {
+
+    $name_rerion = "(" .$ar_res["NAME"] . ")";
+
+
+}
 $html ='
 
 <page>
- <div class="header" style="padding: 0 50px;">
-        <div class="header__items">
+ <div class="header">
+<table class="table" width="100%" style="margin-bottom: 10px;">
+      <thead>
+        <tr>
+          <th valign="baseline" scope="col" style="text-align: left;">
+           <div class="header__items_item--label">
+                     Подготовлено с помощью сервиса bezbahil.ru
+                </div>
+                  <br>
+                <div><img style="width: 75px;" src="logo_oms.png"/></div>
+                  <br>
+          <div class="header__items_item--label" style="font-weight: normal;">
+                    Контактные данные - info@bezbahil.ru
+                </div>
+          </th>
+           <th valign="baseline" style="float: right; text-align: right;">
+                <div class="header__items">
             <div class="header__items_item">
-                <div class="header__items_item_wrap" style="margin-bottom: 5px;">
+                <div class="header__items_item_wrap">
                     <div class="header__items_item--label" style="font-weight: bold;">
-                        Кому:
+                        Кому: Руководителю страховой медицинской организации
                     </div>
-                    <div class="header__items_item--text" style="margin-bottom: 5px;">
-                        <span class="bold-text" style="font-weight: bold;">Руководителю страховой медицинской организации</span>
+                    <br>
+                    <div class="header__items_item--text">
+                      
                         <div class="blue-text cursive" style="font-style: italic;">
-                            '.$name_company.',
-                            '.$boss_compani.'
-                            '.$mail_compani.'
+                            '.$name_company . $name_rerion .'<br>
+                            '.$boss_compani.'<br>
+                            '.$mail_compani.' <br>
+                            '.$mail_compani2.'<br>
+                            '.$mail_compani3.'
                         </div>
+                          <br>
                     </div>
                 </div>
             </div>
-            <div class="header__items_item" style="margin-bottom: 5px;">
+            <div class="header__items_item">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label">
-                        <span style="font-weight: bold;">От:</span>
+                        <span style="font-weight: bold;">От: </span> 
+                        <span class="header__items_item--text blue-text cursive" style="font-style: italic;">
+                        '.$full_name_user.'</span>
                     </div>
-                    <div class="header__items_item--text blue-text cursive" style="font-style: italic;">
-                        '.$full_name_user.'
-                    </div>
+                      <br>
                 </div>
             </div>
-               <div class="header__items_item" style="margin-bottom: 5px;">
+            
+        </div>
+           </th>
+        </tr>
+      </thead>
+</table>
+<div style="text-align: right; float: right;">
+
+ <div class="header__items_item">
+                <div class="header__items_item_wrap">
+                    <div class="header__items_item--label">
+                        <span style="font-weight: bold;">Номер полиса:</span> 
+                         <span class="header__items_item--text red-text cursive" style="font-style: italic;">
+                        '. $number_polic_POST .'
+                    </span>
+                    </div>
+                      <br>
+                </div>
+            </div>
+               <div class="header__items_item">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label" >
                         <span style="font-weight: bold;">Адрес электронной почты:</span>
@@ -91,37 +164,30 @@ $html ='
                     <div class="header__items_item--text blue-text cursive" style=" font-style: italic;">
                         '. $email .'
                     </div>
-                </div>
-            </div>
-            <div class="header__items_item" style="margin-bottom: 5px;">
-                <div class="header__items_item_wrap">
-                    <div class="header__items_item--label">
-                        <span style="font-weight: bold;">Номер полиса:</span> 
-                    </div>
-                    <div class="header__items_item--text red-text cursive" style="font-style: italic;">
-                        '. $number_polic_POST .'
-                    </div>
+                      <br>
                 </div>
             </div>
             <div class="header__items_item">
                 <div class="header__items_item_wrap">
                     <div class="header__items_item--label" >
-                        <span style="font-weight: bold;">Телефон:</span>
-                    </div>
-                    <div class="header__items_item--text blue-text cursive" style=" font-style: italic;">
-                        '. $mobail_number .'
+                        <span style="font-weight: bold;">Телефон:</span>  <span class="header__items_item--text
+                         blue-text cursive" style=" font-style: italic;">'. $mobail_number .'</span>
                     </div>
                 </div>
             </div>
-        </div>
+</div>
+
+ 
+        
     </div>
 ​   <div>
-        <p style="text-align: center; margin-bottom: 5px; font-size: 18px; font-weight: bold;">ПРЕТЕНЗИЯ</p>
+        <p style="text-align: center; margin-bottom: 5px; font-size: 15px; font-weight: bold;">ПРЕТЕНЗИЯ</p>
          <p>
         <span class="red-text cursive" style="font-style: italic;">«'.$data_user_oplata_POST.'</span> г. в медицинской организации <span
-            class="blue-text cursive" style="font-style: italic;">'.$arHospital.'</span> мною
-        была совершена
-        оплата медицинских услуг, что подтверждается прилагаемыми к настоящему письму документами.
+            class="blue-text cursive" style="font-style: italic;">' . $FULL_NAME_HOSPITAL . '</span> (код в реестре медицинских
+             организаций, осуществляющих деятельность в сфере ОМС ' . $MEDICAL_CODE . ', ' . $hospital_adress .'),
+              мною была совершена оплата медицинских услуг, что подтверждается прилагаемыми к настоящему письму
+              документами.
     </p>
     <p>
 Медицинские услуги были оказаны мне в связи с заболеванием, лечение которого, согласно Программе государственных
@@ -184,9 +250,9 @@ $mpdf = new \Mpdf\Mpdf([
     'orientation' => 'P',
     'margin_top' => 9,
     'margin_bottom' => 0,
-    'margin_left' => 15,
-    'margin_right' => 15,
-    'default_font_size' => 10,
+    'margin_left' => 9,
+    'margin_right' => 9,
+    'default_font_size' => 9,
 ]);
 //создаем PDF файл, задаем формат, отступы и.т.д.
 

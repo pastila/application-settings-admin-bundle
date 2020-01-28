@@ -48,9 +48,9 @@ while($ob = $res->GetNextElement()){
 <form id="appeal-form" action="">
     <!-- 1 Step -->
     <section class="form-obrashcheniya__step_one">
-        <div class="form-obrashcheniya__step_one_title">
+        <h3 class="form-obrashcheniya__step_one_title">
             Укажите период, в котором вы получали помощь
-        </div>
+        </h3>
         <?php
             $APPLICATION->IncludeComponent(
                 "bitrix:news.list",
@@ -128,16 +128,16 @@ while($ob = $res->GetNextElement()){
 
         <div class="form-obrashcheniya__step_two_r">
             <div class="form-obrashcheniya__step_two_r_wrap">
-                <div class="form-obrashcheniya__step_two_r_wrap_title">
+                <h3 class="form-obrashcheniya__step_two_r_wrap_title">
                     <?=$arResult_block[1]?>
-                </div>
+                </h3>
                 <p><?=$arResult_block[0]?></p>
             </div>
 
             <div class="form-obrashcheniya__step_two_r_wrap">
-                <div class="form-obrashcheniya__step_two_r_wrap_title">
+                <h3 class="form-obrashcheniya__step_two_r_wrap_title">
                     <?=$arResult_block[3]?>
-                </div>
+                </h3>
                 <p><?=$arResult_block[2]?></p>
             </div>
         </div>
@@ -176,9 +176,9 @@ while($ob = $res->GetNextElement()){
         <div class="form-obrashcheniya__step_three_r">
             <div class="card">
                 <div class="form-obrashcheniya__step_three_r_wrap">
-                    <div class="form-obrashcheniya__step_three_r_wrap_title">
+                    <h3 class="form-obrashcheniya__step_three_r_wrap_title">
                         Вы выбрали регион:
-                    </div>
+                    </h3>
 
                     <div id="region_name" class="form-obrashcheniya__step_three_r_wrap_name">
                         Не выбрано
@@ -186,9 +186,9 @@ while($ob = $res->GetNextElement()){
                 </div>
 
                 <div class="form-obrashcheniya__step_three_r_wrap">
-                    <div class="form-obrashcheniya__step_three_r_wrap_title">
+                    <h3 class="form-obrashcheniya__step_three_r_wrap_title">
                         Вы выбрали медицинскую организацию:
-                    </div>
+                    </h3>
 
                     <div id="hosptital_name" class="form-obrashcheniya__step_three_r_wrap_name">
                         Не выбрано
@@ -196,9 +196,9 @@ while($ob = $res->GetNextElement()){
                 </div>
 
                 <div class="form-obrashcheniya__step_three_r_wrap">
-                    <div class="form-obrashcheniya__step_three_r_wrap_title">
+                    <h3 class="form-obrashcheniya__step_three_r_wrap_title">
                         Расположение по адресу
-                    </div>
+                    </h3>
 
                     <div id="street_name" class="form-obrashcheniya__step_three_r_wrap_name">
                         Не выбрано
@@ -207,9 +207,9 @@ while($ob = $res->GetNextElement()){
                 </div>
 
                 <div class="form-obrashcheniya__step_three_r_wrap">
-                    <div class="form-obrashcheniya__step_three_r_wrap_title">
+                    <h3 class="form-obrashcheniya__step_three_r_wrap_title">
                         Руководитель (главный врач)
-                    </div>
+                    </h3>
 
                     <div id="boss_name" class="form-obrashcheniya__step_three_r_wrap_name">
                         Не выбрано
@@ -243,25 +243,10 @@ while($ob = $res->GetNextElement()){
                                 <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255">
                                     <path d="M0 63.75l127.5 127.5L255 63.75z" /></svg>
                             </div>
-                            <?php
-                                $arSelect = array("ID", "NAME", "IBLOCK_ID");
-                                $arFilter = array("IBLOCK_ID" => 8);
-                                $res = CIBlockElement::GetList(array(), $arFilter, false, false, $arSelect);
-
-                                while ($ob = $res->GetNextElement()) {
-                                    $arFields[] = $ob->GetFields();
-                                }
-                                ?>
                             <input type="text" id="search_diagnoz_input"
                                 placeholder="Начните вводить наименование заболевания, с которым вы обратились в медицинскую организацию." />
                             <ul style="cursor: pointer;" data-value="" class="custom-serach__items"
                                 id="search_diagnoz_global">
-                                <li value="" id="empty_diagnoz" class="custom-serach__items_item diagnoz_search_js">
-                                    Здесь нет моего диагноза</li>
-                                <?php foreach ($arFields as &$arItem) {?>
-                                <li value="<?=$arItem['ID']?>" class="custom-serach__items_item  diagnoz_search_js">
-                                    <?php echo $arItem['NAME']?></li>
-                                <?php } ?>
                             </ul>
                         </div>
                     </div>

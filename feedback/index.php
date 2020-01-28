@@ -17,7 +17,7 @@ $array_all_company = array();
 
 $order = Array("name" => "asc");
 $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_KPP", "CODE");
-$arFilter = Array("IBLOCK_ID" => 16);
+$arFilter = Array("IBLOCK_ID" => 16 ,"ACTIVE"=> "Y");
 $res = CIBlockElement::GetList($order, $arFilter, false, false, $arSelect);
 while ($ob = $res->GetNextElement()) {
 
@@ -26,6 +26,10 @@ while ($ob = $res->GetNextElement()) {
     $allReviews[$arProps['PROPERTY_KPP_VALUE']] = $arProps;
 }
 $countReviews = count($allReviews);
+
+
+
+
 
 ?>
 <!-- Breadcrumbs -->
@@ -618,9 +622,9 @@ $countReviews = count($allReviews);
         <div class="white_block">
             <?php  if (isset($_GET["property_region"])) {  ?>
 
-            <div class="sidebar__item_title">Рейтинг Страховых(<?= $name_region; ?>)</div>
+            <h3 class="sidebar__item_title">Рейтинг Страховых(<?= $name_region; ?>)</h3>
             <?php }else{ ?>
-            <div class="sidebar__item_title">Рейтинг Страховых</div>
+            <h3 class="sidebar__item_title">Рейтинг Страховых</h3>
             <?php } ?>
 
             <ul class="sidebar__item_lists scrollbar">
