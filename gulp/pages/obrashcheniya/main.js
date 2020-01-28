@@ -14,12 +14,31 @@ $(document).ready(function() {
  var arr_date_picker =   $("[class *=datepicker-here_obrashcheniya]");
   arr_date_picker.each(function() {
    var min_year =$(this).attr("data-date");
-
-
    $(this).datepicker({
      minDate: new Date(min_year+".01.01"),
      maxDate: new Date(min_year+".12.31"),
    });
+  });
+
+  var arr_block_obrashcheniya =   $(".block__items_flex");
+  arr_block_obrashcheniya.each(function() {
+    var _= $(this);
+    var id =  _.attr("data-block_img");
+    if(_.children().length === 0 ){
+      $("#send_"+id).removeAttr("onclick");
+      $("#send_"+id).addClass("disabled");
+    }else{
+
+      if($("[data-pdf-id=" + id + "]").find(".pdf").attr("href") === undefined) {
+
+          $("#send_" + id).removeAttr("onclick");
+          $("#send_" + id).addClass("disabled");
+
+      }
+    }
+
+  })
+
   });
 
 
@@ -114,6 +133,10 @@ $(document).ready(function() {
                   '    </div>\n' +
                   '</div>'
               );
+              if( $("[data-block_img="+element+"]").find("[id*=img_block_"+element).length !== 0){
+                $("#send_" + element).attr("onclick","send_ms(this)");
+                $("#send_" + element).removeClass("disabled");
+              }
             }
           }
         }
@@ -186,7 +209,7 @@ $(document).ready(function() {
     });
 
   }
-});
+
 
 function del(f) {
 
@@ -201,6 +224,11 @@ function del(f) {
       $('#success_' + r.ID_EL).text('Файл успешно удален!');
       $('#error_' + r.ID_EL).text('');
       document.getElementById(r.ID_EL).value = "";
+
+      if( $("[data-block_img="+r.ID_EL+"]").find("[id*=img_block_"+r.ID_EL+"]").length === 0){
+        $("#send_" + r.ID_EL).removeAttr("onclick");
+        $("#send_" + r.ID_EL).removeClass("disabled");
+      }
     }
   });
 }
@@ -361,7 +389,10 @@ if(cur_el.find(policy).val().length === 16) {
                           text("Просмотреть");
                       $(".ready_pdf").removeClass("hidden");
                       $(".with_out_pdf").addClass("hidden");
-                      // $("#gif_save_"+element[1]).css({"display":"none"})
+                      if( $("[data-block_img="+element[1]+"]").find("[id*=img_block_"+element[1]).length !== 0){
+                        $("#send_" + element[1]).attr("onclick","send_ms(this)");
+                        $("#send_" + element[1]).removeClass("disabled");
+                      }
                     }
                   });
                 }
@@ -457,6 +488,11 @@ if(cur_el.find(policy).val().length === 16) {
                     $(".with_out_pdf").addClass("hidden")
                   },
                 }).done(function(msg) {
+                  if( $("[data-block_img="+element[1]+"]").find("[id*=img_block_"+element[1]).length !== 0){
+
+                    $("#send_" + element[1]).attr("onclick","send_ms(this)");
+                    $("#send_" + element[1]).removeClass("disabled");
+                  }
                   // $("#gif_save_"+element[1]).css({"display":"none"})
                 });
 
@@ -791,6 +827,11 @@ function save_date(sv) {
                       $("#date_picker_"+id).css({"display":"none"});
                       $("#edit_"+id).attr("onclick","edit(this)");
 
+                      if( $("[data-block_img="+id+"]").find("[id*=img_block_"+id).length !== 0){
+                        $("#send_" + id).attr("onclick","send_ms(this)");
+                        $("#send_" + id).removeClass("disabled");
+                      }
+
                     }
                   });
                 }
@@ -892,6 +933,11 @@ function save_date(sv) {
 
                   $("#date_picker_"+id).css({"display":"none"});
                   $("#edit_"+id).attr("onclick","edit(this)");
+
+                 if( $("[data-block_img="+id+"]").find("[id*=img_block_"+id).length !== 0){
+                   $("#send_" + id).attr("onclick","send_ms(this)");
+                   $("#send_" + id).removeClass("disabled");
+                 }
 
                 });
 

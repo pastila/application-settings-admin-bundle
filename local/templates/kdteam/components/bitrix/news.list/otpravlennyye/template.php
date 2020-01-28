@@ -183,7 +183,8 @@ if (count($arResult["ITEMS"]) > 0) {
                                        type="text"
                                        name="time"
                                        value="<?= $arItem["PROPERTIES"]["VISIT_DATE"]["VALUE"] ?>"
-                                        id="date_picker_<?= $arItem['ID'] ?>">
+                                        id="date_picker_<?= $arItem['ID'] ?>"
+                                readonly>
 
                                 </div>
 
@@ -236,7 +237,7 @@ if (count($arResult["ITEMS"]) > 0) {
                         </div>
 
                         <!-- Item Sidebar -->
-                        <div class="js-img-add block__items_flex">
+                        <div class="js-img-add block__items_flex" data-block_img="<?= $arItem["ID"] ?>">
                             <?php if (!empty($arItem["PREVIEW_PICTURE"]["SRC"])) { ?>
                                 <div id="img_block_<?= $arItem['ID'] ?>_img_1"
                                      class="obrashcheniya__content_sidebar_blocks">
@@ -260,7 +261,7 @@ if (count($arResult["ITEMS"]) > 0) {
                             <?php } ?>
                             <?php if (!empty($arItem["PROPERTIES"]["IMG_2"]['VALUE'])) { ?>
                                 <div id="img_block_<?= $arItem['ID'] ?>_img_2"
-                                     class="obrashcheniya__content_sidebar_blocks">
+                                     class="obrashcheniya__content_sidebar_blocks" >
                                     <div class="obrashcheniya__content_sidebar_blocks_img">
                                         <img src="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_2"]['VALUE'])["SRC"] ?>"
                                              alt="">
@@ -352,7 +353,7 @@ if (count($arResult["ITEMS"]) > 0) {
                             <?php } ?>
                         </div>
 
-                        <div class="obrashcheniya__content_sidebar_blocks">
+                        <div class="obrashcheniya__content_sidebar_blocks" data-pdf-id="<?= $arItem["ID"] ?>">
 
                             <div class="obrashcheniya__content_sidebar_blocks_img">
                                 <img src="/local/templates/kdteam/images/svg/pdf_icon.svg" alt="">
