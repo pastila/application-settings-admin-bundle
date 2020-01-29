@@ -15,11 +15,10 @@ $(document).ready(function() {
   arr_date_picker.each(function() {
    var min_year =$(this).attr("data-date");
    $(this).datepicker({
-     minDate: new Date(min_year+".01.01"),
-     maxDate: new Date(min_year+".12.31"),
+     minDate: new Date(min_year+'-01-01T00:00:01'),
+     maxDate: new Date(min_year+'-12-31T23:59:59')
    });
   });
-
   var arr_block_obrashcheniya =   $(".block__items_flex");
   arr_block_obrashcheniya.each(function() {
     var _= $(this);

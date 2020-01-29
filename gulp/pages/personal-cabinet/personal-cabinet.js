@@ -181,33 +181,23 @@ $(document).ready(function() {
     var data_FORM =  $("#form_change_data").serializeArray();
     var input_file = $('.input_file');
 
-    if (input_file.prop('files')[0] != undefined) {
-      if (input_file.prop('files')[0]['size'] > 10485760) {
-        error.push('error');
-        $('.block-error-label_size').css({"display":"block"});
-        error.push("error");
-      }
-      var format_file = input_file.prop('files')[0]['type'];
-      format_file = format_file.split('/')[1];
-      if ((format_file.search('jpeg') == -1) &&
-          (format_file.search('pjpeg') == -1) && (format_file.search('png') == -1)) {
-        $('.block-error-label_format').css({"display":"block"});
-        error.push("error");
-      }
-    }
+    // if (input_file.prop('files')[0] != undefined) {
+    //   if (input_file.prop('files')[0]['size'] > 10485760) {
+    //     error.push('error');
+    //     $('.block-error-label_size').css({"display":"block"});
+    //     error.push("error");
+    //   }
+    //   var format_file = input_file.prop('files')[0]['type'];
+    //   format_file = format_file.split('/')[1];
+    //   if ((format_file.search('jpeg') == -1) &&
+    //       (format_file.search('pjpeg') == -1) && (format_file.search('png') == -1)) {
+    //     $('.block-error-label_format').css({"display":"block"});
+    //     error.push("error");
+    //   }
+    // }
 
 
 
-  let region = $('#referal').attr('data-id_region');
-  console.log(region);
-  if(region != "" || region != undefined || region != "0"){
-    fd.append("town",region );
-    let hospital = $('#referal_two').attr('data-id_region');
-
-    if(hospital != "" || hospital != undefined || region != "0"){
-      fd.append("id_company",hospital);
-    }
-  }
 
 
 
@@ -224,6 +214,16 @@ $(document).ready(function() {
     }
 
 
+    let region = $('#referal').attr('data-id_region');
+    console.log(region);
+    if(region != "" || region != undefined || region != "0"){
+      fd.append("town",region );
+      let hospital = $('#referal_two').attr('data-id_region');
+
+      if(hospital != "" || hospital != undefined || region != "0"){
+        fd.append("id_company",hospital);
+      }
+    }
 
     if(data_FORM[1]['value'].length <2){
       $('[name=name]').after(
@@ -245,7 +245,7 @@ $(document).ready(function() {
         '<span class="label danger  error-email "  >Введите эмеил</span>');
     error.push("error");
   }
-  fd.append('import_file', input_file.prop('files')[0]);
+  // fd.append('import_file', input_file.prop('files')[0]);
   fd.append('name', data_FORM[1]['value']);
   fd.append('last_name', data_FORM[0]['value']);
   fd.append('second_name', data_FORM[2]['value']);

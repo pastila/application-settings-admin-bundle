@@ -83,7 +83,7 @@ if ($USER->IsAuthorized()) { ?>
             )
         );
     } else {?>
-        <a href="/forma-obrashenija/" class="page-title">Проверить свой дигноз</a>
+        <a href="/forma-obrashenija/" class="page-title">У вас нет готовых обращений. Сформировать обращение на возврат средств за медицинскую помощь по программе ОМС. </a>
     <?php }?>
 <?php } else {
 
