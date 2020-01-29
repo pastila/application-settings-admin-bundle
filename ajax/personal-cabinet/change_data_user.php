@@ -33,6 +33,10 @@ if ($_POST["name"] != "") {
     $clear_name= str_replace(" ","",$_POST["name"]);
     $array_field += ["NAME" => $clear_name];
 }
+if ($_POST["email"] != "") {
+    $clear_email= str_replace(" ","",$_POST["email"]);
+    $array_field += ["EMAIL" => $clear_email];
+}
 if ($_POST["last_name"] != "") {
     $clear_last_name = str_replace(" ","",$_POST["last_name"]);
     $array_field += ["LAST_NAME" => $clear_last_name];
@@ -41,10 +45,10 @@ if ($_POST["second_name"] != "") {
     $clear_second_name = str_replace(" ","",$_POST["second_name"]);
     $array_field += ["SECOND_NAME" => $clear_second_name];
 }
-if ($_POST["personal_phone"] != "") {
-
-    $array_field += ["PERSONAL_PHONE" => $_POST["personal_phone"]];
-}
+//if ($_POST["personal_phone"] != "") {
+//
+//    $array_field += ["PERSONAL_PHONE" => $_POST["personal_phone"]];
+//}
 
 
 if ($_POST["uf_insurance_policy"] != "") {

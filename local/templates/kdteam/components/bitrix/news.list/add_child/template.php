@@ -26,22 +26,26 @@ $this->setFrameMode(true);
         $res = CIBlockElement::GetByID($arItem["PROPERTIES"]['COMPANY']['VALUE']);
         if ($ar_res = $res->GetNextElement()) {
             $ar_Field = $ar_res->GetFields();
-            $ar_property = $ar_res->GetProperties();
+            if($ar_Field["ACTIVE"] == 'Y') {
+                $ar_property = $ar_res->GetProperties();
 
-            if ($ar_property["MOBILE_NUMBER"]["VALUE"] != "") {
-                $phone= $ar_property["MOBILE_NUMBER"]["VALUE"];
-            }
-            if ($ar_property["MOBILE_NUMBER2"]["VALUE"] != "") {
-                $phone2= $ar_property["MOBILE_NUMBER2"]["VALUE"];
-            }
-            if ($ar_property["MOBILE_NUMBER3"]["VALUE"] != "") {
-                $phone3= $ar_property["MOBILE_NUMBER3"]["VALUE"];
-            }
-            $hospital_id = $ar_Field['ID'];
-            $hospital = $ar_Field['~NAME'];
-            $sect_id = $ar_Field['IBLOCK_SECTION_ID'];
+                if ($ar_property["MOBILE_NUMBER"]["VALUE"] != "") {
+                    $phone = $ar_property["MOBILE_NUMBER"]["VALUE"];
+                }
+                if ($ar_property["MOBILE_NUMBER2"]["VALUE"] != "") {
+                    $phone2 = $ar_property["MOBILE_NUMBER2"]["VALUE"];
+                }
+                if ($ar_property["MOBILE_NUMBER3"]["VALUE"] != "") {
+                    $phone3 = $ar_property["MOBILE_NUMBER3"]["VALUE"];
+                }
+                $hospital_id = $ar_Field['ID'];
 
+                $logo_company = CFile::GetFileArray($ar_property["LOGO_IMG"]['VALUE']);
 
+                $hospital = $ar_Field['~NAME'];
+                $sect_id = $ar_Field['IBLOCK_SECTION_ID'];
+
+            }
         }
     }
 
@@ -112,6 +116,9 @@ $this->setFrameMode(true);
                     <p>Cтраховая компания</p>
                 </div>
                 <div class="item_data">
+                    <div class="logo_block">
+                        <img src="<?=$logo_company["SRC"]?>">
+                    </div>
                     <p><?= $hospital ?></p>
                 </div>
             </div>

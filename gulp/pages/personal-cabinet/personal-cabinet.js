@@ -202,32 +202,29 @@ $(document).ready(function() {
   console.log(region);
   if(region != "" || region != undefined || region != "0"){
     fd.append("town",region );
+    let hospital = $('#referal_two').attr('data-id_region');
+
+    if(hospital != "" || hospital != undefined || region != "0"){
+      fd.append("id_company",hospital);
+    }
   }
-  let hospital = $('#referal_two').attr('data-id_region');
-
-  if(hospital != "" || hospital != undefined || region != "0"){
-    fd.append("id_company",hospital);
-  }
 
 
 
-    if(data_FORM[5]['value'].length >16 ){
+
+    if(data_FORM[4]['value'].length >16 ){
       $('[name=uf_insurance_policy]').after(
           ' <span class="label danger  error-policy-max "  >Введен длинный номер полиса</span>');
       error.push("error");
 
-    }else if( data_FORM[5]['value'].length  <16){
+    }else if( data_FORM[4]['value'].length  <16){
       $('[name=uf_insurance_policy]').after(
           '<span class="label danger  error-policy-min "  >Введен короткий номер полиса</span>');
       error.push("error");
     }
 
 
-    if(data_FORM[3]['value'].length <16){
-      $('[name=personal_phone]').after(
-          '<span class="label danger  error-personal_phone "  >Введен короткий номер телефона</span>');
-      error.push("error");
-    }
+
     if(data_FORM[1]['value'].length <2){
       $('[name=name]').after(
           '<span class="label danger  error-name "  >Введите имя</span>');
@@ -243,7 +240,7 @@ $(document).ready(function() {
           '<span class="label danger  error-second_name "  >Введите отчество</span>');
       error.push("error");
     }
-  if(data_FORM[4]['value'].length <2){
+  if(data_FORM[3]['value'].length <2){
     $('[name=email]').after(
         '<span class="label danger  error-email "  >Введите эмеил</span>');
     error.push("error");
@@ -252,13 +249,12 @@ $(document).ready(function() {
   fd.append('name', data_FORM[1]['value']);
   fd.append('last_name', data_FORM[0]['value']);
   fd.append('second_name', data_FORM[2]['value']);
-  fd.append('personal_phone', data_FORM[3]['value']);
-  fd.append('email', data_FORM[4]['value']);
-  fd.append('uf_insurance_policy', data_FORM[5]['value']);
+  fd.append('email', data_FORM[3]['value']);
+  fd.append('uf_insurance_policy', data_FORM[4]['value']);
 
     if(error.length == 0) {
       $.ajax({
-        url: '/ajax/change_data_user.php',
+        url: '/ajax/personal-cabinet/change_data_user.php',
         type: 'POST',
         data: fd,
         processData: false,

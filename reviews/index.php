@@ -197,12 +197,12 @@ $arUser = $rsUser->Fetch();
                             $arUserComments = $rsUserComments->Fetch();
                             $name_userComments = $arUserComments["NAME"];
 
-                            $file_comment = CFile::ResizeImageGet($arUserComments["PERSONAL_PHOTO"],
-                                array('width' => 50, 'height' => 50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
+//                            $file_comment = CFile::ResizeImageGet($arUserComments["PERSONAL_PHOTO"],
+//                                array('width' => 50, 'height' => 50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
                             ?>
 
                 <div class="hidenComments__top">
-                    <img src="<?php echo $file_comment["src"] ?>" alt="OMS">
+<!--                    <img src="--><?php //echo $file_comment["src"] ?><!--" alt="OMS">-->
                     <?if($arPropsComments["REPRESENTATIVE"]["VALUE"] == "1"){?>
                     <div class="feedback_strah_user">
                         <p class="text_user">Представитель страховой службы</p>
@@ -237,13 +237,13 @@ $arUser = $rsUser->Fetch();
                                         $rsUserQuote = CUser::GetByID($ID_USERQuote);
                                         $arUserQuote = $rsUserQuote->Fetch();
                                         $name_userQuote = $arUserQuote["NAME"];
-                                        $file_quote = CFile::ResizeImageGet($arUserQuote["PERSONAL_PHOTO"],
-                                            array('width' => 50, 'height' => 50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
+//                                        $file_quote = CFile::ResizeImageGet($arUserQuote["PERSONAL_PHOTO"],
+//                                            array('width' => 50, 'height' => 50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
                                         ?>
                     <div class="hidenComments__top">
 
-                                            <img src="<?php echo $file_quote["src"]; ?>"
-                                                 alt="OMS">
+<!--                                            <img src="--><?php //echo $file_quote["src"]; ?><!--"-->
+<!--                                                 alt="OMS">-->
                                             <? if ($arPropsQuote["REPRESENTATIVE"]["VALUE"] == "1") { ?>
                                                 <div class="feedback_strah_user">
                                                     <p class="text_user">Представитель страховой службы</p>
@@ -435,11 +435,11 @@ $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 10
          $rsUserComments = CUser::GetByID($arPropsComments["AVTOR_COMMENTS"]["VALUE"]);
          $arUserComments = $rsUserComments->Fetch();
          $name_userComments = $arUserComments["NAME"];
-         $file_comment = CFile::ResizeImageGet($arUserComments["PERSONAL_PHOTO"], array('width'=>50, 'height'=>50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
+//         $file_comment = CFile::ResizeImageGet($arUserComments["PERSONAL_PHOTO"], array('width'=>50, 'height'=>50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
          ?>
 
             <div class="hidenComments__top">
-                <img src="<?php echo $file_comment["src"] ?>" alt="OMS">
+<!--                <img src="--><?php //echo $file_comment["src"] ?><!--" alt="OMS">-->
                 <?if($arPropsComments["REPRESENTATIVE"]["VALUE"] == "1"){?>
                 <div class="feedback_strah_user">
                     <p class="text_user">Представитель страховой службы</p>
@@ -474,13 +474,13 @@ $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 10
                                         $rsUserQuote = CUser::GetByID($ID_USERQuote);
                                         $arUserQuote = $rsUserQuote->Fetch();
                                         $name_userQuote = $arUserQuote["NAME"];
-                                        $file_quote = CFile::ResizeImageGet($arUserQuote["PERSONAL_PHOTO"],
-                                            array('width' => 50, 'height' => 50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
+//                                        $file_quote = CFile::ResizeImageGet($arUserQuote["PERSONAL_PHOTO"],
+//                                            array('width' => 50, 'height' => 50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
                                         ?>
                                         <div class="hidenComments__top">
 
-                                            <img src="<?php echo $file_quote["src"]; ?>"
-                                                 alt="OMS">
+<!--                                            <img src="--><?php //echo $file_quote["src"]; ?><!--"-->
+<!--                                                 alt="OMS">-->
                                             <? if ($arPropsQuote["REPRESENTATIVE"]["VALUE"] == "1") { ?>
                                                 <div class="feedback_strah_user">
                                                     <p class="text_user">Представитель страховой службы</p>
@@ -674,12 +674,12 @@ if(isset($ID_rewievs[0])) {
                     $rsUserComments = CUser::GetByID($arPropsComments["AVTOR_COMMENTS"]["VALUE"]);
                     $arUserComments = $rsUserComments->Fetch();
                     $name_userComments = $arUserComments["NAME"];
-                    $file_comment = CFile::ResizeImageGet($arUserComments["PERSONAL_PHOTO"],
-                        array('width' => 50, 'height' => 50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
+//                    $file_comment = CFile::ResizeImageGet($arUserComments["PERSONAL_PHOTO"],
+//                        array('width' => 50, 'height' => 50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
                     ?>
 
                     <div class="hidenComments__top">
-                        <img src="<?php echo $file_comment["src"] ?>" alt="OMS">
+<!--                        <img src="--><?php //echo $file_comment["src"] ?><!--" alt="OMS">-->
                         <? if ($arPropsComments["REPRESENTATIVE"]["VALUE"] == "1") { ?>
                             <div class="feedback_strah_user">
                                 <p class="text_user">Представитель страховой службы</p>
@@ -714,12 +714,12 @@ if(isset($ID_rewievs[0])) {
                                 $rsUserQuote = CUser::GetByID($ID_USERQuote);
                                 $arUserQuote = $rsUserQuote->Fetch();
                                 $name_userQuote = $arUserQuote["NAME"];
-                                $file_quote = CFile::ResizeImageGet($arUserQuote["PERSONAL_PHOTO"],
-                                    array('width' => 50, 'height' => 50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
+//                                $file_quote = CFile::ResizeImageGet($arUserQuote["PERSONAL_PHOTO"],
+//                                    array('width' => 50, 'height' => 50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
                                 ?>
                                 <div class="hidenComments__top">
 
-                                    <img src="<?php echo $file_quote["src"]; ?>" alt="OMS">
+<!--                                    <img src="--><?php //echo $file_quote["src"]; ?><!--" alt="OMS">-->
                                     <? if ($arPropsQuote["REPRESENTATIVE"]["VALUE"] == "1") { ?>
                                         <div class="feedback_strah_user">
                                             <p class="text_user">Представитель страховой службы</p>

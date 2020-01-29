@@ -54,7 +54,7 @@ $countReviews = count($allReviews);
         <a href="/add-feedback/" class="mainBtn">Добавить отзыв</a>
         <a href="?comments=all" class="accentBtn">Все отзывы</a>
         <?php if ($USER->IsAdmin()){ ?>
-        <a href="?admin=property_verified" class="accentBtn">Модерция отзыввов</a>
+        <a href="?admin=property_verified" class="accentBtn">Модерция отзывов</a>
         <?php } ?>
     </div>
 
@@ -476,8 +476,8 @@ $countReviews = count($allReviews);
                         $arUserComments = $rsUserComments->Fetch();
                         $name_userComments = $arUserComments["NAME"];
 
-                            $file_comment = CFile::ResizeImageGet($arUserComments["PERSONAL_PHOTO"],
-                                array('width' => 50, 'height' => 50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
+//                            $file_comment = CFile::ResizeImageGet($arUserComments["PERSONAL_PHOTO"],
+//                                array('width' => 50, 'height' => 50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
 
 
                         ?>
@@ -490,7 +490,7 @@ $countReviews = count($allReviews);
                 </div>
                 <?php } ?>
                 <div class="hidenComments__top">
-                    <img src="<?php echo $file_comment["src"] ?>" alt="OMS">
+<!--                    <img src="--><?php //echo $file_comment["src"] ?><!--" alt="OMS">-->
 
 
                     <? if ($arPropsComments["REPRESENTATIVE"]["VALUE"] == "1") { ?>
@@ -550,13 +550,13 @@ $countReviews = count($allReviews);
                                     $rsUserQuote = CUser::GetByID($ID_USERQuote);
                                     $arUserQuote = $rsUserQuote->Fetch();
                                     $name_userQuote = $arUserQuote["NAME"];
-                                    $file_quote = CFile::ResizeImageGet($arUserQuote["PERSONAL_PHOTO"],
-                                        array('width' => 50, 'height' => 50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
+//                                    $file_quote = CFile::ResizeImageGet($arUserQuote["PERSONAL_PHOTO"],
+//                                        array('width' => 50, 'height' => 50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
 
                                     ?>
                     <div class="hidenComments__top">
 
-                        <img src="<?php echo $file_quote["src"]; ?>" alt="OMS">
+<!--                        <img src="--><?php //echo $file_quote["src"]; ?><!--" alt="OMS">-->
 
 
                         <? if ($arPropsQuote["REPRESENTATIVE"]["VALUE"] == "1") { ?>

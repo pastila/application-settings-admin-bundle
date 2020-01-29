@@ -166,8 +166,8 @@ $url = $APPLICATION->GetCurDir();
                             <?php
                             $rsUser = CUser::GetByID($ID_USER);
                             $person = $rsUser->Fetch();
-
-                            $file = CFile::ResizeImageGet($person["PERSONAL_PHOTO"], array('width'=>50, 'height'=>50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
+//
+//                            $file = CFile::ResizeImageGet($person["PERSONAL_PHOTO"], array('width'=>50, 'height'=>50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
                             if($url != "/personal-cabinet/") {
                                 if ($person['UF_INSURANCE_COMPANY'] != '') {
                                 if (CIBlockElement::GetByID($person['UF_INSURANCE_COMPANY'])->SelectedRowsCount() != 0) {
@@ -222,7 +222,7 @@ $url = $APPLICATION->GetCurDir();
 
                             ?>
 
-                            <img src="<?=$file["src"]?>" alt="">
+<!--                            <img src="--><?//=$file["src"]?><!--" alt="">-->
                         </div>
                     </div>
 

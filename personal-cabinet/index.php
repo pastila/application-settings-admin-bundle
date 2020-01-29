@@ -5,6 +5,7 @@ $asset = Asset::getInstance();
 CModule::IncludeModule('iblock');
 $asset->addCss(SITE_TEMPLATE_PATH . "/pages/personal-cabinet/personal-cabinet.min.css");
 $asset->addJs(SITE_TEMPLATE_PATH . "/pages/personal-cabinet/personal-cabinet.min.js");
+//$asset->addJs("/gulp/pages/personal-cabinet/personal-cabinet.js");
 global $USER;
 if ($_GET['forgot_password'] == 'yes' and !$USER->IsAuthorized()) {
     $APPLICATION->IncludeComponent(
@@ -26,8 +27,8 @@ $person = $rsUser->Fetch();
 $ID_company = $person["UF_INSURANCE_COMPANY"];
 
     $logo_user = CFile::GetFileArray($person["PERSONAL_PHOTO"]);
-$arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_LOGO_IMG","PROPERTY_MOBILE_NUMBER","PROPERTY_MOBILE_NUMBER2","PROPERTY_MOBILE_NUMBER3");
-$arFilter = Array("IBLOCK_ID"=>16, "ID"=>$ID_company);
+$arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_LOGO_IMG","PROPERTY_MOBILE_NUMBER","PROPERTY_MOBILE_NUMBER2","PROPERTY_MOBILE_NUMBER3","PROPERTY_KPP");
+$arFilter = Array("IBLOCK_ID"=>16, "ID"=>$ID_company ,"ACTIVE"=> 'Y');
 $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
 while($ob = $res->GetNextElement()){
     $arFields = $ob->GetFields();
@@ -35,10 +36,11 @@ while($ob = $res->GetNextElement()){
   $logo_company = CFile::GetFileArray($arFields["PROPERTY_LOGO_IMG_VALUE"]);
 
 }
+
     $arFilter = Array('IBLOCK_ID'=>16, 'ID'=>$person["UF_REGION"]);
     $db_list = CIBlockSection::GetList(Array($by=>$order), $arFilter, true);
     if($ar_result = $db_list->GetNext()){
-      
+
     }
 
 ?>
@@ -175,7 +177,7 @@ while($ob = $res->GetNextElement()){
                    <p>Номер телефона</p>
                </div>
                <div class="item_data input__wrap">
-                   <input type="text" name="personal_phone" maxlength="16" data-mask="+7 (000) 000 00 00" placeholder="+7 (___) ___ __ __" value="<?=$person["PERSONAL_PHONE"];?>">
+                   <p><?=$person["PERSONAL_PHONE"];?></p>
                </div>
            </div>
            <div class="flex_data">
@@ -198,20 +200,20 @@ while($ob = $res->GetNextElement()){
                </div>
            </div>
 
-               <div class="flex_data">
-               <div class="item_data">
-                   <p>Аватарка</p>
-               </div>
-               <div class="item_data file-input">
-                   <input type="file" name="file" class="input_file"
-                          accept="image/*">
-                   <span class="button smallAccentBtn">Выберите файл</span>
-                   <span class="label" data-js-label>.png .jpeg</span>
-                   <span class="label error-inputs block-error-label">Максимальный размер файла 10mb</span>
-                   <span class="label error-inputs block-error-label_size" style="display: none" >Размер файла превышен</span>
-                   <span class="label error-inputs block-error-label_format" style="display: none" >Не вервый формат</span>
-               </div>
-           </div>
+<!--               <div class="flex_data">-->
+<!--               <div class="item_data">-->
+<!--                   <p>Аватарка</p>-->
+<!--               </div>-->
+<!--               <div class="item_data file-input">-->
+<!--                   <input type="file" name="file" class="input_file"-->
+<!--                          accept="image/*">-->
+<!--                   <span class="button smallAccentBtn">Выберите файл</span>-->
+<!--                   <span class="label" data-js-label>.png .jpeg</span>-->
+<!--                   <span class="label error-inputs block-error-label">Максимальный размер файла 10mb</span>-->
+<!--                   <span class="label error-inputs block-error-label_size" style="display: none" >Размер файла превышен</span>-->
+<!--                   <span class="label error-inputs block-error-label_format" style="display: none" >Не вервый формат</span>-->
+<!--               </div>-->
+<!--           </div>-->
                <div class="feedback__top">
                    <div class="custom-select custom-select-js-cite styles-select-personal">
 
@@ -226,7 +228,7 @@ while($ob = $res->GetNextElement()){
 
 
 
-                               <input id="referal"  value="<?php echo $ar_result["NAME"]  ?>" type="text" data-id_region="0" placeholder="Поиск по региону" autocomplete="off"/>
+                               <input id="referal"  value="<?php echo $ar_result["NAME"]  ?>" type="text" data-id_region="<?=$ar_result["ID"]?>" placeholder="Поиск по региону" autocomplete="off"/>
                                <ul style="cursor: pointer;" class="custom-serach__items" id="search_result">
                                    <?
                                    $arOrder = Array("name"=>"asc");
@@ -243,12 +245,19 @@ while($ob = $res->GetNextElement()){
                        </div>
                        <div class="input__wrap half-wrap_input">
                            <label class="input__wrap_label" for="user_pass">Список страховых компаний : </label>
-                           <div class="block_relative search-second" style="pointer-events: none">
+                           <div class="block_relative search-second" >
                                <div class="input__ico">
                                    <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                                </div>
                                <input id="referal_two" value="<?= $arFields["NAME"]?>" type="text" data-id_region="0" placeholder="Поиск страховых компаний " autocomplete="off"/>
-                               <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_hospital">
+                               <ul  class="custom-serach__items" id="search_result_hospital">
+                                   <?php $arSelect = Array("ID", "IBLOCK_ID", "NAME", "PROPERTY_KPP");
+                                   $arFilter = Array("IBLOCK_ID"=>16, "IBLOCK_SECTION_ID"=> $person["UF_REGION"],"ACTIVE"=> 'Y');
+                                   $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+                                   while($ob = $res->GetNextElement()){
+                                       $arFields = $ob->GetFields(); ?>
+                                      <li value="<?=$arFields["ID"] ?>" data-kpp="<?=$arFields["PROPERTY_KPP_VALUE"]?>" class="custom-serach__items_item hospital "><?=$arFields["NAME"]?></li>
+                                  <? } ?>
 
                                </ul>
                            </div>
@@ -272,9 +281,9 @@ while($ob = $res->GetNextElement()){
        </div>
        <div class="edit_block">
            <a  class="accentBtn" id="change-data">Редактировать данные</a>
-           <div class="photo_user">
-               <img src="<?=$logo_user["SRC"]?>" alt="">
-           </div>
+<!--           <div class="photo_user">-->
+<!--               <img src="--><?//=$logo_user["SRC"]?><!--" alt="">-->
+<!--           </div>-->
        </div>
    </div>
     <div class="info_child">
@@ -285,7 +294,7 @@ while($ob = $res->GetNextElement()){
         </p>
     </div>
 
-    <a class="mainBtn main-button-styles" id="add_children_btn">Добавить ребенка</a>
+    <a class="mainBtn main-button-styles" id="add_children_btn">Добавить ребенка или опекаемого</a>
     <div class="flex_personal">
         <div class="personal_data" id="add_children" style="display: none">
             <form  onsubmit="return false" id="add_children_form" action="" enctype="multipart/form-data">
