@@ -53,6 +53,9 @@ $countReviews = count($allReviews);
     <div class="feedback__btns">
         <a href="/add-feedback/" class="mainBtn">Добавить отзыв</a>
         <a href="?comments=all" class="accentBtn">Все отзывы</a>
+        <?php if ($USER->IsAdmin()){ ?>
+        <a href="?admin=property_verified" class="accentBtn">Новые отзывы</a>
+        <?php } ?>
     </div>
 
     <div class="feedback__filter">
@@ -295,16 +298,24 @@ $countReviews = count($allReviews);
         <!-- FeedBack block -->
 
         <?php
-        $fiterby = "";
-        $filterorder = "";
+
         $arFilter = Array(
             "IBLOCK_ID" => 13,
             "ACTIVE" => "Y",
+
         );
 
-        foreach ($sort_url as $key => $filter) {
-            $key = mb_strtoupper($key);
-            $arFilter += [$key => $filter];
+        if(isset($sort_url["admin"])){
+            $arFilter = Array(
+                "IBLOCK_ID" => 13,
+                "ACTIVE" => "Y",
+                $sort_url["admin"] => false,
+            );
+        }else {
+            foreach ($sort_url as $key => $filter) {
+                $key = mb_strtoupper($key);
+                $arFilter += [$key => $filter];
+            }
         }
 
         $order = Array("created" => "desc");
@@ -472,6 +483,7 @@ $countReviews = count($allReviews);
                         ?>
                 <?php if ($USER->IsAdmin()) { ?>
                 <div class="block_remove">
+
                     <div data-id="<?php echo $arFieldsComments["ID"]; ?>" class="delet_comment remove_comment">Удалить
                         комментарий
                     </div>
@@ -572,6 +584,23 @@ $countReviews = count($allReviews);
 
             <?php if ($USER->IsAdmin()) { ?>
             <div class="right_content-reviews">
+
+                <?php  if(isset($sort_url["admin"])){ ?>
+
+                    <div id="checkbox-box_<?= $arFields["ID"];?>" class="wrap-chrckbox"  >
+                        <label class="check-label years" data-chec="Y">
+                            промодерирован          <input name="years" type="checkbox" value="accepted">
+                            <span class="check-img"></span>
+                        </label>
+                        <label class="check-label years" data-chec="Y">
+                          не по теме          <input name="years" type="checkbox" value="reject">
+                            <span class="check-img"></span>
+                        </label>
+
+                        <span style="padding-top: 4px" onclick="check_review(this)" data-check-id="<?= $arFields["ID"]; ?>" >Применить</span>
+                    </div>
+
+                <? }?>
                 <div title="Удалить отзыв" data-id="<?php echo $arFields["ID"]; ?>" class="dalete_review inline_block">
                     Удалить отзыв
                 </div>

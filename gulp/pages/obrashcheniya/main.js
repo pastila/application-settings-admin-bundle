@@ -392,6 +392,7 @@ if(cur_el.find(policy).val().length === 16) {
                       if( $("[data-block_img="+element[1]+"]").find("[id*=img_block_"+element[1]).length !== 0){
                         $("#send_" + element[1]).attr("onclick","send_ms(this)");
                         $("#send_" + element[1]).removeClass("disabled");
+                        $(".datepicker-here_"+element[1]).remove();
                       }
                     }
                   });
@@ -489,7 +490,7 @@ if(cur_el.find(policy).val().length === 16) {
                   },
                 }).done(function(msg) {
                   if( $("[data-block_img="+element[1]+"]").find("[id*=img_block_"+element[1]).length !== 0){
-
+                    $(".datepicker-here_"+element[1]).remove();
                     $("#send_" + element[1]).attr("onclick","send_ms(this)");
                     $("#send_" + element[1]).removeClass("disabled");
                   }
@@ -826,7 +827,7 @@ function save_date(sv) {
 
                       $("#date_picker_"+id).css({"display":"none"});
                       $("#edit_"+id).attr("onclick","edit(this)");
-
+                      $(".datepicker-here_"+id).remove();
                       if( $("[data-block_img="+id+"]").find("[id*=img_block_"+id).length !== 0){
                         $("#send_" + id).attr("onclick","send_ms(this)");
                         $("#send_" + id).removeClass("disabled");
@@ -933,7 +934,7 @@ function save_date(sv) {
 
                   $("#date_picker_"+id).css({"display":"none"});
                   $("#edit_"+id).attr("onclick","edit(this)");
-
+                  $(".datepicker-here_"+id).remove();
                  if( $("[data-block_img="+id+"]").find("[id*=img_block_"+id).length !== 0){
                    $("#send_" + id).attr("onclick","send_ms(this)");
                    $("#send_" + id).removeClass("disabled");

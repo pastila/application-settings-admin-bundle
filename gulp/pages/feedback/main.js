@@ -200,6 +200,7 @@ $(document).on("click",".select-items div",function() {
 
 $(document).ready(function() {
 
+
   $(".delet_cation").click(function() {
     var id = $(this).attr("data-id");
     var data = {
@@ -263,3 +264,55 @@ $(document).ready(function() {
 
 });
 
+function  check_review(el) {
+ var _= $(el);
+ var id= _.attr("data-check-id");
+ var arr_check = $("#checkbox-box_"+id+" input:checked");
+ var data = {};
+ var accepted ="";
+ var reject = "";
+
+
+
+if(arr_check.length >0 ) {
+
+  if(arr_check[0]["value"] == "accepted") {
+    accepted = "accepted";
+  }
+  if(arr_check[0]["value"] == "reject") {
+    reject = "reject";
+  }
+
+  if(arr_check.length >1 ) {
+    if (arr_check[1]["value"] == "accepted") {
+      accepted = "accepted";
+    }
+    if (arr_check[1]["value"] == "reject") {
+      reject = "reject";
+    }
+  }
+  data= {
+    'id':id,
+    "accepted":accepted,
+    "reject":reject,
+  };
+
+
+
+      $.ajax({
+            dataType: 'html',
+            url: '/ajax/for_admin/check-review.php',
+            type: 'POST',
+            data: data,
+            beforeSend: function() {
+
+            },
+            success: function(msg){
+
+            },
+          }).done(function(msg) {
+
+          });
+
+}
+}

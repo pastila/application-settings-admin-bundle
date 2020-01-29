@@ -47,7 +47,7 @@ if (count($arResult["ITEMS"]) > 0) {
 
                 <p id="error_<?= $arItem["ID"] ?>" class="semi-bold error mb-2"></p>
                 <?php if($arItem["PROPERTIES"]["VISIT_DATE"]["VALUE"] == ""){ ?>
-                    <p id="error_<?= $arItem["ID"] ?>" class="semi-bold error mb-2 datepicker-here<?= $arItem["ID"] ?>">Введите дату оплаты</p>
+                    <p id="error_<?= $arItem["ID"] ?>" class="semi-bold error mb-2 datepicker-here_<?= $arItem["ID"] ?>">Введите дату оплаты</p>
 <?php } ?>
                 <p id="success_<?= $arItem["ID"] ?>" class="semi-bold success mb-2"></p>
                 <p class="semi-bold obrashcheniya__content_left_center_item_text-full hidden with_out_pdf error mb-2">Без  сформированного документа PDF нельзя отрпавить обращение</p>
