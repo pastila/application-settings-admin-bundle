@@ -322,15 +322,31 @@ $(document).ready(function() {
 
                 $('.header__r_auth_reg').attr('data-rigstration', '1');
                 $('body').css({'overflow': 'hidden'});
-                setTimeout(function() {
-                  $.magnificPopup.open({
-                    items: {
-                      src: '<div class="white-popup custom_styles_popup">Регистрация  успешно завершена . Теперь вы можете проверить свой диагноз.</div>',
-                      type: 'inline',
-                    },
-                  });
-                  $('body').css({'overflow': 'initial'});
-                }, 1000);
+
+                    $.ajax({
+                          dataType: 'html',
+                          url: '/ajax/forma-obrashenija/reload_header.php',
+                          type: 'POST',
+                          beforeSend: function() {
+
+                          },
+                          success: function(msg){
+                            console.log(msg);
+                            $(".header__r").html("");
+                            $(".header__r").html(msg);
+                          },
+                        }).done(function(msg) {
+                      setTimeout(function() {
+                        $.magnificPopup.open({
+                          items: {
+                            src: '<div class="white-popup custom_styles_popup">Регистрация  успешно завершена . Теперь вы можете проверить свой диагноз.</div>',
+                            type: 'inline',
+                          },
+                        });
+                        $('body').css({'overflow': 'initial'});
+                      }, 1000);
+                         });
+
 
               } else {
                  location.reload();
@@ -554,7 +570,7 @@ function toggleClass(elem, className) {
 }
 
 $(document).ready(function() {
-  $('#show-mnu').click(function() {
+  $(document).on("click","#show-mnu",function() {
     $('#show-mnu').toggleClass('active');
   });
   $(document).on('click', function(e) {
