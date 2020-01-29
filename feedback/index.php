@@ -54,7 +54,7 @@ $countReviews = count($allReviews);
         <a href="/add-feedback/" class="mainBtn">Добавить отзыв</a>
         <a href="?comments=all" class="accentBtn">Все отзывы</a>
         <?php if ($USER->IsAdmin()){ ?>
-        <a href="?admin=property_verified" class="accentBtn">Новые отзывы</a>
+        <a href="?admin=property_verified" class="accentBtn">Модерция отзыввов</a>
         <?php } ?>
     </div>
 
@@ -376,7 +376,7 @@ $countReviews = count($allReviews);
                 BX_RESIZE_IMAGE_PROPORTIONAL, true);
 
             ?>
-        <div class="white_block">
+        <div class="white_block white_block_riview_<?= $arFields["ID"]; ?>" >
             <?php if ($Date_change_user != "") { ?>
             <span class="date_review">Дата изменения <?php echo $Date_change_user; ?></span>
             <?php } ?>

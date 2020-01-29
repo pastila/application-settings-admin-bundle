@@ -297,8 +297,6 @@ if(arr_check.length >0 ) {
     "reject":reject,
   };
 
-
-
       $.ajax({
             dataType: 'html',
             url: '/ajax/for_admin/check-review.php',
@@ -308,7 +306,11 @@ if(arr_check.length >0 ) {
 
             },
             success: function(msg){
+              if(msg == "1"){
+              $(".white_block_riview_"+id).html("");
+              $(".white_block_riview_"+id).html("Отзыв промодерирован и произведен посчтет рейтинга");
 
+              }
             },
           }).done(function(msg) {
 

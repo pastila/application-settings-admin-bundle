@@ -41,6 +41,10 @@ if ($_POST) {
 
         \CIBlockElement::SetPropertyValuesEx($_POST["id"], 13, $arField);
 
+        $el = new \CIBlockElement;
+        $el->Update($_POST["id"], ['ACTIVE' => "Y"]);
+
+       echo "1";
 
     }
 }
