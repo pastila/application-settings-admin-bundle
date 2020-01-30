@@ -108,7 +108,9 @@ $this->setFrameMode(true);
                     <p>Регион страхования</p>
                 </div>
                 <div class="item_data">
-                    <p><?= $ob["NAME"] ?></p>
+                    <?php if ($hospital) { ?>
+                        <p><?= $ob["NAME"] ?></p>
+                    <?php } ?>
                 </div>
             </div>
             <div class="flex_data">
