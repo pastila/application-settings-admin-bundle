@@ -118,10 +118,10 @@
                     <h5 class="title">Выгрузка МО</h5>
                 </div>
                 <div class="body">
-                    <input  type="file" name="file"   id="id-from"/>
+                    <input  type="file" name="file"   id="id-file_mo"/>
                 </div>
                 <div class="footer">
-                    <button id="my_adm_btn_exp_ord" type="button" class="btn btn-primary">Выгрузить</button>
+                    <button id="my_adm_btn_exp_ord" type="button" class="btn btn-primary">Запустить импорт</button>
                 </div>
             </div>
         </div>
@@ -154,13 +154,71 @@
               });
                 $('#my_adm_btn_exp_ord').click(function () {
 
+                  var fd = new FormData();
+
+                  var input_file = $('#id-file_mo');
+
+
+                  if (input_file.prop('files')[0] != undefined) {
+                    fd.append('import_file', input_file.prop('files')[0]);
+                  }
+
+        $.ajax({
+
+              url: '/ajax/for_admin/import/import_mo.php',
+              type: 'POST',
+              data: fd,
+              processData: false,
+              contentType: false,
+              beforeSend: function() {
+                    $("#my_adm_btn_exp_ord").css({"display":"none"});
+              },
+              success: function(msg){
+                if(msg != 0 ){
+                        $.ajax({
+                              url: '/ajax/for_admin/import/run_import_mo.php',
+                              type: 'POST',
+
+                              beforeSend: function() {
+
+                                $("#my_adm_btn_exp_ord").after('<span class="run_span"> импорт файал запущен ,ожидаемое время 20 минут,страницу можно закрыть. </span>');
+                                $(document).mouseup(function (e){ // событие клика по веб-документу
+                                  var div = $(".run_span"); // тут указываем ID элемента
+                                  if (!div.is(e.target) // если клик был не по нашему блоку
+                                      && div.has(e.target).length === 0) { // и не по его дочерним элементам
+                                    div.remove(); // скрываем его
+                                  }
+
+                                });
+                              },
+                              success: function(msg){
+                                console.log(msg);
+
+
+
+                              },
+                            }).done(function(msg) {
+
+                            });
+                }else{
+                    $("#my_adm_btn_exp_ord").after('<span class="error_span"> Файл не удалось сохранить</span>');
+                  $(document).mouseup(function (e){ // событие клика по веб-документу
+                    var div = $(".error_span"); // тут указываем ID элемента
+                    if (!div.is(e.target) // если клик был не по нашему блоку
+                        && div.has(e.target).length === 0) { // и не по его дочерним элементам
+                      div.remove(); // скрываем его
+                    }
+                  });
+                }
+              },
+            }).done(function(msg) {
+
+            });
 
 
 
 
-                    // if (from.length > 0 && to.length > 0) {
-                            window.open('/ajax/export_orders_to_csv.php?from=' + from + '&to=' + to);
-                    // }
+
                 });
 
 
