@@ -369,7 +369,7 @@ $(document).ready(function() {
             },
             callbacks: {
               afterClose: function() {
-                // document.location.reload(true);
+                document.location.reload(true);
               },
             },
           });
