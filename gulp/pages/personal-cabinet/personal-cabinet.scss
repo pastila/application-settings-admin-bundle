@@ -33,6 +33,12 @@
           @media(min-width: 576px){
             width: 49%;
           }
+          &_text{
+            height: 5rem;
+            padding: 0 3rem;
+            display: flex;
+            align-items: center;
+          }
         }
       }
     }
@@ -86,6 +92,13 @@
   margin-top: 2rem;
   .main-button-styles {
     margin-right: 2rem;
+  }
+  &_button{
+    margin-bottom: 2rem;
+    @media(max-width: 991px){
+      margin-bottom: 0;
+      margin-right: 2rem;
+    }
   }
 }
 .absolute-error{

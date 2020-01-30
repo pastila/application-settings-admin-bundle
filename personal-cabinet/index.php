@@ -177,7 +177,7 @@ while($ob = $res->GetNextElement()){
                    <p>Номер телефона</p>
                </div>
                <div class="item_data input__wrap">
-                   <p><?=$person["PERSONAL_PHONE"];?></p>
+                   <p class="item_data_text"><?=$person["PERSONAL_PHONE"];?></p>
                </div>
            </div>
            <div class="flex_data">
