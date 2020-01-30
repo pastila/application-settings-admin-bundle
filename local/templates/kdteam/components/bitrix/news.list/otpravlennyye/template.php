@@ -156,16 +156,15 @@ if (count($arResult["ITEMS"]) > 0) {
                             </div>
 
                             <div class="obrashcheniya__content_left_center_item">
-                                <div class="obrashcheniya__content_left_center_item_text obrashcheniya__content_left_center_item_date-block blue">
-                                    Дата оплаты медицинских услуг:
-                                    <div class="obrashcheniya__content_left_center_item_date-block_edit" data-id-date_picker_edit="<?= $arItem['ID'] ?>" onclick="edit_date(this)">
+                                <div class="obrashcheniya__content_left_center_item_text blue">
+                                    <span class="obrashcheniya__content_left_center_item_date-block">Дата оплаты медицинских услуг: <div class="obrashcheniya__content_left_center_item_date-block_edit" data-id-date_picker_edit="<?= $arItem['ID'] ?>" onclick="edit_date(this)">
                                         <img src="<?= SITE_TEMPLATE_PATH ?>/images/svg/edit.svg" alt="" id="svg_edit_<?= $arItem['ID'] ?>" >
                                     </div>
 
                                     <div class="obrashcheniya__content_left_center_item_date-block_edit" data-id-date_picker_save="<?= $arItem['ID'] ?>" onclick="save_date(this)" style="display: none">
                                         <img src="<?= SITE_TEMPLATE_PATH ?>/images/svg/save.svg" alt=""   id="svg_save_<?= $arItem['ID'] ?>">
                                         <img src="/images/gif/loading.gif"  style="display: none" alt="" id="gif_<?= $arItem['ID'] ?>">
-                                    </div>
+                                    </div></span>
                                 </div>
 
                                 <p id="time_<?= $arItem['ID'] ?>"
