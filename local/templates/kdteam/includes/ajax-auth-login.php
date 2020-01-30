@@ -17,7 +17,7 @@
 
                 <!-- Input -->
                 <div class="input__wrap">
-                    <label class="input__wrap_label">Логин</label>
+                    <label class="input__wrap_label">Логин / Электронная почта</label>
                     <input id="name" type="text" name="login" required>
                 </div>
 

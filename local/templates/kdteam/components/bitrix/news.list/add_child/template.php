@@ -43,12 +43,11 @@ $this->setFrameMode(true);
                 $logo_company = CFile::GetFileArray($ar_property["LOGO_IMG"]['VALUE']);
 
                 $hospital = $ar_Field['~NAME'];
-                $sect_id = $ar_Field['IBLOCK_SECTION_ID'];
 
             }
+            $sect_id = $ar_Field['IBLOCK_SECTION_ID'];
         }
     }
-
     $arFilter = array("IBLOCK_ID" => 16, 'ID' => $sect_id);
     $res_reg = CIBlockSection::GetList(
         array(),
@@ -60,183 +59,183 @@ $this->setFrameMode(true);
 
     }
     ?>
-    <div class="flex_personal">
-        <div id="element_<?= $arItem['ID'] ?>" class="personal_data">
 
-            <div class="flex_data">
-                <div class="item_data">
-                    <p>Фамилия</p>
-                </div>
-                <div class="item_data">
-                    <p><?= $arItem["PROPERTIES"]['SURNAME']['VALUE']; ?></p>
-                </div>
-            </div>
-            <div class="flex_data">
-                <div class="item_data">
-                    <p>Имя</p>
-                </div>
-                <div class="item_data">
-                    <p><?= $arItem["NAME"]; ?></p>
-                </div>
-            </div>
-            <div class="flex_data">
-                <div class="item_data">
-                    <p>Отчество</p>
-                </div>
-                <div class="item_data">
-                    <p><?= $arItem["PROPERTIES"]['PARTONYMIC']['VALUE']; ?></p>
-                </div>
-            </div>
-            <div class="flex_data">
-                <div class="item_data">
-                    <p>Дата рождения</p>
-                </div>
-                <div class="item_data">
-                    <p><?= $arItem["PROPERTIES"]['BIRTHDAY']['VALUE']; ?></p>
-                </div>
-            </div>
-            <div class="flex_data">
-                <div class="item_data">
-                    <p>Cтраховой полис</p>
-                </div>
-                <div class="item_data">
-                    <p><?= $arItem["PROPERTIES"]['POLICY']['VALUE']; ?></p>
-                </div>
-            </div>
-            <div class="flex_data">
-                <div class="item_data">
-                    <p>Регион страхования</p>
-                </div>
-                <div class="item_data">
-                    <?php if ($hospital) { ?>
-                        <p><?= $ob["NAME"] ?></p>
-                    <?php } ?>
-                </div>
-            </div>
-            <div class="flex_data">
-                <div class="item_data">
-                    <p>Cтраховая компания</p>
-                </div>
-                <div class="item_data">
-                    <div class="logo_block">
-                        <img src="<?=$logo_company["SRC"]?>">
-                    </div>
-                    <p><?= $hospital ?></p>
-                </div>
-            </div>
-            <div class="flex_data">
-                <div class="item_data">
-                    <p>Горячая линия компании</p>
-                </div>
-                <div class="item_data">
-                    <p><?= $phone ?></p>
-                    <p><?= $phone2 ?></p>
-                    <p><?= $phone3 ?></p>
-                </div>
-            </div>
-            <div class="submit_button submit_button-child">
-                <button id="edit_<?= $arItem['ID'] ?>" class="edit_js mainBtn main-button-styles">Редактировать</button>
-                <button id="del_<?= $arItem['ID'] ?>" class="del_js accentBtn main-button-styles">Удалить</button>
-            </div>
-        </div>
-        <div class="personal_data" id="edit_children_<?= $arItem['ID'] ?>" style="display: none">
-            <form onsubmit="return false" id="edit_children_form_<?= $arItem['ID'] ?>" action=""
-                  enctype="multipart/form-data">
-                <div class="flex_data">
-                    <div class="item_data">
-                        <p>Имя</p>
-                    </div>
-                    <div class="item_data input__wrap">
-                        <input id="children_name_add_<?= $arItem['ID'] ?>" required type="text" name="name"
-                               value="<?= $arItem["NAME"]; ?>">
-                    </div>
-                </div>
+        <div class="flex_personal" id="element_<?= $arItem['ID'] ?>">
+            <div class="personal_data">
                 <div class="flex_data">
                     <div class="item_data">
                         <p>Фамилия</p>
                     </div>
-                    <div class="item_data input__wrap">
-                        <input id="children_last_name_add_<?= $arItem['ID'] ?>" required type="text" name="last_name"
-                               value="<?= $arItem["PROPERTIES"]['SURNAME']['VALUE']; ?>">
+                    <div class="item_data">
+                        <p><?= $arItem["PROPERTIES"]['SURNAME']['VALUE']; ?></p>
+                    </div>
+                </div>
+                <div class="flex_data">
+                    <div class="item_data">
+                        <p>Имя</p>
+                    </div>
+                    <div class="item_data">
+                        <p><?= $arItem["NAME"]; ?></p>
                     </div>
                 </div>
                 <div class="flex_data">
                     <div class="item_data">
                         <p>Отчество</p>
                     </div>
-                    <div class="item_data input__wrap">
-                        <input id="children_second_name_add_<?= $arItem['ID'] ?>" required type="text"
-                               name="second_name"
-                               value="<?= $arItem["PROPERTIES"]['PARTONYMIC']['VALUE']; ?>">
-
+                    <div class="item_data">
+                        <p><?= $arItem["PROPERTIES"]['PARTONYMIC']['VALUE']; ?></p>
                     </div>
                 </div>
                 <div class="flex_data">
                     <div class="item_data">
                         <p>Дата рождения</p>
                     </div>
-                    <div class="item_data input__wrap">
-                        <input class="datepicker-here" required type="text" name="time"
-                               value="<?= $arItem["PROPERTIES"]['BIRTHDAY']['VALUE']; ?>"
-                               id="children_birthday_add_<?= $arItem['ID'] ?>"
-                               placeholder="DD.MM.YYYY"
-                               pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}">
+                    <div class="item_data">
+                        <p><?= $arItem["PROPERTIES"]['BIRTHDAY']['VALUE']; ?></p>
                     </div>
                 </div>
                 <div class="flex_data">
                     <div class="item_data">
                         <p>Cтраховой полис</p>
                     </div>
-                    <div class="item_data input__wrap">
-                        <input required type="text" id="child_policy_add_<?= $arItem['ID'] ?>" minlength="16"
-                               maxlength="16"
-                               name="uf_insurance_policy" value="<?= $arItem["PROPERTIES"]['POLICY']['VALUE']; ?>">
+                    <div class="item_data">
+                        <p><?= $arItem["PROPERTIES"]['POLICY']['VALUE']; ?></p>
                     </div>
                 </div>
-
-                <div id="hospitals_<?= $arItem['ID'] ?>" class="region_child">
-                    <?php
-                    $APPLICATION->IncludeComponent(
-                        "bitrix:catalog.section.list",
-                        "choise_hospital_edit",
-                        array(
-                            "VIEW_MODE" => "LIST",
-                            "SHOW_PARENT_NAME" => "N",
-                            "IBLOCK_TYPE" => "",
-                            "IBLOCK_ID" => "16",
-                            "SECTION_ID" => $sect_id,
-                            "SECTION_CODE" => "",
-                            "SECTION_URL" => "",
-                            "COUNT_ELEMENTS" => "N",
-                            "TOP_DEPTH" => "1",
-                            "SECTION_FIELDS" => "",
-                            "SECTION_USER_FIELDS" => "",
-                            "ADD_SECTIONS_CHAIN" => "N",
-                            "CACHE_TYPE" => "A",
-                            "CACHE_TIME" => "36000000",
-                            "CACHE_NOTES" => "",
-                            "CACHE_GROUPS" => "Y",
-                            "HOSPITAL" => $hospital_id,
-                            "HOSPITAL_NAME" => $hospital,
-                            "ID_ELEM" => $arItem['ID'],
-                        )
-                    ); ?>
+                <div class="flex_data">
+                    <div class="item_data">
+                        <p>Регион страхования</p>
+                    </div>
+                    <div class="item_data">
+                        <p><?= $ob["NAME"] ?></p>
+                    </div>
                 </div>
-                <div class="submit_button submit_button-child">
-                    <button class="mainBtn main-button-styles" type="submit" id="save_edit_<?= $arItem['ID'] ?>">
-                        Сохранить
-                    </button>
-                    <button class="accentBtn main-button-styles" type="submit" id="cancel_edit_<?= $arItem['ID'] ?>">
-                        Отмена
-                    </button>
+                <div class="flex_data">
+                    <div class="item_data">
+                        <p>Cтраховая компания</p>
+                    </div>
+                    <div class="item_data">
+                        <div class="logo_block">
+                            <img src="<?=$logo_company["SRC"]?>">
+                        </div>
+                        <p><?= $hospital ?></p>
+                    </div>
+                </div>
+                <div class="flex_data">
+                    <div class="item_data">
+                        <p>Горячая линия компании</p>
+                    </div>
+                    <div class="item_data">
+                        <p><?= $phone ?></p>
+                        <p><?= $phone2 ?></p>
+                        <p><?= $phone3 ?></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submit_button submit_button-child edit_block">
+                <button id="edit_<?= $arItem['ID'] ?>" class="edit_js mainBtn submit_button-child_button">Редактировать</button>
+                <button id="del_<?= $arItem['ID'] ?>" class="del_js accentBtn submit_button-child_button">Удалить</button>
+            </div>
+        </div>
+        <div id="edit_children_<?= $arItem['ID'] ?>" style="display: none">
+            <form onsubmit="return false" id="edit_children_form_<?= $arItem['ID'] ?>" action=""
+                  enctype="multipart/form-data">
+                <div class="flex_personal">
+                    <div class="personal_data">
+                        <div class="flex_data">
+                            <div class="item_data">
+                                <p>Имя</p>
+                            </div>
+                            <div class="item_data input__wrap">
+                                <input id="children_name_add_<?= $arItem['ID'] ?>" required type="text" name="name"
+                                       value="<?= $arItem["NAME"]; ?>">
+                            </div>
+                        </div>
+                        <div class="flex_data">
+                            <div class="item_data">
+                                <p>Фамилия</p>
+                            </div>
+                            <div class="item_data input__wrap">
+                                <input id="children_last_name_add_<?= $arItem['ID'] ?>" required type="text" name="last_name"
+                                       value="<?= $arItem["PROPERTIES"]['SURNAME']['VALUE']; ?>">
+                            </div>
+                        </div>
+                        <div class="flex_data">
+                            <div class="item_data">
+                                <p>Отчество</p>
+                            </div>
+                            <div class="item_data input__wrap">
+                                <input id="children_second_name_add_<?= $arItem['ID'] ?>" required type="text"
+                                       name="second_name"
+                                       value="<?= $arItem["PROPERTIES"]['PARTONYMIC']['VALUE']; ?>">
+
+                            </div>
+                        </div>
+                        <div class="flex_data">
+                            <div class="item_data">
+                                <p>Дата рождения</p>
+                            </div>
+                            <div class="item_data input__wrap">
+                                <input class="datepicker-here" required type="text" name="time"
+                                       value="<?= $arItem["PROPERTIES"]['BIRTHDAY']['VALUE']; ?>"
+                                       id="children_birthday_add_<?= $arItem['ID'] ?>"
+                                       placeholder="DD.MM.YYYY"
+                                       pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}">
+                            </div>
+                        </div>
+                        <div class="flex_data">
+                            <div class="item_data">
+                                <p>Cтраховой полис</p>
+                            </div>
+                            <div class="item_data input__wrap">
+                                <input required type="text" id="child_policy_add_<?= $arItem['ID'] ?>" minlength="16"
+                                       maxlength="16"
+                                       name="uf_insurance_policy" value="<?= $arItem["PROPERTIES"]['POLICY']['VALUE']; ?>">
+                            </div>
+                        </div>
+
+                        <div id="hospitals_<?= $arItem['ID'] ?>" class="region_child">
+                            <?php
+                            $APPLICATION->IncludeComponent(
+                                "bitrix:catalog.section.list",
+                                "choise_hospital_edit",
+                                array(
+                                    "VIEW_MODE" => "LIST",
+                                    "SHOW_PARENT_NAME" => "N",
+                                    "IBLOCK_TYPE" => "",
+                                    "IBLOCK_ID" => "16",
+                                    "SECTION_ID" => $sect_id,
+                                    "SECTION_CODE" => "",
+                                    "SECTION_URL" => "",
+                                    "COUNT_ELEMENTS" => "N",
+                                    "TOP_DEPTH" => "1",
+                                    "SECTION_FIELDS" => "",
+                                    "SECTION_USER_FIELDS" => "",
+                                    "ADD_SECTIONS_CHAIN" => "N",
+                                    "CACHE_TYPE" => "A",
+                                    "CACHE_TIME" => "36000000",
+                                    "CACHE_NOTES" => "",
+                                    "CACHE_GROUPS" => "Y",
+                                    "HOSPITAL" => $hospital_id,
+                                    "HOSPITAL_NAME" => $hospital,
+                                    "ID_ELEM" => $arItem['ID'],
+                                )
+                            ); ?>
+                        </div>
+                    </div>
+                    <div class="submit_button submit_button-child edit_block">
+                        <button class="mainBtn submit_button-child_button" type="submit" id="save_edit_<?= $arItem['ID'] ?>">
+                            Сохранить
+                        </button>
+                        <button class="accentBtn submit_button-child_button" type="submit" id="cancel_edit_<?= $arItem['ID'] ?>">
+                            Отмена
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
-        <div class="edit_block">
-        </div>
 
-
-    </div>
 
 
 <?php } ?>
