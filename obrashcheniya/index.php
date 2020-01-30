@@ -20,6 +20,7 @@ if ($USER->IsAuthorized()) { ?>
         <? } ?>
 
     </ul>
+    <h2 class="page-title">Ваши обращения</h2>
     <?php
     if (CModule::IncludeModule("iblock")) {
         $arFilter = array("IBLOCK_ID" => 11, "UF_USER_ID" => $USER->GetID());
@@ -83,7 +84,7 @@ if ($USER->IsAuthorized()) { ?>
             )
         );
     } else {?>
-        <a href="/forma-obrashenija/" class="page-title">У вас нет готовых обращений. Сформировать обращение на возврат средств за медицинскую помощь по программе ОМС. </a>
+        <p> У вас нет готовых обращений. Сформировать обращение на возврат средств за медицинскую помощь по программе ОМС можно  <a href="/forma-obrashenija/" class="page-title"> здесь. </a></p>
     <?php }?>
 <?php } else {
 
