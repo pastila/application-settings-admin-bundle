@@ -43,12 +43,11 @@ $this->setFrameMode(true);
                 $logo_company = CFile::GetFileArray($ar_property["LOGO_IMG"]['VALUE']);
 
                 $hospital = $ar_Field['~NAME'];
-                $sect_id = $ar_Field['IBLOCK_SECTION_ID'];
 
             }
+            $sect_id = $ar_Field['IBLOCK_SECTION_ID'];
         }
     }
-
     $arFilter = array("IBLOCK_ID" => 16, 'ID' => $sect_id);
     $res_reg = CIBlockSection::GetList(
         array(),
@@ -108,9 +107,7 @@ $this->setFrameMode(true);
                     <p>Регион страхования</p>
                 </div>
                 <div class="item_data">
-                    <?php if ($hospital) { ?>
                         <p><?= $ob["NAME"] ?></p>
-                    <?php } ?>
                 </div>
             </div>
             <div class="flex_data">
