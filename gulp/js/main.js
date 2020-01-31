@@ -517,7 +517,7 @@ $(document).ready(function() {
       msg = 'Спасибо! Ваша оценка ' + ratingValue + '.';
     }
     else {
-      msg = 'Мы будем стараться лучше. Ваша оценка ' + ratingValue +
+      msg = 'Спасибо! Ваша оценка ' + ratingValue +
           '.';
     }
     responseMessage(msg);
