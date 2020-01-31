@@ -41,15 +41,15 @@ if ((!empty($_POST['APPEAL_VALUE']) and !empty($_POST['HOSPITAL'])) and json_dec
 
         $id_company = $person["UF_INSURANCE_COMPANY"];
        $prop=CIBlockElement::GetByID($id_company)->GetNextElement()->GetProperties();
-        $file_comment = CFile::ResizeImageGet($prop["LOGO_IMG"]["VALUE"], array('width'=>300, 'height'=>600), BX_RESIZE_IMAGE_PROPORTIONAL, true);
+        $file_comment = CFile::ResizeImageGet($prop["LOGO_IMG"]["VALUE"], array('width'=>200, 'height'=>400), BX_RESIZE_IMAGE_PROPORTIONAL, true);
         $url_logo_company = $file_comment["src"];
 
 
 
-        $html_block = "<div class='block__four_r'> <img src='$url_logo_company' alt=''> </div>";
+        $html_block = "<div class='block__four_r_items'> <img src='$url_logo_company' alt=''> </div>";
 
 
-        $text = 'Горячая линия: "'.$prop["MOBILE_NUMBER"]["VALUE"]. ' ' .$prop["MOBILE_NUMBER2"]["VALUE"]. ' ' .$prop["MOBILE_NUMBER3"]["VALUE"].'"';
+        $text = 'Горячая линия: " '.$prop["MOBILE_NUMBER"]["VALUE"]. ' ' .$prop["MOBILE_NUMBER2"]["VALUE"]. ' ' .$prop["MOBILE_NUMBER3"]["VALUE"].'"';
 
         $new_str =   str_replace("#MOBAIL_CONTACTS#",$text,$result['DIAGNOZ']);
 
