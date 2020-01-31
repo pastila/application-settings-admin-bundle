@@ -82,8 +82,8 @@ CModule::IncludeModule("iblock");
         <div class="popup__wrap_middle">
             <div class="input__wrap">
                 <label class="input__wrap_label">Номер страхового полиса (16ти значный)</label>
-                <input id="number_polic" type="text" maxlength="16" name="number_polic"
-                       pattern="[0-9]{16}" placeholder="0000000000000000" required>
+                <input title="Номер страхового полиса должен состоять из цифр!" id="number_polic" type="text" maxlength="16" name="number_polic"
+                        placeholder="0000000000000000" required>
             </div>
             <div class="input__wrap">
                 <label class="input__wrap_label">Пароль</label>
@@ -140,3 +140,26 @@ CModule::IncludeModule("iblock");
         <button type="submit" id="registration" class="mainBtn">Регистрация</button>
     </div>
 </form>
+
+<script>
+    /*policy number input number only!*/
+    $(document).ready(function(){
+      $('input[name="number_polic"]').keypress
+      (
+          function(event)
+          {
+            if (event.keyCode == 46 || event.keyCode == 8)
+            {
+              //do nothing
+            }
+            else
+            {
+              if (event.keyCode < 48 || event.keyCode > 57 )
+              {
+                event.preventDefault();
+              }
+            }
+          }
+      );
+    })
+</script>
