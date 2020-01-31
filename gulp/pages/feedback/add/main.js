@@ -314,9 +314,10 @@ $(document).ready(function() {
 
 
     let hospital = $('#referal_two').attr('data-id_region');
-    if (hospital == '' || hospital == undefined) {
+    if (hospital == '' || hospital == undefined || hospital == "0" ) {
       $('#referal_two').after(
-          '<span class="label danger"  >Выберите больницу</span>');
+          '<span class="label danger"  >Выберите компанию</span>');
+
       empty.push('error');
     } else {
       let kpp = $('#referal_two').attr('data-id_region_kpp');

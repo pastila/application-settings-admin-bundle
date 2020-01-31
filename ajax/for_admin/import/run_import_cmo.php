@@ -4,7 +4,7 @@ CModule::IncludeModule("iblock");
 
 //print_r(exec("id -Gn"));
 
- exec("php  start_import_mo.php > log_mo.txt");
+exec("php  start_import_cmo.php > log_cmo.txt");
 
 
 
