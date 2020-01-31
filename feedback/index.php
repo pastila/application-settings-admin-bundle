@@ -372,7 +372,7 @@ $countReviews = count($allReviews);
             $compani = CIBlockElement::GetByID($arProps["NAME_COMPANY"]["VALUE"])->GetNextElement()->GetProperties();
             $compani_fields = CIBlockElement::GetByID($arProps["NAME_COMPANY"]["VALUE"])->GetNextElement()->GetFields();
 
-            $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 100, 'height' => 100),
+            $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 120, 'height' => 80),
                 BX_RESIZE_IMAGE_PROPORTIONAL, true);
 
             ?>
@@ -651,9 +651,9 @@ $countReviews = count($allReviews);
         <div class="white_block">
             <?php  if (isset($_GET["property_region"])) {  ?>
 
-            <h3 class="sidebar__item_title">Рейтинг Страховых(<?= $name_region; ?>)</h3>
+            <h3 class="sidebar__item_title">Рейтинг страховых компаний (<?= $name_region; ?>)</h3>
             <?php }else{ ?>
-            <h3 class="sidebar__item_title">Рейтинг Страховых</h3>
+            <h3 class="sidebar__item_title">Рейтинг страховых компаний</h3>
             <?php } ?>
 
             <ul class="sidebar__item_lists scrollbar">
