@@ -102,9 +102,9 @@ main.main {
     @media screen and (min-width: 1200px){
         max-width: 70vw;
     }
-    @media screen and (min-width: 1440px){
-        max-width: 60vw;
-    }
+    //@media screen and (min-width: 1440px){
+    //    max-width: 60vw;
+    //}
 }
 
 .white_block {
@@ -137,6 +137,7 @@ main.main {
 
 .link-underline {
     text-decoration: underline;
+    font-size: 1.8rem;
 }
 
 .list_block{
