@@ -7,11 +7,12 @@ if ($_FILES['import_file']) {
     $name = basename($_FILES["import_file"]["name"]);
 
     $uploads_dir .= $name;
-   if(move_uploaded_file($_FILES["import_file"]["tmp_name"], $uploads_dir) === true){
-       echo $uploads_dir;
-   }else{
-       echo 0;
-   }
+    if(move_uploaded_file($_FILES["import_file"]["tmp_name"], $uploads_dir) === true){
+        echo $uploads_dir;
+    }else{
+        echo 0;
+    }
 
 
 }
+
