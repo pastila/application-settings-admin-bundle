@@ -226,7 +226,7 @@ function del(f) {
 
       if( $("[data-block_img="+r.ID_EL+"]").find("[id*=img_block_"+r.ID_EL+"]").length === 0){
         $("#send_" + r.ID_EL).removeAttr("onclick");
-        $("#send_" + r.ID_EL).removeClass("disabled");
+        $("#send_" + r.ID_EL).addClass("disabled");
       }
     }
   });
