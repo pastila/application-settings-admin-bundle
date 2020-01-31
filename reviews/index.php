@@ -82,7 +82,7 @@ $arUser = $rsUser->Fetch();
                 /* владик */
                 $compani = CIBlockElement::GetByID($arProps["NAME_COMPANY"]["VALUE"])->GetNextElement()->GetProperties();
 
-                $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 120, 'height' => 80),
+                $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 200, 'height' => 120),
                     BX_RESIZE_IMAGE_PROPORTIONAL, true);
 
                 ?>
@@ -324,7 +324,7 @@ $city = CIBlockSection::GetByID($arProps["REGION"]["VALUE"])->GetNext();
 /* владик */
 $compani = CIBlockElement::GetByID($arProps["NAME_COMPANY"]["VALUE"])->GetNextElement()->GetProperties();
 
-$file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 120, 'height' => 80),
+$file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 200, 'height' => 120),
  BX_RESIZE_IMAGE_PROPORTIONAL, true);
 
 ?>
@@ -596,7 +596,7 @@ if(isset($ID_rewievs[0])) {
         /* владик */
         $compani = CIBlockElement::GetByID($arProps["NAME_COMPANY"]["VALUE"])->GetNextElement()->GetProperties();
 
-        $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 120, 'height' => 80),
+        $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 200, 'height' => 120),
             BX_RESIZE_IMAGE_PROPORTIONAL, true);
 
         ?>

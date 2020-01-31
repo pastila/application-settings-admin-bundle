@@ -372,7 +372,7 @@ $countReviews = count($allReviews);
             $compani = CIBlockElement::GetByID($arProps["NAME_COMPANY"]["VALUE"])->GetNextElement()->GetProperties();
             $compani_fields = CIBlockElement::GetByID($arProps["NAME_COMPANY"]["VALUE"])->GetNextElement()->GetFields();
 
-            $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 120, 'height' => 80),
+            $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 200, 'height' => 120),
                 BX_RESIZE_IMAGE_PROPORTIONAL, true);
 
             ?>
