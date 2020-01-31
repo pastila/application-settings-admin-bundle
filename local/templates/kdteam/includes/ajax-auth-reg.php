@@ -75,7 +75,7 @@ CModule::IncludeModule("iblock");
                     <input id="check-code-js" name="sms-code" maxlength="5" class="check-code-js" type="text">
                 </div>
                 <div class="input_phone-flex main_btn-parent">
-                <input type="button" class="sms-again-button mainBtn" value="Не получили SMS? Отправить повторно.">
+                <input type="button" class="sms-again-button blue-bg" value="Не получили SMS? Отправить повторно.">
                 </div>
             </div>
         </div>
