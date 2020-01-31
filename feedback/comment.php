@@ -73,7 +73,7 @@ preg_match("/(\d+)\/$/",$url,$result_id);
             /* владик */
             $compani = CIBlockElement::GetByID($arProps["NAME_COMPANY"]["VALUE"])->GetNextElement()->GetProperties();
 
-            $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 100, 'height' => 100),
+            $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 120, 'height' => 80),
                 BX_RESIZE_IMAGE_PROPORTIONAL, true);
 
             ?>
