@@ -189,7 +189,9 @@ $this->setFrameMode(true);
                                 <p>Cтраховой полис</p>
                             </div>
                             <div class="item_data input__wrap">
-                                <input required type="text" id="child_policy_add_<?= $arItem['ID'] ?>" minlength="16"
+                                <input title="Номер страхового полиса должен состоять из цифр!"
+                                       class="numberInput" required type="text"
+                                       id="child_policy_add_<?= $arItem['ID'] ?>" minlength="16"
                                        maxlength="16"
                                        name="uf_insurance_policy" value="<?= $arItem["PROPERTIES"]['POLICY']['VALUE']; ?>">
                             </div>

@@ -3,7 +3,6 @@
 //= ../../node_modules/jquery-mask-plugin/dist/jquery.mask.min.js
 //= ../../node_modules/air-datepicker/dist/js/datepicker.min.js
 $(document).ready(function() {
-
   $("#write-us_modal").click(function() {
    setTimeout(function() {
      form_us();
@@ -420,8 +419,13 @@ $(document).ready(function() {
       $('#company').val(name_check_comapany);
       $('.primer_company').remove();
     });
+    /*policy number input number only!*/
+    $('.numberInput').bind('change keyup input click', function() {
+      if (this.value.match(/[^0-9]/g)) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+      }
+    });
   }
-
   function FormAuth() {
 
     console.log('auth');
@@ -845,3 +849,13 @@ function isValidEmailAddress(emailAddress) {
   var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
   return pattern.test(emailAddress);
 }
+
+/*policy number input number only!*/
+$(document).ready(function() {
+  $('.numberInput').bind('change keyup input click', function() {
+    if (this.value.match(/[^0-9]/g)) {
+      this.value = this.value.replace(/[^0-9]/g, '');
+    }
+  });
+});
+

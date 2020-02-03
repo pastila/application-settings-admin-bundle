@@ -195,7 +195,9 @@ while($ob = $res->GetNextElement()){
                </div>
                <div class="item_data input__wrap">
 
-                   <input type="text"  minlength="16" maxlength="16" name="uf_insurance_policy" value="<?=$person["UF_INSURANCE_POLICY"];?>">
+                   <input title="Номер страхового полиса должен состоять из цифр!" class="numberInput"
+                          type="text"  minlength="16" maxlength="16" name="uf_insurance_policy"
+                          value="<?=$person["UF_INSURANCE_POLICY"];?>">
 
                </div>
            </div>
@@ -342,7 +344,9 @@ while($ob = $res->GetNextElement()){
                         <p>Cтраховой полис</p>
                     </div>
                     <div class="item_data input__wrap">
-                        <input required type="text" id="child_policy_add"  minlength="16" maxlength="16" name="uf_insurance_policy" value="">
+                        <input title="Номер страхового полиса должен состоять из цифр!"  required type="text"
+                               id="child_policy_add"  minlength="16" maxlength="16" name="uf_insurance_policy"
+                               value="" class="numberInput">
                     </div>
                 </div>
                 <div id="hospitals" class="region_child">
