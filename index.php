@@ -55,7 +55,7 @@ CModule::IncludeModule("iblock");
     <!-- Item -->
     <a href="/feedback/" class="buttons__items_item">
         <div class="buttons__items_item_image-block">
-            <img class="buttons__items_item_img" src="./local/templates/kdteam/images/png/reviews_strah.png" alt="">
+            <img class="buttons__items_item_img" src="./local/templates/kdteam/images/pages/home/Illustration3.svg" alt="">
         </div>
 
         <div class="buttons__items_item_title-block">
