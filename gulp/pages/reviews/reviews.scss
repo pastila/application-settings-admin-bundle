@@ -221,7 +221,7 @@
         &__block_top {
             display: flex;
             font-size: 1.6rem;
-            margin-bottom: 4rem;
+            margin-bottom: 5rem;
             flex-wrap: wrap;
 
             &_star, &_name {
@@ -356,7 +356,7 @@
 }
 .feedback__block_top{
     @media(min-width: 576px){
-        padding-right: 100px;
+        padding-right: 120px;
     }
 }
 

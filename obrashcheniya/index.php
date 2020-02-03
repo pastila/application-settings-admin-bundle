@@ -20,7 +20,7 @@ if ($USER->IsAuthorized()) { ?>
         <? } ?>
 
     </ul>
-    <h2 class="page-title">Ваши обращения</h2>
+
     <?php
     if (CModule::IncludeModule("iblock")) {
         $arFilter = array("IBLOCK_ID" => 11, "UF_USER_ID" => $USER->GetID());

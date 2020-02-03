@@ -115,12 +115,12 @@ echo '</pre>';
                 "PROPERTY_VALUES" => $arProp,
             );
 
-//
-//                if ($res = $el->Update($arProps["ID"], $Array)) {
-//                    echo "update ID: " . $arProps["ID"] . PHP_EOL;
-//                } else {
-//                    echo "Error: " . $el->LAST_ERROR;
-//                }
+
+                if ($res = $el->Update($arProps["ID"], $Array)) {
+                    echo "update ID: " . $arProps["ID"] . PHP_EOL;
+                } else {
+                    echo "Error: " . $el->LAST_ERROR;
+                }
         }
 
 
@@ -164,9 +164,9 @@ echo '</pre>';
             );
 
 
-//                $oElement = new CIBlockElement();
-//                $idElement = $oElement->Add($arFields, false, false, true);
-//                echo "element new ID: " . $idElement . PHP_EOL;
+                $oElement = new CIBlockElement();
+                $idElement = $oElement->Add($arFields, false, false, true);
+                echo "element new ID: " . $idElement . PHP_EOL;
 
 
 

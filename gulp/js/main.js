@@ -50,7 +50,42 @@ $(document).ready(function() {
   function FormReg() {
 
     $('#phone').mask('+7(000)000-00-00');
-
+    $("#famaly-name").on('keyup', function() {
+       var $this = $(this);
+      clearTimeout($this.data('timer'));
+      $this.data('timer', setTimeout(function() {
+        $this.removeData('timer');
+        if ($this.val().length > 0) {
+          var first_simvol = $this.val()[0].toUpperCase();
+          var other = $("#famaly-name").val().slice(1);
+          $("#famaly-name").val(first_simvol+other);
+        }
+      },1000));
+    });
+    $("#name").on('keyup', function() {
+       var $this = $(this);
+      clearTimeout($this.data('timer'));
+      $this.data('timer', setTimeout(function() {
+        $this.removeData('timer');
+        if ($this.val().length > 0) {
+          var first_simvol = $this.val()[0].toUpperCase();
+          var other = $("#famaly-name").val().slice(1);
+          $("#famaly-name").val(first_simvol+other);
+        }
+      },1000));
+    });
+    $("#last-name").on('keyup', function() {
+       var $this = $(this);
+      clearTimeout($this.data('timer'));
+      $this.data('timer', setTimeout(function() {
+        $this.removeData('timer');
+        if ($this.val().length > 0) {
+          var first_simvol = $this.val()[0].toUpperCase();
+          var other = $("#famaly-name").val().slice(1);
+          $("#famaly-name").val(first_simvol+other);
+        }
+      },1000));
+    });
 
     $('.datepicker-here').datepicker({
 
@@ -517,7 +552,7 @@ $(document).ready(function() {
       msg = 'Спасибо! Ваша оценка ' + ratingValue + '.';
     }
     else {
-      msg = 'Мы будем стараться лучше. Ваша оценка ' + ratingValue +
+      msg = 'Спасибо! Ваша оценка ' + ratingValue +
           '.';
     }
     responseMessage(msg);

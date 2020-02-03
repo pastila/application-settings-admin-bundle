@@ -1,8 +1,8 @@
 <?php require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");?>
 
 <div class="modal">
-    <div class="close-modal">
-        <img src="/local/templates/kdteam/images/svg/close_modal.svg" alt="">
+    <div class="close-modal close-js">
+       <img src="/local/templates/kdteam/images/svg/close_modal.svg" alt="">
     </div>
 
     <h3 class="title">
@@ -17,7 +17,11 @@
         <a href="/obrashcheniya/">Перейти в мои обращения</a>
     </div>
 </div>
-
+<script>
+    $(document).on("click",".close-js",function() {
+      location.reload();
+    })
+</script>
 <?php
 CModule::IncludeModule("iblock");
 

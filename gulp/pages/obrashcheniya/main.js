@@ -132,7 +132,7 @@ $(document).ready(function() {
                   '    </div>\n' +
                   '</div>'
               );
-              if( $("[data-block_img="+element+"]").find("[id*=img_block_"+element).length !== 0){
+              if( $("[data-block_img="+element+"]").find("[id*=img_block_"+element).length !== 0  && $("#time_"+element).val() !== ""){
                 $("#send_" + element).attr("onclick","send_ms(this)");
                 $("#send_" + element).removeClass("disabled");
               }
@@ -224,9 +224,9 @@ function del(f) {
       $('#error_' + r.ID_EL).text('');
       document.getElementById(r.ID_EL).value = "";
 
-      if( $("[data-block_img="+r.ID_EL+"]").find("[id*=img_block_"+r.ID_EL+"]").length === 0){
+      if( $("[data-block_img="+r.ID_EL+"]").find("[id*=img_block_"+r.ID_EL+"]").length === 0 ){
         $("#send_" + r.ID_EL).removeAttr("onclick");
-        $("#send_" + r.ID_EL).removeClass("disabled");
+        $("#send_" + r.ID_EL).addClass("disabled");
       }
     }
   });

@@ -99,12 +99,9 @@ main.main {
     @media screen and (min-width: 992px){
         max-width: 80vw;
     }
-    @media screen and (min-width: 1200px){
+    @media screen and (min-width: 1440px){
         max-width: 70vw;
     }
-    //@media screen and (min-width: 1440px){
-    //    max-width: 60vw;
-    //}
 }
 
 .white_block {
@@ -466,4 +463,16 @@ input{
     display: flex;
     justify-content: center;
     margin-top: 3rem;
+}
+
+.mainBtn , .accentBtn {
+    &.disabled{
+        background: $disabled;
+        border-color: $disabled;
+        cursor: not-allowed;
+        &:hover{
+            background: $disabled;
+            border-color: $disabled;
+        }
+    }
 }

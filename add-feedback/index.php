@@ -89,7 +89,7 @@ global $USER; ?>
                         </div>
 
                         <div class="input__wrap">
-                            <label for="name" class="input__wrap_label">Заголовок коротко</label>
+                            <label for="name" class="input__wrap_label">Заголовок</label>
                             <input id="name" type="name" name="name" required="">
                         </div>
 
@@ -101,7 +101,8 @@ global $USER; ?>
                         <div class="feedback__bottom">
                             <div class="feedback__bottom_star">
                                 <!-- Rating Stars Box -->
-                                <div class='rating-stars text-center' data-select="star">
+                                <div class='rating-stars text-center input__wrap' data-select="star">
+                                    <label for="name" class="input__wrap_label">Оценка</label>
                                     <ul id='stars'>
                                         <li class='star' title='Poor' data-value='1'>
                                             <i class='fa fa-star fa-fw'></i>
