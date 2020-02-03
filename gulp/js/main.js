@@ -3,7 +3,6 @@
 //= ../../node_modules/jquery-mask-plugin/dist/jquery.mask.min.js
 //= ../../node_modules/air-datepicker/dist/js/datepicker.min.js
 $(document).ready(function() {
-
   $("#write-us_modal").click(function() {
    setTimeout(function() {
      form_us();
@@ -64,13 +63,14 @@ $(document).ready(function() {
     });
     $("#name").on('keyup', function() {
        var $this = $(this);
+       console.log($this);
       clearTimeout($this.data('timer'));
       $this.data('timer', setTimeout(function() {
         $this.removeData('timer');
         if ($this.val().length > 0) {
           var first_simvol = $this.val()[0].toUpperCase();
-          var other = $("#famaly-name").val().slice(1);
-          $("#famaly-name").val(first_simvol+other);
+          var other = $("#name").val().slice(1);
+          $("#name").val(first_simvol+other);
         }
       },1000));
     });
@@ -81,8 +81,8 @@ $(document).ready(function() {
         $this.removeData('timer');
         if ($this.val().length > 0) {
           var first_simvol = $this.val()[0].toUpperCase();
-          var other = $("#famaly-name").val().slice(1);
-          $("#famaly-name").val(first_simvol+other);
+          var other = $("#last-name").val().slice(1);
+          $("#last-name").val(first_simvol+other);
         }
       },1000));
     });
@@ -420,8 +420,13 @@ $(document).ready(function() {
       $('#company').val(name_check_comapany);
       $('.primer_company').remove();
     });
+    /*policy number input number only!*/
+    $('.numberInput').bind('change keyup input click', function() {
+      if (this.value.match(/[^0-9]/g)) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+      }
+    });
   }
-
   function FormAuth() {
 
     console.log('auth');
@@ -845,3 +850,13 @@ function isValidEmailAddress(emailAddress) {
   var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
   return pattern.test(emailAddress);
 }
+
+/*policy number input number only!*/
+$(document).ready(function() {
+  $('.numberInput').bind('change keyup input click', function() {
+    if (this.value.match(/[^0-9]/g)) {
+      this.value = this.value.replace(/[^0-9]/g, '');
+    }
+  });
+});
+

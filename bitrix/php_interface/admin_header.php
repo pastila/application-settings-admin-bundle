@@ -54,6 +54,26 @@
             background: rgba(0, 0, 0, .7);
             z-index: 11110;
         }
+        #export-mo {
+            position: fixed;
+            display: none;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .7);
+            z-index: 11110;
+        }
+        #exp-company-cmo {
+            position: fixed;
+            display: none;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .7);
+            z-index: 11110;
+        }
 
         .close-js-price {
             position: fixed;
@@ -83,7 +103,25 @@
             padding: 5px;
             cursor: pointer;
         }
+        .close-content-ord-company-cmo {
+            text-align: right;
+            color: #000;
+            font-weight: bold;
+            display: block;
+            float: right;
+            padding: 5px;
+            cursor: pointer;
+        }
    .close-content-ord-reviews {
+            text-align: right;
+            color: #000;
+            font-weight: bold;
+            display: block;
+            float: right;
+            padding: 5px;
+            cursor: pointer;
+        }
+        .close-content-ord-export-mo {
             text-align: right;
             color: #000;
             font-weight: bold;
@@ -185,6 +223,23 @@
             </div>
         </div>
     </div>
+    <div id="export-mo" style="display: none">
+        <div class="close-js-price">
+            <div class="close-content-ord-export-mo">x</div>
+            <div class="content">
+                <div class="header">
+                    <h5 class="title">Экспорт MO</h5>
+                </div>
+                <div class="body body-export">
+                    <div class="load">Подождите ,идет формирование файла.Примерное время формирование 15 секунд.</div><br>
+                    <div class="load">После формирования появится кнопка скачать</div>
+                </div>
+                <div class="footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="exp-reviews" style="display: none">
         <div class="close-js-price">
@@ -197,18 +252,35 @@
                     <div style="display: flex">
 
                         <input type="text" value="" tabindex="4" onfocus="setTimeout(function(){$('#first_comment_input').parent().find('.bx-calendar-icon-first_comment').click()},300);" name="TASK[DEADLINE]" id="first_comment_input" />
-
                         <div style="font-size:15px;font-weight:600;"> C <input  onclick="BX.calendar({node:this, field:'first_comment_input', form: 'ADD_NEW_TASK', bTime: true, currentTime: '<?=(time()+date("Z")+CTimeZone::GetOffset())?>', bHideTime: true});"  class="bx-calendar-icon-first_comment" type="date" style="margin-right: 20px" id="first_comment" ></div>
-
-
                         <input type="text" value="" tabindex="4" onfocus="setTimeout(function(){$('#second_comment_input').parent().find('.bx-calendar-icon-second_comment').click()},300);" name="TASK[DEADLINE]" id="second_comment_input" />
                         <div style="font-size:15px;font-weight:600;"> По <input  onclick="BX.calendar({node:this, field:'second_comment_input', form: 'ADD_NEW_TASK-second_comment', bTime: true, currentTime: '<?=(time()+date("Z")+CTimeZone::GetOffset())?>', bHideTime: true});"  class="bx-calendar-icon-second_comment" type="date" style="margin-right: 20px" id="second_comment" ></div>
-
 
                     </div>
                 </div>
                 <div class="footer">
                     <button id="my_adm_btn_exp_ord-reviews" type="button" class="btn btn-primary">Запустить выгрузку</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="exp-company-cmo" style="display: none">
+        <div class="close-js-price">
+            <div class="close-content-ord-company-cmo">x</div>
+            <div class="content">
+                <div class="header">
+                    <h5 class="title">Выгрузить СМО</h5>
+                </div>
+                <div class="body">
+                    <div style="display: flex">
+                        <div class="load">Подождите ,идет формирование файла.Примерное время формирование 3 секунды.</div>
+
+                    </div>
+                </div>
+                <div class="footer footer-cmo">
+
                 </div>
             </div>
         </div>
@@ -234,30 +306,117 @@
         $('.adm-btn.adm-btn-desktop-gadgets.adm-btn-menu').before('<a title="" id="show-ord-reviews"' +
             ' class="adm-btn adm-btn-desktop-gadgets adm-btn-test-btn_event" hidefocus="true"' +
             ' href="#">Выгрузить отзывы</a>');
-
+        $('.adm-btn.adm-btn-desktop-gadgets.adm-btn-menu').before('<a title="" id="show-ord-export-mo"' +
+            ' class="adm-btn adm-btn-desktop-gadgets adm-btn-test-btn_event" hidefocus="true"' +
+            ' href="#">Выгрузить MO</a>');
+        $('.adm-btn.adm-btn-desktop-gadgets.adm-btn-menu').before('<a title="" id="show-ord-export-cmo"' +
+            ' class="adm-btn adm-btn-desktop-gadgets adm-btn-test-btn_event" hidefocus="true"' +
+            ' href="#">Выгрузить СMO</a>');
 
         $(document).ready(function() {
+
 
           $('#show-ord-w').on('click', function() {
             $('#exp-ord').show();
           });
+
+
           $('#show-ord-cmo').on('click', function() {
             $('#exp-cmo').show();
           });
+
+
           $('#show-ord-reviews').on('click', function() {
             $('#exp-reviews').show();
           });
 
+
+
+
+
+          $('.close-content-ord-company-cmo').on('click', function() {
+            $('#exp-company-cmo').hide();
+          });
+
+
           $('.close-content-ord ').on('click', function() {
             $('#exp-ord').hide();
           });
-          $('.close-content-ord-cmo ').on('click', function() {
+
+
+          $('.close-content-ord-mo ').on('click', function() {
             $('#exp-cmo').hide();
           });
+
+
+          $('.close-content-ord-export-mo').on('click', function() {
+            $('#export-mo').hide();
+          });
+
+
 
           $('.close-content-ord-reviews').on('click', function() {
             $('#exp-reviews').hide();
           });
+
+
+
+          $("#show-ord-export-cmo").click(function() {
+              $.ajax({
+                dataType: 'html',
+                url: '/ajax/for_admin/export/export_cmo.php',
+                type: 'POST',
+                beforeSend: function() {
+
+                  $('#exp-company-cmo').show();
+                  $(".download-2").remove();
+
+                },
+                success: function(msg){
+                  $(".footer-cmo").
+                      append('<div class="download-2"><a style="font-size:15px;font-weight:600;" href="/' + msg + '">Скачать</a></div>')
+                },
+              }).done(function(msg) {
+
+              });
+
+          });
+
+
+          $("#show-ord-export-mo").click(function() {
+                $.ajax({
+                       dataType: 'html',
+                      url: '/ajax/for_admin/export/export_mo.php',
+                      type: 'POST',
+                      beforeSend: function() {
+
+                        $('#export-mo').show();
+                        $(".download").remove();
+
+                      },
+                      success: function(msg){
+
+
+                        $(".load").
+                            after('<div class="download"><a style="font-size:15px;font-weight:600;" href="/' + msg + '">Скачать</a></div>')
+                      },
+                    }).done(function(msg) {
+
+                    });
+          });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
           $('#my_adm_btn_exp_ord-reviews').click(function() {
 
