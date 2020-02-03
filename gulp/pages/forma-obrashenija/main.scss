@@ -22,9 +22,9 @@
             white-space: nowrap;
 
             &_arrow {
+                width: 3rem;
                 position: absolute;
                 right: -1rem;
-                max-height: 3rem;
                 fill: $lightBg;
             }
 
