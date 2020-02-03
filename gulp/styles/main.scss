@@ -349,31 +349,6 @@ a{
     cursor: pointer;
 }
 
-CSS
-textarea,
-input.text,
-input[type="text"],
-input[type="button"],
-input[type="submit"],
-.input-checkbox {
-    box-sizing: border-box;
-    -webkit-appearance: none;
-    border-radius: 0;
-}
-
-input{
-    -moz-appearance: none;/* older firefox */
-    -webkit-appearance: none; /* safari, chrome, edge and ie mobile */
-    appearance: none; /* rest */
-    border-radius: 0;
- }
-
- select {
-    -moz-appearance: none;/* older firefox */
-    -webkit-appearance: none; /* safari, chrome, edge and ie mobile */
-    appearance: none; /* rest */
-    border-radius: 0 !important;
- }
  .select_block{
      select{
          background-image: url('/local/templates/kdteam/images/svg/sort-down.svg');

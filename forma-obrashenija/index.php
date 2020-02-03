@@ -46,42 +46,37 @@ while($ob = $res->GetNextElement()){
         выполняться бесплатно, или даже вернуть средства, которые вы уже заплатили.</p>
 </section>
 
-<div class="steps">
-    <div class="steps_btns">
-        <div class="steps_btns_action is-active" data-step="step-1">
-            <span>Период оказания помощи</span>
-
-            <svg class="steps_btns_action_arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 477.175 477.175">
-                <path
-                    d="M360.731 229.075l-225.1-225.1c-5.3-5.3-13.8-5.3-19.1 0s-5.3 13.8 0 19.1l215.5 215.5-215.5 215.5c-5.3 5.3-5.3 13.8 0 19.1 2.6 2.6 6.1 4 9.5 4 3.4 0 6.9-1.3 9.5-4l225.1-225.1c5.3-5.2 5.3-13.8.1-19z" />
-            </svg>
+<div class="steps-wrap">
+    <div class="steps step-1">
+        <div class="steps_navigation checked">
+            <label class="steps_navigation_action" for="step-1" data-tab="step-1" data-step="1">Период оказания помощи</label>
+            <input class="step-btn active" checked="checked" id="step-1" name="step" type="radio">
         </div>
 
-        <div class="steps_btns_action" data-step="step-2">
-            <span>Каким было ваше обращение ? </span>
-
-            <svg class="steps_btns_action_arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 477.175 477.175">
-                <path
-                    d="M360.731 229.075l-225.1-225.1c-5.3-5.3-13.8-5.3-19.1 0s-5.3 13.8 0 19.1l215.5 215.5-215.5 215.5c-5.3 5.3-5.3 13.8 0 19.1 2.6 2.6 6.1 4 9.5 4 3.4 0 6.9-1.3 9.5-4l225.1-225.1c5.3-5.2 5.3-13.8.1-19z" />
-            </svg>
+        <div class="steps_navigation">
+            <label class="steps_navigation_action" for="step-2" data-tab="step-2" data-step="2">Каким было ваше обращение ?</label>
+            <input class="step-btn" id="step-2" name="step" type="radio">
         </div>
 
-        <div class="steps_btns_action" data-step="step-3">
-            <span>Ваша больница</span>
-            <svg class="steps_btns_action_arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 477.175 477.175">
-                <path
-                    d="M360.731 229.075l-225.1-225.1c-5.3-5.3-13.8-5.3-19.1 0s-5.3 13.8 0 19.1l215.5 215.5-215.5 215.5c-5.3 5.3-5.3 13.8 0 19.1 2.6 2.6 6.1 4 9.5 4 3.4 0 6.9-1.3 9.5-4l225.1-225.1c5.3-5.2 5.3-13.8.1-19z" />
-            </svg>
+        <div class="steps_navigation">
+            <label class="steps_navigation_action" for="step-3" data-tab="step-3" data-step="3">Ваша больница</label>
+            <input class="step-btn" id="step-3" name="step" type="radio">
         </div>
 
-        <div class="steps_btns_action" data-step="step-4">
-            <span>Ваше заболевание</span>
+        <div class="steps_navigation">
+            <label class="steps_navigation_action" for="step-4" data-tab="step-4" data-step="4">Ваше заболевание</label>
+            <input class="step-btn" id="step-4" name="step" type="radio">
+        </div>
+
+        <div class="progressive-bar-wrap">
+            <div class="progressive-bar"></div>
+            <div class="progressive-bar-set"></div>
         </div>
     </div>
 
     <form id="appeal-form" action="">
-        <div class="steps_items card">
-            <div class="steps_items_item step-1 is-active">
+        <div class="steps_items">
+            <div class="card steps_items_item step-1 active">
                 <div class="steps_items_item_content">
                     <?php
                         $APPLICATION->IncludeComponent(
@@ -143,7 +138,7 @@ while($ob = $res->GetNextElement()){
                 <button class="steps_items_item_button mainBtn" id="strax-sluchay" class="mainBtn">Далее</button>
             </div>
 
-            <div class="steps_items_item step-2">
+            <div class="card steps_items_item step-2">
                 <div class="steps_items_item_content">
 
                     <div class="wrap-chrckbox plannet">
@@ -182,7 +177,7 @@ while($ob = $res->GetNextElement()){
                 </div>
             </div>
 
-            <div class="steps_items_item step-3">
+            <div class="card steps_items_item step-3">
                 <div id="hospitals" class="error_step-card-3">
                     <?php
                     $APPLICATION->IncludeComponent(
@@ -257,7 +252,7 @@ while($ob = $res->GetNextElement()){
                 </div>
             </div>
 
-            <div class="steps_items_item step-4">
+            <div class="card steps_items_item step-4">
                 <p class="form-obrashcheniya__step_four_text"><?=$arResult_block[8]?></p>
 
                 <a class="link-underline" target="_blank" href="/news/chto-oplachivaetsya-po-polisu/">Что оплачивается
@@ -295,7 +290,9 @@ while($ob = $res->GetNextElement()){
                     </form>
                 </div>
 
-                <h3 class="steps_items_item_content_title">Или найдите диагноз в перечне заболеваний, структурированном в соответствии с
+                <h3 class="steps_items_item_content_title">Или найдите диагноз в перечне заболеваний, структурированном
+                    в
+                    соответствии с
                     международной классификацией болезней (МКБ-10).</h3>
 
                 <div id="grid" class="steps_items_item_inputs" action="">
@@ -331,6 +328,8 @@ while($ob = $res->GetNextElement()){
         </div>
     </form>
 </div>
+
+
 
 <!-- ALL STEPS IN FORM -->
 

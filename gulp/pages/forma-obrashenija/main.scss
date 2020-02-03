@@ -1,44 +1,113 @@
 @import '../../styles/utils/vars';
 
 .steps {
-    &_btns {
+    position: relative;
+    display: flex;
+    margin-bottom: 5rem;
+
+    input[type="radio"] {
+        display: none;
+    }
+
+    &_navigation {
         display: flex;
-        justify-content: space-between;
-        flex-wrap: nowrap;
-        margin-bottom: 2rem;
-        font-size: 2.1rem;
-        color: $mainColor;
-        font-family: $main-font-semibold;
-        background-color: white;
-        overflow-x: scroll;
-        overflow-y: hidden;
-        &_action {
-            position: relative;
-            display: flex;
-            align-items: center;
-            padding: 4rem 5rem;
-            cursor: pointer;
-            color: $lightBg;
-            white-space: nowrap;
-
-            &_arrow {
-                width: 3rem;
-                position: absolute;
-                right: -1rem;
-                fill: $lightBg;
-            }
-
-            &.is-active {
+        justify-content: center;
+        position: relative;
+        width: 25%;
+        -webkit-transition: all .4s;
+        transition: all .4s;
+        z-index: 3;
+        &.checked {
+            label {
                 color: $accentColor;
-            }
-
-            &.is-active &{
-                &_arrow {
-                    fill: $accentColor;
+                &::before {
+                    color: $accentColor;
+                    border: 0.5rem solid $accentColor;
                 }
             }
         }
+
+        label {
+            padding-top: 8rem;
+            font-size: 1.8rem;
+            text-align: center;
+            font-family: $main-font-semibold;
+            color: #daebf4;
+            &::before {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                content: attr(data-step);
+                left: 50%;
+                width: 5rem;
+                height: 5rem;
+                color: $mainColor;
+                background:white;
+                line-height: 3rem;
+                border: 0.5rem solid #daebf4;
+                font-size: 1.8rem;
+                top: 0;
+                border-radius: 100%;
+                -webkit-transition: all .4s;
+                transition: all .4s;
+                cursor: pointer;
+                pointer-events: none;
+                transform: translateX(-50%);
+            }
+        }
     }
+}
+
+.progressive-bar-wrap {
+    position: absolute;
+    top: 23%;
+    left: 0;
+    width: 100%;
+    height: 1rem;
+}
+
+.progressive-bar, .progressive-bar-set {
+    height: 0.6rem;
+    background: repeating-linear-gradient(45deg,
+    #1ea4ec, #1ea4ec 4px, #1f8bc5 4px,
+    #1f8bc5 10px);
+    -webkit-transition: width 800ms cubic-bezier(0.915, 0.015, 0.3, 1.005);
+    transition: width 800ms cubic-bezier(0.915, 0.015, 0.3, 1.005);
+    border-radius: 0.6rem;
+    width: 0;
+    position: relative;
+}
+
+.progressive-bar {
+    z-index: 2;
+}
+
+.progressive-bar-set {
+    width: 100%;
+    top: -6px;
+    background:#daebf4;
+    position: relative;
+    z-index: 1;
+}
+
+.step-1 .progressive-bar{
+    width: 13%;
+}
+
+.step-2 .progressive-bar{
+    width: 40%;
+}
+
+.step-3 .progressive-bar{
+    width: 65%;
+}
+
+.step-4 .progressive-bar{
+    width: 100%;
+}
+
+.steps {
 
     &_items {
         display: flex;
@@ -46,7 +115,7 @@
             width: 100%;
             display: none;
             font-size: 1.8rem;
-            &.is-active {
+            &.active {
                 display: block;
             }
 
