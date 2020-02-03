@@ -20,7 +20,7 @@
       }
       .flex_data {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
         flex-wrap: wrap;
         align-items: center;
         margin-bottom: 1rem;
@@ -29,6 +29,12 @@
           margin-bottom: 0;
           &:nth-child(odd){
             font-weight: 700;
+            @media(min-width: 576px){
+              width: 40%;
+            }
+            @media(min-width: 1200px){
+              width: 30%;
+            }
           }
           @media(min-width: 576px){
             width: 49%;
@@ -62,6 +68,7 @@
 }
 .logo_block{
   max-width: 10rem;
+  margin-top: 1rem;
 }
 .user_vip{
   margin-bottom: 2rem;

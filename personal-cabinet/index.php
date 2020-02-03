@@ -288,6 +288,7 @@ while($ob = $res->GetNextElement()){
 <!--           </div>-->
        </div>
    </div>
+
     <div class="info_child">
         <p>Если у вас есть несовершеннолетние дети или иные лица, для которых вы являетесь законным представителем, вы
             можете внести данные о них, чтобы иметь возможность действовать на <a href="http://bezbahil.ru/">bezbahil.ru</a> в их интересах
@@ -295,7 +296,6 @@ while($ob = $res->GetNextElement()){
             программой ОМС, или писать отзыв о работе страховой компании
         </p>
     </div>
-
     <a class="mainBtn main-button-styles" id="add_children_btn">Добавить ребенка или опекаемого</a>
     <div class="flex_personal">
         <div class="personal_data" id="add_children" style="display: none">
