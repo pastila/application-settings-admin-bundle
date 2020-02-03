@@ -64,6 +64,7 @@ $(document).ready(function() {
     });
     $("#name").on('keyup', function() {
        var $this = $(this);
+       console.log($this);
       clearTimeout($this.data('timer'));
       $this.data('timer', setTimeout(function() {
         $this.removeData('timer');
