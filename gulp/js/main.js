@@ -69,8 +69,8 @@ $(document).ready(function() {
         $this.removeData('timer');
         if ($this.val().length > 0) {
           var first_simvol = $this.val()[0].toUpperCase();
-          var other = $("#famaly-name").val().slice(1);
-          $("#famaly-name").val(first_simvol+other);
+          var other = $("#name").val().slice(1);
+          $("#name").val(first_simvol+other);
         }
       },1000));
     });
@@ -81,8 +81,8 @@ $(document).ready(function() {
         $this.removeData('timer');
         if ($this.val().length > 0) {
           var first_simvol = $this.val()[0].toUpperCase();
-          var other = $("#famaly-name").val().slice(1);
-          $("#famaly-name").val(first_simvol+other);
+          var other = $("#last-name").val().slice(1);
+          $("#last-name").val(first_simvol+other);
         }
       },1000));
     });
