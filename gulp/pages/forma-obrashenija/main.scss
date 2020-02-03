@@ -1,40 +1,99 @@
 @import '../../styles/utils/vars';
 
-
-.form-obrashcheniya {
-    &__step_one {
+.steps {
+    &_btns {
         display: flex;
-        flex-direction: column;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        margin-bottom: 2rem;
+        font-size: 2.1rem;
+        color: $mainColor;
+        font-family: $main-font-semibold;
+        background-color: white;
+        &_action {
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 2rem 5rem;
+            cursor: pointer;
+            color: $lightBg;
 
-        &_title {
-            font-size: 1.6rem;
-            margin-bottom: 1rem;
-        }
-    }
-
-    &__step_two {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-
-        &_l {
-
-            &_title {
-                font-size: 1.4rem;
-                margin-bottom: 2rem;
+            &_arrow {
+                position: absolute;
+                right: -1rem;
+                max-height: 3rem;
+                fill: $lightBg;
             }
-        }
 
-        &_r {
+            &.is-active {
+                color: $accentColor;
+            }
 
-            &_wrap {
-                margin-top: 2rem;
-                &_title {
-                    font-size: 2rem;
+            &.is-active &{
+                &_arrow {
+                    fill: $accentColor;
                 }
             }
         }
     }
+
+    &_items {
+        display: flex;
+        &_item {
+            width: 100%;
+            display: none;
+            font-size: 1.8rem;
+            &.is-active {
+                display: block;
+            }
+
+            &_text {
+                margin-bottom: 3rem;
+            }
+
+            &_content {
+                margin-bottom: 3rem;
+                &_title {
+                    margin-bottom: 3rem;
+                }
+            }
+
+            &_lists {
+                padding: 5rem;
+                margin-bottom: 3rem;
+                background-color: $light-blue-bg;
+
+                &_list {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 2rem;
+                    &_title {
+                        text-transform: uppercase;
+                        font-family: $main-font-semibold;
+                        font-size: 1.6rem;
+                        max-width: 30rem;
+                        width: 100%;
+                    }
+
+                    &_name {
+                        width: 100%;
+                        padding-left: 3rem;
+                        font-size: 1.8rem;
+                    }
+                }
+            }
+
+            &_footer {
+                margin-bottom: 3rem;
+                padding: 5rem;
+                background-color: $light-blue-bg;
+            }
+        }
+    }
+}
+
+
+.form-obrashcheniya {
 
     &__step_three {
         &_l {

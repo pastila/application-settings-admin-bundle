@@ -1007,3 +1007,36 @@ function after_global_search (SECTION_ID, TEXT, VALUE) {
   }, 'html');
 
 }
+
+function tabs(action, tabContent, tabname) {
+  const tabLinks = document.querySelectorAll(action);
+  const contents = document.querySelectorAll(tabContent);
+  let dataName;
+
+  tabLinks.forEach(tabLink => {
+      tabLink.addEventListener('click', selectTabLink);
+  });
+
+  function selectTabLink(e) {
+      e.preventDefault();
+
+      tabLinks.forEach(tabLink => {
+          tabLink.classList.remove('is-active');
+      });
+      this.classList.add('is-active');
+      dataName = this.getAttribute(`data-${tabname}`);
+      activateContent(dataName);
+  }
+
+  function activateContent(data) {
+      contents.forEach(content => {
+          if (content.classList.contains(data)) {
+              content.classList.add('is-active');
+          } else {
+              content.classList.remove('is-active');
+          }
+      });
+  }
+
+}
+tabs('.steps_btns_action', '.steps_items_item', 'step');

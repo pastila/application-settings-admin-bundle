@@ -13,13 +13,14 @@ $accentColor: #00ABD8;
 $borderAccentBtn: #00A8D5;
 $border: #f1f4f7;
 $lightBg: #e8ebef;
+$light-blue-bg: #f1f9ff;
 $text-color: #5D5D5D;
 $title-color: #103F5C;
 // Buttons home border
 $homeBtnColor: #EAEFF5;
 
 // Input
-$inputColor: #edf6ff;
+$inputColor: $bgColor;
 
 // disabled color
 $disabled: #8a8a8a;
