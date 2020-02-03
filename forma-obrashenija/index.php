@@ -265,18 +265,20 @@ while($ob = $res->GetNextElement()){
                     полису ОМС</a>
 
                 <div class="smart_search-block">
-                    <p class="title-select bold">
-                        Начните вводить наименование заболевания, с которым вы обратились в медицинскую организацию.
-                    </p>
-                    <p class="title-select bold">
-                        «В связи с тем, что список диагнозов очень большой, поиск может работать медленно. Начните
-                        вводить
-                        заболевание и дождитесь появления списка заболеваний с похожими названиями, чтобы выбрать
-                        нужное»
-                    </p>
+                    <div class="steps_items_item_footer">
+                        <p>
+                            Начните вводить наименование заболевания, с которым вы обратились в медицинскую организацию.
+                        </p>
+                        <p>
+                            «В связи с тем, что список диагнозов очень большой, поиск может работать медленно. Начните
+                            вводить
+                            заболевание и дождитесь появления списка заболеваний с похожими названиями, чтобы выбрать
+                            нужное»
+                        </p>
+                    </div>
                     <form action="">
                         <div class="input-with-search">
-                            <label class="title-select" for="user_pass">Выберите диагноз: </label>
+                            <h3 class="steps_items_item_content_title" for="user_pass">Выберите диагноз: </h3>
                             <div class="input__wrap" id="reload_div">
                                 <div class="input__ico">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255"
@@ -293,10 +295,10 @@ while($ob = $res->GetNextElement()){
                     </form>
                 </div>
 
-                <p class="title-select bold">Или</p>
-                <p class="d-block mb--2rem">Найдите диагноз в перечне заболеваний, структурированном в соответствии с
-                    международной классификацией болезней (МКБ-10).</p>
-                <div id="grid" class="grid" action="">
+                <h3 class="steps_items_item_content_title">Или найдите диагноз в перечне заболеваний, структурированном в соответствии с
+                    международной классификацией болезней (МКБ-10).</h3>
+
+                <div id="grid" class="steps_items_item_inputs" action="">
                     <?php
             $APPLICATION->IncludeComponent(
                 "bitrix:catalog.section.list",

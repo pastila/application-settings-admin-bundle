@@ -10,13 +10,16 @@
         color: $mainColor;
         font-family: $main-font-semibold;
         background-color: white;
+        overflow-x: scroll;
+        overflow-y: hidden;
         &_action {
             position: relative;
             display: flex;
             align-items: center;
-            padding: 2rem 5rem;
+            padding: 4rem 5rem;
             cursor: pointer;
             color: $lightBg;
+            white-space: nowrap;
 
             &_arrow {
                 position: absolute;
@@ -80,6 +83,14 @@
                         padding-left: 3rem;
                         font-size: 1.8rem;
                     }
+                }
+            }
+
+            &_inputs {
+                display: flex;
+                justify-content: space-between;
+                @media screen and (max-width: 1200px){
+                    flex-direction: column;
                 }
             }
 
