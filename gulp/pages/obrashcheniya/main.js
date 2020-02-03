@@ -827,7 +827,7 @@ function save_date(sv) {
                       $("#date_picker_"+id).css({"display":"none"});
                       $("#edit_"+id).attr("onclick","edit(this)");
                       $(".datepicker-here_"+id).remove();
-                      if( $("[data-block_img="+id+"]").find("[id*=img_block_"+id).length !== 0){
+                      if( $("[data-block_img="+id+"]").find("[id*=img_block_"+id).length !== 0  && $("#time_"+id).val() !== ""){
                         $("#send_" + id).attr("onclick","send_ms(this)");
                         $("#send_" + id).removeClass("disabled");
                       }
@@ -934,11 +934,10 @@ function save_date(sv) {
                   $("#date_picker_"+id).css({"display":"none"});
                   $("#edit_"+id).attr("onclick","edit(this)");
                   $(".datepicker-here_"+id).remove();
-                 if( $("[data-block_img="+id+"]").find("[id*=img_block_"+id).length !== 0){
-                   $("#send_" + id).attr("onclick","send_ms(this)");
-                   $("#send_" + id).removeClass("disabled");
-                 }
-
+                  if( $("[data-block_img="+id+"]").find("[id*=img_block_"+id).length !== 0  && $("#time_"+id).val() !== ""){
+                    $("#send_" + id).attr("onclick","send_ms(this)");
+                    $("#send_" + id).removeClass("disabled");
+                  }
                 });
 
               }

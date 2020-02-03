@@ -49,7 +49,7 @@ if ((!empty($_POST['APPEAL_VALUE']) and !empty($_POST['HOSPITAL'])) and json_dec
         $html_block = "<div class='block__four_r_items'> <img src='$url_logo_company' alt=''> </div>";
 
 
-        $text = 'Горячая линия: " '.$prop["MOBILE_NUMBER"]["VALUE"]. ' ' .$prop["MOBILE_NUMBER2"]["VALUE"]. ' ' .$prop["MOBILE_NUMBER3"]["VALUE"].'"';
+        $text = 'Горячая линия: <div> '.$prop["MOBILE_NUMBER"]["VALUE"]. '</div><div> ' .$prop["MOBILE_NUMBER2"]["VALUE"]. '</div><div>  ' .$prop["MOBILE_NUMBER3"]["VALUE"].'</div>';
 
         $new_str =   str_replace("#MOBAIL_CONTACTS#",$text,$result['DIAGNOZ']);
 
