@@ -33,6 +33,7 @@
     border-radius: 20rem;
     @media screen and (max-width: 576px){
         width: 100%;
+        margin: 0 0 2rem 0 !important;
     }
 
     &:hover {

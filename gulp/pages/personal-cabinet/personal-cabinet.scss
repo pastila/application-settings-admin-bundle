@@ -96,15 +96,21 @@
 }
 .submit_button-child{
   display: flex;
-  margin-top: 2rem;
+  flex-wrap: wrap;
   .main-button-styles {
     margin-right: 2rem;
   }
   &_button{
     margin-bottom: 2rem;
+
     @media(max-width: 991px){
       margin-bottom: 0;
       margin-right: 2rem;
+    }
+
+    @media(max-width: 576px){
+      margin-bottom: 2rem;
+      margin-right: 0;
     }
   }
 }
@@ -115,6 +121,7 @@
 }
 #add_children_btn{
   margin-left: 0;
+  margin-bottom: 2rem;
 }
 .info_child{
   margin: 2rem 0;

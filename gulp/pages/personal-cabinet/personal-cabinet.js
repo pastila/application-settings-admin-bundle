@@ -308,7 +308,7 @@ $(document).ready(function() {
   });
   $(document).on('click', '#cancel', function() {
     $('#add_children').css('display','none');
-    $('#add_children_btn').css('display','flex');
+    $('#add_children_btn').css('display','inline-flex');
     $('#add_children_form')[0].reset();
   });
   $(document).on('click', '#save_children', function(e) {

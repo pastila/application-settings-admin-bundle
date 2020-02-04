@@ -53,7 +53,11 @@ label {
         justify-content: center;
         margin: 2rem 0 0 0;
         &_btn {
+            width: 100%;
             margin-right: 2rem;
+            @media screen and (max-width: 576px){
+                margin-right: 0;
+            }
         }
     }
 
@@ -170,6 +174,7 @@ label {
     .tumbler_users-tab{
         margin-bottom: 2rem;
         display: flex;
+        flex-wrap: wrap;
         &__item{
             transition: all .2s;
             &:not(:last-of-type) {

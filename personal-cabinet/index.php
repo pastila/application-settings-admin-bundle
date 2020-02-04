@@ -296,9 +296,10 @@ while($ob = $res->GetNextElement()){
             программой ОМС, или писать отзыв о работе страховой компании
         </p>
     </div>
+    
     <a class="mainBtn main-button-styles" id="add_children_btn">Добавить ребенка или опекаемого</a>
-    <div class="flex_personal white_block">
-        <div class="personal_data" id="add_children" style="display: none">
+    
+        <div class="personal_data white_block" id="add_children" style="display: none">
             <form  onsubmit="return false" id="add_children_form" action="" enctype="multipart/form-data">
                 <h2 class="small-page-title">Заполните данные опекаемого человека</h2>
 
@@ -380,10 +381,7 @@ while($ob = $res->GetNextElement()){
                 </div>
             </form>
         </div>
-        <div class="edit_block">
 
-        </div>
-    </div>
     <div id="cur_children">
 
         <?php
