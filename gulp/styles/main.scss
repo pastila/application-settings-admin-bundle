@@ -25,6 +25,10 @@
 // Popup
 @import '../../node_modules/magnific-popup/dist/magnific-popup.css';
 
+* {
+    box-sizing: border-box;
+}
+
 // Styles for all pages
 html {
     font-family: $main-font-regular;
@@ -63,11 +67,11 @@ a {
 
 p {
     font-size: 1.8rem;
-    line-height: normal;
 }
 
 img {
     max-width: 100%;
+    max-height: 100%;
 }
 
 button {
@@ -170,7 +174,7 @@ main.main {
     }
 }
 .error{
-    color: red;
+    color: $accentColor;
 }
 .bold{
     font-family: $main-font-bold;
@@ -448,9 +452,5 @@ a{
         background: $disabled;
         border-color: $disabled;
         cursor: not-allowed;
-        &:hover{
-            background: $disabled;
-            border-color: $disabled;
-        }
     }
 }

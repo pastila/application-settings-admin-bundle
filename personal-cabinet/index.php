@@ -60,7 +60,7 @@ while($ob = $res->GetNextElement()){
     <div class="user_vip"><p class="text_vip">Аккаунт представителя страховой службы</p></div>
     <?php } ?>
 
-    <div class="flex_personal">
+    <div class="flex_personal white_block">
        <div class="personal_data" id="true_data_person">
 
             <div class="flex_data">
@@ -297,7 +297,7 @@ while($ob = $res->GetNextElement()){
         </p>
     </div>
     <a class="mainBtn main-button-styles" id="add_children_btn">Добавить ребенка или опекаемого</a>
-    <div class="flex_personal">
+    <div class="flex_personal white_block">
         <div class="personal_data" id="add_children" style="display: none">
             <form  onsubmit="return false" id="add_children_form" action="" enctype="multipart/form-data">
                 <h2 class="small-page-title">Заполните данные опекаемого человека</h2>

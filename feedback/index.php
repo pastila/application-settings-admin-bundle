@@ -35,10 +35,10 @@ $countReviews = count($allReviews);
 <!-- Breadcrumbs -->
 <ul class="breadcrumbs">
     <? if ($detect->isTablet() || $detect->isMobile()) { ?>
-        <li><a href="/" class="">Отзывы</a></li>
+    <li><a href="/" class="">Отзывы</a></li>
     <? } else { ?>
-        <li><a href="/">Главная</a></li>
-        <li>Отзывы</li>
+    <li><a href="/">Главная</a></li>
+    <li>Отзывы</li>
     <? } ?>
 
 </ul>
@@ -335,7 +335,7 @@ $countReviews = count($allReviews);
             ?>
 
         <div>
-            <p class="error title-medium" style="color: red">Отзывы не найдены</p>
+            <p class="error title-medium">Отзывы не найдены</p>
         </div>
 
 
@@ -376,22 +376,18 @@ $countReviews = count($allReviews);
                 BX_RESIZE_IMAGE_PROPORTIONAL, true);
 
             ?>
-        <div class="white_block white_block_riview_<?= $arFields["ID"]; ?>" >
+        <div class="white_block white_block_riview_<?= $arFields["ID"]; ?>">
             <?php if ($Date_change_user != "") { ?>
             <span class="date_review">Дата изменения <?php echo $Date_change_user; ?></span>
             <?php } ?>
             <?php if ($arProps["REVIEW_LETTER"]["VALUE"] == "1") { ?>
             <div class="feedback__title">Возврат денежных средств</div>
             <?php } ?>
-            <!-- Company Name -->
-            <div class="feedback__block_company-name">
 
-                <img src="<?= $file["src"] ?>">
-            </div>
             <!-- top -->
             <div class="feedback__block_top">
 
-                <?php if ($arProps["EVALUATION"]["VALUE"] != "") { ?>
+                <?php if ($arProps["EVALUATION"]["VALUE"] != "" && $arProps["EVALUATION"]["VALUE"] != "0") { ?>
                 <div class="feedback__block_top_star">
 
                     <? for ($i = 1; $i <= $arProps["EVALUATION"]["VALUE"]; ++$i) { ?>
@@ -406,13 +402,17 @@ $countReviews = count($allReviews);
                             fill="#00abd8"
                             <?php } ?>/>
                     </svg>
-
-
                     <? } ?>
                 </div>
                 <? } ?>
                 <div class="feedback__block_top_name">
-                    <?= $name_user ?>, <?= $city["NAME"] ?>, <?= $newDate ?>
+                    <span class="feedback__block_top_name_text"><?= $name_user ?>, <?= $city["NAME"] ?>, <?= $newDate ?></span>
+
+                    <!-- Company Name -->
+                    <div class="feedback__block_company-name">
+
+                        <img src="<?= $file["src"] ?>">
+                    </div>
                 </div>
                 <!--                <div class="feedback__block_top_data">-->
                 <!--                    05 сент, 2019-->
@@ -426,7 +426,9 @@ $countReviews = count($allReviews);
             </div>
 
             <!-- Text -->
-            <div class="srolling--parent"> <p class="feedback__text readmore__parent"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p></div>
+            <div class="srolling--parent">
+                <p class="feedback__text readmore__parent"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p>
+            </div>
 
 
             <!-- Bottom -->
@@ -490,7 +492,8 @@ $countReviews = count($allReviews);
                 </div>
                 <?php } ?>
                 <div class="hidenComments__top">
-<!--                    <img src="--><?php //echo $file_comment["src"] ?><!--" alt="OMS">-->
+                    <!--                    <img src="--><?php //echo $file_comment["src"] ?>
+                    <!--" alt="OMS">-->
 
 
                     <? if ($arPropsComments["REPRESENTATIVE"]["VALUE"] == "1") { ?>
@@ -556,7 +559,8 @@ $countReviews = count($allReviews);
                                     ?>
                     <div class="hidenComments__top">
 
-<!--                        <img src="--><?php //echo $file_quote["src"]; ?><!--" alt="OMS">-->
+                        <!--                        <img src="--><?php //echo $file_quote["src"]; ?>
+                        <!--" alt="OMS">-->
 
 
                         <? if ($arPropsQuote["REPRESENTATIVE"]["VALUE"] == "1") { ?>
@@ -587,18 +591,19 @@ $countReviews = count($allReviews);
 
                 <?php  if(isset($sort_url["admin"])){ ?>
 
-                    <div id="checkbox-box_<?= $arFields["ID"];?>" class="wrap-chrckbox"  >
-                        <label class="check-label years" data-chec="Y">
-                            промодерирован          <input name="years" type="checkbox" value="accepted">
-                            <span class="check-img"></span>
-                        </label>
-                        <label class="check-label years" data-chec="Y">
-                          не по теме          <input name="years" type="checkbox" value="reject">
-                            <span class="check-img"></span>
-                        </label>
+                <div id="checkbox-box_<?= $arFields["ID"];?>" class="wrap-chrckbox">
+                    <label class="check-label years" data-chec="Y">
+                        промодерирован <input name="years" type="checkbox" value="accepted">
+                        <span class="check-img"></span>
+                    </label>
+                    <label class="check-label years" data-chec="Y">
+                        не по теме <input name="years" type="checkbox" value="reject">
+                        <span class="check-img"></span>
+                    </label>
 
-                        <span style="padding-top: 4px" onclick="check_review(this)" data-check-id="<?= $arFields["ID"]; ?>" >Применить</span>
-                    </div>
+                    <span style="padding-top: 4px" onclick="check_review(this)"
+                        data-check-id="<?= $arFields["ID"]; ?>">Применить</span>
+                </div>
 
                 <? }?>
                 <div title="Удалить отзыв" data-id="<?php echo $arFields["ID"]; ?>" class="dalete_review inline_block">
@@ -614,36 +619,6 @@ $countReviews = count($allReviews);
             echo $navStr;
         }
         ?>
-        <div class="info_block">
-            <p>Существующая в России система обязательного медицинского страхования состоит из одних лишь плюсов и в
-                теории должна являться примером эффективного государственного социального страхования. Принцип
-                солидарной взаимопомощи; страховые медицинские организации, заинтересованные в повышении качества
-                медицинской помощи; исчерпывающий перечень заболеваний, лечение которых включено в программу ОМС – все
-                это присутствует в системе. Однако на практике все чаще полис ОМС оказывается бесполезен и получатель
-                медицинской помощи – гражданин, застрахованный по ОМС, не имеет возможности получить необходимую
-                медицинскую помощь бесплатно. </p>
-            <p>Для решения проблем, с которыми сталкиваются граждане при получении медицинской помощи, в системе ОМС с
-                недавних пор присутствует понятие «страховой представитель». Это специалист страховой компании, в
-                обязанности которого входит сопровождение застрахованных граждан в процессе получения помощи. Все
-                проблемы граждан на пути к доступной и качественной медицинской помощи должны решаться страховыми
-                представителями. На сегодняшний день в стране насчитывается более 14 000 страховых представителей.
-                <span class="border">Территориальные фонды ОМС регулярно проводят конкурсы на звание лучшего страхового
-                    представителя, в
-                    которых моделируют различные конфликтные ситуации и даже приглашают студентов в качестве актеров на
-                    роль
-                    застрахованных.</span> Мы же считаем, что в реальной жизни, практически в любой день в любой
-                медицинской
-                организации достаточно поводов для настоящего, а не выдуманного обращения к страховому представителю. И
-                результат работы по такому обращению объективнее оценит тот, для кого эта работа выполнялась – сам
-                застрахованный гражданин, а не жюри с представителями минздрава и территориального фонда.</p>
-            <p>Если у вас есть опыт обращения к своему страховому представителю, опишите его, вне зависимости от того,
-                положительный он или отрицательный. Так вы внесете свой вклад в формирование рейтинга страховых компаний
-                и возможно именно ваш отзыв станет решающим для посетителей сайта при выборе страховой компании. </p>
-            <p>Дополнительная информация по
-                <a
-                    href="http://www.ffoms.ru/news/regionalnye-novosti/v-khabarovskom-krae-vybrali-luchshikh-strakhovykh-predstaviteley/">ссылке.</a>
-            </p>
-        </div>
     </div>
 
     <div class="sidebar">
@@ -765,8 +740,8 @@ $countReviews = count($allReviews);
                 } ?>
 
 
-                </ul>
-                    <? if (isset($_GET["property_region"])) {
+            </ul>
+            <? if (isset($_GET["property_region"])) {
                         $url_for_filter = "?";
 
                         foreach ($sort_url as $key => $filter) {
@@ -779,13 +754,44 @@ $countReviews = count($allReviews);
                         }
 
                     } ?>
-                    <div class="center__child">
-                        <a class="accentBtn" href="<?= $url_for_filter ?>">Весь рейтинг</a>
-                    </div>
+            <div class="center__child">
+                <a class="accentBtn" href="<?= $url_for_filter ?>">Весь рейтинг</a>
+            </div>
         </div>
 
 
     </div>
+</div>
+
+<div class="info_block">
+    <p>Существующая в России система обязательного медицинского страхования состоит из одних лишь плюсов и в
+        теории должна являться примером эффективного государственного социального страхования. Принцип
+        солидарной взаимопомощи; страховые медицинские организации, заинтересованные в повышении качества
+        медицинской помощи; исчерпывающий перечень заболеваний, лечение которых включено в программу ОМС – все
+        это присутствует в системе. Однако на практике все чаще полис ОМС оказывается бесполезен и получатель
+        медицинской помощи – гражданин, застрахованный по ОМС, не имеет возможности получить необходимую
+        медицинскую помощь бесплатно. </p>
+    <p>Для решения проблем, с которыми сталкиваются граждане при получении медицинской помощи, в системе ОМС с
+        недавних пор присутствует понятие «страховой представитель». Это специалист страховой компании, в
+        обязанности которого входит сопровождение застрахованных граждан в процессе получения помощи. Все
+        проблемы граждан на пути к доступной и качественной медицинской помощи должны решаться страховыми
+        представителями. На сегодняшний день в стране насчитывается более 14 000 страховых представителей.
+        <span class="border">Территориальные фонды ОМС регулярно проводят конкурсы на звание лучшего страхового
+            представителя, в
+            которых моделируют различные конфликтные ситуации и даже приглашают студентов в качестве актеров на
+            роль
+            застрахованных.</span> Мы же считаем, что в реальной жизни, практически в любой день в любой
+        медицинской
+        организации достаточно поводов для настоящего, а не выдуманного обращения к страховому представителю. И
+        результат работы по такому обращению объективнее оценит тот, для кого эта работа выполнялась – сам
+        застрахованный гражданин, а не жюри с представителями минздрава и территориального фонда.</p>
+    <p>Если у вас есть опыт обращения к своему страховому представителю, опишите его, вне зависимости от того,
+        положительный он или отрицательный. Так вы внесете свой вклад в формирование рейтинга страховых компаний
+        и возможно именно ваш отзыв станет решающим для посетителей сайта при выборе страховой компании. </p>
+    <p>Дополнительная информация по
+        <a
+            href="http://www.ffoms.ru/news/regionalnye-novosti/v-khabarovskom-krae-vybrali-luchshikh-strakhovykh-predstaviteley/">ссылке.</a>
+    </p>
 </div>
 
 <?php require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>

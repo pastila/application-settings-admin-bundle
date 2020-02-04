@@ -244,6 +244,7 @@
     display: inline-block;
     position: relative;
     font-family: $main-font-semibold;
+    font-size: 1.4rem;
 }
 .file-input > [type='file'] {
     position: absolute;
@@ -292,7 +293,7 @@
 .file-input > .label.block-error-label {
     display: block;
     overflow: initial;
-    color: #f12323;
+    color: $accentColor;
     opacity: 1;
     margin: .5rem 0;
     padding: 0;

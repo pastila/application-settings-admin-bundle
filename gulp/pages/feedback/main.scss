@@ -2,22 +2,46 @@
 @import '../../styles/utils/mixins';
 
 .feedback {
+    display: flex;
     position: relative;
+
+    .sidebar {
+        width: 30%;
+        padding-left: 3rem;
+    }
+
+    &__wrap {
+        &_white-blocks {
+            width: 70%;
+        }
+    }
 
     &__block {
         &_company-name {
+            width: 12rem;
             position: relative;
             font-size: 1.2rem;
             font-weight: 700;
             text-transform: uppercase;
+            margin-left: auto;
+            img {
+                margin: 0 auto;
+            }
         }
-    }
-    &__filter {
-        .custom-select{
-            margin-bottom: 1rem;
-        }
-    }
 
+        &_top {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+
+            &_name {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                width: 100%;
+            }
+        }
+    }
 
     &__btns {
         display: flex;
@@ -44,12 +68,15 @@
     }
 
     &__filter {
-        margin-bottom: 2rem;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 7rem;
         .select-selected {
             background-color: $mainColor;
             display: flex;
             align-items: center;
             color: white;
+            font-size: 1.6rem;
 
             &:after {
                 border-color: white transparent transparent transparent;
@@ -61,28 +88,29 @@
                 border-color: transparent transparent white transparent;
             }
         }
+
         &__reset {
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            height: 2rem;
             padding: 1.5rem 3rem;
             background-color: $accentColor;
             color: white;
-            @media screen and (min-width: 992px){
-                font-size: 1.4rem;
-            }
-            @media(max-width: 991px){
-                padding: 1rem;
-            }
+            font-size: 1.6rem;
+        }
+
+        .custom-select {
+            width: 26%;
         }
     }
 
     &__title {
-        font-size: 1.4rem;
+        font-size: 2.6rem;
         font-weight: 700;
         margin-bottom: 2rem;
+        text-transform: capitalize;
+        color: $mainColor;
     }
 
     &__text {
@@ -98,13 +126,13 @@
         }
 
         &_name, &_data {
-            opacity: 0.5;
+            font-size: 1.6rem;
         }
     }
 
     &__bottom {
         display: flex;
-        font-size: 1.2rem;
+        font-size: 1.6rem;
         flex-wrap: wrap;
         align-items: baseline;
 
@@ -121,7 +149,7 @@
 
         &__top {
             display: flex;
-            margin-bottom: 1rem;
+            margin-bottom: 2rem;
 
             &_wrap {
                 display: flex;
@@ -202,135 +230,11 @@
         margin-left: 0;
     }
 }
-.feedback__block_top{
-    @media(min-width: 576px){
-        padding-right: 100px;
-    }
-}
-@media screen and (min-width: 576px) {
-    .feedback {
-        &__block {
-            &_company-name {
-                position: absolute;
-                right: 2rem;
-                top: 2rem;
-                font-size: 1.4rem;
-            }
-        }
 
-        &__btns {
-    
-            .smallMainBtn, .smallAccentBtn {
-                margin-right: 2rem;
-            }
-        }
-    
-        &__filter {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-
-            .custom-select {
-                width: 28%;
-            }
-        }
-
-    }
-}
-
-
-@media screen and (min-width: 992px) {
-    .feedback {
-        &__block {
-            &_company-name {
-                right: 3rem;
-                top: 3rem;
-            }
-        }
-
-        &__filter {
-            display: flex;
-            justify-content: space-between;
-            .custom-select {
-                width: 25%;
-                .select-selected {
-                    padding: 1.5rem 3rem;
-                    font-size: 1.4rem;
-                }
-            }
-        }
-
-        &__block_top {
-            display: flex;
-            flex-wrap: wrap;
-            font-size: 1.6rem;
-            margin-bottom: 4rem;
-
-            &_star, &_name {
-                margin-right: 4rem;
-            }
-        }
-
-        &__title {
-            font-size: 1.8rem;
-        }
-
-        &__text {
-            margin-bottom: 3rem;
-        }
-
-        &__bottom {
-            font-size: 1.6rem;
-
-            &_name {
-                margin-right: 3.7rem;
-            }
-        }
-    }
-}
 .opacity_block{
     opacity: .5;
 }
 
-@media screen and (min-width: 1200px) {
-    .feedback {
-        display: grid;
-        grid-template-columns: repeat(12, 1fr);
-        grid-gap: 2rem;
-
-        &__wrap_white-blocks {
-            grid-column: 1 / 10;
-        }
-
-        &__title {
-            font-size: 2.1rem;
-        }
-        &__filter {
-            @media screen and (min-width: 1200px) {
-                display: flex;
-                justify-content: flex-start;
-                .custom-select {
-                    margin-right: 2rem;
-                    width: 100%;
-                    max-width: 30rem;
-                }
-            }
-        }
-    }
-}
-
-@media screen and (min-width: 1600px) {
-    .feedback {
-
-        &__block {
-            &_company-name {
-                position: absolute;
-                top: 3rem;
-                right: 3rem;
-            }
-        }
-    }
-}
 .feedback_strah_user{
     display: block;
     width: 100%;
@@ -413,8 +317,12 @@
     }
 }
 .refresh_active-link{
+    position: absolute;
+    width: 100%;
+    top: 100%;
     background: #fff;
     box-shadow: 0 0 1rem rgba(25, 108, 156, 0.205);
+    font-size: 1.6rem;
     .after-select_activ-filter{
         padding: 1rem 4rem 1rem 2rem;
         transition: all .2s;
@@ -430,7 +338,6 @@
     display: flex;
     flex-direction: column-reverse;
     justify-content: flex-end;
-    height: 100%;
 }
 .title-medium{
     margin: 2rem 0;
@@ -454,7 +361,6 @@ a[data-tooltip].bottom {
     }
 }
 a[data-tooltip] {
-    position: relative;
     &:before {
         position: absolute;
         visibility: hidden;
@@ -465,7 +371,7 @@ a[data-tooltip] {
 
     &:before {
         content: attr(data-tooltip);
-        background: $mainColor;
+        background: $accentColor;
         color: #fff;
         padding: 1rem 2rem;
         white-space: nowrap;
@@ -514,4 +420,59 @@ a[data-tooltip][data-position="bottom"]:before {
     }
 }
 
+@media screen and (max-width: 576px) {
+    .feedback {
+        &__block {
+            &_company-name {
+                margin-left: 0;
+            }
+            &_top {
+                &_name {
+                    &_text {
+                        margin-bottom: 2rem;
+                    }
+                }
+            }
+        }
+    }
+}
 
+@media screen and (max-width: 992px) {
+    .feedback {
+        &__filter {
+            flex-direction: column;
+
+            .custom-select {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+
+            &__reset {
+                margin-top: 3rem;
+            }
+        }
+    }
+
+    .refresh_active-link {
+        position: relative;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .feedback {
+        flex-direction: column;
+
+        &__wrap {
+            &_white-blocks {
+                width: 100%;
+            }
+        }
+
+        .sidebar {
+            width: 100%;
+            padding-left: 0;
+        }
+    }
+
+    
+}

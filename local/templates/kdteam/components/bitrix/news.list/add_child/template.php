@@ -60,7 +60,7 @@ $this->setFrameMode(true);
     }
     ?>
 
-        <div class="flex_personal" id="element_<?= $arItem['ID'] ?>">
+        <div class="flex_personal white_block" id="element_<?= $arItem['ID'] ?>">
             <div class="personal_data">
                 <div class="flex_data">
                     <div class="item_data">
@@ -141,7 +141,7 @@ $this->setFrameMode(true);
         <div id="edit_children_<?= $arItem['ID'] ?>" style="display: none">
             <form onsubmit="return false" id="edit_children_form_<?= $arItem['ID'] ?>" action=""
                   enctype="multipart/form-data">
-                <div class="flex_personal">
+                <div class="flex_personal white_block">
                     <div class="personal_data">
                         <div class="flex_data">
                             <div class="item_data">

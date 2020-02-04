@@ -5,6 +5,7 @@
 
     &__block {
         &_company-name {
+            height: 10rem;
             position: relative;
             font-size: 1.2rem;
             font-weight: 700;
@@ -356,7 +357,7 @@
 }
 .feedback__block_top{
     @media(min-width: 576px){
-        padding-right: 120px;
+        padding-right: 12rem;
     }
 }
 

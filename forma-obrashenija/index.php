@@ -136,7 +136,9 @@ while($ob = $res->GetNextElement()){
                     Укажите период, в котором вы получали помощь
                 </div>
 
-                <span class="steps_items_item_button mainBtn disabled" id="" class="mainBtn">Далее</span>
+                <div style="display: flex">
+                    <span class="steps_items_item_button mainBtn disabled" id="" class="mainBtn">Далее</span>
+                </div>
             </div>
 
             <div class="card steps_items_item step-2">

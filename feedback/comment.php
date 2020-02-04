@@ -39,17 +39,17 @@ preg_match("/(\d+)\/$/",$url,$result_id);
             $arFields = $ob->GetFields();
             $arProps = $ob->GetProperties();
             ?>
-            <ul class="breadcrumbs">
-                <? if ($detect->isTablet() || $detect->isMobile()) { ?>
-                    <li><a href="/feedback/" class=""><?php echo $arFields["NAME"] ?></a></li>
-                <? } else { ?>
-                    <li><a href="/">Главная</a></li>
-                    <li><a href="/feedback/">Отзывы</a></li>
-                    <li><?php echo $arFields["NAME"] ?></li>
-                <? } ?>
+        <ul class="breadcrumbs">
+            <? if ($detect->isTablet() || $detect->isMobile()) { ?>
+            <li><a href="/feedback/" class=""><?php echo $arFields["NAME"] ?></a></li>
+            <? } else { ?>
+            <li><a href="/">Главная</a></li>
+            <li><a href="/feedback/">Отзывы</a></li>
+            <li><?php echo $arFields["NAME"] ?></li>
+            <? } ?>
 
-            </ul>
-            <?
+        </ul>
+        <?
             if($arProps["DATE_CHANGE_BY_USER"]["VALUE"] != "") {
                 $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arProps["DATE_CHANGE_BY_USER"]["VALUE"]));
             }else{
@@ -77,69 +77,70 @@ preg_match("/(\d+)\/$/",$url,$result_id);
                 BX_RESIZE_IMAGE_PROPORTIONAL, true);
 
             ?>
-            <div class="white_block">
-                <!-- Company Name -->
-                <div class="feedback__block_company-name"><img src="<?= $file["src"] ?>"></div>
-                <!-- top -->
-                <div class="feedback__block_top">
-                    <?php if($arProps["EVALUATION"]["VALUE"] != ""){ ?>
-                        <div class="feedback__block_top_star">
+        <div class="white_block">
+            <!-- top -->
+            <div class="feedback__block_top">
+            <?php if ($arProps["EVALUATION"]["VALUE"] != "" && $arProps["EVALUATION"]["VALUE"] != "0") { ?>
+                <div class="feedback__block_top_star">
 
-                            <? for ($i = 1; $i <= $arProps["EVALUATION"]["VALUE"]; ++$i) { ?>
-                                <svg class="star star-active" xmlns="http://www.w3.org/2000/svg"
-                                     viewBox="0 0 47.94 47.94">
-                                    <path
-                                            d="M26.285 2.486l5.407 10.956a2.58 2.58 0 0 0 1.944 1.412l12.091 1.757c2.118.308 2.963 2.91 1.431 4.403l-8.749 8.528a2.582 2.582 0 0 0-.742 2.285l2.065 12.042c.362 2.109-1.852 3.717-3.746 2.722l-10.814-5.685a2.585 2.585 0 0 0-2.403 0l-10.814 5.685c-1.894.996-4.108-.613-3.746-2.722l2.065-12.042a2.582 2.582 0 0 0-.742-2.285L.783 21.014c-1.532-1.494-.687-4.096 1.431-4.403l12.091-1.757a2.58 2.58 0 0 0 1.944-1.412l5.407-10.956c.946-1.919 3.682-1.919 4.629 0z"
-                                        <?if($arProps["VERIFIED"]["VALUE"] == ""){?>
-                                            fill="#c5d2e0"
-                                        <?php }elseif($arProps["REJECTED"]["VALUE"] != "" && $arProps["VERIFIED"]["VALUE"] != ""){?>
-                                            fill="#3a4552"
-                                        <?}elseif($arProps["VERIFIED"]["VALUE"] !=""){ ?>
-                                            fill="#00abd8"
-                                        <?php } ?>/>
-                                </svg>
+                    <? for ($i = 1; $i <= $arProps["EVALUATION"]["VALUE"]; ++$i) { ?>
+                    <svg class="star star-active" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 47.94 47.94">
+                        <path
+                            d="M26.285 2.486l5.407 10.956a2.58 2.58 0 0 0 1.944 1.412l12.091 1.757c2.118.308 2.963 2.91 1.431 4.403l-8.749 8.528a2.582 2.582 0 0 0-.742 2.285l2.065 12.042c.362 2.109-1.852 3.717-3.746 2.722l-10.814-5.685a2.585 2.585 0 0 0-2.403 0l-10.814 5.685c-1.894.996-4.108-.613-3.746-2.722l2.065-12.042a2.582 2.582 0 0 0-.742-2.285L.783 21.014c-1.532-1.494-.687-4.096 1.431-4.403l12.091-1.757a2.58 2.58 0 0 0 1.944-1.412l5.407-10.956c.946-1.919 3.682-1.919 4.629 0z"
+                            <?if($arProps["VERIFIED"]["VALUE"]=="" ){?>
+                            fill="#c5d2e0"
+                            <?php }elseif($arProps["REJECTED"]["VALUE"] != "" && $arProps["VERIFIED"]["VALUE"] != ""){?>
+                            fill="#3a4552"
+                            <?}elseif($arProps["VERIFIED"]["VALUE"] !=""){ ?>
+                            fill="#00abd8"
+                            <?php } ?>/>
+                    </svg>
 
 
 
-                            <? } ?>
-                        </div>
                     <? } ?>
-                    <div class="feedback__block_top_name">
-                        <?= $name_user ?>, <?= $city["NAME"] ?>, <?= $newDate ?>
-                    </div>
-                    <!--                <div class="feedback__block_top_data">-->
-                    <!--                    05 сент, 2019-->
-                    <!--                </div>-->
                 </div>
-                <!-- Title -->
-                <div class="feedback__title">
-                    <?= $arFields["NAME"] ?>
+                <? } ?>
+                <div class="feedback__block_top_name">
+                    <span class="feedback__block_top_name_text"><?= $name_user ?>, <?= $city["NAME"] ?>,
+                        <?= $newDate ?></span>
+
+                    <!-- Company Name -->
+                    <div class="feedback__block_company-name"><img src="<?= $file["src"] ?>"></div>
                 </div>
+                <!--                <div class="feedback__block_top_data">-->
+                <!--                    05 сент, 2019-->
+                <!--                </div>-->
+            </div>
+            <!-- Title -->
+            <div class="feedback__title">
+                <?= $arFields["NAME"] ?>
+            </div>
 
-                <!-- Text -->
-                <div class="srolling--parent">
-                 <p class="feedback__text readmore__parent"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p>
-                </div>
+            <!-- Text -->
+            <div class="srolling--parent">
+                <p class="feedback__text readmore__parent"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p>
+            </div>
 
-                <!-- Bottom -->
-                <div class="feedback__bottom">
-                    <div class="feedback__bottom_name opacity_block">OMC</div>
+            <!-- Bottom -->
+            <div class="feedback__bottom">
+                <div class="feedback__bottom_name opacity_block">OMC</div>
 
-                    <a id="show-comments" class="feedback__bottom_link opacity_block">
-                        <img src="" alt="">
+                <a id="show-comments" class="feedback__bottom_link opacity_block">
+                    <img src="" alt="">
 
-                        <span class="comment-count">
-                    <?= $count_comments ?>
-                                </span>
-                        комментариев
-                    </a>
-                    <?php if($Date_change_user != ""){ ?>
-                        <span class="date_review">Дата изменения <?php echo $Date_change_user; ?></span>
-                    <?php } ?>
-                </div>
-                <!-- COMMETNS -->
-                <div class="hidenComments">
-                    <?php
+                    <span class="comment-count">
+                        <?= $count_comments ?>
+                    </span>
+                    комментариев
+                </a>
+                <?php if($Date_change_user != ""){ ?>
+                <span class="date_review">Дата изменения <?php echo $Date_change_user; ?></span>
+                <?php } ?>
+            </div>
+            <!-- COMMETNS -->
+            <div class="hidenComments">
+                <?php
                     $ID_COMMENTS = $arProps["COMMENTS_TO_REWIEW"]["VALUE"]; /// комментарии
                     $order = Array("date_active_from" => "desc");
                     $arSelectComments = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
@@ -156,37 +157,38 @@ preg_match("/(\d+)\/$/",$url,$result_id);
 //                        $file_comment = CFile::ResizeImageGet($arUserComments["PERSONAL_PHOTO"], array('width'=>50, 'height'=>50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
                         ?>
 
-                        <div class="hidenComments__top">
-<!--                            <img src="--><?php //echo $file_comment["src"] ?><!--" alt="OMS">-->
+                <div class="hidenComments__top">
+                    <!--                            <img src="--><?php //echo $file_comment["src"] ?>
+                    <!--" alt="OMS">-->
 
-                            <div class="hidenComments__top_wrap">
-                                <div class="hidenComments__top_name"><?= $name_userComments ?></div>
+                    <div class="hidenComments__top_wrap">
+                        <div class="hidenComments__top_name"><?= $name_userComments ?></div>
 
-                                <div class="hidenComments__top_data"><?= $newDateComments ?></div>
-                            </div>
+                        <div class="hidenComments__top_data"><?= $newDateComments ?></div>
+                    </div>
+                </div>
+
+                <p><?= $arPropsComments["COMMENTS"]["VALUE"] ?></p>
+                <? if ($USER->IsAuthorized()) { ?>
+                <? if ($arPropsComments["CITED"]["VALUE"] == "") { ?>
+                <!--                        <a id="show-comment" class="hidenComments__link" href="#">Цитировать</a>-->
+                <div class="block_commented_styles">
+                    <form action="">
+                        <div class="input__wrap">
+                            <textarea minlength="10" name="cited" required
+                                data-id-cited="<?= $arFieldsComments["ID"] ?>"></textarea>
                         </div>
-
-                        <p><?= $arPropsComments["COMMENTS"]["VALUE"] ?></p>
-                        <? if ($USER->IsAuthorized()) { ?>
-                            <? if ($arPropsComments["CITED"]["VALUE"] == "") { ?>
-                                <!--                        <a id="show-comment" class="hidenComments__link" href="#">Цитировать</a>-->
-                                <div class="block_commented_styles">
-                                    <form action="">
-                                        <div class="input__wrap">
-                                            <textarea minlength="10" name="cited" required
-                                                      data-id-cited="<?= $arFieldsComments["ID"] ?>"></textarea>
-                                        </div>
-                                        <div class="danger hidden">Заполните поле</div>
-                                        <button type="submit" class="smallMainBtn button-cited" id="comments"
-                                                data-id-cited="<?= $arFieldsComments["ID"] ?>">Цитировать
-                                        </button>
-                                    </form>
-                                </div>
-                            <? } ?>
-                        <? } ?>
-                        <!-- Цитаты-->
-                        <div class="block_quotes">
-                            <?
+                        <div class="danger hidden">Заполните поле</div>
+                        <button type="submit" class="smallMainBtn button-cited" id="comments"
+                            data-id-cited="<?= $arFieldsComments["ID"] ?>">Цитировать
+                        </button>
+                    </form>
+                </div>
+                <? } ?>
+                <? } ?>
+                <!-- Цитаты-->
+                <div class="block_quotes">
+                    <?
                             if ($arPropsComments["CITED"]["VALUE"] != "") {  // цитаты к коментариям
                                 $ID_Quote = $arPropsComments["CITED"]["VALUE"];
                                 $arSelectQuote = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
@@ -204,25 +206,26 @@ preg_match("/(\d+)\/$/",$url,$result_id);
                                     $name_userQuote = $arUserQuote["NAME"];
 //                                    $file_quote = CFile::ResizeImageGet($arUserQuote["PERSONAL_PHOTO"], array('width'=>50, 'height'=>50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
                                     ?>
-                                    <div class="hidenComments__top">
+                    <div class="hidenComments__top">
 
-<!--                                        <img src="--><?php //echo $file_quote["src"]; ?><!--" alt="OMS">-->
-                                        <div class="hidenComments__top_wrap">
-                                            <div class="hidenComments__top_name"><?= $name_userQuote ?></div>
-                                            <div class="hidenComments__top_data"><?= $newDateQuote ?></div>
-                                        </div>
-                                    </div>
-
-                                    <p class="quotes_italic">« <?= $arPropsQuote["CIATION"]["VALUE"] ?> »</p>
-
-
-                                <? } ?>
-                            <? } ?>
+                        <!--                                        <img src="--><?php //echo $file_quote["src"]; ?>
+                        <!--" alt="OMS">-->
+                        <div class="hidenComments__top_wrap">
+                            <div class="hidenComments__top_name"><?= $name_userQuote ?></div>
+                            <div class="hidenComments__top_data"><?= $newDateQuote ?></div>
                         </div>
+                    </div>
+
+                    <p class="quotes_italic">« <?= $arPropsQuote["CIATION"]["VALUE"] ?> »</p>
+
+
+                    <? } ?>
                     <? } ?>
                 </div>
+                <? } ?>
+            </div>
 
-            </div><!-- FeedBack block END -->
+        </div><!-- FeedBack block END -->
         <? }
 
         ?>

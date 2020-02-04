@@ -20,7 +20,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 22rem;
+    min-width: 20rem;
     min-height: 5.5rem;
     padding: 0 2rem;
     font-size: 1.6rem;
@@ -31,6 +31,9 @@
     text-align: center;
     border: solid 0.1rem $bgColor;
     border-radius: 20rem;
+    @media screen and (max-width: 576px){
+        width: 100%;
+    }
 
     &:hover {
         background-color:lighten($bgColor, 10%);
