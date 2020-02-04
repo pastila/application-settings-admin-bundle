@@ -158,6 +158,20 @@
             &_inputs {
                 display: flex;
                 justify-content: space-between;
+                &.disabled{
+                    filter: grayscale(100%);
+                    cursor: not-allowed;
+                    .input__ico{
+                        visibility: hidden;
+                        opacity: 0;
+                    }
+                    .input-with-search{
+                        filter: grayscale(100%);
+                        cursor: not-allowed !important;
+                        pointer-events: none;
+                    }
+                }
+
                 @media screen and (max-width: 1200px){
                     flex-direction: column;
                 }
@@ -173,62 +187,50 @@
 }
 
 
-.form-obrashcheniya {
+// .form-obrashcheniya {
 
-    &__step_three {
-        &_l {
-            margin-bottom: 2rem;
-            &_text {
-                margin-bottom: 2rem;
-            }
-        }
+//     &__step_three {
+//         &_l {
+//             margin-bottom: 2rem;
+//             &_text {
+//                 margin-bottom: 2rem;
+//             }
+//         }
 
-        &_r {
-            &_wrap {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
+//         &_r {
+//             &_wrap {
+//                 display: flex;
+//                 flex-direction: column;
+//                 align-items: center;
+//                 justify-content: center;
 
-                &:not(:last-of-type)  {
-                    margin-bottom: 1.5rem;
-                }
+//                 &:not(:last-of-type)  {
+//                     margin-bottom: 1.5rem;
+//                 }
 
-                &_title {
-                    font-size: 1.6rem;
-                    margin-bottom: 2rem;
-                    text-align: center;
-                }
+//                 &_title {
+//                     font-size: 1.6rem;
+//                     margin-bottom: 2rem;
+//                     text-align: center;
+//                 }
 
-                &_name {
-                    text-transform: uppercase;
-                    font-weight: bold;
-                    font-size: 1.6rem;
-                    text-align: center;
-                }
-            }
-        }
-    }
+//                 &_name {
+//                     text-transform: uppercase;
+//                     font-weight: bold;
+//                     font-size: 1.6rem;
+//                     text-align: center;
+//                 }
+//             }
+//         }
+//     }
 
-    &__step_four {
-        &_text {
-            margin-bottom: 2rem;
-        }
-        .disabled{
-            filter: grayscale(100%);
-            cursor: not-allowed;
-            .input__ico{
-                visibility: hidden;
-                opacity: 0;
-            }
-            .input-with-search{
-                filter: grayscale(100%);
-                cursor: not-allowed !important;
-                pointer-events: none;
-            }
-        }
-    }
-}
+//     &__step_four {
+//         &_text {
+//             margin-bottom: 2rem;
+//         }
+        
+//     }
+// }
 
 @media screen and (min-width: 992px) {
     .form-obrashcheniya {

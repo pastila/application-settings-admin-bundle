@@ -20,9 +20,9 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    max-width: 22rem;
-    width: 100%;
-    height: 5.5rem;
+    min-width: 22rem;
+    min-height: 5.5rem;
+    padding: 0 2rem;
     font-size: 1.6rem;
     font-family: $main-font-semibold;
     background-color: $bgColor;
@@ -31,16 +31,9 @@
     text-align: center;
     border: solid 0.1rem $bgColor;
     border-radius: 20rem;
-    letter-spacing: 0.1rem;
 
     &:hover {
         background-color:lighten($bgColor, 10%);
-    }
-
-    @media screen and (max-width: 576px){
-        height: 3.5rem;
-        font-size: 1rem;
-        max-width: 14rem;
     }
 }
 

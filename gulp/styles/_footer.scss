@@ -56,12 +56,15 @@
     }
 
     &__menu {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
         margin-bottom: 2rem;
 
         li {
             text-align: center;
-            font-size: 1.2rem;
             a {
+                font-size: 1.6rem;
                 display: block;
                 color: $mainColor;
                 &:hover {

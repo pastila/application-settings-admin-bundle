@@ -50,6 +50,7 @@
                 display: flex;
                 width: 50rem;
                 height: 50rem;
+                
                 img {
                     width: 100%;
                 }
@@ -129,6 +130,18 @@
 
                 &_title-block {
                     text-align: center;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width:1200px) {
+    .buttons {
+        &__items {
+            &_item {
+                &_image-block {
+                    width: 30rem;
                 }
             }
         }
