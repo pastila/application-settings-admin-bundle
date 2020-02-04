@@ -7,8 +7,8 @@ $asset->addCss(SITE_TEMPLATE_PATH . "/pages/stax-sluchay/main.min.css");
 $asset->addJs(SITE_TEMPLATE_PATH . "/pages/stax-sluchay/main.min.js");
 
 $asset->addCss(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/main.min.css");
-$asset->addJs("/gulp/pages/forma-obrashenija/main.js");
-//$asset->addJs(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/main.min.js");
+//$asset->addJs("/gulp/pages/forma-obrashenija/main.js");
+$asset->addJs(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/main.min.js");
 
 CModule::IncludeModule("iblock");
 $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_*");
