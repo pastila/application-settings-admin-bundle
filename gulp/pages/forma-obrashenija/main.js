@@ -2,11 +2,37 @@
 
 $(document).ready(function () {
 
+
+
+
+
+
   $(document).on("click", ".diagnoz_search_js", function () {
-    $("#grid").addClass('disabled')
+    $("#grid").addClass('disabled');
+
+
+    $(".steps_items_item_button").each(function(index) {
+      if(index == 3)
+     $(this).removeClass("disabled");
+      $(this).attr("id","strax-sluchay");
+    });
+
   });
 
   $(".years").click(function () {
+
+    var arr_step = [];
+    var arr_span_further = [];
+    $(".steps_navigation_action").each(function(index) {
+      if(index !== 0){
+        arr_step.push($(this));
+      }
+    });
+    $(".steps_items_item_button").each(function() {
+      arr_span_further.push($(this));
+    });
+
+
 
     if ($("#selected_year").val() != "") {
       var year = $(this).attr("data-year");
@@ -25,6 +51,10 @@ $(document).ready(function () {
           $('#hosptital_name').html('Не выбрано');
           $('#street_name').html('Не выбрано');
           $('#boss_name').html('Не выбрано');
+
+
+          arr_step[2].attr("for","");
+          arr_span_further[2].addClass("disabled");
 
           search_hospital();
           search_region();
@@ -74,7 +104,16 @@ $(document).ready(function () {
     }
   });
   $(document).on('click', '.region', function () {
-
+    var arr_step = [];
+    var arr_span_further = [];
+    $(".steps_navigation_action").each(function(index) {
+      if(index !== 0){
+        arr_step.push($(this));
+      }
+    });
+    $(".steps_items_item_button").each(function() {
+      arr_span_further.push($(this));
+    });
     let id_region = $(this).attr('value');
     let select_region = $(this).text();
     $('#referal_forma').val(select_region);
@@ -82,6 +121,9 @@ $(document).ready(function () {
     $('#region_name').text(select_region);
     $('#referal_forma').attr('data-region_check', 'check');
     let component = $('#hospitals');
+    arr_step[2].attr("for","");
+    arr_span_further[2].addClass("disabled");
+
 
     $.ajax({
       dataType: 'html',
@@ -174,6 +216,16 @@ $(document).ready(function () {
 
   function search_hospital() {
     $(document).on('click', '.hospital', function () {
+      var arr_step = [];
+      var arr_span_further = [];
+      $(".steps_navigation_action").each(function(index) {
+        if(index !== 0){
+          arr_step.push($(this));
+        }
+      });
+      $(".steps_items_item_button").each(function() {
+        arr_span_further.push($(this));
+      });
       let id_region = $(this).attr('value');
       let select_region = $(this).text();
       let name_boss = $(this).attr("data-name-boss");
@@ -184,6 +236,12 @@ $(document).ready(function () {
       $('#hosptital_name').text(select_region);
       $('#street_name').text(name_street);
       $('#boss_name').text(name_boss);
+      arr_step[2].attr("for","step-4");
+      arr_span_further[2].removeClass("disabled");
+
+      arr_span_further[2].click(function() {
+        arr_step[2].trigger("click");
+      });
 
 
 
@@ -628,6 +686,13 @@ function search_group() {
   keyup_group(id_class);
 
 }
+$(document).on('click', '.diagnoz-js', function () {
+  $(".steps_items_item_button").each(function(index) {
+    if(index == 3)
+      $(this).removeClass("disabled");
+    $(this).attr("id","strax-sluchay");
+  });
+});
 function search_subgroup() {
   // ------ choose_subgroup ------
   $(document).on('click', '#search_result_subgroup li', function () {
@@ -637,6 +702,8 @@ function search_subgroup() {
   $(document).on('click', '#subgroup_input', function () {
     $('#search_result_subgroup').css('display', 'block');
   });
+
+
   $(document).mouseup(function (e) {
     let container = $('#subgroup_input');
     if (container.has(e.target).length === 0) {
@@ -918,10 +985,12 @@ function keyup_diagnoz(id_subgroup) {
             $('#search_result_diagnoz').append(msg);
           }, 100);
           $(document).on('click', '.diagnoz-js', function () {
+
             let id = $(this).attr('value');
             let select_region = $(this).text();
             $('#diagnoz_input').val(select_region);
             $('#diagnoz_input').attr('data-id_diagnoz', id);
+
           });
         }
       });
@@ -956,7 +1025,25 @@ function keyup_diagnoz_global() {
     var $this = $(this);
     if ($this.val() === "") {
       $("#grid").removeClass('disabled')
+      let component = $('#grid');
+      $.post('/ajax/main_form_oms.php', { id: "" },
+          function (result) {
+            $(component).html(result);
+            $('#diagnoz_input').val("");
+            $('#diagnoz_input').attr('data-id_diagnoz', "");
+            search_group();
+            search_subgroup();
+            search_diagnoz();
+          }, 'html');
     }
+    $(".steps_items_item_button").each(function(index) {
+      if(index == 3)
+        $(this).addClass("disabled");
+      $(this).attr("id","");
+    });
+
+
+
     var delay = 500;
     clearTimeout($this.data('timer'));
     $this.data('timer', setTimeout(function () {
@@ -999,6 +1086,7 @@ function keyup_diagnoz_global() {
 }
 
 function after_global_search(SECTION_ID, TEXT, VALUE) {
+
   let component = $('#grid');
   $.post('/ajax/main_form_oms.php', { id: SECTION_ID },
     function (result) {
@@ -1027,12 +1115,12 @@ function steps() {
 
           items.forEach(item => {
             const tabClass = item.classList.contains(label);
-            
+
             if (tabClass) {
               item.classList.add('active');
             }
           });
-          
+
         } else {
           radioBtn.parentNode.classList.remove('checked');
           radioBtn.classList.remove('active');
@@ -1040,7 +1128,7 @@ function steps() {
 
           items.forEach(item => {
             const tabClass = item.classList.contains(label);
-            
+
             if (tabClass) {
               item.classList.remove('active');
             }
@@ -1054,3 +1142,39 @@ function steps() {
   });
 }
 steps();
+$(document).ready(function() {
+  var arr_step = [];
+  var arr_span_further = [];
+  $(".steps_navigation_action").each(function(index) {
+    if(index !== 0){
+       $(this).attr("for","");
+      arr_step.push($(this));
+    }
+  });
+  $(".steps_items_item_button").each(function() {
+    arr_span_further.push($(this));
+  });
+
+  $("[name=years]").change(function() {
+    arr_step[0].attr("for","step-2");
+    arr_span_further[0].removeClass("disabled");
+
+  });
+  arr_span_further[0].click(function() {
+    arr_step[0].trigger("click");
+
+  });
+
+
+
+  $("[data-planned]").change(function() {
+    arr_step[1].attr("for","step-3");
+    arr_span_further[1].removeClass("disabled");
+
+  });
+  arr_span_further[1].click(function() {
+    arr_step[1].trigger("click");
+
+  });
+
+});

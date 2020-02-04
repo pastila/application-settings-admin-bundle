@@ -7,6 +7,7 @@ $asset->addCss(SITE_TEMPLATE_PATH . "/pages/stax-sluchay/main.min.css");
 $asset->addJs(SITE_TEMPLATE_PATH . "/pages/stax-sluchay/main.min.js");
 
 $asset->addCss(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/main.min.css");
+//$asset->addJs("/gulp/pages/forma-obrashenija/main.js");
 $asset->addJs(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/main.min.js");
 
 CModule::IncludeModule("iblock");
@@ -135,7 +136,7 @@ while($ob = $res->GetNextElement()){
                     Укажите период, в котором вы получали помощь
                 </div>
 
-                <button class="steps_items_item_button mainBtn" id="strax-sluchay" class="mainBtn">Далее</button>
+                <span class="steps_items_item_button mainBtn disabled" id="" class="mainBtn">Далее</span>
             </div>
 
             <div class="card steps_items_item step-2">
@@ -144,13 +145,13 @@ while($ob = $res->GetNextElement()){
                     <div class="wrap-chrckbox plannet">
                         <label id="planned_label" class="check-label">
                             Плановое
-                            <input id="planned" type="checkbox" value="" />
+                            <input id="planned" data-planned  type="radio" value="" />
                             <span class="check-img"></span>
                         </label>
 
                         <label class="check-label">
                             Неотложное
-                            <input id="urgent" type="checkbox" value="" />
+                            <input id="urgent"  data-planned type="radio" value="" />
                             <span class="check-img"></span>
                         </label>
                     </div>
@@ -173,7 +174,7 @@ while($ob = $res->GetNextElement()){
                 </div>
 
                 <div style="display:flex;">
-                    <button class="steps_items_item_button mainBtn" id="strax-sluchay" class="mainBtn">Далее</button>
+                    <span class="steps_items_item_button mainBtn disabled" id="" class="mainBtn">Далее</span>
                 </div>
             </div>
 
@@ -248,7 +249,7 @@ while($ob = $res->GetNextElement()){
                 </div>
 
                 <div style="display:flex;">
-                    <button class="steps_items_item_button mainBtn" id="strax-sluchay" class="mainBtn">Далее</button>
+                    <span class="steps_items_item_button mainBtn disabled" id="" class="mainBtn">Далее</span>
                 </div>
             </div>
 
@@ -322,7 +323,7 @@ while($ob = $res->GetNextElement()){
                 </div>
 
                 <div style="display:flex;">
-                    <button class="steps_items_item_button mainBtn" id="strax-sluchay" class="mainBtn">Готово</button>
+                    <span class="steps_items_item_button mainBtn disabled" id=""  class="mainBtn">Готово</span>
                 </div>
             </div>
         </div>
@@ -369,7 +370,7 @@ while($ob = $res->GetNextElement()){
 <!-- 4 Step -->
 <!-- <section class="form-obrashcheniya__step_four">
     <div class="card error_step-card-4">
-        
+
     </div>
 </section> -->
 <!-- </form> -->
