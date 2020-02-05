@@ -150,7 +150,7 @@ $arUser = $rsUser->Fetch();
                 </a>
             </div>
             <div class="feedback__bottom bottom_change-block">
-                <span class="feedback_change_star" data-id-rewiev="<?=$arFields["ID"]?>">Редактировать оценку</span>
+                <span class="feedback_change_star accentBtn" data-id-rewiev="<?=$arFields["ID"]?>">Редактировать оценку</span>
             </div>
             <form action="" id="form_change_count_star" data-form-id="<?=$arFields["ID"]?>"
                 class="hidden form-change_star">

@@ -43,7 +43,7 @@ if($ob = $res->GetNextElement()){
 <!-- Pages Title -->
 <?= $arProps["PREVIEW_TEXT"]; ?>
 
-<div class="form_contact-us">
+<div class="form_contact-us white_block">
     <form id="feedback_modal_two" class="writeUs__form" enctype="multipart/form-data" >
         <div class="writeUs__form__wrap">
             <h2 class="title_medium"> Напишите нам</h2>

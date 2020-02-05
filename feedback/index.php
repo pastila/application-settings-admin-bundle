@@ -54,7 +54,7 @@ $countReviews = count($allReviews);
         <a href="/add-feedback/" class="mainBtn">Добавить отзыв</a>
         <a href="?comments=all" class="accentBtn">Все отзывы</a>
         <?php if ($USER->IsAdmin()){ ?>
-        <a href="?admin=property_verified" class="accentBtn">Модерция отзывов</a>
+        <a href="?admin=property_verified" class="accentBtn">Модерация отзывов</a>
         <?php } ?>
     </div>
 
