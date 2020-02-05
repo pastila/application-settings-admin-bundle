@@ -65,6 +65,9 @@ CModule::IncludeModule("iblock");
                        data-mask="+7 (000) 000 00 00"
                        placeholder="+7 (___) ___ __ __"  required>
                 <p id="sms_confirm_error" style="display: none" class="error sms-error">Введите номер телефона</p>
+                <p id="tel_confirm_error" style="display: none" class="error sms-error">
+                    Пользовватель с таким телефоном уже сущесвует
+                </p>
             </div>
             <div class="input__wrap hidden_wrap_phone flex_hidden_wrap_phone main_btn-parent">
                 <input type="button" class="accept-phone-js blue-bg" value="Подтвердить номер телефона">

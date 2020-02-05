@@ -82,11 +82,10 @@
         margin-bottom: 1rem;
     }
     .sms-error{
-        position: absolute;
-        top: 100%;
-        left: 0;
         @media(min-width: 992px){
             left: 1rem;
+            position: absolute;
+            top: 100%;
         }
     }
     .flex_hidden_wrap_phone{

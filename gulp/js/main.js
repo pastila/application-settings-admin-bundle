@@ -236,16 +236,21 @@ $(document).ready(function() {
     });
 
     $('.accept-phone-js').click(function() {
+      $('#tel_confirm_error').css('display', 'none');
       if ($('#phone')['0'].validity.valid === true) {
-        $('.hidden_wrap_phone').css('display', 'none');
         $('#sms_confirm_error').css('display', 'none');
-        $('#sms_confirm').css('display', 'block');
         $.ajax({
           url: '/ajax/sms_code_generate.php',
           type: 'POST',
           data: {phone: $('#phone').val()},
           success: function(code) {
-            console.log(code);
+            if (code === 'error') {
+              $('#tel_confirm_error').css('display', 'block');
+            } else {
+              $('.hidden_wrap_phone').css('display', 'none');
+              $('#sms_confirm').css('display', 'block');
+              console.log(code);
+            }
           },
         });
       } else {
