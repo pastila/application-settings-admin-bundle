@@ -11,7 +11,7 @@
     }
     .personal_data{
       @media screen and (min-width: 992px){
-        flex: 2;
+        flex: 1;
         padding-right: 3rem;
         margin-bottom: 0;
       }
@@ -24,6 +24,8 @@
         flex-wrap: wrap;
         align-items: center;
         margin-bottom: 1rem;
+        padding: 1.5rem 0;
+        border-bottom: solid 0.1rem $border;
         .item_data {
           width: 100%;
           margin-bottom: 0;
@@ -34,6 +36,7 @@
             }
             @media(min-width: 1200px){
               width: 30%;
+              margin-right: 5rem;
             }
           }
           @media(min-width: 576px){
