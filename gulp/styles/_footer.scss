@@ -1,9 +1,11 @@
 @import './utils/vars';
 
 .footer {
+    margin-top: 5rem;
     margin-right: -1.5rem;
     margin-left: -1.5rem;
     padding: 1.5rem 1.5rem 1.5rem 1.5rem;
+    background-color: $footer-bg;
 
     &__container {
         display: flex;
@@ -52,6 +54,13 @@
             font-size: 1.2rem;
             margin-bottom: .5rem;
             display: inline-block;
+            color: white;
+        }
+
+        svg {
+            path {
+                fill: white;
+            }
         }
     }
 
@@ -66,9 +75,9 @@
             a {
                 font-size: 1.6rem;
                 display: block;
-                color: $mainColor;
+                color: white;
                 &:hover {
-                    color: lighten($mainColor, 10%);
+                    color: lighten(white, 10%);
                 }
             }
         }

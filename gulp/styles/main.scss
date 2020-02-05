@@ -123,6 +123,16 @@ main.main {
     border: solid 0.2rem $border;
 }
 
+.blue_block {
+    padding: 3rem;
+    background: #28467f;
+    margin-bottom: 2rem;
+    position: relative;
+    border-radius: 1rem;
+    border: solid 0.2rem #28467f;
+    color: white;
+}
+
 .success {
     color: $succes;
 }

@@ -7,17 +7,37 @@ $main-font-bold: 'Exo-Bold';
 
 // Colors shema
 $bgColor: #f7fafc;
-$mainColor: #103F5C;
+$mainColor: rgb(32, 32, 32);
 $borderMainBtn: #266286;
 $accentColor: #00ABD8;
 $borderAccentBtn: #00A8D5;
-$border: #f1f4f7;
-$lightBg: #e8ebef;
-$light-blue-bg: #f1f9ff;
-$text-color: #5D5D5D;
-$title-color: #103F5C;
+$border: #e0ebf2;
+$lightBg: #e0ebf2;
+$light-blue-bg: #e0ebf2;
+$text-color: #464646;
+$title-color: #186b9c;
 // Buttons home border
-$homeBtnColor: #EAEFF5;
+$homeBtnColor: #e0ebf2;
+
+// Color Shema
+$color: #464646;
+$bgLightBlue: #e0ebf2;
+
+// Btns Color
+$mainBtnBg: #28467f;
+$mainBtnColor: white;
+
+// Btns RESET Color
+$btnResetBg: #222;
+$btnResetColor: #ffef00;
+
+// Btns White
+$btnWhiteBg: white;
+$btnWhiteColor: #222;
+
+// Footer
+$footer-bg: #28467f;
+
 
 // Input
 $inputColor: $bgColor;
