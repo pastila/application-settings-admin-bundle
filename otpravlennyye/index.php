@@ -40,7 +40,7 @@ if ($Section = $section->GetNext()) {
         ?>
         <!-- Обращения item -->
         <div class="otpravlennyye">
-            <div class="card">
+            <div class="white_block">
                 <div class="otpravlennyye__item">
                     <div class="otpravlennyye__item_title">
                         <?= $arFields["NAME"] . ' № ' . $arFields["ID"]?>
