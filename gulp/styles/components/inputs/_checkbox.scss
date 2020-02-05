@@ -29,7 +29,8 @@ input:checked ~ .check-img:after {
     width: 2rem;
     height: 2rem;
     transform: translateY(-50%);
-    background-color: $accentColor;
+    background-color: $bgColor;
+    border: solid 0.1rem $mainColor;
 
     &:after {
         content: "";

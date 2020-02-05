@@ -41,6 +41,31 @@
     }
 }
 
+@mixin btnDescBorder($bgColor, $color, $border-color) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20rem;
+    min-height: 5.5rem;
+    padding: 0 2rem;
+    font-size: 1.6rem;
+    font-family: $main-font-semibold;
+    background-color: $bgColor;
+    color: $color;
+    cursor: pointer;
+    text-align: center;
+    border: solid 0.1rem $border-color;
+    border-radius: 20rem;
+    @media screen and (max-width: 576px){
+        width: 100%;
+        margin: 0 0 2rem 0 !important;
+    }
+
+    &:hover {
+        background-color:lighten($bgColor, 10%);
+    }
+}
+
 @mixin smallBtn($bgColor, $color) {
     display: inline-flex;
     justify-content: center;

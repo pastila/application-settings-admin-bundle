@@ -47,14 +47,14 @@ $countReviews = count($allReviews);
 <h2 class="page-title">Отзывы о страховых медицинских организациях</h2>
 
 <!-- ALL STEPS IN FORM -->
-<form action="">
+<form action="" class="white_block">
 
     <!-- Add and All feedback btns -->
     <div class="feedback__btns">
         <a href="/add-feedback/" class="mainBtn">Добавить отзыв</a>
-        <a href="?comments=all" class="accentBtn">Все отзывы</a>
+        <a href="?comments=all" class="accentBtnBorder">Все отзывы</a>
         <?php if ($USER->IsAdmin()){ ?>
-        <a href="?admin=property_verified" class="accentBtn">Модерация отзывов</a>
+        <a href="?admin=property_verified" class="accentBtnBorder">Модерация отзывов</a>
         <?php } ?>
     </div>
 
@@ -611,7 +611,7 @@ $countReviews = count($allReviews);
                         Применить
                     </div>
 
-                    <div class="accentBtn feedback__actions-btns_btn" title="Удалить отзыв"
+                    <div class="accentBtnBorder feedback__actions-btns_btn" title="Удалить отзыв"
                         data-id="<?php echo $arFields["ID"]; ?>">
                         Удалить отзыв
                     </div>

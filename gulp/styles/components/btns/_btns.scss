@@ -1,6 +1,11 @@
 .mainBtn {
     @include btnDesc($mainColor, white);
 }
+
+.accentBtnBorder {
+    @include btnDescBorder(transparent, $mainColor, $accentColor);
+}
+
 .smallMainBtn{
     @include btnDesc($mainColor, white);
 }

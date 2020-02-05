@@ -47,7 +47,7 @@
         display: flex;
         flex-wrap: wrap;
         margin-bottom: 2rem;
-        .mainBtn {
+        .mainBtn, .accentBtnBorder {
             margin-right: 2rem;
             @media screen and (max-width: 575px){
                 margin-right: .5rem;
@@ -70,22 +70,21 @@
     &__filter {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 7rem;
         .select-selected {
-            background-color: $mainColor;
+            background-color: $bgColor;
             display: flex;
             align-items: center;
-            color: white;
+            color: $mainColor;
             font-size: 1.6rem;
 
             &:after {
-                border-color: white transparent transparent transparent;
+                border-color: $mainColor transparent transparent transparent;
             }
 
             &.select-arrow-active:after {
                 top: 40%;
                 transform: translateY(-50%);
-                border-color: transparent transparent white transparent;
+                border-color: transparent transparent $mainColor transparent;
             }
         }
 
@@ -95,7 +94,7 @@
             justify-content: center;
             text-align: center;
             padding: 1.5rem 3rem;
-            background-color: $accentColor;
+            background-color: $mainColor;
             color: white;
             font-size: 1.6rem;
         }
@@ -145,7 +144,7 @@
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-end;
 
         &_btn {
             margin: 2rem 1rem;
@@ -154,7 +153,7 @@
 
     &__radio-btns {
         display: flex;
-        justify-content: center;
+        justify-content: flex-end;
         margin: 3rem 0;
     }
 

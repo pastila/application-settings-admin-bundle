@@ -41,7 +41,7 @@ CModule::IncludeModule("iblock");
     <!-- Item -->
     <a href="/forma-obrashenija/" class="buttons__items_item">
         <div class="buttons__items_item_image-block">
-            <img class="buttons__items_item_img" src="./local/templates/kdteam/images/pages/home/Illustration2.svg" alt="">
+            <img class="buttons__items_item_img" src="<?= SITE_TEMPLATE_PATH ?>/images/pages/home/Illustration2.svg" alt="">
         </div>
 
         <div class="buttons__items_item_title-block">
@@ -55,7 +55,7 @@ CModule::IncludeModule("iblock");
     <!-- Item -->
     <a href="/feedback/" class="buttons__items_item">
         <div class="buttons__items_item_image-block">
-            <img class="buttons__items_item_img" src="./local/templates/kdteam/images/pages/home/Illustration3.svg" alt="">
+            <img class="buttons__items_item_img" src="<?= SITE_TEMPLATE_PATH ?>/images/pages/home/Illustration3.svg" alt="">
         </div>
 
         <div class="buttons__items_item_title-block">
@@ -69,7 +69,7 @@ CModule::IncludeModule("iblock");
     <!-- Item -->
     <a href="/news/" class="buttons__items_item">
         <div class="buttons__items_item_image-block">
-            <img class="buttons__items_item_img" src="./local/templates/kdteam/images/pages/home/Illustration.svg" alt="">
+            <img class="buttons__items_item_img" src="<?= SITE_TEMPLATE_PATH ?>/images/pages/home/Illustration.svg" alt="">
         </div>
 
         <div class="buttons__items_item_title-block">
