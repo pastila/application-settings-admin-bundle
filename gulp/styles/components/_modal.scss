@@ -96,6 +96,8 @@
 .block_relative{
     position: relative;
     display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     input{
         width: 100%;
     }

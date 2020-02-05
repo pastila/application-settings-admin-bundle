@@ -63,6 +63,9 @@ h3 {
 a {
     text-decoration: none;
     color: $mainColor;
+    &:hover:not(.mainBtn):not(.accentBtn):not(.feedback__filter__reset) {
+        color: $accentColor;
+    }
 }
 
 p {

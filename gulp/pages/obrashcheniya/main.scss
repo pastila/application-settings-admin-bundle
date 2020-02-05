@@ -105,6 +105,7 @@ label {
                     &_date-block{
                         position: relative;
                         display: inline-flex;
+                        align-items: center;
                         justify-content: space-between;
                         &_edit{
                             cursor: pointer;
