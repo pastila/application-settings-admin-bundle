@@ -406,7 +406,8 @@ $countReviews = count($allReviews);
                 </div>
                 <? } ?>
                 <div class="feedback__block_top_name">
-                    <span class="feedback__block_top_name_text"><?= $name_user ?>, <?= $city["NAME"] ?>, <?= $newDate ?></span>
+                    <span class="feedback__block_top_name_text"><?= $name_user ?>, <?= $city["NAME"] ?>,
+                        <?= $newDate ?></span>
 
                     <!-- Company Name -->
                     <div class="feedback__block_company-name">
@@ -591,24 +592,32 @@ $countReviews = count($allReviews);
 
                 <?php  if(isset($sort_url["admin"])){ ?>
 
-                <div id="checkbox-box_<?= $arFields["ID"];?>" class="wrap-chrckbox">
-                    <label class="check-label years" data-chec="Y">
-                        промодерирован <input name="years" type="checkbox" value="accepted">
-                        <span class="check-img"></span>
-                    </label>
-                    <label class="check-label years" data-chec="Y">
-                        не по теме <input name="years" type="checkbox" value="reject">
-                        <span class="check-img"></span>
-                    </label>
+                <div class="feedback__radio-btns">
+                    <div id="checkbox-box_<?= $arFields["ID"];?>" class="wrap-chrckbox">
+                        <label class="check-label years" data-chec="Y">
+                            промодерирован <input name="years" type="checkbox" value="accepted">
+                            <span class="check-img"></span>
+                        </label>
+                        <label class="check-label years" data-chec="Y">
+                            не по теме <input name="years" type="checkbox" value="reject">
+                            <span class="check-img"></span>
+                        </label>
+                    </div>
+                </div>
 
-                    <span style="padding-top: 4px" onclick="check_review(this)"
-                        data-check-id="<?= $arFields["ID"]; ?>">Применить</span>
+                <div class="feedback__actions-btns">
+                    <div class="feedback__actions-btns_btn mainBtn" onclick="check_review(this)"
+                        data-check-id="<?= $arFields["ID"]; ?>">
+                        Применить
+                    </div>
+
+                    <div class="accentBtn feedback__actions-btns_btn" title="Удалить отзыв"
+                        data-id="<?php echo $arFields["ID"]; ?>">
+                        Удалить отзыв
+                    </div>
                 </div>
 
                 <? }?>
-                <div title="Удалить отзыв" data-id="<?php echo $arFields["ID"]; ?>" class="dalete_review inline_block">
-                    Удалить отзыв
-                </div>
             </div>
             <?php } ?>
 
