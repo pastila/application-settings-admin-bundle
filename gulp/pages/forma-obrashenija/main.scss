@@ -59,6 +59,23 @@
     }
 }
 
+#reload_div {
+    &.disabled{
+        filter: grayscale(100%);
+        cursor: not-allowed;
+        .input__ico{
+            visibility: hidden;
+            opacity: 0;
+        }
+        .input-with-search{
+            filter: grayscale(100%);
+            cursor: not-allowed !important;
+            pointer-events: none;
+        }
+    }
+}
+
+
 .progressive-bar-wrap {
     position: absolute;
     top: 23%;
