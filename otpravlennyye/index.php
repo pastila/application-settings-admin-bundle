@@ -12,10 +12,10 @@ CModule::IncludeModule("iblock");
 <!-- Breadcrumbs -->
 <ul class="breadcrumbs">
     <? if ($detect->isTablet() || $detect->isMobile()) { ?>
-        <li><a href="/" class="">Отправленные обращения</a></li>
+    <li><a href="/" class="">Отправленные обращения</a></li>
     <? } else { ?>
-        <li><a href="/">Главная</a></li>
-        <li>Отправленные обращения</li>
+    <li><a href="/">Главная</a></li>
+    <li>Отправленные обращения</li>
     <? } ?>
 
 </ul>
@@ -38,37 +38,30 @@ if ($Section = $section->GetNext()) {
         $arFields = $obElement->GetFields();
         $newDate = FormatDate("d.m.Y", MakeTimeStamp($arFields["CREATED_DATE"]));
         ?>
-        <!-- Обращения item -->
-        <div class="otpravlennyye">
-            <div class="white_block">
-                <div class="otpravlennyye__item">
-                    <div class="otpravlennyye__item_title">
-                        <?= $arFields["NAME"] . ' № ' . $arFields["ID"]?>
-                    </div>
+<!-- Обращения item -->
+<div class="otpravlennyye">
+    <div class="white_block">
+        <div class="otpravlennyye__item">
+            <h3 class="otpravlennyye__item_title">
+                <?= $arFields["NAME"] . ' № ' . $arFields["ID"]?>
+            </h3>
 
-                    <h3 class="success title-medium">Направлено в страховую компанию</h3>
+            <h4 class="success">Направлено в страховую компанию</h4>
 
-                    <div class="otpravlennyye__item_data">
-                        дата: <?= $arFields['PROPERTY_SEND_MESSAGE_VALUE'] ?>
-                    </div>
-
-                    <p class="otpravlennyye__item_text">
-                        В соответствии с действующим законодательством
-                        в течение 30 дней вам должны предоставить ответ на обращение либо проинформировать о
-                        продлении срока рассмотрения обращения, если для решения поставленных вопросов нужно
-                        проведение экспертизы
-                    </p>
-                    <div class="sent-mail-block">
-                        <div class="logo_block">
-                            <img src="/local/templates/kdteam/images/png/header/logo-oms.png" alt="">
-                        </div>
-                        <p>Подготовлено с использованием сервиса bezbahil.ru. Почта для обращений представителей СМО -
-                            <a href="mailto:smo@bezbahil.ru">smo@bezbahil.ru</a>.</p>
-                    </div>
-                </div>
+            <div class="otpravlennyye__item_data">
+                дата: <?= $arFields['PROPERTY_SEND_MESSAGE_VALUE'] ?>
             </div>
+
+            <p class="otpravlennyye__item_text">
+                В соответствии с действующим законодательством
+                в течение 30 дней вам должны предоставить ответ на обращение либо проинформировать о
+                продлении срока рассмотрения обращения, если для решения поставленных вопросов нужно
+                проведение экспертизы
+            </p>
         </div>
-    <?
+    </div>
+</div>
+<?
     }
 } ?>
 
