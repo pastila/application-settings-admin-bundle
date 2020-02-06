@@ -738,6 +738,11 @@ function form_us(){
               'Ваше письмо отправленно успешно</div>',
               type: 'inline',
             },
+            callbacks: {
+              afterClose: function() {
+                document.location.reload(true);
+              },
+            },
           });
         } else if (suc.captcha == "1") {
           $("#captcha-error_parent").after(
@@ -825,6 +830,11 @@ console.log("3232");
                 'Ваше письмо отправленно успешно</div>',
                 type: 'inline',
               },
+              callbacks: {
+                afterClose: function() {
+                  document.location.reload(true);
+                },
+              }
             });
           } else if (suc.captcha == "1") {
             $("#captcha-error_parent").after(

@@ -98,7 +98,7 @@ $arUser = $rsUser->Fetch();
 
             <!-- top -->
             <div class="feedback__block_top">
-                <?php if($arProps["EVALUATION"]["VALUE"] != "") {?>
+                <?php if($arProps["EVALUATION"]["VALUE"] != "" && $arProps["EVALUATION"]["VALUE"] != "0") {?>
                 <div class="feedback__block_top_star" data-block-star="<?=$arFields["ID"]?>">
                     <? for ($i = 1; $i <= $arProps["EVALUATION"]["VALUE"]; ++$i) { ?>
                     <svg class="star star-active" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 47.94 47.94"
@@ -340,7 +340,7 @@ $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 12
 
         <!-- top -->
         <div class="feedback__block_top">
-            <?php if($arProps["EVALUATION"]["VALUE"] != "") {?>
+            <?php if($arProps["EVALUATION"]["VALUE"] != "" && $arProps["EVALUATION"]["VALUE"] != "0") {?>
             <div class="feedback__block_top_star" data-block-star="<?=$arFields["ID"]?>">
                 <? for ($i = 1; $i <= $arProps["EVALUATION"]["VALUE"]; ++$i) { ?>
                 <svg class="star star-active" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 47.94 47.94">
@@ -609,7 +609,7 @@ if(isset($ID_rewievs[0])) {
             <div class="feedback__block_company-name"><img src="<?= $file["src"] ?>"></div>
             <!-- top -->
             <div class="feedback__block_top">
-                <?php if ($arProps["EVALUATION"]["VALUE"] != "") { ?>
+                <?php if ($arProps["EVALUATION"]["VALUE"] != "" && $arProps["EVALUATION"]["VALUE"] != "0") { ?>
                     <div class="feedback__block_top_star">
                         <? for ($i = 1; $i <= $arProps["EVALUATION"]["VALUE"]; ++$i) { ?>
                             <svg class="star star-active" xmlns="http://www.w3.org/2000/svg"
