@@ -48,10 +48,10 @@ while($ob = $res->GetNextElement()){
 <div class="personal_cabinet">
     <ul class="breadcrumbs">
         <? if ($detect->isTablet() || $detect->isMobile()) { ?>
-            <li><a href="/" class="">Личный кабинет</a></li>
+            <li><a href="/" class="active-breadcrumbs">Личный кабинет</a></li>
         <? } else { ?>
             <li><a href="/">Главная</a></li>
-            <li>Личный кабинет</li>
+            <li class="active-breadcrumbs">Личный кабинет</li>
         <? } ?>
 
     </ul>

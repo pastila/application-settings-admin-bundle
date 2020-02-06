@@ -12,10 +12,10 @@ CModule::IncludeModule("iblock");
 <!-- Breadcrumbs -->
 <ul class="breadcrumbs">
     <? if ($detect->isTablet() || $detect->isMobile()) { ?>
-    <li><a href="/" class="">Отправленные обращения</a></li>
+    <li><a href="/" class="active-breadcrumbs">Отправленные обращения</a></li>
     <? } else { ?>
     <li><a href="/">Главная</a></li>
-    <li>Отправленные обращения</li>
+    <li class="active-breadcrumbs">Отправленные обращения</li>
     <? } ?>
 
 </ul>

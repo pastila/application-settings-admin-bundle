@@ -34,15 +34,15 @@ for ($index = 0; $index < $itemSize; $index++) {
                  $strReturn .= '
         
 			<li>
-				<a itemprop="item" href="/"><span itemprop="name" class="">'.$title.'</span></a>
+				<a itemprop="item" href="/"><span itemprop="name" class="active-breadcrumbs">'.$title.'</span></a>
 
 				<meta itemprop="position" content="'.$itemSize.'" />
 			</li>';
              }else{
                  $strReturn .= '
         
-			<li>
-				<a itemprop="item" href="/news/"><span itemprop="name" class="">'.$title.'</span></a>
+			<li class="active-breadcrumbs">
+				<a itemprop="item" href="/news/"><span itemprop="name" class="active-breadcrumbs">'.$title.'</span></a>
 
 				<meta itemprop="position" content="'.$itemSize.'" />
 			</li>';
@@ -54,7 +54,7 @@ for ($index = 0; $index < $itemSize; $index++) {
              $itemSize_for_Microdata += 1;
 
              $strReturn .= '
-			<li>
+			<li >
 				<a  itemprop="item" href="' . $arResult[$index]["LINK"] . '" title="' . $title . '" itemprop="url">
 					<span itemprop="name">'.$title.'</span>
 				</a>
@@ -63,8 +63,8 @@ for ($index = 0; $index < $itemSize; $index++) {
          } else {
              $strReturn .= '
         
-			<li>
-				<a itemprop="item"><span itemprop="name">'.$title.'</span></a>
+			<li >
+				<a itemprop="item"><span itemprop="name" class="active-breadcrumbs">'.$title.'</span></a>
 
 				<meta itemprop="position" content="'.$itemSize.'" />
 			</li>';

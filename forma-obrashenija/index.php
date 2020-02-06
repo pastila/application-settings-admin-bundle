@@ -29,10 +29,10 @@ while($ob = $res->GetNextElement()){
 <!-- Breadcrumbs -->
 <ul class="breadcrumbs">
     <? if ($detect->isTablet() || $detect->isMobile()) { ?>
-    <li><a href="/" class="">Страховой случай в ОМС</a></li>
+    <li><a href="/" class="active-breadcrumbs">Страховой случай в ОМС</a></li>
     <? } else { ?>
     <li><a href="/">Главная</a></li>
-    <li>Страховой случай в ОМС</li>
+    <li  class="active-breadcrumbs">Страховой случай в ОМС</li>
     <? } ?>
 
 </ul>

@@ -13,10 +13,10 @@ if ($USER->IsAuthorized()) { ?>
     <!-- Breadcrumbs -->
     <ul class="breadcrumbs">
         <? if ($detect->isTablet() || $detect->isMobile()) { ?>
-            <li><a href="/" class="">Обращения</a></li>
+            <li><a href="/"  class="active-breadcrumbs">Обращения</a></li>
         <? } else { ?>
             <li><a href="/">Главная</a></li>
-            <li>Обращения</li>
+            <li class="active-breadcrumbs">Обращения</li>
         <? } ?>
 
     </ul>
@@ -94,7 +94,7 @@ if ($USER->IsAuthorized()) { ?>
     <!-- Breadcrumbs -->
     <ul class="breadcrumbs">
         <li><a href="/">Главная</a></li>
-        <li>обращения</li>
+        <li  class="active-breadcrumbs">обращения</li>
     </ul>
     <h2 class="page-title">Ваши обращения</h2>
     <div class="obrashcheniya">
