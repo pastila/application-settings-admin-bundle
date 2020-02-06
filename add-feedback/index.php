@@ -84,9 +84,9 @@ global $USER; ?>
                             </div>
                         </div>
 
-                        <div class="feedback__title">
+                        <h3 class="feedback__title">
                             Расскажите о вашей ситуации
-                        </div>
+                        </h3>
 
                         <div class="input__wrap">
                             <label for="name" class="input__wrap_label">Заголовок</label>

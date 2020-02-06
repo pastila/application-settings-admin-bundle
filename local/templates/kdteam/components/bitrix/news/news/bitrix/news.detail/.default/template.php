@@ -32,7 +32,7 @@ $this->setFrameMode(true);
             <?php }?>
 
             <?php if ($arParams["DISPLAY_NAME"] != "N" && $arResult["NAME"]) {?>
-            <h3 class="content-news_title"><?php echo $arResult["NAME"]?></h3>
+            <h2 class="content-news_title"><?php echo $arResult["NAME"]?></h2>
             <?php }?>
 
             <?php if ($arParams["DISPLAY_PREVIEW_TEXT"] != "N" && $arResult["FIELDS"]["PREVIEW_TEXT"]) {?>

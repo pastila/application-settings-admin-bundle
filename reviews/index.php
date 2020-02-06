@@ -126,11 +126,9 @@ $arUser = $rsUser->Fetch();
 
             </div>
             <!-- Title -->
-            <div class="feedback__title">
                 <a href="/reviews/comment-<?=$arFields["ID"]?>/">
-                    <?= $arFields["NAME"] ?>
+                    <h3 class="feedback__title"><?= $arFields["NAME"] ?></h3>
                 </a>
-            </div>
 
             <!-- Text -->
             <div class="srolling--parent">
@@ -367,11 +365,9 @@ $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 12
 
         </div>
         <!-- Title -->
-        <div class="feedback__title">
-            <a href="/reviews/comment-<?=$arFields["ID"]?>/">
-                <?= $arFields["NAME"] ?>
-            </a>
-        </div>
+        <a href="/reviews/comment-<?=$arFields["ID"]?>/">
+            <h3 class="feedback__title"><?= $arFields["NAME"] ?></h3>
+        </a>
 
         <!-- Text -->
         <p class="feedback__text"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p>
@@ -636,11 +632,9 @@ if(isset($ID_rewievs[0])) {
 
             </div>
             <!-- Title -->
-            <div class="feedback__title">
-                <a href="/reviews/comment-<?= $arFields["ID"] ?>/">
-                    <?= $arFields["NAME"] ?>
-                </a>
-            </div>
+            <a href="/reviews/comment-<?= $arFields["ID"] ?>/">
+                <h3 class="feedback__title"><?= $arFields["NAME"] ?></h3>
+            </a>
 
             <!-- Text -->
             <p class="feedback__text"><?= $arProps["TEXT_MASSEGE"]["VALUE"] ?></p>

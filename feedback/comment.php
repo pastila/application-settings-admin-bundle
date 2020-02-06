@@ -80,7 +80,7 @@ preg_match("/(\d+)\/$/",$url,$result_id);
         <div class="white_block">
             <!-- top -->
             <div class="feedback__block_top">
-            <?php if ($arProps["EVALUATION"]["VALUE"] != "" && $arProps["EVALUATION"]["VALUE"] != "0") { ?>
+                <?php if ($arProps["EVALUATION"]["VALUE"] != "" && $arProps["EVALUATION"]["VALUE"] != "0") { ?>
                 <div class="feedback__block_top_star">
 
                     <? for ($i = 1; $i <= $arProps["EVALUATION"]["VALUE"]; ++$i) { ?>
@@ -113,9 +113,9 @@ preg_match("/(\d+)\/$/",$url,$result_id);
                 <!--                </div>-->
             </div>
             <!-- Title -->
-            <div class="feedback__title">
+            <h3 class="feedback__title">
                 <?= $arFields["NAME"] ?>
-            </div>
+            </h3>
 
             <!-- Text -->
             <div class="srolling--parent">

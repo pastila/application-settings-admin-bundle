@@ -44,7 +44,7 @@ $countReviews = count($allReviews);
 </ul>
 
 <!-- Pages Title -->
-<h2 class="page-title">Отзывы о страховых медицинских организациях</h2>
+<h1 class="page-title">Отзывы о страховых медицинских организациях</h1>
 
 <!-- ALL STEPS IN FORM -->
 <form action="" class="white_block">
@@ -381,7 +381,7 @@ $countReviews = count($allReviews);
             <span class="date_review">Дата изменения <?php echo $Date_change_user; ?></span>
             <?php } ?>
             <?php if ($arProps["REVIEW_LETTER"]["VALUE"] == "1") { ?>
-            <div class="feedback__title">Возврат денежных средств</div>
+            <h3 class="feedback__title">Возврат денежных средств</h3>
             <?php } ?>
 
             <!-- top -->
@@ -420,11 +420,9 @@ $countReviews = count($allReviews);
                 <!--                </div>-->
             </div>
             <!-- Title -->
-            <div class="feedback__title">
-                <a href="/feedback/comment-<?= $arFields["ID"] ?>/">
-                    <?= $arFields["NAME"] ?>
-                </a>
-            </div>
+            <a href="/feedback/comment-<?= $arFields["ID"] ?>/">
+                <h3 class="feedback__title"><?= $arFields["NAME"] ?></h3>
+            </a>
 
             <!-- Text -->
             <div class="srolling--parent">
