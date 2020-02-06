@@ -30,7 +30,7 @@ input:checked ~ .check-img:after {
     height: 2rem;
     transform: translateY(-50%);
     background-color: $bgColor;
-    border: solid 0.1rem $mainColor;
+    border: solid 0.1rem $light-blue-bg;
 
     &:after {
         content: "";

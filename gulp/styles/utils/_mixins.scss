@@ -66,6 +66,7 @@
     &:hover {
         background-color:lighten($bgColor, 10%);
         color: $color !important;
+        border: solid 0.1rem $color;
     }
 }
 
