@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-  $('.steps_items_item_button').on( 'click', function(){
+  $('.steps_items_item_button:not(:last)').on( 'click', function(){
     if(!$(this).hasClass("disabled")) {
       $('html').animate({
             scrollTop: $(".steps-wrap").offset().top - 10
