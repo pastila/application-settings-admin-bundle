@@ -43,9 +43,14 @@
     }
 
     &__title {
-        font-size: 1.4rem;
+        font-size: 2.6rem;
         font-weight: 700;
         margin-bottom: 2rem;
+        text-transform: capitalize;
+        color: $title-color;
+        a {
+            color: $title-color;
+        }
     }
 
     &__text {
@@ -230,10 +235,6 @@
             }
         }
 
-        &__title {
-            font-size: 1.8rem;
-        }
-
         &__text {
             margin-bottom: 3rem;
         }
@@ -259,10 +260,6 @@
 
         &__wrap_white-blocks {
             grid-column: 1 / 10;
-        }
-
-        &__title {
-            font-size: 2.1rem;
         }
 
         &__text {
