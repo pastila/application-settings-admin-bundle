@@ -47,8 +47,8 @@ $(document).ready(function() {
 
   function FormReg() {
     $('#famaly-name, #name , #last-name').bind('change keyup input click', function() {
-      if (this.value.match(/[^а-яА-Я]/g)) {
-        this.value = this.value.replace(/[^а-яА-Я]/g, '');
+      if (this.value.match(/[^а-яёА-ЯЁ]/g)) {
+        this.value = this.value.replace(/[^а-яёА-ЯЁ]/g, '');
       }
     });
 
