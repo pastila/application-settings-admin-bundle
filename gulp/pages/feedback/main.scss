@@ -47,7 +47,7 @@
         display: flex;
         flex-wrap: wrap;
         margin-bottom: 2rem;
-        .whiteBtn, .accentWhiteBorder {
+        .whiteBtn, .accentWhiteBorder, .accentBtnBorder {
             margin-right: 2rem;
             @media screen and (max-width: 575px){
                 margin-right: .5rem;

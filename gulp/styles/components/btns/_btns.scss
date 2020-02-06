@@ -15,7 +15,7 @@
 }
 
 .accentBtnBorder {
-    @include btnDescBorder(transparent, $mainColor, $accentColor);
+    @include btnDescBorder(transparent, $btnWhiteBg, $accentColor);
 }
 
 .smallMainBtn{

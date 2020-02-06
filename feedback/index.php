@@ -47,14 +47,14 @@ $countReviews = count($allReviews);
 <h2 class="page-title">Отзывы о страховых медицинских организациях</h2>
 
 <!-- ALL STEPS IN FORM -->
-<form action="" class="blue_block">
+<form action="" class="white_block">
 
     <!-- Add and All feedback btns -->
     <div class="feedback__btns">
         <a href="/add-feedback/" class="whiteBtn">Добавить отзыв</a>
-        <a href="?comments=all" class="accentWhiteBorder">Все отзывы</a>
+        <a href="?comments=all" class="accentBtnBorder">Все отзывы</a>
         <?php if ($USER->IsAdmin()){ ?>
-        <a href="?admin=property_verified" class="accentWhiteBorder">Модерация отзывов</a>
+        <a href="?admin=property_verified" class="accentBtnBorder">Модерация отзывов</a>
         <?php } ?>
     </div>
 
