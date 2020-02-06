@@ -67,6 +67,11 @@ label {
             padding-bottom: 2rem;
             margin-bottom: 2rem;
 
+            &_wrap {
+                flex-direction: row !important;
+                align-items: center;
+            }
+
             &_top {
                 margin-bottom: 2rem;
 
@@ -171,6 +176,7 @@ label {
             }
         }
     }
+
     .tumbler_users-tab{
         margin-bottom: 2rem;
         display: flex;
@@ -187,6 +193,7 @@ label {
             }
         }
     }
+
     .hidden_child-block{
         display: none;
         &.active{
