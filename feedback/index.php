@@ -611,7 +611,7 @@ $countReviews = count($allReviews);
                         Применить
                     </div>
 
-                    <div class="accentBtnBorder feedback__actions-btns_btn" title="Удалить отзыв"
+                    <div class="accentBtnBorder dalete_review feedback__actions-btns_btn" title="Удалить отзыв"
                         data-id="<?php echo $arFields["ID"]; ?>">
                         Удалить отзыв
                     </div>
