@@ -391,14 +391,14 @@
                       beforeSend: function() {
 
                         $('#export-mo').show();
-                        $(".download").remove();
+                        $(".download-2").remove();
 
                       },
                       success: function(msg){
 
 
                         $(".loaded").
-                            after('<div class="download"><a style="font-size:15px;font-weight:600;" href="/' + msg + '">Скачать</a></div>')
+                            after('<div class="download-2"><a style="font-size:15px;font-weight:600;" href="/' + msg + '">Скачать</a></div>')
                       },
                     }).done(function(msg) {
 
