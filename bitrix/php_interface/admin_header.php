@@ -232,7 +232,7 @@
                 </div>
                 <div class="body body-export" >
                     <div class="load">Подождите ,идет формирование файла.Примерное время формирование 15 секунд.</div><br>
-                    <div class="loaded">После формирования появится кнопка скачать</div>
+                    <div class="loaded-2">После формирования появится кнопка скачать</div>
                 </div>
                 <div class="footer">
 
@@ -397,7 +397,7 @@
                       success: function(msg){
 
 
-                        $(".loaded").
+                        $(".loaded-2").
                             after('<div class="download-2"><a style="font-size:15px;font-weight:600;" href="/' + msg + '">Скачать</a></div>')
                       },
                     }).done(function(msg) {
