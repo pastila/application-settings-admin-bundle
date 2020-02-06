@@ -16,7 +16,6 @@ window.addEventListener('DOMContentLoaded', () => {
         b.setAttribute("onchange", "select-items select-hide");
 
         for (j = 1; j < selElmnt.length; j++) {
-              console.log(selElmnt.options[j].attributes.class);
             /* For each option in the original select element,
             create a new DIV that will act as an option item: */
             c = document.createElement("DIV");

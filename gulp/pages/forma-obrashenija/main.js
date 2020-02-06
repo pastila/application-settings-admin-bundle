@@ -408,7 +408,6 @@ $(document).ready(function () {
       error.push("error8");
       $('.error_step-card-1').addClass('error_block');
     }
-    console.log(error);
     if (error.length > 0) {
 
     } else {
@@ -761,7 +760,6 @@ function search_diagnoz() {
 }
 
 function keyup_class() {
-  console.log('keyup_class');
   $('#class_input').on('keyup', function () {
     var $this = $(this);
     if ($this.val() !== "") {
@@ -778,7 +776,6 @@ function keyup_class() {
     $this.data('timer', setTimeout(function () {
       $this.removeData('timer');
       $.post('/ajax/smart_search_class.php', { name: $this.val() }, function (msg) {
-        console.log('search');
         if ($('.error_class').length != 0) {
           $('.error_class').remove();
         }
@@ -832,7 +829,6 @@ function keyup_class() {
   });
 }
 function keyup_group(id_class) {
-  console.log('keyup_group');
   $('#group_input').on('keyup', function () {
     var $this = $(this);
     var delay = 500;
@@ -892,7 +888,6 @@ function keyup_group(id_class) {
   });
 }
 function keyup_subgroup(id_group) {
-  console.log('keyup_subgroup');
   $('#subgroup_input').on('keyup', function () {
     var $this = $(this);
     var delay = 500;
@@ -954,7 +949,6 @@ function keyup_subgroup(id_group) {
   });
 }
 function keyup_diagnoz(id_subgroup) {
-  console.log('keyup_diagnoz');
   $('#diagnoz_input').on('keyup', function () {
     var $this = $(this);
     var delay = 500;

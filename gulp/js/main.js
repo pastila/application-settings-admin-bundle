@@ -34,7 +34,6 @@ $(document).ready(function() {
   });
 
   //authorization
-  console.log('start');
   $('.header__r_auth_reg').click(function() {
     setTimeout(function() {
       FormReg();
@@ -63,7 +62,6 @@ $(document).ready(function() {
     });
     $("#name").on('keyup', function() {
        var $this = $(this);
-       console.log($this);
       clearTimeout($this.data('timer'));
       $this.data('timer', setTimeout(function() {
         $this.removeData('timer');
@@ -164,7 +162,6 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '.region_reg', function() {
-      console.log("3232");
       let id_region = $(this).attr('value');
       $('#referal').attr('data-id_region', id_region);
       $('#referal').attr('data-region_check', 'check');
@@ -249,7 +246,6 @@ $(document).ready(function() {
             } else {
               $('.hidden_wrap_phone').css('display', 'none');
               $('#sms_confirm').css('display', 'block');
-              console.log(code);
             }
           },
         });
@@ -332,7 +328,6 @@ $(document).ready(function() {
           success: function(msg) {
 
             var suc = JSON.parse(msg);
-            console.log(suc);
             if (suc.error !== undefined) {
               var email = $('#phone');
               email.after(
@@ -371,7 +366,6 @@ $(document).ready(function() {
 
                           },
                           success: function(msg){
-                            console.log(msg);
                             $(".header__r").html("");
                             $(".header__r").html(msg);
                           },
@@ -434,7 +428,6 @@ $(document).ready(function() {
   }
   function FormAuth() {
 
-    console.log('auth');
     $('#auth-form-login').validator().on('submit', function(e) {
       e.preventDefault();
       $.ajax({
@@ -749,7 +742,6 @@ function form_us(){
               '<p class="label danger"  >Код капчи не верный</p>');
 
         } else {
-          console.log(suc);
           if (suc.size == "1") {
             $(".file_input_half").after(
                 '<p class="label danger"  >Файлы с недопустимым размером</p>');
@@ -770,7 +762,6 @@ function form_us(){
   });
 }
 function form_us_two(){
-console.log("3232");
   $('#feedback_modal_two').validator().on('submit', function(e) {
 
 
@@ -841,7 +832,6 @@ console.log("3232");
                 '<p class="label danger"  >Код капчи не верный</p>');
 
           } else {
-            console.log(suc);
             if (suc.size == "1") {
               $(".file_input_half").after(
                   '<p class="label danger"  >Файлы с недопустимым размером</p>');

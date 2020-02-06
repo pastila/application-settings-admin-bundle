@@ -184,7 +184,6 @@ $(document).ready(function() {
                 },
                 type: 'post',
                 success: function(result) {
-                  console.log('success');
                   $('[data-obrashenie-id=' + idItem + ']').
                       find(".pdf").
                       attr("href", result);
@@ -285,10 +284,8 @@ function edit(ed) {
   time_p.css('display', 'none');
 }
 function save(sv) {
-console.log(sv);
 
   let element = $(sv)[0].id.split('_');
-  console.log(element);
   let cur_el = $('#appeal_' + element[1]);
   let usrname = $("input[name='usrname']");
   let policy = $("input[name='policy']");
@@ -331,7 +328,6 @@ if(cur_el.find(policy).val().length === 16) {
                 type: 'post',
                 success: function(result) {
                   $("[data-id-date_picker_edit="+element[1]+"]").attr("onclick","edit_date(this)");
-                  console.log(result)
                 }
               });
 
@@ -377,7 +373,6 @@ if(cur_el.find(policy).val().length === 16) {
                     },
                     type: 'post',
                     success: function(result) {
-                      console.log('success');
                       $('[data-obrashenie-id=' + element[1] + ']').
                           find(".pdf").
                           attr("href", result);
@@ -428,7 +423,6 @@ if(cur_el.find(policy).val().length === 16) {
                   // $("#gif_save_"+element[1]).css({"display":"block"})
                 },
                 success: function(result) {
-                  console.log(result)
                   $("[data-id-date_picker_edit="+element[1]+"]").attr("onclick","edit_date(this)");
                 }
               });
@@ -578,9 +572,7 @@ if(time_p.text().search("2") != -1) {
   });
 }
   } else if ($('#selected_sender_'+element[1]).val() === 'child') {
-    console.log('here');
     if ($('#children_input_' + element[1]).attr('data-id_child').length > 0) {
-console.log($('#time_' + element[1]).text());
       if($('#time_' + element[1]).text() !=="") {
         $.ajax({
           url: '/pdf/file_children_pdf.php',
@@ -610,7 +602,6 @@ console.log($('#time_' + element[1]).text());
               type: 'post',
               success: function(result) {
                 let result2 = JSON.parse(result);
-                console.log(result2);
                 let error = $('#error_' + element[1]);
                 let success = $('#success_' + element[1]);
                 if (result2.error !== undefined) {
@@ -634,7 +625,6 @@ console.log($('#time_' + element[1]).text());
 }
 
 function commutator(ajax, id) {
-  console.log(id);
 
   if (ajax === 'child') {
     if ($('#children_input_' + id).attr('data-id_child').length > 0) {
@@ -647,7 +637,6 @@ function commutator(ajax, id) {
         },
         type: 'post',
         success: function(result) {
-          console.log('success');
           $('[data-obrashenie-id=' + id + ']').
               find(".pdf").
               attr("href", result);

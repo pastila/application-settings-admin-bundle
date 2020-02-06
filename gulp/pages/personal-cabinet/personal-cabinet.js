@@ -144,7 +144,6 @@ $(document).ready(function() {
             $('.hospital-empty').remove();
           }
         } else {
-          console.log("2323");
           setTimeout(function() {
             $('#search_result_hospital').append(msg);
           }, 100);
@@ -215,7 +214,6 @@ $(document).ready(function() {
 
 
     let region = $('#referal').attr('data-id_region');
-    console.log(region);
     if(region != "" || region != undefined || region != "0"){
       fd.append("town",region );
       let hospital = $('#referal_two').attr('data-id_region');
