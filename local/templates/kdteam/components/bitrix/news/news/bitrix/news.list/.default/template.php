@@ -36,9 +36,9 @@ $this->setFrameMode(true);
         </div>
 
         <div class="news_item_content">
-            <div class="news_item_content_title">
-                <a href="<?=$arItem['DETAIL_PAGE_URL']?>"><?php echo $arItem['NAME']?></a>
-            </div>
+            <a class="news_item_content_title" href="<?=$arItem['DETAIL_PAGE_URL']?>">
+                <h3><?php echo $arItem['NAME']?></h3>
+            </a>
 
             <?php if ($arItem['PROPERTIES']['ADD_NAME']['VALUE']) { ?>
             <div class="news_item_content_text">
