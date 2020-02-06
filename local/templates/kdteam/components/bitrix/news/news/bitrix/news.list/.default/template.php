@@ -19,7 +19,7 @@ $this->setFrameMode(true);
     if ($arItem['PREVIEW_PICTURE']['ID']) {
         $file = CFile::ResizeImageGet(
             $arItem['PREVIEW_PICTURE']['ID'],
-            array('width' => 250, 'height' => 250),
+            array('width' => 511, 'height' => 375),
             BX_RESIZE_IMAGE_PROPORTIONAL_ALT,
             false
         )['src'];
@@ -29,22 +29,25 @@ $this->setFrameMode(true);
     }
 
     ?>
+<div class="col-1">
     <div class="news_item white_block">
-        <a class="block_image" href="<?=$arItem['DETAIL_PAGE_URL']?>">
+        <div class="news_item_image">
             <img src="<?=$file?>" alt="">
-        </a>
-
-        <div class="name_news">
-            <a href="<?=$arItem['DETAIL_PAGE_URL']?>"><?php echo $arItem['NAME']?></a>
         </div>
-        <?php if ($arItem['PROPERTIES']['ADD_NAME']['VALUE']) { ?>
-            <div class="top_label">
-                <a href="<?=$arItem['DETAIL_PAGE_URL']?>">
-                    <?php echo $arItem['PROPERTIES']['ADD_NAME']['VALUE']?></a>
-            </div>
-        <?php }?>
-        <div class="date_news"><?php echo $arItem['ACTIVE_FROM']?></div>
-        <a href="<?=$arItem['DETAIL_PAGE_URL']?>" class="readmore_news">Продолжить чтение</a>
-    </div>
-<?php }?>
 
+        <div class="news_item_content">
+            <div class="news_item_content_title">
+                <a href="<?=$arItem['DETAIL_PAGE_URL']?>"><?php echo $arItem['NAME']?></a>
+            </div>
+
+            <?php if ($arItem['PROPERTIES']['ADD_NAME']['VALUE']) { ?>
+            <div class="news_item_content_text">
+                <?php echo $arItem['PROPERTIES']['ADD_NAME']['VALUE']?>
+            </div>
+            <?php }?>
+            <div class="news_item_content_date"><?php echo $arItem['ACTIVE_FROM']?></div>
+            <a href="<?=$arItem['DETAIL_PAGE_URL']?>" class="news_item_content_readmore">Продолжить чтение</a>
+        </div>
+    </div>
+</div>
+<?php }?>

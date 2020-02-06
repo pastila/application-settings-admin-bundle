@@ -125,11 +125,11 @@ main.main {
 
 .blue_block {
     padding: 3rem;
-    background: #28467f;
+    background: $blue-block;
     margin-bottom: 2rem;
     position: relative;
     border-radius: 1rem;
-    border: solid 0.2rem #28467f;
+    border: solid 0.2rem $blue-block;
     color: white;
 }
 
@@ -181,7 +181,6 @@ main.main {
     }
     .white_block {
         position: relative;
-        margin-bottom: 4rem;
         font-size: 1.4rem;
     }
 }

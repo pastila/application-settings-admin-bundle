@@ -764,7 +764,7 @@ $countReviews = count($allReviews);
 
                     } ?>
             <div class="center__child">
-                <a class="darkBtn" href="<?= $url_for_filter ?>">Весь рейтинг</a>
+                <a class="mainBtn" href="<?= $url_for_filter ?>">Весь рейтинг</a>
             </div>
         </div>
 

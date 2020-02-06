@@ -13,6 +13,7 @@
     
     &:hover {
         background-color:lighten($bgColor, 10%);
+        color: $color !important;
     }
 }
 
@@ -38,6 +39,7 @@
 
     &:hover {
         background-color:lighten($bgColor, 10%);
+        color: $color !important;
     }
 }
 
@@ -63,6 +65,7 @@
 
     &:hover {
         background-color:lighten($bgColor, 10%);
+        color: $color !important;
     }
 }
 
@@ -79,6 +82,7 @@
     
     &:hover {
         background-color:lighten($bgColor, 10%);
+        color: $color !important;
     }
 }
 

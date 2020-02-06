@@ -16,6 +16,11 @@ $lightBg: #e0ebf2;
 $light-blue-bg: #e0ebf2;
 $text-color: #464646;
 $title-color: #186b9c;
+
+// TExt Shema
+$text-color: $mainColor;
+$text-color-second: #b9b9b9;
+
 // Buttons home border
 $homeBtnColor: #e0ebf2;
 
@@ -28,15 +33,18 @@ $mainBtnBg: #186b9c;
 $mainBtnColor: white;
 
 // Btns RESET Color
-$btnResetBg: #222;
-$btnResetColor: #fff;
+$btnResetBg: #0866a3;
+$btnResetColor: white;
 
 // Btns White
-$btnWhiteBg: white;
-$btnWhiteColor: #222;
+$btnWhiteBg: #0866a3;
+$btnWhiteColor: white;
 
 // Footer
 $footer-bg: #1b3954;
+
+// Blue Block
+$blue-block: #1b3954;
 
 
 // Input
