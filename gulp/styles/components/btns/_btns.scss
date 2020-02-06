@@ -1,5 +1,17 @@
 .mainBtn {
-    @include btnDesc($mainColor, white);
+    @include btnDesc($mainBtnBg, $mainBtnColor);
+}
+
+.darkBtn {
+    @include btnDesc($btnResetBg, $btnResetColor);
+}
+
+.whiteBtn {
+    @include btnDesc($btnWhiteBg, $btnWhiteColor);
+}
+
+.accentWhiteBorder {
+    @include btnDescBorder(transparent, white, white);
 }
 
 .accentBtnBorder {
@@ -7,7 +19,7 @@
 }
 
 .smallMainBtn{
-    @include btnDesc($mainColor, white);
+    @include btnDesc($mainBtnBg, $mainBtnColor);
 }
 .accentBtn {
     @include btnDesc($accentColor, white);

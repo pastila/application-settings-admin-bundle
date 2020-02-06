@@ -42,7 +42,7 @@ if (count($arResult["ITEMS"]) > 0) {
 
         <!-- Обращение -->
         <div id="appeal_<?= $arItem["ID"] ?>" class="obrashcheniya">
-            <div id="card_<?= $arItem["ID"] ?>" class="card">
+            <div id="card_<?= $arItem["ID"] ?>" class="white_block">
 
 
                 <p id="error_<?= $arItem["ID"] ?>" class="semi-bold error mb-2"></p>
