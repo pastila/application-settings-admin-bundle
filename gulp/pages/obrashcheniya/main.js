@@ -60,6 +60,7 @@ $(document).ready(function() {
               let data_el = btn.getAttribute('data_el');
               $('#selected_sender_'+data_el).val('child');
               commutator('child', data_el);
+              showBlock.scrollIntoView({block: "center", behavior: "smooth"});
             } else {
               showBlock.classList.remove('active');
             }
