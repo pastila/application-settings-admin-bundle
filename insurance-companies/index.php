@@ -30,15 +30,15 @@ if($ob = $res->GetNextElement()){
 </ul>
 
 <!-- Pages Title -->
-<?= $arProps["PREVIEW_TEXT"]; ?>
+<div class="white_block">
+    <?= $arProps["PREVIEW_TEXT"]; ?>
+</div>
 
 <style>
     .decoration-link{
         text-decoration: underline;
     }
-    p{
-        margin-bottom: 1rem;
-    }
+    
     .list_block li{
         padding-left: 1.5rem;
         margin-bottom: .5rem;

@@ -20,23 +20,20 @@ if($ob = $res->GetNextElement()){
 ?>
 <?$APPLICATION->SetTitle("О нас");?>
 
-    <!-- Breadcrumbs -->
-    <ul class="breadcrumbs">
-        <? if ($detect->isTablet() || $detect->isMobile()) { ?>
-            <li><a href="/" class=""><?= $arProps["NAME"]; ?></a></li>
-        <? } else { ?>
-            <li><a href="/">Главная</a></li>
-            <li><?= $arProps["NAME"]; ?></li>
-        <? } ?>
+<!-- Breadcrumbs -->
+<ul class="breadcrumbs">
+    <? if ($detect->isTablet() || $detect->isMobile()) { ?>
+    <li><a href="/" class=""><?= $arProps["NAME"]; ?></a></li>
+    <? } else { ?>
+    <li><a href="/">Главная</a></li>
+    <li><?= $arProps["NAME"]; ?></li>
+    <? } ?>
 
-    </ul>
+</ul>
 
-    <!-- Pages Title -->
-<?= $arProps["PREVIEW_TEXT"]; ?>
-    <style>
-        p{
-            margin-bottom: 1rem;
-        }
-    </style>
+<!-- Pages Title -->
+<div class="white_block">
+    <?= $arProps["PREVIEW_TEXT"]; ?>
+</div>
 
 <?php require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>
