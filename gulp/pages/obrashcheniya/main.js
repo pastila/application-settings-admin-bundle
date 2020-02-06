@@ -384,11 +384,13 @@ if(cur_el.find(policy).val().length === 16) {
                           text("Просмотреть");
                       $(".ready_pdf").removeClass("hidden");
                       $(".with_out_pdf").addClass("hidden");
+                      $(".datepicker-here_"+element[1]).remove();
                       if( $("[data-block_img="+element[1]+"]").find("[id*=img_block_"+element[1]).length !== 0){
                         $("#send_" + element[1]).attr("onclick","send_ms(this)");
                         $("#send_" + element[1]).removeClass("disabled");
-                        $(".datepicker-here_"+element[1]).remove();
+
                       }
+
                     }
                   });
                 }
@@ -483,8 +485,9 @@ if(cur_el.find(policy).val().length === 16) {
                     $(".with_out_pdf").addClass("hidden")
                   },
                 }).done(function(msg) {
+                  $(".datepicker-here_"+element[1]).remove();
                   if( $("[data-block_img="+element[1]+"]").find("[id*=img_block_"+element[1]).length !== 0){
-                    $(".datepicker-here_"+element[1]).remove();
+
                     $("#send_" + element[1]).attr("onclick","send_ms(this)");
                     $("#send_" + element[1]).removeClass("disabled");
                   }

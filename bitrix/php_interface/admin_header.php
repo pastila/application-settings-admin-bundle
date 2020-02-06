@@ -230,9 +230,9 @@
                 <div class="header">
                     <h5 class="title">Экспорт MO</h5>
                 </div>
-                <div class="body body-export">
+                <div class="body body-export" >
                     <div class="load">Подождите ,идет формирование файла.Примерное время формирование 15 секунд.</div><br>
-                    <div class="load">После формирования появится кнопка скачать</div>
+                    <div class="loaded">После формирования появится кнопка скачать</div>
                 </div>
                 <div class="footer">
 
@@ -274,9 +274,9 @@
                     <h5 class="title">Выгрузить СМО</h5>
                 </div>
                 <div class="body">
-                    <div style="display: flex">
+                    <div >
                         <div class="load">Подождите ,идет формирование файла.Примерное время формирование 3 секунды.</div>
-
+                        <div class="loaded">После формирования появится кнопка скачать</div>
                     </div>
                 </div>
                 <div class="footer footer-cmo">
@@ -397,7 +397,7 @@
                       success: function(msg){
 
 
-                        $(".load").
+                        $(".loaded").
                             after('<div class="download"><a style="font-size:15px;font-weight:600;" href="/' + msg + '">Скачать</a></div>')
                       },
                     }).done(function(msg) {

@@ -225,11 +225,9 @@ if (count($arResult["ITEMS"]) > 0) {
                         <!--                                <span style="display: none" class="error_search-js">Выберете опекаемого человека</span>-->
                         <ul style="cursor: pointer;" class="custom-serach__items" id="searchul_<?=$arItem['ID']?>">
                             <?php
-                                        foreach ($arFields as &$arSection) {?>
+                                        foreach ($arFields as $arSection) {?>
                             <li value="<?=$arSection["ID"]?>"
-                                class="custom-serach__items_item childrenjs_<?=$arItem['ID']?>">
-                                <?php echo $arSection['PROPERTY_SURNAME_VALUE']?> <?php echo $arSection['NAME']?>
-                                <?php echo $arSection['PROPERTY_PARTONYMIC_VALUE']?></li>
+                                class="custom-serach__items_item childrenjs_<?=$arItem['ID']?>"><?php echo $arSection['PROPERTY_SURNAME_VALUE']?>    <?php echo $arSection['NAME']?>     <?php echo $arSection['PROPERTY_PARTONYMIC_VALUE']?></li>
                             <?php } ?>
                         </ul>
                     </div>
