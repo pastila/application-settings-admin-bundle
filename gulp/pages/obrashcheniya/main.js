@@ -133,7 +133,8 @@ $(document).ready(function() {
                   '    </div>\n' +
                   '</div>'
               );
-              if( $("[data-block_img="+element+"]").find("[id*=img_block_"+element).length !== 0  && $("#time_"+element).val() !== ""){
+
+              if( $("[data-block_img="+element+"]").find("[id=img_block_"+element).length !== "0"  && $("#time_"+element).text() !== ""){
                 $("#send_" + element).attr("onclick","send_ms(this)");
                 $("#send_" + element).removeClass("disabled");
               }
@@ -357,8 +358,7 @@ if(cur_el.find(policy).val().length === 16) {
               var usrname_str = cur_el.find(usrname).val();
               usrname_str = usrname_str.replace(/\s/g, '');
 
-              if (time_p_str.length <= 3 || policy_str.length <= 1 ||
-                  usrname_str.length <= 3) {
+              if (time_p_str.length <= 3 || policy_str.length <= 1 || usrname_str.length <= 3) {
 
               } else {
                 if ($('#children_input_' + element[1]).
@@ -385,6 +385,7 @@ if(cur_el.find(policy).val().length === 16) {
                       $(".ready_pdf").removeClass("hidden");
                       $(".with_out_pdf").addClass("hidden");
                       $(".datepicker-here_"+element[1]).remove();
+
                       if( $("[data-block_img="+element[1]+"]").find("[id*=img_block_"+element[1]).length !== 0){
                         $("#send_" + element[1]).attr("onclick","send_ms(this)");
                         $("#send_" + element[1]).removeClass("disabled");
@@ -820,7 +821,7 @@ function save_date(sv) {
                       $("#date_picker_"+id).css({"display":"none"});
                       $("#edit_"+id).attr("onclick","edit(this)");
                       $(".datepicker-here_"+id).remove();
-                      if( $("[data-block_img="+id+"]").find("[id*=img_block_"+id).length !== 0  && $("#time_"+id).val() !== ""){
+                      if( $("[data-block_img="+id+"]").find("[id*=img_block_"+id).length !== 0  && $("#time_"+id).text() !== ""){
                         $("#send_" + id).attr("onclick","send_ms(this)");
                         $("#send_" + id).removeClass("disabled");
                       }
