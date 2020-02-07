@@ -227,7 +227,7 @@ if (count($arResult["ITEMS"]) > 0) {
                             <?php
                                         foreach ($arFields as $arSection) {?>
                             <li value="<?=$arSection["ID"]?>"
-                                class="custom-serach__items_item childrenjs_<?=$arItem['ID']?>"><?php echo $arSection['PROPERTY_SURNAME_VALUE']?>    <?php echo $arSection['NAME']?>     <?php echo $arSection['PROPERTY_PARTONYMIC_VALUE']?></li>
+                                class="custom-serach__items_item childrenjs_<?=$arItem['ID']?>"><?php echo $arSection['PROPERTY_SURNAME_VALUE']?> <?php echo $arSection['NAME']?> <?php echo $arSection['PROPERTY_PARTONYMIC_VALUE']?></li>
                             <?php } ?>
                         </ul>
                     </div>

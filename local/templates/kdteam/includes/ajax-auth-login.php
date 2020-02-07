@@ -10,7 +10,7 @@
                 Вход
             </h3>
         </div>
-        <div class="message error"></div>
+        <p class="message error"></p>
 
         <div class="popup__wrap_tabs_tab">
             <div id="popup-login-content" class="popup__wrap_logIn">
