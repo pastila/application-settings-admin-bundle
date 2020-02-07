@@ -33,10 +33,10 @@ for ($index = 0; $index < $itemSize; $index++) {
              if(count($arResult) == 2){
                  $strReturn .= '
         
-			<li>
-				<a itemprop="item" href="/"><span itemprop="name" class="active-breadcrumbs">'.$title.'</span></a>
+			<li class="active-breadcrumbs">
+				<a itemprop="item" href="/"> '.$title.'</a>
 
-				<meta itemprop="position" content="'.$itemSize.'" />
+			
 			</li>';
              }else{
                  $strReturn .= '
@@ -44,7 +44,7 @@ for ($index = 0; $index < $itemSize; $index++) {
 			<li class="active-breadcrumbs">
 				<a itemprop="item" href="/news/"><span itemprop="name" class="active-breadcrumbs">'.$title.'</span></a>
 
-				<meta itemprop="position" content="'.$itemSize.'" />
+				
 			</li>';
              }
 
@@ -58,15 +58,15 @@ for ($index = 0; $index < $itemSize; $index++) {
 				<a  itemprop="item" href="' . $arResult[$index]["LINK"] . '" title="' . $title . '" itemprop="url">
 					<span itemprop="name">'.$title.'</span>
 				</a>
-				<meta itemprop="position" content="'.$itemSize_for_Microdata.'" />
+				
 			</li>';
          } else {
              $strReturn .= '
         
-			<li >
-				<a itemprop="item"><span itemprop="name" class="active-breadcrumbs">'.$title.'</span></a>
+			<li class="active-breadcrumbs">
+				<a itemprop="item"> '.$title.'</a>
 
-				<meta itemprop="position" content="'.$itemSize.'" />
+				
 			</li>';
          }
 
