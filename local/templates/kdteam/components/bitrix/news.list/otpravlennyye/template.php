@@ -17,7 +17,7 @@ $this->setFrameMode(true);
 ?>
 
 <!-- Pages Title -->
-<h2 class="page-title">Ваши обращения</h2>
+<h1 class="page-title">Ваши обращения</h1>
 <?php
 global $USER;
 

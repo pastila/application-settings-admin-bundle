@@ -96,7 +96,7 @@ if ($USER->IsAuthorized()) { ?>
         <li><a href="/">Главная</a></li>
         <li  class="active-breadcrumbs">обращения</li>
     </ul>
-    <h2 class="page-title">Ваши обращения</h2>
+    <h1 class="page-title">Ваши обращения</h1>
     <div class="obrashcheniya">
         <p>Вам необходимо авторизоваться, чтобы видеть свои обращения, либо пройдите проверку своего диагноза <a class="link-underline" href="/forma-obrashenija/">здесь</a>.</p>
     </div>
