@@ -90,7 +90,11 @@ $(document).ready(function() {
         }
       },1000));
     });
-
+    $('.numberInput').bind('change keyup input click', function() {
+      if (this.value.match(/[^0-9]/g)) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+      }
+    });
     $('.datepicker-here').datepicker({
 
     });
@@ -863,11 +867,4 @@ function isValidEmailAddress(emailAddress) {
 }
 
 /*policy number input number only!*/
-$(document).ready(function() {
-  $('.numberInput').bind('change keyup input click', function() {
-    if (this.value.match(/[^0-9]/g)) {
-      this.value = this.value.replace(/[^0-9]/g, '');
-    }
-  });
-});
 
