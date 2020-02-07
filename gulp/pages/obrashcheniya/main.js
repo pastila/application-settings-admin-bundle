@@ -566,6 +566,17 @@ if(time_p.text().search("2") != -1) {
             success.text('');
           } else if (result2.success !== undefined) {
             $('#appeal_' + element[1]).addClass("sended");
+            $.magnificPopup.open({
+              items: {
+                src: '<div class="white-popup custom_styles_popup">Ваше обращение успешно отправлено!</div>',
+                type: 'inline',
+              },
+              callbacks: {
+                afterClose: function() {
+                  document.location.reload(true);
+                },
+              },
+            });
             error.text('');
             success.text(result2.success);
           }
@@ -613,6 +624,17 @@ if(time_p.text().search("2") != -1) {
                   success.text('');
                 } else if (result2.success !== undefined) {
                   $('#appeal_' + element[1]).addClass(" sended");
+                  $.magnificPopup.open({
+                    items: {
+                      src: '<div class="white-popup custom_styles_popup">Ваше обращение успешно отправлено!</div>',
+                      type: 'inline',
+                    },
+                    callbacks: {
+                      afterClose: function() {
+                        document.location.reload(true);
+                      },
+                    },
+                  });
                   error.text('');
                   success.text(result2.success);
                 }
