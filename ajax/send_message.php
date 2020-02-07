@@ -119,6 +119,7 @@ if (CModule::IncludeModule("iblock")) {
 
                     $PERSONAL_BIRTHDAT = $person["PERSONAL_BIRTHDAY"];
                     $user_email = $person["EMAIL"];
+                    $BIRTHDAY_person =  $person["PERSONAL_BIRTHDAY"];
                     $mobail_number = $person["PERSONAL_PHONE"];
                     $full_name_user = $USER->GetFullName();
 
@@ -261,6 +262,7 @@ if (CModule::IncludeModule("iblock")) {
                                     'BOSS_COMPANY' => $boss_company,
                                     'MAIL_COMPANY' => $mail_company,
                                     'EMAIL' => $email,
+                                    'BIRTHDAY'=>$BIRTHDAY_person,
                                     'USER_MAIL' => $user_email,
                                     'FULLNAME' => $arFields['PROPERTY_FULL_NAME_VALUE'],
                                     'POLICY' => $arFields['PROPERTY_POLICY_VALUE'],

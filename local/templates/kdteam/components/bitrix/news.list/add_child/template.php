@@ -177,7 +177,7 @@ $this->setFrameMode(true);
                                 <p>Дата рождения</p>
                             </div>
                             <div class="item_data input__wrap">
-                                <input class="datepicker-here" required type="text" name="time"
+                                <input class="datepicker-here" required type="text" name="time" readonly
                                        value="<?= $arItem["PROPERTIES"]['BIRTHDAY']['VALUE']; ?>"
                                        id="children_birthday_add_<?= $arItem['ID'] ?>"
                                        placeholder="DD.MM.YYYY"
