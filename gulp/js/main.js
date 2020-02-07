@@ -867,4 +867,8 @@ function isValidEmailAddress(emailAddress) {
 }
 
 /*policy number input number only!*/
-
+$('.numberInput').bind('change keyup input click', function() {
+  if (this.value.match(/[^0-9]/g)) {
+    this.value = this.value.replace(/[^0-9]/g, '');
+  }
+});

@@ -21,31 +21,6 @@ label {
     margin-bottom: 2rem;
     &.sended{
         pointer-events: none;
-        &::before{
-            content: 'Ваше обращение отправлено';
-            position: absolute;
-            margin-top: 41rem;
-            font-size: 1.5rem;
-            left: 50%;
-            z-index: 1;
-            transform: translateX(-50%);
-            min-width: 320px;
-            text-align: center;
-        }
-        &::after{
-            background: url("/local/templates/kdteam/images/svg/paper-plane.svg");
-            content: '';
-            position: absolute;
-            left: calc(50% - 10rem);
-            width: 20rem;
-            margin-top: 20rem;
-            background-size: contain;
-            height: 20rem;
-            background-repeat: no-repeat;
-        }
-        .card{
-            filter: blur(5px);
-        }
     }
     &__btns {
         display: flex;

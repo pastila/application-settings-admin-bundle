@@ -11,6 +11,11 @@
         align-items: center;
         font-size: 1.4rem;
 
+        &.active-breadcrumbs {
+            color: $accentColor;
+            font-family: $main-font-semibold;
+        }
+
         &:after {
             content: '';
             width: 3.6rem;

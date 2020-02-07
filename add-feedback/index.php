@@ -33,7 +33,7 @@ global $USER; ?>
 
             <!-- Pages Title -->
             <? if ($USER->IsAuthorized()) { ?>
-                <h2 class="page-title">Добавить отзыв о компании</h2>
+                <h1 class="page-title">Добавить отзыв о компании</h1>
 
                 <!-- Wrap -->
                 <form id="form-comments">

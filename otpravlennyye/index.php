@@ -21,7 +21,7 @@ CModule::IncludeModule("iblock");
 </ul>
 
 <!-- Pages Title -->
-<h2 class="page-title">Отправленные обращения</h2>
+<h1 class="page-title">Отправленные обращения</h1>
 
 
 <?
