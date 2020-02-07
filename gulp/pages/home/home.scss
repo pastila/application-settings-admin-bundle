@@ -46,14 +46,14 @@
             align-items: center;
             justify-content: space-around;
 
+            &_img {
+                width: 100%;
+            }
+
             &_image-block {
                 display: flex;
                 width: 50rem;
                 height: 50rem;
-                
-                img {
-                    width: 100%;
-                }
             }
 
             &_title-block {
