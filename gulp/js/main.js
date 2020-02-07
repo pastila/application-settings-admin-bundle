@@ -1,6 +1,6 @@
 //= ../../node_modules/jquery/dist/jquery.min.js
 //= ../../node_modules/magnific-popup/dist/jquery.magnific-popup.min.js
-//= ../../node_modules/jquery-mask-plugin/dist/jquery.mask.min.js
+//= ../../node_modules/jquery-mask-plugin/dist/jquery.mask.js
 //= ../../node_modules/air-datepicker/dist/js/datepicker.min.js
 $(document).ready(function() {
   $("#write-us_modal").click(function() {
@@ -46,13 +46,19 @@ $(document).ready(function() {
   });
 
   function FormReg() {
+    $('#famaly-name, #name , #last-name').bind('change keyup input click', function() {
+      if (this.value.match(/[^а-яёА-ЯЁ]/g)) {
+        this.value = this.value.replace(/[^а-яёА-ЯЁ]/g, '');
+      }
+    });
 
-    $('#phone').mask('+7(000)000-00-00');
+      $('#phone').mask('+7(000)000-00-00');
     $("#famaly-name").on('keyup', function() {
        var $this = $(this);
       clearTimeout($this.data('timer'));
       $this.data('timer', setTimeout(function() {
         $this.removeData('timer');
+
         if ($this.val().length > 0) {
           var first_simvol = $this.val()[0].toUpperCase();
           var other = $("#famaly-name").val().slice(1);
@@ -84,7 +90,11 @@ $(document).ready(function() {
         }
       },1000));
     });
-
+    $('.numberInput').bind('change keyup input click', function() {
+      if (this.value.match(/[^0-9]/g)) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+      }
+    });
     $('.datepicker-here').datepicker({
 
     });
@@ -857,11 +867,8 @@ function isValidEmailAddress(emailAddress) {
 }
 
 /*policy number input number only!*/
-$(document).ready(function() {
-  $('.numberInput').bind('change keyup input click', function() {
-    if (this.value.match(/[^0-9]/g)) {
-      this.value = this.value.replace(/[^0-9]/g, '');
-    }
-  });
+$('.numberInput').bind('change keyup input click', function() {
+  if (this.value.match(/[^0-9]/g)) {
+    this.value = this.value.replace(/[^0-9]/g, '');
+  }
 });
-

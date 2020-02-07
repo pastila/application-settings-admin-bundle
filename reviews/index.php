@@ -17,10 +17,10 @@ $arUser = $rsUser->Fetch();
 ?>
 <ul class="breadcrumbs">
     <? if ($detect->isTablet() || $detect->isMobile()) { ?>
-    <li><a href="/" class="">Ваши отзывы</a></li>
+    <li><a href="/" class="active-breadcrumbs">Ваши отзывы</a></li>
     <? } else { ?>
     <li><a href="/">Главная</a></li>
-    <li>Ваши отзывы</li>
+    <li class="active-breadcrumbs">Ваши отзывы</li>
     <? } ?>
 
 </ul>

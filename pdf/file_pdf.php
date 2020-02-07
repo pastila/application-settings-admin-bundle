@@ -63,7 +63,7 @@ $email = $person["EMAIL"];
 $mobail_number = $person["PERSONAL_PHONE"];
 $full_name_user = $_POST["usrname"];
 $strahovay_compani = $person["UF_INSURANCE_COMPANY"];
-
+$PERSONAL_BIRTHDAT = $person["PERSONAL_BIRTHDAY"];
 
 
 $arSelect = Array("ID", "IBLOCK_ID", "NAME", "IBLOCK_SECTION_ID","PROPERTY_*");
@@ -132,7 +132,7 @@ $html ='
                     <div class="header__items_item--label">
                         <span style="font-weight: bold;">От: </span> 
                         <span class="header__items_item--text blue-text cursive" style="font-style: italic; font-weight: normal;">
-                        '.$full_name_user.'</span>
+                        '.$full_name_user.',' .$PERSONAL_BIRTHDAT.'</span>
                     </div>
                       <br>
                 </div>
