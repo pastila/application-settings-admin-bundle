@@ -133,8 +133,8 @@ $(document).ready(function() {
                   '    </div>\n' +
                   '</div>'
               );
-
-              if( $("[data-block_img="+element+"]").find("[id=img_block_"+element).length !== "0"  && $("#time_"+element).text() !== ""){
+              $(".photo_empty_all_"+element).html("");
+              if( $("[data-block_img="+element+"]").find("[id=img_block_"+element).length !== "0"  && $("#time_"+element).text().search("2") != "-1"){
                 $("#send_" + element).attr("onclick","send_ms(this)");
                 $("#send_" + element).removeClass("disabled");
               }
@@ -226,6 +226,7 @@ function del(f) {
       document.getElementById(r.ID_EL).value = "";
 
       if( $("[data-block_img="+r.ID_EL+"]").find("[id*=img_block_"+r.ID_EL+"]").length === 0 ){
+        $(".photo_empty_all_"+r.ID_EL).html("Нужно добавить скан документа/изображения для отправки обращения страховой компании");
         $("#send_" + r.ID_EL).removeAttr("onclick");
         $("#send_" + r.ID_EL).addClass("disabled");
       }
@@ -731,12 +732,6 @@ function save_date(sv) {
 
   var _ = $(sv);
   var id = _.attr("data-id-date_picker_save");
-
-
-
-
-
-
   let usrname = $("input[name='usrname']");
   let cur_el = $('#appeal_' + id);
   let policy = $("input[name='policy']");
@@ -843,7 +838,7 @@ function save_date(sv) {
                       $("#date_picker_"+id).css({"display":"none"});
                       $("#edit_"+id).attr("onclick","edit(this)");
                       $(".datepicker-here_"+id).remove();
-                      if( $("[data-block_img="+id+"]").find("[id*=img_block_"+id).length !== 0  && $("#time_"+id).text() !== ""){
+                      if( $("[data-block_img="+id+"]").find("[id*=img_block_"+id).length !== 0  && $("#time_"+element).text().search("2") != "-1"){
                         $("#send_" + id).attr("onclick","send_ms(this)");
                         $("#send_" + id).removeClass("disabled");
                       }
@@ -950,7 +945,7 @@ function save_date(sv) {
                   $("#date_picker_"+id).css({"display":"none"});
                   $("#edit_"+id).attr("onclick","edit(this)");
                   $(".datepicker-here_"+id).remove();
-                  if( $("[data-block_img="+id+"]").find("[id*=img_block_"+id).length !== 0  && $("#time_"+id).val() !== ""){
+                  if( $("[data-block_img="+id+"]").find("[id*=img_block_"+id).length !== 0  && $("#time_"+element).text().search("2") != "-1"){
                     $("#send_" + id).attr("onclick","send_ms(this)");
                     $("#send_" + id).removeClass("disabled");
                   }

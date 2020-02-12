@@ -50,6 +50,13 @@ if (count($arResult["ITEMS"]) > 0) {
         <p id="error_<?= $arItem["ID"] ?>" class="semi-bold error mb-2 datepicker-here_<?= $arItem["ID"] ?>">Введите
             дату оплаты</p>
         <?php } ?>
+
+       <?php $photo_sum =  (int)$arItem["PREVIEW_PICTURE"]["FILE_SIZE"] + (int)$arItem["PROPERTIES"]['IMG_2']["VALUE"] + (int)$arItem["PROPERTIES"]['IMG_3']["VALUE"] + (int)$arItem["PROPERTIES"]['IMG_4']["VALUE"] + (int)$arItem["PROPERTIES"]['IMG_5']["VALUE"] ; ?>
+
+        <?php if($photo_sum == 0){ ?>
+        <p  class="semi-bold error mb-2 photo_empty_all_<?= $arItem["ID"] ?>">Нужно добавить скан документа/изображения для отправки обращения страховой компании</p>
+        <?php } ?>
+
         <p id="success_<?= $arItem["ID"] ?>" class="semi-bold success mb-2"></p>
         <p class="semi-bold obrashcheniya__content_left_center_item_text-full hidden with_out_pdf error mb-2">Без
             сформированного документа PDF нельзя отрпавить обращение</p>
