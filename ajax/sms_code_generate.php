@@ -27,19 +27,18 @@ if ($arSpecUser) {
         return $random_string;
     }
     $sms_code = generate_string($permitted_chars, 5);
-    echo $sms_code;
+
     $_SESSION['SMS_CODE'] = $sms_code;
-//$result = $apiSms->execCommad('registerSender', array('name' => "GAZDA", 'country' => "ua"));
-//$result = $apiSms->execCommad("sendSMS", array(
-//    'sender' => "OMS",
-//    'text' => "Ваш код - $sms_code",
-//    'phone' => $_POST['phone'],
-//    'datetime' => "",
-//    'sms_lifetime' => "0"
-//));
+//    $result = $apiSms->execCommad('registerSender', array('name' => "OMS", 'country' => "ru"));
+
+    $result = $apiSms->execCommad("sendSMS", array(
+        'sender' => "OMS",
+        'text' => "Ваш код - $sms_code",
+        'phone' => $_POST['phone'],
+        'datetime' => "",
+        'sms_lifetime' => "0"
+    ));
 
 }
-
-
 
 ?>

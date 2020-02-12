@@ -42,11 +42,8 @@ while ($ob_hospital = $res_hospital->GetNextElement()) {
 }
 //Проверка на дублировние
 
-if($_POST["data_checkout"] == 1){
-    $data_user_oformlenie_POST = "(Дата запишеться как только вы отправите обращение)";
-}else{
-    $data_user_oformlenie_POST = date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time());
-}
+$data_user_oformlenie_POST = date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time());
+
 
 $data_user_oplata_POST = $_POST["data_user_oplata_POST"];
 

@@ -438,7 +438,8 @@ $(document).ready(function () {
               let diagnoz = jQuery.parseJSON(result);
               $("#strax-sluchay").remove();
               if (diagnoz !== 'error') {
-
+                $('.steps.step-4').css('pointer-events','none');
+                $('.white_block').css('display','none');
                 $form.replaceWith(diagnoz['DIAGNOZ']);
                 $title.html(diagnoz['FULL_NAME']);
 

@@ -25,6 +25,7 @@ $url = $APPLICATION->GetCurDir();
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="HandheldFriendly" content="true">
     <title><?php $APPLICATION->ShowTitle(); ?></title>
+    <link rel="shortcut icon" href="/local/templates/kdteam/images/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <?php $APPLICATION->ShowHead(); ?>
     <?php

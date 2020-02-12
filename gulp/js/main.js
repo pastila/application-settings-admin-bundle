@@ -264,6 +264,32 @@ $(document).ready(function() {
       }
     });
 
+    $('.sms-again-button').click(function() {
+      $('#tel_confirm_error').css('display', 'none');
+      if ($('#phone')['0'].validity.valid === true) {
+        $('#sms_confirm_error').css('display', 'none');
+        $.ajax({
+          url: '/ajax/sms_code_generate.php',
+          type: 'POST',
+          data: {phone: $('#phone').val()},
+          success: function(code) {
+            if (code === 'error') {
+              $('#tel_confirm_error').css('display', 'block');
+            } else {
+              $('.hidden_wrap_phone').css('display', 'none');
+              $('#sms_confirm').css('display', 'block');
+              $('.sms-again-button').prop('disabled', true);
+              timer_for_sms();
+            }
+          },
+        });
+      } else {
+        $('#sms_confirm_error').css('display', 'block');
+      }
+
+    });
+
+
     document.getElementById('password').onchange = validatePassword;
     document.getElementById('pass_conf').onchange = validatePassword;
     // $(".check-img").click(function() {
@@ -329,46 +355,63 @@ $(document).ready(function() {
         errors.push("error9");
       }
 
-      if (errors.length == 0) {
 
+      if ($('#check-code-js').val().length === 0) {
+        $("#check-code-js").after(
+            '<p class="label danger">Введите код подтверждения</p>');
+        $('.accept-phone-js').after(
+            '<p class="label danger">Введите код подтверждения</p>');
+        errors.push("error10");
+      } else if ($('#check-code-js').val().length > 0) {
         $.ajax({
-          url: '/ajax/registration.php',
+          url: '/ajax/sms_confirm.php',
           type: 'POST',
-          data: data_form,
-          success: function(msg) {
+          data: {ID: $('#check-code-js').val()},
+          success: function(confirm) {
+            if (confirm === 'error') {
+              $("#check-code-js").after(
+                  '<p class="label danger">Неверный код подтверждения</p>');
+            } else if (confirm === 'success') {
+              if (errors.length === 0) {
 
-            var suc = JSON.parse(msg);
-            if (suc.error !== undefined) {
-              var email = $('#phone');
-              email.after(
-                  '<div class="danger" data-danger-email>' + suc.error +
-                  '</div>');
+                $.ajax({
+                  url: '/ajax/registration.php',
+                  type: 'POST',
+                  data: data_form,
+                  success: function(msg) {
 
-            } else if (suc.birthday == '18'){
+                    var suc = JSON.parse(msg);
+                    if (suc.error !== undefined) {
+                      var email = $('#phone');
+                      email.after(
+                          '<div class="danger" data-danger-email>' + suc.error +
+                          '</div>');
 
-              $('.datepicker-here').after(
-                  '<span class="label danger"  >Регистрация лиц, не достигших 18 лет, не допускается</span>');
+                    } else if (suc.birthday == '18'){
+
+                      $('.datepicker-here').after(
+                          '<span class="label danger"  >Регистрация лиц, не достигших 18 лет, не допускается</span>');
 
 
-            }else if (suc.user == 'Уже существует') {
-              var email = $('#email');
-              email.after(
-                  '<div class="danger" data-danger-email>Пользовватель с таким эмейлом уже сущесвуте</div>');
-            } else if (suc.company == 'Нет компании') {
-              var email = $('#company');
-              email.after(
-                  '<div class="danger" data-danger-company>В нашей базе нет этой компании ,мы не можем вас зарегестрировать </div>');
-            }
-            else if (suc.user != 0 ) {
+                    }else if (suc.user == 'Уже существует') {
+                      var email = $('#email');
+                      email.after(
+                          '<div class="danger" data-danger-email>Пользовватель с таким эмейлом уже сущесвуте</div>');
+                    } else if (suc.company == 'Нет компании') {
+                      var email = $('#company');
+                      email.after(
+                          '<div class="danger" data-danger-company>В нашей базе нет этой компании ,мы не можем вас зарегестрировать </div>');
+                    }
+                    else if (suc.user != 0 ) {
 
-              if ($('.header__r_auth_reg').attr('data-rigstration') == "0") {
+                      if ($('.header__r_auth_reg').attr('data-rigstration') == "0") {
 
-                $('#auth-form-reg').find($('.close-modal')).trigger('click');
+                        $('#auth-form-reg').find($('.close-modal')).trigger('click');
 
-                $('.header__r_auth_reg').attr('data-rigstration', '1');
-                $('body').css({'overflow': 'hidden'});
+                        $('.header__r_auth_reg').attr('data-rigstration', '1');
+                        $('body').css({'overflow': 'hidden'});
 
-                    $.ajax({
+                        $.ajax({
                           dataType: 'html',
                           url: '/ajax/forma-obrashenija/reload_header.php',
                           type: 'POST',
@@ -380,25 +423,29 @@ $(document).ready(function() {
                             $(".header__r").html(msg);
                           },
                         }).done(function(msg) {
-                      setTimeout(function() {
-                        $.magnificPopup.open({
-                          items: {
-                            src: '<div class="white-popup custom_styles_popup">Регистрация  успешно завершена . Теперь вы можете проверить свой диагноз.</div>',
-                            type: 'inline',
-                          },
+                          setTimeout(function() {
+                            $.magnificPopup.open({
+                              items: {
+                                src: '<div class="white-popup custom_styles_popup">Регистрация  успешно завершена . Теперь вы можете проверить свой диагноз.</div>',
+                                type: 'inline',
+                              },
+                            });
+                            $('body').css({'overflow': 'initial'});
+                          }, 1000);
                         });
-                        $('body').css({'overflow': 'initial'});
-                      }, 1000);
-                         });
 
 
-              } else {
-                 location.reload();
+                      } else {
+                        location.reload();
+                      }
+                    }
+                  },
+                });
+
               }
             }
-          },
+          }
         });
-
       }
       return false;
     });
@@ -872,3 +919,9 @@ $('.numberInput').bind('change keyup input click', function() {
     this.value = this.value.replace(/[^0-9]/g, '');
   }
 });
+
+function timer_for_sms() {
+  setTimeout(function() {
+    $('.sms-again-button').removeAttr('disabled');
+  }, 30000);
+}
