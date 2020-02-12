@@ -13,7 +13,7 @@ require '/var/www/vendor/autoload.php';
 
 global $USER;
 
-$arHospital = $_POST["hospitl"];
+ preg_match('/^\s+(.*)/',$_POST["hospitl"],$preg_hospital);
 //Проверка на дублировние
 $arSel = array("ID", "IBLOCK_ID", "NAME", "PROPERTY_FULL_NAME", "PROPERTY_HOSPITAL", "PROPERTY_ADDRESS");
 $arFil = array("IBLOCK_ID" => 11,"ID" => $_POST['id']);
@@ -21,22 +21,22 @@ $res = CIBlockElement::GetList(array(), $arFil, false, false, $arSel);
 $ob = $res->GetNextElement();
 $arFields = $ob->GetFields();
 $hospital_adress = $arFields['PROPERTY_ADDRESS_VALUE'];
-
 $res_hospital = CIBlockElement::GetList(
     array(),
-    array('NAME' => $arHospital, 'IBLOCK_ID' => 9),
+    array('IBLOCK_ID' => 9 ,'%NAME' => $preg_hospital[1]),
     false,
     false,
     array("ID", "IBLOCK_ID", "NAME", "PROPERTY_FULL_NAME", "PROPERTY_MEDICAL_CODE", "IBLOCK_SECTION_ID")
 );
+
 while ($ob_hospital = $res_hospital->GetNextElement()) {
+
     $arFields = $ob_hospital->GetFields();
+    $MEDICAL_CODE = $arFields['PROPERTY_MEDICAL_CODE_VALUE'];
+    $FULL_NAME_HOSPITAL = $arFields['PROPERTY_FULL_NAME_VALUE'];
     $res = CIBlockSection::GetByID($arFields['IBLOCK_SECTION_ID']);
     if ($ar_res = $res->GetNext()) {
-        if ($ar_res['NAME'] == $hospital_adress) {
-            $FULL_NAME_HOSPITAL = $arFields['PROPERTY_FULL_NAME_VALUE'];
-            $MEDICAL_CODE = $arFields['PROPERTY_MEDICAL_CODE_VALUE'];
-        }
+
     }
 
 }
