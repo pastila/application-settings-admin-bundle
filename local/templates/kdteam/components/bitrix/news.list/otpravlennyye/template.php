@@ -66,10 +66,10 @@ if (count($arResult["ITEMS"]) > 0) {
             <!-- Контент левая сторона -->
             <div class="obrashcheniya__content_left">
                 <div class="tumbler_users-tab">
-                    <p class="tumbler_users-tab__item mainBtn add-user__js current" data_el="<?=$arItem["ID"]?>"
-                        id="remove_child-button">Мои обращения</p>
-                    <p class="tumbler_users-tab__item mainBtn add-child__js" data_el="<?=$arItem["ID"]?>"
-                        id="add_child-button">Для опекаемого человека</p>
+                    <p class="tumbler_users-tab__item add-user__js current" data_el="<?=$arItem["ID"]?>"
+                        id="remove_child-button">Медицинская помощь оказана мне</p>
+                    <p class="tumbler_users-tab__item add-child__js" data_el="<?=$arItem["ID"]?>"
+                        id="add_child-button">Медицинская помощь оказана другому лицу</p>
                     <input value="my" id="selected_sender_<?=$arItem["ID"]?>" type="hidden">
                 </div>
                 <!-- Внутри контента Верхняя часть -->

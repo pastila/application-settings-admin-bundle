@@ -156,15 +156,20 @@ label {
         margin-bottom: 2rem;
         display: flex;
         flex-wrap: wrap;
+        cursor: pointer;
+        margin-bottom: 4rem;
         &__item{
             transition: all .2s;
             &:not(:last-of-type) {
-                margin-right: 1.5rem;
+                margin-right: 5rem;
+                @media screen and (max-width: 768px){
+                    margin-bottom: 2rem;
+                }
             }
             &.current{
                 pointer-events: none;
-                background-color: $accentColor;
-                border-color: $accentColor;
+                color: $accentColor;
+                border-bottom: solid 0.2rem $accentColor;
             }
         }
     }
