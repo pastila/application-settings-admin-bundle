@@ -220,7 +220,7 @@ if (count($arResult["ITEMS"]) > 0) {
             <div class="obrashcheniya__content_left hidden_child-block">
                 <?php if (count($arFields) > 0) { ?>
                 <div class="input-with-search">
-                    <label class="title-select" for="user_pass">Выбор опекаемого человека: </label>
+                    <label class="title-select" for="user_pass">Укажите лицо, получавшее медицинсую помощь (ребенка, опекаемый)</label>
                     <div class="input__wrap">
                         <div class="input__ico">
                             <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255">

@@ -212,7 +212,7 @@ while($ob = $res->GetNextElement()){
                 <div class="steps_items_item_lists">
                     <div class="steps_items_item_lists_list">
                         <div class="steps_items_item_lists_list_title">
-                            Вы выбрали регион:
+                            Вы выбрали регион
                         </div>
 
                         <div id="region_name" class="steps_items_item_lists_list_name">
@@ -222,7 +222,7 @@ while($ob = $res->GetNextElement()){
 
                     <div class="steps_items_item_lists_list">
                         <div class="steps_items_item_lists_list_title">
-                            Вы выбрали медицинскую организацию:
+                            Вы выбрали медицинскую организацию
                         </div>
 
                         <div id="hosptital_name" class="steps_items_item_lists_list_name">
@@ -232,7 +232,7 @@ while($ob = $res->GetNextElement()){
 
                     <div class="steps_items_item_lists_list">
                         <div class="steps_items_item_lists_list_title">
-                            Расположение по адресу
+                            Юридический адрес
                         </div>
 
                         <div id="street_name" class="steps_items_item_lists_list_name">
