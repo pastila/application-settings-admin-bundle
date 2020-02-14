@@ -392,6 +392,9 @@ a{
      font-family: $main-font-bold;
  }
  .add_reviews-select{
+     display: flex;
+     flex-wrap: wrap;
+     flex-direction: column;
      @media(min-width: 992px){
          margin-right: 2rem;
          max-width: 100%;

@@ -40,7 +40,7 @@ global $USER; ?>
                     <div class="white_block">
 
                         <div class="feedback__top">
-                            <div class="block_relative add_reviews-select">
+                            <div class="add_reviews-select">
                                 <label class="input__wrap_label" for="user_pass">Выбор региона: </label>
                                 <div class="input__wrap">
                                     <div class="input__ico">
@@ -65,7 +65,7 @@ global $USER; ?>
                                     </ul>
                                 </div>
                             </div>
-                            <div class="block_relative add_reviews-select">
+                            <div class="add_reviews-select">
                                 <label class="input__wrap_label" for="user_pass">Список страховых компаний : </label>
                                 <div class="input__wrap">
                                     <div class="input__ico">
