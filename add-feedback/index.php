@@ -20,19 +20,19 @@ global $USER; ?>
 
             <!-- Breadcrumbs -->
             <ul class="breadcrumbs">
-                <? if ($detect->isTablet() || $detect->isMobile()) { ?>
+                <?php if ($detect->isTablet() || $detect->isMobile()) { ?>
                     <li class="active-breadcrumbs"><a href="/feedback/" class="">Добавление отзыва</a></li>
-                <? } else { ?>
+                <?php } else { ?>
                     <li><a href="/">Главная</a></li>
                     <li><a href="/feedback/">Отзывы</a></li>
                     <li class="active-breadcrumbs">Добавление отзыва</li>
-                <? } ?>
+                <?php } ?>
 
 
             </ul>
 
             <!-- Pages Title -->
-            <? if ($USER->IsAuthorized()) { ?>
+            <?php if ($USER->IsAuthorized()) { ?>
                 <h1 class="page-title">Добавить отзыв о компании</h1>
 
                 <!-- Wrap -->
