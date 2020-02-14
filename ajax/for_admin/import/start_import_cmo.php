@@ -266,7 +266,9 @@ if (isset($all_company)) {
 
 foreach ($mew_company as $key => $item) {
     $id_section = "";
-    $arFilter = array('IBLOCK_ID' => 16, "%NAME" => $item["A"] );
+    preg_match("/(\d+)\s+(.*)/",$item["A"],$arRegion);
+
+    $arFilter = array('IBLOCK_ID' => 16, "UF_CODE_REGION" => $arRegion["1"] );
     $rsSections = CIBlockSection::GetList(array(), $arFilter);
     if ($arSection = $rsSections->Fetch()) {
         $id_section =   $arSection["ID"];
