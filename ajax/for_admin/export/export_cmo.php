@@ -7,7 +7,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use \PhpOffice\PhpSpreadsheet\Cell\DataType;
 $arResult = array();
-$arSelect = Array("ID","NAME", "IBLOCK_ID","IBLOCK_SECTION_ID", "NAME","PROPERTY_*");
+$arSelect = Array("ID","NAME", "ACTIVE","IBLOCK_ID","IBLOCK_SECTION_ID", "NAME","PROPERTY_*");
 $arFilter = Array("IBLOCK_ID"=>16 );
 $i = 0;
 $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
@@ -16,6 +16,7 @@ while($ob = $res->GetNextElement()){
     $arProps = $ob->GetProperties();
     $arFields = $ob->GetFields();
     $arResult[$i]["ID"] = $arFields["ID"];
+    $arResult[$i]["ACTIVE"] = $arFields["ACTIVE"];
     $arResult[$i]["NAME"] = $arFields["~NAME"];
     $arResult[$i]["EMAIL_FIRST"] = $arProps["EMAIL_FIRST"]["VALUE"];
     $arResult[$i]["EMAIL_SECOND"] = $arProps["EMAIL_SECOND"]["~VALUE"];
@@ -72,6 +73,7 @@ $spreadsheet->getActiveSheet()->getStyle('M')->getAlignment()->setHorizontal(\Ph
 $spreadsheet->getActiveSheet()->getColumnDimension('M')->setAutoSize(true);
 $spreadsheet->getActiveSheet()->getColumnDimension('N')->setAutoSize(true);
 $spreadsheet->getActiveSheet()->getColumnDimension('O')->setAutoSize(true);
+$spreadsheet->getActiveSheet()->getColumnDimension('P')->setAutoSize(true);
 
 
 
@@ -90,6 +92,7 @@ $sheet->setCellValue('L' . $intCounter_for_name_row, "ККП код");
 $sheet->setCellValue('M' . $intCounter_for_name_row, "Уникальный код компании");
 $sheet->setCellValue('N' . $intCounter_for_name_row, "Рейтинг по регоину");
 $sheet->setCellValue('O' . $intCounter_for_name_row, "Рейтинг по стране");
+$sheet->setCellValue('P' . $intCounter_for_name_row, "Активность");
 
 
 $intCounter_for_item = 2;
@@ -109,6 +112,7 @@ foreach ($arResult as $item) {
     $sheet->setCellValue('M' . $intCounter_for_item, $item["UNIQUE_CODE"]);
     $sheet->setCellValue('N' . $intCounter_for_item, $item["ALL_AMOUNT_STAR"]);
     $sheet->setCellValue('O' . $intCounter_for_item, $item["AMOUNT_STAR"]);
+    $sheet->setCellValue('P' . $intCounter_for_item, $item["ACTIVE"]);
 
 
 
