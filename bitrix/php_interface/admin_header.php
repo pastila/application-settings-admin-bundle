@@ -337,6 +337,9 @@
           $('.close-content-ord-company-cmo').on('click', function() {
             $('#exp-company-cmo').hide();
           });
+            $('.close-content-ord-cmo').on('click', function() {
+            $('#exp-cmo').hide();
+          });
 
 
           $('.close-content-ord ').on('click', function() {
