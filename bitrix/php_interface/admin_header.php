@@ -513,7 +513,7 @@
                       $('#my_adm_btn_exp_ord-cmo').css({'display': 'none'});
                       $('#my_adm_btn_exp_ord-cmo').
                           after(
-                              '<span class="run_span"> импорт файла запущен ,ожидаемое время 20 минут,страницу можно закрыть. </span>');
+                              '<span class="run_span"> импорт файла запущен ,ожидаемое время 2 минуты,страницу можно закрыть. </span>');
                       $(document).mouseup(function(e) { // событие клика по веб-документу
                         var div = $('.run_span'); // тут указываем ID элемента
                         if (!div.is(e.target) // если клик был не по нашему блоку
