@@ -642,12 +642,12 @@ $countReviews = count($allReviews);
                 <?php
                 $arFilter = array(
                     "IBLOCK_ID" => 16,
-
+                    "ACTIVE" => "Y",
                     "!PROPERTY_AMOUNT_STAR" => false,
                     "!PROPERTY_ALL_AMOUNT_STAR" => false,
                 );
                 if (isset($_GET["property_region"])) {
-                    $arFilter += ["SECTION_ID" => $_GET["property_region"],"ACTIVE" => "Y"];
+                    $arFilter += ["SECTION_ID" => $_GET["property_region"]];
                 }
                 $order = array();
                 if(!isset($_GET["property_region"])){
