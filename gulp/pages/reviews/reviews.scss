@@ -296,6 +296,7 @@
     align-items: baseline;
     margin: 1rem 0 0 0;
     .feedback_change_star{
+        color: $accentColor;
         cursor: pointer;
         margin-right: 1rem;
         font-family: $main-font-semibold;
@@ -372,7 +373,6 @@
     .moreless{
         cursor: pointer;
         color: $accentColor;
-        font-family: $main-font-bold;
         display: block;
         margin: 1rem 0 0 0;
         &.more{

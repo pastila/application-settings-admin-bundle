@@ -171,7 +171,7 @@ foreach ($arFields["PROPERTY_VALUES"]['145'] as $key => $region_id){
 function IBlockElementAfterSaveHandler($arg1, $arg2 = false, $bInternal = false)
 {
 
-    if ($arg1['IBLOCK_ID'] == 13) {
+    if ($arg1['IBLOCK_ID'] == 13 ) {
 
         $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
         $arFilter = Array(
@@ -224,9 +224,10 @@ function IBlockElementAfterSaveHandler($arg1, $arg2 = false, $bInternal = false)
                 $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
                 $count_company_with_this_kpp =  $res->SelectedRowsCount();
                 $total_star = 0;
-
                 while($ob = $res->GetNextElement()) {
                     $arProps_company = $ob->GetFields();
+
+
                     array_push($array_id_company_with_kpp, $arProps_company["ID"]);
 
 
@@ -247,6 +248,44 @@ function IBlockElementAfterSaveHandler($arg1, $arg2 = false, $bInternal = false)
         }
 
 
+    } else if ($arg1['IBLOCK_ID'] == 16 ) {
+        $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
+        $arFilter = Array(
+            "IBLOCK_ID" => 16,
+            "ID" => $arg1["ID"],
+        );
+        $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+        if ($ob = $res->GetNextElement()) {
+
+            $arProps = $ob->GetProperties();
+            $KPP = $arProps['KPP']['VALUE'];
+            $array_id_company_with_kpp = array();
+            if ($KPP) {
+                $arSelect = Array("ID", "IBLOCK_ID", "NAME","PROPERTY_AMOUNT_STAR");
+                $arFilter = Array("IBLOCK_ID"=>16, "ACTIVE"=> "Y", "PROPERTY_KPP"=> $KPP,"!PROPERTY_AMOUNT_STAR"=> false);
+                $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+                $count_company_with_this_kpp =  $res->SelectedRowsCount();
+                $total_star = 0;
+                while($ob = $res->GetNextElement()) {
+                    $arProps_company = $ob->GetFields();
+
+
+                    array_push($array_id_company_with_kpp, $arProps_company["ID"]);
+
+
+                    $total_star = $total_star + $arProps_company["PROPERTY_AMOUNT_STAR_VALUE"];
+                }
+
+                $result = $total_star / $count_company_with_this_kpp;
+
+                $All_star = Array(
+                    "ALL_AMOUNT_STAR" => round($result,2),
+                );
+                foreach ($array_id_company_with_kpp as $key){
+                    CIBlockElement::SetPropertyValuesEx($key, 16, $All_star);
+                }
+            }
+        }
     }
 
     if ($arg1['IBLOCK_ID'] == 24) {
