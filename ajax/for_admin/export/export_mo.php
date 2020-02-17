@@ -11,9 +11,10 @@ $arFilter = Array("IBLOCK_ID"=>9 );
 $i = 0;
 $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
 
-while($ob = $res->GetNextElement()){
+while ($ob = $res->GetNextElement()) {
     $arProps = $ob->GetProperties();
     $arFields = $ob->GetFields();
+    $arSection = CIBlockSection::GetByID($arFields['IBLOCK_SECTION_ID'])->GetNext();
     $arResult[$i]["ID"] = $arFields["ID"];
     $arResult[$i]["NAME"] = $arFields["~NAME"];
     $arResult[$i]["MEDICAL_CODE"] = $arProps["MEDICAL_CODE"]["VALUE"];
@@ -25,6 +26,7 @@ while($ob = $res->GetNextElement()){
     foreach ($arProps["YEAR"]["VALUE"] as $key){
         $arResult[$i]["YEAR"]  .= $key.",";
     }
+    $arResult[$i]["REGION"] = $arSection["NAME"];
     ++$i;
 }
 
@@ -42,6 +44,7 @@ $spreadsheet->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
 $spreadsheet->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
 $spreadsheet->getActiveSheet()->getColumnDimension('H')->setAutoSize(true);
 $spreadsheet->getActiveSheet()->getColumnDimension('I')->setAutoSize(true);
+$spreadsheet->getActiveSheet()->getColumnDimension('J')->setAutoSize(true);
 
 $sheet->setCellValue('A' . $intCounter_for_name_row, "Айди медицинской организации");
 $sheet->setCellValue('B' . $intCounter_for_name_row, "Наименование организации");
@@ -52,6 +55,7 @@ $sheet->setCellValue('F' . $intCounter_for_name_row, "Фамилия");
 $sheet->setCellValue('G' . $intCounter_for_name_row, "Имя");
 $sheet->setCellValue('H' . $intCounter_for_name_row, "Отчество");
 $sheet->setCellValue('I' . $intCounter_for_name_row, "Годы");
+$sheet->setCellValue('J' . $intCounter_for_name_row, "Субъект РФ");
 
 $intCounter_for_item = 2;
 foreach ($arResult as $item) {
@@ -64,6 +68,7 @@ foreach ($arResult as $item) {
     $sheet->setCellValue('G' . $intCounter_for_item, $item["PERSON_NAME"]);
     $sheet->setCellValue('H' . $intCounter_for_item, $item["MIDDLE_NAME"]);
     $sheet->setCellValue('I' . $intCounter_for_item, $item["YEAR"]);
+    $sheet->setCellValue('J' . $intCounter_for_item, $item["REGION"]);
 
     ++$intCounter_for_item;
 }
