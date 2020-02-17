@@ -28,17 +28,11 @@ $res_hospital = CIBlockElement::GetList(
     false,
     array("ID", "IBLOCK_ID", "NAME", "PROPERTY_FULL_NAME", "PROPERTY_MEDICAL_CODE", "IBLOCK_SECTION_ID")
 );
-
 while ($ob_hospital = $res_hospital->GetNextElement()) {
 
     $arFields = $ob_hospital->GetFields();
     $MEDICAL_CODE = $arFields['PROPERTY_MEDICAL_CODE_VALUE'];
     $FULL_NAME_HOSPITAL = $arFields['PROPERTY_FULL_NAME_VALUE'];
-    $res = CIBlockSection::GetByID($arFields['IBLOCK_SECTION_ID']);
-    if ($ar_res = $res->GetNext()) {
-
-    }
-
 }
 //Проверка на дублировние
 

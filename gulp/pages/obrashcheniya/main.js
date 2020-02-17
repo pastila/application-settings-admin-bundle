@@ -321,17 +321,6 @@ if(cur_el.find(policy).val().length === 16) {
               $('#success_' + element[1]).html('');
               $('#error_' + element[1]).html('Заполните дату оплаты услуг');
             } else {
-              $.ajax({
-                url: '/pdf/file_pdf.php',
-                data: {
-                  "data_user_oplata_POST": cur_el.find(time).val(),
-                  "number_polic": cur_el.find(policy).val(),
-                },
-                type: 'post',
-                success: function(result) {
-                  $("[data-id-date_picker_edit="+element[1]+"]").attr("onclick","edit_date(this)");
-                }
-              });
 
               $('#save_' + element[1]).css('display', 'none');
 
@@ -416,20 +405,6 @@ if(cur_el.find(policy).val().length === 16) {
               $('#success_' + element[1]).html('');
               $('#error_' + element[1]).html('Заполните дату оплаты услуг');
             } else {
-              $.ajax({
-                url: '/pdf/file_pdf.php',
-                data: {
-                  "data_user_oplata_POST": cur_el.find(time).val(),
-                  "number_polic": cur_el.find(policy).val(),
-                },
-                type: 'post',
-                beforeSend: function() {
-                  // $("#gif_save_"+element[1]).css({"display":"block"})
-                },
-                success: function(result) {
-                  $("[data-id-date_picker_edit="+element[1]+"]").attr("onclick","edit_date(this)");
-                }
-              });
               $('#save_' + element[1]).css('display', 'none');
 
               cur_el.find(usrname).css('display', 'none');
@@ -523,7 +498,7 @@ function send_ms(sd) {
     let cur_el = $('#appeal_' + element[1]);
     let usrname = $("input[name='usrname']");
     let policy = $("input[name='policy']");
-
+    let hospitl = $('#hospitl_' + element[1]);
     let time_p = $('#time_' + element[1]);
 
     let data = {
@@ -532,6 +507,7 @@ function send_ms(sd) {
       "data_checkout": "2",
       "usrname": cur_el.find(usrname).val(),
       "id": element[1],
+      "hospitl": cur_el.find(hospitl).text(),
     };
 
 
@@ -766,19 +742,6 @@ function save_date(sv) {
               $('#error_' + id).html('Заполните дату оплаты услуг');
               $("#gif_"+id).css({"display":"none"});
             } else {
-              // $.ajax({
-              //   url: '/pdf/file_pdf.php',
-              //   data: {
-              //     "data_user_oplata_POST": cur_el.find(time).val(),
-              //     "number_polic": cur_el.find(policy).val(),
-              //   },
-              //   type: 'post',
-              //   success: function(result) {
-              //     console.log(result)
-              //   }
-              // });
-
-
               cur_el.find(usrname).css('display', 'none');
               cur_el.find(policy).css('display', 'none');
               cur_el.find(time).css('display', 'none');
@@ -869,20 +832,6 @@ function save_date(sv) {
               $('#error_' +id).html('Заполните дату оплаты услуг');
               $("#gif_"+id).css({"display":"none"});
             } else {
-              // $.ajax({
-              //   url: '/pdf/file_pdf.php',
-              //   data: {
-              //     "data_user_oplata_POST": cur_el.find(time).val(),
-              //     "number_polic": cur_el.find(policy).val(),
-              //   },
-              //   type: 'post',
-              //   success: function(result) {
-              //     console.log(result)
-              //
-              //   }
-              // });
-
-
               cur_el.find(usrname).css('display', 'none');
               cur_el.find(policy).css('display', 'none');
               cur_el.find(time).css('display', 'none');
