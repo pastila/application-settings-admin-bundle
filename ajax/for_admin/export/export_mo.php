@@ -23,8 +23,8 @@ while ($ob = $res->GetNextElement()) {
     $arResult[$i]["SECOND_NAME"] = $arProps["SECOND_NAME"]["VALUE"];
     $arResult[$i]["PERSON_NAME"] = $arProps["PERSON_NAME"]["VALUE"];
     $arResult[$i]["MIDDLE_NAME"] = $arProps["MIDDLE_NAME"]["VALUE"];
-    foreach ($arProps["YEAR"]["VALUE"] as $key){
-        $arResult[$i]["YEAR"]  .= $key.",";
+    foreach ($arProps["YEAR"]["VALUE"] as $key) {
+        $arResult[$i]["YEAR"]  .= $key . ",";
     }
     $arResult[$i]["REGION"] = $arSection["NAME"];
     ++$i;
