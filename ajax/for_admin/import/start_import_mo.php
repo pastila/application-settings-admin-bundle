@@ -49,7 +49,14 @@ $dir = '/var/www/upload/import/sparrower_mo.xls';
 
 
 
-
+$all_hospital = array();
+$arSelect = Array("ID", "IBLOCK_ID", "NAME");
+$arFilter = Array("IBLOCK_ID" => 9);
+$res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+while ($ob = $res->GetNextElement()) {
+    $arProps = $ob->GetFields();
+    $all_hospital[] = $arProps["ID"];
+}
 $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
 $spreadsheet = $reader->load($dir);
 $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, false, true);
@@ -86,13 +93,13 @@ foreach ($sheetData as $k => $p) {
         if ($ob = $res->GetNextElement()) {
             $el = new CIBlockElement;
             $arProps = $ob->GetFields();
+            if (($key = array_search($arProps["ID"], $all_hospital)) !== false) {
 
+                unset($all_hospital[$key]);
+            }
             $arProperties = $ob->GetProperties();
             $arYEAR = array();
 
-echo '<pre>';
-print_r($arProps['ID']);
-echo '</pre>';
             $result_search_year = array_search(date("Y"), $arProperties["YEAR"]['VALUE']);
             if ($result_search_year === false) {
                 $arYEAR = $arProperties["YEAR"]['VALUE'];
@@ -130,6 +137,17 @@ echo '</pre>';
 
 }
 
+if (isset($all_hospital)) {
+    foreach ($all_hospital as $key_id) {
+
+        $el = new \CIBlockElement;
+        if ($el->Update($key_id, ["ACTIVE" => "N"])) {
+            echo "activity removed: " . $key_id . PHP_EOL;
+
+
+        }
+    }
+}
     foreach ($arCode as $key) {
 
 
