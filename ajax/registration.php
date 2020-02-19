@@ -4,7 +4,7 @@ CModule::IncludeModule("iblock");
 $result = array();
 
 if($_POST) {
-
+    session_start();
 
     $time = $_POST["time"];
 
@@ -17,7 +17,7 @@ if($_POST) {
 
         if ($r >= 568024668) {
 
-        $name = $_POST["name"];
+            $name = $_POST["name"];
             $familia = $_POST["famaly-name"];
             $otchestvo = $_POST["last-name"];
             $email = $_POST["email"];
@@ -45,13 +45,13 @@ if($_POST) {
                 $result = array_merge($result, $msg);
 
             } elseif ($rsUser->SelectedRowsCount() > 0) {
-                $msg = array("user" => "Уже существует");
+                $msg = array("user_already" => "Уже существует");
                 $result = array_merge($result, $msg);
             } else {
 
                 if ($_POST['sms-code'] != "") {
                     if ($_POST['sms-code'] !== $_SESSION['SMS_CODE']) {
-                        $result['error'] = 'Неправильный код подтверждения';
+                        $result['error_sms'] = 'Неправильный код подтверждения';
                         echo json_encode($result);
                         return;
                     }else {
@@ -76,12 +76,12 @@ if($_POST) {
                             "PERSONAL_PHOTO" => $arFile,
                         );
                         $ID = $USER->Add($arFields);
-                        $ID_user = array("user" => $ID);
+                        $ID_user = array("user_success" => "success");
                         $result = array_merge($result, $ID_user);
                         $USER->Authorize($ID);
                     }
                 } else {
-                    $result['error'] = 'Подтвердите номер телефона';
+                    $result['error_phone'] = 'Подтвердите номер телефона';
                     echo json_encode($result);
                     return;
                 }
