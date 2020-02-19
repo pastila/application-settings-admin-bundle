@@ -3,6 +3,7 @@
 //= ../../node_modules/jquery-mask-plugin/dist/jquery.mask.js
 //= ../../node_modules/air-datepicker/dist/js/datepicker.min.js
 $(document).ready(function() {
+
   $("#write-us_modal").click(function() {
    setTimeout(function() {
      form_us();
@@ -95,8 +96,11 @@ $(document).ready(function() {
         this.value = this.value.replace(/[^0-9]/g, '');
       }
     });
-    $('.datepicker-here').datepicker({
-
+    let today = new Date();
+    let year = today.getFullYear() - 18;
+    today.setFullYear(year);
+    $('#datepicker_reg').datepicker({
+      maxDate: today
     });
     $('#datepickers-container').css({'z-index': '9999'});
 
