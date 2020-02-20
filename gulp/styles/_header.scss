@@ -206,13 +206,6 @@
     }
 }
 
-#auth-form-reg {
-    max-width: 110rem;
-
-    .check-label{
-        margin-right: 0;
-    }
-}
 #auth-form-reg{
     .search_company{
         max-height: 20rem;
@@ -315,12 +308,13 @@
         top: 2rem;
         right: 2rem;
         cursor: pointer;
+        z-index: 2;
     }
 
     .popup {
         &__wrap {
             width: 100%;
-            padding: 2rem;
+            padding: 4rem;
             background: white;
             
                 &_top, &_middle, &_bottom {
