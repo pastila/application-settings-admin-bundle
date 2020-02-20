@@ -6,9 +6,9 @@ $ID_USER = $USER->GetID();
 
 <div class="header__r_auth">
     <a rel="nofollow" href="javascript:void(0)" id="show-mnu" class="header__r_auth_user">
-                            <span class="header__r_auth_user_hello">
-                                Добрый день,
-                            </span>
+        <span class="header__r_auth_user_hello">
+            Добрый день,
+        </span>
 
         <span class="header__r_auth_user_name"><?php echo $USER->GetFullName();?> !</span>
     </a>
@@ -45,10 +45,13 @@ $ID_USER = $USER->GetID();
                 }
             }
             ?>
-            <div id="number_calls" class="menu-req">
-                <?php echo $countAppeals?>
-            </div>
-            <a class="active" href="/obrashcheniya/">Ваши обращения</a>
+            <a class="active" href="/obrashcheniya/">
+                <div id="number_calls" class="menu-req">
+                    <?php echo $countAppeals?>
+                </div>
+
+                <span class="header__r_nav_text">Ваши обращения</span>
+            </a>
 
         </li>
 
@@ -67,47 +70,50 @@ $ID_USER = $USER->GetID();
             }
 
             ?>
-            <div id="number_calls" class="menu-req">
-                <?php echo $count_reviews?>
-            </div>
-            <a class="" href="/reviews/">Ваши отзывы</a>
+            <a class="" href="/reviews/">
+                <div id="number_calls" class="menu-req">
+                    <?php echo $count_reviews?>
+                </div>
+
+                <span class="header__r_nav_text">Ваши отзывы</span>
+            </a>
 
         </li>
         <li>
-            <div class="menu-req">
-                <?php
+            <a href="/otpravlennyye/">
+                <div class="menu-req">
+                    <?php
 
-
-                $arFilter = array("IBLOCK_ID" => 11, "UF_USER_ID" => $ID_USER);
-                $section = CIBlockSection::GetList(
-                    array(),
-                    $arFilter,
-                    false,
-                    false,
-                    false
-                );  // получили секцию по айди юзера
-                if ($Section = $section->GetNext()) {
-                    $arFilter = array("IBLOCK_ID" => 11,
-                        "SECTION_ID" => $Section["ID"],"PROPERTY_SEND_REVIEW_VALUE" => 1);
-                    $Element = CIBlockElement::GetList(
+                    $arFilter = array("IBLOCK_ID" => 11, "UF_USER_ID" => $ID_USER);
+                    $section = CIBlockSection::GetList(
                         array(),
                         $arFilter,
                         false,
                         false,
                         false
-                    ); //получили обращения юзера
-                    $obElement = $Element->SelectedRowsCount();
+                    );  // получили секцию по айди юзера
+                    if ($Section = $section->GetNext()) {
+                        $arFilter = array("IBLOCK_ID" => 11,
+                            "SECTION_ID" => $Section["ID"],"PROPERTY_SEND_REVIEW_VALUE" => 1);
+                        $Element = CIBlockElement::GetList(
+                            array(),
+                            $arFilter,
+                            false,
+                            false,
+                            false
+                        ); //получили обращения юзера
+                        $obElement = $Element->SelectedRowsCount();
 
-                } ?><?= $obElement ?>
-            </div>
-
-            <a href="/otpravlennyye/">Отправленные</a>
+                    } ?><?= $obElement ?>
+                </div>
+                <span class="header__r_nav_text">Отправленные</span>
+            </a>
         </li>
-        <a href="/ajax/logout.php">Выйти</a>
+        <a class="header__r_nav_link" href="/ajax/logout.php">Выйти</a>
     </ul>
 
     <!-- <div class="header__r_auth_user-image"> -->
-        <?php
+    <?php
         $rsUser = CUser::GetByID($ID_USER);
         $person = $rsUser->Fetch();
         //
@@ -119,53 +125,73 @@ $ID_USER = $USER->GetID();
             if ($res["ACTIVE"] != "Y") {
                 ?>
 
-                <script> $('body').css({'overflow': 'hidden'});
-                  setTimeout(function() {
-                    $.magnificPopup.open({
-                      items: {
-                        src: '<div class="white-popup custom_styles_popup">Уважаемый пользователь. Ваша, выбранная компания при регистрации больше не сотрудничает с нами . Для ' +
-                        'дальшнеего использования функционалом (обращения) нужно в <a href="/personal-cabinet/"> личном кабинете </a>выбрать страховую компанию </div>',
-                        type: 'inline',
-                      },
-                    });
-                    $('body').css({'overflow': 'initial'});
-                  }, 1000);</script>
-            <? }
+    <script>
+    $('body').css({
+        'overflow': 'hidden'
+    });
+    setTimeout(function() {
+        $.magnificPopup.open({
+            items: {
+                src: '<div class="white-popup custom_styles_popup">Уважаемый пользователь. Ваша, выбранная компания при регистрации больше не сотрудничает с нами . Для ' +
+                    'дальшнеего использования функционалом (обращения) нужно в <a href="/personal-cabinet/"> личном кабинете </a>выбрать страховую компанию </div>',
+                type: 'inline',
+            },
+        });
+        $('body').css({
+            'overflow': 'initial'
+        });
+    }, 1000);
+    </script>
+    <? }
             }else{
             ?>
-                <script> $('body').css({'overflow': 'hidden'});
-                  setTimeout(function() {
-                    $.magnificPopup.open({
-                      items: {
-                        src: '<div class="white-popup custom_styles_popup">Уважаемый пользователь. Ваша, выбранная компания при регистрации больше не сотрудничает с нами . Для ' +
-                        'дальшнеего использования функционалом (обращения) нужно в <a href="/personal-cabinet/"> личном кабинете </a>выбрать страховую компанию </div>',
-                        type: 'inline',
-                      },
-                    });
-                    $('body').css({'overflow': 'initial'});
-                  }, 1000);</script>
-            <?
+    <script>
+    $('body').css({
+        'overflow': 'hidden'
+    });
+    setTimeout(function() {
+        $.magnificPopup.open({
+            items: {
+                src: '<div class="white-popup custom_styles_popup">Уважаемый пользователь. Ваша, выбранная компания при регистрации больше не сотрудничает с нами . Для ' +
+                    'дальшнеего использования функционалом (обращения) нужно в <a href="/personal-cabinet/"> личном кабинете </a>выбрать страховую компанию </div>',
+                type: 'inline',
+            },
+        });
+        $('body').css({
+            'overflow': 'initial'
+        });
+    }, 1000);
+    </script>
+    <?
             } ?>
 
-            <? }else{
+    <? }else{
             ?>
-                <script> $('body').css({'overflow': 'hidden'});
-                  setTimeout(function() {
-                    $.magnificPopup.open({
-                      items: {
-                        src: '<div class="white-popup custom_styles_popup">Уважаемый пользователь. Ваша, выбранная компания при регистрации больше не сотрудничает с нами . Для ' +
-                        'дальшнеего использования функционалом (обращения) нужно в <a href="/personal-cabinet/"> личном кабинете </a>выбрать страховую компанию </div>',
-                        type: 'inline',
-                      },
-                    });
-                    $('body').css({'overflow': 'initial'});
-                  }, 1000);</script>
-                <?
+    <script>
+    $('body').css({
+        'overflow': 'hidden'
+    });
+    setTimeout(function() {
+        $.magnificPopup.open({
+            items: {
+                src: '<div class="white-popup custom_styles_popup">Уважаемый пользователь. Ваша, выбранная компания при регистрации больше не сотрудничает с нами . Для ' +
+                    'дальшнеего использования функционалом (обращения) нужно в <a href="/personal-cabinet/"> личном кабинете </a>выбрать страховую компанию </div>',
+                type: 'inline',
+            },
+        });
+        $('body').css({
+            'overflow': 'initial'
+        });
+    }, 1000);
+    </script>
+    <?
             }
         }
 
         ?>
 
-        <!--                            <img src="--><?//=$file["src"]?><!--" alt="">-->
+    <!--                            <img src="-->
+    <?//=$file["src"]?>
+    <!--" alt="">-->
     <!-- </div> -->
 </div>
