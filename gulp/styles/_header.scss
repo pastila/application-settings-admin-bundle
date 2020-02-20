@@ -223,7 +223,20 @@
     }
 }
 #feedback_modal{
-    max-width: 70rem;
+    max-width: 60vw;
+    width: 100%;
+    height: 80vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    @media screen and (max-width: 576px){
+        max-width: 100%;
+    }
+
+    .popup__wrap {
+        position: absolute;
+        top: 0;
+    }
+    
     .block_padd-modal{
         @media(min-width: 992px){
             padding: 1rem;
