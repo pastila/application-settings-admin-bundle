@@ -14,102 +14,99 @@ $ID_USER = $USER->GetID();
     </a>
 
     <!-- #menu -->
-    <div id="menu" class="white_block">
-        <ul>
-            <li>
-                <a href="/personal-cabinet/">Личный кабинет</a>
-            </li>
+    <ul id="menu" class="header__r_nav">
+        <li>
+            <a href="/personal-cabinet/">Личный кабинет</a>
+        </li>
 
-            <li>
-                <!-- Если есть обращения в админке добавляем класс active -->
-                <!-- И показываем блок с колличеством обращений -->
-                <?php
-                //Количество обращений
-                if (CModule::IncludeModule("iblock")) {
-                    $arFilterSect = array('IBLOCK_ID' => 11, "UF_USER_ID" => $ID_USER);
-                    $rsSect = CIBlockSection::GetList(array(), $arFilterSect);
-                    if ($arSect = $rsSect->GetNext()) {
-                        $arSelect = array("ID", "NAME", "DATE_ACTIVE_FROM");
-                        $arFilter = array("IBLOCK_ID" => 11, "!PROPERTY_SEND_REVIEW" => 3,
-                            "IBLOCK_SECTION_ID" => $arSect["ID"], "ACTIVE" => "Y");
-                        $res = CIBlockElement::GetList(
-                            array(),
-                            $arFilter,
-                            false,
-                            false,
-                            $arSelect
-                        );
-                        while ($ob = $res->GetNextElement()) {
-                            $arFields[] = $ob->GetFields();
-                        }
-                        $countAppeals = count($arFields);
+        <li>
+            <!-- Если есть обращения в админке добавляем класс active -->
+            <!-- И показываем блок с колличеством обращений -->
+            <?php
+            //Количество обращений
+            if (CModule::IncludeModule("iblock")) {
+                $arFilterSect = array('IBLOCK_ID' => 11, "UF_USER_ID" => $ID_USER);
+                $rsSect = CIBlockSection::GetList(array(), $arFilterSect);
+                if ($arSect = $rsSect->GetNext()) {
+                    $arSelect = array("ID", "NAME", "DATE_ACTIVE_FROM");
+                    $arFilter = array("IBLOCK_ID" => 11, "!PROPERTY_SEND_REVIEW" => 3,
+                        "IBLOCK_SECTION_ID" => $arSect["ID"], "ACTIVE" => "Y");
+                    $res = CIBlockElement::GetList(
+                        array(),
+                        $arFilter,
+                        false,
+                        false,
+                        $arSelect
+                    );
+                    while ($ob = $res->GetNextElement()) {
+                        $arFields[] = $ob->GetFields();
                     }
+                    $countAppeals = count($arFields);
                 }
-                ?>
-                <div id="number_calls" class="menu-req">
-                    <?php echo $countAppeals?>
-                </div>
-                <a class="active" href="/obrashcheniya/">Ваши обращения</a>
+            }
+            ?>
+            <div id="number_calls" class="menu-req">
+                <?php echo $countAppeals?>
+            </div>
+            <a class="active" href="/obrashcheniya/">Ваши обращения</a>
 
-            </li>
+        </li>
 
 
-            <li>
-                <!-- Если есть обращения в админке добавляем класс active -->
-                <!-- И показываем блок с колличеством обращений -->
+        <li>
+            <!-- Если есть обращения в админке добавляем класс active -->
+            <!-- И показываем блок с колличеством обращений -->
+            <?php
+            //Количество обращений
+            if (CModule::IncludeModule("iblock")) {
+
+                $arSelect = Array("ID", "IBLOCK_ID", "NAME",);
+                $arFilter = Array("IBLOCK_ID"=>13, "PROPERTY_NAME_USER"=>$ID_USER );
+                $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+                $count_reviews = $res->SelectedRowsCount();
+            }
+
+            ?>
+            <div id="number_calls" class="menu-req">
+                <?php echo $count_reviews?>
+            </div>
+            <a class="" href="/reviews/">Ваши отзывы</a>
+
+        </li>
+        <li>
+            <div class="menu-req">
                 <?php
-                //Количество обращений
-                if (CModule::IncludeModule("iblock")) {
-
-                    $arSelect = Array("ID", "IBLOCK_ID", "NAME",);
-                    $arFilter = Array("IBLOCK_ID"=>13, "PROPERTY_NAME_USER"=>$ID_USER );
-                    $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
-                    $count_reviews = $res->SelectedRowsCount();
-                }
-
-                ?>
-                <div id="number_calls" class="menu-req">
-                    <?php echo $count_reviews?>
-                </div>
-                <a class="" href="/reviews/">Ваши отзывы</a>
-
-            </li>
-            <li>
-                <div class="menu-req">
-                    <?php
 
 
-                    $arFilter = array("IBLOCK_ID" => 11, "UF_USER_ID" => $ID_USER);
-                    $section = CIBlockSection::GetList(
+                $arFilter = array("IBLOCK_ID" => 11, "UF_USER_ID" => $ID_USER);
+                $section = CIBlockSection::GetList(
+                    array(),
+                    $arFilter,
+                    false,
+                    false,
+                    false
+                );  // получили секцию по айди юзера
+                if ($Section = $section->GetNext()) {
+                    $arFilter = array("IBLOCK_ID" => 11,
+                        "SECTION_ID" => $Section["ID"],"PROPERTY_SEND_REVIEW_VALUE" => 1);
+                    $Element = CIBlockElement::GetList(
                         array(),
                         $arFilter,
                         false,
                         false,
                         false
-                    );  // получили секцию по айди юзера
-                    if ($Section = $section->GetNext()) {
-                        $arFilter = array("IBLOCK_ID" => 11,
-                            "SECTION_ID" => $Section["ID"],"PROPERTY_SEND_REVIEW_VALUE" => 1);
-                        $Element = CIBlockElement::GetList(
-                            array(),
-                            $arFilter,
-                            false,
-                            false,
-                            false
-                        ); //получили обращения юзера
-                        $obElement = $Element->SelectedRowsCount();
+                    ); //получили обращения юзера
+                    $obElement = $Element->SelectedRowsCount();
 
-                    } ?><?= $obElement ?>
-                </div>
+                } ?><?= $obElement ?>
+            </div>
 
-                <a href="/otpravlennyye/">Отправленные</a>
-            </li>
-        </ul>
-
+            <a href="/otpravlennyye/">Отправленные</a>
+        </li>
         <a href="/ajax/logout.php">Выйти</a>
-    </div>
+    </ul>
 
-    <div class="header__r_auth_user-image">
+    <!-- <div class="header__r_auth_user-image"> -->
         <?php
         $rsUser = CUser::GetByID($ID_USER);
         $person = $rsUser->Fetch();
@@ -170,5 +167,5 @@ $ID_USER = $USER->GetID();
         ?>
 
         <!--                            <img src="--><?//=$file["src"]?><!--" alt="">-->
-    </div>
+    <!-- </div> -->
 </div>
