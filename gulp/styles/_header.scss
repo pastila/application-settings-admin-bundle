@@ -206,13 +206,6 @@
     }
 }
 
-#auth-form-reg {
-    max-width: 110rem;
-
-    .check-label{
-        margin-right: 0;
-    }
-}
 #auth-form-reg{
     .search_company{
         max-height: 20rem;
@@ -230,7 +223,20 @@
     }
 }
 #feedback_modal{
-    max-width: 70rem;
+    max-width: 60vw;
+    width: 100%;
+    height: 80vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    @media screen and (max-width: 576px){
+        max-width: 100%;
+    }
+
+    .popup__wrap {
+        position: absolute;
+        top: 0;
+    }
+    
     .block_padd-modal{
         @media(min-width: 992px){
             padding: 1rem;
@@ -315,12 +321,13 @@
         top: 2rem;
         right: 2rem;
         cursor: pointer;
+        z-index: 2;
     }
 
     .popup {
         &__wrap {
             width: 100%;
-            padding: 2rem;
+            padding: 4rem;
             background: white;
             
                 &_top, &_middle, &_bottom {

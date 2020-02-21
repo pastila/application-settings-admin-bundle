@@ -30,6 +30,7 @@
         top: 2rem;
         right: 2rem;
         cursor: pointer;
+        z-index: 2;
 
         img {
             height: 2rem;
@@ -37,35 +38,25 @@
     }
 }
 
-@media screen and (min-width: 992px) {
-    .modal {
-        max-width: 50vw;
-        padding: 4rem;
-    
-        .title {
-            font-size: 2.1rem;
-        }
-    
-        .close-modal {
-    
-            img {
-                height: 4rem;
-            }
-        }
-    }
-}
-
-@media screen and (min-width: 1400px) {
-    .modal {
-        max-width: 30vw;
-        padding: 7rem;
-    
-        .title {
-            font-size: 2.6rem;
-        }
-    }
-}
 #auth-form-reg{
+    max-width: 60vw;
+    width: 100%;
+    height: 80vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    @media screen and (max-width: 576px){
+        max-width: 100%;
+    }
+
+    .popup__wrap {
+        position: absolute;
+        top: 0;
+    }
+
+    .check-label{
+        margin-right: 0;
+    }
+
     .checkbox_registration{
         padding: 1rem;
         margin-bottom: 2rem;
@@ -107,4 +98,33 @@
     background-color: $mainColor !important;
     color: white;
     cursor: pointer;
+}
+
+@media screen and (min-width: 992px) {
+    .modal {
+        max-width: 50vw;
+        padding: 4rem;
+    
+        .title {
+            font-size: 2.1rem;
+        }
+    
+        .close-modal {
+    
+            img {
+                height: 4rem;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    .modal {
+        max-width: 30vw;
+        padding: 7rem;
+    
+        .title {
+            font-size: 2.6rem;
+        }
+    }
 }
