@@ -29,10 +29,10 @@ if ($arSpecUser) {
     $sms_code = generate_string($permitted_chars, 5);
 
     $_SESSION['SMS_CODE'] = $sms_code;
-//    $result = $apiSms->execCommad('registerSender', array('name' => "OMS", 'country' => "ru"));
 
+    $result = $apiSms->execCommad('registerSender', array('name' => "bezbahil", 'country' => "ru"));
     $result = $apiSms->execCommad("sendSMS", array(
-        'sender' => "OMS",
+        'sender' => "bezbahil",
         'text' => "Ваш код - $sms_code",
         'phone' => $_POST['phone'],
         'datetime' => "",
