@@ -70,7 +70,7 @@ CModule::IncludeModule("iblock");
                 </p>
             </div>
             <div class="input__wrap hidden_wrap_phone flex_hidden_wrap_phone main_btn-parent">
-                <input type="button" class="accept-phone-js blue-bg" value="Подтвердить номер телефона">
+                <input type="button" class="accept-phone-js whiteBtn" value="Подтвердить номер телефона">
             </div>
             <div class="input__wrap" id="sms_confirm" style="display: none">
                 <div class="input_phone-flex">
@@ -78,7 +78,7 @@ CModule::IncludeModule("iblock");
                     <input id="check-code-js" name="sms-code" maxlength="5" class="check-code-js" type="text">
                 </div>
                 <div class="input_phone-flex main_btn-parent">
-                <input type="button" class="sms-again-button blue-bg" value="Не получили SMS? Отправить повторно.">
+                <input type="button" class="sms-again-button whiteBtn" value="Не получили SMS? Отправить повторно.">
                 </div>
             </div>
         </div>

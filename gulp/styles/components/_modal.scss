@@ -128,3 +128,14 @@
         }
     }
 }
+.popup-login-content{
+    &__links{
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        &__item{
+            margin-bottom: 2rem;
+            font-size: 1.6rem;
+        }
+    }
+}

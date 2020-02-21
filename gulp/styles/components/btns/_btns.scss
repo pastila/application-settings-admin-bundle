@@ -9,7 +9,11 @@
 .whiteBtn {
     @include btnDesc($btnWhiteBg, $btnWhiteColor);
 }
-
+.input__wrap{
+    .whiteBtn{
+        @include btnDesc($btnWhiteBg, $btnWhiteColor);
+    }
+}
 .accentWhiteBorder {
     @include btnDescBorder(transparent, white, white);
 }

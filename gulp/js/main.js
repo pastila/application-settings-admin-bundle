@@ -520,6 +520,13 @@ $(document).ready(function() {
 
       return false;
     });
+    $('#trigger-reg-form').click(function() {
+      $('#auth-form-login').find($('.close-modal')).trigger('click');
+      setTimeout(function() {
+        $('#reg-link').trigger('click');
+      },1000)
+    });
+
   }
 
   // end authorization

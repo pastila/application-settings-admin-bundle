@@ -27,9 +27,14 @@
                     <input type="password" name="password" required>
                 </div>
                 
-                <a href="/personal-cabinet/?forgot_password=yes" class="input__lost-pass">
-                    Забыли пароль ?
-                </a>
+                <div class="popup-login-content__links">
+                    <a href="/personal-cabinet/?forgot_password=yes" class="popup-login-content__links__item">
+                        Забыли пароль ?
+                    </a>
+                    <a id="trigger-reg-form" class="popup-login-content__links__item">
+                        Зарегистрироваться
+                    </a>
+                </div>
 
                 <div class="center__child">
                     <button class="mainBtn">Вход</button>
@@ -40,5 +45,9 @@
         </div>
     </div>
 </form>
+
+    <script>
+
+    </script>
 
 <?require_once($_SERVER["DOCUMENT_ROOT"] . BX_ROOT . "/modules/main/include/epilog_after.php");

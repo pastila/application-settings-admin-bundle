@@ -415,11 +415,10 @@ $(document).ready(function () {
 
         if ($('.header__r_auth_reg').length == 1 && ($(".header__r_auth_reg").attr("data-rigstration") == 0)) {
 
-          $('.header__r_auth_reg').trigger('click');
+          $('.header__r_auth_login').trigger('click');
           setTimeout(function () {
             $('.register_before_review').removeClass('hidden');
           }, 700);
-
         } else {
 
 
