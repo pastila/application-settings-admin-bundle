@@ -82,9 +82,9 @@ CModule::IncludeModule("iblock");
                 </div>
             </div>
         </div>
-        <div class="popup__wrap_middle">
+        <div class="popup__wrap_middle popup__wrap_middle_align-flex-end">
             <div class="input__wrap">
-                <label class="input__wrap_label">Номер страхового полиса (16ти значный)</label>
+                <label class="input__wrap_label">Номер страхового полиса (шестнадцатизначный номер)</label>
                 <input  title="Номер страхового полиса должен состоять из цифр!" id="number_polic"
                         name="number_polic" class="numberInput" minlength="16" maxlength="16"
                         placeholder="0000000000000000" required>
