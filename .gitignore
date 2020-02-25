@@ -16,4 +16,7 @@ robots.txt
 *.log
 *.csv
 node_modules
-node_modules
+/bitrix_logs/*
+/laradock/php-fpm/msmtprc
+/laradock/certbot/certs/*
+/vendor/*
