@@ -1,1 +1,0 @@
-{"version":3,"sources":["ui.webpacker.example.popup.js"],"names":["webPacker","module","properties","popup","document","getElementById"],"mappings":"CAAE,WAEA,aAIA,UAAUA,YAAc,YACxB,CACC,OAGDC,OAAOC,WAAWC,MAAQC,SAASC,eAAe,+BAXlD","file":"ui.webpacker.example.popup.map.js"}
