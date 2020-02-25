@@ -509,9 +509,36 @@ $(document).ready(function() {
         },
         dataType: 'json',
         success: function(result) {
-          if (result.status)
-            location.reload();
-          else {
+          if (result.status) {
+            $('#auth-form-login').find($('.close-modal')).trigger('click');
+
+            $('.header__r_auth_reg').attr('data-rigstration', '1');
+            $('body').css({'overflow': 'hidden'});
+
+            $.ajax({
+              dataType: 'html',
+              url: '/ajax/forma-obrashenija/reload_header.php',
+              type: 'POST',
+              beforeSend: function() {
+
+              },
+              success: function(msg) {
+                $(".header__r").html("");
+                $(".header__r").html(msg);
+              },
+            }).done(function(msg) {
+              setTimeout(function() {
+                $.magnificPopup.open({
+                  items: {
+                    src: '<div class="white-popup custom_styles_popup">Вы успешно авторизовались!</div>',
+                    type: 'inline',
+                  },
+                });
+                $('body').css({'overflow': 'initial'});
+              }, 1000);
+            });
+
+          } else {
             $('.message.error').html(result.message);
             $('.message.error').show();
           }
