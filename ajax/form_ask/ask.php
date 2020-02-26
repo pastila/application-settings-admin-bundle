@@ -49,7 +49,7 @@ if(!$APPLICATION->CaptchaCheckCode($_POST["captcha_word"],$_POST["captcha_code"]
         $arFile = CFile::MakeFileArray($clear_uploads_dir);
 
         $array_img[] = $arFile;
-        $new_uploads_dir= "http://devdoc1.kdteam.su";
+        $new_uploads_dir = LIVE_SITE_URL;
         $new_uploads_dir .= str_ireplace("/var/www","",$clear_uploads_dir);
 
         $array_img_url[]= $new_uploads_dir;
