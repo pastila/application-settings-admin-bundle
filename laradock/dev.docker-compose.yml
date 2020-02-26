@@ -169,6 +169,7 @@ services:
           - INSTALL_IONCUBE=${PHP_FPM_INSTALL_IONCUBE}
       volumes:
         - ./php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
+        - ./php-fpm/laravel.ini:/usr/local/etc/php/conf.d/laravel.ini
         - ./php-fpm/php${PHP_VERSION}/www.conf/www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
         - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
         - ${DATA_PATH_LOGS}/:/var/log

@@ -1,2 +1,2 @@
-* * * * * laradock /usr/bin/php /var/www/artisan schedule:run >> /dev/null 2>&1
 * * * * * laradock /usr/bin/php /var/www/bitrix/modules/main/tools/cron_events.php >> /dev/null 2>&1
+15 3 * * * laradock cd /var/www/ssh && /usr/bin/php send_mail_after_30_day.php > send_mail_after_30_day.txt
