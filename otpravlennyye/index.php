@@ -68,7 +68,7 @@ if ($Section = $section->GetNext()) {
         </div>
     </div>
     <div class="obrashcheniya__content_sidebar">
-        <div class="obrashcheniya__content_sidebar_title">
+        <div class="otpravlennyye__item_title">
             Прикрепленные файлы
         </div>
         <!-- Item Sidebar -->
@@ -138,7 +138,7 @@ if ($Section = $section->GetNext()) {
                 <div class="obrashcheniya__content_sidebar_blocks_text_title">
                     Заявление на возврат
                 </div>
-                <a target="_blank" class=" pdf " href="<?=$PDF?>">
+                <a target="_blank" class="obrashcheniya__content_sidebar_blocks_text_link " href="<?=$PDF?>">
                     просмотреть
                 </a>
             </div>

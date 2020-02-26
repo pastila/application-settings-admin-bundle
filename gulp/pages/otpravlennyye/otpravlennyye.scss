@@ -39,6 +39,54 @@
     }
 }
 
+.block {
+    &__items {
+        &_flex {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 2rem;
+        }
+    }
+}
+
+.obrashcheniya {
+    &__content {
+        &_sidebar {
+            &_blocks {
+                display: flex;
+                width: 100%;
+                padding: 2rem;
+                border: dotted 0.1rem $border;
+                margin-bottom: 5rem;
+                &:last-child {
+                    margin-bottom: 0;
+                }
+                &_img {
+                    flex-grow: 0;
+                    max-width: 8rem;
+                }
+
+                &_text {
+                    flex-grow: 1;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    font-size: 1.6rem;
+
+                    &_title {
+                        margin-left: auto;
+                    }
+
+                    &_link {
+                        margin-left: auto;
+                        color: $accentColor;
+                    }
+                }
+            }
+        }
+    }
+}
+
 @media screen and (min-width: 1200px) {
     .otpravlennyye {
         margin-bottom: 2rem;
