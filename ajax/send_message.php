@@ -73,10 +73,10 @@ if (CModule::IncludeModule("iblock")) {
                             $email .= $arOMS['PROPERTY_EMAIL_FIRST_VALUE'];
                         }
                         if (!empty($arOMS['PROPERTY_EMAIL_SECOND_VALUE'])) {
-                            $email .= ', ' . $arOMS['PROPERTY_EMAIL_SECOND_VALUE'];
+                            $email .= ' , ' . $arOMS['PROPERTY_EMAIL_SECOND_VALUE'];
                         }
                         if (!empty($arOMS['PROPERTY_EMAIL_THIRD_VALUE'])) {
-                            $email .= ', ' . $arOMS['PROPERTY_EMAIL_THIRD_VALUE'];
+                            $email .= ' , ' . $arOMS['PROPERTY_EMAIL_THIRD_VALUE'];
                         }
                     }
 
@@ -126,15 +126,19 @@ if (CModule::IncludeModule("iblock")) {
                     $name_company = $arOMS["NAME"];// название компании
                     $boss_company = $arOMS["PROPERTY_NAME_BOSS_VALUE"];// руководитель компании
 
+                    $arMAil = array();
 
 
                     if (!empty($arOMS['PROPERTY_EMAIL_FIRST_VALUE'])) {
+                        $arMAil[]= $arOMS['PROPERTY_EMAIL_FIRST_VALUE'];
                         $mail_company .= $arOMS['PROPERTY_EMAIL_FIRST_VALUE'];
                     }
                     if (!empty($arOMS['PROPERTY_EMAIL_SECOND_VALUE'])) {
+                        $arMAil[] = $arOMS['PROPERTY_EMAIL_FIRST_VALUE'];
                         $mail_company .= '<br> ' . $arOMS['PROPERTY_EMAIL_SECOND_VALUE'];
                     }
                     if (!empty($arOMS['PROPERTY_EMAIL_THIRD_VALUE'])) {
+                        $arMAil[] = $arOMS['PROPERTY_EMAIL_FIRST_VALUE'];
                         $mail_company .= '<br> ' . $arOMS['PROPERTY_EMAIL_THIRD_VALUE'];
                     }
 
@@ -148,8 +152,6 @@ if (CModule::IncludeModule("iblock")) {
 
 
                     }
-
-
 
 
 
@@ -248,7 +250,7 @@ if (CModule::IncludeModule("iblock")) {
                                 'SEND_MASSEGE_AFTER_SEND_APPEAL',
                                 's1',
                                 array(
-                                    'EMAIL' => $email,
+                                    'EMAIL' => $arUser["EMAIL"],
 
                                 )
                             );
@@ -289,7 +291,7 @@ if (CModule::IncludeModule("iblock")) {
                                 'SEND_MASSEGE_AFTER_SEND_APPEAL',
                                 's1',
                                 array(
-                                    'EMAIL' => $email,
+                                    'EMAIL' => $arUser["EMAIL"],
 
                                 )
                             );
