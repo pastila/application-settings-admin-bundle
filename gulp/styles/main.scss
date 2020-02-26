@@ -460,11 +460,3 @@ a{
     justify-content: center;
     margin-top: 3rem;
 }
-
-.mainBtn , .accentBtn {
-    &.disabled{
-        background: $disabled;
-        border-color: $disabled;
-        cursor: not-allowed;
-    }
-}
