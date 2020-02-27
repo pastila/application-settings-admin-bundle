@@ -250,7 +250,7 @@ if (CModule::IncludeModule("iblock")) {
                                 'SEND_MASSEGE_AFTER_SEND_APPEAL',
                                 's1',
                                 array(
-                                    'EMAIL' => $arUser["EMAIL"],
+                                    'EMAIL' => $person["EMAIL"],
 
                                 )
                             );
@@ -291,7 +291,7 @@ if (CModule::IncludeModule("iblock")) {
                                 'SEND_MASSEGE_AFTER_SEND_APPEAL',
                                 's1',
                                 array(
-                                    'EMAIL' => $arUser["EMAIL"],
+                                    'EMAIL' => $person["EMAIL"],
 
                                 )
                             );
