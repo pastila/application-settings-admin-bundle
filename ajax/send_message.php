@@ -81,29 +81,29 @@ if (CModule::IncludeModule("iblock")) {
                     }
 
                     $message .= 'Загруженные документы пользователем:<br>';
-                    $message .= 'Картинка №1: 
+                    $message .= '
                     <img style="height: 200px;" src="http://' . $_SERVER['SERVER_NAME'] . CFile::GetPath($arFields['PREVIEW_PICTURE']) . '">
                     <br>';
                     if (!empty($arFields['PROPERTY_IMG_2_VALUE'])) {
-                        $message .= 'Картинка №2: 
+                        $message .= '
                         <img style="height: 200px;" src="http://' . $_SERVER['SERVER_NAME'] .
                             CFile::GetPath($arFields['PROPERTY_IMG_2_VALUE']) . '">
                         <br>';
                     }
                     if (!empty($arFields['PROPERTY_IMG_3_VALUE'])) {
-                        $message .= 'Картинка №3: 
+                        $message .= '
                         <img style="height: 200px;" src="http://' . $_SERVER['SERVER_NAME'] .
                             CFile::GetPath($arFields['PROPERTY_IMG_3_VALUE']) . '">
                         <br>';
                     }
                     if (!empty($arFields['PROPERTY_IMG_4_VALUE'])) {
-                        $message .= 'Картинка №4: 
+                        $message .= ' 
                         <img style="height: 200px;" src="http://' . $_SERVER['SERVER_NAME'] .
                             CFile::GetPath($arFields['PROPERTY_IMG_4_VALUE']) . '">
                         <br>';
                     }
                     if (!empty($arFields['PROPERTY_IMG_5_VALUE'])) {
-                        $message .= 'Картинка №5: 
+                        $message .= ' 
                         <img style="height: 200px;" src="http://' . $_SERVER['SERVER_NAME'] .
                             CFile::GetPath($arFields['PROPERTY_IMG_5_VALUE']) . '">
                         <br>';
