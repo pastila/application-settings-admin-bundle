@@ -82,29 +82,29 @@ if (CModule::IncludeModule("iblock")) {
 
                     $message .= 'Загруженные документы пользователем:<br>';
                     $message .= '
-                    <img style="height: 200px;" src="http://' . $_SERVER['SERVER_NAME'] . CFile::GetPath($arFields['PREVIEW_PICTURE']) . '">
+                    <img style="max-height: 200px;max-width: 100%;" src="http://' . $_SERVER['SERVER_NAME'] . CFile::GetPath($arFields['PREVIEW_PICTURE']) . '">
                     <br>';
                     if (!empty($arFields['PROPERTY_IMG_2_VALUE'])) {
                         $message .= '
-                        <img style="height: 200px;" src="http://' . $_SERVER['SERVER_NAME'] .
+                        <img style="max-height: 200px;max-width: 100%;" src="http://' . $_SERVER['SERVER_NAME'] .
                             CFile::GetPath($arFields['PROPERTY_IMG_2_VALUE']) . '">
                         <br>';
                     }
                     if (!empty($arFields['PROPERTY_IMG_3_VALUE'])) {
                         $message .= '
-                        <img style="height: 200px;" src="http://' . $_SERVER['SERVER_NAME'] .
+                        <img style="max-height: 200px;max-width: 100%;" src="http://' . $_SERVER['SERVER_NAME'] .
                             CFile::GetPath($arFields['PROPERTY_IMG_3_VALUE']) . '">
                         <br>';
                     }
                     if (!empty($arFields['PROPERTY_IMG_4_VALUE'])) {
                         $message .= ' 
-                        <img style="height: 200px;" src="http://' . $_SERVER['SERVER_NAME'] .
+                        <img style="max-height: 200px;max-width: 100%;" src="http://' . $_SERVER['SERVER_NAME'] .
                             CFile::GetPath($arFields['PROPERTY_IMG_4_VALUE']) . '">
                         <br>';
                     }
                     if (!empty($arFields['PROPERTY_IMG_5_VALUE'])) {
                         $message .= ' 
-                        <img style="height: 200px;" src="http://' . $_SERVER['SERVER_NAME'] .
+                        <img style="max-height: 200px;max-width: 100%;" src="http://' . $_SERVER['SERVER_NAME'] .
                             CFile::GetPath($arFields['PROPERTY_IMG_5_VALUE']) . '">
                         <br>';
                     }
