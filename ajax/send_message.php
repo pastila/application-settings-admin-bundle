@@ -190,14 +190,14 @@ if (CModule::IncludeModule("iblock")) {
                             $BIRTHDAY = $arFields_child["PROPERTY_BIRTHDAY_VALUE"];
 
                             $email_child_smo = '';
-                            if (!empty($arFields_child['PROPERTY_EMAIL_FIRST_VALUE'])) {
-                                $email_child_smo .= $arFields_child['PROPERTY_EMAIL_FIRST_VALUE'];
+                            if (!empty($arFields_comp['PROPERTY_EMAIL_FIRST_VALUE'])) {
+                                $email_child_smo .= $arFields_comp['PROPERTY_EMAIL_FIRST_VALUE'];
                             }
-                            if (!empty($arFields_child['PROPERTY_EMAIL_SECOND_VALUE'])) {
-                                $email_child_smo .= ' , ' . $arFields_child['PROPERTY_EMAIL_SECOND_VALUE'];
+                            if (!empty($arFields_comp['PROPERTY_EMAIL_SECOND_VALUE'])) {
+                                $email_child_smo .= ' , ' . $arFields_comp['PROPERTY_EMAIL_SECOND_VALUE'];
                             }
-                            if (!empty($arFields_child['PROPERTY_EMAIL_THIRD_VALUE'])) {
-                                $email_child_smo .= ' , ' . $arFields_child['PROPERTY_EMAIL_THIRD_VALUE'];
+                            if (!empty($arFields_comp['PROPERTY_EMAIL_THIRD_VALUE'])) {
+                                $email_child_smo .= ' , ' . $arFields_comp['PROPERTY_EMAIL_THIRD_VALUE'];
                             }
 
                             $mail_cmo = '';
