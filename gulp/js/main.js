@@ -382,15 +382,15 @@ $(document).ready(function() {
                     '</div>');
 
               }
-              if (suc.birthday === '18') {
-                $('.datepicker-here').after(
-                    '<span class="label danger"  >Регистрация лиц, не достигших 18 лет, не допускается</span>');
-              }
-
-              if (suc.user_already === 'Уже существует') {
+              if (suc.error === 'mail') {
                 var email = $('#email');
                 email.after(
-                    '<div class="danger" data-danger-email>Пользовватель с таким эмейлом уже сущесвуте</div>');
+                    '<div class="danger" data-danger-email>Пользователь с таким эмейлом уже сущесвуте</div>');
+              }
+              if (suc.error === 'polic') {
+                var email = $('#number_polic');
+                email.after(
+                    '<div class="danger" data-danger-email>Пользователь с таким полисом уже сущесвуте</div>');
               }
 
               if (suc.company === 'Нет компании') {

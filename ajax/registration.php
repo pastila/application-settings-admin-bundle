@@ -3,20 +3,26 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.
 CModule::IncludeModule("iblock");
 $result = array();
 
-if($_POST) {
-    session_start();
+if ($_POST) {
+    global $USER;
+    $filter = array("EMAIL" => $_POST['email']);
+    $rsUsers = CUser::GetList(($by = "name"), ($order = "ASC"), $filter);
+    while ($arUser = $rsUsers->Fetch()) {
+        $arSpecUser = $arUser;
+    }
+    if ($arSpecUser) {
+        $result['error'] = 'mail';
+    } else {
+        $filter_polic = array("UF_INSURANCE_POLICY" => $_POST['number_polic']);
+        $rsUsers_polic = CUser::GetList(($by = "name"), ($order = "ASC"), $filter_polic);
 
-    $time = $_POST["time"];
-
-    $needletime = date("d.m.Y");
-    $s1 = strtotime($time);
-    $s2 = strtotime($needletime);
-    $r = (int)$s2 - (int)$s1;
-
-    if($time != "") {
-
-        if ($r >= 568024668) {
-
+        while ($arUser_polic = $rsUsers_polic->Fetch()) {
+            $arSpecUser_polic = $arUser_polic;
+        }
+        if ($arSpecUser_polic) {
+            $result['error'] = 'polic';
+        } else {
+            session_start();
             $name = $_POST["name"];
             $familia = $_POST["famaly-name"];
             $otchestvo = $_POST["last-name"];
@@ -48,15 +54,12 @@ if($_POST) {
                 $msg = array("user_already" => "Уже существует");
                 $result = array_merge($result, $msg);
             } else {
-
                 if ($_POST['sms-code'] != "") {
                     if ($_POST['sms-code'] !== $_SESSION['SMS_CODE']) {
                         $result['error_sms'] = 'Неправильный код подтверждения';
                         echo json_encode($result);
                         return;
-                    }else {
-
-
+                    } else {
                         $arFile = CFile::MakeFileArray("/images/user.png");
                         $arFields = Array(
                             "NAME" => $name,
@@ -87,15 +90,7 @@ if($_POST) {
                 }
             }
 
-        } else {
-            $result['birthday'] = '18';
-            echo json_encode($result);
-            return;
         }
-    }else{
-        $result['empty_birthday'] = 'empty';
-        echo json_encode($result);
-        return;
     }
 
 echo json_encode($result,true);
