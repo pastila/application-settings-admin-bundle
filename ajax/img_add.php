@@ -8,7 +8,7 @@ if (isset($_FILES['import_file']['tmp_name'])) {
     $check = can_upload($_FILES['import_file']);
     if ($check === true) {
 
-        $arSelect = array("ID", "IBLOCK_ID", "PREVIEW_PICTURE", "PROPERTY_IMG_2", "PROPERTY_IMG_3", "PROPERTY_IMG_4",
+        $arSelect = array("ID", "IBLOCK_ID", "PROPERTY_IMG_1", "PROPERTY_IMG_2", "PROPERTY_IMG_3", "PROPERTY_IMG_4",
             "PROPERTY_IMG_5");
         $arFilter = array("IBLOCK_ID" => 11, "ID" => $_POST['id_elem']);
         $res = CIBlockElement::GetList(array(), $arFilter, false, false, $arSelect);
@@ -21,8 +21,8 @@ if (isset($_FILES['import_file']['tmp_name'])) {
 
         $el = new CIBlockElement;
 
-        if (empty($arFields['PREVIEW_PICTURE'])) {
-            $picture = 'PREVIEW_PICTURE';
+        if (empty($arFields['PROPERTY_IMG_1_VALUE'])) {
+            $key = 'IMG_1';
             $i = 1;
         } elseif (empty($arFields['PROPERTY_IMG_2_VALUE'])) {
             $key = 'IMG_2';
@@ -37,16 +37,7 @@ if (isset($_FILES['import_file']['tmp_name'])) {
             $key = 'IMG_5';
             $i = 5;
         }
-        if ($picture) {
-            $res = $el->Update($_POST['id_elem'], array("PREVIEW_PICTURE" => $_FILES['import_file']));
-            if ($res > 0) {
-                $rs = CIBlockElement::GetByID($_POST['id_elem']);
-                if ($arElem = $rs->GetNext()) {
-                    $arFile = CFile::GetFileArray($arElem['PREVIEW_PICTURE']);
 
-                }
-            }
-        }
         if ($key) {
             $result[$key] = true;
             CIBlockElement::SetPropertyValuesEx(
@@ -60,6 +51,7 @@ if (isset($_FILES['import_file']['tmp_name'])) {
                 $arFile = CFile::GetFileArray($ar_props['VALUE']);
             }
         }
+        $result["PDF_src"] = 1;
         $result['SRC'] = $arFile["SRC"];
         $result['ID'] = $_POST['id_elem'] . '_img_' . $i;
         $result['RES'] = $res;
@@ -88,11 +80,11 @@ function can_upload($file){
     // нас интересует последний элемент массива - расширение
     $mime = strtolower(end($getMime));
     // объявим массив допустимых расширений
-    $types = array('jpg', 'png', 'gif', 'bmp', 'jpeg');
+    $types = array('jpg', 'png', 'gif', 'bmp', 'jpeg','pdf');
 
     // если расширение не входит в список допустимых - return
     if(!in_array($mime, $types))
-        return 'Недопустимый тип файла. Доступные форматы: jpg, png, bmp, jpeg';
+        return 'Недопустимый тип файла. Доступные форматы: jpg, png, bmp, jpeg, pdf';
 
     return true;
 }

@@ -108,7 +108,7 @@ $(document).ready(function() {
         type: 'post',
         success: function(result){
           let result2 = JSON.parse(result);
-
+          let src;
           if (result2.ERROR !== undefined) {
             error.text(result2.ERROR);
             success.text('');
@@ -120,10 +120,16 @@ $(document).ready(function() {
               error.text('');
               success.text(result2.SUCCESS);
               let r = result2.SRC;
+
+              if(result2.PDF_src == "1"){
+                 src = "/local/templates/kdteam/images/svg/pdf_icon.svg";
+              }else{
+                 src = r;
+              }
               n.find($(".js-img-add")).append(
                   '<div id="img_block_'+ result2.ID +'" class="obrashcheniya__content_sidebar_blocks">\n' +
                   '    <div class="obrashcheniya__content_sidebar_blocks_img">\n' +
-                  '        <img src="'+ r +'">\n' +
+                  '        <img src="'+ src +'">\n' +
                   '    </div>\n' +
                   '    <div class="obrashcheniya__content_sidebar_blocks_text">\n' +
                   '        <div class="obrashcheniya__content_sidebar_blocks_text_title">Загруженный документ</div>\n' +
