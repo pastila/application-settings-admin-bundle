@@ -110,7 +110,7 @@ if (CModule::IncludeModule("iblock")) {
                     }
                     $arFile = CFile::GetFileArray($arFields['PROPERTY_PDF_VALUE']);
                     $message .= 'PDF: 
-                        <a href="'.$_SERVER["REQUEST_SCHEME"].'://' . $_SERVER['SERVER_NAME'] .
+                        <a style="min-width: 200px;padding: 10px;font-size: 16px;font-family: Exo-SemiBold;background-color:#186b9c;color:#fff;cursor: pointer;text-align: center;border: solid .1rem #186b9c;border-radius: 20px;display: inline-block;margin-top: 20px;text-decoration: none;text-transform: uppercase;line-height: 16px;" href="'.$_SERVER["REQUEST_SCHEME"].'://' . $_SERVER['SERVER_NAME'] .
                         $arFile['SRC'] . '">скачать</a>
                         <br>';
                     $ID_user = $USER->GetID();
