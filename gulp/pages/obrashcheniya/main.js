@@ -86,72 +86,84 @@ $(document).ready(function() {
   addChild();
 
   //Загрузка изображений
+
+$( "input[type='file']" ).click(function() {
+  $(this).addClass("click");
+})
+
+
   $( "input[type='file']" ).change(function() {
-    let element = this.id;
-    let reader = new FileReader();
-    reader.readAsDataURL(this.files[0]);
-    let $input = $(this);
-    let fd = new FormData();
-    fd.append("import_file", $input.prop('files')[0]);
-    fd.append("id_elem", element);
-    let n =  $('#card_' + element);
-    let error = $('#error_' + element);
-    let success = $('#success_' + element);
-    let length = n.find($(".js-img-add")).children().length;
-    if (length < 5) {
-      $.ajax({
-        url: '/ajax/img_add.php',
-        cache: false,
-        contentType: false,
-        processData: false,
-        data: fd,
-        type: 'post',
-        success: function(result){
-          let result2 = JSON.parse(result);
-          let src;
-          if (result2.ERROR !== undefined) {
-            error.text(result2.ERROR);
-            success.text('');
-          } else {
-            if (result2.RES === false) {
-              error.text('Не удается прочитать файл');
+    console.log("3232");
+    if($(this).hasClass("click")=== true) {
+      let element = this.id;
+      let reader = new FileReader();
+      reader.readAsDataURL(this.files[0]);
+      let $input = $(this);
+      let fd = new FormData();
+      fd.append("import_file", $input.prop('files')[0]);
+      fd.append("id_elem", element);
+      let n = $('#card_' + element);
+      let error = $('#error_' + element);
+      let success = $('#success_' + element);
+      let length = n.find($(".js-img-add")).children().length;
+      if (length < 5) {
+        $.ajax({
+          url: '/ajax/img_add.php',
+          cache: false,
+          contentType: false,
+          processData: false,
+          data: fd,
+          type: 'post',
+          success: function(result) {
+            let result2 = JSON.parse(result);
+            let src;
+            if (result2.ERROR !== undefined) {
+              error.text(result2.ERROR);
               success.text('');
             } else {
-              error.text('');
-              success.text(result2.SUCCESS);
-              let r = result2.SRC;
+              if (result2.RES === false) {
+                error.text('Не удается прочитать файл');
+                success.text('');
+              } else {
+                error.text('');
+                success.text(result2.SUCCESS);
+                let r = result2.SRC;
 
-
-              if(r.search(".pdf") != "-1"){
-                 src = "/local/templates/kdteam/images/svg/pdf_icon.svg";
-              }else{
-                 src = r;
-              }
-              n.find($(".js-img-add")).append(
-                  '<div id="img_block_'+ result2.ID +'" class="obrashcheniya__content_sidebar_blocks">\n' +
-                  '    <div class="obrashcheniya__content_sidebar_blocks_img">\n' +
-                  '        <img src="'+ src +'">\n' +
-                  '    </div>\n' +
-                  '    <div class="obrashcheniya__content_sidebar_blocks_text">\n' +
-                  '        <div class="obrashcheniya__content_sidebar_blocks_text_title">Загруженный документ</div>\n' +
-                  '        <a id="download_img" download href="'+ r +'"\n' +
-                  '           class="obrashcheniya__content_sidebar_blocks_text_link">скачать</a>\n' +
-                  '        <a href="#" rel="nofollow" onclick="del(this)" id="delete_'+ result2.ID +'" class="delete_img_js">удалить</a>\n' +
-                  '    </div>\n' +
-                  '</div>'
-              );
-              $(".photo_empty_all_"+element).html("");
-              if( $("[data-block_img="+element+"]").find("[id=img_block_"+element).length !== "0"  && $("#time_"+element).text().search("2") != "-1"){
-                $("#send_" + element).attr("onclick","send_ms(this)");
-                $("#send_" + element).removeClass("disabled");
+                if (r.search(".pdf") != "-1") {
+                  src = "/local/templates/kdteam/images/svg/pdf_icon.svg";
+                } else {
+                  src = r;
+                }
+                n.find($(".js-img-add")).append(
+                    '<div id="img_block_' + result2.ID +
+                    '" class="obrashcheniya__content_sidebar_blocks">\n' +
+                    '    <div class="obrashcheniya__content_sidebar_blocks_img">\n' +
+                    '        <img src="' + src + '">\n' +
+                    '    </div>\n' +
+                    '    <div class="obrashcheniya__content_sidebar_blocks_text">\n' +
+                    '        <div class="obrashcheniya__content_sidebar_blocks_text_title">Загруженный документ</div>\n' +
+                    '        <a id="download_img" download href="' + r + '"\n' +
+                    '           class="obrashcheniya__content_sidebar_blocks_text_link">скачать</a>\n' +
+                    '        <a href="#" rel="nofollow" onclick="del(this)" id="delete_' +
+                    result2.ID + '" class="delete_img_js">удалить</a>\n' +
+                    '    </div>\n' +
+                    '</div>'
+                );
+                $(".photo_empty_all_" + element).html("");
+                if ($("[data-block_img=" + element + "]").
+                        find("[id=img_block_" + element).length !== "0" &&
+                    $("#time_" + element).text().search("2") != "-1") {
+                  $("#send_" + element).attr("onclick", "send_ms(this)");
+                  $("#send_" + element).removeClass("disabled");
+                }
               }
             }
           }
-        }
-      });
-    } else {
-      error.text('Вы превысили лимит по загруженным картинкам');
-      success.text('');
+        });
+      } else {
+        error.text('Вы превысили лимит по загруженным картинкам');
+        success.text('');
+      }
     }
   });
   // ------ choose_class ------
@@ -637,7 +649,7 @@ if(time_p.text().search("2") != -1) {
 function commutator(ajax, id) {
 
   if (ajax === 'child') {
-    if ($('#children_input_' + id).attr('data-id_child').length > 0) {
+    if ($('#children_input_' + id).attr('data-id_child') != "") {
       $.ajax({
         url: '/pdf/file_children_pdf.php',
         data: {
@@ -778,8 +790,7 @@ function save_date(sv) {
                   usrname_str.length <= 3) {
                 $("#gif_"+id).css({"display":"none"});
               } else {
-                if ($('#children_input_' + id).
-                    attr('data-id_child').length > 0) {
+                if ($('#children_input_' + id).attr('data-id_child') != "") {
                   $.ajax({
                     url: '/pdf/file_children_pdf.php',
                     data: {
