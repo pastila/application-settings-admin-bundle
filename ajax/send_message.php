@@ -188,6 +188,19 @@ if (CModule::IncludeModule("iblock")) {
                             $PARTONYMIC = $arFields_child["PROPERTY_PARTONYMIC_VALUE"];
                             $polic = $arFields_child["PROPERTY_POLICY_VALUE"];
                             $BIRTHDAY = $arFields_child["PROPERTY_BIRTHDAY_VALUE"];
+
+                            $email_child_smo = '';
+                            if (!empty($arFields_comp['PROPERTY_EMAIL_FIRST_VALUE'])) {
+                                $email_child_smo .= $arFields_comp['PROPERTY_EMAIL_FIRST_VALUE'];
+                            }
+                            if (!empty($arFields_comp['PROPERTY_EMAIL_SECOND_VALUE'])) {
+                                $email_child_smo .= ' , ' . $arFields_comp['PROPERTY_EMAIL_SECOND_VALUE'];
+                            }
+                            if (!empty($arFields_comp['PROPERTY_EMAIL_THIRD_VALUE'])) {
+                                $email_child_smo .= ' , ' . $arFields_comp['PROPERTY_EMAIL_THIRD_VALUE'];
+                            }
+
+                            $mail_cmo = '';
                             if (!empty($arFields_comp['PROPERTY_EMAIL_FIRST_VALUE'])) {
                                 $mail_cmo .= $arFields_comp['PROPERTY_EMAIL_FIRST_VALUE'];
                             }
@@ -219,7 +232,7 @@ if (CModule::IncludeModule("iblock")) {
                                     'MESSAGE' => $message,
                                     'NAME_COMPANY' => $name_rerion,
                                     'BOSS_COMPANY' => $arFields_comp['PROPERTY_NAME_BOSS_VALUE'],
-                                    'EMAIL' => $email,
+                                    'EMAIL' => $email_child_smo,
                                     'USER_MAIL' => $user_email,
                                     'FULLNAME' => $arFields['PROPERTY_FULL_NAME_VALUE'],
                                     'FULLNAME_CHILD' => $full_name_child,
