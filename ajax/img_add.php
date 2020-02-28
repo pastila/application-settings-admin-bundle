@@ -51,7 +51,7 @@ if (isset($_FILES['import_file']['tmp_name'])) {
                 $arFile = CFile::GetFileArray($ar_props['VALUE']);
             }
         }
-        $result["PDF_src"] = 1;
+
         $result['SRC'] = $arFile["SRC"];
         $result['ID'] = $_POST['id_elem'] . '_img_' . $i;
         $result['RES'] = $res;

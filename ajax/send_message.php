@@ -1,10 +1,28 @@
 <?php
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
 if (CModule::IncludeModule("iblock")) {
-    $arSelect = array("IBLOCK_ID", "ID", "PREVIEW_PICTURE", "PROPERTY_FULL_NAME", "PROPERTY_HOSPITAL",
-        "PROPERTY_ADDRESS", "PROPERTY_CLASS", "PROPERTY_GROUP", "PROPERTY_SUBGROUP", "PROPERTY_DIAGNOZ",
-        "PROPERTY_APPEAL", "PROPERTY_YEARS", "PROPERTY_POLICY", "PROPERTY_VISIT_DATE", "PROPERTY_IMG_2",
-        "PROPERTY_IMG_3", "PROPERTY_IMG_4", "PROPERTY_IMG_5", "PROPERTY_PDF");
+    $arSelect = array(
+        "IBLOCK_ID",
+        "ID",
+        "PREVIEW_PICTURE",
+        "PROPERTY_FULL_NAME",
+        "PROPERTY_HOSPITAL",
+        "PROPERTY_ADDRESS",
+        "PROPERTY_CLASS",
+        "PROPERTY_GROUP",
+        "PROPERTY_SUBGROUP",
+        "PROPERTY_DIAGNOZ",
+        "PROPERTY_APPEAL",
+        "PROPERTY_YEARS",
+        "PROPERTY_POLICY",
+        "PROPERTY_VISIT_DATE",
+        "PROPERTY_IMG_2",
+        "PROPERTY_IMG_3",
+        "PROPERTY_IMG_4",
+        "PROPERTY_IMG_5",
+        "PROPERTY_PDF",
+        "PROPERTY_IMG_1"
+    );
     $arFilter = array("IBLOCK_ID" => 11, "ID" => $_POST['ID'], "!PROPERTY_SEND_REVIEW" => 1);
     $res = CIBlockElement::GetList(
         array(),
@@ -43,7 +61,8 @@ if (CModule::IncludeModule("iblock")) {
     if (!empty($arFields['PROPERTY_FULL_NAME_VALUE'])) {
         if (!empty($arFields['PROPERTY_POLICY_VALUE'])) {
             if (!empty($arFields['PROPERTY_VISIT_DATE_VALUE'])) {
-                if (!empty($arFields['PREVIEW_PICTURE'])) {
+                if (!empty($arFields['PROPERTY_IMG_1_VALUE']) || !empty($arFields['PROPERTY_IMG_2_VALUE']) || !empty($arFields['PROPERTY_IMG_3_VALUE']) ||
+                    !empty($arFields['PROPERTY_IMG_4_VALUE']) || !empty($arFields['PROPERTY_IMG_5_VALUE'])) {
                     $count = count($arProps['YEARS']['VALUE']);
                     $i = 1;
                     $nameYear = '';
@@ -63,7 +82,16 @@ if (CModule::IncludeModule("iblock")) {
                     $rsUser = CUser::GetByID($USER->GetID());
                     $arUser = $rsUser->Fetch();
 
-                    $arSel = array("ID", "IBLOCK_ID", "NAME", "IBLOCK_SECTION_ID", "PROPERTY_EMAIL_FIRST","PROPERTY_EMAIL_SECOND","PROPERTY_EMAIL_THIRD", "PROPERTY_NAME_BOSS");
+                    $arSel = array(
+                        "ID",
+                        "IBLOCK_ID",
+                        "NAME",
+                        "IBLOCK_SECTION_ID",
+                        "PROPERTY_EMAIL_FIRST",
+                        "PROPERTY_EMAIL_SECOND",
+                        "PROPERTY_EMAIL_THIRD",
+                        "PROPERTY_NAME_BOSS"
+                    );
                     $arFil = array("IBLOCK_ID" => 16, "ID" => $arUser['UF_INSURANCE_COMPANY']);
                     $rs = CIBlockElement::GetList(array(), $arFil, false, false, $arSel);
                     if ($obs = $rs->GetNextElement()) {
@@ -80,37 +108,117 @@ if (CModule::IncludeModule("iblock")) {
                         }
                     }
 
-                    $message .= 'Загруженные документы пользователем:<br>';
-                    $message .= '
-                    <img style="max-height: 200px;max-width: 100%;" src="http://' . $_SERVER['SERVER_NAME'] . CFile::GetPath($arFields['PREVIEW_PICTURE']) . '">
-                    <br>';
-                    if (!empty($arFields['PROPERTY_IMG_2_VALUE'])) {
-                        $message .= '
-                        <img style="max-height: 200px;max-width: 100%;" src="http://' . $_SERVER['SERVER_NAME'] .
-                            CFile::GetPath($arFields['PROPERTY_IMG_2_VALUE']) . '">
+
+                    $pdf = false;
+                    preg_match("/^\/.*(.pdf)/", CFile::GetPath($arFields['PROPERTY_IMG_1_VALUE']), $file);
+                    if ($file[1] == ".pdf") {
+                        $pdf = true;
+                    }
+
+                    $message .='Загруженные документы пользователем:<br>';
+                    if ($pdf === true) {
+
+                        $message .= 'PDF: 
+                        <a style="color:#186b9c" href="' . $_SERVER["REQUEST_SCHEME"] . '://' . $_SERVER['SERVER_NAME'] .
+                            CFile::GetPath($arFields['PROPERTY_IMG_1_VALUE']) . '">скачать</a>
                         <br>';
+                    } else {
+                        $message .= '
+                    <img style="max-height: 200px;max-width: 100%;" src="http://' . $_SERVER['SERVER_NAME'] .
+                            CFile::GetPath($arFields['PROPERTY_IMG_1_VALUE']) . '">
+                    <br>';
+                    }
+
+
+
+                    if (!empty($arFields['PROPERTY_IMG_2_VALUE'])) {
+                        $pdf = false;
+                        preg_match("/^\/.*(.pdf)/", CFile::GetPath($arFields['PROPERTY_IMG_2_VALUE']), $file);
+                        if ($file[1] == ".pdf") {
+                            $pdf = true;
+                        }
+
+
+                        if ($pdf === true) {
+
+                            $message .= 'PDF: 
+                        <a style="color:#186b9c" href="' . $_SERVER["REQUEST_SCHEME"] . '://' . $_SERVER['SERVER_NAME'] .
+                                CFile::GetPath($arFields['PROPERTY_IMG_2_VALUE']) . '">скачать</a>
+                        <br>';
+                        } else {
+                            $message .= '
+                    <img style="max-height: 200px;max-width: 100%;" src="http://' . $_SERVER['SERVER_NAME'] .
+                                CFile::GetPath($arFields['PROPERTY_IMG_2_VALUE']) . '">
+                    <br>';
+                        }
                     }
                     if (!empty($arFields['PROPERTY_IMG_3_VALUE'])) {
-                        $message .= '
-                        <img style="max-height: 200px;max-width: 100%;" src="http://' . $_SERVER['SERVER_NAME'] .
-                            CFile::GetPath($arFields['PROPERTY_IMG_3_VALUE']) . '">
+                        $pdf = false;
+                        preg_match("/^\/.*(.pdf)/", CFile::GetPath($arFields['PROPERTY_IMG_3_VALUE']), $file);
+                        if ($file[1] == ".pdf") {
+                            $pdf = true;
+                        }
+
+
+                        if ($pdf === true) {
+
+                            $message .= 'PDF: 
+                        <a style="color:#186b9c" href="' . $_SERVER["REQUEST_SCHEME"] . '://' . $_SERVER['SERVER_NAME'] .
+                                CFile::GetPath($arFields['PROPERTY_IMG_3_VALUE']) . '">скачать</a>
                         <br>';
+                        } else {
+                            $message .= '
+                    <img style="max-height: 200px;max-width: 100%;" src="http://' . $_SERVER['SERVER_NAME'] .
+                                CFile::GetPath($arFields['PROPERTY_IMG_3_VALUE']) . '">
+                    <br>';
+                        }
                     }
                     if (!empty($arFields['PROPERTY_IMG_4_VALUE'])) {
-                        $message .= ' 
-                        <img style="max-height: 200px;max-width: 100%;" src="http://' . $_SERVER['SERVER_NAME'] .
-                            CFile::GetPath($arFields['PROPERTY_IMG_4_VALUE']) . '">
+                        $pdf = false;
+                        preg_match("/^\/.*(.pdf)/", CFile::GetPath($arFields['PROPERTY_IMG_4_VALUE']), $file);
+                        if ($file[1] == ".pdf") {
+                            $pdf = true;
+                        }
+
+
+                        if ($pdf === true) {
+
+                            $message .= 'PDF: 
+                        <a style="color:#186b9c" href="' . $_SERVER["REQUEST_SCHEME"] . '://' . $_SERVER['SERVER_NAME'] .
+                                CFile::GetPath($arFields['PROPERTY_IMG_4_VALUE']) . '">скачать</a>
                         <br>';
+                        } else {
+                            $message .= '
+                    <img style="max-height: 200px;max-width: 100%;" src="http://' . $_SERVER['SERVER_NAME'] .
+                                CFile::GetPath($arFields['PROPERTY_IMG_4_VALUE']) . '">
+                    <br>';
+                        }
                     }
                     if (!empty($arFields['PROPERTY_IMG_5_VALUE'])) {
-                        $message .= ' 
-                        <img style="max-height: 200px;max-width: 100%;" src="http://' . $_SERVER['SERVER_NAME'] .
-                            CFile::GetPath($arFields['PROPERTY_IMG_5_VALUE']) . '">
+                        $pdf = false;
+                        preg_match("/^\/.*(.pdf)/", CFile::GetPath($arFields['PROPERTY_IMG_5_VALUE']), $file);
+                        if ($file[1] == ".pdf") {
+                            $pdf = true;
+                        }
+
+
+                        if ($pdf === true) {
+
+                            $message .= 'PDF: 
+                        <a style="color:#186b9c" href="' . $_SERVER["REQUEST_SCHEME"] . '://' . $_SERVER['SERVER_NAME'] .
+                                CFile::GetPath($arFields['PROPERTY_IMG_5_VALUE']) . '">скачать</a>
                         <br>';
+                        } else {
+                            $message .= '
+                    <img style="max-height: 200px;max-width: 100%;" src="http://' . $_SERVER['SERVER_NAME'] .
+                                CFile::GetPath($arFields['PROPERTY_IMG_5_VALUE']) . '">
+                    <br>';
+                        }
                     }
+
                     $arFile = CFile::GetFileArray($arFields['PROPERTY_PDF_VALUE']);
                     $message .= 'PDF: 
-                        <a style="min-width: 200px;padding: 10px;font-size: 16px;font-family: Exo-SemiBold;background-color:#186b9c;color:#fff;cursor: pointer;text-align: center;border: solid .1rem #186b9c;border-radius: 20px;display: inline-block;margin-top: 20px;text-decoration: none;text-transform: uppercase;line-height: 16px;" href="'.$_SERVER["REQUEST_SCHEME"].'://' . $_SERVER['SERVER_NAME'] .
+                        <a style="min-width: 200px;padding: 10px;font-size: 16px;font-family: Exo-SemiBold;background-color:#186b9c;color:#fff;cursor: pointer;text-align: center;border: solid .1rem #186b9c;border-radius: 20px;display: inline-block;margin-top: 20px;text-decoration: none;text-transform: uppercase;line-height: 16px;" href="' . $_SERVER["REQUEST_SCHEME"] . '://' . $_SERVER['SERVER_NAME'] .
                         $arFile['SRC'] . '">скачать</a>
                         <br>';
                     $ID_user = $USER->GetID();
@@ -119,7 +227,7 @@ if (CModule::IncludeModule("iblock")) {
 
                     $PERSONAL_BIRTHDAT = $person["PERSONAL_BIRTHDAY"];
                     $user_email = $person["EMAIL"];
-                    $BIRTHDAY_person =  $person["PERSONAL_BIRTHDAY"];
+                    $BIRTHDAY_person = $person["PERSONAL_BIRTHDAY"];
                     $mobail_number = $person["PERSONAL_PHONE"];
                     $full_name_user = $USER->GetFullName();
 
@@ -130,7 +238,7 @@ if (CModule::IncludeModule("iblock")) {
 
 
                     if (!empty($arOMS['PROPERTY_EMAIL_FIRST_VALUE'])) {
-                        $arMAil[]= $arOMS['PROPERTY_EMAIL_FIRST_VALUE'];
+                        $arMAil[] = $arOMS['PROPERTY_EMAIL_FIRST_VALUE'];
                         $mail_company .= $arOMS['PROPERTY_EMAIL_FIRST_VALUE'];
                     }
                     if (!empty($arOMS['PROPERTY_EMAIL_SECOND_VALUE'])) {
@@ -143,23 +251,29 @@ if (CModule::IncludeModule("iblock")) {
                     }
 
 
-
                     $res = CIBlockSection::GetByID($arOMS['IBLOCK_SECTION_ID']);
 
                     if ($ar_res = $res->GetNext()) {
 
-                        $name_company .= "(" .$ar_res["NAME"] . ")";
+                        $name_company .= "(" . $ar_res["NAME"] . ")";
 
 
                     }
 
 
-
-
                     if (!empty($email)) {
                         if (!empty($_POST['CHILD'])) {
-                            $arSelect_child = array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_SURNAME",
-                                "PROPERTY_PARTONYMIC","PROPERTY_POLICY","PROPERTY_COMPANY","PROPERTY_BIRTHDAY");
+                            $arSelect_child = array(
+                                "ID",
+                                "IBLOCK_ID",
+                                "NAME",
+                                "DATE_ACTIVE_FROM",
+                                "PROPERTY_SURNAME",
+                                "PROPERTY_PARTONYMIC",
+                                "PROPERTY_POLICY",
+                                "PROPERTY_COMPANY",
+                                "PROPERTY_BIRTHDAY"
+                            );
                             $arFilter_child = array("IBLOCK_ID" => 21, "ID" => $_POST['CHILD']);
                             $res_child = CIBlockElement::GetList(
                                 array(),
@@ -171,8 +285,20 @@ if (CModule::IncludeModule("iblock")) {
                             $ob_child = $res_child->GetNextElement();
                             $arFields_child = $ob_child->GetFields();
 
-                            $arSelect_comp = array("ID", "IBLOCK_ID", "IBLOCK_SECTION_ID", "PROPERTY_NAME_BOSS", "NAME", "PROPERTY_EMAIL_FIRST","PROPERTY_EMAIL_SECOND","PROPERTY_EMAIL_THIRD");
-                            $arFilter_comp = array("IBLOCK_ID" => 16, "ID" => $arFields_child["PROPERTY_COMPANY_VALUE"]);
+                            $arSelect_comp = array(
+                                "ID",
+                                "IBLOCK_ID",
+                                "IBLOCK_SECTION_ID",
+                                "PROPERTY_NAME_BOSS",
+                                "NAME",
+                                "PROPERTY_EMAIL_FIRST",
+                                "PROPERTY_EMAIL_SECOND",
+                                "PROPERTY_EMAIL_THIRD"
+                            );
+                            $arFilter_comp = array(
+                                "IBLOCK_ID" => 16,
+                                "ID" => $arFields_child["PROPERTY_COMPANY_VALUE"]
+                            );
                             $res_comp = CIBlockElement::GetList(
                                 array(),
                                 $arFilter_comp,
@@ -212,7 +338,6 @@ if (CModule::IncludeModule("iblock")) {
                             }
 
 
-
                             $name_rerion = $arFields_comp['NAME'];
                             $full_name_child = $SURNAME . ' ' . $NAME . ' ' . $PARTONYMIC;
 
@@ -220,7 +345,7 @@ if (CModule::IncludeModule("iblock")) {
 
                             if ($ar_res = $res->GetNext()) {
 
-                                $name_rerion .= "(" .$ar_res["NAME"] . ")";
+                                $name_rerion .= "(" . $ar_res["NAME"] . ")";
 
 
                             }
@@ -248,14 +373,16 @@ if (CModule::IncludeModule("iblock")) {
                                     'FULL_NAME_HOSPITAL' => $FULL_NAME_HOSPITAL,
                                     'MEDICAL_CODE' => $MEDICAL_CODE,
                                     'HOSPITAL_ADRESS' => $hospital_adress,
-                                    'SRC_LOGO'=> $_SERVER["REQUEST_SCHEME"]."://". $_SERVER["SERVER_NAME"]."/pdf/logo_oms.png",
+                                    'SRC_LOGO' => $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["SERVER_NAME"] . "/pdf/logo_oms.png",
                                 )
                             );
                             CIBlockElement::SetPropertyValuesEx(
                                 $_POST['ID'],
                                 11,
-                                array("SEND_REVIEW" => 3,
-                                    "SEND_MESSAGE" => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time()))
+                                array(
+                                    "SEND_REVIEW" => 3,
+                                    "SEND_MESSAGE" => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time())
+                                )
                             );
                             $result['success'] = 'Обращение успешно отправлено в страховую компанию.
                          Ваше обращение находится в личном кабинете «Отправленные»';
@@ -277,7 +404,7 @@ if (CModule::IncludeModule("iblock")) {
                                     'BOSS_COMPANY' => $boss_company,
                                     'MAIL_COMPANY' => $mail_company,
                                     'EMAIL' => $email,
-                                    'BIRTHDAY'=>$BIRTHDAY_person,
+                                    'BIRTHDAY' => $BIRTHDAY_person,
                                     'USER_MAIL' => $user_email,
                                     'FULLNAME' => $arFields['PROPERTY_FULL_NAME_VALUE'],
                                     'POLICY' => $arFields['PROPERTY_POLICY_VALUE'],
@@ -288,14 +415,16 @@ if (CModule::IncludeModule("iblock")) {
                                     'FULL_NAME_HOSPITAL' => $FULL_NAME_HOSPITAL,
                                     'MEDICAL_CODE' => $MEDICAL_CODE,
                                     'HOSPITAL_ADRESS' => $hospital_adress,
-                                    'SRC_LOGO'=> $_SERVER["REQUEST_SCHEME"]."://". $_SERVER["SERVER_NAME"]."/pdf/logo_oms.png",
+                                    'SRC_LOGO' => $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["SERVER_NAME"] . "/pdf/logo_oms.png",
                                 )
                             );
                             CIBlockElement::SetPropertyValuesEx(
                                 $_POST['ID'],
                                 11,
-                                array("SEND_REVIEW" => 3,
-                                    "SEND_MESSAGE" => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time()))
+                                array(
+                                    "SEND_REVIEW" => 3,
+                                    "SEND_MESSAGE" => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time())
+                                )
                             );
                             $result['success'] = 'Обращение успешно отправлено в страховую компанию.
                          Ваше обращение находится в личном кабинете «Отправленные»';

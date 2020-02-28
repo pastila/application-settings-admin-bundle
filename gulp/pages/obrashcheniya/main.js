@@ -121,7 +121,8 @@ $(document).ready(function() {
               success.text(result2.SUCCESS);
               let r = result2.SRC;
 
-              if(result2.PDF_src == "1"){
+
+              if(r.search(".pdf") != "-1"){
                  src = "/local/templates/kdteam/images/svg/pdf_icon.svg";
               }else{
                  src = r;
@@ -771,10 +772,11 @@ function save_date(sv) {
 
               var usrname_str = cur_el.find(usrname).val();
               usrname_str = usrname_str.replace(/\s/g, '');
-
+              $("#gif_"+id).css({"display":"none"});
+              $(".datepicker-here_"+id).remove();
               if (time_p_str.length <= 3 || policy_str.length <= 1 ||
                   usrname_str.length <= 3) {
-
+                $("#gif_"+id).css({"display":"none"});
               } else {
                 if ($('#children_input_' + id).
                     attr('data-id_child').length > 0) {
@@ -807,7 +809,7 @@ function save_date(sv) {
                       $("#date_picker_"+id).css({"display":"none"});
                       $("#edit_"+id).attr("onclick","edit(this)");
                       $(".datepicker-here_"+id).remove();
-                      if( $("[data-block_img="+id+"]").find("[id*=img_block_"+id).length !== 0  && $("#time_"+element).text().search("2") != "-1"){
+                      if( $("[data-block_img="+id+"]").find("[id*=img_block_"+id).length !== 0  && $("#time_"+id).text().search("2") != "-1"){
                         $("#send_" + id).attr("onclick","send_ms(this)");
                         $("#send_" + id).removeClass("disabled");
                       }
