@@ -2,8 +2,24 @@
 
 $(document).ready(function () {
 
+  $(document).on("click", "#generate_form_fix", function (e) {
+           $.ajax({
+                 dataType: 'html',
+                 url: '/ajax/form_statement.php',
+                 type: 'POST',
+
+                 beforeSend: function() {
+
+                 },
+                 success: function(msg){
 
 
+
+                 },
+               }).done(function(msg) {
+
+               });
+  });
 
 
 
