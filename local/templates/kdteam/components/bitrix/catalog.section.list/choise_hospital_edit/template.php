@@ -193,7 +193,7 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
                                    value="" placeholder="Поиск по больницам" autocomplete="off"/>
                         <?php } else { ?>
                             <input id="hospital_input_<?=$arParams['ID_ELEM']?>" data-id_hospital="<?=$arParams['HOSPITAL']?>" type="text"
-                                   value="<?php echo $arParams['HOSPITAL_NAME']?>" placeholder="Поиск по больницам" autocomplete="off"/>
+                                   value="<?php echo $arParams['HOSPITAL_NAME']?>" placeholder="Поиск по СМО" autocomplete="off"/>
                         <?php } ?>
                         <span style="display: none" class="error_search-js_<?=$arParams['ID_ELEM']?>">Выберете больницу</span>
                         <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_hospital_<?=$arParams['ID_ELEM']?>">
