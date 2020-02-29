@@ -31,14 +31,50 @@ $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM");
 $arFilter = Array("IBLOCK_ID" => 11, "UF_USER_ID" => $ID_USER);
 $section = CIBlockSection::GetList(Array(), $arFilter, false, $arSelect, false);  // получили секцию по айди юзера
 if ($Section = $section->GetNext()) {
-    $arSelect = Array("ID", "IBLOCK_ID", "NAME", "CREATED_DATE", "PREVIEW_PICTURE", "PROPERTY_SEND_MESSAGE",
+    $arSelect = Array("ID", "IBLOCK_ID", "NAME", "CREATED_DATE", "PROPERTY_IMG_1", "PROPERTY_SEND_MESSAGE",
         "PROPERTY_PDF", "PROPERTY_IMG_2", "PROPERTY_IMG_3", "PROPERTY_IMG_4", "PROPERTY_IMG_5");
     $arFilter = Array("IBLOCK_ID" => 11, "SECTION_ID" => $Section["ID"], "PROPERTY_SEND_REVIEW_VALUE"=> 1);
     $Element = CIBlockElement::GetList(Array("created" => "desc"), $arFilter, false, false, $arSelect); //получили обращения юзера
     while ($obElement = $Element->GetNextElement()) {
         $arFields = $obElement->GetFields();
         $PDF = CFile::GetPath($arFields['PROPERTY_PDF_VALUE']);
-        $img_first = CFile::GetPath($arFields['PREVIEW_PICTURE']);
+
+        if (!empty($arFields['PROPERTY_IMG_1_VALUE'])) {
+            $pdf_1 = false;
+            preg_match("/^\/.*(.pdf)/", CFile::GetPath($arFields['PROPERTY_IMG_1_VALUE']), $file);
+            if ($file[1] == ".pdf") {
+                $pdf_1 = true;
+            }
+        }
+        if (!empty($arFields['PROPERTY_IMG_2_VALUE'])) {
+            $pdf_2 = false;
+            preg_match("/^\/.*(.pdf)/", CFile::GetPath($arFields['PROPERTY_IMG_2_VALUE']), $file);
+            if ($file[1] == ".pdf") {
+                $pdf_2 = true;
+            }
+        }
+        if (!empty($arFields['PROPERTY_IMG_3_VALUE'])) {
+            $pdf_3 = false;
+            preg_match("/^\/.*(.pdf)/", CFile::GetPath($arFields['PROPERTY_IMG_3_VALUE']), $file);
+            if ($file[1] == ".pdf") {
+                $pdf_3 = true;
+            }
+        }
+        if (!empty($arFields['PROPERTY_IMG_4_VALUE'])) {
+            $pdf_4 = false;
+            preg_match("/^\/.*(.pdf)/", CFile::GetPath($arFields['PROPERTY_IMG_4_VALUE']), $file);
+            if ($file[1] == ".pdf") {
+                $pdf_4 = true;
+            }
+        }
+        if (!empty($arFields['PROPERTY_IMG_5_VALUE'])) {
+            $pdf_5 = false;
+            preg_match("/^\/.*(.pdf)/", CFile::GetPath($arFields['PROPERTY_IMG_5_VALUE']), $file);
+            if ($file[1] == ".pdf") {
+                $pdf_5 = true;
+            }
+        }
+        $img_first = CFile::GetPath($arFields['PROPERTY_IMG_1_VALUE']);
         $img_second = CFile::GetPath($arFields['PROPERTY_IMG_2_VALUE']);
         $img_third = CFile::GetPath($arFields['PROPERTY_IMG_3_VALUE']);
         $img_fourth = CFile::GetPath($arFields['PROPERTY_IMG_4_VALUE']);
@@ -76,7 +112,13 @@ if ($Section = $section->GetNext()) {
             <?php if ($img_first) { ?>
                 <div class="obrashcheniya__content_sidebar_blocks">
                     <div class="obrashcheniya__content_sidebar_blocks_img">
-                        <img src="<?=$img_first?>">
+
+                        <?php if ($pdf_1) { ?>
+                            <img src="/local/templates/kdteam/images/svg/pdf_icon.svg" alt="" style="height: 45px;">
+                        <? } else { ?>
+                            <img src="<?=$img_first?>">
+                        <?php } ?>
+
                     </div>
                     <div class="obrashcheniya__content_sidebar_blocks_text">
                         <div class="obrashcheniya__content_sidebar_blocks_text_title">Загруженный документ</div>
@@ -87,7 +129,11 @@ if ($Section = $section->GetNext()) {
             <?php if ($img_second) { ?>
                 <div class="obrashcheniya__content_sidebar_blocks">
                     <div class="obrashcheniya__content_sidebar_blocks_img">
-                        <img src="<?=$img_second?>">
+                        <?php if ($pdf_2) { ?>
+                            <img src="/local/templates/kdteam/images/svg/pdf_icon.svg" alt="" style="height: 45px;">
+                        <? } else { ?>
+                            <img src="<?=$img_second?>">
+                        <?php } ?>
                     </div>
                     <div class="obrashcheniya__content_sidebar_blocks_text">
                         <div class="obrashcheniya__content_sidebar_blocks_text_title">Загруженный документ</div>
@@ -98,7 +144,11 @@ if ($Section = $section->GetNext()) {
             <?php if ($img_third) { ?>
                 <div class="obrashcheniya__content_sidebar_blocks">
                     <div class="obrashcheniya__content_sidebar_blocks_img">
-                        <img src="<?=$img_third?>">
+                        <?php if ($pdf_3) { ?>
+                            <img src="/local/templates/kdteam/images/svg/pdf_icon.svg" alt="" style="height: 45px;">
+                        <? } else { ?>
+                            <img src="<?=$img_third?>">
+                        <?php } ?>
                     </div>
                     <div class="obrashcheniya__content_sidebar_blocks_text">
                         <div class="obrashcheniya__content_sidebar_blocks_text_title">Загруженный документ</div>
@@ -109,7 +159,11 @@ if ($Section = $section->GetNext()) {
             <?php if ($img_fourth) { ?>
                 <div class="obrashcheniya__content_sidebar_blocks">
                     <div class="obrashcheniya__content_sidebar_blocks_img">
-                        <img src="<?=$img_third?>">
+                        <?php if ($pdf_4) { ?>
+                            <img src="/local/templates/kdteam/images/svg/pdf_icon.svg" alt="" style="height: 45px;">
+                        <? } else { ?>
+                            <img src="<?=$img_fourth?>">
+                        <?php } ?>
                     </div>
                     <div class="obrashcheniya__content_sidebar_blocks_text">
                         <div class="obrashcheniya__content_sidebar_blocks_text_title">Загруженный документ</div>
@@ -120,7 +174,11 @@ if ($Section = $section->GetNext()) {
             <?php if ($img_fifth) { ?>
                 <div class="obrashcheniya__content_sidebar_blocks">
                     <div class="obrashcheniya__content_sidebar_blocks_img">
-                        <img src="<?=$img_fifth?>">
+                        <?php if ($pdf_5) { ?>
+                            <img src="/local/templates/kdteam/images/svg/pdf_icon.svg" alt="" style="height: 45px;">
+                        <? } else { ?>
+                            <img src="<?=$img_fifth?>">
+                        <?php } ?>
                     </div>
                     <div class="obrashcheniya__content_sidebar_blocks_text">
                         <div class="obrashcheniya__content_sidebar_blocks_text_title">Загруженный документ</div>

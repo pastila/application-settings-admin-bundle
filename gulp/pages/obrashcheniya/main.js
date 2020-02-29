@@ -6,11 +6,26 @@ $(document).ready(function() {
   $('.add-user__js').click(function (){
     $(this).addClass('current');
     $(this).next().removeClass('current');
+    if( $("[data-block_img="+ $(this).attr("data_el")+"]").find("[id*=img_block_"+ $(this).attr("data_el")).length !== 0  && $("#time_"+ $(this).attr("data_el")).text().search("2") != "-1"){
+      $("#send_" + id).attr("onclick","send_ms(this)");
+      $("#send_" + id).removeClass("disabled");
+    }else {
+      $("#send_" + $(this).attr("data_el")).addClass("disabled");
+    }
   });
   $('.add-child__js').click(function (){
     $(this).addClass('current');
     $(this).prev().removeClass('current');
+    if( $("[data-block_img="+ $(this).attr("data_el")+"]").find("[id*=img_block_"+ $(this).attr("data_el")).length !== 0  && $("#time_"+ $(this).attr("data_el")).text().search("2") != "-1"
+        && $("#children_input_"+$(this).attr("data_el")).attr("data-id_child") !== ""){
+      $("#send_" + id).attr("onclick","send_ms(this)");
+      $("#send_" + id).removeClass("disabled");
+    }else {
+      $("#send_" + $(this).attr("data_el")).addClass("disabled");
+    }
+
   });
+
  var arr_date_picker =   $("[class *=datepicker-here_obrashcheniya]");
   arr_date_picker.each(function() {
    var min_year =$(this).attr("data-date");
@@ -215,7 +230,20 @@ $( "input[type='file']" ).click(function() {
                       text("Просмотреть");
                   $(".ready_pdf").removeClass("hidden");
                   $(".with_out_pdf").addClass("hidden");
+                  if( $("[data-block_img="+idItem+"]").find("[id*=img_block_"+idItem).length !== 0  && $("#time_"+idItem).text().search("2") != "-1"){
+                    $("#send_" + idItem).attr("onclick","send_ms(this)");
+                    $("#send_" + idItem).removeClass("disabled");
+                  }
                 }
+
+
+
+
+
+
+
+
+
               });
             }, 'html');
       }
@@ -789,6 +817,10 @@ function save_date(sv) {
               usrname_str = usrname_str.replace(/\s/g, '');
               $("#gif_"+id).css({"display":"none"});
               $(".datepicker-here_"+id).remove();
+
+
+              $("[data-id-date_picker_save="+id+"]").css({"display":"none"});
+              $("[data-id-date_picker_edit="+id+"]").css({"display":"block"});
               if (time_p_str.length <= 3 || policy_str.length <= 1 ||
                   usrname_str.length <= 3) {
                 $("#gif_"+id).css({"display":"none"});
@@ -916,7 +948,7 @@ function save_date(sv) {
                   $("#date_picker_"+id).css({"display":"none"});
                   $("#edit_"+id).attr("onclick","edit(this)");
                   $(".datepicker-here_"+id).remove();
-                  if( $("[data-block_img="+id+"]").find("[id*=img_block_"+id).length !== 0  && $("#time_"+element).text().search("2") != "-1"){
+                  if( $("[data-block_img="+id+"]").find("[id*=img_block_"+id).length !== 0  && $("#time_"+id).text().search("2") != "-1"){
                     $("#send_" + id).attr("onclick","send_ms(this)");
                     $("#send_" + id).removeClass("disabled");
                   }
