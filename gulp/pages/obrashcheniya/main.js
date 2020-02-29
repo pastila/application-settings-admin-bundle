@@ -238,17 +238,20 @@ function del(f) {
     data: {ID: element},
     type: 'post',
     success: function(result) {
+
       let r = JSON.parse(result);
       $('#img_block_' + r.ID).remove();
+      history.scrollRestoration = 'manual';
       $('#success_' + r.ID_EL).text('Файл успешно удален!');
       $('#error_' + r.ID_EL).text('');
       document.getElementById(r.ID_EL).value = "";
-
+      history.scrollRestoration = 'manual';
       if( $("[data-block_img="+r.ID_EL+"]").find("[id*=img_block_"+r.ID_EL+"]").length === 0 ){
         $(".photo_empty_all_"+r.ID_EL).html("Нужно добавить скан документа/изображения для отправки обращения страховой компании");
         $("#send_" + r.ID_EL).removeAttr("onclick");
         $("#send_" + r.ID_EL).addClass("disabled");
       }
+      history.scrollRestoration = 'manual';
     }
   });
 }
