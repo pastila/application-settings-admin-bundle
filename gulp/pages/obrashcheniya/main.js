@@ -93,7 +93,7 @@ $( "input[type='file']" ).click(function() {
 
 
   $( "input[type='file']" ).change(function() {
-    console.log("3232");
+
     if($(this).hasClass("click")=== true) {
       let element = this.id;
       let reader = new FileReader();
