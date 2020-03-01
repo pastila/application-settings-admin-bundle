@@ -300,7 +300,7 @@ $countReviews = count($allReviews);
         $arFilter = Array(
             "IBLOCK_ID" => 13,
             "ACTIVE" => "Y",
-
+            "USER_NO_AUTH" => false,
         );
 
         if (isset($sort_url["admin"])) {
@@ -308,6 +308,7 @@ $countReviews = count($allReviews);
                 "IBLOCK_ID" => 13,
                 "ACTIVE" => "Y",
                 $sort_url["admin"] => false,
+                "!USER_NO_AUTH" => false,
             );
         } else {
             foreach ($sort_url as $key => $filter) {
