@@ -60,10 +60,14 @@ preg_match("/(\d+)\/$/",$url,$result_id);
             $newstrDate = $newdata[2].'.' . $newdata[1].'.' .$newdata[0];
 
             $newDate = FormatDate("d F, Y", MakeTimeStamp($newstrDate));
-            $ID_USER = $arProps["NAME_USER"]["VALUE"];
-            $rsUser = CUser::GetByID($ID_USER);
-            $arUser = $rsUser->Fetch();
-            $name_user = $arUser["NAME"];
+            if ($arProps["NAME_USER"]["VALUE"] == ""){
+                $name_user = $arProps["USER_NO_AUTH"]["VALUE"];
+            }else{
+                $ID_USER = $arProps["NAME_USER"]["VALUE"];
+                $rsUser = CUser::GetByID($ID_USER);
+                $arUser = $rsUser->Fetch();
+                $name_user = $arUser["NAME"];
+            }
             if (is_array($arProps["COMMENTS_TO_REWIEW"]["VALUE"])) {
                 $count_comments = count($arProps["COMMENTS_TO_REWIEW"]["VALUE"]);
             } else {

@@ -69,10 +69,14 @@ $arUser = $rsUser->Fetch();
                     $Date_change_user = "";
                 }
 
-                $ID_USER = $arProps["NAME_USER"]["VALUE"];
-                $rsUser = CUser::GetByID($ID_USER);
-                $arUser = $rsUser->Fetch();
-                $name_user = $arUser["NAME"];
+                if ($arProps["NAME_USER"]["VALUE"] == ""){
+                    $name_user = $arProps["USER_NO_AUTH"]["VALUE"];
+                }else{
+                    $ID_USER = $arProps["NAME_USER"]["VALUE"];
+                    $rsUser = CUser::GetByID($ID_USER);
+                    $arUser = $rsUser->Fetch();
+                    $name_user = $arUser["NAME"];
+                }
                 if (is_array($arProps["COMMENTS_TO_REWIEW"]["VALUE"])) {
                     $count_comments = count($arProps["COMMENTS_TO_REWIEW"]["VALUE"]);
                 } else {
@@ -309,10 +313,14 @@ if($arProps["DATE_CHANGE_BY_USER"]["VALUE"] != "") {
 
  $Date_change_user =  "";
 }
-$ID_USER = $arProps["NAME_USER"]["VALUE"];
-$rsUser = CUser::GetByID($ID_USER);
-$arUser = $rsUser->Fetch();
-$name_user = $arUser["NAME"];
+    if ($arProps["NAME_USER"]["VALUE"] == ""){
+        $name_user = $arProps["USER_NO_AUTH"]["VALUE"];
+    }else{
+        $ID_USER = $arProps["NAME_USER"]["VALUE"];
+        $rsUser = CUser::GetByID($ID_USER);
+        $arUser = $rsUser->Fetch();
+        $name_user = $arUser["NAME"];
+    }
 if (is_array($arProps["COMMENTS_TO_REWIEW"]["VALUE"])) {
  $count_comments = count($arProps["COMMENTS_TO_REWIEW"]["VALUE"]);
 } else {
@@ -579,10 +587,14 @@ if(isset($ID_rewievs[0])) {
 
             $Date_change_user = "";
         }
-        $ID_USER = $arProps["NAME_USER"]["VALUE"];
-        $rsUser = CUser::GetByID($ID_USER);
-        $arUser = $rsUser->Fetch();
-        $name_user = $arUser["NAME"];
+        if ($arProps["NAME_USER"]["VALUE"] == ""){
+            $name_user = $arProps["USER_NO_AUTH"]["VALUE"];
+        }else{
+            $ID_USER = $arProps["NAME_USER"]["VALUE"];
+            $rsUser = CUser::GetByID($ID_USER);
+            $arUser = $rsUser->Fetch();
+            $name_user = $arUser["NAME"];
+        }
         if (is_array($arProps["COMMENTS_TO_REWIEW"]["VALUE"])) {
             $count_comments = count($arProps["COMMENTS_TO_REWIEW"]["VALUE"]);
         } else {

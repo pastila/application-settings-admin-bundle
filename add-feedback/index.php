@@ -32,7 +32,7 @@ global $USER; ?>
             </ul>
 
             <!-- Pages Title -->
-            <?php if ($USER->IsAuthorized()) { ?>
+<!--            --><?php //if ($USER->IsAuthorized()) { ?>
                 <h1 class="page-title">Добавить отзыв о компании</h1>
 
                 <!-- Wrap -->
@@ -87,10 +87,15 @@ global $USER; ?>
                         <h3 class="feedback__title">
                             Расскажите о вашей ситуации
                         </h3>
-
+                                    <?php if (!$USER->IsAuthorized()) { ?>
+                        <div class="input__wrap">
+                            <label for="name_user" class="input__wrap_label">Введите свое имя</label>
+                            <input id="name_user" type="name_user" name="name_user" placeholder="Имя" required pattern="([а-яЁА-ЯЁ]+)">
+                        </div>
+                        <?php } ?>
                         <div class="input__wrap">
                             <label for="name" class="input__wrap_label">Заголовок</label>
-                            <input id="name" type="name" name="name" required="">
+                            <input id="name" type="name" name="name" required>
                         </div>
 
                         <div class="input__wrap">
@@ -144,12 +149,12 @@ global $USER; ?>
                         </div>
                 </form>
 
-            <? } else { ?>
-                <h2 style="color: red;" class="page-title">Отзывы можно оставлять только авторизованным
-                    пользователям!</h2>
-                <p>Для того чтобы вернуться на страницу «отзывы», кликните <a style="text-decoration: underline"
-                                                                              href="/feedback/">сюда</a></p>
-            <? } ?>
+<!--            --><?// } else { ?>
+<!--                <h2 style="color: red;" class="page-title">Отзывы можно оставлять только авторизованным-->
+<!--                    пользователям!</h2>-->
+<!--                <p>Для того чтобы вернуться на страницу «отзывы», кликните <a style="text-decoration: underline"-->
+<!--                                                                              href="/feedback/">сюда</a></p>-->
+<!--            --><?// } ?>
         </main>
 
 

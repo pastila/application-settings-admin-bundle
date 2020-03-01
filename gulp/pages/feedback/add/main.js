@@ -97,6 +97,7 @@ var data = {
   'star': '0',
   'letter': '0',
   'kpp': '0',
+  'name_user_no_Authorized': '',
 };
 $('.star').click(function() {
   data.star = $(this).attr('data-value');
@@ -182,29 +183,30 @@ $(document).ready(function() {
     clearTimeout($this.data('timer'));
     $this.data('timer', setTimeout(function() {
       $this.removeData('timer');
-      $.post('/ajax/personal-cabinet/search_region.php', {name_city: $this.val()}, function(msg) {
-        if ($('.error_region').length != 0) {
-          $('.error_region').remove();
-        }
-        $('.region').each(function() {
-          $(this).remove();
-        });
-        if (msg == 'error_region') {
+      $.post('/ajax/personal-cabinet/search_region.php',
+          {name_city: $this.val()}, function(msg) {
+            if ($('.error_region').length != 0) {
+              $('.error_region').remove();
+            }
+            $('.region').each(function() {
+              $(this).remove();
+            });
+            if (msg == 'error_region') {
 
-          if ($('.error_region').length != 0) {
-            $('.error_region').remove();
-            $('#search_result').
-                append('<li class="error_region" >Регион не найден</li>');
-          } else {
-            $('#search_result').
-                append('<li class="error_region" >Регион не найден</li>');
-          }
-        } else {
-          setTimeout(function() {
-            $('#search_result').append(msg);
-          }, 100);
-        }
-      });
+              if ($('.error_region').length != 0) {
+                $('.error_region').remove();
+                $('#search_result').
+                    append('<li class="error_region" >Регион не найден</li>');
+              } else {
+                $('#search_result').
+                    append('<li class="error_region" >Регион не найден</li>');
+              }
+            } else {
+              setTimeout(function() {
+                $('#search_result').append(msg);
+              }, 100);
+            }
+          });
     }, delay));
   });
 
@@ -215,7 +217,7 @@ $(document).ready(function() {
     $('#referal').attr('data-region_check', 'check');
     $('#referal_two').attr('data-id_region', '0');
     $('#referal_two').attr('data-id_region_kpp', '0');
-    $('#referal_two').val("");
+    $('#referal_two').val('');
 
     $.post('/ajax/personal-cabinet/search_company.php',
         {region_id: $('#referal').attr('data-id_region')}, function(msg) {
@@ -295,69 +297,94 @@ $(document).ready(function() {
     $('#referal_two').attr('data-region_check', 'check');
 
   });
+  var obj_review = {
 
-  $('#form-comments').validator().on('submit', function(e) {
-    e.preventDefault();
+    'user_Authorized': function(data_form) {
 
-    var data_form = $('#form-comments').serializeArray();
-    let empty = [];
+      let region = $('#referal').attr('data-id_region');
+      if (region == '' || region == undefined) {
+        $('#referal').after(
+            '<span class="label danger"  >Выберите регион</span>');
+        this.empty_field.push('error');
+      } else {
+        data.id_city = region;
+      }
+      let hospital = $('#referal_two').attr('data-id_region');
+      if (hospital === '' || hospital === undefined || hospital === '0') {
+        $('#referal_two').after(
+            '<span class="label danger"  >Выберите компанию</span>');
 
-    let region = $('#referal').attr('data-id_region');
-    if (region == '' || region == undefined) {
-      $('#referal').after(
-          '<span class="label danger"  >Выберите регион</span>');
-      empty.push('error');
-    } else {
-      data.id_city = region;
-    }
+        this.empty_field.push('error');
+      } else {
+        let kpp = $('#referal_two').attr('data-id_region_kpp');
+        data.kpp = kpp;
+        data.id_compani = hospital;
+      }
 
+      data.head = data_form[0]['value'];
+      data.text = data_form[1]['value'];
+      if (data.id_city === 0) {
+        $('[data-select=city]').next().css({'display': 'block'});
+        this.empty_field.push('city');
+      }
+      if (data.id_compani === 0) {
+        $('[data-select=company]').next().css({'display': 'block'});
+        this.empty_field.push('company');
+      }
 
-
-    let hospital = $('#referal_two').attr('data-id_region');
-    if (hospital == '' || hospital == undefined || hospital == "0" ) {
-      $('#referal_two').after(
-          '<span class="label danger"  >Выберите компанию</span>');
-
-      empty.push('error');
-    } else {
-      let kpp = $('#referal_two').attr('data-id_region_kpp');
-      data.kpp = kpp;
-      data.id_compani = hospital;
-    }
-
-    data.head = data_form[0]['value'];
-    data.text = data_form[1]['value'];
-    if (data.id_city == 0) {
-      $('[data-select=city]').next().css({'display': 'block'});
-      empty.push('city');
-    }
-    if (data.id_compani == 0) {
-      $('[data-select=company]').next().css({'display': 'block'});
-      empty.push('company');
-    }
+      if (getCookie('letter') !== undefined) {
+        data.letter = '1';
+      }
 
 
-    function getCookie(name) {
-      let matches = document.cookie.match(new RegExp(
-          '(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') +
-          '=([^;]*)',
-      ));
-      return matches ? decodeURIComponent(matches[1]) : undefined;
-    }
+    },
+    'user_no_Authorized': function(data_form) {
+      let region = $('#referal').attr('data-id_region');
+      if (region == '' || region == undefined) {
+        $('#referal').after(
+            '<span class="label danger"  >Выберите регион</span>');
+        this.empty_field.push('error');
+      } else {
+        data.id_city = region;
+      }
+      let hospital = $('#referal_two').attr('data-id_region');
+      if (hospital === '' || hospital === undefined || hospital === '0') {
+        $('#referal_two').after(
+            '<span class="label danger"  >Выберите компанию</span>');
 
-    if (getCookie('letter') != undefined) {
-      data.letter = '1';
-    }
+        this.empty_field.push('error');
+      } else {
+        let kpp = $('#referal_two').attr('data-id_region_kpp');
+        data.kpp = kpp;
+        data.id_compani = hospital;
+      }
+      data.name_user_no_Authorized = data_form[0]['value'];
+      data.head = data_form[1]['value'];
+      data.text = data_form[2]['value'];
+      if (data.id_city === 0) {
+        $('[data-select=city]').next().css({'display': 'block'});
+        this.empty_field.push('city');
+      }
+      if (data.id_compani === 0) {
+        $('[data-select=company]').next().css({'display': 'block'});
+        this.empty_field.push('company');
+      }
 
-    if (empty.length == 0) {
+      if (getCookie('letter') !== undefined) {
+        data.letter = '1';
+      }
 
+    },
+    'empty_field': [],
+    'send_data': function(data) {
+      console.log(data);
       $.ajax({
         url: '/ajax/add_reviews.php',
         type: 'POST',
         data: data,
         dataType: 'html',
         beforeSend: function() {
-          delete_cookie("letter");
+          delete_cookie('letter');
 
         },
 
@@ -376,13 +403,44 @@ $(document).ready(function() {
           });
         }
       });
+    },
+  };
+  $('#form-comments').validator().on('submit', function(e) {
+    e.preventDefault();
+
+    var data_form = $('#form-comments').serializeArray();
+
+
+    if ($('.header__r_auth_login').length > 0 &&
+        $('.header__r_auth_reg').length > 0) {
+      obj_review.user_no_Authorized(data_form);
+      if (obj_review.empty_field.length === 0) {
+
+        obj_review.send_data(data);
+
+      }
+    } else {
+      obj_review.user_Authorized(data_form);
+      if (obj_review.empty_field.length === 0) {
+
+        obj_review.send_data(data);
+
+      }
     }
 
   });
 });
-function delete_cookie ( cookie_name )
-{
-  var cookie_date = new Date ( );  // Текущая дата и время
-  cookie_date.setTime ( cookie_date.getTime() - 1 );
-  document.cookie = cookie_name += "=; expires=" + cookie_date.toGMTString();
+
+function delete_cookie(cookie_name) {
+  var cookie_date = new Date();  // Текущая дата и время
+  cookie_date.setTime(cookie_date.getTime() - 1);
+  document.cookie = cookie_name += '=; expires=' + cookie_date.toGMTString();
+}
+
+function getCookie(name) {
+  let matches = document.cookie.match(new RegExp(
+      '(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') +
+      '=([^;]*)',
+  ));
+  return matches ? decodeURIComponent(matches[1]) : undefined;
 }

@@ -339,6 +339,7 @@ $countReviews = count($allReviews);
 
 
         <? }
+
         while ($ob = $res->GetNextElement()) {
 
             $arFields = $ob->GetFields();
@@ -348,13 +349,20 @@ $countReviews = count($allReviews);
             $newstrDate = $newdata[2] . '.' . $newdata[1] . '.' . $newdata[0];
 
             $newDate = FormatDate("d F, Y", MakeTimeStamp($newstrDate));
-            if ($arProps["NAME_USER"]["VALUE"] == "") {
-                continue;
+            if($sort_url["admin"] == "") {
+                if ($arProps["NAME_USER"]["VALUE"] == "" && $arProps["VERIFIED"]["VALUE"] == "") {
+                    continue;
+                }
             }
-            $ID_USER = $arProps["NAME_USER"]["VALUE"];
-            $rsUser = CUser::GetByID($ID_USER);
-            $arUser = $rsUser->Fetch();
 
+            if ($arProps["NAME_USER"]["VALUE"] == ""){
+                $name_user = $arProps["USER_NO_AUTH"]["VALUE"];
+            }else{
+                $ID_USER = $arProps["NAME_USER"]["VALUE"];
+                $rsUser = CUser::GetByID($ID_USER);
+                $arUser = $rsUser->Fetch();
+                $name_user = $arUser["NAME"];
+            }
             if ($arProps["DATE_CHANGE_BY_USER"]["VALUE"] != "") {
                 $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arProps["DATE_CHANGE_BY_USER"]["VALUE"]));
             } else {
@@ -362,7 +370,7 @@ $countReviews = count($allReviews);
                 $Date_change_user = "";
             }
 
-            $name_user = $arUser["NAME"];
+
             if (is_array($arProps["COMMENTS_TO_REWIEW"]["VALUE"])) {
                 $count_comments = count($arProps["COMMENTS_TO_REWIEW"]["VALUE"]);
             } else {
