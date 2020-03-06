@@ -48,13 +48,14 @@ CModule::IncludeModule("iblock");
         <div class="popup__wrap_middle">
             <div class="input__wrap">
                 <label class="input__wrap_label">Дата рождения</label>
-                <input id="datepicker_reg" class="datepicker-here" type="text" name="time" autocomplete="off" required readonly >
+                <input id="datepicker_reg" class="datepicker-here" type="text" name="time" autocomplete="off" required readonly
+                       placeholder="DD.MM.YYYY">
                 <div class="danger date" style="display: none;">Регистрация лиц, не достигших 18 лет, не допускается</div>
             </div>
             <!-- Input -->
             <div class="input__wrap">
                 <label class="input__wrap_label">Электронная почта</label>
-                <input id="email" type="email" name="email" required>
+                <input id="email" type="email" name="email" required placeholder="Электронная почта">
             </div>
 
         </div>
