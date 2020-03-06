@@ -21,6 +21,7 @@
             border: none;
             background: $inputColor;
             font-size: 1.6rem;
+            border-radius: 1rem;
             &:focus, &:visited, &:focus {
                 outline: none;
             }
