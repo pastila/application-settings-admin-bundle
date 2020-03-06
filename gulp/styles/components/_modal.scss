@@ -31,7 +31,6 @@
         right: 2rem;
         cursor: pointer;
         z-index: 2;
-
         img {
             height: 2rem;
         }
@@ -137,5 +136,11 @@
             margin-bottom: 2rem;
             font-size: 1.6rem;
         }
+    }
+}
+.close-modal {
+    transition: all .2s;
+    &:hover {
+        filter: brightness(0.5);
     }
 }
