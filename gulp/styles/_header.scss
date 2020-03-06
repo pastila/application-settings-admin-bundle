@@ -314,6 +314,8 @@
     align-items: center;
     justify-content: center;
     margin: 0 auto;
+    border-radius: 1rem;
+    background: white;
 
     .close-modal {
         position: absolute;
@@ -328,8 +330,6 @@
         &__wrap {
             width: 100%;
             padding: 4rem;
-            background: white;
-            
                 &_top, &_middle, &_bottom {
                     display: flex;
                     flex-wrap: wrap;

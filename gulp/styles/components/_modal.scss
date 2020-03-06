@@ -131,11 +131,13 @@
 .popup-login-content{
     &__links{
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         flex-wrap: wrap;
         &__item{
             margin-bottom: 2rem;
             font-size: 1.6rem;
+            font-family: $main-font-semibold;
+            color: $accentColor;
         }
     }
 }

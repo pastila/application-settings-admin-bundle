@@ -43,7 +43,7 @@ $(document).ready(function() {
   $('.header__r_auth_login').click(function() {
     setTimeout(function() {
       FormAuth();
-    }, 1500);
+    }, 700);
   });
 
   function FormReg() {
@@ -527,15 +527,6 @@ $(document).ready(function() {
                 $(".header__r").html(msg);
               },
             }).done(function(msg) {
-              setTimeout(function() {
-                $.magnificPopup.open({
-                  items: {
-                    src: '<div class="white-popup custom_styles_popup">Вы успешно авторизовались!</div>',
-                    type: 'inline',
-                  },
-                });
-                $('body').css({'overflow': 'initial'});
-              }, 1000);
             });
 
           } else {
