@@ -822,7 +822,7 @@ function form_us(){
           $.magnificPopup.open({
             items: {
               src: '<div class="white-popup custom_styles_popup"><button title="Закрыть" type="button" class="mfp-close">×</button>' +
-              'Ваше письмо отправленно успешно</div>',
+              '<h3 class="popup__wrap_tabs_title">Ваше письмо отправленно успешно</h3></div>',
               type: 'inline',
             },
             callbacks: {
@@ -833,7 +833,7 @@ function form_us(){
           });
         } else if (suc.captcha == "1") {
           $("#captcha-error_parent").after(
-              '<p class="label danger"  >Код капчи не верный</p>');
+              '<p class="label danger"  >Код капчи неверный</p>');
 
         } else {
           if (suc.size == "1") {
@@ -912,7 +912,7 @@ function form_us_two(){
             $.magnificPopup.open({
               items: {
                 src: '<div class="white-popup custom_styles_popup"><button title="Закрыть" type="button" class="mfp-close">×</button>' +
-                'Ваше письмо отправленно успешно</div>',
+                '<h3 class="popup__wrap_tabs_title">Ваше письмо отправленно успешно</h3></div>',
                 type: 'inline',
               },
               callbacks: {
@@ -923,7 +923,7 @@ function form_us_two(){
             });
           } else if (suc.captcha == "1") {
             $("#captcha-error_parent").after(
-                '<p class="label danger"  >Код капчи не верный</p>');
+                '<p class="label danger"  >Код капчи неверный</p>');
 
           } else {
             if (suc.size == "1") {
