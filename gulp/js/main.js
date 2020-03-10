@@ -362,9 +362,9 @@ $(document).ready(function() {
 
       if ($('#check-code-js').val().length === 0) {
         $("#check-code-js").after(
-            '<p class="label danger">Введите код подтверждения</p>');
+            '<p class="label danger sms-error">Введите код подтверждения</p>');
         $('.accept-phone-js').after(
-            '<p class="label danger">Введите код подтверждения</p>');
+            '<p class="label danger sms-error">Введите код подтверждения</p>');
         errors.push("error10");
       } else if ($('#check-code-js').val().length > 0) {
         if (errors.length === 0) {

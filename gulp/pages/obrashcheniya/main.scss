@@ -24,13 +24,29 @@ label {
     }
     &__btns {
         display: flex;
+        justify-content: space-between;
         flex-wrap: wrap;
         margin: 2rem 0 0 0;
+        &_flex{
+            display: flex;
+            flex-wrap: wrap;
+        }
         &_btn {
             margin-right: 2rem;
             @media screen and (max-width: 576px){
                 width: 100%;
                 margin-right: 0;
+            }
+        }
+        &_block{
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            @media screen and (max-width: 575px){
+                width: 100%;
+            }
+            &_remove{
+                font-size: 1.6rem;
             }
         }
     }

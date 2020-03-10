@@ -96,9 +96,6 @@ if (count($arResult["ITEMS"]) > 0) {
                                     <?//= $arItem['ID'] ?>
                                     <!--">-->
                                 </a>
-                                <a title="Удалить обращение" class="obrashcheniya__content_left_top_link__icon"
-                                   onclick="delete_el(this)" id="delete_el_<?= $arItem["ID"] ?>"><img
-                                            src="<?= SITE_TEMPLATE_PATH ?>/images/svg/remove_file.svg" alt=""></a>
                             </div>
                         </div>
 
@@ -467,23 +464,27 @@ if (count($arResult["ITEMS"]) > 0) {
                     </div>
                 </div>
                 <div class="obrashcheniya__btns">
-                    <div class="obrashcheniya__btns_btn">
-                        <input class="smallMainBtn hidden_browse_input" id="<?= $arItem["ID"] ?>" type="file" multiple
-                               name="file">
-                        <label for="<?= $arItem["ID"] ?>" class="btn btn-tertiary js-labelFile mainBtn">
-                            Прикрепить скан или фото</label>
+                    <div class="obrashcheniya__btns_flex">
+                        <div class="obrashcheniya__btns_btn">
+                            <input class="smallMainBtn hidden_browse_input" id="<?= $arItem["ID"] ?>" type="file" multiple
+                                   name="file">
+                            <label for="<?= $arItem["ID"] ?>" class="btn btn-tertiary js-labelFile mainBtn">
+                                Прикрепить скан или фото</label>
+                        </div>
+                        <a class="obrashcheniya__btns_btn accentBtn" onclick="send_ms(this)"
+                           id="send_<?= $arItem["ID"] ?>">Отправить</a>
                     </div>
-                    <a class="obrashcheniya__btns_btn accentBtn" onclick="send_ms(this)"
-                       id="send_<?= $arItem["ID"] ?>">Отправить</a>
+                    <div class="obrashcheniya__btns_block">
+                    <a title="Удалить обращение" class="obrashcheniya__btns_block_remove"
+                       onclick="delete_el(this)" id="delete_el_<?= $arItem["ID"] ?>">Удалить обращение</a>
+                </div>
                 </div>
             </div>
         </div>
     <?php }
 } else { ?>
     <div class="obrashcheniya">
-        <p> У вас нет готовых обращений. Сформировать обращение на возврат средств за медицинскую помощь по программе
-            ОМС
-            можно
-            <a class="link-underline" href="/forma-obrashenija/">здесь</a>.</p>
+        <p> У вас нет готовых обращений.</p>
     </div>
+    <a href="/forma-obrashenija/" class="mainBtn">Сформировать обращение</a>
 <?php } ?>
