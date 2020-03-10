@@ -60,40 +60,34 @@ $(document).ready(function() {
       $this.data('timer', setTimeout(function() {
         $this.removeData('timer');
 
-        if ($this.val().length > 0) {
-
-   if($this.val().search("-") === -1) {
-     var first_simvol = $this.val()[0].toUpperCase();
-     var other = $this.val().slice(1).toLowerCase();
-     $this.val(first_simvol + other);
-   }else{
-     var harder_str = $this.val().split("-");
-     var first_simvol_first_str = harder_str[0][0].toUpperCase();
-     var other_first_str = harder_str[0].slice(1).toLowerCase();
-     var first_simvol_second_str = harder_str[1][0].toUpperCase();
-     var other_second_str = harder_str[1].slice(1).toLowerCase();
-     $this.val(first_simvol_first_str + other_first_str +'-'+ first_simvol_second_str + other_second_str);
-   }
+        if($this.val().length > 0) {
+          if(obj_correction_name.is_harder_str($this) === false){
+            var new_str =  obj_correction_name.correction_plain_str($this);
+            $this.val(new_str);
+          } else {
+            var new_str =  obj_correction_name.correction_harder_str($this);
+            $this.val(new_str);
+          }
         }
       },2200));
     });
+
+
+
     $("#name").on('keyup', function() {
        var $this = $(this);
       clearTimeout($this.data('timer'));
       $this.data('timer', setTimeout(function() {
         $this.removeData('timer');
 
-        if($this.val().search("-") === -1) {
-          var first_simvol = $this.val()[0].toUpperCase();
-          var other = $this.val().slice(1).toLowerCase();
-          $this.val(first_simvol + other);
-        }else{
-          var harder_str = $this.val().split("-");
-          var first_simvol_first_str = harder_str[0][0].toUpperCase();
-          var other_first_str = harder_str[0].slice(1).toLowerCase();
-          var first_simvol_second_str = harder_str[1][0].toUpperCase();
-          var other_second_str = harder_str[1].slice(1).toLowerCase();
-          $this.val(first_simvol_first_str + other_first_str +'-'+ first_simvol_second_str + other_second_str);
+        if($this.val().length > 0) {
+          if(obj_correction_name.is_harder_str($this) === false){
+            var new_str =  obj_correction_name.correction_plain_str($this);
+            $this.val(new_str);
+          } else {
+           var new_str =  obj_correction_name.correction_harder_str($this);
+            $this.val(new_str);
+          }
         }
 
       },2200));
@@ -103,24 +97,14 @@ $(document).ready(function() {
       clearTimeout($this.data('timer'));
       $this.data('timer', setTimeout(function() {
         $this.removeData('timer');
-        if($this.val().search("-") === -1) {
-          var first_simvol = $this.val()[0].toUpperCase();
-          var other = $this.val().slice(1).toLowerCase();
-          $this.val(first_simvol + other);
-        }else{
-          var harder_str = $this.val().split("-");
-          var first_simvol_first_str = harder_str[0][0].toUpperCase();
-          var other_first_str = harder_str[0].slice(1).toLowerCase();
-          var first_simvol_second_str = harder_str[1][0].toUpperCase();
-          var other_second_str = harder_str[1].slice(1).toLowerCase();
-          $this.val(first_simvol_first_str + other_first_str +'-'+ first_simvol_second_str + other_second_str);
-        }
-
-
-        if ($this.val().length > 0) {
-          var first_simvol = $this.val()[0].toUpperCase();
-          var other = $("#last-name").val().slice(1);
-          $("#last-name").val(first_simvol+other);
+        if($this.val().length > 0) {
+          if(obj_correction_name.is_harder_str($this) === false){
+            var new_str =  obj_correction_name.correction_plain_str($this);
+            $this.val(new_str);
+          } else {
+            var new_str =  obj_correction_name.correction_harder_str($this);
+            $this.val(new_str);
+          }
         }
       },2200));
     });
@@ -1018,3 +1002,23 @@ function timer_for_sms() {
     $('.sms-again-button').removeAttr('disabled');
   }, 30000);
 }
+var obj_correction_name={
+  is_harder_str : function(str) {
+    if (str.val().search("-") === -1) {
+      return false;
+    }
+  },
+  correction_plain_str :function(str) {
+    var first_simvol = str.val()[0].toUpperCase();
+    var other = str.val().slice(1).toLowerCase();
+    return first_simvol + other;
+  },
+  correction_harder_str : function(str) {
+    var harder_str = str.val().split("-");
+    var first_simvol_first_str = harder_str[0][0].toUpperCase();
+    var other_first_str = harder_str[0].slice(1).toLowerCase();
+    var first_simvol_second_str = harder_str[1][0].toUpperCase();
+    var other_second_str = harder_str[1].slice(1).toLowerCase();
+    return first_simvol_first_str + other_first_str + '-' + first_simvol_second_str + other_second_str;
+  }
+};
