@@ -48,8 +48,8 @@ $(document).ready(function() {
 
   function FormReg() {
     $('#famaly-name, #name , #last-name').bind('change keyup input click', function() {
-      if (this.value.match(/[^а-яёА-ЯЁ]/g)) {
-        this.value = this.value.replace(/[^а-яёА-ЯЁ]/g, '');
+      if (this.value.match(/[^а-яёА-ЯЁ\-]/g)) {
+        this.value = this.value.replace(/[^а-яёА-ЯЁ\-]/g, '');
       }
     });
 
@@ -61,35 +61,68 @@ $(document).ready(function() {
         $this.removeData('timer');
 
         if ($this.val().length > 0) {
-          var first_simvol = $this.val()[0].toUpperCase();
-          var other = $("#famaly-name").val().slice(1);
-          $("#famaly-name").val(first_simvol+other);
+
+   if($this.val().search("-") === -1) {
+     var first_simvol = $this.val()[0].toUpperCase();
+     var other = $this.val().slice(1).toLowerCase();
+     $this.val(first_simvol + other);
+   }else{
+     var harder_str = $this.val().split("-");
+     var first_simvol_first_str = harder_str[0][0].toUpperCase();
+     var other_first_str = harder_str[0].slice(1).toLowerCase();
+     var first_simvol_second_str = harder_str[1][0].toUpperCase();
+     var other_second_str = harder_str[1].slice(1).toLowerCase();
+     $this.val(first_simvol_first_str + other_first_str +'-'+ first_simvol_second_str + other_second_str);
+   }
         }
-      },1000));
+      },2200));
     });
     $("#name").on('keyup', function() {
        var $this = $(this);
       clearTimeout($this.data('timer'));
       $this.data('timer', setTimeout(function() {
         $this.removeData('timer');
-        if ($this.val().length > 0) {
+
+        if($this.val().search("-") === -1) {
           var first_simvol = $this.val()[0].toUpperCase();
-          var other = $("#name").val().slice(1);
-          $("#name").val(first_simvol+other);
+          var other = $this.val().slice(1).toLowerCase();
+          $this.val(first_simvol + other);
+        }else{
+          var harder_str = $this.val().split("-");
+          var first_simvol_first_str = harder_str[0][0].toUpperCase();
+          var other_first_str = harder_str[0].slice(1).toLowerCase();
+          var first_simvol_second_str = harder_str[1][0].toUpperCase();
+          var other_second_str = harder_str[1].slice(1).toLowerCase();
+          $this.val(first_simvol_first_str + other_first_str +'-'+ first_simvol_second_str + other_second_str);
         }
-      },1000));
+
+      },2200));
     });
     $("#last-name").on('keyup', function() {
        var $this = $(this);
       clearTimeout($this.data('timer'));
       $this.data('timer', setTimeout(function() {
         $this.removeData('timer');
+        if($this.val().search("-") === -1) {
+          var first_simvol = $this.val()[0].toUpperCase();
+          var other = $this.val().slice(1).toLowerCase();
+          $this.val(first_simvol + other);
+        }else{
+          var harder_str = $this.val().split("-");
+          var first_simvol_first_str = harder_str[0][0].toUpperCase();
+          var other_first_str = harder_str[0].slice(1).toLowerCase();
+          var first_simvol_second_str = harder_str[1][0].toUpperCase();
+          var other_second_str = harder_str[1].slice(1).toLowerCase();
+          $this.val(first_simvol_first_str + other_first_str +'-'+ first_simvol_second_str + other_second_str);
+        }
+
+
         if ($this.val().length > 0) {
           var first_simvol = $this.val()[0].toUpperCase();
           var other = $("#last-name").val().slice(1);
           $("#last-name").val(first_simvol+other);
         }
-      },1000));
+      },2200));
     });
     $('.numberInput').bind('change keyup input click', function() {
       if (this.value.match(/[^0-9]/g)) {
@@ -350,6 +383,20 @@ $(document).ready(function() {
                 '<p class="label danger"  >Подтвердите свое согласие</p>');
             errors.push("error8");
         }
+
+      // if(plan.length == 0 ){
+      //   input.append('   <div class="popover_error">\n' +
+      //       '          <div class="popover_error_arrow"></div>\n' +
+      //       '          <div class="popover_error_image">\n' +
+      //       '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+      //       '          </div>\n' +
+      //       '          <div class="popover_error_text">\n' +
+      //       '          Подтвердите свое согласие.\n' +
+      //       '      </div>\n' +
+      //       '      </div>');
+      //   errors.push("error8");
+      //
+      // }
       var data = $(".datepicker-here").val();
       var re = /^(\d+)[.](\d+)[.](\d+)/;
       if (re.test( data ) ) {

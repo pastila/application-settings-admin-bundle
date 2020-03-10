@@ -29,15 +29,15 @@ CModule::IncludeModule("iblock");
                 <label class="input__wrap_label">Фамилия</label>
                 <input id="famaly-name" type="text" name="famaly-name" pattern="^[А-ЯЁ][а-яё]*([-][А-ЯЁ][а-яё]*)*$"
                        placeholder="Фамилия" required>
-                <div class="popover_error">
-                    <div class="popover_error_arrow"></div>
-                    <div class="popover_error_image">
-                        <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">
-                    </div>
-                    <div class="popover_error_text">
-                        Введите данные в указанном формате.
-                    </div>
-                </div>
+<!--                <div class="popover_error">-->
+<!--                    <div class="popover_error_arrow"></div>-->
+<!--                    <div class="popover_error_image">-->
+<!--                        <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">-->
+<!--                    </div>-->
+<!--                    <div class="popover_error_text">-->
+<!--                        Введите данные в указанном формате.-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
 
             <!-- Input -->
