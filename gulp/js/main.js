@@ -29,6 +29,12 @@ $(document).ready(function() {
     if (!div.is(e.target)) {
       div.remove();
     }
+    var popover = $(".popover_error");
+    if (!popover.is(e.target)) {
+      popover.fadeToggle(400,"linear",function() {
+        popover.remove();
+      });
+    }
     $('.error_step-card-1').removeClass('error_block');
     $('.error_step-card-3').removeClass('error_block');
     $('.error_step-card-4').removeClass('error_block');
@@ -341,8 +347,15 @@ $(document).ready(function() {
 
       let region = $('#referal').attr('data-id_region');
       if (region == '' || region == undefined || region == "0") {
-        $('#referal').after(
-            '<span class="label danger"  >Выберите регион</span>');
+        $('#referal').after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '        Выберите регион.\n' +
+            '      </div>\n' +
+            '      </div>');
         errors.push('error');
       } else {
 
@@ -350,52 +363,84 @@ $(document).ready(function() {
       }
       let company = $('#referal_two').attr('data-id_region');
       if (company == '' || company == undefined || company == "0") {
-        $('#referal_two').after(
-            '<span class="label danger"  >Выберите компанию</span>');
+        $('#referal_two').after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '        Выберите компанию.\n' +
+            '      </div>\n' +
+            '      </div>');
         errors.push('error');
       } else {
         data_form.push({'name': 'company', 'value': company});
       }
+
+
+
+
          let plan =[];
         let input = $('.checkbox_registration_modal');
         $(input).find('input:checked').each(function() {
             plan.push(this.value);
         });
 
-        if(plan.length == 0 ){
-            input.after(
-                '<p class="label danger"  >Подтвердите свое согласие</p>');
-            errors.push("error8");
-        }
+        // if(plan.length == 0 ){
+        //     input.after(
+        //         '<p class="label danger">Подтвердите свое согласие</p>');
+        //     errors.push("error8");
+        // }
 
-      // if(plan.length == 0 ){
-      //   input.append('   <div class="popover_error">\n' +
-      //       '          <div class="popover_error_arrow"></div>\n' +
-      //       '          <div class="popover_error_image">\n' +
-      //       '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
-      //       '          </div>\n' +
-      //       '          <div class="popover_error_text">\n' +
-      //       '          Подтвердите свое согласие.\n' +
-      //       '      </div>\n' +
-      //       '      </div>');
-      //   errors.push("error8");
-      //
-      // }
+      if(plan.length == 0 ){
+        input.children(".check-label").children(".check-img_reg").after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '          Подтвердите свое согласие.\n' +
+            '      </div>\n' +
+            '      </div>');
+        errors.push("error8");
+
+      }
       var data = $(".datepicker-here").val();
       var re = /^(\d+)[.](\d+)[.](\d+)/;
       if (re.test( data ) ) {
       }else{
-        $(".datepicker-here").after(
-            '<p class="label danger"  >Выберите дату рождения</p>');
+        $(".datepicker-here").after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '          Выберите дату рождения.\n' +
+            '      </div>\n' +
+            '      </div>');
         errors.push("error9");
       }
 
 
       if ($('#check-code-js').val().length === 0) {
-        $("#check-code-js").after(
-            '<p class="label danger">Введите код подтверждения</p>');
-        $('.accept-phone-js').after(
-            '<p class="label danger">Введите код подтверждения</p>');
+        $("#check-code-js").after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '         Введите код подтверждения.\n' +
+            '      </div>\n' +
+            '      </div>');
+        $('.accept-phone-js').after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '         Введите код подтверждения.\n' +
+            '      </div>\n' +
+            '      </div>');
         errors.push("error10");
       } else if ($('#check-code-js').val().length > 0) {
         if (errors.length === 0) {
@@ -413,26 +458,71 @@ $(document).ready(function() {
                     '</div>');
 
               }
+
+
+
+
+
               if (suc.error === 'mail') {
                 var email = $('#email');
-                email.after(
-                    '<div class="danger" data-danger-email>Пользователь с таким эмейлом уже сущесвуте</div>');
+                email.after('   <div class="popover_error">\n' +
+                    '          <div class="popover_error_arrow"></div>\n' +
+                    '          <div class="popover_error_image">\n' +
+                    '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+                    '          </div>\n' +
+                    '          <div class="popover_error_text">\n' +
+                    '         Пользователь с таким эмейлом уже сущесвуте.\n' +
+                    '      </div>\n' +
+                    '      </div>');
               }
+
+
+
+
               if (suc.error === 'polic') {
                 var email = $('#number_polic');
-                email.after(
-                    '<div class="danger" data-danger-email>Пользователь с таким полисом уже сущесвуте</div>');
+                email.after('   <div class="popover_error">\n' +
+                    '          <div class="popover_error_arrow"></div>\n' +
+                    '          <div class="popover_error_image">\n' +
+                    '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+                    '          </div>\n' +
+                    '          <div class="popover_error_text">\n' +
+                    '         Пользователь с таким полисом уже сущесвуте.\n' +
+                    '      </div>\n' +
+                    '      </div>');
               }
 
               if (suc.company === 'Нет компании') {
-                var email = $('#company');
-                email.after(
-                    '<div class="danger" data-danger-company>В нашей базе нет этой компании ,мы не можем вас зарегестрировать </div>');
+                var company = $('#company');
+                company.after('   <div class="popover_error">\n' +
+                    '          <div class="popover_error_arrow"></div>\n' +
+                    '          <div class="popover_error_image">\n' +
+                    '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+                    '          </div>\n' +
+                    '          <div class="popover_error_text">\n' +
+                    '        В нашей базе нет этой компании ,мы не можем вас зарегестрировать.\n' +
+                    '      </div>\n' +
+                    '      </div>');
               }
 
+
+
+
+
+
+
+
+
               if(suc.error_sms !== undefined)  {
-                $("#check-code-js").after(
-                          '<p class="label danger">Неверный код подтверждения</p>');
+                $("#check-code-js").after('   <div class="popover_error">\n' +
+                    '          <div class="popover_error_arrow"></div>\n' +
+                    '          <div class="popover_error_image">\n' +
+                    '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+                    '          </div>\n' +
+                    '          <div class="popover_error_text">\n' +
+                    '        Неверный код подтверждения.\n' +
+                    '      </div>\n' +
+                    '      </div>');
               }
 
               if (suc.user_success === "success") {
@@ -1006,6 +1096,8 @@ var obj_correction_name={
   is_harder_str : function(str) {
     if (str.val().search("-") === -1) {
       return false;
+    }else{
+      return true;
     }
   },
   correction_plain_str :function(str) {

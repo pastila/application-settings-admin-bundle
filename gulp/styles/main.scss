@@ -460,7 +460,9 @@ a{
     justify-content: center;
     margin-top: 3rem;
 }
-
+.relative_block{
+ position: relative;
+}
 .popover_error{
     padding: 1rem;
     background: white;
@@ -473,9 +475,8 @@ a{
     position: absolute;
     top: calc(100% + 1rem);
     z-index: 2;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 28rem;
+    left: 0;
+    width: auto;
     &_arrow{
         position: absolute;
         display: block;
@@ -508,8 +509,8 @@ a{
         }
     }
     &_image{
-        width: 3rem;
-        height: 3rem;
+        width: 2rem;
+        height: 2rem;
         margin-right: 1rem;
         display: flex;
         img{
@@ -518,7 +519,7 @@ a{
     }
     &_text{
         font-family: $main-font-semibold;
-        font-size: 1rem;
+        font-size: 1.2rem;
         color: $error;
     }
 }
