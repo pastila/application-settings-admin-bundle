@@ -303,16 +303,30 @@ $(document).ready(function() {
 
       let region = $('#referal').attr('data-id_region');
       if (region == '' || region == undefined) {
-        $('#referal').after(
-            '<span class="label danger"  >Выберите регион</span>');
+        $('#referal').after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '        Выберите регион.\n' +
+            '      </div>\n' +
+            '      </div>');
         this.empty_field.push('error');
       } else {
         data.id_city = region;
       }
       let hospital = $('#referal_two').attr('data-id_region');
       if (hospital === '' || hospital === undefined || hospital === '0') {
-        $('#referal_two').after(
-            '<span class="label danger"  >Выберите компанию</span>');
+        $('#referal_two').after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '        Выберите компанию.\n' +
+            '      </div>\n' +
+            '      </div>');
 
         this.empty_field.push('error');
       } else {
@@ -341,16 +355,33 @@ $(document).ready(function() {
     'user_no_Authorized': function(data_form) {
       let region = $('#referal').attr('data-id_region');
       if (region == '' || region == undefined) {
-        $('#referal').after(
-            '<span class="label danger"  >Выберите регион</span>');
+
+
+        $('#referal').after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '        Выберите регион.\n' +
+            '      </div>\n' +
+            '      </div>');
         this.empty_field.push('error');
       } else {
         data.id_city = region;
       }
+
       let hospital = $('#referal_two').attr('data-id_region');
       if (hospital === '' || hospital === undefined || hospital === '0') {
-        $('#referal_two').after(
-            '<span class="label danger"  >Выберите компанию</span>');
+        $('#referal_two').after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '        Выберите компанию.\n' +
+            '      </div>\n' +
+            '      </div>');
 
         this.empty_field.push('error');
       } else {
