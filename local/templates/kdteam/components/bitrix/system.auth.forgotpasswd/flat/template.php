@@ -25,14 +25,14 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/recovery-pass/recovery-pass.min.js");
     <div class="white_block block-recovery_pass">
 
         <?
-        if(!empty($APPLICATION->arAuthResult)):
-            $text = str_replace(array("<br>", "<br />"), "\n", $APPLICATION->arAuthResult["MESSAGE"]);
+        if(!empty($APPLICATION->arAuthResult)){
+            $text = "Данные для востановления пароля высланы вам на почту.";
             ?>
-            <div class="alert <?=($APPLICATION->arAuthResult["TYPE"] == "OK"? "alert-success":"alert-danger")?>"><?=nl2br(htmlspecialcharsbx($text))?></div>
-        <?endif?>
+            <div class="alert  <?=($APPLICATION->arAuthResult["TYPE"] == "OK"? "alert-success":"alert-danger")?>"><?=nl2br(htmlspecialcharsbx($text))?></div>
+        <?}else{?>
 
 
-        <p class="bx-authform-note-container"><?=GetMessage("AUTH_FORGOT_PASSWORD_2")?></p>
+<!--        <p class="bx-authform-note-container">--><?//=GetMessage("AUTH_FORGOT_PASSWORD_2")?><!--</p>-->
 
         <form name="bform" method="post" target="_top" action="<?=$arResult["AUTH_URL"]?>">
             <?if($arResult["BACKURL"] <> ''):?>
@@ -44,7 +44,7 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/recovery-pass/recovery-pass.min.js");
             <div class="bx-authform-formgroup-container">
                 <div class="input__wrap">
                     <label class="input__wrap_label"><?echo GetMessage("AUTH_LOGIN_EMAIL")?></label>
-                    <input type="text" name="USER_LOGIN" maxlength="255" value="<?=$arResult["LAST_LOGIN"]?>" />
+                    <input type="text" name="USER_LOGIN" placeholder="example@gmail.com" maxlength="255" value="" />
                     <input type="hidden" name="USER_EMAIL" />
                 </div>
                 <div class="bx-authform-note-container"><?echo GetMessage("forgot_pass_email_note")?></div>
@@ -82,6 +82,7 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/recovery-pass/recovery-pass.min.js");
             </div>
 
         </form>
+        <?php } ?>
 
     </div>
 </section>
