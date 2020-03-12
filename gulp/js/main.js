@@ -6,15 +6,26 @@ $(document).ready(function() {
 
 
   if(window.location.href.search("change_password=success") !== -1){
+
+    var change_password_cook =  getCookie("change_password");
+
+  if(change_password_cook == "" || change_password_cook === undefined || change_password_cook === null) {
     setTimeout(function() {
+      setCookie("change_password", "1");
       $.magnificPopup.open({
         items: {
           src: '<div class="white-popup custom_styles_popup">Вы успешно изменили пароль! Теперь можете авторизоваться.</div>',
           type: 'inline',
         },
       });
-      $('body').css({'overflow': 'initial'});
+          $('body').css({'overflow': 'initial'});
     }, 800);
+  }else{
+
+  }
+
+  }else{
+    deleteCookie("change_password");
   }
 
 
@@ -1046,4 +1057,40 @@ function timer_for_sms() {
   setTimeout(function() {
     $('.sms-again-button').removeAttr('disabled');
   }, 30000);
+}
+function getCookie(name) {
+  var value = "; " + document.cookie;
+  var parts = value.split("; " + name + "=");
+  if (parts.length == 2) return parts.pop().split(";").shift();
+}
+
+function deleteCookie(name) {
+  setCookie(name, "", {
+    'max-age': -1
+  })
+}
+
+
+function setCookie(name, value, options = {}) {
+
+  options = {
+    path: '/',
+
+  };
+
+  if (options.expires instanceof Date) {
+    options.expires = options.expires.toUTCString();
+  }
+
+  let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+  for (let optionKey in options) {
+    updatedCookie += "; " + optionKey;
+    let optionValue = options[optionKey];
+    if (optionValue !== true) {
+      updatedCookie += "=" + optionValue;
+    }
+  }
+
+  document.cookie = updatedCookie;
 }
