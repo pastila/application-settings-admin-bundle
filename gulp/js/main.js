@@ -949,15 +949,8 @@ function form_us(){
       fd.append('import_file5', input_file.prop('files')[4]);
     }
       if (input_file.prop('files')[5] != undefined) {
-        $(".file_input_half").after('   <div class="popover_error">\n' +
-            '          <div class="popover_error_arrow"></div>\n' +
-            '          <div class="popover_error_image">\n' +
-            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
-            '          </div>\n' +
-            '          <div class="popover_error_text">\n' +
-            '        Максимально 5 картинок.\n' +
-            '      </div>\n' +
-            '      </div>');
+        $(".file_input_half").after(
+            '<p class="label danger"  >Максимально 5 картинок</p>');
         error.push("mane_img");
       }
 
@@ -994,43 +987,17 @@ function form_us(){
             },
           });
         } else if (suc.captcha == "1") {
-
-
-
-          $("#captcha-error_parent").after('   <div class="popover_error">\n' +
-              '          <div class="popover_error_arrow"></div>\n' +
-              '          <div class="popover_error_image">\n' +
-              '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
-              '          </div>\n' +
-              '          <div class="popover_error_text">\n' +
-              '        Код капчи не верный.\n' +
-              '      </div>\n' +
-              '      </div>');
+          $("#captcha-error_parent").after(
+              '<p class="label danger"  >Код капчи не верный</p>');
 
         } else {
-
           if (suc.size == "1") {
-            $(".file_input_half").after('   <div class="popover_error">\n' +
-                '          <div class="popover_error_arrow"></div>\n' +
-                '          <div class="popover_error_image">\n' +
-                '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
-                '          </div>\n' +
-                '          <div class="popover_error_text">\n' +
-                '        Файлы с недопустимым размером.\n' +
-                '      </div>\n' +
-                '      </div>');
+            $(".file_input_half").after(
+                '<p class="label danger"  >Файлы с недопустимым размером</p>');
           }
           if (suc.format == "1") {
-
-            $(".file_input_half").after('   <div class="popover_error">\n' +
-                '          <div class="popover_error_arrow"></div>\n' +
-                '          <div class="popover_error_image">\n' +
-                '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
-                '          </div>\n' +
-                '          <div class="popover_error_text">\n' +
-                '        Файлы с недопустимым форматом.\n' +
-                '      </div>\n' +
-                '      </div>');
+            $(".file_input_half").after(
+                '<p class="label danger"  >Файлы с недопустимым форматом</p>');
           }
         }
 
@@ -1072,16 +1039,8 @@ function form_us_two(){
       fd.append('import_file5', input_file.prop('files')[4]);
     }
     if (input_file.prop('files')[5] != undefined) {
-
-      $(".file_input_half").after('   <div class="popover_error">\n' +
-          '          <div class="popover_error_arrow"></div>\n' +
-          '          <div class="popover_error_image">\n' +
-          '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
-          '          </div>\n' +
-          '          <div class="popover_error_text">\n' +
-          '        Максимально 5 картинок.\n' +
-          '      </div>\n' +
-          '      </div>');
+      $(".file_input_half").after(
+          '<p class="label danger"  >Максимально 5 картинок</p>');
       error.push("mane_img");
     }
 
@@ -1118,38 +1077,17 @@ function form_us_two(){
               }
             });
           } else if (suc.captcha == "1") {
-            $("#captcha-error_parent").after('   <div class="popover_error">\n' +
-                '          <div class="popover_error_arrow"></div>\n' +
-                '          <div class="popover_error_image">\n' +
-                '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
-                '          </div>\n' +
-                '          <div class="popover_error_text">\n' +
-                '        Код капчи не верный.\n' +
-                '      </div>\n' +
-                '      </div>');
+            $("#captcha-error_parent").after(
+                '<p class="label danger"  >Код капчи не верный</p>');
 
           } else {
             if (suc.size == "1") {
-              $(".file_input_half").after('   <div class="popover_error">\n' +
-                  '          <div class="popover_error_arrow"></div>\n' +
-                  '          <div class="popover_error_image">\n' +
-                  '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
-                  '          </div>\n' +
-                  '          <div class="popover_error_text">\n' +
-                  '        Файлы с недопустимым размером.\n' +
-                  '      </div>\n' +
-                  '      </div>');
+              $(".file_input_half").after(
+                  '<p class="label danger"  >Файлы с недопустимым размером</p>');
             }
             if (suc.format == "1") {
-              $(".file_input_half").after('   <div class="popover_error">\n' +
-                  '          <div class="popover_error_arrow"></div>\n' +
-                  '          <div class="popover_error_image">\n' +
-                  '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
-                  '          </div>\n' +
-                  '          <div class="popover_error_text">\n' +
-                  '        Файлы с недопустимым форматом.\n' +
-                  '      </div>\n' +
-                  '      </div>');
+              $(".file_input_half").after(
+                  '<p class="label danger"  >Файлы с недопустимым форматом</p>');
             }
           }
 
@@ -1178,62 +1116,4 @@ function timer_for_sms() {
   setTimeout(function() {
     $('.sms-again-button').removeAttr('disabled');
   }, 30000);
-}
-var obj_correction_name={
-  is_harder_str : function(str) {
-    if (str.val().search("-") === -1) {
-      return false;
-    }else{
-      return true;
-    }
-  },
-  correction_plain_str :function(str) {
-    var first_simvol = str.val()[0].toUpperCase();
-    var other = str.val().slice(1).toLowerCase();
-    return first_simvol + other;
-  },
-  correction_harder_str : function(str) {
-    var harder_str = str.val().split("-");
-    var first_simvol_first_str = harder_str[0][0].toUpperCase();
-    var other_first_str = harder_str[0].slice(1).toLowerCase();
-    var first_simvol_second_str = harder_str[1][0].toUpperCase();
-    var other_second_str = harder_str[1].slice(1).toLowerCase();
-    return first_simvol_first_str + other_first_str + '-' + first_simvol_second_str + other_second_str;
-  }
-};
-function getCookie(name) {
-  var value = "; " + document.cookie;
-  var parts = value.split("; " + name + "=");
-  if (parts.length == 2) return parts.pop().split(";").shift();
-}
-
-function deleteCookie(name) {
-  setCookie(name, "", {
-    'max-age': -1
-  })
-}
-
-
-function setCookie(name, value, options = {}) {
-
-  options = {
-    path: '/',
-
-  };
-
-  if (options.expires instanceof Date) {
-    options.expires = options.expires.toUTCString();
-  }
-
-  let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
-
-  for (let optionKey in options) {
-    updatedCookie += "; " + optionKey;
-    let optionValue = options[optionKey];
-    if (optionValue !== true) {
-      updatedCookie += "=" + optionValue;
-    }
-  }
-
-  document.cookie = updatedCookie;
 }
