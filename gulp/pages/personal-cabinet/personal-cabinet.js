@@ -7,11 +7,11 @@ var data = {
 
 $(document).ready(function() {
 
-  $('#children_last_name_add, #children_name_add, #children_second_name_add, #famaly-name, #name, #last-name, [id*=children_second_name_add], [id*=children_name_add],[id*=children_last_name_add]').bind('change keyup input click', function() {
-    if (this.value.match(/[^а-яёА-ЯЁ\-]/g)) {
-      this.value = this.value.replace(/[^а-яёА-ЯЁ\-]/g, '');
-    }
-  });
+  // $('#children_last_name_add, #children_name_add, #children_second_name_add, #famaly-name, #name, #last-name, [id*=children_second_name_add], [id*=children_name_add],[id*=children_last_name_add]').bind('change keyup input click', function() {
+  //   if (this.value.match(/[^а-яёА-ЯЁ\-]/g)) {
+  //     this.value = this.value.replace(/[^а-яёА-ЯЁ\-]/g, '');
+  //   }
+  // });
 
   $("#famaly-name, [id*=children_last_name_add]").on('keyup', function() {
     var $this = $(this);
