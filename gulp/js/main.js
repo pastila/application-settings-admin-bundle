@@ -4,48 +4,47 @@
 //= ../../node_modules/air-datepicker/dist/js/datepicker.min.js
 $(document).ready(function() {
 
+  if (window.location.href.search('change_password=success') !== -1) {
 
-  if(window.location.href.search("change_password=success") !== -1){
+    var change_password_cook = getCookie('change_password');
+    console.log('1');
+    if (change_password_cook == '' || change_password_cook === undefined ||
+        change_password_cook === null) {
+      setTimeout(function() {
+        setCookie('change_password', '1');
+        $.magnificPopup.open({
+          items: {
+            src: '<div class="white-popup custom_styles_popup">Вы успешно изменили пароль! Теперь можете авторизоваться.</div>',
+            type: 'inline',
+          },
+        });
 
-    var change_password_cook =  getCookie("change_password");
+        $('body').css({'overflow': 'initial'});
+      }, 800);
+    } else {
 
-  if(change_password_cook == "" || change_password_cook === undefined || change_password_cook === null) {
+    }
+
+  } else {
+    deleteCookie('change_password');
+  }
+
+  $('#write-us_modal').click(function() {
     setTimeout(function() {
-      setCookie("change_password", "1");
-      $.magnificPopup.open({
-        items: {
-          src: '<div class="white-popup custom_styles_popup">Вы успешно изменили пароль! Теперь можете авторизоваться.</div>',
-          type: 'inline',
-        },
-      });
-          $('body').css({'overflow': 'initial'});
-    }, 800);
-  }else{
-
-  }
-
-  }else{
-    deleteCookie("change_password");
-  }
-
-
-  $("#write-us_modal").click(function() {
-   setTimeout(function() {
-     form_us();
-   },1500)
+      form_us();
+    }, 1500);
   });
 
+  var url = window.location.pathname;
 
- var url =  window.location.pathname;
+  if (url.search('contact_us/') != -1) {
 
-  if(url.search("contact_us/") != -1){
-
-      form_us_two();
+    form_us_two();
 
   }
-  if(url.search("/forma-obrashenija/") == -1){
-    if($(".header__r_auth_reg").length != 0) {
-      $(".header__r_auth_reg").attr("data-rigstration", "2");
+  if (url.search('/forma-obrashenija/') == -1) {
+    if ($('.header__r_auth_reg').length != 0) {
+      $('.header__r_auth_reg').attr('data-rigstration', '2');
     }
   }
 
@@ -54,9 +53,9 @@ $(document).ready(function() {
     if (!div.is(e.target)) {
       div.remove();
     }
-    var popover = $(".popover_error");
+    var popover = $('.popover_error');
     if (!popover.is(e.target)) {
-      popover.fadeToggle(400,"linear",function() {
+      popover.fadeToggle(400, 'linear', function() {
         popover.remove();
       });
     }
@@ -78,66 +77,65 @@ $(document).ready(function() {
   });
 
   function FormReg() {
-    $('#famaly-name, #name , #last-name').bind('change keyup input click', function() {
-      if (this.value.match(/[^а-яёА-ЯЁ\-]/g)) {
-        this.value = this.value.replace(/[^а-яёА-ЯЁ\-]/g, '');
-      }
-    });
+    $('#famaly-name, #name , #last-name').
+        bind('change keyup input click', function() {
+          if (this.value.match(/[^а-яёА-ЯЁ\-]/g)) {
+            this.value = this.value.replace(/[^а-яёА-ЯЁ\-]/g, '');
+          }
+        });
 
-      $('#phone').mask('+7(000)000-00-00');
-    $("#famaly-name").on('keyup', function() {
-       var $this = $(this);
+    $('#phone').mask('+7(000)000-00-00');
+    $('#famaly-name').on('keyup', function() {
+      var $this = $(this);
       clearTimeout($this.data('timer'));
       $this.data('timer', setTimeout(function() {
         $this.removeData('timer');
 
-        if($this.val().length > 0) {
-          if(obj_correction_name.is_harder_str($this) === false){
-            var new_str =  obj_correction_name.correction_plain_str($this);
+        if ($this.val().length > 0) {
+          if (obj_correction_name.is_harder_str($this) === false) {
+            var new_str = obj_correction_name.correction_plain_str($this);
             $this.val(new_str);
           } else {
-            var new_str =  obj_correction_name.correction_harder_str($this);
+            var new_str = obj_correction_name.correction_harder_str($this);
             $this.val(new_str);
           }
         }
-      },2200));
+      }, 2200));
     });
 
-
-
-    $("#name").on('keyup', function() {
-       var $this = $(this);
+    $('#name').on('keyup', function() {
+      var $this = $(this);
       clearTimeout($this.data('timer'));
       $this.data('timer', setTimeout(function() {
         $this.removeData('timer');
 
-        if($this.val().length > 0) {
-          if(obj_correction_name.is_harder_str($this) === false){
-            var new_str =  obj_correction_name.correction_plain_str($this);
+        if ($this.val().length > 0) {
+          if (obj_correction_name.is_harder_str($this) === false) {
+            var new_str = obj_correction_name.correction_plain_str($this);
             $this.val(new_str);
           } else {
-           var new_str =  obj_correction_name.correction_harder_str($this);
+            var new_str = obj_correction_name.correction_harder_str($this);
             $this.val(new_str);
           }
         }
 
-      },2200));
+      }, 2200));
     });
-    $("#last-name").on('keyup', function() {
-       var $this = $(this);
+    $('#last-name').on('keyup', function() {
+      var $this = $(this);
       clearTimeout($this.data('timer'));
       $this.data('timer', setTimeout(function() {
         $this.removeData('timer');
-        if($this.val().length > 0) {
-          if(obj_correction_name.is_harder_str($this) === false){
-            var new_str =  obj_correction_name.correction_plain_str($this);
+        if ($this.val().length > 0) {
+          if (obj_correction_name.is_harder_str($this) === false) {
+            var new_str = obj_correction_name.correction_plain_str($this);
             $this.val(new_str);
           } else {
-            var new_str =  obj_correction_name.correction_harder_str($this);
+            var new_str = obj_correction_name.correction_harder_str($this);
             $this.val(new_str);
           }
         }
-      },2200));
+      }, 2200));
     });
     $('.numberInput').bind('change keyup input click', function() {
       if (this.value.match(/[^0-9]/g)) {
@@ -148,7 +146,7 @@ $(document).ready(function() {
     let year = today.getFullYear() - 18;
     today.setFullYear(year);
     $('#datepicker_reg').datepicker({
-      maxDate: today
+      maxDate: today,
     });
     $('#datepickers-container').css({'z-index': '9999'});
 
@@ -341,13 +339,11 @@ $(document).ready(function() {
 
     });
 
-
     document.getElementById('password').onchange = validatePassword;
     document.getElementById('pass_conf').onchange = validatePassword;
     // $(".check-img").click(function() {
     //   $(this).toggleClass("click");
     // })
-
 
     $('#auth-form-reg').validator().on('submit', function(e) {
       e.preventDefault();
@@ -367,11 +363,10 @@ $(document).ready(function() {
       //
       // }
 
-
       var data_form = $('#auth-form-reg').serializeArray();
 
       let region = $('#referal').attr('data-id_region');
-      if (region == '' || region == undefined || region == "0") {
+      if (region == '' || region == undefined || region == '0') {
         $('#referal').after('   <div class="popover_error">\n' +
             '          <div class="popover_error_arrow"></div>\n' +
             '          <div class="popover_error_image">\n' +
@@ -387,7 +382,7 @@ $(document).ready(function() {
         data_form.push({'name': 'id_region', 'value': region});
       }
       let company = $('#referal_two').attr('data-id_region');
-      if (company == '' || company == undefined || company == "0") {
+      if (company == '' || company == undefined || company == '0') {
         $('#referal_two').after('   <div class="popover_error">\n' +
             '          <div class="popover_error_arrow"></div>\n' +
             '          <div class="popover_error_image">\n' +
@@ -402,39 +397,38 @@ $(document).ready(function() {
         data_form.push({'name': 'company', 'value': company});
       }
 
+      let plan = [];
+      let input = $('.checkbox_registration_modal');
+      $(input).find('input:checked').each(function() {
+        plan.push(this.value);
+      });
 
+      // if(plan.length == 0 ){
+      //     input.after(
+      //         '<p class="label danger">Подтвердите свое согласие</p>');
+      //     errors.push("error8");
+      // }
 
-
-         let plan =[];
-        let input = $('.checkbox_registration_modal');
-        $(input).find('input:checked').each(function() {
-            plan.push(this.value);
-        });
-
-        // if(plan.length == 0 ){
-        //     input.after(
-        //         '<p class="label danger">Подтвердите свое согласие</p>');
-        //     errors.push("error8");
-        // }
-
-      if(plan.length == 0 ){
-        input.children(".check-label").children(".check-img_reg").after('   <div class="popover_error">\n' +
-            '          <div class="popover_error_arrow"></div>\n' +
-            '          <div class="popover_error_image">\n' +
-            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
-            '          </div>\n' +
-            '          <div class="popover_error_text">\n' +
-            '          Подтвердите свое согласие.\n' +
-            '      </div>\n' +
-            '      </div>');
-        errors.push("error8");
+      if (plan.length == 0) {
+        input.children('.check-label').
+            children('.check-img_reg').
+            after('   <div class="popover_error">\n' +
+                '          <div class="popover_error_arrow"></div>\n' +
+                '          <div class="popover_error_image">\n' +
+                '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+                '          </div>\n' +
+                '          <div class="popover_error_text">\n' +
+                '          Подтвердите свое согласие.\n' +
+                '      </div>\n' +
+                '      </div>');
+        errors.push('error8');
 
       }
-      var data = $(".datepicker-here").val();
+      var data = $('.datepicker-here').val();
       var re = /^(\d+)[.](\d+)[.](\d+)/;
-      if (re.test( data ) ) {
-      }else{
-        $(".datepicker-here").after('   <div class="popover_error">\n' +
+      if (re.test(data)) {
+      } else {
+        $('.datepicker-here').after('   <div class="popover_error">\n' +
             '          <div class="popover_error_arrow"></div>\n' +
             '          <div class="popover_error_image">\n' +
             '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
@@ -443,12 +437,11 @@ $(document).ready(function() {
             '          Выберите дату рождения.\n' +
             '      </div>\n' +
             '      </div>');
-        errors.push("error9");
+        errors.push('error9');
       }
 
-
       if ($('#check-code-js').val().length === 0) {
-        $("#check-code-js").after('   <div class="popover_error">\n' +
+        $('#check-code-js').after('   <div class="popover_error">\n' +
             '          <div class="popover_error_arrow"></div>\n' +
             '          <div class="popover_error_image">\n' +
             '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
@@ -466,7 +459,7 @@ $(document).ready(function() {
             '         Введите код подтверждения.\n' +
             '      </div>\n' +
             '      </div>');
-        errors.push("error10");
+        errors.push('error10');
       } else if ($('#check-code-js').val().length > 0) {
         if (errors.length === 0) {
           $.ajax({
@@ -484,10 +477,6 @@ $(document).ready(function() {
 
               }
 
-
-
-
-
               if (suc.error === 'mail') {
                 var email = $('#email');
                 email.after('   <div class="popover_error">\n' +
@@ -500,9 +489,6 @@ $(document).ready(function() {
                     '      </div>\n' +
                     '      </div>');
               }
-
-
-
 
               if (suc.error === 'polic') {
                 var email = $('#number_polic');
@@ -530,16 +516,8 @@ $(document).ready(function() {
                     '      </div>');
               }
 
-
-
-
-
-
-
-
-
-              if(suc.error_sms !== undefined)  {
-                $("#check-code-js").after('   <div class="popover_error">\n' +
+              if (suc.error_sms !== undefined) {
+                $('#check-code-js').after('   <div class="popover_error">\n' +
                     '          <div class="popover_error_arrow"></div>\n' +
                     '          <div class="popover_error_image">\n' +
                     '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
@@ -550,9 +528,9 @@ $(document).ready(function() {
                     '      </div>');
               }
 
-              if (suc.user_success === "success") {
+              if (suc.user_success === 'success') {
 
-                if ($('.header__r_auth_reg').attr('data-rigstration') == "0") {
+                if ($('.header__r_auth_reg').attr('data-rigstration') == '0') {
 
                   $('#auth-form-reg').find($('.close-modal')).trigger('click');
 
@@ -567,8 +545,8 @@ $(document).ready(function() {
 
                     },
                     success: function(msg) {
-                      $(".header__r").html("");
-                      $(".header__r").html(msg);
+                      $('.header__r').html('');
+                      $('.header__r').html(msg);
                     },
                   }).done(function(msg) {
                     setTimeout(function() {
@@ -641,6 +619,7 @@ $(document).ready(function() {
       }
     });
   }
+
   function FormAuth() {
 
     $('#auth-form-login').validator().on('submit', function(e) {
@@ -669,8 +648,8 @@ $(document).ready(function() {
 
               },
               success: function(msg) {
-                $(".header__r").html("");
-                $(".header__r").html(msg);
+                $('.header__r').html('');
+                $('.header__r').html(msg);
               },
             }).done(function(msg) {
               setTimeout(function() {
@@ -697,7 +676,7 @@ $(document).ready(function() {
       $('#auth-form-login').find($('.close-modal')).trigger('click');
       setTimeout(function() {
         $('#reg-link').trigger('click');
-      },1000)
+      }, 1000);
     });
 
   }
@@ -819,7 +798,6 @@ function responseMessage(msg) {
   $('.success-box div.text-message').html('<span>' + msg + '</span>');
 }
 
-
 // hasClass
 function hasClass(elem, className) {
   return new RegExp(' ' + className + ' ').test(' ' + elem.className + ' ');
@@ -857,17 +835,16 @@ function toggleClass(elem, className) {
 }
 
 $(document).ready(function() {
-  $(document).on("click","#show-mnu",function() {
+  $(document).on('click', '#show-mnu', function() {
     $('#show-mnu').toggleClass('active');
   });
   $(document).on('click', function(e) {
-    if (!$(e.target).closest("#show-mnu , #menu ").length) {
+    if (!$(e.target).closest('#show-mnu , #menu ').length) {
       $('#show-mnu').removeClass('active');
     }
     e.stopPropagation();
   });
-})
-
+});
 
 function lazyloadImage() {
   const images = document.querySelectorAll('[data-src]');
@@ -919,107 +896,15 @@ function validatePassword() {
 //empty string means no validation error
 }
 
-function form_us(){
+function form_us() {
 
-    $('#feedback_modal').validator().on('submit', function(e) {
-
-
-    e.preventDefault();
-      var fd = new FormData();
-      var error = [];
-
-
-    var  data_FORM = $("#feedback_modal").serializeArray();
-
-    var input_file = $('.file-simple');
-
-    if (input_file.prop('files')[0] != undefined) {
-      fd.append('import_file1', input_file.prop('files')[0]);
-    }
-    if (input_file.prop('files')[1] != undefined) {
-      fd.append('import_file2', input_file.prop('files')[1]);
-    }
-    if (input_file.prop('files')[2] != undefined) {
-      fd.append('import_file3', input_file.prop('files')[2]);
-    }
-    if (input_file.prop('files')[3] != undefined) {
-      fd.append('import_file4', input_file.prop('files')[3]);
-    }
-    if (input_file.prop('files')[4] != undefined) {
-      fd.append('import_file5', input_file.prop('files')[4]);
-    }
-      if (input_file.prop('files')[5] != undefined) {
-        $(".file_input_half").after(
-            '<p class="label danger"  >Максимально 5 картинок</p>');
-        error.push("mane_img");
-      }
-
-        fd.append('name', data_FORM[0]['value']);
-        fd.append('email', data_FORM[1]['value']);
-        fd.append('text', data_FORM[2]['value']);
-        fd.append('captcha_code', data_FORM[3]['value']);
-        fd.append('captcha_word', data_FORM[4]['value']);
-  if(error.length  == "0") {
-    $.ajax({
-
-      url: '/ajax/form_ask/ask.php',
-      type: 'POST',
-      data: fd,
-      processData: false,
-      contentType: false,
-      beforeSend: function() {
-
-      },
-      success: function(msg) {
-        var suc = JSON.parse(msg);
-
-        if (suc.suc == "1") {
-          $.magnificPopup.open({
-            items: {
-              src: '<div class="white-popup custom_styles_popup"><button title="Закрыть" type="button" class="mfp-close">×</button>' +
-              'Ваше письмо отправленно успешно</div>',
-              type: 'inline',
-            },
-            callbacks: {
-              afterClose: function() {
-                document.location.reload(true);
-              },
-            },
-          });
-        } else if (suc.captcha == "1") {
-          $("#captcha-error_parent").after(
-              '<p class="label danger"  >Код капчи не верный</p>');
-
-        } else {
-          if (suc.size == "1") {
-            $(".file_input_half").after(
-                '<p class="label danger"  >Файлы с недопустимым размером</p>');
-          }
-          if (suc.format == "1") {
-            $(".file_input_half").after(
-                '<p class="label danger"  >Файлы с недопустимым форматом</p>');
-          }
-        }
-
-      },
-    }).done(function(msg) {
-
-    });
-  }
-
-    return false;
-  });
-}
-function form_us_two(){
-  $('#feedback_modal_two').validator().on('submit', function(e) {
-
+  $('#feedback_modal').validator().on('submit', function(e) {
 
     e.preventDefault();
     var fd = new FormData();
     var error = [];
 
-
-    var  data_FORM = $("#feedback_modal_two").serializeArray();
+    var data_FORM = $('#feedback_modal').serializeArray();
 
     var input_file = $('.file-simple');
 
@@ -1039,9 +924,9 @@ function form_us_two(){
       fd.append('import_file5', input_file.prop('files')[4]);
     }
     if (input_file.prop('files')[5] != undefined) {
-      $(".file_input_half").after(
+      $('.file_input_half').after(
           '<p class="label danger"  >Максимально 5 картинок</p>');
-      error.push("mane_img");
+      error.push('mane_img');
     }
 
     fd.append('name', data_FORM[0]['value']);
@@ -1049,7 +934,7 @@ function form_us_two(){
     fd.append('text', data_FORM[2]['value']);
     fd.append('captcha_code', data_FORM[3]['value']);
     fd.append('captcha_word', data_FORM[4]['value']);
-    if(error.length  == "0") {
+    if (error.length == '0') {
       $.ajax({
 
         url: '/ajax/form_ask/ask.php',
@@ -1063,7 +948,7 @@ function form_us_two(){
         success: function(msg) {
           var suc = JSON.parse(msg);
 
-          if (suc.suc == "1") {
+          if (suc.suc == '1') {
             $.magnificPopup.open({
               items: {
                 src: '<div class="white-popup custom_styles_popup"><button title="Закрыть" type="button" class="mfp-close">×</button>' +
@@ -1074,19 +959,19 @@ function form_us_two(){
                 afterClose: function() {
                   document.location.reload(true);
                 },
-              }
+              },
             });
-          } else if (suc.captcha == "1") {
-            $("#captcha-error_parent").after(
+          } else if (suc.captcha == '1') {
+            $('#captcha-error_parent').after(
                 '<p class="label danger"  >Код капчи не верный</p>');
 
           } else {
-            if (suc.size == "1") {
-              $(".file_input_half").after(
+            if (suc.size == '1') {
+              $('.file_input_half').after(
                   '<p class="label danger"  >Файлы с недопустимым размером</p>');
             }
-            if (suc.format == "1") {
-              $(".file_input_half").after(
+            if (suc.format == '1') {
+              $('.file_input_half').after(
                   '<p class="label danger"  >Файлы с недопустимым форматом</p>');
             }
           }
@@ -1100,8 +985,99 @@ function form_us_two(){
     return false;
   });
 }
+
+function form_us_two() {
+  $('#feedback_modal_two').validator().on('submit', function(e) {
+
+    e.preventDefault();
+    var fd = new FormData();
+    var error = [];
+
+    var data_FORM = $('#feedback_modal_two').serializeArray();
+
+    var input_file = $('.file-simple');
+
+    if (input_file.prop('files')[0] != undefined) {
+      fd.append('import_file1', input_file.prop('files')[0]);
+    }
+    if (input_file.prop('files')[1] != undefined) {
+      fd.append('import_file2', input_file.prop('files')[1]);
+    }
+    if (input_file.prop('files')[2] != undefined) {
+      fd.append('import_file3', input_file.prop('files')[2]);
+    }
+    if (input_file.prop('files')[3] != undefined) {
+      fd.append('import_file4', input_file.prop('files')[3]);
+    }
+    if (input_file.prop('files')[4] != undefined) {
+      fd.append('import_file5', input_file.prop('files')[4]);
+    }
+    if (input_file.prop('files')[5] != undefined) {
+      $('.file_input_half').after(
+          '<p class="label danger"  >Максимально 5 картинок</p>');
+      error.push('mane_img');
+    }
+
+    fd.append('name', data_FORM[0]['value']);
+    fd.append('email', data_FORM[1]['value']);
+    fd.append('text', data_FORM[2]['value']);
+    fd.append('captcha_code', data_FORM[3]['value']);
+    fd.append('captcha_word', data_FORM[4]['value']);
+    if (error.length == '0') {
+      $.ajax({
+
+        url: '/ajax/form_ask/ask.php',
+        type: 'POST',
+        data: fd,
+        processData: false,
+        contentType: false,
+        beforeSend: function() {
+
+        },
+        success: function(msg) {
+          var suc = JSON.parse(msg);
+
+          if (suc.suc == '1') {
+            $.magnificPopup.open({
+              items: {
+                src: '<div class="white-popup custom_styles_popup"><button title="Закрыть" type="button" class="mfp-close">×</button>' +
+                'Ваше письмо отправленно успешно</div>',
+                type: 'inline',
+              },
+              callbacks: {
+                afterClose: function() {
+                  document.location.reload(true);
+                },
+              },
+            });
+          } else if (suc.captcha == '1') {
+            $('#captcha-error_parent').after(
+                '<p class="label danger"  >Код капчи не верный</p>');
+
+          } else {
+            if (suc.size == '1') {
+              $('.file_input_half').after(
+                  '<p class="label danger"  >Файлы с недопустимым размером</p>');
+            }
+            if (suc.format == '1') {
+              $('.file_input_half').after(
+                  '<p class="label danger"  >Файлы с недопустимым форматом</p>');
+            }
+          }
+
+        },
+      }).done(function(msg) {
+
+      });
+    }
+
+    return false;
+  });
+}
+
 function isValidEmailAddress(emailAddress) {
-  var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+  var pattern = new RegExp(
+      /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
   return pattern.test(emailAddress);
 }
 
