@@ -55,7 +55,7 @@ CModule::IncludeModule("iblock");
             <!-- Input -->
             <div class="input__wrap">
                 <label class="input__wrap_label">Электронная почта</label>
-                <input id="email" type="email" name="email" required>
+                <input id="email" type="email" name="email" pattern="^[a-z]+@[a-z]+\.[a-z]{2,6}$" required>
             </div>
 
         </div>
