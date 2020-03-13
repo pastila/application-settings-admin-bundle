@@ -7,9 +7,8 @@ $(document).ready(function() {
   if (window.location.href.search('change_password=success') !== -1) {
 
     var change_password_cook = getCookie('change_password');
-    console.log('1');
-    if (change_password_cook == '' || change_password_cook === undefined ||
-        change_password_cook === null) {
+
+    if (change_password_cook == '' || change_password_cook === undefined || change_password_cook === null) {
       setTimeout(function() {
         setCookie('change_password', '1');
         $.magnificPopup.open({
@@ -21,6 +20,7 @@ $(document).ready(function() {
 
         $('body').css({'overflow': 'initial'});
       }, 800);
+      deleteCookie('change_password');
     } else {
 
     }
