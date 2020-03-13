@@ -29,6 +29,7 @@ CModule::IncludeModule("iblock");
                 <label class="input__wrap_label">Фамилия</label>
                 <input id="famaly-name" type="text" name="famaly-name" pattern="^[А-ЯЁ][а-яё]*([-][А-ЯЁ][а-яё]*)*$"
                        placeholder="Фамилия" required>
+
             </div>
 
             <!-- Input -->
@@ -54,9 +55,8 @@ CModule::IncludeModule("iblock");
             <!-- Input -->
             <div class="input__wrap">
                 <label class="input__wrap_label">Электронная почта</label>
-                <input id="email" type="email" name="email" required>
+                <input id="email" type="email" name="email" pattern="^[a-z0-9\.\-]+@[a-z]+\.[a-z]{2,6}$" required>
             </div>
-
         </div>
         <div class="popup__wrap_middle">
             <div class="input__wrap">
@@ -105,7 +105,7 @@ CModule::IncludeModule("iblock");
                     <div class="input__ico">
                         <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                     </div>
-                    <input id="referal"  value="" type="text" placeholder="Поиск по региону" autocomplete="off"/>
+                    <input id="referal"  value="" type="text" placeholder="Поиск по региону" required autocomplete="off"/>
                     <ul style="cursor: pointer;" class="custom-serach__items" id="search_result">
                         <?
                         $arOrder = Array("name"=>"asc");
@@ -126,18 +126,18 @@ CModule::IncludeModule("iblock");
                     <div class="input__ico">
                         <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                     </div>
-                    <input id="referal_two" value="" type="text" placeholder="Поиск по компаниям" autocomplete="off"/>
+                    <input id="referal_two" value="" type="text" placeholder="Поиск по компаниям"  required autocomplete="off"/>
                     <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_hospital">
 
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="wrap-chrckbox checkbox_registration checkbox_registration_modal">
-            <label class="check-label">
+        <div class="wrap-chrckbox checkbox_registration checkbox_registration_modal ">
+            <label class="check-label relative_block" >
                 Я ознакомлен и согласен с условиями <a target="_blank" href="/terms-of-use/">пользовательского соглашения</a> и
                 <a target="_blank" href="/personal-data-processing/">политикой по обработке персональных данных</a>
-                <input type="checkbox" value="" />
+                <input type="checkbox" required value="" />
                 <span class="check-img check-img_reg"></span>
         </div>
         <div class="popup__wrap_bottom center__child">
