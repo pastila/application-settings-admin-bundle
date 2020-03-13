@@ -31,23 +31,23 @@ if ($person["EMAIL"] == $clear_email) {
     }
 
 }
-if($person["UF_INSURANCE_POLICY"] == $_POST["uf_insurance_policy"]){
-
-}else{
-
-    $filter = Array(
-        "UF_INSURANCE_POLICY" => $_POST["uf_insurance_policy"],
-    );
-    $order = array('sort' => 'asc');
-    $tmp = 'sort';
-    $rsUser = CUser::GetList($order, $tmp, $filter);
-
-    if ($rsUser->SelectedRowsCount() > 0) {
-
-        $result["user_policy_already"] = "Пользователь с таким полисом уже есть";
-    }
-
-}
+//if($person["UF_INSURANCE_POLICY"] == $_POST["uf_insurance_policy"]){
+//
+//}else{
+//
+//    $filter = Array(
+//        "UF_INSURANCE_POLICY" => $_POST["uf_insurance_policy"],
+//    );
+//    $order = array('sort' => 'asc');
+//    $tmp = 'sort';
+//    $rsUser = CUser::GetList($order, $tmp, $filter);
+//
+//    if ($rsUser->SelectedRowsCount() > 0) {
+//
+//        $result["user_policy_already"] = "Пользователь с таким полисом уже есть";
+//    }
+//
+//}
 
 if(isset($result["user_email_already"]) || isset($result["user_policy_already"])){
     exit(json_encode($result));
