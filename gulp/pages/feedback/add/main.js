@@ -374,7 +374,7 @@ $(document).ready(function() {
 
       let hospital = $('#referal_two').attr('data-id_region');
       if (hospital === '' || hospital === undefined || hospital === '0') {
-        $('#referal_two') .after('   <div class="popover_error">\n' +
+        $('#referal_two').after('   <div class="popover_error">\n' +
             '          <div class="popover_error_arrow"></div>\n' +
             '          <div class="popover_error_image">\n' +
             '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
@@ -390,6 +390,20 @@ $(document).ready(function() {
         data.kpp = kpp;
         data.id_compani = hospital;
       }
+
+
+      if(data_form[0]['value'].length < 1){
+        $("#"+data_form[0]["name"]).after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '        Введите свое имя.\n' +
+            '      </div>\n' +
+            '      </div>');
+      }else 
+
       data.name_user_no_Authorized = data_form[0]['value'];
       data.head = data_form[1]['value'];
       data.text = data_form[2]['value'];
@@ -437,7 +451,7 @@ $(document).ready(function() {
       });
     },
   };
-  $('#form-comments').click(function(e) {
+  $('#submit').click(function(e) {
     e.preventDefault();
 
     var data_form = $('#form-comments').serializeArray();
