@@ -54,6 +54,12 @@ $(document).ready(function() {
     if (!div.is(e.target)) {
       div.remove();
     }
+    var popover = $(".popover_error");
+    if (!popover.is(e.target)) {
+      popover.fadeToggle(400,"linear",function() {
+        popover.remove();
+      });
+    }
     $('.error_step-card-1').removeClass('error_block');
     $('.error_step-card-3').removeClass('error_block');
     $('.error_step-card-4').removeClass('error_block');
@@ -73,8 +79,8 @@ $(document).ready(function() {
 
   function FormReg() {
     $('#famaly-name, #name , #last-name').bind('change keyup input click', function() {
-      if (this.value.match(/[^а-яёА-ЯЁ]/g)) {
-        this.value = this.value.replace(/[^а-яёА-ЯЁ]/g, '');
+      if (this.value.match(/[^а-яёА-ЯЁ\-]/g)) {
+        this.value = this.value.replace(/[^а-яёА-ЯЁ\-]/g, '');
       }
     });
 
@@ -85,36 +91,53 @@ $(document).ready(function() {
       $this.data('timer', setTimeout(function() {
         $this.removeData('timer');
 
-        if ($this.val().length > 0) {
-          var first_simvol = $this.val()[0].toUpperCase();
-          var other = $("#famaly-name").val().slice(1);
-          $("#famaly-name").val(first_simvol+other);
+        if($this.val().length > 0) {
+          if(obj_correction_name.is_harder_str($this) === false){
+            var new_str =  obj_correction_name.correction_plain_str($this);
+            $this.val(new_str);
+          } else {
+            var new_str =  obj_correction_name.correction_harder_str($this);
+            $this.val(new_str);
+          }
         }
-      },1000));
+      },2200));
     });
+
+
+
     $("#name").on('keyup', function() {
        var $this = $(this);
       clearTimeout($this.data('timer'));
       $this.data('timer', setTimeout(function() {
         $this.removeData('timer');
-        if ($this.val().length > 0) {
-          var first_simvol = $this.val()[0].toUpperCase();
-          var other = $("#name").val().slice(1);
-          $("#name").val(first_simvol+other);
+
+        if($this.val().length > 0) {
+          if(obj_correction_name.is_harder_str($this) === false){
+            var new_str =  obj_correction_name.correction_plain_str($this);
+            $this.val(new_str);
+          } else {
+           var new_str =  obj_correction_name.correction_harder_str($this);
+            $this.val(new_str);
+          }
         }
-      },1000));
+
+      },2200));
     });
     $("#last-name").on('keyup', function() {
        var $this = $(this);
       clearTimeout($this.data('timer'));
       $this.data('timer', setTimeout(function() {
         $this.removeData('timer');
-        if ($this.val().length > 0) {
-          var first_simvol = $this.val()[0].toUpperCase();
-          var other = $("#last-name").val().slice(1);
-          $("#last-name").val(first_simvol+other);
+        if($this.val().length > 0) {
+          if(obj_correction_name.is_harder_str($this) === false){
+            var new_str =  obj_correction_name.correction_plain_str($this);
+            $this.val(new_str);
+          } else {
+            var new_str =  obj_correction_name.correction_harder_str($this);
+            $this.val(new_str);
+          }
         }
-      },1000));
+      },2200));
     });
     $('.numberInput').bind('change keyup input click', function() {
       if (this.value.match(/[^0-9]/g)) {
@@ -349,8 +372,15 @@ $(document).ready(function() {
 
       let region = $('#referal').attr('data-id_region');
       if (region == '' || region == undefined || region == "0") {
-        $('#referal').after(
-            '<span class="label danger"  >Выберите регион</span>');
+        $('#referal').after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '        Выберите регион.\n' +
+            '      </div>\n' +
+            '      </div>');
         errors.push('error');
       } else {
 
@@ -358,38 +388,84 @@ $(document).ready(function() {
       }
       let company = $('#referal_two').attr('data-id_region');
       if (company == '' || company == undefined || company == "0") {
-        $('#referal_two').after(
-            '<span class="label danger"  >Выберите компанию</span>');
+        $('#referal_two').after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '        Выберите компанию.\n' +
+            '      </div>\n' +
+            '      </div>');
         errors.push('error');
       } else {
         data_form.push({'name': 'company', 'value': company});
       }
+
+
+
+
          let plan =[];
         let input = $('.checkbox_registration_modal');
         $(input).find('input:checked').each(function() {
             plan.push(this.value);
         });
 
-        if(plan.length == 0 ){
-            input.after(
-                '<p class="label danger"  >Подтвердите свое согласие</p>');
-            errors.push("error8");
-        }
+        // if(plan.length == 0 ){
+        //     input.after(
+        //         '<p class="label danger">Подтвердите свое согласие</p>');
+        //     errors.push("error8");
+        // }
+
+      if(plan.length == 0 ){
+        input.children(".check-label").children(".check-img_reg").after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '          Подтвердите свое согласие.\n' +
+            '      </div>\n' +
+            '      </div>');
+        errors.push("error8");
+
+      }
       var data = $(".datepicker-here").val();
       var re = /^(\d+)[.](\d+)[.](\d+)/;
       if (re.test( data ) ) {
       }else{
-        $(".datepicker-here").after(
-            '<p class="label danger"  >Выберите дату рождения</p>');
+        $(".datepicker-here").after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '          Выберите дату рождения.\n' +
+            '      </div>\n' +
+            '      </div>');
         errors.push("error9");
       }
 
 
       if ($('#check-code-js').val().length === 0) {
-        $("#check-code-js").after(
-            '<p class="label danger">Введите код подтверждения</p>');
-        $('.accept-phone-js').after(
-            '<p class="label danger">Введите код подтверждения</p>');
+        $("#check-code-js").after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '         Введите код подтверждения.\n' +
+            '      </div>\n' +
+            '      </div>');
+        $('.accept-phone-js').after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '         Введите код подтверждения.\n' +
+            '      </div>\n' +
+            '      </div>');
         errors.push("error10");
       } else if ($('#check-code-js').val().length > 0) {
         if (errors.length === 0) {
@@ -407,26 +483,71 @@ $(document).ready(function() {
                     '</div>');
 
               }
+
+
+
+
+
               if (suc.error === 'mail') {
                 var email = $('#email');
-                email.after(
-                    '<div class="danger" data-danger-email>Пользователь с таким эмейлом уже сущесвуте</div>');
+                email.after('   <div class="popover_error">\n' +
+                    '          <div class="popover_error_arrow"></div>\n' +
+                    '          <div class="popover_error_image">\n' +
+                    '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+                    '          </div>\n' +
+                    '          <div class="popover_error_text">\n' +
+                    '         Пользователь с таким эмейлом уже сущесвуте.\n' +
+                    '      </div>\n' +
+                    '      </div>');
               }
+
+
+
+
               if (suc.error === 'polic') {
                 var email = $('#number_polic');
-                email.after(
-                    '<div class="danger" data-danger-email>Пользователь с таким полисом уже сущесвуте</div>');
+                email.after('   <div class="popover_error">\n' +
+                    '          <div class="popover_error_arrow"></div>\n' +
+                    '          <div class="popover_error_image">\n' +
+                    '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+                    '          </div>\n' +
+                    '          <div class="popover_error_text">\n' +
+                    '         Пользователь с таким полисом уже сущесвуте.\n' +
+                    '      </div>\n' +
+                    '      </div>');
               }
 
               if (suc.company === 'Нет компании') {
-                var email = $('#company');
-                email.after(
-                    '<div class="danger" data-danger-company>В нашей базе нет этой компании ,мы не можем вас зарегестрировать </div>');
+                var company = $('#company');
+                company.after('   <div class="popover_error">\n' +
+                    '          <div class="popover_error_arrow"></div>\n' +
+                    '          <div class="popover_error_image">\n' +
+                    '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+                    '          </div>\n' +
+                    '          <div class="popover_error_text">\n' +
+                    '        В нашей базе нет этой компании ,мы не можем вас зарегестрировать.\n' +
+                    '      </div>\n' +
+                    '      </div>');
               }
 
+
+
+
+
+
+
+
+
               if(suc.error_sms !== undefined)  {
-                $("#check-code-js").after(
-                          '<p class="label danger">Неверный код подтверждения</p>');
+                $("#check-code-js").after('   <div class="popover_error">\n' +
+                    '          <div class="popover_error_arrow"></div>\n' +
+                    '          <div class="popover_error_image">\n' +
+                    '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+                    '          </div>\n' +
+                    '          <div class="popover_error_text">\n' +
+                    '        Неверный код подтверждения.\n' +
+                    '      </div>\n' +
+                    '      </div>');
               }
 
               if (suc.user_success === "success") {
@@ -1058,6 +1179,28 @@ function timer_for_sms() {
     $('.sms-again-button').removeAttr('disabled');
   }, 30000);
 }
+var obj_correction_name={
+  is_harder_str : function(str) {
+    if (str.val().search("-") === -1) {
+      return false;
+    }else{
+      return true;
+    }
+  },
+  correction_plain_str :function(str) {
+    var first_simvol = str.val()[0].toUpperCase();
+    var other = str.val().slice(1).toLowerCase();
+    return first_simvol + other;
+  },
+  correction_harder_str : function(str) {
+    var harder_str = str.val().split("-");
+    var first_simvol_first_str = harder_str[0][0].toUpperCase();
+    var other_first_str = harder_str[0].slice(1).toLowerCase();
+    var first_simvol_second_str = harder_str[1][0].toUpperCase();
+    var other_second_str = harder_str[1].slice(1).toLowerCase();
+    return first_simvol_first_str + other_first_str + '-' + first_simvol_second_str + other_second_str;
+  }
+};
 function getCookie(name) {
   var value = "; " + document.cookie;
   var parts = value.split("; " + name + "=");
