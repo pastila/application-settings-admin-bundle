@@ -298,7 +298,7 @@ $(document).ready(function() {
 
   });
   var obj_review = {
-
+    'empty_field': [],
     'user_Authorized': function(data_form) {
 
       let region = $('#referal').attr('data-id_region');
@@ -335,8 +335,34 @@ $(document).ready(function() {
         data.id_compani = hospital;
       }
 
-      data.head = data_form[0]['value'];
-      data.text = data_form[1]['value'];
+      if(data_form[0]['value'] === "" ){
+        $("#"+data_form[0]["name"]).after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '        Заполните заголовок.\n' +
+            '      </div>\n' +
+            '      </div>');
+        this.empty_field.push('error');
+      }else{
+        data.name_user_no_Authorized = data_form[0]['value'];
+      }
+      if(data_form[1]['value'] === "" ){
+        $("#"+data_form[1]["name"]).after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '        Заполните описание.\n' +
+            '      </div>\n' +
+            '      </div>');
+        this.empty_field.push('error');
+      }else{
+        data.name_user_no_Authorized = data_form[0]['value'];
+      }
       if (data.id_city === 0) {
         $('[data-select=city]').next().css({'display': 'block'});
         this.empty_field.push('city');
@@ -353,10 +379,11 @@ $(document).ready(function() {
 
     },
     'user_no_Authorized': function(data_form) {
+
+
+
       let region = $('#referal').attr('data-id_region');
       if (region == '' || region == undefined) {
-
-
         $('#referal').after('   <div class="popover_error">\n' +
             '          <div class="popover_error_arrow"></div>\n' +
             '          <div class="popover_error_image">\n' +
@@ -389,9 +416,53 @@ $(document).ready(function() {
         data.kpp = kpp;
         data.id_compani = hospital;
       }
-      data.name_user_no_Authorized = data_form[0]['value'];
-      data.head = data_form[1]['value'];
-      data.text = data_form[2]['value'];
+
+
+      if(data_form[0]['value'] === "" ){
+        $("#"+data_form[0]["name"]).after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '        Введите свое имя.\n' +
+            '      </div>\n' +
+            '      </div>');
+        this.empty_field.push('error');
+      }else{
+        data.name_user_no_Authorized = data_form[0]['value'];
+      }
+      if(data_form[1]['value']  === "" ){
+        $("#"+data_form[1]["name"]).after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '        Заполните заголовок.\n' +
+            '      </div>\n' +
+            '      </div>');
+        this.empty_field.push('error');
+      }else{
+        data.name_user_no_Authorized = data_form[1]['value'];
+      }
+      if(data_form[2]['value'] === ""){
+        $("#"+data_form[2]["name"]).after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '        Заполните описание.\n' +
+            '      </div>\n' +
+            '      </div>');
+        this.empty_field.push('error');
+      }else{
+        data.name_user_no_Authorized = data_form[2]['value'];
+      }
+
+
+
       if (data.id_city === 0) {
         $('[data-select=city]').next().css({'display': 'block'});
         this.empty_field.push('city');
@@ -406,9 +477,9 @@ $(document).ready(function() {
       }
 
     },
-    'empty_field': [],
+
     'send_data': function(data) {
-      console.log(data);
+
       $.ajax({
         url: '/ajax/add_reviews.php',
         type: 'POST',
@@ -436,15 +507,16 @@ $(document).ready(function() {
       });
     },
   };
-  $('#form-comments').validator().on('submit', function(e) {
+  $('#submit').click(function(e) {
     e.preventDefault();
 
     var data_form = $('#form-comments').serializeArray();
-
+    obj_review.empty_field = [];
 
     if ($('.header__r_auth_login').length > 0 &&
         $('.header__r_auth_reg').length > 0) {
       obj_review.user_no_Authorized(data_form);
+      console.log(obj_review.empty_field);
       if (obj_review.empty_field.length === 0) {
 
         obj_review.send_data(data);
@@ -452,6 +524,7 @@ $(document).ready(function() {
       }
     } else {
       obj_review.user_Authorized(data_form);
+      console.log(obj_review.empty_field);
       if (obj_review.empty_field.length === 0) {
 
         obj_review.send_data(data);
@@ -461,6 +534,24 @@ $(document).ready(function() {
 
   });
 });
+
+$("#name_user").on('keyup', function() {
+  var $this = $(this);
+  clearTimeout($this.data('timer'));
+  $this.data('timer', setTimeout(function() {
+    $this.removeData('timer');
+    if($this.val().length > 0) {
+      if(obj_correction_name.is_harder_str($this) === false){
+        var new_str =  obj_correction_name.correction_plain_str($this);
+        $this.val(new_str);
+      } else {
+        var new_str =  obj_correction_name.correction_harder_str($this);
+        $this.val(new_str);
+      }
+    }
+  },2200));
+});
+
 
 function delete_cookie(cookie_name) {
   var cookie_date = new Date();  // Текущая дата и время
@@ -475,3 +566,8 @@ function getCookie(name) {
   ));
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
+$('#name_user').bind('change keyup input click', function() {
+  if (this.value.match(/[^а-яёА-ЯЁ\-]/g)) {
+    this.value = this.value.replace(/[^а-яёА-ЯЁ\-]/g, '');
+  }
+});
