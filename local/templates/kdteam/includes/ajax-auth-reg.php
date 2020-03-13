@@ -55,9 +55,8 @@ CModule::IncludeModule("iblock");
             <!-- Input -->
             <div class="input__wrap">
                 <label class="input__wrap_label">Электронная почта</label>
-                <input id="email" type="email" name="email" pattern="^[a-z]+@[a-z]+\.[a-z]{2,6}$" required>
+                <input id="email" type="email" name="email" pattern="^[a-z0-9\.\-]+@[a-z]+\.[a-z]{2,6}$" required>
             </div>
-
         </div>
         <div class="popup__wrap_middle">
             <div class="input__wrap">
