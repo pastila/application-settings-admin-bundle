@@ -4,30 +4,6 @@
 //= ../../node_modules/air-datepicker/dist/js/datepicker.min.js
 $(document).ready(function() {
 
-  if (window.location.href.search('change_password=success') !== -1) {
-
-    var change_password_cook = getCookie('change_password');
-
-    if (change_password_cook == '' || change_password_cook === undefined || change_password_cook === null) {
-      setTimeout(function() {
-        setCookie('change_password', '1');
-        $.magnificPopup.open({
-          items: {
-            src: '<div class="white-popup custom_styles_popup">Вы успешно изменили пароль! Теперь можете авторизоваться.</div>',
-            type: 'inline',
-          },
-        });
-
-        $('body').css({'overflow': 'initial'});
-      }, 800);
-      deleteCookie('change_password');
-    } else {
-
-    }
-
-  } else {
-    deleteCookie('change_password');
-  }
 
   $('#write-us_modal').click(function() {
     setTimeout(function() {
