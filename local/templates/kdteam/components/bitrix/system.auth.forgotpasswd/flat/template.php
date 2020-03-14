@@ -112,7 +112,7 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/recovery-pass/recovery-pass.min.js");
           '      </div>');
     } else {
 
-      var pattern = new RegExp('^[a-z0-9.-]+@[a-z\-]+.[a-z]{2,6}$');
+      var pattern = new RegExp('^[a-z0-9.-]+@[a-z.-]+.[a-z]{2,6}$');
 
       if (pattern.test(data[3]['value'])) {
 
