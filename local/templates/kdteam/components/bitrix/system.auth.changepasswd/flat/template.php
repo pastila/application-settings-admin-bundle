@@ -49,6 +49,7 @@ if ($arResult["PHONE_REGISTRATION"]) {
                 $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
                 $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
                 $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+                $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
                 unset($_COOKIE["ghTfq4"]);
 
                 LocalRedirect("/personal-cabinet/");
