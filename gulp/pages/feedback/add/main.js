@@ -567,7 +567,7 @@ function getCookie(name) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 $('#name_user').bind('change keyup input click', function() {
-  if (this.value.match(/[^а-яёА-ЯЁ\-]/g)) {
-    this.value = this.value.replace(/[^а-яёА-ЯЁ\-]/g, '');
+  if (this.value.match(/[^а-яёА-ЯЁ\-\s]/g)) {
+    this.value = this.value.replace(/[^а-яёА-ЯЁ\-\s]/g, '');
   }
 });
