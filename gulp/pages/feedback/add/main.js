@@ -432,6 +432,7 @@ $(document).ready(function() {
       }else{
         data.name_user_no_Authorized = data_form[0]['value'];
       }
+      console.log("1");
       if(data_form[1]['value']  === "" ){
         $("#"+data_form[1]["name"]).after('   <div class="popover_error">\n' +
             '          <div class="popover_error_arrow"></div>\n' +
