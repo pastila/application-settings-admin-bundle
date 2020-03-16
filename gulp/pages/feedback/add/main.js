@@ -540,15 +540,59 @@ $("#name_user").on('keyup', function() {
   clearTimeout($this.data('timer'));
   $this.data('timer', setTimeout(function() {
     $this.removeData('timer');
+
+ var str = "";
+
+
+
     if($this.val().length > 0) {
-      if(obj_correction_name.is_harder_str($this) === false){
-        var new_str =  obj_correction_name.correction_plain_str($this);
-        $this.val(new_str);
-      } else {
-        var new_str =  obj_correction_name.correction_harder_str($this);
-        $this.val(new_str);
+
+      var harder_str = $this.val().split(" ");
+      for(var i= 0 ;i <harder_str.length ; i++){
+        if(harder_str[i][0] !== undefined) {
+
+
+          if(harder_str[i].search("-") !== -1){
+            var harder_str_str =harder_str[i].split("-");
+
+            for(var j= 0 ;j <harder_str_str.length ; j++) {
+
+              if (harder_str_str[j][0] !== undefined){
+                var first_simvol_first_str_str = harder_str_str[j][0].toUpperCase();
+              var other_first_str_str = harder_str_str[j].slice(1).
+                  toLowerCase();
+
+              str += first_simvol_first_str_str + other_first_str_str;
+              if (harder_str_str.length - 1 !== j) {
+
+                str += "-";
+              }
+            }
+            }
+
+          }else {
+
+            var first_simvol_first_str = harder_str[i][0].toUpperCase();
+            var other_first_str = harder_str[i].slice(1).toLowerCase();
+
+            str += first_simvol_first_str + other_first_str;
+            console.log();
+            if (harder_str.length - 1 !== i) {
+              str += " ";
+            }
+          }
+
+        }
+
       }
     }
+
+
+
+
+
+    $this.val(str);
+
   },2200));
 });
 
@@ -567,7 +611,7 @@ function getCookie(name) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 $('#name_user').bind('change keyup input click', function() {
-  if (this.value.match(/[^а-яёА-ЯЁ\-]/g)) {
-    this.value = this.value.replace(/[^а-яёА-ЯЁ\-]/g, '');
+  if (this.value.match(/[^а-яёА-ЯЁ\-\s]/g)) {
+    this.value = this.value.replace(/[^а-яёА-ЯЁ\-\s]/g, '');
   }
 });

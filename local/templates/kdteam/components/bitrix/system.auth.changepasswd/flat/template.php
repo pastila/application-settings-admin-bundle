@@ -28,14 +28,52 @@ if ($arResult["PHONE_REGISTRATION"]) {
     <div class="white_block block-recovery_pass">
 
         <?
+
+
+        global $USER;
         if (!empty($APPLICATION->arAuthResult)) {
-            $text = str_replace(array("<br>", "<br />"), "\n", $APPLICATION->arAuthResult["MESSAGE"]);
-            if ($APPLICATION->arAuthResult ["TYPE"] == "OK") {
-                LocalRedirect("/?change_password=success");
-            }
-            ?>
-            <div class="alert <?= ($APPLICATION->arAuthResult ["TYPE"] == "OK" ? "alert-success" : "alert-danger") ?>"><?= nl2br(htmlspecialcharsbx($text)) ?></div>
-        <? } else {
+        $text = str_replace(array("<br>", "<br />"), "\n", $APPLICATION->arAuthResult["MESSAGE"]);
+        if ($APPLICATION->arAuthResult ["TYPE"] == "OK") {
+
+        preg_match('/(.*)(USER_LOGIN=)(.*)/', $APPLICATION->GetCurUri(), $preg_url);
+        $email = $preg_url[3];
+
+        preg_match('/(.*)(\S)([0-9][0-9])(.*)/', $email, $preg_email);
+
+        $true_email = $preg_email[1] . "@" . $preg_email[4];
+
+        $cook = $_COOKIE["ghTfq4"];
+        // так нужно , первые несколько попыток $USER->Login отдает просто null
+
+        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+
+
+
+
+
+        unset($_COOKIE["ghTfq4"]);?>
+
+        <div class="alert alert-success">Вы успешно изменили пароль! Теперь можете авторизоваться.</div>
+        <?  }else{?>
+        <div class="alert alert-danger"><?= nl2br(htmlspecialcharsbx($text)) ?></div>
+        <?    }
+        }else{
             ?>
             <form class="form-recovery_main" id="recovery-password" method="post" action="<?= $arResult["AUTH_FORM"] ?>" name="bform">
                 <? if (strlen($arResult["BACKURL"]) > 0): ?>
@@ -234,7 +272,7 @@ if ($arResult["PHONE_REGISTRATION"]) {
                 '      </div>\n' +
                 '      </div>');
           }else{
-            console.log("323");
+            setCookie("ghTfq4",pass1);
             $("#recovery-password").submit();
           }
         }
