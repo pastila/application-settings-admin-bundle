@@ -4,30 +4,30 @@
 //= ../../node_modules/air-datepicker/dist/js/datepicker.min.js
 $(document).ready(function() {
 
-  if (window.location.href.search('change_password=success') !== -1) {
-
-    var change_password_cook = getCookie('change_password');
-    console.log('1');
-    if (change_password_cook == '' || change_password_cook === undefined ||
-        change_password_cook === null) {
-      setTimeout(function() {
-        setCookie('change_password', '1');
-        $.magnificPopup.open({
-          items: {
-            src: '<div class="white-popup custom_styles_popup">Вы успешно изменили пароль! Теперь можете авторизоваться.</div>',
-            type: 'inline',
-          },
-        });
-
-        $('body').css({'overflow': 'initial'});
-      }, 800);
-    } else {
-
-    }
-
-  } else {
-    deleteCookie('change_password');
-  }
+  // if (window.location.href.search('change_password=success') !== -1) {
+  //
+  //   var change_password_cook = getCookie('change_password');
+  //   console.log('1');
+  //   if (change_password_cook == '' || change_password_cook === undefined ||
+  //       change_password_cook === null) {
+  //     setTimeout(function() {
+  //       setCookie('change_password', '1');
+  //       $.magnificPopup.open({
+  //         items: {
+  //           src: '<div class="white-popup custom_styles_popup">Вы успешно изменили пароль! Теперь можете авторизоваться.</div>',
+  //           type: 'inline',
+  //         },
+  //       });
+  //
+  //       $('body').css({'overflow': 'initial'});
+  //     }, 800);
+  //   } else {
+  //
+  //   }
+  //
+  // } else {
+  //   deleteCookie('change_password');
+  // }
 
   $('#write-us_modal').click(function() {
     setTimeout(function() {
@@ -1093,3 +1093,23 @@ function timer_for_sms() {
     $('.sms-again-button').removeAttr('disabled');
   }, 30000);
 }
+var obj_correction_name={
+  is_harder_str : function(str) {
+    if (str.val().search("-") === -1) {
+      return false;
+    }
+  },
+  correction_plain_str :function(str) {
+    var first_simvol = str.val()[0].toUpperCase();
+    var other = str.val().slice(1).toLowerCase();
+    return first_simvol + other;
+  },
+  correction_harder_str : function(str) {
+    var harder_str = str.val().split("-");
+    var first_simvol_first_str = harder_str[0][0].toUpperCase();
+    var other_first_str = harder_str[0].slice(1).toLowerCase();
+    var first_simvol_second_str = harder_str[1][0].toUpperCase();
+    var other_second_str = harder_str[1].slice(1).toLowerCase();
+    return first_simvol_first_str + other_first_str + '-' + first_simvol_second_str + other_second_str;
+  }
+};
