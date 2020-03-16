@@ -44,6 +44,12 @@ if ($arResult["PHONE_REGISTRATION"]) {
 
                 $cook= $_COOKIE["ghTfq4"];
                 // так нужно , первые несколько попыток $USER->Login отдает просто null
+                sleep(1);
+                $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+                $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+                $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+                $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+                $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
                 $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
                 $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
                 $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
