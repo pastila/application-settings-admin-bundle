@@ -298,8 +298,8 @@ $(document).ready(function() {
 
   });
   var obj_review = {
-    'empty_field': [],
-    'user_Authorized': function(data_form) {
+    empty_field: [],
+    user_Authorized: function(data_form) {
 
       let region = $('#referal').attr('data-id_region');
       if (region == '' || region == undefined) {
@@ -347,7 +347,7 @@ $(document).ready(function() {
             '      </div>');
         this.empty_field.push('error');
       }else{
-        data.name_user_no_Authorized = data_form[0]['value'];
+        data.head = data_form[0]['value'];
       }
       if(data_form[1]['value'] === "" ){
         $("#"+data_form[1]["name"]).after('   <div class="popover_error">\n' +
@@ -361,7 +361,7 @@ $(document).ready(function() {
             '      </div>');
         this.empty_field.push('error');
       }else{
-        data.name_user_no_Authorized = data_form[0]['value'];
+        data.text = data_form[0]['value'];
       }
       if (data.id_city === 0) {
         $('[data-select=city]').next().css({'display': 'block'});
@@ -378,7 +378,7 @@ $(document).ready(function() {
 
 
     },
-    'user_no_Authorized': function(data_form) {
+    user_no_Authorized: function(data_form) {
 
 
 
@@ -395,7 +395,7 @@ $(document).ready(function() {
             '      </div>');
         this.empty_field.push('error');
       } else {
-        data.id_city = region;
+        data.id_city =region;
       }
 
       let hospital = $('#referal_two').attr('data-id_region');
@@ -444,7 +444,7 @@ $(document).ready(function() {
             '      </div>');
         this.empty_field.push('error');
       }else{
-        data.name_user_no_Authorized = data_form[1]['value'];
+        data.head = data_form[1]['value'];
       }
       if(data_form[2]['value'] === ""){
         $("#"+data_form[2]["name"]).after('   <div class="popover_error">\n' +
@@ -458,7 +458,7 @@ $(document).ready(function() {
             '      </div>');
         this.empty_field.push('error');
       }else{
-        data.name_user_no_Authorized = data_form[2]['value'];
+        data.text = data_form[2]['value'];
       }
 
 
@@ -478,8 +478,8 @@ $(document).ready(function() {
 
     },
 
-    'send_data': function(data) {
-
+    send_data: function(data) {
+console.log(data);
       $.ajax({
         url: '/ajax/add_reviews.php',
         type: 'POST',
@@ -516,7 +516,7 @@ $(document).ready(function() {
     if ($('.header__r_auth_login').length > 0 &&
         $('.header__r_auth_reg').length > 0) {
       obj_review.user_no_Authorized(data_form);
-      console.log(obj_review.empty_field);
+
       if (obj_review.empty_field.length === 0) {
 
         obj_review.send_data(data);
@@ -524,7 +524,7 @@ $(document).ready(function() {
       }
     } else {
       obj_review.user_Authorized(data_form);
-      console.log(obj_review.empty_field);
+
       if (obj_review.empty_field.length === 0) {
 
         obj_review.send_data(data);
