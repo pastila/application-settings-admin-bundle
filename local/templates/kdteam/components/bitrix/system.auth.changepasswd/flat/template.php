@@ -292,6 +292,4 @@ if ($arResult["PHONE_REGISTRATION"]) {
 
 
 </script>
-<script type="text/javascript">
-  document.bform.USER_CHECKWORD.focus();
-</script>
+
