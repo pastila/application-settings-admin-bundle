@@ -11,10 +11,6 @@ $(document).ready(function() {
     }, 1500);
   });
 
-
-
-
-
   var url = window.location.pathname;
 
   if (url.search('contact_us/') != -1) {
