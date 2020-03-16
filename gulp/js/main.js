@@ -11,6 +11,10 @@ $(document).ready(function() {
     }, 1500);
   });
 
+
+
+
+
   var url = window.location.pathname;
 
   if (url.search('contact_us/') != -1) {
@@ -18,6 +22,8 @@ $(document).ready(function() {
     form_us_two();
 
   }
+
+  // ?
   if (url.search('/forma-obrashenija/') == -1) {
     if ($('.header__r_auth_reg').length != 0) {
       $('.header__r_auth_reg').attr('data-rigstration', '2');
