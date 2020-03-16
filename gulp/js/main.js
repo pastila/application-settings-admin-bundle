@@ -3,31 +3,30 @@
 //= ../../node_modules/jquery-mask-plugin/dist/jquery.mask.js
 //= ../../node_modules/air-datepicker/dist/js/datepicker.min.js
 $(document).ready(function() {
-
-  // if (window.location.href.search('change_password=success') !== -1) {
-  //
-  //   var change_password_cook = getCookie('change_password');
-  //   console.log('1');
-  //   if (change_password_cook == '' || change_password_cook === undefined ||
-  //       change_password_cook === null) {
-  //     setTimeout(function() {
-  //       setCookie('change_password', '1');
-  //       $.magnificPopup.open({
-  //         items: {
-  //           src: '<div class="white-popup custom_styles_popup">Вы успешно изменили пароль! Теперь можете авторизоваться.</div>',
-  //           type: 'inline',
-  //         },
-  //       });
-  //
-  //       $('body').css({'overflow': 'initial'});
-  //     }, 800);
-  //   } else {
-  //
-  //   }
-  //
-  // } else {
-  //   deleteCookie('change_password');
-  // }
+//   if (window.location.href.search('reset_password=ok') !== -1) {
+//
+//     var change_password_cook = getCookie('change_password');
+// console.log(change_password_cook);
+//     if (change_password_cook === '' || change_password_cook === undefined || change_password_cook === null) {
+//       setTimeout(function() {
+//         setCookie('change_password', '1');
+//         $.magnificPopup.open({
+//           items: {
+//             src: '<div class="white-popup custom_styles_popup">Вы успешно изменили пароль! Теперь можете авторизоваться.</div>',
+//             type: 'inline',
+//           },
+//         });
+//
+//         $('body').css({'overflow': 'initial'});
+//       }, 800);
+//
+//     } else {
+//
+//     }
+//
+//   } else {
+//
+//   }
 
   $('#write-us_modal').click(function() {
     setTimeout(function() {
@@ -42,6 +41,8 @@ $(document).ready(function() {
     form_us_two();
 
   }
+
+  // ?
   if (url.search('/forma-obrashenija/') == -1) {
     if ($('.header__r_auth_reg').length != 0) {
       $('.header__r_auth_reg').attr('data-rigstration', '2');
@@ -1093,6 +1094,31 @@ function timer_for_sms() {
     $('.sms-again-button').removeAttr('disabled');
   }, 30000);
 }
+function getCookie(name) {
+  var value = "; " + document.cookie;
+  var parts = value.split("; " + name + "=");
+  if (parts.length == 2) return parts.pop().split(";").shift();
+}
+
+function deleteCookie(name) {
+  setCookie(name, "", {
+    'max-age': -1
+  })
+}
+
+
+function setCookie(name, value, options = {}) {
+
+  options = {
+    path: '/',
+
+  };
+
+  if (options.expires instanceof Date) {
+    options.expires = options.expires.toUTCString();
+  }
+
+  let updatedCookie = name + "=" + value;
 var obj_correction_name={
   is_harder_str : function(str) {
     if (str.val().search("-") === -1) {
@@ -1113,3 +1139,14 @@ var obj_correction_name={
     return first_simvol_first_str + other_first_str + '-' + first_simvol_second_str + other_second_str;
   }
 };
+
+  for (let optionKey in options) {
+    updatedCookie += "; " + optionKey;
+    let optionValue = options[optionKey];
+    if (optionValue !== true) {
+      updatedCookie += "=" + optionValue;
+    }
+  }
+
+  document.cookie = updatedCookie;
+}
