@@ -32,6 +32,7 @@ if ($arResult["PHONE_REGISTRATION"]) {
 
         global $USER;
         if (!empty($APPLICATION->arAuthResult)) {
+
         $text = str_replace(array("<br>", "<br />"), "\n", $APPLICATION->arAuthResult["MESSAGE"]);
         if ($APPLICATION->arAuthResult ["TYPE"] == "OK") {
 
@@ -45,23 +46,23 @@ if ($arResult["PHONE_REGISTRATION"]) {
         $cook = $_COOKIE["ghTfq4"];
         // так нужно , первые несколько попыток $USER->Login отдает просто null
 
-        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
 
 
 
@@ -74,6 +75,7 @@ if ($arResult["PHONE_REGISTRATION"]) {
         <div class="alert alert-danger"><?= nl2br(htmlspecialcharsbx($text)) ?></div>
         <?    }
         }else{
+
             ?>
             <form class="form-recovery_main" id="recovery-password" method="post" action="<?= $arResult["AUTH_FORM"] ?>" name="bform">
                 <? if (strlen($arResult["BACKURL"]) > 0): ?>
