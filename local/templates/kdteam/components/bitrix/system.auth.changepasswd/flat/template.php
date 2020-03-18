@@ -50,8 +50,8 @@ if ($arResult["PHONE_REGISTRATION"]) {
 
                 ?>
 
-                <div class="alert alert-success">Вы успешно изменили пароль!</div>
-                <div class="mainBtn  main-btn_fullwidth save">Перейти в личный кабинет.</div>
+                <div class="alert alert-success" style="text-align: center;margin: 35px;">Вы успешно изменили пароль!</div>
+                <a href="/personal-cabinet/" style="color:white;" class="mainBtn  main-btn_fullwidth" >Перейти в личный кабинет.</a>
             <? } else {
                 ?>
                 <div class="alert alert-danger"><?= nl2br(htmlspecialcharsbx($text)) ?></div>
