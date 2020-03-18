@@ -3,24 +3,49 @@
 //= ../../node_modules/jquery-mask-plugin/dist/jquery.mask.js
 //= ../../node_modules/air-datepicker/dist/js/datepicker.min.js
 $(document).ready(function() {
+//   if (window.location.href.search('reset_password=ok') !== -1) {
+//
+//     var change_password_cook = getCookie('change_password');
+// console.log(change_password_cook);
+//     if (change_password_cook === '' || change_password_cook === undefined || change_password_cook === null) {
+//       setTimeout(function() {
+//         setCookie('change_password', '1');
+//         $.magnificPopup.open({
+//           items: {
+//             src: '<div class="white-popup custom_styles_popup">Вы успешно изменили пароль! Теперь можете авторизоваться.</div>',
+//             type: 'inline',
+//           },
+//         });
+//
+//         $('body').css({'overflow': 'initial'});
+//       }, 800);
+//
+//     } else {
+//
+//     }
+//
+//   } else {
+//
+//   }
 
-  $("#write-us_modal").click(function() {
-   setTimeout(function() {
-     form_us();
-   },1500)
+  $('#write-us_modal').click(function() {
+    setTimeout(function() {
+      form_us();
+    }, 1500);
   });
 
+  var url = window.location.pathname;
 
- var url =  window.location.pathname;
+  if (url.search('contact_us/') != -1) {
 
-  if(url.search("contact_us/") != -1){
-
-      form_us_two();
+    form_us_two();
 
   }
-  if(url.search("/forma-obrashenija/") == -1){
-    if($(".header__r_auth_reg").length != 0) {
-      $(".header__r_auth_reg").attr("data-rigstration", "2");
+
+  // ?
+  if (url.search('/forma-obrashenija/') == -1) {
+    if ($('.header__r_auth_reg').length != 0) {
+      $('.header__r_auth_reg').attr('data-rigstration', '2');
     }
   }
 
@@ -28,6 +53,12 @@ $(document).ready(function() {
     var div = $('.danger');
     if (!div.is(e.target)) {
       div.remove();
+    }
+    var popover = $('.popover_error');
+    if (!popover.is(e.target)) {
+      popover.fadeToggle(400, 'linear', function() {
+        popover.remove();
+      });
     }
     $('.error_step-card-1').removeClass('error_block');
     $('.error_step-card-3').removeClass('error_block');
@@ -47,49 +78,65 @@ $(document).ready(function() {
   });
 
   function FormReg() {
-    $('#famaly-name, #name , #last-name').bind('change keyup input click', function() {
-      if (this.value.match(/[^а-яёА-ЯЁ]/g)) {
-        this.value = this.value.replace(/[^а-яёА-ЯЁ]/g, '');
-      }
+    $('#famaly-name, #name , #last-name').
+        bind('change keyup input click', function() {
+          if (this.value.match(/[^а-яёА-ЯЁ\-]/g)) {
+            this.value = this.value.replace(/[^а-яёА-ЯЁ\-]/g, '');
+          }
+        });
+
+    $('#phone').mask('+7(000)000-00-00');
+    $('#famaly-name').on('keyup', function() {
+      var $this = $(this);
+      clearTimeout($this.data('timer'));
+      $this.data('timer', setTimeout(function() {
+        $this.removeData('timer');
+
+        if ($this.val().length > 0) {
+          if (obj_correction_name.is_harder_str($this) === false) {
+            var new_str = obj_correction_name.correction_plain_str($this);
+            $this.val(new_str);
+          } else {
+            var new_str = obj_correction_name.correction_harder_str($this);
+            $this.val(new_str);
+          }
+        }
+      }, 2200));
     });
 
-      $('#phone').mask('+7(000)000-00-00');
-    $("#famaly-name").on('keyup', function() {
-       var $this = $(this);
+    $('#name').on('keyup', function() {
+      var $this = $(this);
       clearTimeout($this.data('timer'));
       $this.data('timer', setTimeout(function() {
         $this.removeData('timer');
 
         if ($this.val().length > 0) {
-          var first_simvol = $this.val()[0].toUpperCase();
-          var other = $("#famaly-name").val().slice(1);
-          $("#famaly-name").val(first_simvol+other);
+          if (obj_correction_name.is_harder_str($this) === false) {
+            var new_str = obj_correction_name.correction_plain_str($this);
+            $this.val(new_str);
+          } else {
+            var new_str = obj_correction_name.correction_harder_str($this);
+            $this.val(new_str);
+          }
         }
-      },1000));
+
+      }, 2200));
     });
-    $("#name").on('keyup', function() {
-       var $this = $(this);
+    $('#last-name').on('keyup', function() {
+      var $this = $(this);
       clearTimeout($this.data('timer'));
       $this.data('timer', setTimeout(function() {
         $this.removeData('timer');
         if ($this.val().length > 0) {
-          var first_simvol = $this.val()[0].toUpperCase();
-          var other = $("#name").val().slice(1);
-          $("#name").val(first_simvol+other);
+          if (obj_correction_name.is_harder_str($this) === false) {
+            var new_str = obj_correction_name.correction_plain_str($this);
+            $this.val(new_str);
+          } else {
+            var new_str = obj_correction_name.correction_harder_str($this);
+            $this.val(new_str);
+          }
         }
-      },1000));
-    });
-    $("#last-name").on('keyup', function() {
-       var $this = $(this);
-      clearTimeout($this.data('timer'));
-      $this.data('timer', setTimeout(function() {
-        $this.removeData('timer');
-        if ($this.val().length > 0) {
-          var first_simvol = $this.val()[0].toUpperCase();
-          var other = $("#last-name").val().slice(1);
-          $("#last-name").val(first_simvol+other);
-        }
-      },1000));
+      }, 2200));
     });
     $('.numberInput').bind('change keyup input click', function() {
       if (this.value.match(/[^0-9]/g)) {
@@ -100,7 +147,7 @@ $(document).ready(function() {
     let year = today.getFullYear() - 18;
     today.setFullYear(year);
     $('#datepicker_reg').datepicker({
-      maxDate: today
+      maxDate: today,
     });
     $('#datepickers-container').css({'z-index': '9999'});
 
@@ -293,13 +340,11 @@ $(document).ready(function() {
 
     });
 
-
     document.getElementById('password').onchange = validatePassword;
     document.getElementById('pass_conf').onchange = validatePassword;
     // $(".check-img").click(function() {
     //   $(this).toggleClass("click");
     // })
-
 
     $('#auth-form-reg').validator().on('submit', function(e) {
       e.preventDefault();
@@ -319,53 +364,103 @@ $(document).ready(function() {
       //
       // }
 
-
       var data_form = $('#auth-form-reg').serializeArray();
 
       let region = $('#referal').attr('data-id_region');
-      if (region == '' || region == undefined || region == "0") {
-        $('#referal').after(
-            '<span class="label danger"  >Выберите регион</span>');
+      if (region == '' || region == undefined || region == '0') {
+        $('#referal').after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '        Выберите регион.\n' +
+            '      </div>\n' +
+            '      </div>');
         errors.push('error');
       } else {
 
         data_form.push({'name': 'id_region', 'value': region});
       }
       let company = $('#referal_two').attr('data-id_region');
-      if (company == '' || company == undefined || company == "0") {
-        $('#referal_two').after(
-            '<span class="label danger"  >Выберите компанию</span>');
+      if (company == '' || company == undefined || company == '0') {
+        $('#referal_two').after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '        Выберите компанию.\n' +
+            '      </div>\n' +
+            '      </div>');
         errors.push('error');
       } else {
         data_form.push({'name': 'company', 'value': company});
       }
-         let plan =[];
-        let input = $('.checkbox_registration_modal');
-        $(input).find('input:checked').each(function() {
-            plan.push(this.value);
-        });
 
-        if(plan.length == 0 ){
-            input.after(
-                '<p class="label danger"  >Подтвердите свое согласие</p>');
-            errors.push("error8");
-        }
-      var data = $(".datepicker-here").val();
+      let plan = [];
+      let input = $('.checkbox_registration_modal');
+      $(input).find('input:checked').each(function() {
+        plan.push(this.value);
+      });
+
+      // if(plan.length == 0 ){
+      //     input.after(
+      //         '<p class="label danger">Подтвердите свое согласие</p>');
+      //     errors.push("error8");
+      // }
+
+      if (plan.length == 0) {
+        input.children('.check-label').
+            children('.check-img_reg').
+            after('   <div class="popover_error">\n' +
+                '          <div class="popover_error_arrow"></div>\n' +
+                '          <div class="popover_error_image">\n' +
+                '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+                '          </div>\n' +
+                '          <div class="popover_error_text">\n' +
+                '          Подтвердите свое согласие.\n' +
+                '      </div>\n' +
+                '      </div>');
+        errors.push('error8');
+
+      }
+      var data = $('.datepicker-here').val();
       var re = /^(\d+)[.](\d+)[.](\d+)/;
-      if (re.test( data ) ) {
-      }else{
-        $(".datepicker-here").after(
-            '<p class="label danger"  >Выберите дату рождения</p>');
-        errors.push("error9");
+      if (re.test(data)) {
+      } else {
+        $('.datepicker-here').after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '          Выберите дату рождения.\n' +
+            '      </div>\n' +
+            '      </div>');
+        errors.push('error9');
       }
 
-
       if ($('#check-code-js').val().length === 0) {
-        $("#check-code-js").after(
-            '<p class="label danger">Введите код подтверждения</p>');
-        $('.accept-phone-js').after(
-            '<p class="label danger">Введите код подтверждения</p>');
-        errors.push("error10");
+        $('#check-code-js').after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '         Введите код подтверждения.\n' +
+            '      </div>\n' +
+            '      </div>');
+        $('.accept-phone-js').after('   <div class="popover_error">\n' +
+            '          <div class="popover_error_arrow"></div>\n' +
+            '          <div class="popover_error_image">\n' +
+            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+            '          </div>\n' +
+            '          <div class="popover_error_text">\n' +
+            '         Введите код подтверждения.\n' +
+            '      </div>\n' +
+            '      </div>');
+        errors.push('error10');
       } else if ($('#check-code-js').val().length > 0) {
         if (errors.length === 0) {
           $.ajax({
@@ -382,31 +477,61 @@ $(document).ready(function() {
                     '</div>');
 
               }
+
               if (suc.error === 'mail') {
                 var email = $('#email');
-                email.after(
-                    '<div class="danger" data-danger-email>Пользователь с таким эмейлом уже сущесвуте</div>');
+                email.after('   <div class="popover_error">\n' +
+                    '          <div class="popover_error_arrow"></div>\n' +
+                    '          <div class="popover_error_image">\n' +
+                    '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+                    '          </div>\n' +
+                    '          <div class="popover_error_text">\n' +
+                    '         Пользователь с таким эмейлом уже сущесвуте.\n' +
+                    '      </div>\n' +
+                    '      </div>');
               }
+
               if (suc.error === 'polic') {
                 var email = $('#number_polic');
-                email.after(
-                    '<div class="danger" data-danger-email>Пользователь с таким полисом уже сущесвуте</div>');
+                email.after('   <div class="popover_error">\n' +
+                    '          <div class="popover_error_arrow"></div>\n' +
+                    '          <div class="popover_error_image">\n' +
+                    '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+                    '          </div>\n' +
+                    '          <div class="popover_error_text">\n' +
+                    '         Пользователь с таким полисом уже сущесвуте.\n' +
+                    '      </div>\n' +
+                    '      </div>');
               }
 
               if (suc.company === 'Нет компании') {
-                var email = $('#company');
-                email.after(
-                    '<div class="danger" data-danger-company>В нашей базе нет этой компании ,мы не можем вас зарегестрировать </div>');
+                var company = $('#company');
+                company.after('   <div class="popover_error">\n' +
+                    '          <div class="popover_error_arrow"></div>\n' +
+                    '          <div class="popover_error_image">\n' +
+                    '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+                    '          </div>\n' +
+                    '          <div class="popover_error_text">\n' +
+                    '        В нашей базе нет этой компании ,мы не можем вас зарегестрировать.\n' +
+                    '      </div>\n' +
+                    '      </div>');
               }
 
-              if(suc.error_sms !== undefined)  {
-                $("#check-code-js").after(
-                          '<p class="label danger">Неверный код подтверждения</p>');
+              if (suc.error_sms !== undefined) {
+                $('#check-code-js').after('   <div class="popover_error">\n' +
+                    '          <div class="popover_error_arrow"></div>\n' +
+                    '          <div class="popover_error_image">\n' +
+                    '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+                    '          </div>\n' +
+                    '          <div class="popover_error_text">\n' +
+                    '        Неверный код подтверждения.\n' +
+                    '      </div>\n' +
+                    '      </div>');
               }
 
-              if (suc.user_success === "success") {
+              if (suc.user_success === 'success') {
 
-                if ($('.header__r_auth_reg').attr('data-rigstration') == "0") {
+                if ($('.header__r_auth_reg').attr('data-rigstration') == '0') {
 
                   $('#auth-form-reg').find($('.close-modal')).trigger('click');
 
@@ -421,8 +546,8 @@ $(document).ready(function() {
 
                     },
                     success: function(msg) {
-                      $(".header__r").html("");
-                      $(".header__r").html(msg);
+                      $('.header__r').html('');
+                      $('.header__r').html(msg);
                     },
                   }).done(function(msg) {
                     setTimeout(function() {
@@ -495,6 +620,7 @@ $(document).ready(function() {
       }
     });
   }
+
   function FormAuth() {
 
     $('#auth-form-login').validator().on('submit', function(e) {
@@ -523,8 +649,8 @@ $(document).ready(function() {
 
               },
               success: function(msg) {
-                $(".header__r").html("");
-                $(".header__r").html(msg);
+                $('.header__r').html('');
+                $('.header__r').html(msg);
               },
             }).done(function(msg) {
               setTimeout(function() {
@@ -551,7 +677,7 @@ $(document).ready(function() {
       $('#auth-form-login').find($('.close-modal')).trigger('click');
       setTimeout(function() {
         $('#reg-link').trigger('click');
-      },1000)
+      }, 1000);
     });
 
   }
@@ -673,7 +799,6 @@ function responseMessage(msg) {
   $('.success-box div.text-message').html('<span>' + msg + '</span>');
 }
 
-
 // hasClass
 function hasClass(elem, className) {
   return new RegExp(' ' + className + ' ').test(' ' + elem.className + ' ');
@@ -711,17 +836,16 @@ function toggleClass(elem, className) {
 }
 
 $(document).ready(function() {
-  $(document).on("click","#show-mnu",function() {
+  $(document).on('click', '#show-mnu', function() {
     $('#show-mnu').toggleClass('active');
   });
   $(document).on('click', function(e) {
-    if (!$(e.target).closest("#show-mnu , #menu ").length) {
+    if (!$(e.target).closest('#show-mnu , #menu ').length) {
       $('#show-mnu').removeClass('active');
     }
     e.stopPropagation();
   });
-})
-
+});
 
 function lazyloadImage() {
   const images = document.querySelectorAll('[data-src]');
@@ -773,107 +897,15 @@ function validatePassword() {
 //empty string means no validation error
 }
 
-function form_us(){
+function form_us() {
 
-    $('#feedback_modal').validator().on('submit', function(e) {
-
-
-    e.preventDefault();
-      var fd = new FormData();
-      var error = [];
-
-
-    var  data_FORM = $("#feedback_modal").serializeArray();
-
-    var input_file = $('.file-simple');
-
-    if (input_file.prop('files')[0] != undefined) {
-      fd.append('import_file1', input_file.prop('files')[0]);
-    }
-    if (input_file.prop('files')[1] != undefined) {
-      fd.append('import_file2', input_file.prop('files')[1]);
-    }
-    if (input_file.prop('files')[2] != undefined) {
-      fd.append('import_file3', input_file.prop('files')[2]);
-    }
-    if (input_file.prop('files')[3] != undefined) {
-      fd.append('import_file4', input_file.prop('files')[3]);
-    }
-    if (input_file.prop('files')[4] != undefined) {
-      fd.append('import_file5', input_file.prop('files')[4]);
-    }
-      if (input_file.prop('files')[5] != undefined) {
-        $(".file_input_half").after(
-            '<p class="label danger"  >Максимально 5 картинок</p>');
-        error.push("mane_img");
-      }
-
-        fd.append('name', data_FORM[0]['value']);
-        fd.append('email', data_FORM[1]['value']);
-        fd.append('text', data_FORM[2]['value']);
-        fd.append('captcha_code', data_FORM[3]['value']);
-        fd.append('captcha_word', data_FORM[4]['value']);
-  if(error.length  == "0") {
-    $.ajax({
-
-      url: '/ajax/form_ask/ask.php',
-      type: 'POST',
-      data: fd,
-      processData: false,
-      contentType: false,
-      beforeSend: function() {
-
-      },
-      success: function(msg) {
-        var suc = JSON.parse(msg);
-
-        if (suc.suc == "1") {
-          $.magnificPopup.open({
-            items: {
-              src: '<div class="white-popup custom_styles_popup"><button title="Закрыть" type="button" class="mfp-close">×</button>' +
-              'Ваше письмо отправленно успешно</div>',
-              type: 'inline',
-            },
-            callbacks: {
-              afterClose: function() {
-                document.location.reload(true);
-              },
-            },
-          });
-        } else if (suc.captcha == "1") {
-          $("#captcha-error_parent").after(
-              '<p class="label danger"  >Код капчи не верный</p>');
-
-        } else {
-          if (suc.size == "1") {
-            $(".file_input_half").after(
-                '<p class="label danger"  >Файлы с недопустимым размером</p>');
-          }
-          if (suc.format == "1") {
-            $(".file_input_half").after(
-                '<p class="label danger"  >Файлы с недопустимым форматом</p>');
-          }
-        }
-
-      },
-    }).done(function(msg) {
-
-    });
-  }
-
-    return false;
-  });
-}
-function form_us_two(){
-  $('#feedback_modal_two').validator().on('submit', function(e) {
-
+  $('#feedback_modal').validator().on('submit', function(e) {
 
     e.preventDefault();
     var fd = new FormData();
     var error = [];
 
-
-    var  data_FORM = $("#feedback_modal_two").serializeArray();
+    var data_FORM = $('#feedback_modal').serializeArray();
 
     var input_file = $('.file-simple');
 
@@ -893,9 +925,9 @@ function form_us_two(){
       fd.append('import_file5', input_file.prop('files')[4]);
     }
     if (input_file.prop('files')[5] != undefined) {
-      $(".file_input_half").after(
+      $('.file_input_half').after(
           '<p class="label danger"  >Максимально 5 картинок</p>');
-      error.push("mane_img");
+      error.push('mane_img');
     }
 
     fd.append('name', data_FORM[0]['value']);
@@ -903,7 +935,7 @@ function form_us_two(){
     fd.append('text', data_FORM[2]['value']);
     fd.append('captcha_code', data_FORM[3]['value']);
     fd.append('captcha_word', data_FORM[4]['value']);
-    if(error.length  == "0") {
+    if (error.length == '0') {
       $.ajax({
 
         url: '/ajax/form_ask/ask.php',
@@ -917,7 +949,7 @@ function form_us_two(){
         success: function(msg) {
           var suc = JSON.parse(msg);
 
-          if (suc.suc == "1") {
+          if (suc.suc == '1') {
             $.magnificPopup.open({
               items: {
                 src: '<div class="white-popup custom_styles_popup"><button title="Закрыть" type="button" class="mfp-close">×</button>' +
@@ -928,19 +960,19 @@ function form_us_two(){
                 afterClose: function() {
                   document.location.reload(true);
                 },
-              }
+              },
             });
-          } else if (suc.captcha == "1") {
-            $("#captcha-error_parent").after(
+          } else if (suc.captcha == '1') {
+            $('#captcha-error_parent').after(
                 '<p class="label danger"  >Код капчи не верный</p>');
 
           } else {
-            if (suc.size == "1") {
-              $(".file_input_half").after(
+            if (suc.size == '1') {
+              $('.file_input_half').after(
                   '<p class="label danger"  >Файлы с недопустимым размером</p>');
             }
-            if (suc.format == "1") {
-              $(".file_input_half").after(
+            if (suc.format == '1') {
+              $('.file_input_half').after(
                   '<p class="label danger"  >Файлы с недопустимым форматом</p>');
             }
           }
@@ -954,8 +986,99 @@ function form_us_two(){
     return false;
   });
 }
+
+function form_us_two() {
+  $('#feedback_modal_two').validator().on('submit', function(e) {
+
+    e.preventDefault();
+    var fd = new FormData();
+    var error = [];
+
+    var data_FORM = $('#feedback_modal_two').serializeArray();
+
+    var input_file = $('.file-simple');
+
+    if (input_file.prop('files')[0] != undefined) {
+      fd.append('import_file1', input_file.prop('files')[0]);
+    }
+    if (input_file.prop('files')[1] != undefined) {
+      fd.append('import_file2', input_file.prop('files')[1]);
+    }
+    if (input_file.prop('files')[2] != undefined) {
+      fd.append('import_file3', input_file.prop('files')[2]);
+    }
+    if (input_file.prop('files')[3] != undefined) {
+      fd.append('import_file4', input_file.prop('files')[3]);
+    }
+    if (input_file.prop('files')[4] != undefined) {
+      fd.append('import_file5', input_file.prop('files')[4]);
+    }
+    if (input_file.prop('files')[5] != undefined) {
+      $('.file_input_half').after(
+          '<p class="label danger"  >Максимально 5 картинок</p>');
+      error.push('mane_img');
+    }
+
+    fd.append('name', data_FORM[0]['value']);
+    fd.append('email', data_FORM[1]['value']);
+    fd.append('text', data_FORM[2]['value']);
+    fd.append('captcha_code', data_FORM[3]['value']);
+    fd.append('captcha_word', data_FORM[4]['value']);
+    if (error.length == '0') {
+      $.ajax({
+
+        url: '/ajax/form_ask/ask.php',
+        type: 'POST',
+        data: fd,
+        processData: false,
+        contentType: false,
+        beforeSend: function() {
+
+        },
+        success: function(msg) {
+          var suc = JSON.parse(msg);
+
+          if (suc.suc == '1') {
+            $.magnificPopup.open({
+              items: {
+                src: '<div class="white-popup custom_styles_popup"><button title="Закрыть" type="button" class="mfp-close">×</button>' +
+                'Ваше письмо отправленно успешно</div>',
+                type: 'inline',
+              },
+              callbacks: {
+                afterClose: function() {
+                  document.location.reload(true);
+                },
+              },
+            });
+          } else if (suc.captcha == '1') {
+            $('#captcha-error_parent').after(
+                '<p class="label danger"  >Код капчи не верный</p>');
+
+          } else {
+            if (suc.size == '1') {
+              $('.file_input_half').after(
+                  '<p class="label danger"  >Файлы с недопустимым размером</p>');
+            }
+            if (suc.format == '1') {
+              $('.file_input_half').after(
+                  '<p class="label danger"  >Файлы с недопустимым форматом</p>');
+            }
+          }
+
+        },
+      }).done(function(msg) {
+
+      });
+    }
+
+    return false;
+  });
+}
+
 function isValidEmailAddress(emailAddress) {
-  var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+  var pattern = new RegExp(
+      /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
   return pattern.test(emailAddress);
 }
 
@@ -970,4 +1093,60 @@ function timer_for_sms() {
   setTimeout(function() {
     $('.sms-again-button').removeAttr('disabled');
   }, 30000);
+}
+function getCookie(name) {
+  var value = "; " + document.cookie;
+  var parts = value.split("; " + name + "=");
+  if (parts.length == 2) return parts.pop().split(";").shift();
+}
+
+function deleteCookie(name) {
+  setCookie(name, "", {
+    'max-age': -1
+  })
+}
+
+
+function setCookie(name, value, options = {}) {
+
+  options = {
+    path: '/',
+
+  };
+
+  if (options.expires instanceof Date) {
+    options.expires = options.expires.toUTCString();
+  }
+
+  let updatedCookie = name + "=" + value;
+var obj_correction_name={
+  is_harder_str : function(str) {
+    if (str.val().search("-") === -1) {
+      return false;
+    }
+  },
+  correction_plain_str :function(str) {
+    var first_simvol = str.val()[0].toUpperCase();
+    var other = str.val().slice(1).toLowerCase();
+    return first_simvol + other;
+  },
+  correction_harder_str : function(str) {
+    var harder_str = str.val().split("-");
+    var first_simvol_first_str = harder_str[0][0].toUpperCase();
+    var other_first_str = harder_str[0].slice(1).toLowerCase();
+    var first_simvol_second_str = harder_str[1][0].toUpperCase();
+    var other_second_str = harder_str[1].slice(1).toLowerCase();
+    return first_simvol_first_str + other_first_str + '-' + first_simvol_second_str + other_second_str;
+  }
+};
+
+  for (let optionKey in options) {
+    updatedCookie += "; " + optionKey;
+    let optionValue = options[optionKey];
+    if (optionValue !== true) {
+      updatedCookie += "=" + optionValue;
+    }
+  }
+
+  document.cookie = updatedCookie;
 }
