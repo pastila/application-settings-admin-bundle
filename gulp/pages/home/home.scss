@@ -13,8 +13,14 @@
     }
 
     &__l {
-        width: 50%;
         padding-top: 8rem;
+        &_item{
+            @media(min-width: 1200px){
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+            }
+        }
         &_img {
             width: 100vw;
             max-height: 50vmin;
@@ -31,6 +37,12 @@
         font-size: 3.8rem;
         color: $text-color-second;
         line-height: normal;
+        &_line{
+            margin: 0 2rem;
+            @media(max-width: 1199px){
+                display: none;
+            }
+        }
     }
 }
 

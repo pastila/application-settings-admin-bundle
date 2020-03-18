@@ -24,9 +24,12 @@ CModule::IncludeModule("iblock");
 <!-- Slider -->
 <div class="slider">
     <div class="slider__l">
-        <h1 class="home-title"><?=$arFields["NAME"]?></h1>
-        <div class="home-title-sub">
-            <?=$arFields["PREVIEW_TEXT"]?>
+
+        <div class="slider__l_item">
+            <h1 class="home-title"><?=$arFields["NAME"]?></h1>
+            <div class="home-title-sub">
+                <span class="home-title-sub_line">—</span><?=$arFields["PREVIEW_TEXT"]?>
+            </div>
         </div>
 
         <div class="slider__l_descr">
