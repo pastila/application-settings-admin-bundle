@@ -33,58 +33,41 @@ if ($arResult["PHONE_REGISTRATION"]) {
         global $USER;
         if (!empty($APPLICATION->arAuthResult)) {
 
-        $text = str_replace(array("<br>", "<br />"), "\n", $APPLICATION->arAuthResult["MESSAGE"]);
-        if ($APPLICATION->arAuthResult ["TYPE"] == "OK") {
-
-        preg_match('/(.*)(USER_LOGIN=)(.*)/', $APPLICATION->GetCurUri(), $preg_url);
-        $email = $preg_url[3];
-
-        preg_match('/(.*)(\S)([0-9][0-9])(.*)/', $email, $preg_email);
-
-        $true_email = $preg_email[1] . "@" . $preg_email[4];
-
-        $cook = $_COOKIE["ghTfq4"];
-        // так нужно , первые несколько попыток $USER->Login отдает просто null
-
-//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
-//        $res = $USER->Login(strip_tags($true_email), strip_tags($cook), 'Y');
+            $text = str_replace(array("<br>", "<br />"), "\n", $APPLICATION->arAuthResult["MESSAGE"]);
+            if ($APPLICATION->arAuthResult ["TYPE"] == "OK") {
 
 
 
+                $rsUser = $USER->GetByLogin($arResult["LAST_LOGIN"]);
+                if ($arUser = $rsUser->Fetch()) {
+
+                    \Bitrix\Main\UserAuthActionTable::deleteByFilter(['USER_ID'=>$arUser['ID']]);
+                    $t = $USER->Authorize($arUser["ID"]);
 
 
-        unset($_COOKIE["ghTfq4"]);?>
+                }
 
-        <div class="alert alert-success">Вы успешно изменили пароль! Теперь можете авторизоваться.</div>
-        <?  }else{?>
-        <div class="alert alert-danger"><?= nl2br(htmlspecialcharsbx($text)) ?></div>
-        <?    }
-        }else{
+
+                ?>
+
+                <div class="alert alert-success">Вы успешно изменили пароль!</div>
+                <div class="mainBtn  main-btn_fullwidth save">Перейти в личный кабинет.</div>
+            <? } else {
+                ?>
+                <div class="alert alert-danger"><?= nl2br(htmlspecialcharsbx($text)) ?></div>
+            <? }
+        } else {
 
             ?>
-            <form class="form-recovery_main" id="recovery-password" method="post" action="<?= $arResult["AUTH_FORM"] ?>" name="bform">
+            <form class="form-recovery_main" id="recovery-password" method="post" action="<?= $arResult["AUTH_FORM"] ?>"
+                  name="bform">
                 <? if (strlen($arResult["BACKURL"]) > 0): ?>
                     <input type="hidden" name="backurl" value="<?= $arResult["BACKURL"] ?>"/>
                 <? endif ?>
                 <input type="hidden" name="AUTH_FORM" value="Y">
                 <input type="hidden" name="TYPE" value="CHANGE_PWD">
 
-                <? if ($arResult["PHONE_REGISTRATION"]):?>
+                <? if ($arResult["PHONE_REGISTRATION"]): ?>
                     <div class="bx-authform-formgroup-container input-style d-none">
                         <label><? echo GetMessage("change_pass_phone_number") ?></label>
                         <div class="input__wrap">
@@ -101,7 +84,7 @@ if ($arResult["PHONE_REGISTRATION"]) {
                                    value="<?= $arResult["USER_CHECKWORD"] ?>" autocomplete="off"/>
                         </div>
                     </div>
-                <? else:?>
+                <? else: ?>
                     <div class="bx-authform-formgroup-container input-style d-none" style="display: none">
                         <div class="input__wrap">
                             <label class="input__wrap_label"><?= GetMessage("AUTH_LOGIN") ?></label>
@@ -123,7 +106,7 @@ if ($arResult["PHONE_REGISTRATION"]) {
                     <div class="input__wrap">
 
                         <label class="input__wrap_label"><?= GetMessage("AUTH_NEW_PASSWORD_REQ") ?></label>
-                        <? if ($arResult["SECURE_AUTH"]):?>
+                        <? if ($arResult["SECURE_AUTH"]): ?>
                             <div class="bx-authform-psw-protected" id="bx_auth_secure" style="display:none">
                                 <div class="bx-authform-psw-protected-desc">
                                     <span></span><? echo GetMessage("AUTH_SECURE_NOTE") ?></div>
@@ -141,7 +124,7 @@ if ($arResult["PHONE_REGISTRATION"]) {
                 <div class="bx-authform-formgroup-container input-style">
                     <div class="input__wrap">
                         <label class="input__wrap_label"><?= GetMessage("AUTH_NEW_PASSWORD_CONFIRM") ?></label>
-                        <? if ($arResult["SECURE_AUTH"]):?>
+                        <? if ($arResult["SECURE_AUTH"]): ?>
                             <div class="bx-authform-psw-protected" id="bx_auth_secure_conf" style="display:none">
                                 <div class="bx-authform-psw-protected-desc">
                                     <span></span><? echo GetMessage("AUTH_SECURE_NOTE") ?></div>
@@ -159,7 +142,7 @@ if ($arResult["PHONE_REGISTRATION"]) {
                     <p><? echo $arResult["GROUP_POLICY"]["PASSWORD_REQUIREMENTS"]; ?></p>
                 </div>
 
-                <? if ($arResult["USE_CAPTCHA"]):?>
+                <? if ($arResult["USE_CAPTCHA"]): ?>
                     <input type="hidden" name="captcha_sid" value="<?= $arResult["CAPTCHA_CODE"] ?>"/>
 
                     <div class="bx-authform-formgroup-container input-style">
@@ -273,9 +256,9 @@ if ($arResult["PHONE_REGISTRATION"]) {
                 '        Пароли не совпадают.\n' +
                 '      </div>\n' +
                 '      </div>');
-          }else{
-            setCookie("ghTfq4",pass1);
-            $("#recovery-password").submit();
+          } else {
+
+            $('#recovery-password').submit();
           }
         }
       } else {
