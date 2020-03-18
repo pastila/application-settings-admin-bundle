@@ -337,6 +337,12 @@
                     .input {
                         &__wrap {
                             width: 100%;
+                            &--column{
+                                display: flex;
+                                flex-direction: column;
+                                position: relative;
+
+                            }
                         }
                     }
                     &_align-flex-end{

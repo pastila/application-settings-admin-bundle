@@ -60,14 +60,16 @@ CModule::IncludeModule("iblock");
         </div>
         <div class="popup__wrap_middle">
             <div class="input__wrap">
-                <label class="input__wrap_label">Ваш номер телефона</label>
-                <input id="phone" type="tel" pattern="\+7\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2}" name="phone"
-                       data-mask="+7 (000) 000 00 00"
-                       placeholder="+7 (___) ___ __ __"  required>
-                <p id="sms_confirm_error" style="display: none" class="error sms-error">Введите номер телефона</p>
-                <p id="tel_confirm_error" style="display: none" class="error sms-error">
-                    Пользовватель с таким телефоном уже сущесвует
-                </p>
+                <div class="input__wrap--column">
+                    <label class="input__wrap_label">Ваш номер телефона</label>
+                    <input id="phone" type="tel" pattern="\+7\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2}" name="phone"
+                           data-mask="+7 (000) 000 00 00"
+                           placeholder="+7 (___) ___ __ __"  required>
+                    <p id="sms_confirm_error" style="display: none" class="error sms-error">Введите номер телефона</p>
+                    <p id="tel_confirm_error" style="display: none" class="error sms-error">
+                        Пользовватель с таким телефоном уже сущесвует
+                    </p>
+                </div>
             </div>
             <div class="input__wrap hidden_wrap_phone flex_hidden_wrap_phone main_btn-parent">
                 <input type="button" class="accept-phone-js whiteBtn" value="Подтвердить номер телефона">
