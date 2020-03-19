@@ -150,7 +150,7 @@ while($ob = $res->GetNextElement()){
                        <p>Фамилия</p>
                    </div>
                    <div class="item_data input__wrap">
-                       <input type="text" name="last_name" value="<?=$person["LAST_NAME"];?>">
+                       <input type="text" name="last_name" pattern="^[А-ЯЁ][а-яё]*([-][А-ЯЁ][а-яё]*)*$"  id="famaly-name" value="<?=$person["LAST_NAME"];?>">
                    </div>
                </div>
            <div class="flex_data">
@@ -158,7 +158,7 @@ while($ob = $res->GetNextElement()){
                    <p>Имя</p>
                </div>
                <div class="item_data input__wrap">
-                   <input type="text" name="name" value="<?=$person["NAME"];?>">
+                   <input type="text" name="name" id="name" pattern="^[А-ЯЁ][а-яё]*([-][А-ЯЁ][а-яё]*)*$" value="<?=$person["NAME"];?>">
                </div>
            </div>
 
@@ -167,7 +167,7 @@ while($ob = $res->GetNextElement()){
                    <p>Отчество</p>
                </div>
                <div class="item_data input__wrap">
-                   <input type="text" name="second_name" value="<?=$person["SECOND_NAME"];?>">
+                   <input type="text" name="second_name" pattern="^[А-ЯЁ][а-яё]*([-][А-ЯЁ][а-яё]*)*$" id="last-name" value="<?=$person["SECOND_NAME"];?>">
 
                </div>
            </div>
@@ -308,7 +308,7 @@ while($ob = $res->GetNextElement()){
                         <p>Фамилия</p>
                     </div>
                     <div class="item_data input__wrap">
-                        <input id="children_last_name_add" required type="text" name="last_name" value="">
+                        <input id="children_last_name_add" required type="text" name="last_name" pattern="^[А-ЯЁ][а-яё]*([-][А-ЯЁ][а-яё]*)*$" value="">
                     </div>
                 </div>
                 <div class="flex_data">
@@ -316,7 +316,7 @@ while($ob = $res->GetNextElement()){
                         <p>Имя</p>
                     </div>
                     <div class="item_data input__wrap">
-                        <input id="children_name_add" required type="text" name="name" value="">
+                        <input id="children_name_add" required type="text" name="name" pattern="^[А-ЯЁ][а-яё]*([-][А-ЯЁ][а-яё]*)*$" value="">
                     </div>
                 </div>
                 <div class="flex_data">
@@ -324,7 +324,7 @@ while($ob = $res->GetNextElement()){
                         <p>Отчество</p>
                     </div>
                     <div class="item_data input__wrap">
-                        <input id="children_second_name_add" required type="text" name="second_name" value="">
+                        <input id="children_second_name_add" required type="text" name="second_name" pattern="^[А-ЯЁ][а-яё]*([-][А-ЯЁ][а-яё]*)*$" value="">
 
                     </div>
                 </div>
