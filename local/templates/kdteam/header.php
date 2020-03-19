@@ -54,12 +54,29 @@ $url = $APPLICATION->GetCurDir();
 left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrika counter -->
 
+
+    <!-- Google Tag Manager -->
+    <script data-skip-moving="true">
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-N3VBFGG');
+    </script>
+    <!-- End Google Tag Manager -->
+
     <!-- Адмитад -->
     <meta name="verify-admitad" content="d368515aeb" />
     <!-- /Адмитад -->
 </head>
 
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N3VBFGG"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
     <?php $APPLICATION->ShowPanel();
 ?>
 
