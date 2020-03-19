@@ -341,7 +341,12 @@
                                 display: flex;
                                 flex-direction: column;
                                 position: relative;
-
+                                label{
+                                    display: block;
+                                }
+                                input{
+                                    width: 100%;
+                                }
                             }
                         }
                     }
