@@ -523,7 +523,7 @@ abstract class CAllUser extends CDBResult
 	protected function UpdateSessionData($id, $applicationId = null)
 	{
 		global $DB;
-
+		session_start();
 		unset($_SESSION["SESS_OPERATIONS"]);
 		unset($_SESSION["MODULE_PERMISSIONS"]);
 		$_SESSION["BX_LOGIN_NEED_CAPTCHA"] = false;
@@ -536,6 +536,7 @@ abstract class CAllUser extends CDBResult
 
 		if($arUser = $result->Fetch())
 		{
+
 			$_SESSION["SESS_AUTH"]["AUTHORIZED"] = "Y";
 			$_SESSION["SESS_AUTH"]["USER_ID"] = $arUser["ID"];
 			$_SESSION["SESS_AUTH"]["LOGIN"] = $arUser["LOGIN"];
@@ -598,7 +599,7 @@ abstract class CAllUser extends CDBResult
 		{
 			self::$CURRENT_USER = false;
 			$this->justAuthorized = true;
-			$this->SetControllerAdmin(false);
+            $this->SetControllerAdmin(false);
 
 			//sometimes we don't need to update db (REST)
 			if($bUpdate)
@@ -875,6 +876,7 @@ abstract class CAllUser extends CDBResult
 		// All except Admin
 		if ($user_id > 1 && $arParams["CONTROLLER_ADMIN"] !== "Y")
 		{
+
 			if(!static::CheckUsersCount($user_id))
 			{
 				$user_id = 0;
@@ -886,12 +888,14 @@ abstract class CAllUser extends CDBResult
 			}
 		}
 
+
 		$arParams["USER_ID"] = $user_id;
 
 		$doAuthorize = true;
 
 		if($user_id > 0)
 		{
+
 			if($applicationId === null && CModule::IncludeModule("security"))
 			{
 				/*
@@ -1132,6 +1136,7 @@ abstract class CAllUser extends CDBResult
 	protected static function CheckUsersCount($user_id)
 	{
 		$limitUsersCount = intval(COption::GetOptionInt("main", "PARAM_MAX_USERS", 0));
+
 		if ($limitUsersCount > 0)
 		{
 			$by = "ID";

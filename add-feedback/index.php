@@ -95,7 +95,7 @@ global $USER; ?>
                         <?php } ?>
                         <div class="input__wrap">
                             <label for="name" class="input__wrap_label">Заголовок</label>
-                            <input id="name" type="name" name="name" required>
+                            <input id="title" type="title" name="title" required>
                         </div>
 
                         <div class="input__wrap">
