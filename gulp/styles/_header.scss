@@ -80,6 +80,7 @@
                 align-self: center;
                 padding-right: 2rem;
                 position: relative;
+                color: white;
 
                 &::after {
                     content: '';
@@ -92,7 +93,7 @@
                     border: .5rem solid transparent;
                     -webkit-transform: translateY(-50%);
                     transform: translateY(-50%);
-                    border-color: #3a4552 transparent transparent transparent;
+                    border-color: white transparent transparent transparent;
                     transition: all .2s;
                 }
 
@@ -101,7 +102,7 @@
                         top: 50%;
                         -webkit-transform: translateY(-50%);
                         transform: translateY(-50%);
-                        border-color: transparent transparent #3a4552 transparent;
+                        border-color: transparent transparent white transparent;
                     }
                 }
 
