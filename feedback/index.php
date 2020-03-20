@@ -301,6 +301,7 @@ $countReviews = count($allReviews);
             "IBLOCK_ID" => 13,
             "ACTIVE" => "Y",
             "USER_NO_AUTH" => false,
+            "!PROPERTY_VERIFIED" => false,
         );
 
         if (isset($sort_url["admin"])) {

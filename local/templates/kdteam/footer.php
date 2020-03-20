@@ -20,7 +20,7 @@ if (defined("B_PROLOG_INCLUDED") && B_PROLOG_INCLUDED === true) {
                 <a href="/about/">О нас</a>
             </li>
             <li>
-                <a href="/contact_us/">Связаться</a>
+                <a href="/contact_us/">Контакты</a>
             </li>
             <li>
                 <a href="/terms-of-use/">Пользовательское соглашение</a>
@@ -55,3 +55,20 @@ if (defined("B_PROLOG_INCLUDED") && B_PROLOG_INCLUDED === true) {
 </body>
 <script src="/local/templates/kdteam/js/validator.min.js"></script>
 </html>
+<?php
+
+ $arSelect = Array("ID", "IBLOCK_ID", "NAME", "PROPERTY_TITLE", "PROPERTY_KEYWORDS", "PROPERTY_DESCRIPTION");
+$arFilter = Array("IBLOCK_CODE"=>"seo", "%NAME"=>  $APPLICATION->GetCurDir());
+$res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+if($ob = $res->GetNextElement()){
+    $arProps = $ob->GetFields();
+    if($arProps["PROPERTY_TITLE_VALUE"]) {
+        $APPLICATION->SetPageProperty("title", $arProps["PROPERTY_TITLE_VALUE"]);
+    }
+    if($arProps["PROPERTY_KEYWORDS_VALUE"]) {
+        $APPLICATION->SetPageProperty("keywords", $arProps["PROPERTY_KEYWORDS_VALUE"]);
+    }
+        if($arProps["PROPERTY_DESCRIPTION_VALUE"]) {
+            $APPLICATION->SetPageProperty("description", $arProps["PROPERTY_DESCRIPTION_VALUE"]);
+        }
+} ?>
