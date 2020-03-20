@@ -322,16 +322,14 @@ $countReviews = count($allReviews);
         $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "CREATED_DATE", "PROPERTY_*");
 
 
-        $pagen = Array("nPageSize" => 3);
+        $pagen = Array("nPageSize" => 10);
         if ($sort_url["comments"] == "all" ) {
             $pagen = false;
         }
+
         if(!isset($_GET["PAGEN_1"])){
-            $pagen["NavPageNomer"] = 1;
+            $pagen["iNumPage"] = 1;
         }
-        echo '<pre>';
-        print_r($pagen);
-        echo '</pre>';
         $res = CIBlockElement::GetList($order, $arFilter, false, $pagen, $arSelect);
         if (!$sort_url["comments"] == "all") {
             $res->NavStart(0);
@@ -645,6 +643,7 @@ $countReviews = count($allReviews);
 
             </div><!-- FeedBack block END -->
         <? }
+
 
         if (!$sort_url["comments"] == "all") {
             $navStr = $res->GetPageNavStringEx($navComponentObject, "Страницы:", ".default",false,null);
