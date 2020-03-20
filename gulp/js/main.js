@@ -550,6 +550,9 @@ $(document).ready(function() {
                       $('.header__r').html(msg);
                     },
                   }).done(function(msg) {
+
+
+
                     setTimeout(function() {
                       $.magnificPopup.open({
                         items: {
@@ -649,6 +652,10 @@ $(document).ready(function() {
 
               },
               success: function(msg) {
+
+                if(window.location.href.search("/add-feedback/") !== -1){
+                  $(".name_user_no_Authorized").remove();
+                }
                 $('.header__r').html('');
                 $('.header__r').html(msg);
               },
