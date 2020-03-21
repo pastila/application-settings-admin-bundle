@@ -59,7 +59,7 @@ CModule::IncludeModule("iblock");
 
             <p>за то, что уже оплачено. Нужно всего несколько минут, чтобы соотнести свое лечение с программой ОМС и
                 запустить процесс возврата денег, если оплата была незаконной.</p>
-            <a class="buttons__items_item_link" href="/forma/"><p>Перейти в раздел <img src="<?= SITE_TEMPLATE_PATH ?>/images/pages/home/arrow-right.svg"></p></a>
+            <a class="buttons__items_item_link" href="/forma-obrashenija/"><p>Перейти в раздел <img src="<?= SITE_TEMPLATE_PATH ?>/images/pages/home/arrow-right.svg"></p></a>
         </div>
     </div>
 
