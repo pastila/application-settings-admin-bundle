@@ -70,7 +70,7 @@ $(document).ready(function() {
   $('.header__r_auth_login').click(function() {
     setTimeout(function() {
       FormAuth();
-    }, 1500);
+    }, 700);
   });
 
   function FormReg() {
@@ -678,15 +678,6 @@ $(document).ready(function() {
                 $('.header__r').html(msg);
               },
             }).done(function(msg) {
-              setTimeout(function() {
-                $.magnificPopup.open({
-                  items: {
-                    src: '<div class="white-popup custom_styles_popup">Вы успешно авторизовались!</div>',
-                    type: 'inline',
-                  },
-                });
-                $('body').css({'overflow': 'initial'});
-              }, 1000);
             });
 
           } else {
@@ -974,22 +965,22 @@ function form_us() {
         success: function(msg) {
           var suc = JSON.parse(msg);
 
-          if (suc.suc == '1') {
-            $.magnificPopup.open({
-              items: {
-                src: '<div class="white-popup custom_styles_popup"><button title="Закрыть" type="button" class="mfp-close">×</button>' +
-                'Ваше письмо отправленно успешно</div>',
-                type: 'inline',
+        if (suc.suc == "1") {
+          $.magnificPopup.open({
+            items: {
+              src: '<div class="white-popup custom_styles_popup"><button title="Закрыть" type="button" class="mfp-close">×</button>' +
+              '<h3 class="popup__wrap_tabs_title">Ваше письмо отправленно успешно</h3></div>',
+              type: 'inline',
+            },
+            callbacks: {
+              afterClose: function() {
+                document.location.reload(true);
               },
-              callbacks: {
-                afterClose: function() {
-                  document.location.reload(true);
-                },
-              },
-            });
-          } else if (suc.captcha == '1') {
-            $('#captcha-error_parent').after(
-                '<p class="label danger"  >Код капчи не верный</p>');
+            },
+          });
+        } else if (suc.captcha == "1") {
+          $("#captcha-error_parent").after(
+              '<p class="label danger"  >Код капчи неверный</p>');
 
           } else {
             if (suc.size == '1') {
@@ -1067,7 +1058,7 @@ function form_us_two() {
             $.magnificPopup.open({
               items: {
                 src: '<div class="white-popup custom_styles_popup"><button title="Закрыть" type="button" class="mfp-close">×</button>' +
-                'Ваше письмо отправленно успешно</div>',
+                '<h3 class="popup__wrap_tabs_title">Ваше письмо отправленно успешно</h3></div>',
                 type: 'inline',
               },
               callbacks: {
@@ -1076,9 +1067,9 @@ function form_us_two() {
                 },
               },
             });
-          } else if (suc.captcha == '1') {
-            $('#captcha-error_parent').after(
-                '<p class="label danger"  >Код капчи не верный</p>');
+          } else if (suc.captcha == "1") {
+            $("#captcha-error_parent").after(
+                '<p class="label danger"  >Код капчи неверный</p>');
 
           } else {
             if (suc.size == '1') {

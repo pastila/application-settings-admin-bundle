@@ -332,7 +332,7 @@ textarea{
     resize: none;
 }
 .custom_styles_popup{
-    max-width: 50rem;
+    max-width: 60rem;
     background: #fff;
     margin: 0 auto;
     position: relative;
@@ -442,12 +442,6 @@ a{
             margin-bottom: 2rem;
         }
     }
-}
-#btn_myFileInput{
-    font-family: $main-font-bold;
-    border: none;
-    background-color: $accentColor;
-    color: white;
 }
 .label_parent-elements{
     display: block;
