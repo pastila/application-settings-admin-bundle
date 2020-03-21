@@ -484,6 +484,25 @@ $(document).ready(function() {
               '      </div>');
           errors.push('error');
         }
+console.log("1");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         if (errors.length === 0) {
