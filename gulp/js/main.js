@@ -3,30 +3,26 @@
 //= ../../node_modules/jquery-mask-plugin/dist/jquery.mask.js
 //= ../../node_modules/air-datepicker/dist/js/datepicker.min.js
 $(document).ready(function() {
-//   if (window.location.href.search('reset_password=ok') !== -1) {
-//
-//     var change_password_cook = getCookie('change_password');
-// console.log(change_password_cook);
-//     if (change_password_cook === '' || change_password_cook === undefined || change_password_cook === null) {
-//       setTimeout(function() {
-//         setCookie('change_password', '1');
-//         $.magnificPopup.open({
-//           items: {
-//             src: '<div class="white-popup custom_styles_popup">Вы успешно изменили пароль! Теперь можете авторизоваться.</div>',
-//             type: 'inline',
-//           },
-//         });
-//
-//         $('body').css({'overflow': 'initial'});
-//       }, 800);
-//
-//     } else {
-//
-//     }
-//
-//   } else {
-//
-//   }
+  var obj_correction_name = {
+    is_harder_str : function(str) {
+      if (str.val().search("-") === -1) {
+        return false;
+      }
+    },
+    correction_plain_str :function(str) {
+      var first_simvol = str.val()[0].toUpperCase();
+      var other = str.val().slice(1).toLowerCase();
+      return first_simvol + other;
+    },
+    correction_harder_str : function(str) {
+      var harder_str = str.val().split("-");
+      var first_simvol_first_str = harder_str[0][0].toUpperCase();
+      var other_first_str = harder_str[0].slice(1).toLowerCase();
+      var first_simvol_second_str = harder_str[1][0].toUpperCase();
+      var other_second_str = harder_str[1].slice(1).toLowerCase();
+      return first_simvol_first_str + other_first_str + '-' + first_simvol_second_str + other_second_str;
+    }
+  };
 
   $('#write-us_modal').click(function() {
     setTimeout(function() {
@@ -296,6 +292,7 @@ $(document).ready(function() {
     $('.accept-phone-js').click(function() {
       $('#tel_confirm_error').css('display', 'none');
       if ($('#phone')['0'].validity.valid === true) {
+        setCookie("phone",$('#phone').val());
         $('#sms_confirm_error').css('display', 'none');
         $.ajax({
           url: '/ajax/sms_code_generate.php',
@@ -304,6 +301,7 @@ $(document).ready(function() {
           success: function(code) {
             if (code === 'error') {
               $('#tel_confirm_error').css('display', 'block');
+
             } else {
               $('.hidden_wrap_phone').css('display', 'none');
               $('#sms_confirm').css('display', 'block');
@@ -462,6 +460,42 @@ $(document).ready(function() {
             '      </div>');
         errors.push('error10');
       } else if ($('#check-code-js').val().length > 0) {
+
+        var phone =  getCookie("phone");
+        if (phone != data_form[5]['value']) {
+
+          $('#phone').after('   <div class="popover_error">\n' +
+              '          <div class="popover_error_arrow"></div>\n' +
+              '          <div class="popover_error_image">\n' +
+              '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+              '          </div>\n' +
+              '          <div class="popover_error_text">\n' +
+              '        Введный вами номер для подтверждения не соответсвтует текущему .\n' +
+              '      </div>\n' +
+              '      </div>');
+          errors.push('error');
+        }
+console.log("1");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         if (errors.length === 0) {
           $.ajax({
             url: '/ajax/registration.php',
@@ -550,9 +584,7 @@ $(document).ready(function() {
                       $('.header__r').html(msg);
                     },
                   }).done(function(msg) {
-
-
-
+                    deleteCookie("phone");
                     setTimeout(function() {
                       $.magnificPopup.open({
                         items: {
@@ -1117,26 +1149,7 @@ function setCookie(name, value, options = {}) {
   }
 
   let updatedCookie = name + "=" + value;
-var obj_correction_name={
-  is_harder_str : function(str) {
-    if (str.val().search("-") === -1) {
-      return false;
-    }
-  },
-  correction_plain_str :function(str) {
-    var first_simvol = str.val()[0].toUpperCase();
-    var other = str.val().slice(1).toLowerCase();
-    return first_simvol + other;
-  },
-  correction_harder_str : function(str) {
-    var harder_str = str.val().split("-");
-    var first_simvol_first_str = harder_str[0][0].toUpperCase();
-    var other_first_str = harder_str[0].slice(1).toLowerCase();
-    var first_simvol_second_str = harder_str[1][0].toUpperCase();
-    var other_second_str = harder_str[1].slice(1).toLowerCase();
-    return first_simvol_first_str + other_first_str + '-' + first_simvol_second_str + other_second_str;
-  }
-};
+
 
   for (let optionKey in options) {
     updatedCookie += "; " + optionKey;
