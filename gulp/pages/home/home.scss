@@ -75,6 +75,10 @@
             &_title {
                 margin-bottom: 2rem;
                 font-size: 4rem;
+                transition: all .2s ease-in;
+                &:hover{
+                    color: $accentColor;
+                }
             }
         }
     }
