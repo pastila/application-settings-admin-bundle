@@ -76,9 +76,11 @@ CModule::IncludeModule("iblock");
                 <input type="button" class="accept-phone-js whiteBtn" value="Подтвердить номер телефона">
             </div>
             <div class="input__wrap" id="sms_confirm" style="display: none">
+                <div class="input__wrap--column">
                 <div class="input_phone-flex">
                     <label class="input__wrap_label">Введите код подтверждения</label>
                     <input id="check-code-js" name="sms-code" maxlength="5" class="check-code-js" type="text">
+                </div>
                 </div>
                 <div class="input_phone-flex main_btn-parent">
                 <input type="button" class="sms-again-button whiteBtn" value="Не получили SMS? Отправить повторно.">
