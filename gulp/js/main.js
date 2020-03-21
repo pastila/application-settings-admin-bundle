@@ -364,11 +364,6 @@ $(document).ready(function() {
 
       var data_form = $('#auth-form-reg').serializeArray();
 
-
-
-
-
-
       let region = $('#referal').attr('data-id_region');
       if (region == '' || region == undefined || region == '0') {
         $('#referal').after('   <div class="popover_error">\n' +
@@ -464,10 +459,6 @@ $(document).ready(function() {
             '      </div>\n' +
             '      </div>');
         errors.push('error10');
-
-
-
-
       } else if ($('#check-code-js').val().length > 0) {
 
         var phone =  getCookie("phone");
@@ -693,6 +684,10 @@ console.log("1");
 
               },
               success: function(msg) {
+
+                if(window.location.href.search("/add-feedback/") !== -1){
+                  $(".name_user_no_Authorized").remove();
+                }
                 $('.header__r').html('');
                 $('.header__r').html(msg);
               },

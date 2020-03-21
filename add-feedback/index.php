@@ -88,7 +88,7 @@ global $USER; ?>
                             Расскажите о вашей ситуации
                         </h3>
                                     <?php if (!$USER->IsAuthorized()) { ?>
-                        <div class="input__wrap">
+                        <div class="input__wrap name_user_no_Authorized">
                             <label for="name_user" class="input__wrap_label">Введите свое имя</label>
                             <input id="name_user" type="name_user" name="name_user" placeholder="Имя" required pattern="([а-яЁА-ЯЁ]+)">
                         </div>
