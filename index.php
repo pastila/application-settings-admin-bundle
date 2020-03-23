@@ -24,9 +24,12 @@ CModule::IncludeModule("iblock");
 <!-- Slider -->
 <div class="slider">
     <div class="slider__l">
-        <h1 class="home-title"><?=$arFields["NAME"]?></h1>
-        <div class="home-title-sub">
-            <?=$arFields["PREVIEW_TEXT"]?>
+
+        <div class="slider__l_item">
+            <h1 class="home-title"><?=$arFields["NAME"]?></h1>
+            <div class="home-title-sub">
+                <span class="home-title-sub_line">—</span><?=$arFields["PREVIEW_TEXT"]?>
+            </div>
         </div>
 
         <div class="slider__l_descr">
@@ -56,6 +59,7 @@ CModule::IncludeModule("iblock");
 
             <p>за то, что уже оплачено. Нужно всего несколько минут, чтобы соотнести свое лечение с программой ОМС и
                 запустить процесс возврата денег, если оплата была незаконной.</p>
+            <a class="buttons__items_item_link" href="/forma-obrashenija/"><p>Перейти в раздел <img src="<?= SITE_TEMPLATE_PATH ?>/images/pages/home/arrow-right.svg"></p></a>
         </div>
     </div>
 
@@ -76,6 +80,7 @@ CModule::IncludeModule("iblock");
             </a>
             <p>страховую компанию и участвуйте в создании народного рейтинга компаний. Ваши отзывы помогают выявить
                 компании, которым действительно дорого здоровье своих застрахованных.</p>
+            <a class="buttons__items_item_link" href="/feedback/"><p>Перейти в раздел <img src="<?= SITE_TEMPLATE_PATH ?>/images/pages/home/arrow-right.svg"></p></a>
         </div>
     </div>
 
@@ -96,6 +101,7 @@ CModule::IncludeModule("iblock");
             </a>
 
             <p>о возможностях полиса ОМС чтобы получать максимум пользы для себя и своих близких.</p>
+            <a class="buttons__items_item_link" href="/news/"><p>Перейти в раздел <img src="<?= SITE_TEMPLATE_PATH ?>/images/pages/home/arrow-right.svg"></p></a>
         </div>
     </div>
 </div>
