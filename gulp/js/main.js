@@ -199,6 +199,7 @@ $(document).ready(function() {
               $('.region_reg').each(function() {
                 $(this).remove();
               });
+
               if (msg == 'error_region') {
 
                 if ($('.error_region').length != 0) {
@@ -230,6 +231,9 @@ $(document).ready(function() {
             $('.hospital_reg').each(function() {
               $(this).remove();
             });
+            $(".referal_two_reg").val("");
+            $(".referal_two_reg").attr("data-id_region","");
+            $('.referal_two_reg').removeAttr('data-region_check');
             $('.hospital-empty').remove();
             setTimeout(function() {
               $('#search_result_hospital').append(msg);

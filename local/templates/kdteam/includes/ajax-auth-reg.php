@@ -131,7 +131,7 @@ CModule::IncludeModule("iblock");
                     <div class="input__ico">
                         <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                     </div>
-                    <input id="referal_two" value="" type="text" placeholder="Поиск по компаниям"  required autocomplete="off"/>
+                    <input id="referal_two" value="" class="referal_two_reg" type="text" placeholder="Поиск по компаниям"  required autocomplete="off"/>
                     <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_hospital">
 
                     </ul>
