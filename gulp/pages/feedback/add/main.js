@@ -432,7 +432,7 @@ $(document).ready(function() {
       }else{
         data.name_user_no_Authorized = data_form[0]['value'];
       }
-      console.log("1");
+
       if(data_form[1]['value']  === "" ){
         $("#"+data_form[1]["name"]).after('   <div class="popover_error">\n' +
             '          <div class="popover_error_arrow"></div>\n' +
@@ -480,7 +480,7 @@ $(document).ready(function() {
     },
 
     send_data: function(data) {
-console.log(data);
+
       $.ajax({
         url: '/ajax/add_reviews.php',
         type: 'POST',
@@ -612,7 +612,7 @@ function getCookie(name) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 $('#name_user').bind('change keyup input click', function() {
-  if (this.value.match(/[^а-яёА-ЯЁ\-\s]/g)) {
-    this.value = this.value.replace(/[^а-яёА-ЯЁ\-\s]/g, '');
+  if (this.value.match(/[^а-яёА-ЯЁ\-\s\.]/g)) {
+    this.value = this.value.replace(/[^а-яёА-ЯЁ\-\s\.]/g, '');
   }
 });
