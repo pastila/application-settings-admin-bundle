@@ -67,11 +67,12 @@
     &__menu {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-around;
+        justify-content: center;
         margin-bottom: 2rem;
 
         li {
             text-align: center;
+            margin-right: 1rem;
             a {
                 font-size: 1.6rem;
                 display: block;

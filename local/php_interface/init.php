@@ -200,9 +200,9 @@ function IBlockElementAfterSaveHandler($arg1, $arg2 = false, $bInternal = false)
                 );
                 $res_otzev = CIBlockElement::GetList(Array(), $arFilter_otzev, false, false, $arSelect_otzev);
                 $total = 0;
-              if(  $count_otzev = $res_otzev->SelectedRowsCount() > 0) {
+              if(    $res_otzev->SelectedRowsCount() > 0) {
 
-
+                  $count_otzev = $res_otzev->SelectedRowsCount();
                   while ($ob_otzev = $res_otzev->GetNextElement()) {
 
                       $arProp__otzev = $ob_otzev->GetProperties();
@@ -212,6 +212,7 @@ function IBlockElementAfterSaveHandler($arg1, $arg2 = false, $bInternal = false)
 
 
                   }
+
                   $result = $total / $count_otzev;
 
 

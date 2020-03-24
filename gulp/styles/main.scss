@@ -186,6 +186,7 @@ main.main {
 }
 .error{
     color: $error;
+    font-size: 1.6rem;
 }
 .bold{
     font-family: $main-font-bold;
@@ -516,4 +517,7 @@ a{
         font-size: 1.2rem;
         color: $error;
     }
+}
+.mb-2{
+    margin-bottom: 2rem;
 }

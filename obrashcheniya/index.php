@@ -84,7 +84,8 @@ if ($USER->IsAuthorized()) { ?>
             )
         );
     } else {?>
-        <p> У вас нет готовых обращений. Сформировать обращение на возврат средств за медицинскую помощь по программе ОМС можно  <a href="/forma-obrashenija/" class="link-underline""> здесь. </a></p>
+        <h1 class="page-title">У вас нет готовых обращений.</h1>
+        <a href="/forma-obrashenija/" class="mainBtn "">Сформировать обращение</a>
     <?php }?>
 <?php } else {
 

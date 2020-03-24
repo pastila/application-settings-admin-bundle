@@ -76,6 +76,7 @@
             align-items: center;
             color: $mainColor;
             font-size: 1.6rem;
+            border-radius: 1rem;
 
             &:after {
                 border-color: $mainColor transparent transparent transparent;
@@ -97,6 +98,7 @@
             background-color: $btnResetBg;
             color: $btnResetColor;
             font-size: 1.6rem;
+            border-radius: 1rem;
         }
 
         .custom-select {
@@ -342,6 +344,7 @@
     background: #fff;
     box-shadow: 0 0 1rem rgba(25, 108, 156, 0.205);
     font-size: 1.6rem;
+    border-radius: 1rem;
     .after-select_activ-filter{
         padding: 1rem 4rem 1rem 2rem;
         transition: all .2s;
@@ -386,6 +389,7 @@ a[data-tooltip] {
         opacity: 0;
         transition: transform 200ms ease, opacity 200ms;
         z-index: 99;
+        border-radius: 1rem;
     }
 
     &:before {

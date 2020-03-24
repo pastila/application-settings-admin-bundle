@@ -66,6 +66,7 @@
   background: white;
   color: $text-color;
   font-size: 1.6rem;
+  border-radius: 1rem;
   @include boxShadow;
 
   > div {
