@@ -88,7 +88,7 @@ left:-9999px;" alt="" /></div></noscript>
         <header class="header">
             <div class="header__container">
                 <a class="header__logo" href="/">
-                    <img class="header__logo_img" src="/local/templates/kdteam/images/png/header/logo-oms.png"
+                    <img class="header__logo_img" src="/local/templates/kdteam/images/png/header/logo-oms-white.png"
                         alt="OMS">
                 </a>
                 <?php
@@ -298,7 +298,7 @@ left:-9999px;" alt="" /></div></noscript>
                         <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-login.php"?>" id="login-link"
                             class="header__r_auth_login">
                             <img class="header__r_auth_login_img"
-                                src="/local/templates/kdteam/images/svg/header/login/enter.svg" alt="OMS">
+                                src="/local/templates/kdteam/images/svg/header/login/enter-white.svg" alt="OMS">
                             <div class="header__r_auth_login_text">
                                 Вход
                             </div>
@@ -307,7 +307,7 @@ left:-9999px;" alt="" /></div></noscript>
                         <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-reg.php"?>" id="reg-link"
                             data-rigstration="0" class="header__r_auth_reg">
                             <img class="header__r_auth_login_img"
-                                src="/local/templates/kdteam/images/svg/header/reg/edit.svg" alt="OMS">
+                                src="/local/templates/kdteam/images/svg/header/reg/edit-white.svg" alt="OMS">
                             <div class="header__r_auth_login_text">
                                 Регистрация
                             </div>

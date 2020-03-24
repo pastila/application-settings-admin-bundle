@@ -49,6 +49,9 @@ $arUser = $rsUser->Fetch();
             if ($sort_url["comments"] == "all") {
                 $pagen = false;
             }
+        if(!isset($_GET["PAGEN_1"])){
+            $pagen["iNumPage"] = 1;
+        }
             $res = CIBlockElement::GetList($order, $arFilter, false, $pagen, $arSelect);
             if (!$sort_url["comments"] == "all") {
                 $res->NavStart(0);
@@ -273,7 +276,14 @@ $arUser = $rsUser->Fetch();
                 $navStr = $res->GetPageNavStringEx($navComponentObject, "Страницы:", ".default");
                 echo $navStr;
             }
+if($amount == 0){
+                ?>
+
+    <h3 class="mb-2">Вы еще не оставили ни одного отзыва.</h3>
+    <?
+}
             ?>
+
 
     </div>
 
@@ -281,7 +291,7 @@ $arUser = $rsUser->Fetch();
 </div>
 <? } elseif ($arUser["UF_REPRESENTATIVE"] == "1") { ?>
 
-<h1 class="page-title">Отзывы о ваей компании</h1>
+<h1 class="page-title">Отзывы о вашей компании</h1>
 <div class="feedback">
     <!-- FeedBack block -->
 
@@ -295,6 +305,9 @@ $pagen = Array("nPageSize" => 5);
 if ($sort_url["comments"] == "all") {
 $pagen = false;
 }
+    if(!isset($_GET["PAGEN_2"])){
+        $pagen["iNumPage"] = 1;
+    }
 $res = CIBlockElement::GetList($order, $arFilter, false, $pagen, $arSelect);
 if (!$sort_url["comments"] == "all") {
 $res->NavStart(0);
@@ -524,7 +537,7 @@ $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 12
 
 $order = Array("created" => "desc");
 $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM");
-$arFilter = Array("IBLOCK_ID" => array(15), "ACTIVE" => "Y", "PROPERTY_AVTOR_CIATION" => $USER->GetID());
+$arFilter = Array("IBLOCK_ID" => "15", "ACTIVE" => "Y", "PROPERTY_AVTOR_CIATIONS" => $USER->GetID());
 $res = CIBlockElement::GetList($order, $arFilter, false, $pagen, $arSelect);
 
 $ID_rewievs = array();
@@ -551,6 +564,8 @@ if(isset($ID_rewievs[0])) {
     }
 
 
+
+
     $order = Array("created" => "desc");
     $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "CREATED_DATE", "PROPERTY_*");
     $arFilter = Array("IBLOCK_ID" => 13, "ACTIVE" => "Y", "PROPERTY_COMMENTS_TO_REWIEW" => $ID_comments);
@@ -558,6 +573,9 @@ if(isset($ID_rewievs[0])) {
     $pagen = Array("nPageSize" => 5);
     if ($sort_url["comments"] == "all") {
         $pagen = false;
+    }
+    if(!isset($_GET["PAGEN_3"])){
+        $pagen["iNumPage"] = 1;
     }
     $res = CIBlockElement::GetList($order, $arFilter, false, $pagen, $arSelect);
     if (!$sort_url["comments"] == "all") {

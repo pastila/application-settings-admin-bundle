@@ -481,9 +481,7 @@ if (count($arResult["ITEMS"]) > 0) {
     <?php }
 } else { ?>
     <div class="obrashcheniya">
-        <p> У вас нет готовых обращений. Сформировать обращение на возврат средств за медицинскую помощь по программе
-            ОМС
-            можно
-            <a class="link-underline" href="/forma-obrashenija/">здесь</a>.</p>
+        <p> У вас нет готовых обращений.</p>
     </div>
+    <a href="/forma-obrashenija/" class="mainBtn">Сформировать обращение</a>
 <?php } ?>
