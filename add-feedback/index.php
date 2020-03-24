@@ -88,14 +88,14 @@ global $USER; ?>
                             Расскажите о вашей ситуации
                         </h3>
                                     <?php if (!$USER->IsAuthorized()) { ?>
-                        <div class="input__wrap">
+                        <div class="input__wrap name_user_no_Authorized">
                             <label for="name_user" class="input__wrap_label">Введите свое имя</label>
                             <input id="name_user" type="name_user" name="name_user" placeholder="Имя" required pattern="([а-яЁА-ЯЁ]+)">
                         </div>
                         <?php } ?>
                         <div class="input__wrap">
                             <label for="name" class="input__wrap_label">Заголовок</label>
-                            <input id="name" type="name" name="name" required>
+                            <input id="title" type="title" name="title" required>
                         </div>
 
                         <div class="input__wrap">

@@ -60,12 +60,13 @@ if($ob = $res->GetNextElement()){
                 </div>
             </div>
                 <div class="input__wrap">
+                    <label class="input__wrap_label">Сообщение</label>
                     <textarea class="textarea_input" minlength="10" name="text" required></textarea>
                 </div>
             <div class="input__wrap">
                 <label class="input__wrap_label">Прикрепить к сообщению файлы(максимум 5):</label>
                 <div class="file-input file_input_half">
-                    <button class="button smallAccentBtn"  id="btn_myFileInput">.png .jpeg</button>
+                    <button class="button mainBtn"  id="btn_myFileInput">.png .jpeg</button>
                     <label class="label_parent-elements" for="btn_myFileInput">Вы не выбрали файлы</label>
                     <input class="file-simple"  accept="image/*" type="file" id="myFileInput" multiple />
                     <span class="label block-error-label">Максимальный размер файла 10mb</span>

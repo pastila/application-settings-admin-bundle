@@ -4,6 +4,12 @@
 @import './utils/fonts';
 @import './utils/typografy';
 
+
+
+
+
+
+
 @import './components/btns/btns';
 @import './components/inputs/input';
 @import './components/inputs/checkbox';
@@ -186,6 +192,7 @@ main.main {
 }
 .error{
     color: $error;
+    font-size: 1.6rem;
 }
 .bold{
     font-family: $main-font-bold;
@@ -332,7 +339,7 @@ textarea{
     resize: none;
 }
 .custom_styles_popup{
-    max-width: 50rem;
+    max-width: 60rem;
     background: #fff;
     margin: 0 auto;
     position: relative;
@@ -443,12 +450,6 @@ a{
         }
     }
 }
-#btn_myFileInput{
-    font-family: $main-font-bold;
-    border: none;
-    background-color: $accentColor;
-    color: white;
-}
 .label_parent-elements{
     display: block;
     .element-file{
@@ -459,4 +460,67 @@ a{
     display: flex;
     justify-content: center;
     margin-top: 3rem;
+}
+.relative_block{
+ position: relative;
+}
+.popover_error{
+    padding: 1rem;
+    background: white;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    border-radius: 1rem;
+    border: solid 0.2rem $border;
+    @include boxShadow;
+    position: absolute;
+    top: calc(100% + 1rem);
+    z-index: 2;
+    left: 0;
+    width: auto;
+    &_arrow{
+        position: absolute;
+        display: block;
+        width: 2rem;
+        height: 1rem;
+        margin: 0;
+        top: auto;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        &:before{
+            position: absolute;
+            display: block;
+            content: "";
+            border-color: transparent;
+            border-style: solid;
+            top: 0;
+            border-width: 0 1rem 1rem 1rem;
+            border-bottom-color: $border;
+        }
+        &:after{
+            position: absolute;
+            display: block;
+            content: "";
+            border-color: transparent;
+            border-style: solid;
+            top: 1px;
+            border-width: 0 1rem 1rem 1rem;
+            border-bottom-color: white;
+        }
+    }
+    &_image{
+        width: 2rem;
+        height: 2rem;
+        margin-right: 1rem;
+        display: flex;
+        img{
+            max-width: 100%;
+        }
+    }
+    &_text{
+        font-family: $main-font-semibold;
+        font-size: 1.2rem;
+        color: $error;
+    }
 }

@@ -7,6 +7,67 @@ var data = {
 
 $(document).ready(function() {
 
+  $(document).on('change keyup input click','#children_last_name_add, #children_name_add, #children_second_name_add, #famaly-name, #name, #last-name, [id*=children_second_name_add], [id*=children_name_add],[id*=children_last_name_add]' ,function() {
+    if (this.value.match(/[^а-яёА-ЯЁ\-]/g)) {
+      this.value = this.value.replace(/[^а-яёА-ЯЁ\-]/g, '');
+    }
+  });
+
+  $("#famaly-name, [id*=children_last_name_add]").on('keyup', function() {
+    var $this = $(this);
+    clearTimeout($this.data('timer'));
+    $this.data('timer', setTimeout(function() {
+      $this.removeData('timer');
+
+      if($this.val().length > 0) {
+        if(obj_correction_name.is_harder_str($this) === false){
+          var new_str =  obj_correction_name.correction_plain_str($this);
+          $this.val(new_str);
+        } else {
+          var new_str =  obj_correction_name.correction_harder_str($this);
+          $this.val(new_str);
+        }
+      }
+    },2200));
+  });
+
+
+
+  $("#name, [id*=children_name_add]").on('keyup', function() {
+    var $this = $(this);
+    clearTimeout($this.data('timer'));
+    $this.data('timer', setTimeout(function() {
+      $this.removeData('timer');
+
+      if($this.val().length > 0) {
+        if(obj_correction_name.is_harder_str($this) === false){
+          var new_str =  obj_correction_name.correction_plain_str($this);
+          $this.val(new_str);
+        } else {
+          var new_str =  obj_correction_name.correction_harder_str($this);
+          $this.val(new_str);
+        }
+      }
+
+    },2200));
+  });
+  $("#last-name, [id*=children_second_name_add]").on('keyup', function() {
+    var $this = $(this);
+    clearTimeout($this.data('timer'));
+    $this.data('timer', setTimeout(function() {
+      $this.removeData('timer');
+      if($this.val().length > 0) {
+        if(obj_correction_name.is_harder_str($this) === false){
+          var new_str =  obj_correction_name.correction_plain_str($this);
+          $this.val(new_str);
+        } else {
+          var new_str =  obj_correction_name.correction_harder_str($this);
+          $this.val(new_str);
+        }
+      }
+    },2200));
+  });
+
   $(document).on('click', '#search_result li', function() {
     $('#referal').val($(this).text());
     $('#search_result').fadeOut();
@@ -202,13 +263,27 @@ $(document).ready(function() {
 
 
     if(data_FORM[4]['value'].length >16 ){
-      $('[name=uf_insurance_policy]').after(
-          ' <span class="label danger  error-policy-max "  >Введен длинный номер полиса</span>');
+      $('[name=uf_insurance_policy]').after('   <div class="popover_error">\n' +
+          '          <div class="popover_error_arrow"></div>\n' +
+          '          <div class="popover_error_image">\n' +
+          '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+          '          </div>\n' +
+          '          <div class="popover_error_text">\n' +
+          '        Введен длинный номер полиса.\n' +
+          '      </div>\n' +
+          '      </div>');
       error.push("error");
 
     }else if( data_FORM[4]['value'].length  <16){
-      $('[name=uf_insurance_policy]').after(
-          '<span class="label danger  error-policy-min "  >Введен короткий номер полиса</span>');
+      $('[name=uf_insurance_policy]').after('   <div class="popover_error">\n' +
+          '          <div class="popover_error_arrow"></div>\n' +
+          '          <div class="popover_error_image">\n' +
+          '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+          '          </div>\n' +
+          '          <div class="popover_error_text">\n' +
+          '        Введен короткий номер полиса.\n' +
+          '      </div>\n' +
+          '      </div>');
       error.push("error");
     }
 
@@ -224,23 +299,55 @@ $(document).ready(function() {
     }
 
     if(data_FORM[1]['value'].length <2){
-      $('[name=name]').after(
-          '<span class="label danger  error-name "  >Введите имя</span>');
+      $('[name=name]').after('   <div class="popover_error">\n' +
+          '          <div class="popover_error_arrow"></div>\n' +
+          '          <div class="popover_error_image">\n' +
+          '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+          '          </div>\n' +
+          '          <div class="popover_error_text">\n' +
+          '        Введите имя.\n' +
+          '      </div>\n' +
+          '      </div>');
       error.push("error");
     }
+
     if(data_FORM[0]['value'].length <2){
-      $('[name=last_name]').after(
-          '<span class="label danger  error-last_name "  >Введите фамилию</span>');
+      $('[name=last_name]').after('   <div class="popover_error">\n' +
+          '          <div class="popover_error_arrow"></div>\n' +
+          '          <div class="popover_error_image">\n' +
+          '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+          '          </div>\n' +
+          '          <div class="popover_error_text">\n' +
+          '        Введите фамилию.\n' +
+          '      </div>\n' +
+          '      </div>');
       error.push("error");
     }
+
     if(data_FORM[2]['value'].length <2){
-      $('[name=second_name]').after(
-          '<span class="label danger  error-second_name "  >Введите отчество</span>');
+      $('[name=second_name]').after('   <div class="popover_error">\n' +
+          '          <div class="popover_error_arrow"></div>\n' +
+          '          <div class="popover_error_image">\n' +
+          '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+          '          </div>\n' +
+          '          <div class="popover_error_text">\n' +
+          '        Введите отчество.\n' +
+          '      </div>\n' +
+          '      </div>');
       error.push("error");
     }
+
+
   if(data_FORM[3]['value'].length <2){
-    $('[name=email]').after(
-        '<span class="label danger  error-email "  >Введите эмеил</span>');
+    $('[name=email]').after('   <div class="popover_error">\n' +
+        '          <div class="popover_error_arrow"></div>\n' +
+        '          <div class="popover_error_image">\n' +
+        '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+        '          </div>\n' +
+        '          <div class="popover_error_text">\n' +
+        '        Введите эмеил.\n' +
+        '      </div>\n' +
+        '      </div>');
     error.push("error");
   }
   // fd.append('import_file', input_file.prop('files')[0]);
@@ -261,14 +368,35 @@ $(document).ready(function() {
 
         },
         success: function(msg) {
-          if (msg == "1") {
-            window.location.reload();
-          }
-          if (msg == "Пользователь с таким эмейлом уже есть") {
 
-            $(".input_email").
-                after(
-                    '<p class="danger">Пользователь с таким эмейлом уже есть</p>')
+              var result = JSON.parse(msg);
+
+          if (result.user_email_already != ""  && result.user_email_already !== undefined) {
+
+            $(".input_email").after('   <div class="popover_error">\n' +
+                '          <div class="popover_error_arrow"></div>\n' +
+                '          <div class="popover_error_image">\n' +
+                '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+                '          </div>\n' +
+                '          <div class="popover_error_text">\n' +
+                '        Пользователь с таким эмейлом уже есть.\n' +
+                '      </div>\n' +
+                '      </div>');
+          }
+          if (result.user_policy_already != "" && result.user_policy_already !== undefined) {
+
+            $(".numberInput").after('   <div class="popover_error">\n' +
+                '          <div class="popover_error_arrow"></div>\n' +
+                '          <div class="popover_error_image">\n' +
+                '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+                '          </div>\n' +
+                '          <div class="popover_error_text">\n' +
+                '        Пользователь с таким полисом уже есть.\n' +
+                '      </div>\n' +
+                '      </div>');
+          }
+          if (result.true !== "" && result.true !== undefined) {
+            window.location.reload();
           }
         },
       }).done(function(msg) {
