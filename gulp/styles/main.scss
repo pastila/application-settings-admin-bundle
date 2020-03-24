@@ -4,12 +4,6 @@
 @import './utils/fonts';
 @import './utils/typografy';
 
-
-
-
-
-
-
 @import './components/btns/btns';
 @import './components/inputs/input';
 @import './components/inputs/checkbox';
@@ -523,4 +517,7 @@ a{
         font-size: 1.2rem;
         color: $error;
     }
+}
+.mb-2{
+    margin-bottom: 2rem;
 }
