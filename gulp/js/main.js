@@ -241,7 +241,7 @@ $(document).ready(function() {
 
           });
     });
-
+console.log("1");
     $(document).on('click', '.hospital_reg', function() {
       let id_region = $(this).attr('value');
       let select_region = $(this).text();
