@@ -983,7 +983,7 @@ function form_us() {
           $.magnificPopup.open({
             items: {
               src: '<div class="white-popup custom_styles_popup"><button title="Закрыть" type="button" class="mfp-close">×</button>' +
-              '<h3 class="popup__wrap_tabs_title">Ваше письмо отправленно успешно</h3></div>',
+              '<h3 class="popup__wrap_tabs_title">Ваше письмо отправлено успешно</h3></div>',
               type: 'inline',
             },
             callbacks: {
@@ -1072,7 +1072,7 @@ function form_us_two() {
             $.magnificPopup.open({
               items: {
                 src: '<div class="white-popup custom_styles_popup"><button title="Закрыть" type="button" class="mfp-close">×</button>' +
-                '<h3 class="popup__wrap_tabs_title">Ваше письмо отправленно успешно</h3></div>',
+                '<h3 class="popup__wrap_tabs_title">Ваше письмо отправлено успешно</h3></div>',
                 type: 'inline',
               },
               callbacks: {
