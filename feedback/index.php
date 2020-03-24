@@ -112,7 +112,7 @@ $countReviews = count($allReviews);
                     $url_for_filter = "?";
                     foreach ($sort_url as $key => $filter) {
 
-                        if ($key != "property_kpp") {
+                        if ($key != "property_kpp" && $key!="PAGEN_1") {
                             $url_for_filter .= "$key=$filter&";
                         }
                     }
@@ -189,7 +189,7 @@ $countReviews = count($allReviews);
                     $url_for_filter = "?";
                     foreach ($sort_url as $key => $filter) {
 
-                        if ($key != "property_evaluation") {
+                        if ($key != "property_evaluation" && $key!="PAGEN_1") {
                             $url_for_filter .= "$key=$filter&";
                         }
                     }
@@ -267,7 +267,7 @@ $countReviews = count($allReviews);
                     $url_for_filter = "?";
                     foreach ($sort_url as $key => $filter) {
 
-                        if ($key != "property_region") {
+                        if ($key != "property_region" && $key!="PAGEN_1") {
                             $url_for_filter .= "$key=$filter&";
                         }
                     }
@@ -323,8 +323,12 @@ $countReviews = count($allReviews);
 
 
         $pagen = Array("nPageSize" => 10);
-        if ($sort_url["comments"] == "all") {
+        if ($sort_url["comments"] == "all" ) {
             $pagen = false;
+        }
+
+        if(!isset($_GET["PAGEN_1"])){
+            $pagen["iNumPage"] = 1;
         }
         $res = CIBlockElement::GetList($order, $arFilter, false, $pagen, $arSelect);
         if (!$sort_url["comments"] == "all") {
@@ -639,8 +643,10 @@ $countReviews = count($allReviews);
 
             </div><!-- FeedBack block END -->
         <? }
+
+
         if (!$sort_url["comments"] == "all") {
-            $navStr = $res->GetPageNavStringEx($navComponentObject, "Страницы:", ".default");
+            $navStr = $res->GetPageNavStringEx($navComponentObject, "Страницы:", ".default",false,null);
             echo $navStr;
         }
         ?>
