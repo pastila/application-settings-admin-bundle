@@ -37,6 +37,7 @@ $cpt->SetCodeCrypt($captchaPass);
         </div>
         <div class="block_padd-modal">
             <div class="input__wrap">
+                <label class="input__wrap_label">Сообщение</label>
                 <textarea class="textarea_input" minlength="10" name="text" required></textarea>
             </div>
         </div>

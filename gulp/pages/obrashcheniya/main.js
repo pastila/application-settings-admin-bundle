@@ -298,8 +298,8 @@ function delete_el(el) {
         if(suc.count == 1){
           $('.page-title').after(
               '<div class="obrashcheniya"></div>');
-          $(".obrashcheniya").append('<p>У вас нет готовых обращений. Сформировать обращение на возврат средств за медицинскую помощь по программе ОМС можно\n' +
-              '           </p>');
+          $(".obrashcheniya").append('<p>У вас нет готовых обращений.</p>');
+          $(".obrashcheniya").after('<a href="/forma-obrashenija/" class="mainBtn "">Сформировать обращение</a>');
         }
 
         }
