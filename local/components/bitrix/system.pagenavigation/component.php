@@ -13,7 +13,6 @@ if (is_object($arParams["NAV_RESULT"]) &&  is_subclass_of($arParams["NAV_RESULT"
 		$dbresult->NavPageSize = 10;
 
 	$arResult = Array();
-
 	$arResult["NavShowAlways"] = $arParams["SHOW_ALWAYS"];
 	$arResult["NavTitle"] = $arParams["NAV_TITLE"];
 	$arResult["NavRecordCount"] = $dbresult->NavRecordCount;
@@ -27,6 +26,7 @@ if (is_object($arParams["NAV_RESULT"]) &&  is_subclass_of($arParams["NAV_RESULT"
 	$arResult["add_anchor"] = $dbresult->add_anchor;
 	$arResult["nPageWindow"] = $nPageWindow = $dbresult->nPageWindow;
 	$arResult["bSavePage"] = (CPageOption::GetOptionString("main", "nav_page_in_session", "Y")=="Y");
+
 
 	if($arParams["BASE_LINK"] <> '')
 	{
