@@ -29,6 +29,7 @@ CModule::IncludeModule("iblock");
                 <label class="input__wrap_label">Фамилия</label>
                 <input id="famaly-name" type="text" name="famaly-name" pattern="^[А-ЯЁ][а-яё]*([-][А-ЯЁ][а-яё]*)*$"
                        placeholder="Фамилия" required>
+
             </div>
 
             <!-- Input -->
@@ -48,34 +49,38 @@ CModule::IncludeModule("iblock");
         <div class="popup__wrap_middle">
             <div class="input__wrap">
                 <label class="input__wrap_label">Дата рождения</label>
-                <input id="datepicker_reg" class="datepicker-here" type="text" name="time" autocomplete="off" required readonly >
+                <input id="datepicker_reg" class="datepicker-here" type="text" name="time" autocomplete="off" required readonly
+                       placeholder="DD.MM.YYYY">
                 <div class="danger date" style="display: none;">Регистрация лиц, не достигших 18 лет, не допускается</div>
             </div>
             <!-- Input -->
             <div class="input__wrap">
                 <label class="input__wrap_label">Электронная почта</label>
-                <input id="email" type="email" name="email" required>
+                <input id="email" type="email" name="email" pattern="^[a-z0-9\.\-]+@[a-z]+\.[a-z]{2,6}$" required placeholder="Электронная почта">
             </div>
-
         </div>
         <div class="popup__wrap_middle">
             <div class="input__wrap">
-                <label class="input__wrap_label">Ваш номер телефона</label>
-                <input id="phone" type="tel" pattern="\+7\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2}" name="phone"
-                       data-mask="+7 (000) 000 00 00"
-                       placeholder="+7 (___) ___ __ __"  required>
-                <p id="sms_confirm_error" style="display: none" class="error sms-error">Введите номер телефона</p>
-                <p id="tel_confirm_error" style="display: none" class="error sms-error">
-                    Пользовватель с таким телефоном уже сущесвует
-                </p>
+                <div class="input__wrap--column">
+                    <label class="input__wrap_label">Ваш номер телефона</label>
+                    <input id="phone" type="tel" pattern="\+7\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2}" name="phone"
+                           data-mask="+7 (000) 000 00 00"
+                           placeholder="+7 (___) ___ __ __"  required>
+                    <p id="sms_confirm_error" style="display: none" class="error sms-error">Введите номер телефона</p>
+                    <p id="tel_confirm_error" style="display: none" class="error sms-error">
+                        Пользовватель с таким телефоном уже сущесвует
+                    </p>
+                </div>
             </div>
             <div class="input__wrap hidden_wrap_phone flex_hidden_wrap_phone main_btn-parent">
                 <input type="button" class="accept-phone-js whiteBtn" value="Подтвердить номер телефона">
             </div>
             <div class="input__wrap" id="sms_confirm" style="display: none">
+                <div class="input__wrap--column">
                 <div class="input_phone-flex">
                     <label class="input__wrap_label">Введите код подтверждения</label>
                     <input id="check-code-js" name="sms-code" maxlength="5" class="check-code-js" type="text">
+                </div>
                 </div>
                 <div class="input_phone-flex main_btn-parent">
                 <input type="button" class="sms-again-button whiteBtn" value="Не получили SMS? Отправить повторно.">
@@ -105,7 +110,7 @@ CModule::IncludeModule("iblock");
                     <div class="input__ico">
                         <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                     </div>
-                    <input id="referal"  value="" type="text" placeholder="Поиск по региону" autocomplete="off"/>
+                    <input id="referal"  value="" type="text" placeholder="Поиск по региону" required autocomplete="off"/>
                     <ul style="cursor: pointer;" class="custom-serach__items" id="search_result">
                         <?
                         $arOrder = Array("name"=>"asc");
@@ -126,18 +131,18 @@ CModule::IncludeModule("iblock");
                     <div class="input__ico">
                         <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255" viewBox="0 0 255 255"><path d="M0 63.75l127.5 127.5L255 63.75z"/></svg>
                     </div>
-                    <input id="referal_two" value="" type="text" placeholder="Поиск по компаниям" autocomplete="off"/>
+                    <input id="referal_two" value="" type="text" placeholder="Поиск по компаниям"  required autocomplete="off"/>
                     <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_hospital">
 
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="wrap-chrckbox checkbox_registration checkbox_registration_modal">
-            <label class="check-label">
+        <div class="wrap-chrckbox checkbox_registration checkbox_registration_modal ">
+            <label class="check-label relative_block" >
                 Я ознакомлен и согласен с условиями <a target="_blank" href="/terms-of-use/">пользовательского соглашения</a> и
                 <a target="_blank" href="/personal-data-processing/">политикой по обработке персональных данных</a>
-                <input type="checkbox" value="" />
+                <input type="checkbox" required value="" />
                 <span class="check-img check-img_reg"></span>
         </div>
         <div class="popup__wrap_bottom center__child">

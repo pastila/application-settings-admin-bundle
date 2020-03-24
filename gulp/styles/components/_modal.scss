@@ -31,7 +31,6 @@
         right: 2rem;
         cursor: pointer;
         z-index: 2;
-
         img {
             height: 2rem;
         }
@@ -44,6 +43,9 @@
     height: 80vh;
     overflow-y: scroll;
     overflow-x: hidden;
+    @media (min-width: 992px) and (max-width: 1199px){
+        max-width: 85vw;
+    }
     @media screen and (max-width: 576px){
         max-width: 100%;
     }
@@ -143,6 +145,14 @@
         &__item{
             margin-bottom: 2rem;
             font-size: 1.6rem;
+            font-family: $main-font-semibold;
+            color: $accentColor;
         }
+    }
+}
+.close-modal {
+    transition: all .2s;
+    &:hover {
+        filter: brightness(0.5);
     }
 }
