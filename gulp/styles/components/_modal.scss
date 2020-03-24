@@ -81,6 +81,13 @@
             top: 100%;
         }
     }
+    .sms-error{
+        @media(min-width: 992px){
+            left: 1rem;
+            position: absolute;
+            top: 100%;
+        }
+    }
     .flex_hidden_wrap_phone{
         display: flex;
         justify-content: flex-end;
