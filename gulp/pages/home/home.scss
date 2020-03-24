@@ -13,8 +13,14 @@
     }
 
     &__l {
-        width: 50%;
         padding-top: 8rem;
+        &_item{
+            @media(min-width: 1200px){
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+            }
+        }
         &_img {
             width: 100vw;
             max-height: 50vmin;
@@ -23,14 +29,20 @@
 
         &_descr {
             margin-top: 3rem;
-            font-size: 1.8rem;
+            font-size: 2rem;
         }
     }
 
     .home-title-sub {
-        font-size: 3.8rem;
+        font-size: 4.2rem;
         color: $text-color-second;
         line-height: normal;
+        &_line{
+            margin: 0 2rem;
+            @media(max-width: 1199px){
+                display: none;
+            }
+        }
     }
 }
 
@@ -62,6 +74,36 @@
 
             &_title {
                 margin-bottom: 2rem;
+                font-size: 4rem;
+                transition: all .2s ease-in;
+                &:hover{
+                    color: $accentColor;
+                }
+            }
+            &_link{
+                display: inline-flex;
+                align-items: center;
+                font-family: $main-font-semibold;
+                color: $title-color;
+                text-transform: uppercase;
+                margin-top: 2rem;
+                p{
+                    display: inline-flex;
+                    align-items: center;
+                }
+                img{
+                    width: 2rem;
+                    margin-left: 1rem;
+                    transition: all .2s ease-in;
+                    position: relative;
+                    left: 0;
+                }
+                &:hover{
+                    color: $title-color !important;
+                    img{
+                        left: 1rem;
+                    }
+                }
             }
         }
     }

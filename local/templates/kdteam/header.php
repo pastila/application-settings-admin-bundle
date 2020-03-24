@@ -54,12 +54,29 @@ $url = $APPLICATION->GetCurDir();
 left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrika counter -->
 
+
+    <!-- Google Tag Manager -->
+    <script data-skip-moving="true">
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-N3VBFGG');
+    </script>
+    <!-- End Google Tag Manager -->
+
     <!-- Адмитад -->
     <meta name="verify-admitad" content="d368515aeb" />
     <!-- /Адмитад -->
 </head>
 
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N3VBFGG"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
     <?php $APPLICATION->ShowPanel();
 ?>
 
@@ -69,7 +86,7 @@ left:-9999px;" alt="" /></div></noscript>
         <header class="header">
             <div class="header__container">
                 <a class="header__logo" href="/">
-                    <img class="header__logo_img" src="/local/templates/kdteam/images/png/header/logo-oms.png"
+                    <img class="header__logo_img" src="/local/templates/kdteam/images/png/header/logo-oms-white.png"
                         alt="OMS">
                 </a>
                 <?php
@@ -279,7 +296,7 @@ left:-9999px;" alt="" /></div></noscript>
                         <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-login.php"?>" id="login-link"
                             class="header__r_auth_login">
                             <img class="header__r_auth_login_img"
-                                src="/local/templates/kdteam/images/svg/header/login/enter.svg" alt="OMS">
+                                src="/local/templates/kdteam/images/svg/header/login/enter-white.svg" alt="OMS">
                             <div class="header__r_auth_login_text">
                                 Вход
                             </div>
@@ -288,7 +305,7 @@ left:-9999px;" alt="" /></div></noscript>
                         <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-reg.php"?>" id="reg-link"
                             data-rigstration="0" class="header__r_auth_reg">
                             <img class="header__r_auth_login_img"
-                                src="/local/templates/kdteam/images/svg/header/reg/edit.svg" alt="OMS">
+                                src="/local/templates/kdteam/images/svg/header/reg/edit-white.svg" alt="OMS">
                             <div class="header__r_auth_login_text">
                                 Регистрация
                             </div>
