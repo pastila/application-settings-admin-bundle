@@ -112,7 +112,7 @@ $countReviews = count($allReviews);
                     $url_for_filter = "?";
                     foreach ($sort_url as $key => $filter) {
 
-                        if ($key != "property_kpp" || $key!="PAGEN_1") {
+                        if ($key != "property_kpp" && $key!="PAGEN_1") {
                             $url_for_filter .= "$key=$filter&";
                         }
                     }
@@ -189,7 +189,7 @@ $countReviews = count($allReviews);
                     $url_for_filter = "?";
                     foreach ($sort_url as $key => $filter) {
 
-                        if ($key != "property_evaluation" || $key!="PAGEN_1") {
+                        if ($key != "property_evaluation" && $key!="PAGEN_1") {
                             $url_for_filter .= "$key=$filter&";
                         }
                     }
@@ -267,7 +267,7 @@ $countReviews = count($allReviews);
                     $url_for_filter = "?";
                     foreach ($sort_url as $key => $filter) {
 
-                        if ($key != "property_region" || $key!="PAGEN_1") {
+                        if ($key != "property_region" && $key!="PAGEN_1") {
                             $url_for_filter .= "$key=$filter&";
                         }
                     }
