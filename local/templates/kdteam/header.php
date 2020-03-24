@@ -24,6 +24,8 @@ $url = $APPLICATION->GetCurDir();
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="HandheldFriendly" content="true">
+    <meta name="yandex-verification" content="3117711c7cf9d47f" />
+    <meta name="google-site-verification" content="6i-0zWPQEfVk1TaN63icBNxaPtFIwxrzlrG-w4oiTyg" />
     <title><?php $APPLICATION->ShowTitle(); ?></title>
     <link rel="shortcut icon" href="/local/templates/kdteam/images/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">

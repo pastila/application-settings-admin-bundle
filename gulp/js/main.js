@@ -301,7 +301,6 @@ $(document).ready(function() {
           success: function(code) {
             if (code === 'error') {
               $('#tel_confirm_error').css('display', 'block');
-
             } else {
               $('.hidden_wrap_phone').css('display', 'none');
               $('#sms_confirm').css('display', 'block');
