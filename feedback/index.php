@@ -775,21 +775,9 @@ $countReviews = count($allReviews);
 
 
             </ul>
-            <? if (isset($_GET["property_region"])) {
-                $url_for_filter = "?";
 
-                foreach ($sort_url as $key => $filter) {
-                    if ($key != "property_region") {
-                        $url_for_filter .= "$key=$filter&";
-                    }
-                }
-                if ($url_for_filter == "?") {
-                    $url_for_filter = "/feedback/";
-                }
-
-            } ?>
             <div class="center__child">
-                <a class="mainBtn" href="<?= $url_for_filter ?>">Весь рейтинг</a>
+                <a class="mainBtn" href="/feedback/">Весь рейтинг</a>
             </div>
         </div>
 
