@@ -323,13 +323,14 @@ $countReviews = count($allReviews);
 
 
         $pagen = Array("nPageSize" => 10);
-        if ($sort_url["comments"] == "all" ) {
+        if ($sort_url["comments"] == "all" && isset($_GET["PAGEN_1"])) {
             $pagen = false;
-        }
+        }else if(!isset($_GET["PAGEN_1"])){
 
-        if(!isset($_GET["PAGEN_1"])){
             $pagen["iNumPage"] = 1;
         }
+
+
         $res = CIBlockElement::GetList($order, $arFilter, false, $pagen, $arSelect);
         if (!$sort_url["comments"] == "all") {
             $res->NavStart(0);
