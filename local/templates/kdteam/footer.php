@@ -20,7 +20,13 @@ if (defined("B_PROLOG_INCLUDED") && B_PROLOG_INCLUDED === true) {
                 <a href="/about/">О нас</a>
             </li>
             <li>
-                <a href="/contact_us/">Связаться</a>
+                <a href="/contact_us/">Контакты</a>
+            </li>
+            <li>
+                <a href="/feedback/">Отзывы</a>
+            </li>
+            <li>
+                <a href="/news/">Новости</a>
             </li>
             <li>
                 <a href="/terms-of-use/">Пользовательское соглашение</a>

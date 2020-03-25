@@ -186,6 +186,7 @@ main.main {
 }
 .error{
     color: $error;
+    font-size: 1.6rem;
 }
 .bold{
     font-family: $main-font-bold;
@@ -332,7 +333,7 @@ textarea{
     resize: none;
 }
 .custom_styles_popup{
-    max-width: 50rem;
+    max-width: 60rem;
     background: #fff;
     margin: 0 auto;
     position: relative;
@@ -443,12 +444,6 @@ a{
         }
     }
 }
-#btn_myFileInput{
-    font-family: $main-font-bold;
-    border: none;
-    background-color: $accentColor;
-    color: white;
-}
 .label_parent-elements{
     display: block;
     .element-file{
@@ -522,4 +517,7 @@ a{
         font-size: 1.2rem;
         color: $error;
     }
+}
+.mb-2{
+    margin-bottom: 2rem;
 }

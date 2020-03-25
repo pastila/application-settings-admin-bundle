@@ -298,8 +298,8 @@ $(document).ready(function() {
 
   });
   var obj_review = {
-    'empty_field': [],
-    'user_Authorized': function(data_form) {
+    empty_field: [],
+    user_Authorized: function(data_form) {
 
       let region = $('#referal').attr('data-id_region');
       if (region == '' || region == undefined) {
@@ -347,7 +347,7 @@ $(document).ready(function() {
             '      </div>');
         this.empty_field.push('error');
       }else{
-        data.name_user_no_Authorized = data_form[0]['value'];
+        data.head = data_form[0]['value'];
       }
       if(data_form[1]['value'] === "" ){
         $("#"+data_form[1]["name"]).after('   <div class="popover_error">\n' +
@@ -361,7 +361,7 @@ $(document).ready(function() {
             '      </div>');
         this.empty_field.push('error');
       }else{
-        data.name_user_no_Authorized = data_form[0]['value'];
+        data.text = data_form[0]['value'];
       }
       if (data.id_city === 0) {
         $('[data-select=city]').next().css({'display': 'block'});
@@ -378,7 +378,7 @@ $(document).ready(function() {
 
 
     },
-    'user_no_Authorized': function(data_form) {
+    user_no_Authorized: function(data_form) {
 
 
 
@@ -395,7 +395,7 @@ $(document).ready(function() {
             '      </div>');
         this.empty_field.push('error');
       } else {
-        data.id_city = region;
+        data.id_city =region;
       }
 
       let hospital = $('#referal_two').attr('data-id_region');
@@ -432,6 +432,7 @@ $(document).ready(function() {
       }else{
         data.name_user_no_Authorized = data_form[0]['value'];
       }
+
       if(data_form[1]['value']  === "" ){
         $("#"+data_form[1]["name"]).after('   <div class="popover_error">\n' +
             '          <div class="popover_error_arrow"></div>\n' +
@@ -444,7 +445,7 @@ $(document).ready(function() {
             '      </div>');
         this.empty_field.push('error');
       }else{
-        data.name_user_no_Authorized = data_form[1]['value'];
+        data.head = data_form[1]['value'];
       }
       if(data_form[2]['value'] === ""){
         $("#"+data_form[2]["name"]).after('   <div class="popover_error">\n' +
@@ -458,7 +459,7 @@ $(document).ready(function() {
             '      </div>');
         this.empty_field.push('error');
       }else{
-        data.name_user_no_Authorized = data_form[2]['value'];
+        data.text = data_form[2]['value'];
       }
 
 
@@ -478,7 +479,7 @@ $(document).ready(function() {
 
     },
 
-    'send_data': function(data) {
+    send_data: function(data) {
 
       $.ajax({
         url: '/ajax/add_reviews.php',
@@ -516,7 +517,7 @@ $(document).ready(function() {
     if ($('.header__r_auth_login').length > 0 &&
         $('.header__r_auth_reg').length > 0) {
       obj_review.user_no_Authorized(data_form);
-      console.log(obj_review.empty_field);
+
       if (obj_review.empty_field.length === 0) {
 
         obj_review.send_data(data);
@@ -524,7 +525,7 @@ $(document).ready(function() {
       }
     } else {
       obj_review.user_Authorized(data_form);
-      console.log(obj_review.empty_field);
+
       if (obj_review.empty_field.length === 0) {
 
         obj_review.send_data(data);
@@ -536,6 +537,7 @@ $(document).ready(function() {
 });
 
 $("#name_user").on('keyup', function() {
+
   var $this = $(this);
   clearTimeout($this.data('timer'));
   $this.data('timer', setTimeout(function() {
@@ -548,40 +550,52 @@ $("#name_user").on('keyup', function() {
     if($this.val().length > 0) {
 
       var harder_str = $this.val().split(" ");
+
+
       for(var i= 0 ;i <harder_str.length ; i++){
         if(harder_str[i][0] !== undefined) {
 
-
           if(harder_str[i].search("-") !== -1){
-            var harder_str_str =harder_str[i].split("-");
 
-            for(var j= 0 ;j <harder_str_str.length ; j++) {
+              var harder_str_str = harder_str[i].split("-");
 
-              if (harder_str_str[j][0] !== undefined){
-                var first_simvol_first_str_str = harder_str_str[j][0].toUpperCase();
-              var other_first_str_str = harder_str_str[j].slice(1).
-                  toLowerCase();
+              for (var j = 0; j < harder_str_str.length; j++) {
 
-              str += first_simvol_first_str_str + other_first_str_str;
-              if (harder_str_str.length - 1 !== j) {
+                if (harder_str_str[j][0] !== undefined) {
+                  var first_simvol_first_str_str = harder_str_str[j][0].toUpperCase();
+                  var other_first_str_str = harder_str_str[j].slice(1).
+                      toLowerCase();
 
-                str += "-";
+                  str += first_simvol_first_str_str + other_first_str_str;
+                  if (harder_str_str.length - 1 !== j) {
+
+                    str += "-";
+                  }
+                }
               }
-            }
-            }
+
 
           }else {
+            if (i == 0) {
+              var first_simvol_first_str = harder_str[i][0].toUpperCase();
+              var other_first_str = harder_str[i].slice(1).toLowerCase();
 
-            var first_simvol_first_str = harder_str[i][0].toUpperCase();
-            var other_first_str = harder_str[i].slice(1).toLowerCase();
+              str += first_simvol_first_str + other_first_str;
+              console.log();
+              if (harder_str.length - 1 !== i) {
+                str += " ";
+              }
+            }else{
+              var first_simvol_first_str = harder_str[i][0];
+              var other_first_str = harder_str[i].slice(1);
 
-            str += first_simvol_first_str + other_first_str;
-            console.log();
-            if (harder_str.length - 1 !== i) {
-              str += " ";
+              str += first_simvol_first_str + other_first_str;
+              console.log();
+              if (harder_str.length - 1 !== i) {
+                str += " ";
+              }
             }
           }
-
         }
 
       }
@@ -611,7 +625,7 @@ function getCookie(name) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 $('#name_user').bind('change keyup input click', function() {
-  if (this.value.match(/[^а-яёА-ЯЁ\-\s]/g)) {
-    this.value = this.value.replace(/[^а-яёА-ЯЁ\-\s]/g, '');
+  if (this.value.match(/[^а-яёА-ЯЁ\-\s\.]/g)) {
+    this.value = this.value.replace(/[^а-яёА-ЯЁ\-\s\.]/g, '');
   }
 });

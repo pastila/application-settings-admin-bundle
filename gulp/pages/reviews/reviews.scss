@@ -363,8 +363,13 @@
         }
     }
     &__right{
-        grid-column: 4/13;
         text-align: right;
+        @media(min-width: 576px){
+            grid-column: 4/13;
+        }
+        @media(max-width: 575px){
+            margin-top: 2rem;
+        }
     }
 }
 
