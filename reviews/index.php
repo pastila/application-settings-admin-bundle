@@ -537,7 +537,7 @@ $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 12
 <?php
 
 $order = Array("created" => "desc");
-$arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM");
+$arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_CIATION_TO_COMMENTS");
 $arFilter = Array("IBLOCK_ID" => "15", "ACTIVE" => "Y", "PROPERTY_AVTOR_CIATION" => $USER->GetID());
 $res = CIBlockElement::GetList($order, $arFilter, false, $pagen, $arSelect);
 
@@ -545,7 +545,7 @@ $ID_rewievs = array();
 while ($ob = $res->GetNextElement()) {
     $arFields = $ob->GetFields();
 
-    $ID_rewievs[] = $arFields["ID"];
+    $ID_rewievs[] = $arFields["PROPERTY_CIATION_TO_COMMENTS_VALUE"];
 }
 
 
