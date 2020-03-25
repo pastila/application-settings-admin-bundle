@@ -525,21 +525,6 @@ a{
 //404 page
 .page-404 {
     margin: 3rem 0;
-    @media(min-width: 992px){
-        display: flex;
-        justify-content: space-around;
-        &_half-text{
-            width: 60%;
-        }
-        &_half-image{
-            width: 20%;
-        }
-    }
-    &_half-image{
-        @media(max-width: 991px){
-            display: none;
-        }
-    }
     &_title{
         margin: 2rem 0;
     }
