@@ -295,26 +295,26 @@ left:-9999px;" alt="" /></div></noscript>
 
                 <div class="header__r" style="display: flex;">
                     <div class="header__r_auth">
-                        <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-login.php"?>" id="login-link"
+                        <span href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-login.php"?>" id="login-link"
                             class="header__r_auth_login">
                             <img class="header__r_auth_login_img"
                                 src="/local/templates/kdteam/images/svg/header/login/enter-white.svg" alt="OMS">
                             <div class="header__r_auth_login_text">
                                 Вход
                             </div>
-                        </a>
+                        </span>
 
-                        <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-reg.php"?>" id="reg-link"
+                        <span href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-reg.php"?>" id="reg-link"
                             data-rigstration="0" class="header__r_auth_reg">
                             <img class="header__r_auth_login_img"
                                 src="/local/templates/kdteam/images/svg/header/reg/edit-white.svg" alt="OMS">
                             <div class="header__r_auth_login_text">
                                 Регистрация
                             </div>
-                        </a>
+                        </span>
                     </div>
 
-                    <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-feedback.php"?>"
+                    <span href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-feedback.php"?>"
                         class="header__r_mainBtn headerBtn" id="write-us_modal">
                         <svg style="fill: #ffffff; width: 2rem; height: 3rem;"
                             class="header__r_auth_login_img hidden-desk--image" xmlns="http://www.w3.org/2000/svg"
@@ -328,7 +328,7 @@ left:-9999px;" alt="" /></div></noscript>
                         <div class="hidden-text-mob">
                             Написать нам
                         </div>
-                    </a>
+                    </span>
                 </div>
                 <?php } ?>
             </div>
