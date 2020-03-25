@@ -521,3 +521,39 @@ a{
 .mb-2{
     margin-bottom: 2rem;
 }
+
+//404 page
+.page-404 {
+    margin: 3rem 0;
+    @media(min-width: 992px){
+        display: flex;
+        justify-content: space-around;
+        &_half-text{
+            width: 60%;
+        }
+        &_half-image{
+            width: 20%;
+        }
+    }
+    &_half-image{
+        @media(max-width: 991px){
+            display: none;
+        }
+    }
+    &_title{
+        margin: 2rem 0;
+    }
+    &_text{
+        margin-bottom: 2rem;
+    }
+    &_link{
+        font-family: $main-font-semibold;
+        color: $title-color;
+        text-transform: uppercase;
+        transition: color .2s ease-in;
+        &:hover{
+            color: $accentColor;
+            text-decoration: underline;
+        }
+    }
+}
