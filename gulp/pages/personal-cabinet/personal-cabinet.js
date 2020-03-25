@@ -3,7 +3,26 @@ var data = {
   "id_city":"0",
 };
 
-
+var obj_correction_name = {
+  is_harder_str : function(str) {
+    if (str.val().search("-") === -1) {
+      return false;
+    }
+  },
+  correction_plain_str :function(str) {
+    var first_simvol = str.val()[0].toUpperCase();
+    var other = str.val().slice(1).toLowerCase();
+    return first_simvol + other;
+  },
+  correction_harder_str : function(str) {
+    var harder_str = str.val().split("-");
+    var first_simvol_first_str = harder_str[0][0].toUpperCase();
+    var other_first_str = harder_str[0].slice(1).toLowerCase();
+    var first_simvol_second_str = harder_str[1][0].toUpperCase();
+    var other_second_str = harder_str[1].slice(1).toLowerCase();
+    return first_simvol_first_str + other_first_str + '-' + first_simvol_second_str + other_second_str;
+  }
+};
 
 $(document).ready(function() {
 
