@@ -14,16 +14,36 @@ if ($detect->isTablet() || $detect->isMobile()) {
 $asset->addJs(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/main.min.js");
 
 CModule::IncludeModule("iblock");
-$arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_*");
+$arSelect = Array("ID", "IBLOCK_ID", "NAME","CODE", "DATE_ACTIVE_FROM","PROPERTY_*");
 $arFilter = Array("IBLOCK_ID"=>19);
 $arResult_block= array();
-$res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+$res = CIBlockElement::GetList(Array("SORT"=>"asc"), $arFilter, false, false, $arSelect);
 while($ob = $res->GetNextElement()){
+    $arFields = $ob->GetFields();
     $arProps = $ob->GetProperties();
-    $arResult_block[]= $arProps["TEXT_FORMA"]["VALUE"];
-    $arResult_block[]= $arProps["FIRST_TEXT"]["VALUE"];
+
+    if($arFields["CODE"] == "shag-1"){
+        $FIRST_TEXT_shag_1 = $arProps["FIRST_TEXT"]["VALUE"];
+        $TEXT_FORMA_shag_1 = $arProps["TEXT_FORMA"]["VALUE"];
+
+    }
+    if($arFields["CODE"] == "shag-2-planovoe"){
+        $FIRST_TEXT_shag_2_planovoe = $arProps["FIRST_TEXT"]["VALUE"];
+        $TEXT_FORMA_shag_2_planovoe = $arProps["TEXT_FORMA"]["VALUE"];
+    }
+    if($arFields["CODE"] == "shag-2-neotlozhnoe"){
+        $FIRST_TEXT_shag_2_neotlozhnoe = $arProps["FIRST_TEXT"]["VALUE"];
+        $TEXT_FORMA_shag_2_neotlozhnoe= $arProps["TEXT_FORMA"]["VALUE"];
+    }
+    if($arFields["CODE"] == "shag-4"){
+        $FIRST_TEXT_shag_4 = $arProps["FIRST_TEXT"]["VALUE"];
+        $TEXT_FORMA_shag_4 = $arProps["TEXT_FORMA"]["VALUE"];
+    }
 
 }
+
+
+
 ?><!-- Breadcrumbs -->
 <ul class="breadcrumbs">
     <? if ($detect->isTablet() || $detect->isMobile()) { ?>
@@ -67,7 +87,7 @@ while($ob = $res->GetNextElement()){
                 <div class="steps_items_item_content">
 
                     <div class="steps_items_item_footer">
-                        Укажите период, в котором вы получали помощь
+                       <?php echo $FIRST_TEXT_shag_1;?>
                     </div>
 
                     <?$APPLICATION->IncludeComponent(
@@ -137,16 +157,16 @@ while($ob = $res->GetNextElement()){
                 <div class="steps_items_item_footer">
                     <div class="steps_items_item_text">
                         <h3 class="steps_items_item_content_title">
-                            <?=$arResult_block[1]?> </h3>
+                            <?=$FIRST_TEXT_shag_2_planovoe?> </h3>
                         <p>
-                            <?=$arResult_block[0]?>
+                            <?=$TEXT_FORMA_shag_2_planovoe?>
                         </p>
                     </div>
                     <div class="steps_items_item_text">
                         <h3 class="steps_items_item_content_title">
-                            <?=$arResult_block[3]?> </h3>
+                            <?=$FIRST_TEXT_shag_2_neotlozhnoe?> </h3>
                         <p>
-                            <?=$arResult_block[2]?>
+                            <?=$TEXT_FORMA_shag_2_neotlozhnoe?>
                         </p>
                     </div>
                 </div>
@@ -219,7 +239,7 @@ while($ob = $res->GetNextElement()){
             </div>
             <div class="card steps_items_item step-4">
                 <p class="form-obrashcheniya__step_four_text">
-                    <?=$arResult_block[8]?>
+                    <?php echo $FIRST_TEXT_shag_4;?>
                 </p>
                 <a class="link-underline" target="_blank" href="/news/chto-oplachivaetsya-po-polisu/">Что оплачивается по полису ОМС</a>
                 <div class="smart_search-block">
