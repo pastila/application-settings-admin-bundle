@@ -1,4 +1,9 @@
 <?php require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
+$APPLICATION->SetPageProperty("keywords_inner", "медицинское страхование отзывы, бесплатное лечение, бесплатная медицинская помощь, рейтинг медицинских страховых компаний омс в москве");
+$APPLICATION->SetPageProperty("title", "Рейтинг страховых компаний работающих в системе ОМС");
+$APPLICATION->SetPageProperty("keywords", "медицинское страхование отзывы, бесплатное лечение, бесплатная медицинская помощь, рейтинг медицинских страховых компаний омс в москве");
+$APPLICATION->SetPageProperty("description", "Рейтинг страховых компаний работающих в системе ОМС");
+$APPLICATION->SetTitle("Рейтинг страховых компаний работающих в системе ОМС");
 
 use Bitrix\Main\Page\Asset;
 
