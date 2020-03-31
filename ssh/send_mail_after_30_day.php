@@ -60,7 +60,7 @@ while ($Section = $section->GetNext()) {
 
             $arFields = $obElement->GetFields();
 
-            if ($arFields["PROPERTY_SEND_MESSAGE_VALUE"] == "") {
+            if ($arFields["PROPERTY_SEND_MESSAGE_VALUE"] != "") {
 
                 $newDate = FormatDate("d.m.Y", MakeTimeStamp($arFields["PROPERTY_SEND_MESSAGE_VALUE"]));
                 $time = strtotime($newDate);
