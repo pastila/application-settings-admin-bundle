@@ -70,6 +70,9 @@ left:-9999px;" alt="" /></div></noscript>
     <!-- Адмитад -->
     <meta name="verify-admitad" content="d368515aeb" />
     <!-- /Адмитад -->
+     <!--  JivoSite -->
+    <script src="//code-ya.jivosite.com/widget/u0hymF3kCA" async></script>
+     <!-- / JivoSite -->
 </head>
 
 <body>

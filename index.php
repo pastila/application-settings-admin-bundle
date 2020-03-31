@@ -32,6 +32,19 @@ while($ob = $res->GetNextElement()){
         </div>
     </div>
 <?}?> <!-- Block buttons links to pages -->
+
+<?php $arSelect = Array("ID", "IBLOCK_ID", "NAME", "PROPERTY_TITLE_1", "PROPERTY_TITLE_2", "PROPERTY_TITLE_3", "PROPERTY_TEXT_1", "PROPERTY_TEXT_2", "PROPERTY_TEXT_3");
+$arFilter = Array("IBLOCK_CODE"=>"block_on_main_page","CODE"=>"3-blocks" );
+$res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+while($ob = $res->GetNextElement()){
+    $arProps_block = $ob->GetFields();
+   $title_text_1 = $arProps_block["PROPERTY_TITLE_1_VALUE"];
+   $title_text_2 = $arProps_block["PROPERTY_TITLE_2_VALUE"];
+   $title_text_3 = $arProps_block["PROPERTY_TITLE_3_VALUE"];
+   $text_1 = $arProps_block["~PROPERTY_TEXT_1_VALUE"];
+   $text_2 = $arProps_block["~PROPERTY_TEXT_2_VALUE"];
+   $text_3 = $arProps_block["~PROPERTY_TEXT_3_VALUE"];
+} ?>
 <div class="buttons__items">
     <!-- Item -->
     <div class="buttons__items_item">
@@ -41,10 +54,10 @@ while($ob = $res->GetNextElement()){
         <div class="buttons__items_item_title-block">
             <a href="/forma-obrashenija/">
                 <h2 class="buttons__items_item_title">
-                    Верните деньги за лечение </h2>
+                   <?php echo $title_text_1; ?> </h2>
             </a>
             <p>
-                <span style="font-size: 18pt;">Воспользуйтесь бесплатным сервисом по формированию обращения на возврат денежных средств за лечение в клиниках, работающих в системе обязательного медицинского страхования. </span><strong><span style="font-size: 18pt;">Bezbahil</span></strong><span style="font-size: 18pt;"> отследит, чтобы ваша страховая компания его получила.</span>
+                <?php echo $text_1; ?>
             </p>
             <a class="buttons__items_item_link" href="/forma-obrashenija/">
                 <p>
@@ -61,10 +74,10 @@ while($ob = $res->GetNextElement()){
         <div class="buttons__items_item_title-block">
             <a href="/feedback/">
                 <h2 class="buttons__items_item_title">
-                    Оставляйте отзывы </h2>
+                    <?php echo $title_text_2; ?> </h2>
             </a>
             <p>
-                <span style="font-size: 18pt;">и участвуйте в формировании самого справедливого рейтинга страховых медицинских компаний. Ваши отзывы помогают выявить компании, которым действительно дорого здоровье своих застрахованных.</span>
+                <?php echo $text_2; ?>
             </p>
             <a class="buttons__items_item_link" href="/feedback/">
                 <p>
@@ -81,11 +94,10 @@ while($ob = $res->GetNextElement()){
         <div class="buttons__items_item_title-block">
             <a href="/news/">
                 <h2 class="buttons__items_item_title">
-                    Узнавайте больше </h2>
+                    <?php echo $title_text_3; ?> </h2>
             </a>
             <p>
-                <span style="font-size: 18pt;">о возможностях полиса ОМС чтобы получать максимум пользы для себя и своих близких.</span>
-            </p>
+                <?php echo $text_3; ?>            </p>
             <a class="buttons__items_item_link" href="/news/">
                 <p>
                     Перейти в раздел <img src="/local/templates/kdteam/images/pages/home/arrow-right.svg">
