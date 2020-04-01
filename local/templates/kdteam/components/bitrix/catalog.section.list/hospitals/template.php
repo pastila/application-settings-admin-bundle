@@ -188,9 +188,6 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
 
             <p class="form-obrashcheniya__step_three_l_text"><?php echo $FIRST_TEXT_shag_3;?></p>
 
-            <a class="link-underline d-block mb--2rem" target="_blank" href="/news/kakie-byvayut-bolnitsy/">Какие бывают больницы</a>
-
-
         <?php
 
         if ($arResult['SECTION']['ID'] > 0) { ?>
