@@ -15,16 +15,15 @@ $this->setFrameMode(true);
 
 CModule::IncludeModule("iblock");
 $arSelect = Array("ID", "IBLOCK_ID", "NAME","CODE", "DATE_ACTIVE_FROM","PROPERTY_*");
-$arFilter = Array("IBLOCK_ID"=>19 );
+$arFilter = Array("IBLOCK_ID"=>19 ,"CODE"=>"shag");
 $arResult_block= array();
 $res = CIBlockElement::GetList(Array(Array("SORT"=>"asc")), $arFilter, false, false, $arSelect);
 while($ob = $res->GetNextElement()){
-    $arFields = $ob->GetFields();
     $arProps = $ob->GetProperties();
-    if($arFields["CODE"] == "shag-3"){
-        $FIRST_TEXT_shag_3 = $arProps["FIRST_TEXT"]["VALUE"];
-        $TEXT_FORMA_shag_3 = $arProps["TEXT_FORMA"]["VALUE"];
-    }
+
+
+        $STEP_3_TITLE = $arProps["STEP_3_TITLE"]["VALUE"];
+
 
 
 }
@@ -185,9 +184,9 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
 			unset($arSection);
 			break;
 		case 'LIST':?>
-
-            <p class="form-obrashcheniya__step_three_l_text"><?php echo $FIRST_TEXT_shag_3;?></p>
-
+                <?php if($STEP_3_TITLE !=""){ ?>
+            <p class="form-obrashcheniya__step_three_l_text"><?php echo $STEP_3_TITLE;?></p>
+                <?php } ?>
         <?php
 
         if ($arResult['SECTION']['ID'] > 0) { ?>
