@@ -14,31 +14,20 @@ if ($detect->isTablet() || $detect->isMobile()) {
 $asset->addJs(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/main.min.js");
 
 CModule::IncludeModule("iblock");
-$arSelect = Array("ID", "IBLOCK_ID", "NAME","CODE", "DATE_ACTIVE_FROM","PROPERTY_*");
-$arFilter = Array("IBLOCK_ID"=>19);
+$arSelect = Array("ID", "IBLOCK_ID", "NAME","DATE_ACTIVE_FROM","PROPERTY_*");
+$arFilter = Array("IBLOCK_ID"=>19,"CODE"=>"shag");
 $arResult_block= array();
 $res = CIBlockElement::GetList(Array("SORT"=>"asc"), $arFilter, false, false, $arSelect);
 while($ob = $res->GetNextElement()){
     $arFields = $ob->GetFields();
     $arProps = $ob->GetProperties();
 
-    if($arFields["CODE"] == "shag-1"){
-        $FIRST_TEXT_shag_1 = $arProps["FIRST_TEXT"]["VALUE"];
-        $TEXT_FORMA_shag_1 = $arProps["TEXT_FORMA"]["VALUE"];
-
-    }
-    if($arFields["CODE"] == "shag-2-planovoe"){
-        $FIRST_TEXT_shag_2_planovoe = $arProps["FIRST_TEXT"]["VALUE"];
-        $TEXT_FORMA_shag_2_planovoe = $arProps["TEXT_FORMA"]["VALUE"];
-    }
-    if($arFields["CODE"] == "shag-2-neotlozhnoe"){
-        $FIRST_TEXT_shag_2_neotlozhnoe = $arProps["FIRST_TEXT"]["VALUE"];
-        $TEXT_FORMA_shag_2_neotlozhnoe= $arProps["TEXT_FORMA"]["VALUE"];
-    }
-    if($arFields["CODE"] == "shag-4"){
-        $FIRST_TEXT_shag_4 = $arProps["FIRST_TEXT"]["VALUE"];
-        $TEXT_FORMA_shag_4 = $arProps["TEXT_FORMA"]["VALUE"];
-    }
+$STEP_1_TITLE = $arProps["STEP_1_TITLE"]['VALUE'];
+$STEP_2_TITLE_1 = $arProps["STEP_2_TITLE_1"]['VALUE'];
+$STEP_2_TEXT_1 = $arProps["STEP_2_TEXT_1"]['VALUE'];
+$STEP_2_TITLE_2 = $arProps["STEP_2_TITLE_2"]['VALUE'];
+$STEP_2_TEXT_2 = $arProps["STEP_2_TEXT_2"]['VALUE'];
+$STEP_4_TITLE = $arProps["STEP_4_TITLE"]['VALUE'];
 
 }
 
@@ -85,11 +74,11 @@ while($ob = $res->GetNextElement()){
         <div class="steps_items">
             <div class="card steps_items_item step-1 active">
                 <div class="steps_items_item_content">
-
+                    <?php if($STEP_1_TITLE != ""){ ?>
                     <div class="steps_items_item_footer">
-                       <?php echo $FIRST_TEXT_shag_1;?>
+                       <?php echo $STEP_1_TITLE;?>
                     </div>
-
+                    <?php } ?>
                     <?$APPLICATION->IncludeComponent(
                         "bitrix:news.list",
                         "",
@@ -156,18 +145,26 @@ while($ob = $res->GetNextElement()){
                 </div>
                 <div class="steps_items_item_footer">
                     <div class="steps_items_item_text">
+                        <?php if($STEP_2_TITLE_1 != ""){ ?>
                         <h3 class="steps_items_item_content_title">
-                            <?=$FIRST_TEXT_shag_2_planovoe?> </h3>
+                            <?=$STEP_2_TITLE_1?> </h3>
+                            <?php } ?>
+                         <?php if($STEP_2_TEXT_1 != ""){ ?>
                         <p>
-                            <?=$TEXT_FORMA_shag_2_planovoe?>
+                            <?=$STEP_2_TEXT_1?>
                         </p>
+                         <?php } ?>
                     </div>
                     <div class="steps_items_item_text">
-                        <h3 class="steps_items_item_content_title">
-                            <?=$FIRST_TEXT_shag_2_neotlozhnoe?> </h3>
-                        <p>
-                            <?=$TEXT_FORMA_shag_2_neotlozhnoe?>
-                        </p>
+                        <?php if($STEP_2_TITLE_2 != ""){ ?>
+                            <h3 class="steps_items_item_content_title">
+                                <?=$STEP_2_TITLE_2?> </h3>
+                        <?php } ?>
+                        <?php if($STEP_2_TEXT_2 != ""){ ?>
+                            <p>
+                                <?=$STEP_2_TEXT_2?>
+                            </p>
+                        <?php } ?>
                     </div>
                 </div>
                 <div style="display:flex;">
@@ -238,9 +235,11 @@ while($ob = $res->GetNextElement()){
                 </div>
             </div>
             <div class="card steps_items_item step-4">
+                <?php if($STEP_4_TITLE != ""){ ?>
                 <p class="form-obrashcheniya__step_four_text">
-                    <?php echo $FIRST_TEXT_shag_4;?>
+                    <?php echo $STEP_4_TITLE;?>
                 </p>
+                <?php } ?>
                 <a class="link-underline" target="_blank" href="/news/chto-oplachivaetsya-po-polisu/">Что оплачивается по полису ОМС</a>
                 <div class="smart_search-block">
                     <!--                    <div class="steps_items_item_footer">--> <!--                        <p>--> <!--                            Начните вводить наименование заболевания, с которым вы обратились в медицинскую организацию.--> <!--                        </p>--> <!--                        <p>--> <!--                            «В связи с тем, что список диагнозов очень большой, поиск может работать медленно. Начните--> <!--                            вводить--> <!--                            заболевание и дождитесь появления списка заболеваний с похожими названиями, чтобы выбрать--> <!--                            нужное»--> <!--                        </p>--> <!--                    </div>-->
