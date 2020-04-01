@@ -41,7 +41,7 @@ ob_end_clean();
 ob_end_clean();
 
 $oElement = new CIBlockSection();
-
+$url = "bezbahil.ru/add-feedback/?letter";
 $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM" ,"UF_USER_ID","UF_CHEKED_SEND");
 $arFilter = Array("IBLOCK_ID" =>11);
 $section = CIBlockSection::GetList(Array(), $arFilter, false, $arSelect, false);  // получили секцию юзера
@@ -60,17 +60,15 @@ while ($Section = $section->GetNext()) {
 
             $arFields = $obElement->GetFields();
 
-            if ($arFields["PROPERTY_SEND_MESSAGE_VALUE"]) {
+            if ($arFields["PROPERTY_SEND_MESSAGE_VALUE"] != "") {
 
                 $newDate = FormatDate("d.m.Y", MakeTimeStamp($arFields["PROPERTY_SEND_MESSAGE_VALUE"]));
                 $time = strtotime($newDate);
                 $Difference_time = (int)$_SERVER["REQUEST_TIME"] - (int)$time;
 
                 if ($Difference_time > 2592000) {    //больше чем 30 дней 2592000
-                echo '<pre>';
-                print_r($arFields["ID"]);
-                echo '</pre>';
-                    $url = "devdoc1.kdteam.su/add-feedback/?letter";
+
+
                     $arEventFields = array(
                         "MAIL" => $arUser["EMAIL"],
 

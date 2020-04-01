@@ -50,8 +50,20 @@ if ($_POST) {
                 $prop = CIBlockElement::GetByID($_POST["id_compani"])->GetNextElement()->GetProperties();
                 $date = date("Y:m:d H:i");
                 $url = $_SERVER["SERVER_NAME"] . "/feedback/comment-" . $PRODUCT_ID . "/";
+                $arMail = array();
+
+                if(strlen($prop["EMAIL_FIRST"]["VALUE"]) > 5 ){
+                     array_push($arMail,$prop["EMAIL_FIRST"]["VALUE"]);
+                }
+                if(strlen($prop["EMAIL_SECOND"]["VALUE"]) > 5 ){
+                    array_push($arMail,$prop["EMAIL_SECOND"]["VALUE"]);
+                }
+                if(strlen($prop["EMAIL_THIRD"]["VALUE"]) > 5 ){
+                    array_push($arMail,$prop["EMAIL_THIRD"]["VALUE"]);
+                }
+
                 $arSend = array(
-                    "EMAIL" => $prop["EMAIL_FIRST"]["VALUE"],
+                    "EMAIL" => $arMail,
                     "DATE" => $date,
                     "URL" => $url,
                 );
@@ -91,12 +103,22 @@ if ($_POST) {
                 );
 
                 if ($PRODUCT_ID = $el->Add($arFields)) {
-
+                    $arMail =array();
                     $prop = CIBlockElement::GetByID($_POST["id_compani"])->GetNextElement()->GetProperties();
                     $date = date("Y:m:d H:i");
-                    $url = $_SERVER["NAME"] . "/feedback/comment-" . $PRODUCT_ID . "/";
+                    $url = $_SERVER["SERVER_NAME"] . "/feedback/comment-" . $PRODUCT_ID . "/";
+                    if(strlen($prop["EMAIL_FIRST"]["VALUE"]) > 5 ){
+                        array_push($arMail,$prop["EMAIL_FIRST"]["VALUE"]);
+                    }
+                    if(strlen($prop["EMAIL_SECOND"]["VALUE"]) > 5 ){
+                        array_push($arMail,$prop["EMAIL_SECOND"]["VALUE"]);
+                    }
+                    if(strlen($prop["EMAIL_THIRD"]["VALUE"]) > 5 ){
+                        array_push($arMail,$prop["EMAIL_THIRD"]["VALUE"]);
+                    }
+
                     $arSend = array(
-                        "EMAIL" => $prop["SERVER_NAME"]["VALUE"],
+                        "EMAIL" => $arMail,
                         "DATE" => $date,
                         "URL" => $url,
                     );
@@ -137,6 +159,29 @@ if ($_POST) {
             );
 
             if ($PRODUCT_ID = $el->Add($arFields)) {
+
+                $arMail =array();
+                $prop = CIBlockElement::GetByID($_POST["id_compani"])->GetNextElement()->GetProperties();
+                $date = date("Y:m:d H:i");
+                $url = $_SERVER["SERVER_NAME"] . "/feedback/comment-" . $PRODUCT_ID . "/";
+
+                if(strlen($prop["EMAIL_FIRST"]["VALUE"]) > 5 ){
+                    array_push($arMail,$prop["EMAIL_FIRST"]["VALUE"]);
+                }
+                if(strlen($prop["EMAIL_SECOND"]["VALUE"]) > 5 ){
+                    array_push($arMail,$prop["EMAIL_SECOND"]["VALUE"]);
+                }
+                if(strlen($prop["EMAIL_THIRD"]["VALUE"]) > 5 ){
+                    array_push($arMail,$prop["EMAIL_THIRD"]["VALUE"]);
+                }
+
+                $arSend = array(
+                    "EMAIL" => $arMail,
+                    "DATE" => $date,
+                    "URL" => $url,
+                );
+                CEvent::Send("SEND_FEEDBACK_BOSS", s1, $arSend);
+
                 echo 1;
             }
         } else {
@@ -165,6 +210,27 @@ if ($_POST) {
                     "CODE" => $code,
                 );
                 if ($PRODUCT_ID = $el->Add($arFields)) {
+                    $arMail =array();
+                    $prop = CIBlockElement::GetByID($_POST["id_compani"])->GetNextElement()->GetProperties();
+                    $date = date("Y:m:d H:i");
+                    $url = $_SERVER["SERVER_NAME"] . "/feedback/comment-" . $PRODUCT_ID . "/";
+                    if(strlen($prop["EMAIL_FIRST"]["VALUE"]) > 5 ){
+                        array_push($arMail,$prop["EMAIL_FIRST"]["VALUE"]);
+                    }
+                    if(strlen($prop["EMAIL_SECOND"]["VALUE"]) > 5 ){
+                        array_push($arMail,$prop["EMAIL_SECOND"]["VALUE"]);
+                    }
+                    if(strlen($prop["EMAIL_THIRD"]["VALUE"]) > 5 ){
+                        array_push($arMail,$prop["EMAIL_THIRD"]["VALUE"]);
+                    }
+
+                    $arSend = array(
+                        "EMAIL" => $arMail,
+                        "DATE" => $date,
+                        "URL" => $url,
+                    );
+                    CEvent::Send("SEND_FEEDBACK_BOSS", s1, $arSend);
+
                     echo 1;
                 }
             }

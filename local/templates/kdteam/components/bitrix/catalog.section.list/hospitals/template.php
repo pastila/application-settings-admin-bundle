@@ -14,17 +14,20 @@ $this->setFrameMode(true);
 
 
 CModule::IncludeModule("iblock");
-$arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_*");
-$arFilter = Array("IBLOCK_ID"=>19, );
+$arSelect = Array("ID", "IBLOCK_ID", "NAME","CODE", "DATE_ACTIVE_FROM","PROPERTY_*");
+$arFilter = Array("IBLOCK_ID"=>19 ,"CODE"=>"shag");
 $arResult_block= array();
-$res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+$res = CIBlockElement::GetList(Array(Array("SORT"=>"asc")), $arFilter, false, false, $arSelect);
 while($ob = $res->GetNextElement()){
     $arProps = $ob->GetProperties();
 
-    $arResult_block[]= $arProps["TEXT_FORMA"]["VALUE"];
-    $arResult_block[]= $arProps["FIRST_TEXT"]["VALUE"];
+
+        $STEP_3_TITLE = $arProps["STEP_3_TITLE"]["VALUE"];
+
+
 
 }
+
 $arViewModeList = $arResult['VIEW_MODE_LIST'];
 
 $arViewStyles = array(
@@ -181,12 +184,9 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
 			unset($arSection);
 			break;
 		case 'LIST':?>
-
-            <p class="form-obrashcheniya__step_three_l_text"><?=$arResult_block[6]?></p>
-
-            <a class="link-underline d-block mb--2rem" target="_blank" href="/news/kakie-byvayut-bolnitsy/">Какие бывают больницы</a>
-
-
+                <?php if($STEP_3_TITLE !=""){ ?>
+            <p class="form-obrashcheniya__step_three_l_text"><?php echo $STEP_3_TITLE;?></p>
+                <?php } ?>
         <?php
 
         if ($arResult['SECTION']['ID'] > 0) { ?>

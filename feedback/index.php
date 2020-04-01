@@ -1,4 +1,9 @@
 <?php require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
+$APPLICATION->SetPageProperty("keywords_inner", "медицинское страхование отзывы, бесплатное лечение, бесплатная медицинская помощь, рейтинг медицинских страховых компаний омс в москве");
+$APPLICATION->SetPageProperty("title", "Рейтинг страховых компаний работающих в системе ОМС");
+$APPLICATION->SetPageProperty("keywords", "медицинское страхование отзывы, бесплатное лечение, бесплатная медицинская помощь, рейтинг медицинских страховых компаний омс в москве");
+$APPLICATION->SetPageProperty("description", "Рейтинг страховых компаний работающих в системе ОМС");
+$APPLICATION->SetTitle("Рейтинг страховых компаний работающих в системе ОМС");
 
 use Bitrix\Main\Page\Asset;
 
@@ -112,7 +117,7 @@ $countReviews = count($allReviews);
                     $url_for_filter = "?";
                     foreach ($sort_url as $key => $filter) {
 
-                        if ($key != "property_kpp") {
+                        if ($key != "property_kpp" && $key!="PAGEN_1") {
                             $url_for_filter .= "$key=$filter&";
                         }
                     }
@@ -189,7 +194,7 @@ $countReviews = count($allReviews);
                     $url_for_filter = "?";
                     foreach ($sort_url as $key => $filter) {
 
-                        if ($key != "property_evaluation") {
+                        if ($key != "property_evaluation" && $key!="PAGEN_1") {
                             $url_for_filter .= "$key=$filter&";
                         }
                     }
@@ -267,7 +272,7 @@ $countReviews = count($allReviews);
                     $url_for_filter = "?";
                     foreach ($sort_url as $key => $filter) {
 
-                        if ($key != "property_region") {
+                        if ($key != "property_region" && $key!="PAGEN_1") {
                             $url_for_filter .= "$key=$filter&";
                         }
                     }
@@ -323,9 +328,14 @@ $countReviews = count($allReviews);
 
 
         $pagen = Array("nPageSize" => 10);
-        if ($sort_url["comments"] == "all") {
+        if ($sort_url["comments"] == "all" && !isset($_GET["PAGEN_1"])) {
             $pagen = false;
+        }else if(!isset($_GET["PAGEN_1"])){
+
+            $pagen["iNumPage"] = 1;
         }
+
+
         $res = CIBlockElement::GetList($order, $arFilter, false, $pagen, $arSelect);
         if (!$sort_url["comments"] == "all") {
             $res->NavStart(0);
@@ -639,8 +649,10 @@ $countReviews = count($allReviews);
 
             </div><!-- FeedBack block END -->
         <? }
+
+
         if (!$sort_url["comments"] == "all") {
-            $navStr = $res->GetPageNavStringEx($navComponentObject, "Страницы:", ".default");
+            $navStr = $res->GetPageNavStringEx($navComponentObject, "Страницы:", ".default",false,null);
             echo $navStr;
         }
         ?>
@@ -769,21 +781,9 @@ $countReviews = count($allReviews);
 
 
             </ul>
-            <? if (isset($_GET["property_region"])) {
-                $url_for_filter = "?";
 
-                foreach ($sort_url as $key => $filter) {
-                    if ($key != "property_region") {
-                        $url_for_filter .= "$key=$filter&";
-                    }
-                }
-                if ($url_for_filter == "?") {
-                    $url_for_filter = "/feedback/";
-                }
-
-            } ?>
             <div class="center__child">
-                <a class="mainBtn" href="<?= $url_for_filter ?>">Весь рейтинг</a>
+                <a class="mainBtn" href="/feedback/">Весь рейтинг</a>
             </div>
         </div>
 
@@ -791,35 +791,19 @@ $countReviews = count($allReviews);
     </div>
     <?php } ?>
 </div>
+<?php $arSelect = Array("ID", "IBLOCK_ID", "NAME","PREVIEW_TEXT");
+$arFilter = Array("IBLOCK_CODE"=>"feedback" );
+$res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+if($ob = $res->GetNextElement()){
+    $arProps = $ob->GetFields();?>
 
-<div class="info_block white_block">
-    <p>Существующая в России система обязательного медицинского страхования состоит из одних лишь плюсов и в
-        теории должна являться примером эффективного государственного социального страхования. Принцип
-        солидарной взаимопомощи; страховые медицинские организации, заинтересованные в повышении качества
-        медицинской помощи; исчерпывающий перечень заболеваний, лечение которых включено в программу ОМС – все
-        это присутствует в системе. Однако на практике все чаще полис ОМС оказывается бесполезен и получатель
-        медицинской помощи – гражданин, застрахованный по ОМС, не имеет возможности получить необходимую
-        медицинскую помощь бесплатно. </p>
-    <p>Для решения проблем, с которыми сталкиваются граждане при получении медицинской помощи, в системе ОМС с
-        недавних пор присутствует понятие «страховой представитель». Это специалист страховой компании, в
-        обязанности которого входит сопровождение застрахованных граждан в процессе получения помощи. Все
-        проблемы граждан на пути к доступной и качественной медицинской помощи должны решаться страховыми
-        представителями. На сегодняшний день в стране насчитывается более 14 000 страховых представителей.
-        <a target="_blank"
-           href="http://www.ffoms.ru/news/regionalnye-novosti/v-khabarovskom-krae-vybrali-luchshikh-strakhovykh-predstaviteley/">Территориальные
-            фонды ОМС регулярно проводят конкурсы на звание лучшего страхового
-            представителя, в
-            которых моделируют различные конфликтные ситуации и даже приглашают студентов в качестве актеров на
-            роль
-            застрахованных.</a> Мы же считаем, что в реальной жизни, практически в любой день в любой
-        медицинской
-        организации достаточно поводов для настоящего, а не выдуманного обращения к страховому представителю. И
-        результат работы по такому обращению объективнее оценит тот, для кого эта работа выполнялась – сам
-        застрахованный гражданин, а не жюри с представителями минздрава и территориального фонда.</p>
-    <p>Если у вас есть опыт обращения к своему страховому представителю, опишите его, вне зависимости от того,
-        положительный он или отрицательный. Так вы внесете свой вклад в формирование рейтинга страховых компаний
-        и возможно именно ваш отзыв станет решающим для посетителей сайта при выборе страховой компании. </p>
-</div>
+    <div class="info_block white_block">
+
+     <?php echo $arProps["~PREVIEW_TEXT"]; ?>
+    </div>
+<?} ?>
+
+
 
 <?php require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>
 

@@ -24,6 +24,8 @@ $url = $APPLICATION->GetCurDir();
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="HandheldFriendly" content="true">
+    <meta name="yandex-verification" content="3117711c7cf9d47f" />
+    <meta name="google-site-verification" content="6i-0zWPQEfVk1TaN63icBNxaPtFIwxrzlrG-w4oiTyg" />
     <title><?php $APPLICATION->ShowTitle(); ?></title>
     <link rel="shortcut icon" href="/local/templates/kdteam/images/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -68,6 +70,9 @@ left:-9999px;" alt="" /></div></noscript>
     <!-- Адмитад -->
     <meta name="verify-admitad" content="d368515aeb" />
     <!-- /Адмитад -->
+    <!--  JivoSite -->
+    <script src="//code-ya.jivosite.com/widget/u0hymF3kCA" async></script>
+    <!-- / JivoSite -->
 </head>
 
 <body>
@@ -293,26 +298,26 @@ left:-9999px;" alt="" /></div></noscript>
 
                 <div class="header__r" style="display: flex;">
                     <div class="header__r_auth">
-                        <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-login.php"?>" id="login-link"
+                        <span href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-login.php"?>" id="login-link"
                             class="header__r_auth_login">
                             <img class="header__r_auth_login_img"
                                 src="/local/templates/kdteam/images/svg/header/login/enter-white.svg" alt="OMS">
                             <div class="header__r_auth_login_text">
                                 Вход
                             </div>
-                        </a>
+                        </span>
 
-                        <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-reg.php"?>" id="reg-link"
+                        <span href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-reg.php"?>" id="reg-link"
                             data-rigstration="0" class="header__r_auth_reg">
                             <img class="header__r_auth_login_img"
                                 src="/local/templates/kdteam/images/svg/header/reg/edit-white.svg" alt="OMS">
                             <div class="header__r_auth_login_text">
                                 Регистрация
                             </div>
-                        </a>
+                        </span>
                     </div>
 
-                    <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-feedback.php"?>"
+                    <span href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-feedback.php"?>"
                         class="header__r_mainBtn headerBtn" id="write-us_modal">
                         <svg style="fill: #ffffff; width: 2rem; height: 3rem;"
                             class="header__r_auth_login_img hidden-desk--image" xmlns="http://www.w3.org/2000/svg"
@@ -326,7 +331,7 @@ left:-9999px;" alt="" /></div></noscript>
                         <div class="hidden-text-mob">
                             Написать нам
                         </div>
-                    </a>
+                    </span>
                 </div>
                 <?php } ?>
             </div>
