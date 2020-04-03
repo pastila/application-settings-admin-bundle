@@ -30,7 +30,10 @@ $STEP_2_TITLE_2 = $arProps["STEP_2_TITLE_2"]['VALUE'];
 $STEP_2_TEXT_2 = $arProps["STEP_2_TEXT_2"]['VALUE'];
 $STEP_4_TITLE = $arProps["STEP_4_TITLE"]['VALUE'];
 $STEP_4_TEXT = $arProps["STEP_4_TEXT"]['VALUE'];
+$STEP_4_TITLE_2 = $arProps["STEP_4_TITLE_2"]['VALUE'];
 
+$STEP_2_TITLE_2_TITLE = $arProps["STEP_2_TITLE_2_TITLE"]['VALUE'];
+$STEP_2_TEXT_2_TEXT = $arProps["STEP_2_TEXT_2_TEXT"]['VALUE'];
 
 }
 
@@ -81,13 +84,14 @@ $STEP_4_TEXT = $arProps["STEP_4_TEXT"]['VALUE'];
                     <h3 class="steps_items_item_content_title">
                        <?php echo $STEP_1_TITLE;?>
                     </h3>
+                    <?php } ?>
                         <?php if($STEP_1_TEXT != ""){ ?>
                             <div class="steps_items_item_footer">
                                 <?=$STEP_1_TEXT?>
                             </div>
                         <?php } ?>
 
-                    <?php } ?>
+
                     <?$APPLICATION->IncludeComponent(
                         "bitrix:news.list",
                         "",
@@ -145,6 +149,17 @@ $STEP_4_TEXT = $arProps["STEP_4_TEXT"]['VALUE'];
                 </div>
             </div>
             <div class="card steps_items_item step-2">
+                <?php if($STEP_2_TITLE_2_TITLE != ""){ ?>
+                    <h3 class="steps_items_item_content_title">
+                        <?php echo $STEP_2_TITLE_2_TITLE;?>
+                    </h3>
+                <?php } ?>
+                <?php if($STEP_2_TEXT_2_TEXT != ""){ ?>
+                    <div class="steps_items_item_footer">
+                        <?=$STEP_2_TEXT_2_TEXT?>
+                    </div>
+                <?php } ?>
+
                 <div class="steps_items_item_content">
                     <div class="wrap-chrckbox plannet">
                         <label id="planned_label" class="check-label">
@@ -268,7 +283,11 @@ $STEP_4_TEXT = $arProps["STEP_4_TEXT"]['VALUE'];
                         </div>
                     </div>
                 </div>
-                <h3 class="steps_items_item_content_title">Или найдите диагноз в перечне заболеваний, структурированном в соответствии с международной классификацией болезней (МКБ-10).</h3>
+                <?php if($STEP_4_TITLE_2 != ""){ ?>
+                    <h3 class="steps_items_item_content_title">
+                        <?php echo $STEP_4_TITLE_2;?>
+                    </h3>
+                <?php } ?>
                 <div id="grid" class="steps_items_item_inputs" action="">
                     <?$APPLICATION->IncludeComponent(
                         "bitrix:catalog.section.list",
