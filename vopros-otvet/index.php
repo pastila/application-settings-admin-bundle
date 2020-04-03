@@ -8,7 +8,7 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/otpravlennyye/otpravlennyye.min.js");
 CModule::IncludeModule("iblock");
 ?>
 
-<?$APPLICATION->SetTitle("Политика по обработке персональных данных");?>
+
 <?php $arSelect = Array("ID", "IBLOCK_ID", "NAME", "PREVIEW_TEXT");
 $arFilter = Array("IBLOCK_ID"=>23, "CODE"=>"vopros-otvet");
 $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
@@ -18,7 +18,7 @@ if($ob = $res->GetNextElement()){
 }
 
 ?>
-<?$APPLICATION->SetTitle("О нас");?>
+<?$APPLICATION->SetTitle("Вопрос ответ");?>
 
     <!-- Breadcrumbs -->
     <ul class="breadcrumbs">
