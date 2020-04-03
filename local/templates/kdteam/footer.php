@@ -14,6 +14,9 @@ if (defined("B_PROLOG_INCLUDED") && B_PROLOG_INCLUDED === true) {
 
         <ul class="footer__menu">
             <li>
+                <a href="/vopros-otvet/">Вопрос ответ</a>
+            </li>
+            <li>
                 <a href="/insurance-companies/">Страховым организациям</a>
             </li>
             <li>
