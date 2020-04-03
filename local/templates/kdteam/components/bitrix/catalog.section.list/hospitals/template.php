@@ -23,6 +23,7 @@ while($ob = $res->GetNextElement()){
 
 
         $STEP_3_TITLE = $arProps["STEP_3_TITLE"]["VALUE"];
+        $STEP_3_TEXT = $arProps["STEP_3_TEXT"]["VALUE"];
 
 
 
@@ -185,8 +186,14 @@ $arSectionDeleteParams = array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_C
 			break;
 		case 'LIST':?>
                 <?php if($STEP_3_TITLE !=""){ ?>
-            <p class="form-obrashcheniya__step_three_l_text"><?php echo $STEP_3_TITLE;?></p>
+                  <h3 class="steps_items_item_content_title">
+                <?php echo $STEP_3_TITLE;?></h3>
                 <?php } ?>
+            <?php if($STEP_3_TEXT != ""){ ?>
+                <div class="steps_items_item_footer">
+                    <?php echo $STEP_3_TEXT;?>
+                </div>
+            <?php } ?>
         <?php
 
         if ($arResult['SECTION']['ID'] > 0) { ?>

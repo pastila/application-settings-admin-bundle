@@ -23,11 +23,14 @@ while($ob = $res->GetNextElement()){
     $arProps = $ob->GetProperties();
 
 $STEP_1_TITLE = $arProps["STEP_1_TITLE"]['VALUE'];
+$STEP_1_TEXT = $arProps["STEP_1_TEXT"]['VALUE'];
 $STEP_2_TITLE_1 = $arProps["STEP_2_TITLE_1"]['VALUE'];
 $STEP_2_TEXT_1 = $arProps["STEP_2_TEXT_1"]['VALUE'];
 $STEP_2_TITLE_2 = $arProps["STEP_2_TITLE_2"]['VALUE'];
 $STEP_2_TEXT_2 = $arProps["STEP_2_TEXT_2"]['VALUE'];
 $STEP_4_TITLE = $arProps["STEP_4_TITLE"]['VALUE'];
+$STEP_4_TEXT = $arProps["STEP_4_TEXT"]['VALUE'];
+
 
 }
 
@@ -75,9 +78,15 @@ $STEP_4_TITLE = $arProps["STEP_4_TITLE"]['VALUE'];
             <div class="card steps_items_item step-1 active">
                 <div class="steps_items_item_content">
                     <?php if($STEP_1_TITLE != ""){ ?>
-                    <div class="steps_items_item_footer">
+                    <h3 class="steps_items_item_content_title">
                        <?php echo $STEP_1_TITLE;?>
-                    </div>
+                    </h3>
+                        <?php if($STEP_1_TEXT != ""){ ?>
+                            <div class="steps_items_item_footer">
+                                <?=$STEP_1_TEXT?>
+                            </div>
+                        <?php } ?>
+
                     <?php } ?>
                     <?$APPLICATION->IncludeComponent(
                         "bitrix:news.list",
@@ -236,9 +245,14 @@ $STEP_4_TITLE = $arProps["STEP_4_TITLE"]['VALUE'];
             </div>
             <div class="card steps_items_item step-4">
                 <?php if($STEP_4_TITLE != ""){ ?>
-                <p class="form-obrashcheniya__step_four_text">
+                <h3 class="steps_items_item_content_title">
                     <?php echo $STEP_4_TITLE;?>
-                </p>
+                </h3>
+                <?php } ?>
+                <?php if($STEP_4_TEXT != ""){ ?>
+                <div class="steps_items_item_footer">
+                        <?php echo $STEP_4_TEXT;?>
+                </div>
                 <?php } ?>
                 <a class="link-underline" target="_blank" href="/news/chto-oplachivaetsya-po-polisu/">Что оплачивается по полису ОМС</a>
                 <div class="smart_search-block">
