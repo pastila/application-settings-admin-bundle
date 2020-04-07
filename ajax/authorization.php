@@ -8,6 +8,10 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
 
     if (!$USER->IsAuthorized()) {
+        $rsUser = $USER->GetByLogin($_POST['login']);
+        if ($arUser = $rsUser->Fetch()) {
+            \Bitrix\Main\UserAuthActionTable::deleteByFilter(['USER_ID'=>$arUser['ID']]);
+        }
         $res = $USER->Login(strip_tags($_POST['login']), strip_tags($_POST['password']), 'Y');
         if (empty($res['MESSAGE'])) {
             $result['status'] = true;
