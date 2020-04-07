@@ -110,7 +110,7 @@ if (CModule::IncludeModule("iblock")) {
 
 
                     $pdf = false;
-                    preg_match("/^\/.*(.pdf)/", CFile::GetPath($arFields['PROPERTY_IMG_1_VALUE']), $file);
+                    preg_match("/^\/.*(.pdf)/", mb_strtolower(CFile::GetPath($arFields['PROPERTY_IMG_1_VALUE'])), $file);
                     if ($file[1] == ".pdf") {
                         $pdf = true;
                     }
@@ -133,7 +133,7 @@ if (CModule::IncludeModule("iblock")) {
 
                     if (!empty($arFields['PROPERTY_IMG_2_VALUE'])) {
                         $pdf = false;
-                        preg_match("/^\/.*(.pdf)/", CFile::GetPath($arFields['PROPERTY_IMG_2_VALUE']), $file);
+                        preg_match("/^\/.*(.pdf)/", mb_strtolower(CFile::GetPath($arFields['PROPERTY_IMG_2_VALUE'])), $file);
                         if ($file[1] == ".pdf") {
                             $pdf = true;
                         }
@@ -154,7 +154,7 @@ if (CModule::IncludeModule("iblock")) {
                     }
                     if (!empty($arFields['PROPERTY_IMG_3_VALUE'])) {
                         $pdf = false;
-                        preg_match("/^\/.*(.pdf)/", CFile::GetPath($arFields['PROPERTY_IMG_3_VALUE']), $file);
+                        preg_match("/^\/.*(.pdf)/", mb_strtolower(CFile::GetPath($arFields['PROPERTY_IMG_3_VALUE'])), $file);
                         if ($file[1] == ".pdf") {
                             $pdf = true;
                         }
@@ -175,7 +175,7 @@ if (CModule::IncludeModule("iblock")) {
                     }
                     if (!empty($arFields['PROPERTY_IMG_4_VALUE'])) {
                         $pdf = false;
-                        preg_match("/^\/.*(.pdf)/", CFile::GetPath($arFields['PROPERTY_IMG_4_VALUE']), $file);
+                        preg_match("/^\/.*(.pdf)/", mb_strtolower(CFile::GetPath($arFields['PROPERTY_IMG_4_VALUE'])), $file);
                         if ($file[1] == ".pdf") {
                             $pdf = true;
                         }
@@ -196,7 +196,7 @@ if (CModule::IncludeModule("iblock")) {
                     }
                     if (!empty($arFields['PROPERTY_IMG_5_VALUE'])) {
                         $pdf = false;
-                        preg_match("/^\/.*(.pdf)/", CFile::GetPath($arFields['PROPERTY_IMG_5_VALUE']), $file);
+                        preg_match("/^\/.*(.pdf)/", mb_strtolower(CFile::GetPath($arFields['PROPERTY_IMG_5_VALUE'])), $file);
                         if ($file[1] == ".pdf") {
                             $pdf = true;
                         }
