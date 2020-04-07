@@ -269,7 +269,7 @@ $STEP_2_TEXT_2_TEXT = $arProps["STEP_2_TEXT_2_TEXT"]['VALUE'];
                         <?php echo $STEP_4_TEXT;?>
                 </div>
                 <?php } ?>
-                <a class="link-underline" target="_blank" href="/news/chto-oplachivaetsya-po-polisu/">Что оплачивается по полису ОМС</a>
+
                 <div class="smart_search-block">
                     <!--                    <div class="steps_items_item_footer">--> <!--                        <p>--> <!--                            Начните вводить наименование заболевания, с которым вы обратились в медицинскую организацию.--> <!--                        </p>--> <!--                        <p>--> <!--                            «В связи с тем, что список диагнозов очень большой, поиск может работать медленно. Начните--> <!--                            вводить--> <!--                            заболевание и дождитесь появления списка заболеваний с похожими названиями, чтобы выбрать--> <!--                            нужное»--> <!--                        </p>--> <!--                    </div>-->
                     <div class="input-with-search">
