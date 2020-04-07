@@ -39,37 +39,40 @@ if ($Section = $section->GetNext()) {
         $arFields = $obElement->GetFields();
         $PDF = CFile::GetPath($arFields['PROPERTY_PDF_VALUE']);
 
+
+
+
         if (!empty($arFields['PROPERTY_IMG_1_VALUE'])) {
             $pdf_1 = false;
-            preg_match("/^\/.*(.pdf)/", CFile::GetPath($arFields['PROPERTY_IMG_1_VALUE']), $file);
+            preg_match("/^\/.*(.pdf)/", mb_strtolower(CFile::GetPath($arFields['PROPERTY_IMG_1_VALUE'])), $file);
             if ($file[1] == ".pdf") {
                 $pdf_1 = true;
             }
         }
         if (!empty($arFields['PROPERTY_IMG_2_VALUE'])) {
             $pdf_2 = false;
-            preg_match("/^\/.*(.pdf)/", CFile::GetPath($arFields['PROPERTY_IMG_2_VALUE']), $file);
+            preg_match("/^\/.*(.pdf)/", mb_strtolower(CFile::GetPath($arFields['PROPERTY_IMG_2_VALUE'])), $file);
             if ($file[1] == ".pdf") {
                 $pdf_2 = true;
             }
         }
         if (!empty($arFields['PROPERTY_IMG_3_VALUE'])) {
             $pdf_3 = false;
-            preg_match("/^\/.*(.pdf)/", CFile::GetPath($arFields['PROPERTY_IMG_3_VALUE']), $file);
+            preg_match("/^\/.*(.pdf)/", mb_strtolower(CFile::GetPath($arFields['PROPERTY_IMG_3_VALUE'])), $file);
             if ($file[1] == ".pdf") {
                 $pdf_3 = true;
             }
         }
         if (!empty($arFields['PROPERTY_IMG_4_VALUE'])) {
             $pdf_4 = false;
-            preg_match("/^\/.*(.pdf)/", CFile::GetPath($arFields['PROPERTY_IMG_4_VALUE']), $file);
+            preg_match("/^\/.*(.pdf)/", mb_strtolower(CFile::GetPath($arFields['PROPERTY_IMG_4_VALUE'])), $file);
             if ($file[1] == ".pdf") {
                 $pdf_4 = true;
             }
         }
         if (!empty($arFields['PROPERTY_IMG_5_VALUE'])) {
             $pdf_5 = false;
-            preg_match("/^\/.*(.pdf)/", CFile::GetPath($arFields['PROPERTY_IMG_5_VALUE']), $file);
+            preg_match("/^\/.*(.pdf)/", mb_strtolower(CFile::GetPath($arFields['PROPERTY_IMG_5_VALUE'])), $file);
             if ($file[1] == ".pdf") {
                 $pdf_5 = true;
             }
