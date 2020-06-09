@@ -333,7 +333,7 @@ while($ob = $res->GetNextElement()){
                         <p>Дата рождения</p>
                     </div>
                     <div class="item_data input__wrap">
-                        <input class="datepicker-here" required type="text" name="time" value="" readonly
+                        <input class="datepicker-here100" required type="text" name="time" value="" readonly
                                id="children_birthday_add"
                                placeholder="DD.MM.YYYY"
                                pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}"

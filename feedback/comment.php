@@ -67,6 +67,9 @@ preg_match("/(\d+)\/$/",$url,$result_id);
                 $rsUser = CUser::GetByID($ID_USER);
                 $arUser = $rsUser->Fetch();
                 $name_user = $arUser["NAME"];
+if ($name_user == ""):
+$name_user = $arProps["USER_NO_AUTH"]["VALUE"];
+endif;
             }
             if (is_array($arProps["COMMENTS_TO_REWIEW"]["VALUE"])) {
                 $count_comments = count($arProps["COMMENTS_TO_REWIEW"]["VALUE"]);

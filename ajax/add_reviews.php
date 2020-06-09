@@ -14,6 +14,8 @@ if ($_POST) {
         }
 
         $id_user = $USER->GetID();
+$name_user = $USER->GetFirstName();
+
         $email_user = $USER->GetEmail();
 
 
@@ -40,6 +42,7 @@ if ($_POST) {
                     "NAME_USER" => $id_user,
                     "REVIEW_LETTER" => $REVIEW_LETTER,
                     "KPP" => $_POST["kpp"],
+"USER_NO_AUTH" => $name_user,
                 ),
                 "NAME" => $name,
                 "CODE" => $code,

@@ -17,7 +17,7 @@ if ($_POST) {
         $rsUsers_polic = CUser::GetList(($by = "name"), ($order = "ASC"), $filter_polic);
 
         while ($arUser_polic = $rsUsers_polic->Fetch()) {
-            $arSpecUser_polic = $arUser_polic;
+            $arSpecUser_polic = false;//$arUser_polic;
         }
         if ($arSpecUser_polic) {
             $result['error'] = 'polic';
@@ -75,7 +75,7 @@ if ($_POST) {
                             "UF_INSURANCE_POLICY" => $nomer_polica,
                             "UF_INSURANCE_COMPANY" => $id_company,
                             "UF_REGION" => $id_region,
-                            "PERSONAL_BIRTHDAY" => $_POST["time"],
+                            //"PERSONAL_BIRTHDAY" => $_POST["time"],
                             "PERSONAL_PHOTO" => $arFile,
                         );
                         $ID = $USER->Add($arFields);

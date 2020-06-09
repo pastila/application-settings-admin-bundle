@@ -280,7 +280,11 @@ $arUser = $rsUser->Fetch();
 if($amount == 0){
                 ?>
 
-    <h3 class="mb-2">Вы еще не оставили ни одного отзыва.</h3>
+    <h3 class="mb-2">Вы еще не оставили ни одного отзыва.
+<br>
+</h3>
+<a href="/add-feedback/" class="mainBtn">Поделитесь своим мнением</a>
+
     <?
 }
             ?>

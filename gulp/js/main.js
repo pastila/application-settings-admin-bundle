@@ -69,6 +69,7 @@ $(document).ready(function() {
   });
   $('.header__r_auth_login').click(function() {
     setTimeout(function() {
+      debugger;
       FormAuth();
     }, 700);
   });

@@ -198,7 +198,7 @@ class CBXVirtualIoFileSystem
 		$res = preg_replace($pattern, "/", $path);
 
 		if (($p = strpos($res, "\0")) !== false)
-			$res = substr($res, 0, $p);
+			throw new \Bitrix\Main\IO\InvalidPathException($path);
 
 		$arPath = explode('/', $res);
 		$nPath = count($arPath);

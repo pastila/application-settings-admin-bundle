@@ -12,6 +12,7 @@ if ($detect->isTablet() || $detect->isMobile()) {
     $asset->addJs(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/scroll.min.js");
 }
 $asset->addJs(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/main.min.js");
+//$asset->addJs(SITE_TEMPLATE_PATH . "/pages/forma-obrashenija/main.js");
 
 CModule::IncludeModule("iblock");
 $arSelect = Array("ID", "IBLOCK_ID", "NAME","DATE_ACTIVE_FROM","PROPERTY_*");

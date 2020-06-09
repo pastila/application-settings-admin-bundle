@@ -366,7 +366,7 @@ $countReviews = count($allReviews);
                     continue;
                 }
             }
-
+//print_r($arProps["NAME_USER"]["VALUE"]);
             if ($arProps["NAME_USER"]["VALUE"] == ""){
                 $name_user = $arProps["USER_NO_AUTH"]["VALUE"];
             }else{
@@ -374,6 +374,9 @@ $countReviews = count($allReviews);
                 $rsUser = CUser::GetByID($ID_USER);
                 $arUser = $rsUser->Fetch();
                 $name_user = $arUser["NAME"];
+if ($name_user == ""):
+$name_user = $arProps["USER_NO_AUTH"]["VALUE"];
+endif;
             }
             if ($arProps["DATE_CHANGE_BY_USER"]["VALUE"] != "") {
                 $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arProps["DATE_CHANGE_BY_USER"]["VALUE"]));

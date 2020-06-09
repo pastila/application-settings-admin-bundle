@@ -186,14 +186,19 @@ if (count($arResult["ITEMS"]) > 0) {
 
                                     <div class="obrashcheniya__content_left_center_item_date-block_edit"
                                          data-id-date_picker_edit="<?= $arItem['ID'] ?>" onclick="edit_date(this)">
+<?if ($arItem["PROPERTIES"]["VISIT_DATE"]["VALUE"]):?>
                                         <img src="<?= SITE_TEMPLATE_PATH ?>/images/svg/edit.svg" alt=""
                                              id="svg_edit_<?= $arItem['ID'] ?>">
+<?else:?>
+                                        <img src="<?= SITE_TEMPLATE_PATH ?>/images/svg/edit-r.svg" alt=""
+                                             id="svg_edit_<?= $arItem['ID'] ?>">
+<?endif?>
                                     </div>
 
                                     <div class="obrashcheniya__content_left_center_item_date-block_edit"
                                          data-id-date_picker_save="<?= $arItem['ID'] ?>" onclick="save_date(this)"
                                          style="display: none">
-                                        <img src="<?= SITE_TEMPLATE_PATH ?>/images/svg/save.svg" alt=""
+                                        <img src="<?= SITE_TEMPLATE_PATH ?>/images/svg/save-r.svg" alt=""
                                              id="svg_save_<?= $arItem['ID'] ?>">
                                         <img src="/images/gif/loading.gif" style="display: none" alt=""
                                              id="gif_<?= $arItem['ID'] ?>">
@@ -293,7 +298,7 @@ if (count($arResult["ITEMS"]) > 0) {
 
                                     <div class="obrashcheniya__content_sidebar_blocks_text">
                                         <div class="obrashcheniya__content_sidebar_blocks_text_title">
-                                            Загруженный документ
+                                            <?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_1"]['VALUE'])["FILE_NAME"] ?>
                                         </div>
                                         <a id="download_img" download
                                            href="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_1"]['VALUE'])["SRC"] ?>"
@@ -326,7 +331,7 @@ if (count($arResult["ITEMS"]) > 0) {
 
                                     <div class="obrashcheniya__content_sidebar_blocks_text">
                                         <div class="obrashcheniya__content_sidebar_blocks_text_title">
-                                            Загруженный документ
+                                            <?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_2"]['VALUE'])["FILE_NAME"] ?>
                                         </div>
                                         <a id="download_img" download
                                            href="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_2"]['VALUE'])["SRC"] ?>"
@@ -359,7 +364,7 @@ if (count($arResult["ITEMS"]) > 0) {
 
                                     <div class="obrashcheniya__content_sidebar_blocks_text">
                                         <div class="obrashcheniya__content_sidebar_blocks_text_title">
-                                            Загруженный документ
+                                            <?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_3"]['VALUE'])["FILE_NAME"] ?>
                                         </div>
                                         <a id="download_img" download
                                            href="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_3"]['VALUE'])["SRC"] ?>"
@@ -391,7 +396,7 @@ if (count($arResult["ITEMS"]) > 0) {
 
                                     <div class="obrashcheniya__content_sidebar_blocks_text">
                                         <div class="obrashcheniya__content_sidebar_blocks_text_title">
-                                            Загруженный документ
+                                            <?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_4"]['VALUE'])["FILE_NAME"] ?>
                                         </div>
                                         <a id="download_img" download
                                            href="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_4"]['VALUE'])["SRC"] ?>"
@@ -423,7 +428,7 @@ if (count($arResult["ITEMS"]) > 0) {
 
                                     <div class="obrashcheniya__content_sidebar_blocks_text">
                                         <div class="obrashcheniya__content_sidebar_blocks_text_title">
-                                            Загруженный документ
+                                            <?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_5"]['VALUE'])["FILE_NAME"] ?>
                                         </div>
                                         <a id="download_img" download
                                            href="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_5"]['VALUE'])["SRC"] ?>"
@@ -455,7 +460,7 @@ if (count($arResult["ITEMS"]) > 0) {
                                 } ?>"
                                     <?php if ($url_pdf != "") { ?> href="<?= $url_pdf ?>" <? } ?> >
                                     <?php if ($url_pdf != "") { ?> просмотреть
-                                    <? } else { ?> Заполните все поля для формирования заявления, нажав "редактировать"
+                                    <? } else { ?> 
                                     <?
                                     } ?>
                                 </a>

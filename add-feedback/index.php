@@ -93,6 +93,8 @@ global $USER; ?>
                             <input id="name_user" type="name_user" name="name_user" placeholder="Имя" required pattern="([а-яЁА-ЯЁ]+)">
                         </div>
                         <?php } ?>
+
+
                         <div class="input__wrap">
                             <label for="name" class="input__wrap_label">Заголовок</label>
                             <input id="title" type="title" name="title" required>

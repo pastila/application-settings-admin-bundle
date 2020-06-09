@@ -53,9 +53,12 @@ if (isset($_FILES['import_file']['tmp_name'])) {
         }
 
         $result['SRC'] = $arFile["SRC"];
+
         $result['ID'] = $_POST['id_elem'] . '_img_' . $i;
         $result['RES'] = $res;
         $result['SUCCESS'] = "Файл успешно загружен!";
+  $result['FILE_NAME'] = $arFile["FILE_NAME"];
+
     } else {
         // выводим сообщение об ошибке
         $result['ID'] = $_POST['id_elem'];

@@ -30,6 +30,9 @@ $url = $APPLICATION->GetCurDir();
     <link rel="shortcut icon" href="/local/templates/kdteam/images/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <?php $APPLICATION->ShowHead(); ?>
+<meta property = "og:image" content="https://bezbahil.ru/local/templates/kdteam/images/png/header/logo-oms-white.jpg"/>
+<link rel="image_src" href="https://bezbahil.ru/local/templates/kdteam/images/png/header/logo-oms-white.jpg" />
+
     <?php
     $asset->addCss(SITE_TEMPLATE_PATH . "/styles/main.min.css");
     $asset->addJs(SITE_TEMPLATE_PATH . "/js/main.min.js");
@@ -94,11 +97,16 @@ left:-9999px;" alt="" /></div></noscript>
                     <img class="header__logo_img" src="/local/templates/kdteam/images/png/header/logo-oms-white.png"
                         alt="OMS">
                 </a>
+
+
+
+
                 <?php
             global $USER;
             $ID_USER = $USER->GetID();
             if ($USER->IsAuthorized()) { ?>
-                <div class="header__r">
+                <div class="header__r"><img class="header__r_auth_login_img" src="/images/message.svg" alt="OMS">
+<a style="font-size: 2rem; color: #fff; display: flex; padding-right: 2rem;padding-left: 1rem;" href="/vopros-otvet/"><span class="header__r_auth_user_hello">Вопрос - Ответ</span></a>
                     <a rel="nofollow" href="javascript:void(0)" id="show-mnu" class="header__r_auth_user">
                         <span class="header__r_auth_user_hello">
                             Добрый день,
@@ -298,10 +306,13 @@ left:-9999px;" alt="" /></div></noscript>
 
                 <div class="header__r" style="display: flex;">
                     <div class="header__r_auth">
+<span class="header__r_auth_login">
+<img class="header__r_auth_login_img" src="/images/message.svg" alt="OMS">
+<a style="font-size: 2rem;" href="/vopros-otvet/"><div class="header__r_auth_login_text">Вопрос - Ответ</div></a></span>
                         <span href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-login.php"?>" id="login-link"
                             class="header__r_auth_login">
                             <img class="header__r_auth_login_img"
-                                src="/local/templates/kdteam/images/svg/header/login/enter-white.svg" alt="OMS">
+                                src="/images/key.svg" alt="OMS">
                             <div class="header__r_auth_login_text">
                                 Вход
                             </div>
@@ -310,7 +321,7 @@ left:-9999px;" alt="" /></div></noscript>
                         <span href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-reg.php"?>" id="reg-link"
                             data-rigstration="0" class="header__r_auth_reg">
                             <img class="header__r_auth_login_img"
-                                src="/local/templates/kdteam/images/svg/header/reg/edit-white.svg" alt="OMS">
+                                src="/images/edit.svg" alt="OMS">
                             <div class="header__r_auth_login_text">
                                 Регистрация
                             </div>
