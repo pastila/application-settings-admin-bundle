@@ -3,9 +3,13 @@
 if ((!empty($_POST['APPEAL_VALUE']) and !empty($_POST['HOSPITAL'])) and json_decode($_POST['DIAGNOZ']) != null) {
 
     if (!empty($_POST['YEARS'])) {
-
-        $rsUser = CUser::GetByID($USER->GetID());
-        $person = $rsUser->Fetch();
+      /*
+       * https://jira.accurateweb.ru/browse/BEZBAHIL-39
+       * От предложения звонить в страховую и вывода горячей линии компании отказываемся, так как пользователь ещё
+       * не указал свою смо. То есть предложение звонить страховому представителю нужно убирать вообще.
+       */
+//        $rsUser = CUser::GetByID($USER->GetID());
+//        $person = $rsUser->Fetch();
         CModule::IncludeModule("iblock");
         $new_str = "";
         $arSelect = array("ID", "IBLOCK_ID", "PROPERTY_APPEAL", "PREVIEW_TEXT");
@@ -39,22 +43,31 @@ if ((!empty($_POST['APPEAL_VALUE']) and !empty($_POST['HOSPITAL'])) and json_dec
 //        }
 
 
-        $id_company = $person["UF_INSURANCE_COMPANY"];
-       $prop=CIBlockElement::GetByID($id_company)->GetNextElement()->GetProperties();
-        $file_comment = CFile::ResizeImageGet($prop["LOGO_IMG"]["VALUE"], array('width'=>200, 'height'=>400), BX_RESIZE_IMAGE_PROPORTIONAL, true);
-        $url_logo_company = $file_comment["src"];
+      /*
+       * https://jira.accurateweb.ru/browse/BEZBAHIL-39
+       * От предложения звонить в страховую и вывода горячей линии компании отказываемся, так как пользователь ещё
+       * не указал свою смо. То есть предложение звонить страховому представителю нужно убирать вообще.
+       */
+//        $id_company = $person["UF_INSURANCE_COMPANY"];
+//        $prop=CIBlockElement::GetByID($id_company)->GetNextElement()->GetProperties();
+//        $file_comment = CFile::ResizeImageGet($prop["LOGO_IMG"]["VALUE"], array('width'=>200, 'height'=>400), BX_RESIZE_IMAGE_PROPORTIONAL, true);
+//        $url_logo_company = $file_comment["src"];
 
 
 
-        $html_block = "<div class='block__four_r_items'> <img src='$url_logo_company' alt=''> </div>";
+//        $html_block = "<div class='block__four_r_items'> <img src='$url_logo_company' alt=''> </div>";
 
 
-        $text = 'Горячая линия: <div> '.$prop["MOBILE_NUMBER"]["VALUE"]. '</div><div> ' .$prop["MOBILE_NUMBER2"]["VALUE"]. '</div><div>  ' .$prop["MOBILE_NUMBER3"]["VALUE"].'</div>';
+//        $text = 'Горячая линия: <div> '.$prop["MOBILE_NUMBER"]["VALUE"]. '</div><div> ' .$prop["MOBILE_NUMBER2"]["VALUE"]. '</div><div>  ' .$prop["MOBILE_NUMBER3"]["VALUE"].'</div>';
 
-        $new_str =   str_replace("#MOBAIL_CONTACTS#",$text,$result['DIAGNOZ']);
+//        $new_str =   str_replace("#MOBAIL_CONTACTS#",$text,$result['DIAGNOZ']);
 
-        $new_str =   str_replace("#URL_LOGO_COMPANY#",$html_block, $new_str);
-        $result['DIAGNOZ'] = $new_str;
+//        $new_str =   str_replace("#URL_LOGO_COMPANY#",$html_block, $new_str);
+
+      $new_str =   str_replace("#MOBAIL_CONTACTS#", '', $result['DIAGNOZ']);
+      $new_str =   str_replace("#URL_LOGO_COMPANY#", '', $new_str);
+
+      $result['DIAGNOZ'] = $new_str;
 
     } else {
         $result = 'error';
