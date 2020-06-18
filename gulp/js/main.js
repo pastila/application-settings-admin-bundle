@@ -69,7 +69,6 @@ $(document).ready(function() {
   });
   $('.header__r_auth_login').click(function() {
     setTimeout(function() {
-      debugger;
       FormAuth();
     }, 700);
   });
@@ -145,6 +144,7 @@ $(document).ready(function() {
     today.setFullYear(year);
     $('#datepicker_reg').datepicker({
       maxDate: today,
+      dateFormat: 'dd.mm.yyyy'
     });
     $('#datepickers-container').css({'z-index': '9999'});
 
@@ -427,7 +427,11 @@ $(document).ready(function() {
         errors.push('error8');
 
       }
-      var data = $('.datepicker-here').val();
+      /*
+       *  @FIXME: Datepicker UI не должен использоваться совместно с полем input type="date", т.к. они не совместимы.
+       *  Нужно либо заменить поле на тип text и использовать datepicker, или использовать HTML5 datepicker
+       */
+      var data = $('.datepicker-here').val().replace(/(\d*)-(\d*)-(\d*)/, '$3.$2.$1');
       var re = /^(\d+)[.](\d+)[.](\d+)/;
       if (re.test(data)) {
       } else {
@@ -466,7 +470,7 @@ $(document).ready(function() {
       } else if ($('#check-code-js').val().length > 0) {
 
         var phone =  getCookie("phone");
-        if (phone != data_form[5]['value']) {
+        if (phone != data_form[8]['value']) {
 
           $('#phone').after('   <div class="popover_error">\n' +
               '          <div class="popover_error_arrow"></div>\n' +
@@ -524,7 +528,7 @@ console.log("1");
                     '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
                     '          </div>\n' +
                     '          <div class="popover_error_text">\n' +
-                    '         Пользователь с таким эмейлом уже сущесвуте.\n' +
+                    '         Пользователь с таким e-mail уже существует.\n' +
                     '      </div>\n' +
                     '      </div>');
               }
@@ -537,7 +541,7 @@ console.log("1");
                     '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
                     '          </div>\n' +
                     '          <div class="popover_error_text">\n' +
-                    '         Пользователь с таким полисом уже сущесвуте.\n' +
+                    '         Пользователь с таким полисом уже существует.\n' +
                     '      </div>\n' +
                     '      </div>');
               }

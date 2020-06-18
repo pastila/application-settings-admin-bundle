@@ -495,12 +495,12 @@ $(document).ready(function() {
         if (msg == 1) {
           $.magnificPopup.open({
             items: {
-              src: '<div class="white-popup custom_styles_popup" >Ваш отзыв успешно отправлен</div>',
+              src: '<div class="white-popup custom_styles_popup" >Спасибо за отзыв. Он будет опубликован после модерации.</div>',
               type: 'inline',
             },
             callbacks: {
               afterClose: function() {
-                document.location.reload(true);
+                document.location.href = '/feedback/'
               },
             },
           });

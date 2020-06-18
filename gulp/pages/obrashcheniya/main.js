@@ -143,6 +143,7 @@ $( "input[type='file']" ).click(function() {
                 error.text('');
                 success.text(result2.SUCCESS);
                 let r = result2.SRC.toLowerCase();
+                let fileName = result2.FILE_NAME.toLowerCase();
 
                 if (r.search(".pdf") != "-1") {
                   src = "/local/templates/kdteam/images/svg/pdf_icon.svg";
@@ -156,7 +157,7 @@ $( "input[type='file']" ).click(function() {
                     '        <img src="' + src + '">\n' +
                     '    </div>\n' +
                     '    <div class="obrashcheniya__content_sidebar_blocks_text">\n' +
-                    '        <div class="obrashcheniya__content_sidebar_blocks_text_title">Загруженный документ</div>\n' +
+                    '        <div class="obrashcheniya__content_sidebar_blocks_text_title">' + fileName + '</div>\n' +
                     '        <a id="download_img" download href="' + r + '"\n' +
                     '           class="obrashcheniya__content_sidebar_blocks_text_link">скачать</a>\n' +
                     '        <a href="#" rel="nofollow" onclick="del(this)" id="delete_' +

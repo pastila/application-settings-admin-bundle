@@ -3,22 +3,31 @@
 $(document).ready(function () {
 
   $(document).on("click", "#generate_form_fix", function (e) {
-           $.ajax({
-                 dataType: 'html',
-                 url: '/ajax/form_statement.php',
-                 type: 'POST',
+        if ($('.header__r_auth_reg').length == 1 && ($(".header__r_auth_reg").attr("data-rigstration") == 0)) {
 
-                 beforeSend: function() {
+          $('.header__r_auth_login').trigger('click');
+          setTimeout(function () {
+            $('.register_before_review').removeClass('hidden');
+          }, 700);
 
-                 },
-                 success: function(msg){
+        } else {
+
+          $.ajax({
+            dataType: 'html',
+            url: '/ajax/form_statement.php',
+            type: 'POST',
+
+            beforeSend: function () {
+
+            },
+            success: function (msg) {
 
 
+            },
+          }).done(function (msg) {
 
-                 },
-               }).done(function(msg) {
-
-               });
+          });
+        }
   });
 
 
@@ -429,13 +438,13 @@ $(document).ready(function () {
     } else {
       if ($('#choose_diagnoz_elem').val() != 'Здесь нет моего диагноза') {
 
-        if ($('.header__r_auth_reg').length == 1 && ($(".header__r_auth_reg").attr("data-rigstration") == 0)) {
-
-          $('.header__r_auth_login').trigger('click');
-          setTimeout(function () {
-            $('.register_before_review').removeClass('hidden');
-          }, 700);
-        } else {
+        // if ($('.header__r_auth_reg').length == 1 && ($(".header__r_auth_reg").attr("data-rigstration") == 0)) {
+        //
+        //   $('.header__r_auth_login').trigger('click');
+        //   setTimeout(function () {
+        //     $('.register_before_review').removeClass('hidden');
+        //   }, 700);
+        // } else {
 
 
           $.post('/ajax/diagnoz.php',
@@ -490,7 +499,7 @@ $(document).ready(function () {
 
               }
             }, 'html');
-        }
+        // }
       } else {
         $.magnificPopup.open({
           items: {
@@ -1187,7 +1196,7 @@ $(document).ready(function() {
 
   });
 
-  
+
 
 
 });
