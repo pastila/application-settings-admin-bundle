@@ -142,8 +142,8 @@ $( "input[type='file']" ).click(function() {
               } else {
                 error.text('');
                 success.text(result2.SUCCESS);
-                let r = result2.SRC.toLowerCase();
-                let fileName = result2.FILE_NAME.toLowerCase();
+                let r = result2.SRC;
+                let fileName = result2.FILE_NAME;
 
                 if (r.search(".pdf") != "-1") {
                   src = "/local/templates/kdteam/images/svg/pdf_icon.svg";
