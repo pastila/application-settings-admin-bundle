@@ -361,7 +361,7 @@ $(document).ready(function() {
             '      </div>');
         this.empty_field.push('error');
       }else{
-        data.text = data_form[0]['value'];
+        data.text = data_form[1]['value'];
       }
       if (data.id_city === 0) {
         $('[data-select=city]').next().css({'display': 'block'});
