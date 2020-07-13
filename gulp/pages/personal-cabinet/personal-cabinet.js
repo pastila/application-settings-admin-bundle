@@ -87,6 +87,8 @@ $(document).ready(function() {
     },2200));
   });
 
+  $('.datepicker-here100').datepicker();
+
   $(document).on('click', '#search_result li', function() {
     $('#referal').val($(this).text());
     $('#search_result').fadeOut();
