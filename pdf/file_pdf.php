@@ -101,7 +101,7 @@ if ($_POST['id'] != "") {
                      Подготовлено с помощью сервиса bezbahil.ru
                 </div>
                   <br>
-                <div><img style="width: 75px;" src="logo_oms.png"/></div>
+                <div><img style="width: 75px;" src="logo_oms.png" alt="OMS"/></div>
                   <br>
           <div class="header__items_item--label" style="font-weight: normal;">
                     Контактные данные - info@bezbahil.ru

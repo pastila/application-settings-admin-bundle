@@ -124,7 +124,7 @@ if (CModule::IncludeModule("iblock")) {
                         <br>';
                     } else {
                         $message .= '
-                    <img style="max-height: 200px;max-width: 100%;" src="http://' . $_SERVER['SERVER_NAME'] .
+                    <img style="max-height: 200px;max-width: 100%;" alt="" src="http://' . $_SERVER['SERVER_NAME'] .
                             CFile::GetPath($arFields['PROPERTY_IMG_1_VALUE']) . '">
                     <br>';
                     }
@@ -147,7 +147,7 @@ if (CModule::IncludeModule("iblock")) {
                         <br>';
                         } else {
                             $message .= '
-                    <img style="max-height: 200px;max-width: 100%;" src="http://' . $_SERVER['SERVER_NAME'] .
+                    <img style="max-height: 200px;max-width: 100%;" alt="" src="http://' . $_SERVER['SERVER_NAME'] .
                                 CFile::GetPath($arFields['PROPERTY_IMG_2_VALUE']) . '">
                     <br>';
                         }
@@ -168,7 +168,7 @@ if (CModule::IncludeModule("iblock")) {
                         <br>';
                         } else {
                             $message .= '
-                    <img style="max-height: 200px;max-width: 100%;" src="http://' . $_SERVER['SERVER_NAME'] .
+                    <img style="max-height: 200px;max-width: 100%;" alt="" src="http://' . $_SERVER['SERVER_NAME'] .
                                 CFile::GetPath($arFields['PROPERTY_IMG_3_VALUE']) . '">
                     <br>';
                         }
@@ -189,7 +189,7 @@ if (CModule::IncludeModule("iblock")) {
                         <br>';
                         } else {
                             $message .= '
-                    <img style="max-height: 200px;max-width: 100%;" src="http://' . $_SERVER['SERVER_NAME'] .
+                    <img style="max-height: 200px;max-width: 100%;" alt="" src="http://' . $_SERVER['SERVER_NAME'] .
                                 CFile::GetPath($arFields['PROPERTY_IMG_4_VALUE']) . '">
                     <br>';
                         }
@@ -210,7 +210,7 @@ if (CModule::IncludeModule("iblock")) {
                         <br>';
                         } else {
                             $message .= '
-                    <img style="max-height: 200px;max-width: 100%;" src="http://' . $_SERVER['SERVER_NAME'] .
+                    <img style="max-height: 200px;max-width: 100%;" alt="" src="http://' . $_SERVER['SERVER_NAME'] .
                                 CFile::GetPath($arFields['PROPERTY_IMG_5_VALUE']) . '">
                     <br>';
                         }

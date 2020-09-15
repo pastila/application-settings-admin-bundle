@@ -178,7 +178,7 @@ function editAddRule()
 	var oCell1 = oRow.insertCell(0); oCell1.innerHTML = '<input name="MODULE[]" type="text" style="width:100%">';
 	var oCell2 = oRow.insertCell(1); oCell2.innerHTML = '<input name="EXTENSION[]" type="text" style="width:100%">';
 	var oCell3 = oRow.insertCell(2); oCell3.innerHTML = '<input name="SIZE[]" type="text" style="width:100%">';
-	var oCell4 = oRow.insertCell(3); oCell4.innerHTML = '<img src="/bitrix/themes/.default/images/actions/delete_button.gif" onclick="editDeleteRule(this) "/>';
+	var oCell4 = oRow.insertCell(3); oCell4.innerHTML = '<img src="/bitrix/themes/.default/images/actions/delete_button.gif" onclick="editDeleteRule(this) " alt=""/>';
 
 	if (document.forms.editform.BXAUTOSAVE)
 	{
@@ -348,7 +348,7 @@ if(!is_array($arRules))
 				<td><input name="MODULE[]" type="text" value="<?echo htmlspecialcharsbx($rule["MODULE"])?>" style="width:100%"></td>
 				<td><input name="EXTENSION[]" type="text" value="<?echo htmlspecialcharsbx($rule["EXTENSION"])?>" style="width:100%"></td>
 				<td><input name="SIZE[]" type="text" value="<?echo htmlspecialcharsbx($rule["SIZE"])?>" style="width:100%"></td>
-				<td><img src="/bitrix/themes/.default/images/actions/delete_button.gif" onclick="editDeleteRule(this)" /></td>
+				<td><img src="/bitrix/themes/.default/images/actions/delete_button.gif" onclick="editDeleteRule(this)" alt=""/></td>
 			</tr>
 	<?
 		$ii++;
@@ -360,7 +360,7 @@ if(!is_array($arRules))
 				<td><input name="MODULE[]" type="text" style="width:100%"></td>
 				<td><input name="EXTENSION[]" type="text" style="width:100%"></td>
 				<td><input name="SIZE[]" type="text" style="width:100%"></td>
-				<td><img src="/bitrix/themes/.default/images/actions/delete_button.gif" onclick="editDeleteRule(this)" /></td>
+				<td><img src="/bitrix/themes/.default/images/actions/delete_button.gif" onclick="editDeleteRule(this)" alt=""/></td>
 			</tr>
 		<?
 		$ii=1;
