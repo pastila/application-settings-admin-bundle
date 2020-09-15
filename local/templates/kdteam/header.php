@@ -20,12 +20,15 @@ $url = $APPLICATION->GetCurDir();
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="HandheldFriendly" content="true">
+<!--    <meta charset="UTF-8">-->
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="HandheldFriendly" content="true" />
     <meta name="yandex-verification" content="3117711c7cf9d47f" />
     <meta name="google-site-verification" content="6i-0zWPQEfVk1TaN63icBNxaPtFIwxrzlrG-w4oiTyg" />
+    <!-- Адмитад -->
+    <meta name="verify-admitad" content="d368515aeb" />
+    <!-- /Адмитад -->
     <title><?php $APPLICATION->ShowTitle(); ?></title>
     <link rel="shortcut icon" href="/local/templates/kdteam/images/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -36,26 +39,6 @@ $url = $APPLICATION->GetCurDir();
 
     CModule::IncludeModule("iblock");
     ?>
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript" >
-      (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)
-
-            [0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-      (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-      ym(57673804, "init", {
-        clickmap:true,
-        trackLinks:true,
-        accurateTrackBounce:true,
-        webvisor:true
-      });
-    </script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/57673804" style="position:absolute;
-
-left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
-
 
     <!-- Google Tag Manager -->
     <script data-skip-moving="true">
@@ -67,15 +50,35 @@ left:-9999px;" alt="" /></div></noscript>
     </script>
     <!-- End Google Tag Manager -->
 
-    <!-- Адмитад -->
-    <meta name="verify-admitad" content="d368515aeb" />
-    <!-- /Адмитад -->
     <!--  JivoSite -->
     <script src="//code-ya.jivosite.com/widget/u0hymF3kCA" async></script>
     <!-- / JivoSite -->
 </head>
 
 <body>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)
+
+      [0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+  (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+  ym(57673804, "init", {
+    clickmap:true,
+    trackLinks:true,
+    accurateTrackBounce:true,
+    webvisor:true
+  });
+</script>
+<noscript>
+    <div>
+        <img src="https://mc.yandex.ru/watch/57673804" style="position:absolute; left:-9999px;" alt="" />
+    </div>
+</noscript>
+<!-- /Yandex.Metrika counter -->
+
+
 <!-- Google Tag Manager (noscript) -->
 <noscript>
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N3VBFGG"
@@ -140,9 +143,9 @@ left:-9999px;" alt="" /></div></noscript>
                                 }
                                 ?>
                             <a class="active" href="/obrashcheniya/">
-                                <div id="number_calls" class="menu-req">
+                                <span id="number_calls" class="menu-req">
                                     <?php echo $countAppeals?>
-                                </div>
+                                </span>
 
                                 <span class="header__r_nav_text">Ваши обращения</span>
                             </a>
@@ -165,9 +168,9 @@ left:-9999px;" alt="" /></div></noscript>
                                 ?>
 
                             <a class="" href="/reviews/">
-                                <div id="number_calls" class="menu-req">
+                                <span id="number_calls" class="menu-req">
                                     <?php echo $count_reviews?>
-                                </div>
+                                </span>
 
                                 <span class="header__r_nav_text">Ваши отзывы</span>
                             </a>
@@ -175,7 +178,7 @@ left:-9999px;" alt="" /></div></noscript>
 
                         <li>
                             <a href="/otpravlennyye/">
-                                <div class="menu-req">
+                                <span class="menu-req">
                                     <?php
                                     $arFilter = array("IBLOCK_ID" => 11, "UF_USER_ID" => $ID_USER);
                                     $section = CIBlockSection::GetList(
@@ -198,12 +201,14 @@ left:-9999px;" alt="" /></div></noscript>
                                         $obElement = $Element->SelectedRowsCount();
 
                                     } ?><?= $obElement ?>
-                                </div>
+                                </span>
                                 <span class="header__r_nav_text">Отправленные</span>
                             </a>
                         </li>
 
-                        <a class="header__r_nav_link" href="/ajax/logout.php">Выйти</a>
+                        <li>
+                            <a class="header__r_nav_link" href="/ajax/logout.php">Выйти</a>
+                        </li>
                     </ul>
 
                     <!-- <div class="header__r_auth">
@@ -298,26 +303,26 @@ left:-9999px;" alt="" /></div></noscript>
 
                 <div class="header__r" style="display: flex;">
                     <div class="header__r_auth">
-                        <span href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-login.php"?>" id="login-link"
+                        <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-login.php"?>" id="login-link"
                             class="header__r_auth_login">
                             <img class="header__r_auth_login_img"
                                 src="/local/templates/kdteam/images/svg/header/login/enter-white.svg" alt="OMS">
-                            <div class="header__r_auth_login_text">
+                            <span class="header__r_auth_login_text">
                                 Вход
-                            </div>
-                        </span>
+                            </span>
+                        </a>
 
-                        <span href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-reg.php"?>" id="reg-link"
+                        <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-reg.php"?>" id="reg-link"
                             data-rigstration="0" class="header__r_auth_reg">
                             <img class="header__r_auth_login_img"
                                 src="/local/templates/kdteam/images/svg/header/reg/edit-white.svg" alt="OMS">
-                            <div class="header__r_auth_login_text">
+                            <span class="header__r_auth_login_text">
                                 Регистрация
-                            </div>
-                        </span>
+                            </span>
+                        </a>
                     </div>
 
-                    <span href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-feedback.php"?>"
+                    <a href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-feedback.php"?>"
                         class="header__r_mainBtn headerBtn" id="write-us_modal">
                         <svg style="fill: #ffffff; width: 2rem; height: 3rem;"
                             class="header__r_auth_login_img hidden-desk--image" xmlns="http://www.w3.org/2000/svg"
@@ -328,10 +333,10 @@ left:-9999px;" alt="" /></div></noscript>
                                 d="M470.076 93.898a8.53 8.53 0 00-6.229 1.966L266.982 261.239a17.068 17.068 0 01-21.965 0L48.154 95.863a8.535 8.535 0 00-10.974 13.073l196.864 165.367c12.688 10.683 31.224 10.683 43.913 0L474.82 108.937a8.532 8.532 0 001.049-12.023 8.524 8.524 0 00-5.793-3.016zM164.124 273.13a8.535 8.535 0 00-8.229 2.65l-119.467 128a8.532 8.532 0 1012.476 11.639l119.467-128a8.532 8.532 0 00-4.247-14.289zM356.105 275.78a8.534 8.534 0 10-12.476 11.639l119.467 128a8.533 8.533 0 0012.476-11.64L356.105 275.78z" />
                         </svg>
 
-                        <div class="hidden-text-mob">
+                        <span class="hidden-text-mob">
                             Написать нам
-                        </div>
-                    </span>
+                        </span>
+                    </a>
                 </div>
                 <?php } ?>
             </div>
