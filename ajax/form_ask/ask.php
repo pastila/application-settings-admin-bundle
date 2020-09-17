@@ -56,7 +56,7 @@ if(!$APPLICATION->CaptchaCheckCode($_POST["captcha_word"],$_POST["captcha_code"]
     }
     $html_img = "";
     foreach ($array_img_url as $item){
-        $html_img .= '<div><img src="'.$item.'"></div>';
+        $html_img .= '<div><img src="'.$item.'" alt=""></div>';
     }
 
 

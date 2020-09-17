@@ -154,7 +154,7 @@ $( "input[type='file']" ).click(function() {
                     '<div id="img_block_' + result2.ID +
                     '" class="obrashcheniya__content_sidebar_blocks">\n' +
                     '    <div class="obrashcheniya__content_sidebar_blocks_img">\n' +
-                    '        <img src="' + src + '">\n' +
+                    '        <img src="' + src + '" alt="">\n' +
                     '    </div>\n' +
                     '    <div class="obrashcheniya__content_sidebar_blocks_text">\n' +
                     '        <div class="obrashcheniya__content_sidebar_blocks_text_title">' + fileName + '</div>\n' +
