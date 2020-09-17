@@ -15,11 +15,15 @@
 $this->setFrameMode(true);
 ?>
 <div class="white_block">
-    <div class="news-detail flex-detail-news">
+    <div class="news-detail flex-detail-news" itemscope itemtype="http://schema.org/NewsArticle">
+        <link itemprop="mainEntityOfPage" href="<?= ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>" />
+        <meta itemprop="author" content="Без Бахил">
 
-        <div class="news-detail_image">
+        <div class="news-detail_image" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
             <?php if ($arParams["DISPLAY_PICTURE"] != "N" && is_array($arResult["DETAIL_PICTURE"])) {?>
-
+            <meta itemprop="height" content="<?=$arResult["DETAIL_PICTURE"]["HEIGHT"]?>">
+            <meta itemprop="width" content="<?=$arResult["DETAIL_PICTURE"]["WIDTH"]?>">
+            <meta itemprop="url" content="<?=$arResult["DETAIL_PICTURE"]["SRC"]?>">
             <img src="<?=$arResult["DETAIL_PICTURE"]["SRC"]?>"
                 width="<?=$arResult["DETAIL_PICTURE"]["WIDTH"]?>" height="<?=$arResult["DETAIL_PICTURE"]["HEIGHT"]?>"
                 alt="<?=$arResult["DETAIL_PICTURE"]["ALT"]?>" title="<?=$arResult["DETAIL_PICTURE"]["TITLE"]?>" />
@@ -28,19 +32,19 @@ $this->setFrameMode(true);
 
         <div class="content-news">
             <?php if ($arParams["DISPLAY_DATE"] != "N" && $arResult["DISPLAY_ACTIVE_FROM"]) {?>
-            <span class="news-date-time date_news"><?=$arResult["DISPLAY_ACTIVE_FROM"]?></span>
+            <span class="news-date-time date_news" itemprop="datePublished" ><?=$arResult["DISPLAY_ACTIVE_FROM"]?></span>
             <?php }?>
 
             <?php if ($arParams["DISPLAY_NAME"] != "N" && $arResult["NAME"]) {?>
-            <h2 class="content-news_title"><?php echo $arResult["NAME"]?></h2>
+            <h2 class="content-news_title" itemprop="headline"><?php echo $arResult["NAME"]?></h2>
             <?php }?>
 
             <?php if ($arParams["DISPLAY_PREVIEW_TEXT"] != "N" && $arResult["FIELDS"]["PREVIEW_TEXT"]) {?>
-            <p><?php echo $arResult["FIELDS"]["PREVIEW_TEXT"];
+            <p itemprop="description"><?php echo $arResult["FIELDS"]["PREVIEW_TEXT"];
                     unset($arResult["FIELDS"]["PREVIEW_TEXT"]);?></p>
             <?php }?>
 
-            <p>
+            <p itemprop="articleBody">
                 <?php if ($arResult["NAV_RESULT"]) {?>
                 <?php if ($arParams["DISPLAY_TOP_PAGER"]) {?>
                 <?php echo $arResult["NAV_STRING"]?>
