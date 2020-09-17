@@ -30,7 +30,7 @@ $url = $APPLICATION->GetCurDir();
     <?php if ($_SERVER[REQUEST_URI] === '/') {?>
         <meta property="og:type" content="website"/>
         <meta property="og:url" content="<?= ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]" ?>"/>
-        <meta property="og:title" content="Без Бахил. Лечись бесплатно!"/>
+        <meta property="og:title" content="<?php $APPLICATION->ShowTitle(); ?>"/>
         <meta property="og:site_name" content="Без Бахил. Лечись бесплатно!"/>
         <meta property="og:description" content="Сервис bezbahil — сохраняет здоровье и деньги."/>
         <meta property="og:locale" content="ru_RU"/>
