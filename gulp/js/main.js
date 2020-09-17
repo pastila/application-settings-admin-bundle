@@ -62,12 +62,14 @@ $(document).ready(function() {
   });
 
   //authorization
-  $('.header__r_auth_reg').click(function() {
+  $('.header__r_auth_reg').click(function(e) {
+    e.preventDefault();
     setTimeout(function() {
       FormReg();
     }, 1500);
   });
-  $('.header__r_auth_login').click(function() {
+  $('.header__r_auth_login').click(function(e) {
+    e.preventDefault();
     setTimeout(function() {
       FormAuth();
     }, 700);
