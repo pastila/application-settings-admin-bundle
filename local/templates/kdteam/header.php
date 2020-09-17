@@ -39,6 +39,18 @@ $url = $APPLICATION->GetCurDir();
 
     CModule::IncludeModule("iblock");
     ?>
+
+    <?php if ($_SERVER[REQUEST_URI] === '/') { ?>
+        <script type="application/ld+json">
+            {
+                "@context": "http://schema.org/",
+                "@type": "WebSite",
+                "name": "Без Бахил",
+                "url": "https://bezbahil.ru/"
+            }
+        </script>
+    <?php }?>
+    
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript" >
       (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
