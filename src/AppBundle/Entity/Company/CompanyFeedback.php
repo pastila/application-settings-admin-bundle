@@ -61,7 +61,14 @@ class CompanyFeedback
   /**
    * @var string
    *
-   * @ORM\Column(name="type", type="string", length=255, nullable=false)
+   * @ORM\Column(name="head", type="string", length=255, nullable=false)
+   */
+  private $head;
+
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="text", type="text", nullable=false)
    */
   private $text;
 
@@ -169,6 +176,26 @@ class CompanyFeedback
   public function setDiagnosis($diagnosis)
   {
     $this->diagnosis = $diagnosis;
+
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getHead()
+  {
+    return $this->head;
+  }
+
+  /**
+   * @param string $head
+   *
+   * @return string
+   */
+  public function setHead($head)
+  {
+    $this->head = $head;
 
     return $this;
   }
