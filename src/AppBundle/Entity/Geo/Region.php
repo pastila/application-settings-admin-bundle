@@ -40,98 +40,50 @@ class Region
    */
   protected $name;
 
-  public function getId(): ?int
+  /**
+   * @return int
+   */
+  public function getId()
   {
     return $this->id;
   }
 
-  public function setId(?int $id): Country
-  {
-    $this->id = $id;
-
-    return $this;
-  }
-
-  public function getTitle(): ?string
-  {
-    return $this->title;
-  }
-
-  public function setTitle(?string $title): Country
-  {
-    $this->title = $title;
-
-    return $this;
-  }
-
-  public function getCode(): ?int
+  /**
+   * @return string
+   */
+  public function getCode()
   {
     return $this->code;
   }
 
-  public function setCode(?int $code): Country
+  /**
+   * @param string $code
+   *
+   * @return string
+   */
+  public function setCode($code)
   {
     $this->code = $code;
 
     return $this;
   }
 
-  public function getMaskPhone(): ?string
+  /**
+   * @return string
+   */
+  public function getName()
   {
-    return $this->maskPhone;
+    return $this->name;
   }
 
-  public function setMaskPhone(?string $maskPhone): Country
+  /**
+   * @param string $name
+   *
+   * @return string
+   */
+  public function setName($name)
   {
-    $this->maskPhone = $maskPhone;
-
-    return $this;
-  }
-
-  public function getMinCost(): ?int
-  {
-    return $this->minCost;
-  }
-
-  public function setMinCost(?int $minCost): Country
-  {
-    $this->minCost = $minCost;
-
-    return $this;
-  }
-
-  public function getMaxCost(): ?int
-  {
-    return $this->maxCost;
-  }
-
-  public function setMaxCost(?int $maxCost): Country
-  {
-    $this->maxCost = $maxCost;
-
-    return $this;
-  }
-
-  public function isShowService(): ?bool
-  {
-    return $this->showService;
-  }
-
-  public function setShowService(bool $showService): Country
-  {
-    $this->showService = $showService;
-
-    return $this;
-  }
-
-  public function getPosition(): ?int
-  {
-    return $this->position;
-  }
-
-  public function setPosition(?int $position): Country
-  {
-    $this->position = $position;
+    $this->name = $name;
 
     return $this;
   }
