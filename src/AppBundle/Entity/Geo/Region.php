@@ -22,7 +22,7 @@ class Region
   protected $id;
 
   /**
-   * Код страны.
+   * Код региона.
    *
    * @var null|int
    * @ORM\Column(type="integer", nullable=false, unique=true)
@@ -31,7 +31,7 @@ class Region
   protected $code;
 
   /**
-   * Название страны.
+   * Название региона
    *
    * @var null|string
    * @ORM\Column(type="string", nullable=false)

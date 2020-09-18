@@ -27,6 +27,8 @@ class CompanyFeedback
   private $id;
 
   /**
+   * Пользователь, который оставил отзыв
+   *
    * @var null|User
    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User\User", inversedBy="users")
    * @ORM\JoinColumn(name="user_id", nullable=false, onDelete="RESTRICT")
@@ -34,6 +36,8 @@ class CompanyFeedback
   private $user;
 
   /**
+   * Регион
+   *
    * @var null|Region
    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Geo\Region")
    * @ORM\JoinColumn(name="region_id", nullable=false, onDelete="RESTRICT")
@@ -41,6 +45,8 @@ class CompanyFeedback
   private $region;
 
   /**
+   * Компания
+   *
    * @var null|Company
    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\Company", inversedBy="feedbacks")
    * @ORM\JoinColumn(name="company_id", nullable=false, onDelete="RESTRICT")
@@ -48,20 +54,17 @@ class CompanyFeedback
   private $company;
 
   /**
-   * @var null|Valuation
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\Valuation")
-   * @ORM\JoinColumn(name="valuation_id", nullable=false, onDelete="RESTRICT")
+   * Оценка
+   *
+   * @var int
+   *
+   * @ORM\Column(name="valuation", type="int", nullable=false)
    */
   private $valuation;
 
   /**
-   * @var null|Diagnosis
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Diagnosis\Diagnosis")
-   * @ORM\JoinColumn(name="diagnosis_id", nullable=true)
-   */
-  private $diagnosis;
-
-  /**
+   * Заголовок отзыва
+   *
    * @var string
    *
    * @ORM\Column(name="head", type="string", length=255, nullable=false)
@@ -69,6 +72,8 @@ class CompanyFeedback
   private $head;
 
   /**
+   * Описание отзыва
+   *
    * @var string
    *
    * @ORM\Column(name="text", type="text", nullable=false)
@@ -159,26 +164,6 @@ class CompanyFeedback
   public function setValuation($valuation)
   {
     $this->valuation = $valuation;
-
-    return $this;
-  }
-
-  /**
-   * @return null|Diagnosis
-   */
-  public function getDiagnosis()
-  {
-    return $this->diagnosis;
-  }
-
-  /**
-   * @param Diagnosis $diagnosis
-   *
-   * @return $this
-   */
-  public function setDiagnosis($diagnosis)
-  {
-    $this->diagnosis = $diagnosis;
 
     return $this;
   }

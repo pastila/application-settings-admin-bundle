@@ -25,6 +25,8 @@ class Company
   private $id;
 
   /**
+   * Название компании
+   *
    * @var string
    *
    * @ORM\Column(name="name", type="string", length=512, nullable=false)
@@ -32,6 +34,8 @@ class Company
   private $name;
 
   /**
+   * Регион
+   *
    * @var null|Region
    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Geo\Region", inversedBy="companies")
    * @ORM\JoinColumn(name="region_id", nullable=false, onDelete="RESTRICT")
@@ -39,6 +43,8 @@ class Company
   private $region;
 
   /**
+   * Юридический адрес
+   *
    * @var string
    *
    * @ORM\Column(name="type", type="string", length=512, nullable=true)
@@ -46,6 +52,8 @@ class Company
   private $legalAddress;
 
   /**
+   * Директор
+   *
    * @var string
    *
    * @ORM\Column(name="director", type="string", length=255, nullable=true)
@@ -53,6 +61,8 @@ class Company
   private $director;
 
   /**
+   * Логотип компании
+   *
    * @var string
    *
    * @ORM\Column(name="image", type="string", length=255, nullable=true)
