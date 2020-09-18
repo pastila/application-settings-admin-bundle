@@ -5,6 +5,7 @@ namespace AppBundle\Entity\Company;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Entity\User\User;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * Company.
@@ -14,6 +15,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class CompanyFeedback
 {
+  use TimestampableEntity;
+
   /**
    * @var int
    *
@@ -53,8 +56,8 @@ class CompanyFeedback
 
   /**
    * @var null|Diagnosis
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Diagnosis\Diagnosis", inversedBy="feedbacks")
-   * @ORM\JoinColumn(name="diagnosis_id", nullable=false, onDelete="RESTRICT")
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Diagnosis\Diagnosis")
+   * @ORM\JoinColumn(name="diagnosis_id", nullable=true)
    */
   private $diagnosis;
 

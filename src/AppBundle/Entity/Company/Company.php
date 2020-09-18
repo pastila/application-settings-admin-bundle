@@ -3,7 +3,9 @@
 namespace AppBundle\Entity\Company;
 
 use AppBundle\Entity\Geo\Region;
+use AppBundle\Model\Finder\FinderFilter;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Company.
@@ -39,16 +41,23 @@ class Company
   /**
    * @var string
    *
-   * @ORM\Column(name="type", type="string", length=512, nullable=false)
+   * @ORM\Column(name="type", type="string", length=512, nullable=true)
    */
   private $legalAddress;
 
   /**
    * @var string
    *
-   * @ORM\Column(name="experience", type="string", length=255, nullable=false)
+   * @ORM\Column(name="director", type="string", length=255, nullable=true)
    */
   private $director;
+
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="image", type="string", length=255, nullable=true)
+   */
+  protected $image;
 
   /**
    * @return int
@@ -134,6 +143,26 @@ class Company
   public function setDirector($director)
   {
     $this->director = $director;
+
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getImage()
+  {
+    return $this->image;
+  }
+
+  /**
+   * @param $image
+   *
+   * @return $this
+   */
+  public function setImage($image)
+  {
+    $this->image = $image;
 
     return $this;
   }
