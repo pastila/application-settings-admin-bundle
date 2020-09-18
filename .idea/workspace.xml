@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="37e3b94f-83d1-4e4b-bc8e-cbcafcc0ed61" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Resources/views/InsuranceCompany/Review/list.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Resources/views/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AppBundle/Controller/ReviewsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/InsuranceCompany/FeedbackController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/sessions/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/app_dev.php" beforeDir="false" afterPath="$PROJECT_DIR$/web/app_dev.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,11 +24,19 @@
   <component name="DockerExecCommand">
     <ExecCommand>
       <option name="command" value="bash" />
+      <option name="imageId" value="sha256:b2e7dd336d1f0b161fe09082838b4f251acef3b834843912e7111b1fd9a4b372" />
+    </ExecCommand>
+    <ExecCommand>
+      <option name="command" value="bash" />
       <option name="imageId" value="sha256:89360947280bf6e3fb26f6c72d88fd33218f6f5aa02b7b20860b42d8b533a3cc" />
     </ExecCommand>
     <ExecCommand>
       <option name="command" value="bash" />
       <option name="imageId" value="sha256:59d15c1fabf5a6b69e37d8bb579cafd4eb0e8abdffcf0a088733e7cf3bd457d5" />
+    </ExecCommand>
+    <ExecCommand>
+      <option name="command" value="bash" />
+      <option name="imageId" value="sha256:ed62821bd827a1c7aba9f9820c532f2d3d0aa8dc4915c6326ecab7bf6904c187" />
     </ExecCommand>
   </component>
   <component name="Git.Settings">
@@ -72,6 +86,9 @@
     </include_path>
   </component>
   <component name="ProjectId" id="1coN6nDk4zsZl2N5GP92d5aKlvX" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -80,11 +97,17 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../bb-new-site" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../rezhano" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="web-ide.project.structure" />
+    <property name="settings.editor.selected.configurable" value="Symfony2.SettingsForm" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\dev\accurateweb\bezbahil.ru\bezbahilru\src\AppBundle\Controller\InsuranceCompany" />
+      <recent name="C:\dev\accurateweb\bezbahil.ru\bezbahilru\app\Resources\views" />
+      <recent name="C:\dev\accurateweb\bezbahil.ru\bezbahilru\src\AppBundle\Resources\views\InsuranceCompany" />
+      <recent name="C:\dev\accurateweb\bezbahil.ru\bezbahilru\src\AppBundle\Resources\views\Reviews" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="F:\dev\accurateweb\bezbahil.ru\bezbahilru\local\templates\kdteam\pages\forma-obrashenija" />
     </key>
@@ -93,6 +116,7 @@
     <configuration name="Docker" type="docker-deploy" factoryName="docker-compose.yml" server-name="Docker">
       <deployment type="docker-compose.yml">
         <settings>
+          <option name="commandLineOptions" value="--build" />
           <option name="services">
             <list>
               <option value="nginx" />
@@ -132,6 +156,18 @@
               <path>
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
                 <item name="Docker" type="9fbbdea:ServiceModel$ServiceNode" />
+                <item name="bezbahilru" type="9fbbdea:ServiceModel$ServiceNode" />
+                <item name="php-fpm-bitrix" type="9fbbdea:ServiceModel$ServiceNode" />
+              </path>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="Docker" type="9fbbdea:ServiceModel$ServiceNode" />
+                <item name="bezbahilru" type="9fbbdea:ServiceModel$ServiceNode" />
+                <item name="php-fpm-symfony" type="9fbbdea:ServiceModel$ServiceNode" />
+              </path>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="Docker" type="9fbbdea:ServiceModel$ServiceNode" />
                 <item name="Images" type="9fbbdea:ServiceModel$ServiceNode" />
               </path>
             </expand>
@@ -160,7 +196,7 @@
       <workItem from="1596368925276" duration="3023000" />
       <workItem from="1596444252058" duration="4192000" />
       <workItem from="1596698760570" duration="613000" />
-      <workItem from="1600349062484" duration="7954000" />
+      <workItem from="1600349062484" duration="14964000" />
     </task>
     <servers />
   </component>
@@ -168,29 +204,37 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="552" y="256" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600353294755">
+    <state x="552" y="256" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600441731495">
       <screen x="0" y="0" width="2194" height="1194" />
     </state>
-    <state x="552" y="256" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2194.1194@0.0.2194.1194" timestamp="1600353294755" />
-    <state x="877" y="356" key="FileChooserDialogImpl" timestamp="1600352097313">
+    <state x="552" y="256" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2194.1194@0.0.2194.1194" timestamp="1600441731495" />
+    <state x="807" y="64" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1600439462236">
       <screen x="0" y="0" width="2194" height="1194" />
     </state>
-    <state x="877" y="356" key="FileChooserDialogImpl/0.0.2194.1194@0.0.2194.1194" timestamp="1600352097313" />
-    <state x="814" y="433" key="NewPhpClassDialog" timestamp="1600354241634">
+    <state x="807" y="64" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.2194.1194@0.0.2194.1194" timestamp="1600439462236" />
+    <state x="877" y="356" key="FileChooserDialogImpl" timestamp="1600439758094">
       <screen x="0" y="0" width="2194" height="1194" />
     </state>
-    <state x="814" y="433" key="NewPhpClassDialog/0.0.2194.1194@0.0.2194.1194" timestamp="1600354241634" />
+    <state x="877" y="356" key="FileChooserDialogImpl/0.0.2194.1194@0.0.2194.1194" timestamp="1600439758094" />
+    <state x="814" y="433" key="NewPhpClassDialog" timestamp="1600440071097">
+      <screen x="0" y="0" width="2194" height="1194" />
+    </state>
+    <state x="814" y="433" key="NewPhpClassDialog/0.0.2194.1194@0.0.2194.1194" timestamp="1600440071097" />
     <state x="932" y="530" key="NewPhpFileDialog" timestamp="1600434189626">
       <screen x="0" y="0" width="2194" height="1194" />
     </state>
     <state x="932" y="530" key="NewPhpFileDialog/0.0.2194.1194@0.0.2194.1194" timestamp="1600434189626" />
-    <state x="608" y="243" key="SettingsEditor" timestamp="1591716330587">
+    <state x="608" y="243" key="SettingsEditor" timestamp="1600436836349">
       <screen x="0" y="0" width="2194" height="1194" />
     </state>
-    <state x="608" y="243" key="SettingsEditor/0.0.2194.1194@0.0.2194.1194" timestamp="1591716330587" />
-    <state x="801" y="353" width="622" height="530" key="find.popup" timestamp="1600434984680">
+    <state x="608" y="243" key="SettingsEditor/0.0.2194.1194@0.0.2194.1194" timestamp="1600436836349" />
+    <state x="801" y="353" width="622" height="530" key="find.popup" timestamp="1600442549042">
       <screen x="0" y="0" width="2194" height="1194" />
     </state>
-    <state x="801" y="353" width="622" height="530" key="find.popup/0.0.2194.1194@0.0.2194.1194" timestamp="1600434984680" />
+    <state x="801" y="353" width="622" height="530" key="find.popup/0.0.2194.1194@0.0.2194.1194" timestamp="1600442549042" />
+    <state x="754" y="279" key="run.anything.popup" timestamp="1600438403875">
+      <screen x="0" y="0" width="2194" height="1194" />
+    </state>
+    <state x="754" y="279" key="run.anything.popup/0.0.2194.1194@0.0.2194.1194" timestamp="1600438403875" />
   </component>
 </project>
