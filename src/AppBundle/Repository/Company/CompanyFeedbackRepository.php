@@ -3,7 +3,7 @@
 namespace AppBundle\Repository\Company;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
  * Class CompanyFeedbackRepository

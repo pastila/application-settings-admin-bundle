@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Company.
  *
  * @ORM\Table(name="s_companies")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\Company\CompanyRepository")
+ * @ORM\Entity()
  */
 class Company implements ImageAwareInterface, ImageInterface
 {
