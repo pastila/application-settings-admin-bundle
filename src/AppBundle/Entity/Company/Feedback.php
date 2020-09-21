@@ -80,6 +80,12 @@ class Feedback
   private $text;
 
   /**
+   * @var int
+   * @ORM\Column(type="integer", nullable=false)
+   */
+  private $moderationStatus = FeedbackModerationStatus::MODERATION_NONE;
+
+  /**
    * @return integer
    */
   public function getId()
@@ -206,6 +212,32 @@ class Feedback
 
     return $this;
   }
+
+  /**
+   * @return int
+   */
+  public function getModerationStatus()
+  {
+    return $this->moderationStatus;
+  }
+
+  /**
+   * @param int $moderationStatus
+   * @return Feedback
+   */
+  public function setModerationStatus($moderationStatus)
+  {
+    if (null !== $moderationStatus && !in_array($moderationStatus, FeedbackModerationStatus::getAvailableValues()))
+    {
+      throw new \InvalidArgumentException();
+    }
+
+    $this->moderationStatus = $moderationStatus;
+
+    return $this;
+  }
+
+
 
   public function __toString()
   {
