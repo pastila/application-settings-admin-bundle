@@ -35,33 +35,6 @@ class Company implements ImageAwareInterface, ImageInterface
   private $name;
 
   /**
-   * Регион
-   *
-   * @var null|Region
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Geo\Region")
-   * @ORM\JoinColumn(name="region_id", nullable=false, onDelete="RESTRICT")
-   */
-  private $region;
-
-  /**
-   * Юридический адрес
-   *
-   * @var string
-   *
-   * @ORM\Column(name="type", type="string", length=512, nullable=true)
-   */
-  private $legalAddress;
-
-  /**
-   * Директор
-   *
-   * @var string
-   *
-   * @ORM\Column(name="director", type="string", length=255, nullable=true)
-   */
-  private $director;
-
-  /**
    * Логотип компании
    *
    * @var string
@@ -77,11 +50,18 @@ class Company implements ImageAwareInterface, ImageInterface
   protected $feedbacks;
 
   /**
+   * @var Feedback[]|ArrayCollection
+   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Company\CompanyBranch", mappedBy="company")
+   */
+  protected $branches;
+
+  /**
    * Company constructor.
    */
   public function __construct ()
   {
     $this->feedbacks = new ArrayCollection();
+    $this->branches = new ArrayCollection();
   }
 
   /**
@@ -108,66 +88,6 @@ class Company implements ImageAwareInterface, ImageInterface
   public function setName($name)
   {
     $this->name = $name;
-
-    return $this;
-  }
-
-  /**
-   * @return null|Region
-   */
-  public function getRegion()
-  {
-    return $this->region;
-  }
-
-  /**
-   * @param Region $region
-   *
-   * @return $this
-   */
-  public function setRegion($region)
-  {
-    $this->region = $region;
-
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getLegalAddress()
-  {
-    return $this->legalAddress;
-  }
-
-  /**
-   * @param string $legalAddress
-   *
-   * @return string
-   */
-  public function setLegalAddress($legalAddress)
-  {
-    $this->legalAddress = $legalAddress;
-
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getDirector()
-  {
-    return $this->director;
-  }
-
-  /**
-   * @param string $director
-   *
-   * @return string
-   */
-  public function setDirector($director)
-  {
-    $this->director = $director;
 
     return $this;
   }

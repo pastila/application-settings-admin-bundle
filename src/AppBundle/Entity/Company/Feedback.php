@@ -4,6 +4,7 @@ namespace AppBundle\Entity\Company;
 
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Entity\User\User;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
@@ -30,7 +31,7 @@ class Feedback
    *
    * @var null|User
    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User\User")
-   * @ORM\JoinColumn(name="user_id", nullable=false, onDelete="RESTRICT")
+   * @ORM\JoinColumn(name="user_id", nullable=true, onDelete="RESTRICT")
    */
   private $user;
 
@@ -39,7 +40,7 @@ class Feedback
    *
    * @var null|Region
    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Geo\Region")
-   * @ORM\JoinColumn(name="region_id", nullable=false, onDelete="RESTRICT")
+   * @ORM\JoinColumn(name="region_id", nullable=true, onDelete="RESTRICT")
    */
   private $region;
 
@@ -48,16 +49,25 @@ class Feedback
    *
    * @var null|Company
    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\Company", inversedBy="feedbacks")
-   * @ORM\JoinColumn(name="company_id", nullable=false, onDelete="RESTRICT")
+   * @ORM\JoinColumn(name="company_id", nullable=true, onDelete="RESTRICT")
    */
   private $company;
+
+  /**
+   * Филиал компании
+   *
+   * @var null|CompanyBranch
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\CompanyBranch", inversedBy="feedbacks")
+   * @ORM\JoinColumn(name="company_branch_id", nullable=true, onDelete="RESTRICT")
+   */
+  private $companyBranch;
 
   /**
    * Оценка
    *
    * @var integer
    *
-   * @ORM\Column(name="valuation", type="integer", nullable=false)
+   * @ORM\Column(name="valuation", type="integer", nullable=true)
    */
   private $valuation;
 
@@ -66,9 +76,9 @@ class Feedback
    *
    * @var string
    *
-   * @ORM\Column(name="head", type="string", length=255, nullable=false)
+   * @ORM\Column(name="title", type="string", length=255, nullable=true)
    */
-  private $head;
+  private $title;
 
   /**
    * Описание отзыва
@@ -84,6 +94,20 @@ class Feedback
    * @ORM\Column(type="integer", nullable=false)
    */
   private $moderationStatus = FeedbackModerationStatus::MODERATION_NONE;
+
+  /**
+   * @var Comment[]|ArrayCollection
+   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Company\Comment", mappedBy="feedback")
+   */
+  protected $comments;
+
+  /**
+   * Company constructor.
+   */
+  public function __construct ()
+  {
+    $this->comments = new ArrayCollection();
+  }
 
   /**
    * @return integer
@@ -154,7 +178,7 @@ class Feedback
   }
 
   /**
-   * @return null|Valuation
+   * @return null
    */
   public function getValuation()
   {
@@ -162,7 +186,7 @@ class Feedback
   }
 
   /**
-   * @param Valuation $valuation
+   * @param $valuation
    *
    * @return $this
    */
@@ -176,19 +200,19 @@ class Feedback
   /**
    * @return string
    */
-  public function getHead()
+  public function getTitle()
   {
-    return $this->head;
+    return $this->title;
   }
 
   /**
-   * @param string $head
+   * @param string $title
    *
    * @return string
    */
-  public function setHead($head)
+  public function setTitle($title)
   {
-    $this->head = $head;
+    $this->title = $title;
 
     return $this;
   }
@@ -237,8 +261,9 @@ class Feedback
     return $this;
   }
 
-
-
+  /**
+   * @return string
+   */
   public function __toString()
   {
     return $this->id ? $this->text : '';

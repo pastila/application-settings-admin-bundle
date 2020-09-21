@@ -2,7 +2,10 @@
 
 namespace AppBundle\Command;
 
+use AppBundle\Entity\Company\Company;
+use AppBundle\Entity\Company\CompanyBranch;
 use AppBundle\Entity\Company\Feedback;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -17,10 +20,10 @@ class FeedbackCommand extends ContainerAwareCommand
   /**
    *
    */
-  protected function configure ()
+  protected function configure()
   {
     $this
-      ->setName('feedback:iblick')
+      ->setName('feedback:iblock')
       ->setDescription('Set feedback');
   }
 
@@ -29,24 +32,102 @@ class FeedbackCommand extends ContainerAwareCommand
    * @param OutputInterface $output
    * @return int|void|null
    */
-  protected function execute (InputInterface $input, OutputInterface $output)
+  protected function execute(InputInterface $input, OutputInterface $output)
   {
     $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
-    $conn = $entityManager->getConnection();
 
+    $this->fillFeedback($entityManager);
+    $this->fillCompany($entityManager);
+    $this->fillCompanyBranch($entityManager);
+  }
+
+  /**
+   * @param $entityManager
+   */
+  private function fillRegion($entityManager)
+  {
+    $conn = $entityManager->getConnection();
+    $stmt = $conn->prepare('SELECT * FROM b_iblock_element WHERE IBLOCK_ID = 24 AND ACTIVE = "Y"');
+    $stmt->execute();
+
+    $result = $stmt->fetchAll();
+    foreach ($result as $item) {
+    }
+
+    $entityManager->flush();
+    $entityManager->commit();
+  }
+
+  /**
+   * @param $entityManager
+   */
+  private function fillCompany($entityManager)
+  {
+    $conn = $entityManager->getConnection();
+    $stmt = $conn->prepare('SELECT * FROM b_iblock_element WHERE IBLOCK_ID = 24 AND ACTIVE = "Y"');
+    $stmt->execute();
+
+    $result = $stmt->fetchAll();
+    foreach ($result as $item) {
+      $name = !empty($item['NAME']) ? $item['NAME'] : null;
+      $company = new Company();
+      $company->setName($name);
+      $entityManager->persist($company);
+    }
+
+    $entityManager->flush();
+    $entityManager->commit();
+  }
+
+  /**
+   * @param $entityManager
+   */
+  private function fillCompanyBranch($entityManager)
+  {
+    $conn = $entityManager->getConnection();
+    $stmt = $conn->prepare('SELECT * FROM b_iblock_element WHERE IBLOCK_ID = 16 AND ACTIVE = "Y"');
+    $stmt->execute();
+
+    $result = $stmt->fetchAll();
+    foreach ($result as $item) {
+      $name = !empty($item['NAME']) ? $item['NAME'] : null;
+      $code = !empty($item['CODE']) ? $item['CODE'] : null;
+
+      $branch = new CompanyBranch();
+      $branch->setName($name);
+      $branch->setCode($code);
+      $entityManager->persist($branch);
+    }
+
+    $entityManager->flush();
+    $entityManager->commit();
+  }
+
+  /**
+   * @param $entityManager
+   */
+  private function fillFeedback($entityManager)
+  {
+    $conn = $entityManager->getConnection();
     $stmt = $conn->prepare('SELECT * FROM b_iblock_element WHERE IBLOCK_ID = 13 AND ACTIVE = "Y"');
     $stmt->execute();
 
     $result = $stmt->fetchAll();
     foreach ($result as $item) {
-
       $head = !empty($item['NAME']) ? $item['NAME'] : null;
       $text = !empty($item['SEARCHABLE_CONTENT']) ? $item['SEARCHABLE_CONTENT'] : null;
       $created = !empty($item['DATE_CREATE']) ? $item['DATE_CREATE'] : null;
+      $date = !empty($created) ? DateTime::createFromFormat('Y-m-d H:m:s', $created) : null;
 
       $model = new Feedback();
-      $model->setHead($head);
+      $model->setTitle($head);
       $model->setText($text);
+      $model->setCreatedAt($date);
+      $model->setUpdatedAt($date);
+      $entityManager->persist($model);
     }
+
+    $entityManager->flush();
+    $entityManager->commit();
   }
 }

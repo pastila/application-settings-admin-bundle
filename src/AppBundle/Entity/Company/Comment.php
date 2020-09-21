@@ -44,6 +44,15 @@ class Comment
   private $text;
 
   /**
+   * Отзыв
+   *
+   * @var null|Feedback
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\Feedback")
+   * @ORM\JoinColumn(name="feedback_id", nullable=true, onDelete="RESTRICT")
+   */
+  private $feedback;
+
+  /**
    * @return integer
    */
   public function getId()
@@ -91,6 +100,29 @@ class Comment
     return $this;
   }
 
+  /**
+   * @return null|Feedback
+   */
+  public function getFeedback()
+  {
+    return $this->feedback;
+  }
+
+  /**
+   * @param Feedback $feedback
+   *
+   * @return $this
+   */
+  public function setFeedback($feedback)
+  {
+    $this->feedback = $feedback;
+
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
   public function __toString()
   {
     return $this->id ? $this->text : '';
