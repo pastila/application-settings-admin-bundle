@@ -971,16 +971,6 @@ RUN apt-get update && apt-get install -y \
     ssh \
     openssh-server
 
-RUN groupadd -g 1010 www
-RUN useradd -u 1010 -ms /bin/bash -g www www
-
-RUN mkdir -p /home/www/.ssh
-ADD id_rsa /home/www/.ssh/id_rsa
-RUN chmod 0664 /home/www/.ssh/id_rsa
-RUN echo "Host git.accurateweb.ru\n\t HostName git.accurateweb.ru\n\t Port 2022\n" >> /home/www/.ssh/config
-USER www
-RUN eval $(ssh-agent -s) && ssh-add /home/www/.ssh/id_rsa
-
 WORKDIR /var/www
 
 CMD ["php-fpm"]
