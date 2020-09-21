@@ -11,49 +11,45 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User
 {
-    /**
-     * @var int
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer", options={"unsigned"=true})
-     */
-    protected $id;
+  /**
+   * @var integer
+   * @ORM\Id()
+   * @ORM\GeneratedValue(strategy="AUTO")
+   * @ORM\Column(type="integer")
+   */
+  protected $id;
 
-    /**
-     * @var string
-     * @ORM\Column(type="string", length=255, options={"default"=""})
-     */
-    protected $name;
+  /**
+   * @var string
+   * @ORM\Column(type="string", length=255, options={"default"=""})
+   */
+  protected $name;
 
-    public function __construct()
-    {
-    }
+  /**
+   * @return integer
+   */
+  public function getId()
+  {
+    return $this->id;
+  }
 
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+  /**
+   * @return string
+   */
+  public function getName()
+  {
+    return $this->name;
+  }
 
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
+  /**
+   * @param string $name
+   *
+   * @return $this
+   */
+  public function setName($name)
+  {
+    $this->name = $name;
 
-    /**
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
+    return $this;
+  }
 }

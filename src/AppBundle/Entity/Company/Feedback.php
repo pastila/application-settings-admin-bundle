@@ -8,29 +8,28 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
- * Company.
+ * Feedback.
  *
  * @ORM\Table(name="s_company_feedbacks")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Company\CompanyFeedbackRepository")
  */
-class CompanyFeedback
+class Feedback
 {
   use TimestampableEntity;
 
   /**
-   * @var int
-   *
-   * @ORM\Column(name="id", type="integer", options={"unsigned"=true})
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="IDENTITY")
+   * @var integer
+   * @ORM\Id()
+   * @ORM\GeneratedValue(strategy="AUTO")
+   * @ORM\Column(type="integer")
    */
-  private $id;
+  protected $id;
 
   /**
    * Пользователь, который оставил отзыв
    *
    * @var null|User
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User\User", inversedBy="users")
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User\User")
    * @ORM\JoinColumn(name="user_id", nullable=false, onDelete="RESTRICT")
    */
   private $user;
@@ -56,9 +55,9 @@ class CompanyFeedback
   /**
    * Оценка
    *
-   * @var int
+   * @var integer
    *
-   * @ORM\Column(name="valuation", type="int", nullable=false)
+   * @ORM\Column(name="valuation", type="integer", nullable=false)
    */
   private $valuation;
 
@@ -81,7 +80,7 @@ class CompanyFeedback
   private $text;
 
   /**
-   * @return int
+   * @return integer
    */
   public function getId()
   {

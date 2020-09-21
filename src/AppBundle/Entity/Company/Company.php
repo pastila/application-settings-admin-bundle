@@ -2,10 +2,12 @@
 
 namespace AppBundle\Entity\Company;
 
+use Accurateweb\MediaBundle\Model\Image\ImageAwareInterface;
+use Accurateweb\MediaBundle\Model\Media\ImageInterface;
+use Accurateweb\MediaBundle\Model\Thumbnail\ImageThumbnail;
 use AppBundle\Entity\Geo\Region;
-use AppBundle\Model\Finder\FinderFilter;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Company.
@@ -13,16 +15,15 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @ORM\Table(name="s_companies")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Company\CompanyRepository")
  */
-class Company
+class Company implements ImageAwareInterface, ImageInterface
 {
   /**
-   * @var int
-   *
-   * @ORM\Column(name="id", type="integer", options={"unsigned"=true})
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="IDENTITY")
+   * @var integer
+   * @ORM\Id()
+   * @ORM\GeneratedValue(strategy="AUTO")
+   * @ORM\Column(type="integer")
    */
-  private $id;
+  protected $id;
 
   /**
    * Название компании
@@ -37,7 +38,7 @@ class Company
    * Регион
    *
    * @var null|Region
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Geo\Region", inversedBy="companies")
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Geo\Region")
    * @ORM\JoinColumn(name="region_id", nullable=false, onDelete="RESTRICT")
    */
   private $region;
@@ -67,10 +68,24 @@ class Company
    *
    * @ORM\Column(name="image", type="string", length=255, nullable=true)
    */
-  protected $image;
+  protected $file;
 
   /**
-   * @return int
+   * @var Feedback[]|ArrayCollection
+   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Company\Feedback", mappedBy="company")
+   */
+  protected $feedbacks;
+
+  /**
+   * Company constructor.
+   */
+  public function __construct ()
+  {
+    $this->feedbacks = new ArrayCollection();
+  }
+
+  /**
+   * @return integer
    */
   public function getId()
   {
@@ -160,23 +175,120 @@ class Company
   /**
    * @return string
    */
-  public function getImage()
+  public function getFile ()
   {
-    return $this->image;
+    return $this->file;
   }
 
   /**
-   * @param $image
-   *
+   * @param string $file
    * @return $this
    */
-  public function setImage($image)
+  public function setFile ($file)
   {
-    $this->image = $image;
+    if ($file === null)
+    {
+      return $this;
+    }
+
+    $this->file = $file;
 
     return $this;
   }
 
+  /**
+   * @param null $id
+   * @return ImageInterface
+   */
+  public function getImage ($id = null)
+  {
+    return $this;
+  }
+
+  /**
+   * @param ImageInterface $image
+   * @return $this
+   */
+  public function setImage (ImageInterface $image)
+  {
+    $this->setResourceId($image->getResourceId());
+
+    return $this;
+  }
+
+  /**
+   * @param $id
+   * @return mixed|null
+   */
+  public function getImageOptions ($id)
+  {
+    return null;
+  }
+
+  /**
+   * @param $id
+   * @return $this
+   */
+  public function setImageOptions ($id)
+  {
+    return $this;
+  }
+
+  /**
+   * @return array
+   */
+  public function getThumbnailDefinitions ()
+  {
+    return array();
+  }
+
+  /**
+   * @param string $id
+   * @return ImageThumbnail
+   * @throws \Exception
+   */
+  public function getThumbnail ($id)
+  {
+    $definitions = $this->getThumbnailDefinitions();
+
+    $found = false;
+
+    foreach ($definitions as $definition)
+    {
+      if ($definition->getId() == $id)
+      {
+        $found = true;
+        break;
+      }
+    }
+
+    if (!$found)
+    {
+      throw new \Exception('Image thumbnail definition not found');
+    }
+
+    return new ImageThumbnail($id, $this);
+  }
+
+  /**
+   * @return string
+   */
+  public function getResourceId ()
+  {
+    return $this->getFile();
+  }
+
+  /**
+   * @param $id
+   */
+  public function setResourceId ($id)
+  {
+    $this->setFile($id);
+  }
+
+  /**
+   * @return string
+   */
   public function __toString()
   {
     return $this->id ? $this->name : '';

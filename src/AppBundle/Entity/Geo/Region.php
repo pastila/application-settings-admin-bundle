@@ -4,7 +4,6 @@ namespace AppBundle\Entity\Geo;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Table(name="s_regions")
@@ -13,20 +12,18 @@ use JMS\Serializer\Annotation as JMS;
 class Region
 {
   /**
-   * @var null|int
+   * @var integer
    * @ORM\Id()
    * @ORM\GeneratedValue(strategy="AUTO")
    * @ORM\Column(type="integer")
-   * @JMS\Exclude()
    */
   protected $id;
 
   /**
    * Код региона.
    *
-   * @var null|int
+   * @var null|integer
    * @ORM\Column(type="integer", nullable=false, unique=true)
-   * @JMS\Type("integer")
    */
   protected $code;
 
@@ -35,13 +32,11 @@ class Region
    *
    * @var null|string
    * @ORM\Column(type="string", nullable=false)
-   * @JMS\Type("string")
-   * @JMS\SerializedName("name")
    */
   protected $name;
 
   /**
-   * @return int
+   * @return integer
    */
   public function getId()
   {
@@ -88,8 +83,11 @@ class Region
     return $this;
   }
 
+  /**
+   * @return string
+   */
   public function __toString()
   {
-    return $this->getId() ? $this->getTitle() : 'Новая страна';
+    return $this->getId() ? $this->getName() : 'Новый регион';
   }
 }
