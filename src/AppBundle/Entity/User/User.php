@@ -4,12 +4,13 @@ namespace AppBundle\Entity\User;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="s_users")
  */
-class User
+class User implements UserInterface
 {
   /**
    * @var integer
@@ -42,6 +43,8 @@ class User
    * @ORM\Column(name="middle_name", type="string", length=255, nullable=true)
    */
   protected $middleName;
+
+  private $isAdmin;
 
   /**
    * @return integer
@@ -146,4 +149,72 @@ class User
 
     return $this;
   }
+
+  /**
+   * @return mixed
+   */
+  public function getIsAdmin()
+  {
+    return $this->isAdmin;
+  }
+
+  /**
+   * @param mixed $isAdmin
+   * @return User
+   */
+  public function setIsAdmin($isAdmin)
+  {
+    $this->isAdmin = $isAdmin;
+    return $this;
+  }
+
+
+  /**
+   * @return mixed
+   */
+  public function getRoles()
+  {
+    $roles = ['ROLE_USER'];
+
+    if ($this->getIsAdmin())
+    {
+      $roles[] = 'ROLE_ADMIN';
+    }
+
+    return $roles;
+  }
+
+  /**
+   * @return string|null
+   */
+  public function getPassword()
+  {
+    return null;
+  }
+
+  /**
+   * @return string|null
+   */
+  public function getSalt()
+  {
+    return null;
+  }
+
+  /**
+   * @return string
+   */
+  public function getUsername()
+  {
+    return $this->getLogin();
+  }
+
+  /**
+   * @return mixed
+   */
+  public function eraseCredentials()
+  {
+
+  }
+
+
 }
