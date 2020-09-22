@@ -227,6 +227,7 @@ class FeedbackCommand extends ContainerAwareCommand
 
     $result = $stmt->fetchAll();
     foreach ($result as $item) {
+
       $title = !empty($item['SEARCHABLE_CONTENT']) ? trim($item['SEARCHABLE_CONTENT']) : null;
       $text = !empty($item['TEXT']) ? trim($item['TEXT']) : null;
 //      $regionName  = !empty($item['REGION_NAME']) ? ($item['REGION_NAME']) : null;
@@ -267,10 +268,20 @@ class FeedbackCommand extends ContainerAwareCommand
         $entityManager->persist($user);
       }
 
-      $branch = !empty($item['KPP']) ? $doctrine->getRepository("AppBundle:Company\CompanyBranch")
+      $company = !empty($item['KPP']) ? $doctrine->getRepository("AppBundle:Company\Company")
         ->createQueryBuilder('c')
         ->andWhere('c.kpp = :kpp')
         ->setParameter('kpp', $item['KPP'])
+        ->setMaxResults(1)
+        ->getQuery()
+        ->getOneOrNullResult() : null;
+
+      $branch = !empty($item['KPP']) ? $doctrine->getRepository("AppBundle:Company\CompanyBranch")
+        ->createQueryBuilder('cb')
+        ->andWhere('cb.kpp = :kpp')
+        ->andWhere('cb.region = :region_id')
+        ->setParameter('kpp', $item['KPP'])
+        ->setParameter('region_id', $region->getId())
         ->setMaxResults(1)
         ->getQuery()
         ->getOneOrNullResult() : null;
@@ -280,6 +291,7 @@ class FeedbackCommand extends ContainerAwareCommand
       $feedback->setText($text);
       $feedback->setRegion($region);
       $feedback->setUser($user);
+      $feedback->setCompany($company);
       $feedback->setBranch($branch);
       $feedback->setValuation($valuation);
       $feedback->setCreatedAt($date);
