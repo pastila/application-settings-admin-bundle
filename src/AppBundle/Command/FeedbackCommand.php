@@ -134,10 +134,19 @@ class FeedbackCommand extends ContainerAwareCommand
   private function fillCompanyBranch($entityManager, $doctrine)
   {
     $conn = $entityManager->getConnection();
-    $sql = 'SELECT e.ID, e.NAME, e.IBLOCK_ID, e.ACTIVE, epK.VALUE as KPP, sC.ID as COMPANY_ID
+    $sql = 'SELECT e.ID, 
+                e.NAME, 
+                e.IBLOCK_ID, 
+                e.ACTIVE, 
+                epK.VALUE as KPP,
+                sC.ID as COMPANY_ID,
+                epR.SEARCHABLE_CONTENT as REGION_NAME,
+                sR.id as REGION_ID
             FROM b_iblock_element e
             LEFT JOIN b_iblock_element_property epK ON epK.IBLOCK_ELEMENT_ID = e.ID AND epK.IBLOCK_PROPERTY_ID = 112     
             LEFT JOIN s_companies sC ON sC.kpp = epK.VALUE  
+            LEFT JOIN b_iblock_section epR ON e.IBLOCK_SECTION_ID = epR.ID
+            LEFT JOIN s_regions sR ON (sR.name LIKE epR.SEARCHABLE_CONTENT)
             WHERE e.IBLOCK_ID = 16 AND e.ACTIVE = "Y"';
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -149,8 +158,9 @@ class FeedbackCommand extends ContainerAwareCommand
       $code = !empty($item['CODE']) ? $item['CODE'] : null;
       $kpp = !empty($item['KPP']) ? $item['KPP'] : null;
       $company_id = !empty($item['COMPANY_ID']) ? $item['COMPANY_ID'] : null;
+      $region_id = !empty($item['REGION_ID']) ? $item['REGION_ID'] : null;
 
-      $sql .= "INSERT INTO s_company_branches(name, kpp, code, company_id) VALUES('$name', '$kpp', '$code', $company_id); ";
+      $sql .= "INSERT INTO s_company_branches(name, kpp, code, company_id, region_id) VALUES('$name', '$kpp', '$code', $company_id, $region_id); ";
     }
     $stmt = $conn->prepare($sql);
     $stmt->execute();
