@@ -7,7 +7,6 @@ use AppBundle\Entity\Company\CompanyBranch;
 use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Entity\User\User;
-use AppBundle\Model\Checkout\TransactionStatus;
 use DateTime;
 use Doctrine\ORM\EntityManager as EntityManagerAlias;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -69,7 +68,6 @@ class FeedbackCommand extends ContainerAwareCommand
     }
 
     $entityManager->flush();
-    $entityManager->commit();
   }
 
   /**
@@ -97,7 +95,6 @@ class FeedbackCommand extends ContainerAwareCommand
     }
 
     $entityManager->flush();
-    $entityManager->commit();
   }
 
   /**
@@ -124,7 +121,6 @@ class FeedbackCommand extends ContainerAwareCommand
     }
 
     $entityManager->flush();
-    $entityManager->commit();
   }
 
   /**
@@ -258,6 +254,5 @@ class FeedbackCommand extends ContainerAwareCommand
       $entityManager->persist($feedback);
     }
     $entityManager->flush();
-    $entityManager->commit();
   }
 }
