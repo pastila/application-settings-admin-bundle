@@ -143,16 +143,17 @@ class FeedbackCommand extends ContainerAwareCommand
     $stmt->execute();
 
     $result = $stmt->fetchAll();
+    $sql = '';
     foreach ($result as $item) {
       $name = !empty($item['NAME']) ? $item['NAME'] : null;
       $code = !empty($item['CODE']) ? $item['CODE'] : null;
       $kpp = !empty($item['KPP']) ? $item['KPP'] : null;
       $company_id = !empty($item['COMPANY_ID']) ? $item['COMPANY_ID'] : null;
 
-      $sql = "INSERT INTO s_company_branches(name, kpp, code, company_id) VALUES('$name', '$kpp', '$code', $company_id)";
-      $stmt = $conn->prepare($sql);
-      $stmt->execute();
+      $sql .= "INSERT INTO s_company_branches(name, kpp, code, company_id) VALUES('$name', '$kpp', '$code', $company_id); ";
     }
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
   }
 
   /**

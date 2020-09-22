@@ -39,7 +39,7 @@ class Company implements ImageAwareInterface, ImageInterface
    *
    * @var string
    *
-   * @ORM\Column(name="kpp", type="string", length=256, nullable=true)
+   * @ORM\Column(name="kpp", type="string", length=256, nullable=true, unique=true)
    */
   private $kpp;
 
