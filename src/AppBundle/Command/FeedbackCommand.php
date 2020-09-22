@@ -5,6 +5,7 @@ namespace AppBundle\Command;
 use AppBundle\Entity\Company\Company;
 use AppBundle\Entity\Company\CompanyBranch;
 use AppBundle\Entity\Company\Feedback;
+use AppBundle\Entity\Company\FeedbackModerationStatus;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Entity\User\User;
 use DateTime;
@@ -269,6 +270,8 @@ class FeedbackCommand extends ContainerAwareCommand
       $created = !empty($item['DATE_CREATE']) ? $item['DATE_CREATE'] : null;
       $date = !empty($created) ? DateTime::createFromFormat('Y-m-d H:m:s', $created) : null;
       $reviewLetter = !empty($item['REVIEW_LETTER']) ? $item['REVIEW_LETTER'] : 0;
+      $status = !empty($item['VERIFIED']) ?
+        FeedbackModerationStatus::MODERATION_ACCEPTED: (!empty($item['REJECTED']) ? FeedbackModerationStatus::MODERATION_REJECTED : FeedbackModerationStatus::MODERATION_NONE);
 
       $region = !empty($item['REGION_NAME']) ? $doctrine->getRepository("AppBundle:Geo\Region")
         ->createQueryBuilder('r')
@@ -327,6 +330,7 @@ class FeedbackCommand extends ContainerAwareCommand
       $feedback->setBranch($branch);
       $feedback->setValuation($valuation);
       $feedback->setReviewLetter($reviewLetter);
+      $feedback->setModerationStatus($status);
       $feedback->setCreatedAt($date);
       $feedback->setUpdatedAt($date);
       $entityManager->persist($feedback);
