@@ -120,6 +120,14 @@ class User
   }
 
   /**
+   * @return string
+   */
+  public function getFullName()
+  {
+    return $this->lastName . ' '  . $this->firstName . $this->middleName;
+  }
+
+  /**
    * @param string $middleName
    *
    * @return $this
