@@ -2,6 +2,7 @@
 
 namespace AppBundle\Command;
 
+use AppBundle\Entity\Company\Comment;
 use AppBundle\Entity\Company\Company;
 use AppBundle\Entity\Company\CompanyBranch;
 use AppBundle\Entity\Company\Feedback;
@@ -61,7 +62,8 @@ class FeedbackCommand extends ContainerAwareCommand
       Region::class,
       Company::class,
       CompanyBranch::class,
-      Feedback::class
+      Feedback::class,
+      Comment::class
     ];
 
     foreach ($tables as $table) {
@@ -347,6 +349,29 @@ class FeedbackCommand extends ContainerAwareCommand
    */
   private function fillComment($entityManager, $doctrine, InputInterface $input, OutputInterface $output)
   {
-    // todo в базе нет данных
+    $conn = $entityManager->getConnection();
+    $sql = 'SELECT e.ID, 
+                e.DATE_CREATE, 
+                epK.VALUE as COMMENTS
+            FROM b_iblock_element e
+            LEFT JOIN b_iblock_element_property epK ON epK.IBLOCK_ELEMENT_ID = e.ID AND epK.IBLOCK_PROPERTY_ID = 69         
+            WHERE e.IBLOCK_ID = 14 AND e.ACTIVE = "Y"';
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+
+    $result = $stmt->fetchAll();
+    $sql = '';
+    foreach ($result as $item) {
+      $text = !empty($item['COMMENTS']) ? $item['COMMENTS']: null;
+      $created = !empty($item['DATE_CREATE']) ? $item['DATE_CREATE'] : null;
+      $date = !empty($created) ? date("Y-m-d H:i:s", strtotime($created)) : date("Y-m-d H:i:s");
+
+      $sql .= "INSERT INTO s_company_feedback_comments(text, created_at, updated_at) VALUES('$text', '$date', '$date'); ";
+    }
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+
+    $io = new SymfonyStyle($input, $output);
+    $io->success('Fill Comment:' . count($result));
   }
 }

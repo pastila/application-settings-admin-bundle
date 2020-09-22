@@ -30,7 +30,7 @@ class Comment
    *
    * @var null|User
    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User\User")
-   * @ORM\JoinColumn(name="user_id", nullable=false, onDelete="RESTRICT")
+   * @ORM\JoinColumn(name="user_id", nullable=true, onDelete="RESTRICT")
    */
   private $user;
 
