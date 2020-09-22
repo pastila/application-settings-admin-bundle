@@ -45,7 +45,7 @@ class CompanyBranch
   /**
    * Головная компания
    *
-   * @var null|Company
+   * @var null|string|Company
    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\Company")
    * @ORM\JoinColumn(name="company_id", nullable=true, onDelete="RESTRICT")
    */
@@ -157,6 +157,18 @@ class CompanyBranch
   public function setCompany($company)
   {
     $this->company = $company;
+
+    return $this;
+  }
+
+  /**
+   * @param string companyId
+   *
+   * @return $this
+   */
+  public function setCompanyId($companyId)
+  {
+    $this->company = $companyId;
 
     return $this;
   }

@@ -78,7 +78,7 @@ class FeedbackCommand extends ContainerAwareCommand
   private function fillUser($entityManager)
   {
     $conn = $entityManager->getConnection();
-    $stmt = $conn->prepare('SELECT * FROM b_user WHERE ACTIVE = "Y"');
+    $stmt = $conn->prepare('SELECT * FROM b_user');
     $stmt->execute();
 
     $result = $stmt->fetchAll();
@@ -106,14 +106,20 @@ class FeedbackCommand extends ContainerAwareCommand
   private function fillCompany($entityManager)
   {
     $conn = $entityManager->getConnection();
-    $stmt = $conn->prepare('SELECT * FROM b_iblock_element WHERE IBLOCK_ID = 24 AND ACTIVE = "Y"');
+    $sql = 'SELECT e.ID, e.NAME, e.IBLOCK_ID, e.ACTIVE, epKpp.VALUE as KPP
+            FROM b_iblock_element e
+            LEFT JOIN b_iblock_element_property epKpp ON epKpp.IBLOCK_ELEMENT_ID = e.ID AND epKpp.IBLOCK_PROPERTY_ID = 144     
+            WHERE e.IBLOCK_ID = 24 AND e.ACTIVE = "Y"';
+    $stmt = $conn->prepare($sql);
     $stmt->execute();
 
     $result = $stmt->fetchAll();
     foreach ($result as $item) {
       $name = !empty($item['NAME']) ? $item['NAME'] : null;
+      $kpp = !empty($item['KPP']) ? $item['KPP'] : null;
       $company = new Company();
       $company->setName($name);
+      $company->setKpp($kpp);
       $entityManager->persist($company);
     }
 
@@ -128,9 +134,10 @@ class FeedbackCommand extends ContainerAwareCommand
   private function fillCompanyBranch($entityManager, $doctrine)
   {
     $conn = $entityManager->getConnection();
-    $sql = 'SELECT e.ID, e.NAME, e.IBLOCK_ID, e.ACTIVE, epKpp.VALUE as KPP
+    $sql = 'SELECT e.ID, e.NAME, e.IBLOCK_ID, e.ACTIVE, epK.VALUE as KPP, sC.ID as COMPANY_ID
             FROM b_iblock_element e
-            LEFT JOIN b_iblock_element_property epKpp ON epKpp.IBLOCK_ELEMENT_ID = e.ID AND epKpp.IBLOCK_PROPERTY_ID = 112     
+            LEFT JOIN b_iblock_element_property epK ON epK.IBLOCK_ELEMENT_ID = e.ID AND epK.IBLOCK_PROPERTY_ID = 112     
+            LEFT JOIN s_companies sC ON sC.kpp = epK.VALUE  
             WHERE e.IBLOCK_ID = 16 AND e.ACTIVE = "Y"';
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -140,16 +147,12 @@ class FeedbackCommand extends ContainerAwareCommand
       $name = !empty($item['NAME']) ? $item['NAME'] : null;
       $code = !empty($item['CODE']) ? $item['CODE'] : null;
       $kpp = !empty($item['KPP']) ? $item['KPP'] : null;
+      $company_id = !empty($item['COMPANY_ID']) ? $item['COMPANY_ID'] : null;
 
-      $branch = new CompanyBranch();
-      $branch->setName($name);
-      $branch->setCode($code);
-      $branch->setKpp($kpp);
-      $entityManager->persist($branch);
+      $sql = "INSERT INTO s_company_branches(name, kpp, code, company_id) VALUES('$name', '$kpp', '$code', $company_id)";
+      $stmt = $conn->prepare($sql);
+      $stmt->execute();
     }
-
-    $entityManager->flush();
-    $entityManager->commit();
   }
 
   /**
@@ -186,7 +189,7 @@ class FeedbackCommand extends ContainerAwareCommand
       $text = !empty($item['TEXT']) ? trim($item['TEXT']) : null;
 //      $regionName  = !empty($item['REGION_NAME']) ? ($item['REGION_NAME']) : null;
       $valuation = !empty($item['VALUATION']) ? ($item['VALUATION']) : null;
-      $kpp = !empty($item['KPP']) ? ($item['KPP']) : null;
+//      $kpp = !empty($item['KPP']) ? ($item['KPP']) : null;
 //      $userName = !empty($item['USER_NAME']) ? ($item['USER_NAME']) : null;
       $created = !empty($item['DATE_CREATE']) ? $item['DATE_CREATE'] : null;
       $date = !empty($created) ? DateTime::createFromFormat('Y-m-d H:m:s', $created) : null;

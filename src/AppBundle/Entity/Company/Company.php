@@ -35,6 +35,15 @@ class Company implements ImageAwareInterface, ImageInterface
   private $name;
 
   /**
+   * Кпп компании
+   *
+   * @var string
+   *
+   * @ORM\Column(name="kpp", type="string", length=256, nullable=true)
+   */
+  private $kpp;
+
+  /**
    * Логотип компании
    *
    * @var string
@@ -90,6 +99,26 @@ class Company implements ImageAwareInterface, ImageInterface
     $this->name = $name;
 
     return $this;
+  }
+
+  /**
+   * @param string $kpp
+   *
+   * @return string
+   */
+  public function setKpp($kpp)
+  {
+    $this->kpp = $kpp;
+
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getKpp ()
+  {
+    return $this->kpp;
   }
 
   /**
