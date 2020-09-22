@@ -132,9 +132,15 @@ class FeedbackCommand extends ContainerAwareCommand
   private function fillCompany($entityManager, InputInterface $input, OutputInterface $output)
   {
     $conn = $entityManager->getConnection();
-    $sql = 'SELECT e.ID, e.NAME, e.IBLOCK_ID, e.ACTIVE, epKpp.VALUE as KPP
+    $sql = 'SELECT e.ID, 
+                    e.NAME, 
+                    e.IBLOCK_ID, 
+                    e.ACTIVE, 
+                    epKpp.VALUE as KPP,
+                    epI.VALUE as IMAGE
             FROM b_iblock_element e
-            LEFT JOIN b_iblock_element_property epKpp ON epKpp.IBLOCK_ELEMENT_ID = e.ID AND epKpp.IBLOCK_PROPERTY_ID = 144     
+            LEFT JOIN b_iblock_element_property epKpp ON epKpp.IBLOCK_ELEMENT_ID = e.ID AND epKpp.IBLOCK_PROPERTY_ID = 144    
+            LEFT JOIN b_iblock_element_property epI ON epI.IBLOCK_ELEMENT_ID = e.ID AND epI.IBLOCK_PROPERTY_ID = 139      
             WHERE e.IBLOCK_ID = 24 AND e.ACTIVE = "Y"';
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -143,9 +149,12 @@ class FeedbackCommand extends ContainerAwareCommand
     foreach ($result as $item) {
       $name = !empty($item['NAME']) ? str_replace('"', '',  $item['NAME']) : null;
       $kpp = !empty($item['KPP']) ? $item['KPP'] : null;
+      $image = !empty($item['IMAGE']) ? $item['IMAGE'] : null;
+
       $company = new Company();
       $company->setName($name);
       $company->setKpp($kpp);
+      $company->setFile($image);
       $entityManager->persist($company);
     }
     $entityManager->flush();
@@ -176,7 +185,7 @@ class FeedbackCommand extends ContainerAwareCommand
             LEFT JOIN s_companies sC ON sC.kpp = epK.VALUE  
             LEFT JOIN b_iblock_section epR ON e.IBLOCK_SECTION_ID = epR.ID
             LEFT JOIN s_regions sR ON (sR.name LIKE epR.SEARCHABLE_CONTENT)            
-            LEFT JOIN b_iblock_element_property epVS ON epVS.IBLOCK_ELEMENT_ID = e.ID AND epVS.IBLOCK_PROPERTY_ID = 131     
+            LEFT JOIN b_iblock_element_property epVS ON epVS.IBLOCK_ELEMENT_ID = e.ID AND epVS.IBLOCK_PROPERTY_ID = 146     
             WHERE e.IBLOCK_ID = 16 AND e.ACTIVE = "Y"';
     $stmt = $conn->prepare($sql);
     $stmt->execute();
