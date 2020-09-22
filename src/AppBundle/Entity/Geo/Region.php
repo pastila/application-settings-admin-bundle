@@ -20,20 +20,20 @@ class Region
   protected $id;
 
   /**
-   * Код региона.
-   *
-   * @var null|integer
-   * @ORM\Column(type="integer", nullable=false, unique=true)
-   */
-  protected $code;
-
-  /**
    * Название региона
    *
    * @var null|string
-   * @ORM\Column(type="string", nullable=false)
+   * @ORM\Column(type="string", length=512, nullable=false, unique=true)
    */
   protected $name;
+
+  /**
+   * Название региона(транслит)
+   *
+   * @var null|string
+   * @ORM\Column(type="string", length=512, nullable=false, unique=true)
+   */
+  protected $code;
 
   /**
    * @return integer

@@ -5,6 +5,7 @@ namespace AppBundle\Command;
 use AppBundle\Entity\Company\Company;
 use AppBundle\Entity\Company\CompanyBranch;
 use AppBundle\Entity\Company\Feedback;
+use AppBundle\Entity\Geo\Region;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Command\Command;
@@ -36,9 +37,10 @@ class FeedbackCommand extends ContainerAwareCommand
   {
     $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
 
-    $this->fillFeedback($entityManager);
-    $this->fillCompany($entityManager);
-    $this->fillCompanyBranch($entityManager);
+    $this->fillRegion($entityManager);
+//    $this->fillFeedback($entityManager);
+//    $this->fillCompany($entityManager);
+//    $this->fillCompanyBranch($entityManager);
   }
 
   /**
@@ -47,11 +49,18 @@ class FeedbackCommand extends ContainerAwareCommand
   private function fillRegion($entityManager)
   {
     $conn = $entityManager->getConnection();
-    $stmt = $conn->prepare('SELECT * FROM b_iblock_element WHERE IBLOCK_ID = 24 AND ACTIVE = "Y"');
+    $stmt = $conn->prepare('SELECT * FROM b_iblock_section WHERE IBLOCK_ID = 16 AND ACTIVE = "Y"');
     $stmt->execute();
 
     $result = $stmt->fetchAll();
     foreach ($result as $item) {
+      $name = !empty($item['SEARCHABLE_CONTENT']) ? $item['SEARCHABLE_CONTENT'] : null;
+      $code = !empty($item['CODE']) ? $item['CODE'] : null;
+
+      $region = new Region();
+      $region->setName($name);
+      $region->setCode($code);
+      $entityManager->persist($region);
     }
 
     $entityManager->flush();
