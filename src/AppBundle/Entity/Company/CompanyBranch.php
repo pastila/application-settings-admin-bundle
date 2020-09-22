@@ -68,14 +68,14 @@ class CompanyBranch
    */
   private $region;
 
-  /**
-   * Фактический адресс
-   *
-   * @var string
-   *
-   * @ORM\Column(name="type", type="string", length=512, nullable=true)
-   */
-  private $type;
+//  /**
+//   * Фактический адресс
+//   *
+//   * @var string
+//   *
+//   * @ORM\Column(name="type", type="string", length=512, nullable=true)
+//   */
+//  private $type;
 
   /**
    * Код компании(название на английском)

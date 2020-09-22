@@ -31,7 +31,8 @@ if ($USER->IsAuthorized())
       'id' => $arUser['ID'],
       'fullName' => $USER->GetFullName(),
       'email' =>  $arUser['EMAIL'],
-      'region' => $arUser['PERSONAL_STATE']
+      'region' => $arUser['PERSONAL_STATE'],
+      'isAdmin' => $USER->IsAdmin()
     ]);
 
     exit;

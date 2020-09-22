@@ -16,6 +16,8 @@ class FeedbackListFilter
 
   private $page;
 
+  private $moderation;
+
   /**
    * @return mixed
    */
@@ -73,6 +75,25 @@ class FeedbackListFilter
   /**
    * @return mixed
    */
+  public function getModeration()
+  {
+    return $this->moderation;
+  }
+
+  /**
+   * @param mixed $moderation
+   * @return FeedbackListFilter
+   */
+  public function setModeration($moderation)
+  {
+    $this->moderation = $moderation;
+    return $this;
+  }
+
+
+  /**
+   * @return mixed
+   */
   public function getPage()
   {
     return $this->page;
@@ -104,6 +125,10 @@ class FeedbackListFilter
     if ($this->getRegion())
     {
       $values['region'] = $this->getRegion()->getId();
+    }
+    if ($this->getModeration())
+    {
+      $values['moderation'] = 0;
     }
 
     return $values;

@@ -97,8 +97,10 @@ class BitrixAuthenticator extends AbstractGuardAuthenticator
 
     $user = new User();
 
+    $user->setId($credentials['id']);
     $user->setLogin($credentials['email']);
     $user->setFirstName($credentials['fullName']);
+    $user->setIsAdmin($credentials['isAdmin']);
 
     return $user;
   }

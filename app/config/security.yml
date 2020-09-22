@@ -6,7 +6,7 @@ security:
     providers:
         users:
             entity:
-                class: App\Entity\User\User
+                class: AppBundle\Entity\User\User
                 property: login
 
     firewalls:

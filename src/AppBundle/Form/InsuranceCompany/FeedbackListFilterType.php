@@ -7,6 +7,7 @@ namespace AppBundle\Form\InsuranceCompany;
 
 use AppBundle\Entity\Company\Company;
 use AppBundle\Entity\Company\CompanyBranch;
+use AppBundle\Entity\Company\FeedbackModerationStatus;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Form\BezbahilFilterChoiceType;
 use AppBundle\Form\BezbahilFilterEntityType;
@@ -58,6 +59,9 @@ class FeedbackListFilterType extends AbstractType
         'url_builder' => $options['url_builder'],
         'label' => 'Регион',
         'clear_label' => 'Очистить регион'
+      ])
+      ->add('moderation', ChoiceType::class, [
+        'choices' => FeedbackModerationStatus::getAvailableValues()
       ])
     ;
   }

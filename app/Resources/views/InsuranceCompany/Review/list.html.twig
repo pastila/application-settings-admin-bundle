@@ -46,7 +46,7 @@
             <a href="/add-feedback/" class="whiteBtn">Добавить отзыв</a>
             <a href="?comments=all" class="accentBtnBorder">Все отзывы</a>
             {% if is_granted('ROLE_ADMIN') %}
-                <a href="?admin=property_verified" class="accentBtnBorder">Модерация отзывов</a>
+                <a href="?{{ urlBuilder.buildUrl({ filter: { moderation: 0 }}) }}" class="accentBtnBorder">Модерация отзывов</a>
             {% endif %}
         </div>
 
@@ -265,8 +265,8 @@
 
                         <!-- Company Name -->
                         <div class="feedback__block_company-name">
-{#                            {% set logo = bx_resize_img(review.company.logo, { width: 120, height: 80 }, 1, true) %}#}
-{#                            <img src="{{ logo.src }}" alt="Логотип компании {{ review.company.name }}"/>#}
+                            {#                            {% set logo = bx_resize_img(review.company.logo, { width: 120, height: 80 }, 1, true) %}#}
+                            {#                            <img src="{{ logo.src }}" alt="Логотип компании {{ review.company.name }}"/>#}
                         </div>
                     </div>
                     <!--                <div class="feedback__block_top_data">-->
@@ -446,37 +446,35 @@
             {% if is_granted('ROLE_ADMIN') %}
                 <div class="right_content-reviews">
 
-                    <?php if (isset($sort_url["admin"])) { ?>
+                    {% if filter.waitingModeration %}
 
-                    <div class="feedback__radio-btns">
-                        <div id="checkbox-box_<?= $arFields[" ID
-                        "]; ?>" class="wrap-chrckbox">
-                        <label class="check-label years" data-chec="Y">
-                            промодерирован <input name="years" type="checkbox" value="accepted">
-                            <span class="check-img"></span>
-                        </label>
-                        <label class="check-label years" data-chec="Y">
-                            не по теме <input name="years" type="checkbox" value="reject">
-                            <span class="check-img"></span>
-                        </label>
-                    </div>
-                </div>
+                        <div class="feedback__radio-btns">
+                            <div id="checkbox-box_{{ review.id }}" class="wrap-chrckbox">
+                                <label class="check-label years" data-chec="Y">
+                                    промодерирован <input name="years" type="checkbox" value="accepted">
+                                    <span class="check-img"></span>
+                                </label>
+                                <label class="check-label years" data-chec="Y">
+                                    не по теме <input name="years" type="checkbox" value="reject">
+                                    <span class="check-img"></span>
+                                </label>
+                            </div>
+                        </div>
 
-                <div class="feedback__actions-btns">
-                    <div class="feedback__actions-btns_btn mainBtn" onclick="check_review(this)"
-                         data-check-id="<?= $arFields[" ID
-                    "]; ?>">
-                    Применить
-                </div>
+                        <div class="feedback__actions-btns">
+                            <div class="feedback__actions-btns_btn mainBtn" onclick="check_review(this)"
+                                 data-check-id="{{ review.id }}">
+                                Применить
+                            </div>
 
-                <div class="accentBtnBorder dalete_review feedback__actions-btns_btn"
-                     title="Удалить отзыв"
-                     data-id="<?php echo $arFields[" ID"]; ?>">
-                                                       Удалить отзыв
-                </div>
-                </div>
+                            <div class="accentBtnBorder dalete_review feedback__actions-btns_btn"
+                                 title="Удалить отзыв"
+                                 data-id="{{ review.id }}">
+                                Удалить отзыв
+                            </div>
+                        </div>
 
-                <? } ?>
+                    {% endif %}
                 </div>
             {% endif %}
 

@@ -224,6 +224,13 @@ ORDER BY t.NAME
         ->setParameter('region', $reviewListFilter->getRegion());
     }
 
+    if ($reviewListFilter->getModeration())
+    {
+      $reviewListQb
+        ->andWhere('rv.moderation_status = :moderation_status')
+        ->setParameter(FeedbackModerationStatus::MODERATION_NONE);
+    }
+
     $maxPerPage = 10;
 
     $pagination = new Pagination($reviewListQb, $reviewListFilter->getPage(), $maxPerPage);
