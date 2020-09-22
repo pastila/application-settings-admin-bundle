@@ -6,11 +6,13 @@
 namespace AppBundle\Controller\InsuranceCompany;
 
 use AppBundle\Entity\Company\Company;
+use AppBundle\Entity\Company\CompanyBranch;
 use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\Company\FeedbackModerationStatus;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Entity\User\User;
 use AppBundle\Form\InsuranceCompany\FeedbackListFilterType;
+use AppBundle\Model\InsuranceCompany\Branch\BranchRatingHelper;
 use AppBundle\Model\InsuranceCompany\FeedbackListFilter;
 use AppBundle\Model\InsuranceCompany\FeedbackListFilterUrlBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -21,6 +23,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class FeedbackController extends Controller
 {
+  private $branchRatingHelper;
+
+  public function __construct(BranchRatingHelper $branchRatingHelper)
+  {
+    $this->branchRatingHelper = $branchRatingHelper;
+  }
+
   /**
    * @Route(path="/reviews")
    */
@@ -176,7 +185,8 @@ ORDER BY t.NAME
 //
 
     $user = new User();
-    $user->setName('Максимов Николай');
+    $user->setLastName('Максимов');
+    $user->setFirstName('Николай');
 
     $rgn = new Region();
     $rgn->setName('03  Республика Бурятия');
@@ -184,11 +194,14 @@ ORDER BY t.NAME
     $fbc = new Company();
     $fbc->setName('СОГАЗ-МЕД');
 
+    $fbb = new CompanyBranch();
+    $fbb->setCompany($fbc);
+
     $fb1 = new Feedback();
     $fb1->setTitle('Мне помогли с лечением зуба даже без полиса');
     $fb1->setText('Оформлял полис ОМС в СОГАЗ, выдали временное свидетельство. Через 30 дней обещали выдать сам полис, но по какимто причинам полис задерживался. В этот период мне пришлось пойти в стоматологическую поликлинику с острой болью, но свидетельство было уже не действительно так как у него ограничен срок действия. Пришлось из больницы звонить в страховую компанию и я уже думал что лечение мне по полису не светит. Но страховая уж не знаю как но уговорила врачей принять по свидетеьству меня, вылечили бесплатно. Я считаю что свою работу они сделали. Хотя задерживать полис все равно неправильно, но мне страховая по телефону объяснила, что это не их вина и полис задерживается в г. Москве. Не знаю так ли?');
     $fb1->setValuation(5);
-    $fb1->setCompany($fbc);
+    $fb1->setCompany($fbb);
     $fb1->setUser($user);
     $fb1->setRegion($rgn);
     $fb1->setModerationStatus(FeedbackModerationStatus::MODERATION_NONE);
@@ -198,7 +211,7 @@ ORDER BY t.NAME
     $fb2->setTitle('Мне помогли с лечением зуба даже без полиса');
     $fb2->setText('Оформлял полис ОМС в СОГАЗ, выдали временное свидетельство. Через 30 дней обещали выдать сам полис, но по какимто причинам полис задерживался. В этот период мне пришлось пойти в стоматологическую поликлинику с острой болью, но свидетельство было уже не действительно так как у него ограничен срок действия. Пришлось из больницы звонить в страховую компанию и я уже думал что лечение мне по полису не светит. Но страховая уж не знаю как но уговорила врачей принять по свидетеьству меня, вылечили бесплатно. Я считаю что свою работу они сделали. Хотя задерживать полис все равно неправильно, но мне страховая по телефону объяснила, что это не их вина и полис задерживается в г. Москве. Не знаю так ли?');
     $fb2->setValuation(3);
-    $fb2->setCompany($fbc);
+    $fb2->setCompany($fbb);
     $fb2->setUser($user);
     $fb2->setRegion($rgn);
     $fb2->setModerationStatus(FeedbackModerationStatus::MODERATION_ACCEPTED);
@@ -207,7 +220,7 @@ ORDER BY t.NAME
     $fb3->setTitle('Мне помогли с лечением зуба даже без полиса');
     $fb3->setText('Оформлял полис ОМС в СОГАЗ, выдали временное свидетельство. Через 30 дней обещали выдать сам полис, но по какимто причинам полис задерживался. В этот период мне пришлось пойти в стоматологическую поликлинику с острой болью, но свидетельство было уже не действительно так как у него ограничен срок действия. Пришлось из больницы звонить в страховую компанию и я уже думал что лечение мне по полису не светит. Но страховая уж не знаю как но уговорила врачей принять по свидетеьству меня, вылечили бесплатно. Я считаю что свою работу они сделали. Хотя задерживать полис все равно неправильно, но мне страховая по телефону объяснила, что это не их вина и полис задерживается в г. Москве. Не знаю так ли?');
     $fb3->setValuation(3);
-    $fb3->setCompany($fbc);
+    $fb3->setCompany($fbb);
     $fb3->setUser($user);
     $fb3->setRegion($rgn);
     $fb3->setModerationStatus(FeedbackModerationStatus::MODERATION_REJECTED);
@@ -237,7 +250,9 @@ ORDER BY t.NAME
       ],
       'nbReviews' => $nbReviews,
       'filter' => $reviewListFilter,
-      'filterForm' => $reviewListFilterForm->createView()
+      'filterForm' => $reviewListFilterForm->createView(),
+      'companies' => [ $fbc ],
+      'ratingHelper' => $this->branchRatingHelper
     ]);
   }
 

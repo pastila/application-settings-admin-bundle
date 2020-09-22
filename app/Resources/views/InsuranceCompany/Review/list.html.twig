@@ -54,165 +54,166 @@
             {{ form_row(filterForm.company) }}
             {{ form_row(filterForm.rating) }}
             {{ form_row(filterForm.region) }}
-{#                        <div class="custom-select column-reverse_select">#}
-{#                            <select style="display: none" onchange="window.open(this.value)">#}
+            {#                        <div class="custom-select column-reverse_select">#}
+            {#                            <select style="display: none" onchange="window.open(this.value)">#}
 
-{#                                <option value="0">Оценка</option>#}
-{#                                <?php#}
-{#                            $bool_check_evalution = false;#}
-{#                            $check_evalution = "";#}
-{#                            if (isset($_GET["property_evaluation"]) || isset($_GET["property_name_company"]) || isset($_GET["property_region"]) || isset($_GET["property_kpp"])) {#}
-
-
-{#                                $url_for_filter = "?";#}
-
-{#                                foreach ($sort_url as $key => $filter) {#}
-{#                                if ($key != "property_evaluation") {#}
-{#                                $url_for_filter .= "$key=$filter&";#}
-{#                                }#}
-{#                                }#}
-
-{#                                for ($i = 1; $i <= 5; ++$i) {#}
-{#                                if ($url_for_filter == "") {#}
-{#                                $url_for_filter = "?";#}
-{#                                }#}
-{#                                if ($_GET["property_evaluation"] != $i) {#}
-
-{#                                ?>#}
-{#                                <option value="<?= $url_for_filter ?>property_evaluation=<?= $i ?>" class="number_star">#}
-{#                                    Оценки <?= $i ?>#}
-{#                                </option>#}
-{#                                <?php } else {#}
-{#                                        if ($url_for_filter == "?") {#}
-{#                                            $url_for_filter = "";#}
-{#                                        }#}
-{#                                        $bool_check_evalution = true;#}
-{#                                        $check_evalution = $i;#}
-{#                                        ?>#}
-{#                                <option value="<?= $url_for_filter ?>" class="number_star activ_filter">#}
-{#                                    Оценки <?= $i ?>#}
-{#                                </option>#}
-
-{#                                <?#}
-{#                                    }#}
-{#                                }#}
-{#                            } else {#}
-{#                                for ($i = 1; $i <= 5; ++$i) {#}
-{#                                    ?>#}
-
-{#                                <option value="?property_evaluation=<?= $i ?>" class="number_star">Оценки <?= $i ?>#}
-{#                                </option>#}
-{#                                <? }#}
-{#                            } ?>#}
+            {#                                <option value="0">Оценка</option>#}
+            {#                                <?php#}
+            {#                            $bool_check_evalution = false;#}
+            {#                            $check_evalution = "";#}
+            {#                            if (isset($_GET["property_evaluation"]) || isset($_GET["property_name_company"]) || isset($_GET["property_region"]) || isset($_GET["property_kpp"])) {#}
 
 
-{#                            </select>#}
-{#                            <?php if (isset($_GET["property_evaluation"]) || isset($_GET["property_kpp"]) || isset($_GET["property_region"])) {#}
-{#                            if ($bool_check_evalution === true) {#}
+            {#                                $url_for_filter = "?";#}
 
-{#                                $url_for_filter = "?";#}
-{#                                foreach ($sort_url as $key => $filter) {#}
+            {#                                foreach ($sort_url as $key => $filter) {#}
+            {#                                if ($key != "property_evaluation") {#}
+            {#                                $url_for_filter .= "$key=$filter&";#}
+            {#                                }#}
+            {#                                }#}
 
-{#                            if ($key != "property_evaluation" && $key!="PAGEN_1") {#}
-{#                            $url_for_filter .= "$key=$filter&";#}
-{#                            }#}
-{#                            }#}
-{#                            if ($url_for_filter == "?") {#}
-{#                            $url_for_filter = "/feedback/";#}
-{#                            }#}
-{#                            ?>#}
-{#                            <a data-tooltip="Очистить оценку" data-position="bottom" class="refresh_active-link bottom"#}
-{#                               href="<?= $url_for_filter ?>">#}
-{#                                <div class="activ_filter after-select_activ-filter">#}
-{#                                    Оценка <?= $check_evalution ?></div>#}
-{#                            </a>#}
-{#                            <? }#}
-{#                        } ?>#}
+            {#                                for ($i = 1; $i <= 5; ++$i) {#}
+            {#                                if ($url_for_filter == "") {#}
+            {#                                $url_for_filter = "?";#}
+            {#                                }#}
+            {#                                if ($_GET["property_evaluation"] != $i) {#}
 
-{#                        </div>#}
+            {#                                ?>#}
+            {#                                <option value="<?= $url_for_filter ?>property_evaluation=<?= $i ?>" class="number_star">#}
+            {#                                    Оценки <?= $i ?>#}
+            {#                                </option>#}
+            {#                                <?php } else {#}
+            {#                                        if ($url_for_filter == "?") {#}
+            {#                                            $url_for_filter = "";#}
+            {#                                        }#}
+            {#                                        $bool_check_evalution = true;#}
+            {#                                        $check_evalution = $i;#}
+            {#                                        ?>#}
+            {#                                <option value="<?= $url_for_filter ?>" class="number_star activ_filter">#}
+            {#                                    Оценки <?= $i ?>#}
+            {#                                </option>#}
 
-{#                        <div class="custom-select column-reverse_select">#}
-{#                            <select style="display: none" onchange="window.open(this.value)">#}
-{#                                <option value="0">Регион</option>#}
-{#                                <?php#}
-{#                            $name_region = "";#}
-{#                            $order = Array("name" => "asc");#}
-{#                                $arFilter = Array("IBLOCK_ID" => 16);#}
-{#                                $Section_filter = CIBlockSection::GetList($order, $arFilter, false);#}
-{#                                if (isset($_GET["property_evaluation"]) || isset($_GET["property_name_company"]) ||#}
-{#                                isset($_GET["property_region"]) || isset($_GET["property_kpp"])) {#}
-{#                                while ($ob_section_filter = $Section_filter->GetNext()) {#}
-{#                                if ($_GET["property_region"] != $ob_section_filter["ID"]) {#}
-{#                                $url_for_filter = "?";#}
-{#                                foreach ($sort_url as $key => $filter) {#}
-{#                                if ($key != "property_region") {#}
-{#                                $url_for_filter .= "$key=$filter&";#}
-{#                                }#}
-{#                                }#}
-{#                                ?>#}
-{#                                <option class="sidebar__item_lists_list"#}
-{#                                        value="<?= $url_for_filter ?>property_region=<?= $ob_section_filter[" ID#}
-{#                                "] ?>">#}
-{#                                <?= $ob_section_filter["NAME"] ?>#}
-{#                                </option>#}
-{#                                <? } else {#}
-{#                                        $url_for_filter = "?";#}
-{#                                        $bool_check_region = true;#}
+            {#                                <?#}
+            {#                                    }#}
+            {#                                }#}
+            {#                            } else {#}
+            {#                                for ($i = 1; $i <= 5; ++$i) {#}
+            {#                                    ?>#}
 
-{#                                        $name_region = $ob_section_filter["NAME"];#}
-{#                                        foreach ($sort_url as $key => $filter) {#}
-{#                                if ($key != "property_region") {#}
-{#                                $url_for_filter .= "$key=$filter&";#}
-{#                                }#}
-{#                                }#}
-{#                                if ($url_for_filter == "?") {#}
-{#                                $url_for_filter = "";#}
-{#                                }#}
-{#                                ?>#}
-{#                                <option class="activ_filter" value="<?= $url_for_filter ?>">#}
-{#                                    <?= $ob_section_filter["NAME"] ?>#}
-{#                                </option>#}
-{#                                <? }#}
+            {#                                <option value="?property_evaluation=<?= $i ?>" class="number_star">Оценки <?= $i ?>#}
+            {#                                </option>#}
+            {#                                <? }#}
+            {#                            } ?>#}
 
-{#                                }#}
-{#                                ?>#}
-{#                                <? } else {#}
-{#                                while ($ob_section_filter = $Section_filter->GetNext()) {#}
-{#                                ?>#}
-{#                                <option class="sidebar__item_lists_list"#}
-{#                                        value="?property_region=<?= $ob_section_filter[" ID#}
-{#                                "] ?>">#}
-{#                                <?= $ob_section_filter["NAME"] ?>#}
-{#                                </option>#}
-{#                                <? } ?>#}
 
-{#                                <? } ?>#}
-{#                            </select>#}
-{#                            <?php if (isset($_GET["property_evaluation"]) || isset($_GET["property_kpp"]) || isset($_GET["property_region"])) {#}
-{#                            if ($bool_check_region === true) {#}
+            {#                            </select>#}
+            {#                            <?php if (isset($_GET["property_evaluation"]) || isset($_GET["property_kpp"]) || isset($_GET["property_region"])) {#}
+            {#                            if ($bool_check_evalution === true) {#}
 
-{#                                $url_for_filter = "?";#}
-{#                                foreach ($sort_url as $key => $filter) {#}
+            {#                                $url_for_filter = "?";#}
+            {#                                foreach ($sort_url as $key => $filter) {#}
 
-{#                            if ($key != "property_region" && $key!="PAGEN_1") {#}
-{#                            $url_for_filter .= "$key=$filter&";#}
-{#                            }#}
-{#                            }#}
-{#                            if ($url_for_filter == "?") {#}
-{#                            $url_for_filter = "/feedback/";#}
-{#                            }#}
-{#                            ?>#}
-{#                            <a data-tooltip="Очистить город" data-position="bottom" class="refresh_active-link bottom"#}
-{#                               href="<?= $url_for_filter ?>">#}
-{#                                <div class="activ_filter after-select_activ-filter">#}
-{#                                    <?= $name_region ?></div>#}
-{#                            </a>#}
-{#                            <? }#}
-{#                        } ?>#}
+            {#                            if ($key != "property_evaluation" && $key!="PAGEN_1") {#}
+            {#                            $url_for_filter .= "$key=$filter&";#}
+            {#                            }#}
+            {#                            }#}
+            {#                            if ($url_for_filter == "?") {#}
+            {#                            $url_for_filter = "/feedback/";#}
+            {#                            }#}
+            {#                            ?>#}
+            {#                            <a data-tooltip="Очистить оценку" data-position="bottom" class="refresh_active-link bottom"#}
+            {#                               href="<?= $url_for_filter ?>">#}
+            {#                                <div class="activ_filter after-select_activ-filter">#}
+            {#                                    Оценка <?= $check_evalution ?></div>#}
+            {#                            </a>#}
+            {#                            <? }#}
+            {#                        } ?>#}
 
-{#                        </div>#}
+            {#                        </div>#}
 
-                        <a class="feedback__filter__reset" href="/feedback/">Сбросить фильтры</a>
+            {#                        <div class="custom-select column-reverse_select">#}
+            {#                            <select style="display: none" onchange="window.open(this.value)">#}
+            {#                                <option value="0">Регион</option>#}
+            {#                                <?php#}
+            {#                            $name_region = "";#}
+            {#                            $order = Array("name" => "asc");#}
+            {#                                $arFilter = Array("IBLOCK_ID" => 16);#}
+            {#                                $Section_filter = CIBlockSection::GetList($order, $arFilter, false);#}
+            {#                                if (isset($_GET["property_evaluation"]) || isset($_GET["property_name_company"]) ||#}
+            {#                                isset($_GET["property_region"]) || isset($_GET["property_kpp"])) {#}
+            {#                                while ($ob_section_filter = $Section_filter->GetNext()) {#}
+            {#                                if ($_GET["property_region"] != $ob_section_filter["ID"]) {#}
+            {#                                $url_for_filter = "?";#}
+            {#                                foreach ($sort_url as $key => $filter) {#}
+            {#                                if ($key != "property_region") {#}
+            {#                                $url_for_filter .= "$key=$filter&";#}
+            {#                                }#}
+            {#                                }#}
+            {#                                ?>#}
+            {#                                <option class="sidebar__item_lists_list"#}
+            {#                                        value="<?= $url_for_filter ?>property_region=<?= $ob_section_filter[" ID#}
+            {#                                "] ?>">#}
+            {#                                <?= $ob_section_filter["NAME"] ?>#}
+            {#                                </option>#}
+            {#                                <? } else {#}
+            {#                                        $url_for_filter = "?";#}
+            {#                                        $bool_check_region = true;#}
+
+            {#                                        $name_region = $ob_section_filter["NAME"];#}
+            {#                                        foreach ($sort_url as $key => $filter) {#}
+            {#                                if ($key != "property_region") {#}
+            {#                                $url_for_filter .= "$key=$filter&";#}
+            {#                                }#}
+            {#                                }#}
+            {#                                if ($url_for_filter == "?") {#}
+            {#                                $url_for_filter = "";#}
+            {#                                }#}
+            {#                                ?>#}
+            {#                                <option class="activ_filter" value="<?= $url_for_filter ?>">#}
+            {#                                    <?= $ob_section_filter["NAME"] ?>#}
+            {#                                </option>#}
+            {#                                <? }#}
+
+            {#                                }#}
+            {#                                ?>#}
+            {#                                <? } else {#}
+            {#                                while ($ob_section_filter = $Section_filter->GetNext()) {#}
+            {#                                ?>#}
+            {#                                <option class="sidebar__item_lists_list"#}
+            {#                                        value="?property_region=<?= $ob_section_filter[" ID#}
+            {#                                "] ?>">#}
+            {#                                <?= $ob_section_filter["NAME"] ?>#}
+            {#                                </option>#}
+            {#                                <? } ?>#}
+
+            {#                                <? } ?>#}
+            {#                            </select>#}
+            {#                            <?php if (isset($_GET["property_evaluation"]) || isset($_GET["property_kpp"]) || isset($_GET["property_region"])) {#}
+            {#                            if ($bool_check_region === true) {#}
+
+            {#                                $url_for_filter = "?";#}
+            {#                                foreach ($sort_url as $key => $filter) {#}
+
+            {#                            if ($key != "property_region" && $key!="PAGEN_1") {#}
+            {#                            $url_for_filter .= "$key=$filter&";#}
+            {#                            }#}
+            {#                            }#}
+            {#                            if ($url_for_filter == "?") {#}
+            {#                            $url_for_filter = "/feedback/";#}
+            {#                            }#}
+            {#                            ?>#}
+            {#                            <a data-tooltip="Очистить город" data-position="bottom" class="refresh_active-link bottom"#}
+            {#                               href="<?= $url_for_filter ?>">#}
+            {#                                <div class="activ_filter after-select_activ-filter">#}
+            {#                                    <?= $name_region ?></div>#}
+            {#                            </a>#}
+            {#                            <? }#}
+            {#                        } ?>#}
+
+            {#                        </div>#}
+
+            <a class="feedback__filter__reset" href="{{ path('app_insurancecompany_feedback_index') }}">Сбросить
+                фильтры</a>
         </div>
 
     </form>
@@ -259,7 +260,7 @@
                         </div>
                     {% endif %}
                     <div class="feedback__block_top_name">
-                    <span class="feedback__block_top_name_text">{{ review.user.name }}, {{ review.region.name }},
+                    <span class="feedback__block_top_name_text">{{ review.user.fullName }}, {{ review.region.name }},
                         {{ review.createdAt|date("d F, Y") }}</span>
 
                         <!-- Company Name -->
@@ -274,7 +275,7 @@
                 </div>
                 <!-- Title -->
                 <a href="/feedback/comment-{{ review.id }}/">
-                    <h3 class="feedback__title">{{ review.head }}</h3>
+                    <h3 class="feedback__title">{{ review.title }}</h3>
                 </a>
 
                 <!-- Text -->
@@ -497,125 +498,25 @@
                 <!-- First Sidebar block -->
                 <div class="white_block">
 
-                    <h3 class="sidebar__item_title">Рейтинг страховых компаний{% if filter.region %} ({{ filter.region.name }}){% endif %}</h3>
+                    <h3 class="sidebar__item_title">Рейтинг страховых
+                        компаний{% if filter.region %} ({{ filter.region.name }}){% endif %}</h3>
 
                     <ul class="sidebar__item_lists scrollbar">
-                        <?php
-                $arFilter = array(
-                    "IBLOCK_ID" => 16,
-                        "ACTIVE" => "Y",
-                        "!PROPERTY_AMOUNT_STAR" => false,
-                        "!PROPERTY_ALL_AMOUNT_STAR" => false,
-                        );
-                        if (isset($_GET["property_region"])) {
-                        $arFilter += ["SECTION_ID" => $_GET["property_region"]];
-                        }
-                        $order = array();
-                        if (!isset($_GET["property_region"])) {
-                        $order += ["PROPERTY_ALL_AMOUNT_STAR" => "desc"];
-                        $order += ["name" => "asc"];
-                        } else {
-                        $order += ["PROPERTY_AMOUNT_STAR" => "desc"];
-                        $order += ["name" => "asc"];
-                        }
-                        $array_all_company = array();
-
-                        $elementselect = Array(
-                        "ID",
-                        "IBLOCK_ID",
-                        "NAME",
-                        "CODE",
-                        "PROPERTY_AMOUNT_STAR",
-                        "PROPERTY_KPP",
-                        "PROPERTY_ALL_AMOUNT_STAR"
-                        );
-                        $Element_filter = CIBlockElement::GetList($order, $arFilter, false, false, $elementselect);
-                        $i = 0;
-                        if (isset($_GET["property_evaluation"]) || isset($_GET["property_name_company"]) ||
-                        isset($_GET["property_kpp"])) {
-
-                        while ($ob_element_filter = $Element_filter->GetNextElement()) {
-                        $fields = $ob_element_filter->GetFields();
-
-                        $result_search_kpp = array_search($fields["PROPERTY_KPP_VALUE"], $array_all_company);
-
-                        if ($result_search_kpp === false) {
-
-                        array_push($array_all_company, $fields["PROPERTY_KPP_VALUE"]);
-                        ++$i;
-                        $url_for_filter = "?";
-
-                        foreach ($sort_url as $key => $filter) {
-                        if ($key != "property_kpp") {
-                        $url_for_filter .= "$key=$filter&";
-                        }
-                        }
-                        ?>
-                        <li class="sidebar__item_lists_list list_numbered-items">
-                            <span class="sidebar_count number"><?= $i ?></span>
-                            <a href="<?= $url_for_filter ?>property_kpp=<?= $fields[" PROPERTY_KPP_VALUE"] ?>"
-                            class="sidebar__item_lists_list_link" id="company" data-amount-star="
-                            <?php if (isset($_GET["property_region"])) {
-                                    echo $fields["PROPERTY_AMOUNT_STAR_VALUE"];
-                                } else {
-                                    echo $fields["PROPERTY_ALL_AMOUNT_STAR_VALUE"];
-                                } ?>
-
-                            " data-id="<?= $fields["ID"] ?>">
-                            <?= $fields["NAME"] ?>
-                            </a>
-                            <span class="sidebar_count rating"><?php if (isset($_GET["property_region"])) {
-
-                                        echo $fields["PROPERTY_AMOUNT_STAR_VALUE"];
-                                    } else {
-
-                                        echo $fields["PROPERTY_ALL_AMOUNT_STAR_VALUE"];
-                                    } ?></span>
-                        </li>
-                        <? }
-                    } ?>
-                        <? } else {
-                    while ($ob_element_filter = $Element_filter->GetNextElement()) {
-                        $fields = $ob_element_filter->GetFields();
-
-                        $result_search_kpp = array_search($fields["PROPERTY_KPP_VALUE"], $array_all_company);
-                        if ($result_search_kpp === false) {
-                        ++$i;
-                        array_push($array_all_company, $fields["PROPERTY_KPP_VALUE"]);
-
-                        ?>
-
-                        <li class="sidebar__item_lists_list list_numbered-items">
-                            <span class="sidebar_count number"><?= $i ?></span>
-                            <a title="<?= $fields[" NAME"] ?>"
-                            href="?property_kpp=<?= $fields["PROPERTY_KPP_VALUE"] ?>"
-                            class="sidebar__item_lists_list_link" id="company"
-                            data-amount-star=" <?php if (isset($_GET["property_region"])) {
-
-                                       echo $fields["PROPERTY_AMOUNT_STAR_VALUE"];
-                                   } else {
-
-                                       echo $fields["PROPERTY_ALL_AMOUNT_STAR_VALUE"];
-                                   } ?>" data-id="<?= $fields["ID"] ?>">
-                            <?= $fields["NAME"] ?>
-                            </a>
-                            <span class="sidebar_count rating"><?php if (isset($_GET["property_region"])) {
-
-                                        echo $fields["PROPERTY_AMOUNT_STAR_VALUE"];
-                                    } else {
-
-                                        echo $fields["PROPERTY_ALL_AMOUNT_STAR_VALUE"];
-                                    } ?></span>
-                        </li>
-                        <? }
-                    }
-                } ?>
-
-
+                        {% for company in companies %}
+                            {% set rating = ratingHelper.rating(company, filter.region) %}
+                            <li class="sidebar__item_lists_list list_numbered-items">
+                                <span class="sidebar_count number"><?= $i ?></span>
+                                <a href="< ?= $url_for_filter ? >property_kpp={{ company.kpp }}"
+                                   class="sidebar__item_lists_list_link" id="company"
+                                   data-amount-star="{{ rating }}"
+                                   data-id="{{ company.id }}">{{ company.name }}</a>
+                                <span class="sidebar_count rating">{{ rating }}</span>
+                            </li>
+                        {% endfor %}
                     </ul>
 
                     <div class="center__child">
-                        <a class="mainBtn" href="/feedback/">Весь рейтинг</a>
+                        <a class="mainBtn" href="{{ path('app_insurancecompany_feedback_index') }}">Весь рейтинг</a>
                     </div>
                 </div>
 

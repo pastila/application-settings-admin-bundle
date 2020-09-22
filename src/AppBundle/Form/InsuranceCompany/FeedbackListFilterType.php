@@ -5,7 +5,7 @@
 
 namespace AppBundle\Form\InsuranceCompany;
 
-use AppBundle\Entity\Company\Company;
+use AppBundle\Entity\Company\CompanyBranch;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Form\BezbahilFilterChoiceType;
 use AppBundle\Form\BezbahilFilterEntityType;
@@ -36,19 +36,22 @@ class FeedbackListFilterType extends AbstractType
   {
     $builder
       ->add('company', BezbahilFilterEntityType::class, [
-        'class' => Company::class,
+        'class' => CompanyBranch::class,
         'url_builder' => $options['url_builder'],
-        'label' => 'Страховая компания <span>( < ?= $countReviews ? > )</span>'
+        'label' => 'Страховая компания <span>( < ?= $countReviews ? > )</span>',
+        'clear_label' => 'Очистить отзывы'
       ])
       ->add('rating', BezbahilFilterChoiceType::class, [
         'choices' => $this->getRatingOptions(),
         'url_builder' => $options['url_builder'],
-        'label' => 'Оценка'
+        'label' => 'Оценка',
+        'clear_label' => 'Очистить оценку'
       ])
       ->add('region', BezbahilFilterEntityType::class, [
         'class' => Region::class,
         'url_builder' => $options['url_builder'],
-        'label' => 'Регион'
+        'label' => 'Регион',
+        'clear_label' => 'Очистить регион'
       ])
     ;
   }

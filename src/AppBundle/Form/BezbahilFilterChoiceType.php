@@ -20,12 +20,14 @@ class BezbahilFilterChoiceType extends AbstractType
 
   public function configureOptions(OptionsResolver $resolver)
   {
-    $resolver->setRequired('url_builder');
+    $resolver
+      ->setRequired(['url_builder', 'clear_label']);
   }
 
   public function buildView (FormView $view, FormInterface $form, array $options)
   {
     $view->vars['url_builder'] = $options['url_builder'];
+    $view->vars['clear_label'] = $options['clear_label'];
   }
 
   public function getParent()

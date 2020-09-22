@@ -47,8 +47,8 @@ class Feedback
   /**
    * Компания
    *
-   * @var null|Company
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\Company", inversedBy="feedbacks")
+   * @var null|CompanyBranch
+   * @ORM\ManyToOne(targetEntity="CompanyBranch", inversedBy="feedbacks")
    * @ORM\JoinColumn(name="company_id", nullable=true, onDelete="RESTRICT")
    */
   private $company;
@@ -167,7 +167,7 @@ class Feedback
   }
 
   /**
-   * @return null|Company
+   * @return null|CompanyBranch
    */
   public function getCompany()
   {
@@ -175,7 +175,7 @@ class Feedback
   }
 
   /**
-   * @param Company $company
+   * @param CompanyBranch $company
    *
    * @return $this
    */

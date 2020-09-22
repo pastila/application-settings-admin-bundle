@@ -124,7 +124,15 @@ class User
    */
   public function getFullName()
   {
-    return $this->lastName . ' '  . $this->firstName . $this->middleName;
+    $resultParts = [];
+    foreach ([$this->lastName, $this->firstName, $this->middleName] as $namePart)
+    {
+      if ($namePart)
+      {
+        $resultParts[] = $namePart;
+      }
+    }
+    return implode(' ', $resultParts);
   }
 
   /**

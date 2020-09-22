@@ -53,8 +53,8 @@ class CompanyBranch
   /**
    * Головная компания
    *
-   * @var null|string|Company
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\Company")
+   * @var null|string|CompanyBranch
+   * @ORM\ManyToOne(targetEntity="CompanyBranch")
    * @ORM\JoinColumn(name="company_id", nullable=true, onDelete="RESTRICT")
    */
   private $company;
@@ -170,7 +170,7 @@ class CompanyBranch
 
 
   /**
-   * @return null|Company
+   * @return null|CompanyBranch
    */
   public function getCompany()
   {
@@ -178,7 +178,7 @@ class CompanyBranch
   }
 
   /**
-   * @param Company company
+   * @param CompanyBranch company
    *
    * @return $this
    */

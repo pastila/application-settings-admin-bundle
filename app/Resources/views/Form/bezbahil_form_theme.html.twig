@@ -6,14 +6,14 @@
 {% block bezbahil_filter_choice_widget %}
     <div class="custom-select column-reverse_select">
         <select style="display: none">
-            <option value="">{{ label }}</option>
+            <option value="">{{ label|raw }}</option>
             {% for choice in choices %}
                 <option {% if value == choice.value %}class="activ_filter"{% endif %}
                         value="?{{ form.vars.url_builder.buildHttpQuery({ (form.vars.name): choice.value }) }}">{{ choice.label }}</option>
             {% endfor %}
         </select>
         {% if value %}
-            <a data-tooltip="Очистить отзывы" data-position="bottom" class="refresh_active-link bottom"
+            <a data-tooltip="{{ form.vars.clear_label }}" data-position="bottom" class="refresh_active-link bottom"
                href="{{ form.vars.url_builder.baseUrl }}">
                 <div class="activ_filter after-select_activ-filter">
                     {% for choice in choices %}
