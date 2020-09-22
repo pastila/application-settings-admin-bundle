@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="s_regions")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\Geo\RegionRepository")
+ * @ORM\Entity()
  */
 class Region
 {

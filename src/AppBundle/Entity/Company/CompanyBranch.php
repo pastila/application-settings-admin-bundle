@@ -34,6 +34,15 @@ class CompanyBranch
   private $name;
 
   /**
+   * Кпп компании
+   *
+   * @var string
+   *
+   * @ORM\Column(name="kpp", type="string", length=256, nullable=true)
+   */
+  private $kpp;
+
+  /**
    * Головная компания
    *
    * @var null|Company
@@ -56,12 +65,12 @@ class CompanyBranch
    *
    * @var string
    *
-   * @ORM\Column(name="type", type="string", length=512, nullable=true)
+   * @ORM\Column(name="legal_address", type="string", length=512, nullable=true)
    */
   private $legalAddress;
 
   /**
-   * Код компании(slug)
+   * Код компании(название на английском)
    *
    * @var string
    *
@@ -69,11 +78,11 @@ class CompanyBranch
    */
   private $code;
 
-//  /**
-//   * @var Feedback[]|ArrayCollection
-//   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Company\Feedback", mappedBy="companyBranch")
-//   */
-//  protected $feedbacks;
+  /**
+   * @var Feedback[]|ArrayCollection
+   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Company\Feedback", mappedBy="companyBranch")
+   */
+  protected $feedbacks;
 
   /**
    * Company constructor.
@@ -107,6 +116,27 @@ class CompanyBranch
   public function setName($name)
   {
     $this->name = $name;
+
+    return $this;
+  }
+
+
+  /**
+   * @return string
+   */
+  public function getKpp()
+  {
+    return $this->kpp;
+  }
+
+  /**
+   * @param string $kpp
+   *
+   * @return string
+   */
+  public function setKpp($kpp)
+  {
+    $this->kpp = $kpp;
 
     return $this;
   }
