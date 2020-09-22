@@ -126,7 +126,7 @@ class Feedback
   }
 
   /**
-   * @param Region $user
+   * @param User $user
    *
    * @return $this
    */
