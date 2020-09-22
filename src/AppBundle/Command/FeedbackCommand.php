@@ -40,24 +40,48 @@ class FeedbackCommand extends ContainerAwareCommand
     $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
     $doctrine = $this->getContainer()->get('doctrine');
 
-    $this->fillUser($entityManager);
-    $this->fillRegion($entityManager);
-    $this->fillCompany($entityManager);
-    $this->fillCompanyBranch($entityManager, $doctrine);
-    $this->fillFeedback($entityManager, $doctrine);
+    $this->clearTable($entityManager);
+    $this->fillUser($entityManager, $input, $output);
+    $this->fillRegion($entityManager, $input, $output);
+    $this->fillCompany($entityManager, $input, $output);
+    $this->fillCompanyBranch($entityManager, $doctrine, $input, $output);
+    $this->fillFeedback($entityManager, $doctrine, $input, $output);
   }
 
   /**
    * @param $entityManager
    */
-  private function fillRegion($entityManager)
+  public function clearTable($entityManager)
+  {
+    $connection = $entityManager->getConnection();
+    $tables = [
+      User::class,
+      Region::class,
+      Company::class,
+      CompanyBranch::class,
+      Feedback::class
+    ];
+
+    foreach ($tables as $table) {
+      $metaData = $entityManager->getClassMetadata($table);
+      $connection->query('SET FOREIGN_KEY_CHECKS=0');
+      $query = $connection->getDatabasePlatform()->getTruncateTableSQL($metaData->getTableName());
+      $connection->executeUpdate($query);
+      $connection->query('SET FOREIGN_KEY_CHECKS=1');
+    }
+  }
+
+  /**
+   * @param $entityManager
+   */
+  private function fillRegion($entityManager, InputInterface $input, OutputInterface $output)
   {
     $conn = $entityManager->getConnection();
     $stmt = $conn->prepare('SELECT * FROM b_iblock_section WHERE IBLOCK_ID = 16 AND ACTIVE = "Y"');
     $stmt->execute();
 
     $result = $stmt->fetchAll();
-    foreach ($result as $item) {
+    foreach ($result as $key => $item) {
       $name = !empty($item['SEARCHABLE_CONTENT']) ? $item['SEARCHABLE_CONTENT'] : null;
       $code = !empty($item['CODE']) ? $item['CODE'] : null;
 
@@ -66,14 +90,16 @@ class FeedbackCommand extends ContainerAwareCommand
       $region->setCode($code);
       $entityManager->persist($region);
     }
-
     $entityManager->flush();
+
+    $io = new SymfonyStyle($input, $output);
+    $io->success('Fill Region:' . count($result));
   }
 
   /**
    * @param $entityManager
    */
-  private function fillUser($entityManager)
+  private function fillUser($entityManager, InputInterface $input, OutputInterface $output)
   {
     $conn = $entityManager->getConnection();
     $stmt = $conn->prepare('SELECT * FROM b_user');
@@ -93,14 +119,16 @@ class FeedbackCommand extends ContainerAwareCommand
       $user->setMiddleName($middleName);
       $entityManager->persist($user);
     }
-
     $entityManager->flush();
+
+    $io = new SymfonyStyle($input, $output);
+    $io->success('Fill User:' . count($result));
   }
 
   /**
    * @param $entityManager
    */
-  private function fillCompany($entityManager)
+  private function fillCompany($entityManager, InputInterface $input, OutputInterface $output)
   {
     $conn = $entityManager->getConnection();
     $sql = 'SELECT e.ID, e.NAME, e.IBLOCK_ID, e.ACTIVE, epKpp.VALUE as KPP
@@ -119,15 +147,17 @@ class FeedbackCommand extends ContainerAwareCommand
       $company->setKpp($kpp);
       $entityManager->persist($company);
     }
-
     $entityManager->flush();
+
+    $io = new SymfonyStyle($input, $output);
+    $io->success('Fill Company:' . count($result));
   }
 
   /**
    * @param $entityManager
    * @param $doctrine
    */
-  private function fillCompanyBranch($entityManager, $doctrine)
+  private function fillCompanyBranch($entityManager, $doctrine, InputInterface $input, OutputInterface $output)
   {
     $conn = $entityManager->getConnection();
     $sql = 'SELECT e.ID, 
@@ -161,13 +191,16 @@ class FeedbackCommand extends ContainerAwareCommand
     }
     $stmt = $conn->prepare($sql);
     $stmt->execute();
+
+    $io = new SymfonyStyle($input, $output);
+    $io->success('Fill Company Branch:' . count($result));
   }
 
   /**
    * @param $entityManager
    * @param $doctrine
    */
-  private function fillFeedback($entityManager, $doctrine)
+  private function fillFeedback($entityManager, $doctrine, InputInterface $input, OutputInterface $output)
   {
     $conn = $entityManager->getConnection();
     $sql = 'SELECT  e.ID, 
@@ -254,5 +287,8 @@ class FeedbackCommand extends ContainerAwareCommand
       $entityManager->persist($feedback);
     }
     $entityManager->flush();
+
+    $io = new SymfonyStyle($input, $output);
+    $io->success('Fill Company Branch:' . count($result));
   }
 }
