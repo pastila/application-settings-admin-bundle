@@ -44,6 +44,15 @@ class Company implements ImageAwareInterface, ImageInterface
   private $kpp;
 
   /**
+   * Оценка
+   *
+   * @var integer
+   *
+   * @ORM\Column(name="valuation", type="integer", nullable=true)
+   */
+  private $valuation;
+
+  /**
    * Логотип компании
    *
    * @var string
@@ -119,6 +128,26 @@ class Company implements ImageAwareInterface, ImageInterface
   public function getKpp ()
   {
     return $this->kpp;
+  }
+
+  /**
+   * @return null
+   */
+  public function getValuation()
+  {
+    return $this->valuation;
+  }
+
+  /**
+   * @param $valuation
+   *
+   * @return $this
+   */
+  public function setValuation($valuation)
+  {
+    $this->valuation = $valuation;
+
+    return $this;
   }
 
   /**

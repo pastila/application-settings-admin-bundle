@@ -43,6 +43,15 @@ class CompanyBranch
   private $kpp;
 
   /**
+   * Оценка
+   *
+   * @var integer
+   *
+   * @ORM\Column(name="valuation", type="integer", nullable=true)
+   */
+  private $valuation;
+
+  /**
    * Головная компания
    *
    * @var null|string|Company
@@ -120,7 +129,6 @@ class CompanyBranch
     return $this;
   }
 
-
   /**
    * @return string
    */
@@ -140,6 +148,28 @@ class CompanyBranch
 
     return $this;
   }
+
+
+  /**
+   * @return null
+   */
+  public function getValuation()
+  {
+    return $this->valuation;
+  }
+
+  /**
+   * @param $valuation
+   *
+   * @return $this
+   */
+  public function setValuation($valuation)
+  {
+    $this->valuation = $valuation;
+
+    return $this;
+  }
+
 
   /**
    * @return null|Company
