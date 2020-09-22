@@ -73,9 +73,9 @@ class CompanyBranch
    *
    * @var string
    *
-   * @ORM\Column(name="legal_address", type="string", length=512, nullable=true)
+   * @ORM\Column(name="type", type="string", length=512, nullable=true)
    */
-  private $legalAddress;
+  private $type;
 
   /**
    * Код компании(название на английском)
