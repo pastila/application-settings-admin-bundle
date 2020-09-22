@@ -14,6 +14,8 @@ class FeedbackListFilter
 
   private $region;
 
+  private $page;
+
   /**
    * @return mixed
    */
@@ -67,6 +69,26 @@ class FeedbackListFilter
     $this->region = $region;
     return $this;
   }
+
+  /**
+   * @return mixed
+   */
+  public function getPage()
+  {
+    return $this->page;
+  }
+
+  /**
+   * @param mixed $page
+   * @return FeedbackListFilter
+   */
+  public function setPage($page)
+  {
+    $this->page = $page;
+    return $this;
+  }
+
+
 
   public function getValues()
   {

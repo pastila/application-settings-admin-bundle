@@ -5,12 +5,14 @@
 
 namespace AppBundle\Form\InsuranceCompany;
 
+use AppBundle\Entity\Company\Company;
 use AppBundle\Entity\Company\CompanyBranch;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Form\BezbahilFilterChoiceType;
 use AppBundle\Form\BezbahilFilterEntityType;
 use AppBundle\Model\InsuranceCompany\FeedbackListFilter;
 use AppBundle\Repository\Company\CompanyRepository;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -36,9 +38,9 @@ class FeedbackListFilterType extends AbstractType
   {
     $builder
       ->add('company', BezbahilFilterEntityType::class, [
-        'class' => CompanyBranch::class,
+        'class' => Company::class,
         'url_builder' => $options['url_builder'],
-        'label' => 'Страховая компания <span>( < ?= $countReviews ? > )</span>',
+        'label' => 'Страховая компания <span>('.$this->companyRepository->countAll().')</span>',
         'clear_label' => 'Очистить отзывы'
       ])
       ->add('rating', BezbahilFilterChoiceType::class, [
@@ -49,6 +51,10 @@ class FeedbackListFilterType extends AbstractType
       ])
       ->add('region', BezbahilFilterEntityType::class, [
         'class' => Region::class,
+        'query_builder' => function (EntityRepository $er) {
+          return $er->createQueryBuilder('u')
+            ->orderBy('u.name', 'ASC');
+        },
         'url_builder' => $options['url_builder'],
         'label' => 'Регион',
         'clear_label' => 'Очистить регион'

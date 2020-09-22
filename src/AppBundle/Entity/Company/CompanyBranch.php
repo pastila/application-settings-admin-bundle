@@ -53,8 +53,8 @@ class CompanyBranch
   /**
    * Головная компания
    *
-   * @var null|string|CompanyBranch
-   * @ORM\ManyToOne(targetEntity="CompanyBranch")
+   * @var null|string|Company
+   * @ORM\ManyToOne(targetEntity="Company")
    * @ORM\JoinColumn(name="company_id", nullable=true, onDelete="RESTRICT")
    */
   private $company;
@@ -170,7 +170,7 @@ class CompanyBranch
 
 
   /**
-   * @return null|CompanyBranch
+   * @return null|Company
    */
   public function getCompany()
   {
@@ -178,7 +178,7 @@ class CompanyBranch
   }
 
   /**
-   * @param CompanyBranch company
+   * @param Company company
    *
    * @return $this
    */

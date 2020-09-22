@@ -22,12 +22,38 @@ class FeedbackListFilterUrlBuilder
 
   public function buildHttpQuery($values=[])
   {
-    return http_build_query(['filter' => $this->getRouteParams($values)]);
+    return http_build_query($this->getRouteParams($values));
+  }
+
+  public function buildUrl($values=[])
+  {
+    return $this->router->generate('app_insurancecompany_feedback_index', $this->getRouteParams($values));
   }
 
   public function getRouteParams($values=[])
   {
-    return array_merge($this->originalFilter->getValues(), $values);
+    $params = [
+      'filter' => $this->getFilterParams(isset($values['filter']) ? $values['filter'] : []),
+      'page' => isset($values['page']) ? $values['page'] : 1
+    ];
+
+    if (empty($params['filter']))
+    {
+      unset($params['filter']);
+    }
+    if ($params['page'] <= 1)
+    {
+      unset($params['page']);
+    }
+
+    return $params;
+  }
+
+  public function getFilterParams($values=[])
+  {
+    return array_filter(array_merge($this->originalFilter->getValues(), $values), function($value) {
+      return !empty($value);
+    });
   }
 
   public function getBaseUrl()

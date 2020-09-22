@@ -12,7 +12,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  * Feedback.
  *
  * @ORM\Table(name="s_company_feedbacks")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\Company\CompanyFeedbackRepository")
+ * @ORM\Entity()
  */
 class Feedback
 {
@@ -43,15 +43,6 @@ class Feedback
    * @ORM\JoinColumn(name="region_id", nullable=true, onDelete="RESTRICT")
    */
   private $region;
-
-  /**
-   * Компания
-   *
-   * @var null|CompanyBranch
-   * @ORM\ManyToOne(targetEntity="CompanyBranch", inversedBy="feedbacks")
-   * @ORM\JoinColumn(name="company_id", nullable=true, onDelete="RESTRICT")
-   */
-  private $company;
 
   /**
    * Филиал компании
@@ -103,6 +94,11 @@ class Feedback
    * @ORM\Column(type="integer", nullable=false)
    */
   private $moderationStatus = FeedbackModerationStatus::MODERATION_NONE;
+
+  /**
+   * @var boolean
+   */
+  private $isFromLetter;
 
   /**
    * @var Comment[]|ArrayCollection
@@ -162,26 +158,6 @@ class Feedback
   public function setRegion($region)
   {
     $this->region = $region;
-
-    return $this;
-  }
-
-  /**
-   * @return null|CompanyBranch
-   */
-  public function getCompany()
-  {
-    return $this->company;
-  }
-
-  /**
-   * @param CompanyBranch $company
-   *
-   * @return $this
-   */
-  public function setCompany($company)
-  {
-    $this->company = $company;
 
     return $this;
   }
@@ -308,6 +284,19 @@ class Feedback
     $this->moderationStatus = $moderationStatus;
 
     return $this;
+  }
+
+  /**
+   * @return Company|null
+   */
+  public function getCompany()
+  {
+    return $this->getBranch() ? $this->getBranch()->getCompany() : null;
+  }
+
+  public function isFromLetter()
+  {
+    return $this->isFromLetter;
   }
 
   /**

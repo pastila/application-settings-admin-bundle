@@ -9,12 +9,12 @@
             <option value="">{{ label|raw }}</option>
             {% for choice in choices %}
                 <option {% if value == choice.value %}class="activ_filter"{% endif %}
-                        value="?{{ form.vars.url_builder.buildHttpQuery({ (form.vars.name): choice.value }) }}">{{ choice.label }}</option>
+                        value="?{{ form.vars.url_builder.buildHttpQuery({ filter: { (form.vars.name): choice.value } }) }}">{{ choice.label }}</option>
             {% endfor %}
         </select>
         {% if value %}
             <a data-tooltip="{{ form.vars.clear_label }}" data-position="bottom" class="refresh_active-link bottom"
-               href="{{ form.vars.url_builder.baseUrl }}">
+               href="{{ form.vars.url_builder.buildUrl({ filter: { (form.vars.name): '' } }) }}">
                 <div class="activ_filter after-select_activ-filter">
                     {% for choice in choices %}
                         {% if value == choice.value %}{{ choice.label }}{% endif %}

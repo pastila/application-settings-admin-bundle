@@ -262,6 +262,16 @@ class Company implements ImageAwareInterface, ImageInterface
     $this->setFile($id);
   }
 
+  public function getRating()
+  {
+    return $this->getValuation();
+  }
+
+  public function getLogo()
+  {
+    return 849;
+  }
+
   /**
    * @return string
    */

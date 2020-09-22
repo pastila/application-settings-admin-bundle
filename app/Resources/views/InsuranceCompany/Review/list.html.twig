@@ -231,11 +231,11 @@
         {% for review in reviews %}
             <div class="white_block white_block_riview_{{ review.id }}">
                 {% if review.updatedAt %}
-                    <span class="date_review">Дата изменения {{ review.updatedAt }}</span>
+                    <span class="date_review">Дата изменения {{ review.updatedAt|date('d M, Y') }}</span>
                 {% endif %}
-                <?php if ($arProps["REVIEW_LETTER"]["VALUE"] == "1") { ?>
-                <h3 class="feedback__title">Возврат денежных средств</h3>
-                <?php } ?>
+                {% if review.fromLetter %}
+                    <h3 class="feedback__title">Возврат денежных средств</h3>
+                {% endif %}
 
                 <!-- top -->
                 <div class="feedback__block_top">
@@ -265,8 +265,8 @@
 
                         <!-- Company Name -->
                         <div class="feedback__block_company-name">
-
-                            <img src="<?= $file[" src"] ?>">
+{#                            {% set logo = bx_resize_img(review.company.logo, { width: 120, height: 80 }, 1, true) %}#}
+{#                            <img src="{{ logo.src }}" alt="Логотип компании {{ review.company.name }}"/>#}
                         </div>
                     </div>
                     <!--                <div class="feedback__block_top_data">-->
@@ -482,14 +482,36 @@
 
             </div><!-- FeedBack block END -->
         {% endfor %}
-        <? }
 
+        {% if pagination.lastPage > 1 %}
+            <font class="text title_count_page">
+                Показано: {{ pagination.offset + 1 }}
+                - {{ min(pagination.offset + pagination.maxPerPage, pagination.lastResult) }}
+                из {{ pagination.nbResults }}
+            </font>
+            <font class="text block_pagen">
+                {% if pagination.page > 1 %}
+                    <a href="{{ urlBuilder.buildUrl({ page: 1 }) }}">Начало</a>
+                    <a href="{{ urlBuilder.buildUrl({ page: pagination.page - 1 }) }}">Пред.</a>
+                {% endif %}
 
-        if (!$sort_url["comments"] == "all") {
-            $navStr = $res->GetPageNavStringEx($navComponentObject, "Страницы:", ".default",false,null);
-        echo $navStr;
-        }
-        ?>
+                {% for i in range(low=max(1, pagination.page - 3), high=min(max(1, pagination.page - 3) + 4, pagination.lastPage), step=1) %}
+                    {% if i != pagination.page %}
+                        <a title="{{ i }}"
+                           href="{{ urlBuilder.buildUrl({page: i}) }}">{{ i }}</a>
+                    {% else %}
+                        <b>{{ i }}</b>
+                    {% endif %}
+                {% endfor %}
+
+                {% if pagination.page < pagination.lastPage %}
+                    <a href="{{ urlBuilder.buildUrl({ page: pagination.page + 1 }) }}">След.</a>
+                    <a href="{{ urlBuilder.buildUrl({ page: pagination.lastPage }) }}">Конец</a>
+                {% endif %}
+            </font>
+
+        {% endif %}
+
         </div>
 
 
@@ -502,15 +524,14 @@
                         компаний{% if filter.region %} ({{ filter.region.name }}){% endif %}</h3>
 
                     <ul class="sidebar__item_lists scrollbar">
-                        {% for company in companies %}
-                            {% set rating = ratingHelper.rating(company, filter.region) %}
+                        {% for i, company in companyRating %}
                             <li class="sidebar__item_lists_list list_numbered-items">
-                                <span class="sidebar_count number"><?= $i ?></span>
-                                <a href="< ?= $url_for_filter ? >property_kpp={{ company.kpp }}"
+                                <span class="sidebar_count number">{{ i+1 }}</span>
+                                <a href="{{ urlBuilder.buildUrl({ filter: { company: company[0].kpp } }) }}"
                                    class="sidebar__item_lists_list_link" id="company"
-                                   data-amount-star="{{ rating }}"
-                                   data-id="{{ company.id }}">{{ company.name }}</a>
-                                <span class="sidebar_count rating">{{ rating }}</span>
+                                   data-amount-star="{{ company.actualRating }}"
+                                   data-id="{{ company[0].id }}">{{ company[0].name }}</a>
+                                <span class="sidebar_count rating">{{ company.actualRating }}</span>
                             </li>
                         {% endfor %}
                     </ul>
