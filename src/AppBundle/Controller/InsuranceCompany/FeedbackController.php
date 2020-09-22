@@ -10,8 +10,12 @@ use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\Company\FeedbackModerationStatus;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Entity\User\User;
+use AppBundle\Form\InsuranceCompany\FeedbackListFilterType;
+use AppBundle\Model\InsuranceCompany\FeedbackListFilter;
+use AppBundle\Model\InsuranceCompany\FeedbackListFilterUrlBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,7 +24,7 @@ class FeedbackController extends Controller
   /**
    * @Route(path="/reviews")
    */
-  public function indexAction()
+  public function indexAction(Request $request)
   {
 //    if ($_GET)
 //    {
@@ -104,14 +108,14 @@ class FeedbackController extends Controller
 //    }
 //
 //
-      /*
-       * SELECT t.*, bip.*, prop.*
+    /*
+     * SELECT t.*, bip.*, prop.*
 FROM b_iblock_element t
 LEFT JOIN b_iblock_element_property prop on prop.IBLOCK_ELEMENT_ID = t.ID
 LEFT JOIN b_iblock_property bip ON prop.IBLOCK_PROPERTY_ID = bip.ID
 WHERE t.IBLOCK_ID = 13 AND t.ACTIVE = "Y"
 ORDER BY t.NAME
-       */
+     */
 //    $res = CIBlockElement::GetList($order, $arFilter, false, $pagen, $arSelect);
 //    if (!$sort_url["comments"] == "all")
 //    {
@@ -152,16 +156,6 @@ ORDER BY t.NAME
 //          $name_user = $arProps["USER_NO_AUTH"]["VALUE"];
 //        endif;
 //      }
-//      if ($arProps["DATE_CHANGE_BY_USER"]["VALUE"] != "")
-//      {
-//        $Date_change_user = FormatDate("d F, Y", MakeTimeStamp($arProps["DATE_CHANGE_BY_USER"]["VALUE"]));
-//      } else
-//      {
-//
-//        $Date_change_user = "";
-//      }
-//
-//
 //      if (is_array($arProps["COMMENTS_TO_REWIEW"]["VALUE"]))
 //      {
 //        $count_comments = count($arProps["COMMENTS_TO_REWIEW"]["VALUE"]);
@@ -218,6 +212,13 @@ ORDER BY t.NAME
     $fb3->setRegion($rgn);
     $fb3->setModerationStatus(FeedbackModerationStatus::MODERATION_REJECTED);
 
+    $reviewListFilter = new FeedbackListFilter();
+
+    $reviewListFilterForm = $this->createForm(FeedbackListFilterType::class, $reviewListFilter, [
+      'url_builder' => new FeedbackListFilterUrlBuilder($reviewListFilter, $this->get('router'))
+    ]);
+    $reviewListFilterForm->submit($request->query->get($reviewListFilterForm->getName()));
+
 //      $qb = $this
 //        ->getDoctrine()
 //        ->getManager()
@@ -234,7 +235,9 @@ ORDER BY t.NAME
       'reviews' => [
         $fb1, $fb2, $fb3
       ],
-      'nbReviews' => $nbReviews
+      'nbReviews' => $nbReviews,
+      'filter' => $reviewListFilter,
+      'filterForm' => $reviewListFilterForm->createView()
     ]);
   }
 

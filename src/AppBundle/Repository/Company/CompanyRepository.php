@@ -5,7 +5,6 @@ namespace AppBundle\Repository\Company;
 use AppBundle\Entity\Company\Company;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * Class CompanyRepository
@@ -13,4 +12,8 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class CompanyRepository extends ServiceEntityRepository
 {
+  public function __construct(ManagerRegistry $registry)
+  {
+    parent::__construct($registry, Company::class);
+  }
 }

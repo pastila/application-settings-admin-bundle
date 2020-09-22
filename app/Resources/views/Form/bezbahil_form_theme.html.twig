@@ -1,0 +1,26 @@
+{%- block form_row -%}
+    {{- form_errors(form) -}}
+    {{- form_widget(form) -}}
+{%- endblock form_row -%}
+
+{% block bezbahil_filter_choice_widget %}
+    <div class="custom-select column-reverse_select">
+        <select style="display: none">
+            <option value="">{{ label }}</option>
+            {% for choice in choices %}
+                <option {% if value == choice.value %}class="activ_filter"{% endif %}
+                        value="?{{ form.vars.url_builder.buildHttpQuery({ (form.vars.name): choice.value }) }}">{{ choice.label }}</option>
+            {% endfor %}
+        </select>
+        {% if value %}
+            <a data-tooltip="Очистить отзывы" data-position="bottom" class="refresh_active-link bottom"
+               href="{{ form.vars.url_builder.baseUrl }}">
+                <div class="activ_filter after-select_activ-filter">
+                    {% for choice in choices %}
+                        {% if value == choice.value %}{{ choice.label }}{% endif %}
+                    {% endfor %}
+                </div>
+            </a>
+        {% endif %}
+    </div>
+{% endblock %}

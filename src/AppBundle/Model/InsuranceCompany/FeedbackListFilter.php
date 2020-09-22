@@ -1,0 +1,89 @@
+<?php
+/**
+ * @author Denis N. Ragozin <dragozin@accurateweb.ru>
+ */
+
+namespace AppBundle\Model\InsuranceCompany;
+
+
+class FeedbackListFilter
+{
+  private $company;
+
+  private $rating;
+
+  private $region;
+
+  /**
+   * @return mixed
+   */
+  public function getCompany()
+  {
+    return $this->company;
+  }
+
+  /**
+   * @param mixed $company
+   * @return FeedbackListFilter
+   */
+  public function setCompany($company)
+  {
+    $this->company = $company;
+    return $this;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getRating()
+  {
+    return $this->rating;
+  }
+
+  /**
+   * @param mixed $rating
+   * @return FeedbackListFilter
+   */
+  public function setRating($rating)
+  {
+    $this->rating = $rating;
+    return $this;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getRegion()
+  {
+    return $this->region;
+  }
+
+  /**
+   * @param mixed $region
+   * @return FeedbackListFilter
+   */
+  public function setRegion($region)
+  {
+    $this->region = $region;
+    return $this;
+  }
+
+  public function getValues()
+  {
+    $values = [];
+    if ($this->getCompany())
+    {
+      $values['company'] = $this->getCompany()->getId();
+    }
+    if ($this->getRating())
+    {
+      $values['rating'] = $this->getRating();
+    }
+    if ($this->getRegion())
+    {
+      $values['region'] = $this->getRegion()->getId();
+    }
+
+    return $values;
+  }
+}
