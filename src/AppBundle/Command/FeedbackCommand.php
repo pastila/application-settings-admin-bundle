@@ -179,13 +179,15 @@ class FeedbackCommand extends ContainerAwareCommand
                 sC.ID as COMPANY_ID,
                 epR.SEARCHABLE_CONTENT as REGION_NAME,
                 sR.id as REGION_ID,
-                epVS.VALUE as AMOUNT_STARS
+                epVS.VALUE as AMOUNT_STARS,
+                epVAS.VALUE as ALL_AMOUNT_STAR
             FROM b_iblock_element e
             LEFT JOIN b_iblock_element_property epK ON epK.IBLOCK_ELEMENT_ID = e.ID AND epK.IBLOCK_PROPERTY_ID = 112     
             LEFT JOIN s_companies sC ON sC.kpp = epK.VALUE  
             LEFT JOIN b_iblock_section epR ON e.IBLOCK_SECTION_ID = epR.ID
             LEFT JOIN s_regions sR ON (sR.name LIKE epR.SEARCHABLE_CONTENT)            
-            LEFT JOIN b_iblock_element_property epVS ON epVS.IBLOCK_ELEMENT_ID = e.ID AND epVS.IBLOCK_PROPERTY_ID = 146     
+            LEFT JOIN b_iblock_element_property epVS ON epVS.IBLOCK_ELEMENT_ID = e.ID AND epVS.IBLOCK_PROPERTY_ID = 146                
+            LEFT JOIN b_iblock_element_property epVAS ON epVAS.IBLOCK_ELEMENT_ID = e.ID AND epVAS.IBLOCK_PROPERTY_ID = 131      
             WHERE e.IBLOCK_ID = 16 AND e.ACTIVE = "Y"';
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -199,9 +201,22 @@ class FeedbackCommand extends ContainerAwareCommand
       $company_id = !empty($item['COMPANY_ID']) ? $item['COMPANY_ID'] : null;
       $region_id = !empty($item['REGION_ID']) ? $item['REGION_ID'] : null;
       $amountStar = !empty($item['AMOUNT_STARS']) ? (float)$item['AMOUNT_STARS'] : 0;
+      $amountAllStar = !empty($item['ALL_AMOUNT_STAR']) ? (float)$item['ALL_AMOUNT_STAR'] : 0;
 
+      $company = !empty($item['ALL_AMOUNT_STAR']) && !empty($company_id)? $doctrine->getRepository("AppBundle:Company\Company")
+        ->createQueryBuilder('c')
+        ->andWhere('c.id = :id')
+        ->setParameter('id', $company_id)
+        ->setMaxResults(1)
+        ->getQuery()
+        ->getOneOrNullResult() : null;
+      if (!empty($company)) {
+        $company->setValuation($amountAllStar);
+        $entityManager->persist($company);
+      }
       $sql .= "INSERT INTO s_company_branches(name, kpp, code, company_id, region_id, valuation) VALUES('$name', '$kpp', '$code', $company_id, $region_id, $amountStar); ";
     }
+    $entityManager->flush();
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
