@@ -141,7 +141,7 @@ class FeedbackCommand extends ContainerAwareCommand
 
     $result = $stmt->fetchAll();
     foreach ($result as $item) {
-      $name = !empty($item['NAME']) ? $item['NAME'] : null;
+      $name = !empty($item['NAME']) ? str_replace('"', '',  $item['NAME']) : null;
       $kpp = !empty($item['KPP']) ? $item['KPP'] : null;
       $company = new Company();
       $company->setName($name);
@@ -169,12 +169,14 @@ class FeedbackCommand extends ContainerAwareCommand
                 epK.VALUE as KPP,
                 sC.ID as COMPANY_ID,
                 epR.SEARCHABLE_CONTENT as REGION_NAME,
-                sR.id as REGION_ID
+                sR.id as REGION_ID,
+                epVS.VALUE as AMOUNT_STARS
             FROM b_iblock_element e
             LEFT JOIN b_iblock_element_property epK ON epK.IBLOCK_ELEMENT_ID = e.ID AND epK.IBLOCK_PROPERTY_ID = 112     
             LEFT JOIN s_companies sC ON sC.kpp = epK.VALUE  
             LEFT JOIN b_iblock_section epR ON e.IBLOCK_SECTION_ID = epR.ID
-            LEFT JOIN s_regions sR ON (sR.name LIKE epR.SEARCHABLE_CONTENT)
+            LEFT JOIN s_regions sR ON (sR.name LIKE epR.SEARCHABLE_CONTENT)            
+            LEFT JOIN b_iblock_element_property epVS ON epVS.IBLOCK_ELEMENT_ID = e.ID AND epVS.IBLOCK_PROPERTY_ID = 131     
             WHERE e.IBLOCK_ID = 16 AND e.ACTIVE = "Y"';
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -182,13 +184,14 @@ class FeedbackCommand extends ContainerAwareCommand
     $result = $stmt->fetchAll();
     $sql = '';
     foreach ($result as $item) {
-      $name = !empty($item['NAME']) ? $item['NAME'] : null;
+      $name = !empty($item['NAME']) ? str_replace('"', '',  $item['NAME']): null;
       $code = !empty($item['CODE']) ? $item['CODE'] : null;
       $kpp = !empty($item['KPP']) ? $item['KPP'] : null;
       $company_id = !empty($item['COMPANY_ID']) ? $item['COMPANY_ID'] : null;
       $region_id = !empty($item['REGION_ID']) ? $item['REGION_ID'] : null;
+      $amountStar = !empty($item['AMOUNT_STARS']) ? (float)$item['AMOUNT_STARS'] : 0;
 
-      $sql .= "INSERT INTO s_company_branches(name, kpp, code, company_id, region_id) VALUES('$name', '$kpp', '$code', $company_id, $region_id); ";
+      $sql .= "INSERT INTO s_company_branches(name, kpp, code, company_id, region_id, valuation) VALUES('$name', '$kpp', '$code', $company_id, $region_id, $amountStar); ";
     }
     $stmt = $conn->prepare($sql);
     $stmt->execute();
