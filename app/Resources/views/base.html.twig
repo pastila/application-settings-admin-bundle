@@ -101,10 +101,7 @@ left:-9999px;" alt="" /></div></noscript>
 
 
 
-        <?php
-            global $USER;
-            $ID_USER = $USER->GetID();
-        if ($USER->IsAuthorized()) { ?>
+        {% if app.user %}
         <div class="header__r"><img class="header__r_auth_login_img" src="/images/message.svg" alt="OMS">
             <a style="font-size: 2rem; color: #fff; display: flex; padding-right: 2rem;padding-left: 1rem;" href="/vopros-otvet/"><span class="header__r_auth_user_hello">Вопрос - Ответ</span></a>
             <a rel="nofollow" href="javascript:void(0)" id="show-mnu" class="header__r_auth_user">
@@ -112,7 +109,7 @@ left:-9999px;" alt="" /></div></noscript>
                             Добрый день,
                         </span>
 
-                <span class="header__r_auth_user_name"><?php echo $USER->GetFullName();?> !</span>
+                <span class="header__r_auth_user_name">{{ app.user.fullName }}!</span>
             </a>
 
             <!-- #menu -->
@@ -302,14 +299,14 @@ left:-9999px;" alt="" /></div></noscript>
                 </div>
             </div> -->
         </div>
-        <?php } else { ?>
+        {% else %}
 
         <div class="header__r" style="display: flex;">
             <div class="header__r_auth">
 <span class="header__r_auth_login">
 <img class="header__r_auth_login_img" src="/images/message.svg" alt="OMS">
 <a style="font-size: 2rem;" href="/vopros-otvet/"><div class="header__r_auth_login_text">Вопрос - Ответ</div></a></span>
-                <span href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-login.php"?>" id="login-link"
+                <span href="/local/templates/kdteam/includes/ajax-auth-login.php" id="login-link"
                 class="header__r_auth_login">
                 <img class="header__r_auth_login_img"
                      src="/images/key.svg" alt="OMS">
@@ -318,7 +315,7 @@ left:-9999px;" alt="" /></div></noscript>
                 </div>
                 </span>
 
-                <span href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-auth-reg.php"?>" id="reg-link"
+                <span href="/local/templates/kdteam/includes/ajax-auth-reg.php" id="reg-link"
                 data-rigstration="0" class="header__r_auth_reg">
                 <img class="header__r_auth_login_img"
                      src="/images/edit.svg" alt="OMS">
@@ -328,7 +325,7 @@ left:-9999px;" alt="" /></div></noscript>
                 </span>
             </div>
 
-            <span href="<?= SITE_TEMPLATE_PATH . "/includes/ajax-feedback.php"?>"
+            <span href="/local/templates/kdteam/includes/ajax-feedback.php"
             class="header__r_mainBtn headerBtn" id="write-us_modal">
             <svg style="fill: #ffffff; width: 2rem; height: 3rem;"
                  class="header__r_auth_login_img hidden-desk--image" xmlns="http://www.w3.org/2000/svg"
@@ -344,24 +341,19 @@ left:-9999px;" alt="" /></div></noscript>
             </div>
             </span>
         </div>
-        <?php } ?>
+        {% endif %}
     </div>
 </header>
 <!-- Content -->
 <main class="main">
         {% block main %}{% endblock %}
-    <?php
-if (defined("B_PROLOG_INCLUDED") && B_PROLOG_INCLUDED === true) {
-    require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/epilog.php");
-}
-?>
 </main>
 
 <!-- Footer -->
 <footer class="footer">
     <div class="footer__container">
         <div class="footer__logo">
-            <img src="<?= SITE_TEMPLATE_PATH ?>/images/png/logo-footer-white.png" alt="OMS">
+            <img src="/local/templates/kdteam/images/png/logo-footer-white.png" alt="OMS">
         </div>
 
         <ul class="footer__menu">

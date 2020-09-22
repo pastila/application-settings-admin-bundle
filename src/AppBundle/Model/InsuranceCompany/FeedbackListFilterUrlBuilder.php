@@ -52,7 +52,7 @@ class FeedbackListFilterUrlBuilder
   public function getFilterParams($values=[])
   {
     return array_filter(array_merge($this->originalFilter->getValues(), $values), function($value) {
-      return !empty($value);
+      return !empty($value) || 0 === $value;
     });
   }
 

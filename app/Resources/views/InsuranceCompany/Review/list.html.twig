@@ -46,7 +46,7 @@
             <a href="/add-feedback/" class="whiteBtn">Добавить отзыв</a>
             <a href="?comments=all" class="accentBtnBorder">Все отзывы</a>
             {% if is_granted('ROLE_ADMIN') %}
-                <a href="?{{ urlBuilder.buildUrl({ filter: { moderation: 0 }}) }}" class="accentBtnBorder">Модерация отзывов</a>
+                <a href="{{ urlBuilder.buildUrl({ filter: { moderation: 0 }}) }}" class="accentBtnBorder">Модерация отзывов</a>
             {% endif %}
         </div>
 
@@ -446,7 +446,7 @@
             {% if is_granted('ROLE_ADMIN') %}
                 <div class="right_content-reviews">
 
-                    {% if filter.waitingModeration %}
+                    {% if not filter.moderation is null %}
 
                         <div class="feedback__radio-btns">
                             <div id="checkbox-box_{{ review.id }}" class="wrap-chrckbox">
