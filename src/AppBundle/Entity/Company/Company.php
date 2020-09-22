@@ -68,7 +68,7 @@ class Company implements ImageAwareInterface, ImageInterface
   protected $feedbacks;
 
   /**
-   * @var Feedback[]|ArrayCollection
+   * @var CompanyBranch[]|ArrayCollection
    * @ORM\OneToMany(targetEntity="AppBundle\Entity\Company\CompanyBranch", mappedBy="company")
    */
   protected $branches;
