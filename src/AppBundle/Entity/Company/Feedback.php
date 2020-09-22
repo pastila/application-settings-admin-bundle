@@ -90,6 +90,15 @@ class Feedback
   private $text;
 
   /**
+   * Флаг, что отзыв из письма
+   *
+   * @var integer
+   *
+   * @ORM\Column(name="review_letter", type="integer", nullable=true)
+   */
+  private $reviewLetter;
+
+  /**
    * @var int
    * @ORM\Column(type="integer", nullable=false)
    */
@@ -233,6 +242,26 @@ class Feedback
   public function setTitle($title)
   {
     $this->title = $title;
+
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getReviewLetter()
+  {
+    return $this->reviewLetter;
+  }
+
+  /**
+   * @param string $reviewLetter
+   *
+   * @return string
+   */
+  public function setReviewLetter($reviewLetter)
+  {
+    $this->reviewLetter = $reviewLetter;
 
     return $this;
   }

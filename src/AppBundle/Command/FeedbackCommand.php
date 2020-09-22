@@ -239,14 +239,15 @@ class FeedbackCommand extends ContainerAwareCommand
                     epT.VALUE as TEXT, 
                     epV.VALUE as VALUATION, 
                     epK.VALUE as KPP, 
-                    epU.VALUE as USER_NAME
+                    epU.VALUE as USER_NAME,                    
+                    epRL.VALUE as REVIEW_LETTER
             FROM b_iblock_element e 
             LEFT JOIN b_iblock_element_property epR ON epR.IBLOCK_ELEMENT_ID = e.ID AND epR.IBLOCK_PROPERTY_ID = 60    
             LEFT JOIN b_iblock_section sR ON sR.ID = epR.VALUE  
-            LEFT JOIN s_regions sRg ON (sRg.name LIKE sR.SEARCHABLE_CONTENT)
-                        
+            LEFT JOIN s_regions sRg ON (sRg.name LIKE sR.SEARCHABLE_CONTENT)                        
             LEFT JOIN b_iblock_element_property epT ON epT.IBLOCK_ELEMENT_ID = e.ID AND epT.IBLOCK_PROPERTY_ID = 61    
-            LEFT JOIN b_iblock_element_property epV ON epV.IBLOCK_ELEMENT_ID = e.ID AND epV.IBLOCK_PROPERTY_ID = 62  
+            LEFT JOIN b_iblock_element_property epV ON epV.IBLOCK_ELEMENT_ID = e.ID AND epV.IBLOCK_PROPERTY_ID = 62              
+            LEFT JOIN b_iblock_element_property epRL ON epRL.IBLOCK_ELEMENT_ID = e.ID AND epRL.IBLOCK_PROPERTY_ID = 114    
             LEFT JOIN b_iblock_element_property epK ON epK.IBLOCK_ELEMENT_ID = e.ID AND epK.IBLOCK_PROPERTY_ID = 130   
             LEFT JOIN b_iblock_element_property epU ON epU.IBLOCK_ELEMENT_ID = e.ID AND epU.IBLOCK_PROPERTY_ID = 150    
             WHERE e.IBLOCK_ID = 13 AND e.ACTIVE = "Y"';
@@ -255,7 +256,6 @@ class FeedbackCommand extends ContainerAwareCommand
 
     $result = $stmt->fetchAll();
     foreach ($result as $item) {
-
       $title = !empty($item['SEARCHABLE_CONTENT']) ? trim($item['SEARCHABLE_CONTENT']) : null;
       $text = !empty($item['TEXT']) ? trim($item['TEXT']) : null;
 //      $regionName  = !empty($item['REGION_NAME']) ? ($item['REGION_NAME']) : null;
@@ -264,6 +264,7 @@ class FeedbackCommand extends ContainerAwareCommand
 //      $userName = !empty($item['USER_NAME']) ? ($item['USER_NAME']) : null;
       $created = !empty($item['DATE_CREATE']) ? $item['DATE_CREATE'] : null;
       $date = !empty($created) ? DateTime::createFromFormat('Y-m-d H:m:s', $created) : null;
+      $reviewLetter = !empty($item['REVIEW_LETTER']) ? $item['REVIEW_LETTER'] : 0;
 
       $region = !empty($item['REGION_NAME']) ? $doctrine->getRepository("AppBundle:Geo\Region")
         ->createQueryBuilder('r')
@@ -322,6 +323,7 @@ class FeedbackCommand extends ContainerAwareCommand
       $feedback->setCompany($company);
       $feedback->setBranch($branch);
       $feedback->setValuation($valuation);
+      $feedback->setReviewLetter($reviewLetter);
       $feedback->setCreatedAt($date);
       $feedback->setUpdatedAt($date);
       $entityManager->persist($feedback);
