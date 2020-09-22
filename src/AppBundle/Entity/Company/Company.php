@@ -46,9 +46,8 @@ class Company implements ImageAwareInterface, ImageInterface
   /**
    * Оценка
    *
-   * @var integer
-   *
-   * @ORM\Column(name="valuation", type="integer", nullable=true)
+   * @var float
+   * @ORM\Column(name="valuation", type="decimal", precision=8, scale=3, nullable=true)
    */
   private $valuation;
 
@@ -131,7 +130,7 @@ class Company implements ImageAwareInterface, ImageInterface
   }
 
   /**
-   * @return null
+   * @return float
    */
   public function getValuation()
   {
@@ -140,7 +139,6 @@ class Company implements ImageAwareInterface, ImageInterface
 
   /**
    * @param $valuation
-   *
    * @return $this
    */
   public function setValuation($valuation)

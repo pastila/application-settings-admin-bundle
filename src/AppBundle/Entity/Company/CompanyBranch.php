@@ -45,9 +45,8 @@ class CompanyBranch
   /**
    * Оценка
    *
-   * @var integer
-   *
-   * @ORM\Column(name="valuation", type="integer", nullable=true)
+   * @var float
+   * @ORM\Column(name="valuation", type="decimal", precision=8, scale=3, nullable=true)
    */
   private $valuation;
 
@@ -151,7 +150,7 @@ class CompanyBranch
 
 
   /**
-   * @return null
+   * @return float
    */
   public function getValuation()
   {
@@ -160,7 +159,6 @@ class CompanyBranch
 
   /**
    * @param $valuation
-   *
    * @return $this
    */
   public function setValuation($valuation)

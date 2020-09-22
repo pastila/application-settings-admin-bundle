@@ -46,6 +46,7 @@ class FeedbackCommand extends ContainerAwareCommand
     $this->fillCompany($entityManager, $input, $output);
     $this->fillCompanyBranch($entityManager, $doctrine, $input, $output);
     $this->fillFeedback($entityManager, $doctrine, $input, $output);
+    $this->fillComment($entityManager, $doctrine, $input, $output);
   }
 
   /**
@@ -302,5 +303,14 @@ class FeedbackCommand extends ContainerAwareCommand
 
     $io = new SymfonyStyle($input, $output);
     $io->success('Fill Feedback:' . count($result));
+  }
+
+  /**
+   * @param $entityManager
+   * @param $doctrine
+   */
+  private function fillComment($entityManager, $doctrine, InputInterface $input, OutputInterface $output)
+  {
+    // todo в базе нет данных
   }
 }
