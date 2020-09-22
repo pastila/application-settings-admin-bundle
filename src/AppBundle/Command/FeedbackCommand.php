@@ -240,13 +240,17 @@ class FeedbackCommand extends ContainerAwareCommand
                     epV.VALUE as VALUATION, 
                     epK.VALUE as KPP, 
                     epU.VALUE as USER_NAME,                    
-                    epRL.VALUE as REVIEW_LETTER
+                    epRL.VALUE as REVIEW_LETTER,              
+                    epST.VALUE as VERIFIED,           
+                    epRT.VALUE as REJECTED
             FROM b_iblock_element e 
             LEFT JOIN b_iblock_element_property epR ON epR.IBLOCK_ELEMENT_ID = e.ID AND epR.IBLOCK_PROPERTY_ID = 60    
             LEFT JOIN b_iblock_section sR ON sR.ID = epR.VALUE  
             LEFT JOIN s_regions sRg ON (sRg.name LIKE sR.SEARCHABLE_CONTENT)                        
             LEFT JOIN b_iblock_element_property epT ON epT.IBLOCK_ELEMENT_ID = e.ID AND epT.IBLOCK_PROPERTY_ID = 61    
-            LEFT JOIN b_iblock_element_property epV ON epV.IBLOCK_ELEMENT_ID = e.ID AND epV.IBLOCK_PROPERTY_ID = 62              
+            LEFT JOIN b_iblock_element_property epV ON epV.IBLOCK_ELEMENT_ID = e.ID AND epV.IBLOCK_PROPERTY_ID = 62     
+            LEFT JOIN b_iblock_element_property epST ON epST.IBLOCK_ELEMENT_ID = e.ID AND epST.IBLOCK_PROPERTY_ID = 104  
+            LEFT JOIN b_iblock_element_property epRT ON epRT.IBLOCK_ELEMENT_ID = e.ID AND epRT.IBLOCK_PROPERTY_ID = 105            
             LEFT JOIN b_iblock_element_property epRL ON epRL.IBLOCK_ELEMENT_ID = e.ID AND epRL.IBLOCK_PROPERTY_ID = 114    
             LEFT JOIN b_iblock_element_property epK ON epK.IBLOCK_ELEMENT_ID = e.ID AND epK.IBLOCK_PROPERTY_ID = 130   
             LEFT JOIN b_iblock_element_property epU ON epU.IBLOCK_ELEMENT_ID = e.ID AND epU.IBLOCK_PROPERTY_ID = 150    
