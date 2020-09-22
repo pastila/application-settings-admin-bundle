@@ -57,10 +57,10 @@ class Feedback
    * Филиал компании
    *
    * @var null|CompanyBranch
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\CompanyBranch", inversedBy="feedbacks")
-   * @ORM\JoinColumn(name="company_branch_id", nullable=true, onDelete="RESTRICT")
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\CompanyBranch")
+   * @ORM\JoinColumn(name="branch_id", nullable=true, onDelete="RESTRICT")
    */
-  private $companyBranch;
+  private $branch;
 
   /**
    * Оценка
@@ -173,6 +173,26 @@ class Feedback
   public function setCompany($company)
   {
     $this->company = $company;
+
+    return $this;
+  }
+
+  /**
+   * @return null|CompanyBranch
+   */
+  public function getBranch()
+  {
+    return $this->branch;
+  }
+
+  /**
+   * @param CompanyBranch $branch
+   *
+   * @return $this
+   */
+  public function setBranch($branch)
+  {
+    $this->branch = $branch;
 
     return $this;
   }

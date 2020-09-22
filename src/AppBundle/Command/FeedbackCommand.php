@@ -178,7 +178,7 @@ class FeedbackCommand extends ContainerAwareCommand
                     e.SEARCHABLE_CONTENT, 
                     e.DATE_CREATE, 
                     sR.NAME as REGION_NAME, 
-                    #r.ID as REGION_ID, 
+                    sr.id as REGION_ID, 
                     epT.VALUE as TEXT, 
                     epV.VALUE as VALUATION, 
                     epK.VALUE as KPP, 
@@ -186,7 +186,8 @@ class FeedbackCommand extends ContainerAwareCommand
             FROM b_iblock_element e 
             LEFT JOIN b_iblock_element_property epR ON epR.IBLOCK_ELEMENT_ID = e.ID AND epR.IBLOCK_PROPERTY_ID = 60    
             LEFT JOIN b_iblock_section sR ON sR.ID = epR.VALUE  
-            #LEFT JOIN s_regions r ON (LEFT(r.name,2) = LEFT(sR.NAME,2))
+            LEFT JOIN s_regions sr ON (sr.name LIKE sR.SEARCHABLE_CONTENT)
+                        
             LEFT JOIN b_iblock_element_property epT ON epT.IBLOCK_ELEMENT_ID = e.ID AND epT.IBLOCK_PROPERTY_ID = 61    
             LEFT JOIN b_iblock_element_property epV ON epV.IBLOCK_ELEMENT_ID = e.ID AND epV.IBLOCK_PROPERTY_ID = 62  
             LEFT JOIN b_iblock_element_property epK ON epK.IBLOCK_ELEMENT_ID = e.ID AND epK.IBLOCK_PROPERTY_ID = 130   
@@ -237,7 +238,7 @@ class FeedbackCommand extends ContainerAwareCommand
         $entityManager->persist($user);
       }
 
-      $company = !empty($item['KPP']) ? $doctrine->getRepository("AppBundle:Company\CompanyBranch")
+      $branch = !empty($item['KPP']) ? $doctrine->getRepository("AppBundle:Company\CompanyBranch")
         ->createQueryBuilder('c')
         ->andWhere('c.kpp = :kpp')
         ->setParameter('kpp', $item['KPP'])
@@ -250,7 +251,7 @@ class FeedbackCommand extends ContainerAwareCommand
       $feedback->setText($text);
       $feedback->setRegion($region);
       $feedback->setUser($user);
-      $feedback->setCompany($company);
+      $feedback->setBranch($branch);
       $feedback->setValuation($valuation);
       $feedback->setCreatedAt($date);
       $feedback->setUpdatedAt($date);
