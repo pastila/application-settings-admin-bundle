@@ -289,6 +289,6 @@ class FeedbackCommand extends ContainerAwareCommand
     $entityManager->flush();
 
     $io = new SymfonyStyle($input, $output);
-    $io->success('Fill Company Branch:' . count($result));
+    $io->success('Fill Feedback:' . count($result));
   }
 }
