@@ -207,7 +207,7 @@ class FeedbackCommand extends ContainerAwareCommand
                     e.SEARCHABLE_CONTENT, 
                     e.DATE_CREATE, 
                     sR.NAME as REGION_NAME, 
-                    sr.id as REGION_ID, 
+                    sRg.id as REGION_ID, 
                     epT.VALUE as TEXT, 
                     epV.VALUE as VALUATION, 
                     epK.VALUE as KPP, 
@@ -215,7 +215,7 @@ class FeedbackCommand extends ContainerAwareCommand
             FROM b_iblock_element e 
             LEFT JOIN b_iblock_element_property epR ON epR.IBLOCK_ELEMENT_ID = e.ID AND epR.IBLOCK_PROPERTY_ID = 60    
             LEFT JOIN b_iblock_section sR ON sR.ID = epR.VALUE  
-            LEFT JOIN s_regions sr ON (sr.name LIKE sR.SEARCHABLE_CONTENT)
+            LEFT JOIN s_regions sRg ON (sRg.name LIKE sR.SEARCHABLE_CONTENT)
                         
             LEFT JOIN b_iblock_element_property epT ON epT.IBLOCK_ELEMENT_ID = e.ID AND epT.IBLOCK_PROPERTY_ID = 61    
             LEFT JOIN b_iblock_element_property epV ON epV.IBLOCK_ELEMENT_ID = e.ID AND epV.IBLOCK_PROPERTY_ID = 62  
