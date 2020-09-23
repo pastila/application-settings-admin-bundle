@@ -6,6 +6,7 @@
 namespace AppBundle\Form\Feedback;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\SubmitButton;
 
@@ -16,10 +17,10 @@ class FeedbackType extends AbstractType
     $builder
       ->add('region')
       ->add('company')
-      ->add('name')
+      ->add('author_name')
       ->add('title')
       ->add('text')
       ->add('valuation')
-      ->add('submit', SubmitButton::class);
+      ->add('submit', SubmitType::class);
   }
 }

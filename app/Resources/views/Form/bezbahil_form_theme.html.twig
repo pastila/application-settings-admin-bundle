@@ -9,7 +9,7 @@
             <option value="">{{ label|raw }}</option>
             {% for choice in choices %}
                 <option {% if value == choice.value %}class="activ_filter"{% endif %}
-                        value="?{{ form.vars.url_builder.buildHttpQuery({ filter: { (form.vars.name): choice.value } }) }}">{{ choice.label }}</option>
+                        value="{{ form.vars.url_builder.buildUrl({ filter: { (form.vars.name): choice.value } }) }}">{{ choice.label }}</option>
             {% endfor %}
         </select>
         {% if value %}

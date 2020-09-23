@@ -18,7 +18,7 @@ class Version20200923065818 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE s_company_branches DROP type');
+//        $this->addSql('ALTER TABLE s_company_branches DROP type');
         $this->addSql('ALTER TABLE s_company_feedback_comments ADD moderation_status INT NOT NULL');
     }
 

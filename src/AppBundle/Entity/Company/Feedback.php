@@ -34,7 +34,7 @@ class Feedback
    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User\User")
    * @ORM\JoinColumn(name="user_id", nullable=true, onDelete="RESTRICT")
    */
-  private $user;
+  private $author;
 
   /**
    * Регион
@@ -126,19 +126,19 @@ class Feedback
   /**
    * @return null|User
    */
-  public function getUser()
+  public function getAuthor()
   {
-    return $this->user;
+    return $this->author;
   }
 
   /**
-   * @param User $user
+   * @param User $author
    *
    * @return $this
    */
-  public function setUser($user)
+  public function setAuthor($author)
   {
-    $this->user = $user;
+    $this->author = $author;
 
     return $this;
   }
@@ -316,6 +316,27 @@ class Feedback
   public function isFromLetter()
   {
     return $this->isFromLetter;
+  }
+
+  public function setAuthorName($v)
+  {
+    $author = $this->getAuthor();
+    if (!$author)
+    {
+      $author = new User();
+      $this->setAuthor($author);
+    }
+
+    $author->setFirstName($v);
+
+    return $this;
+  }
+
+  public function getAuthorName()
+  {
+    $author = $this->getAuthor();
+
+    return $author ? $author->getFirstName() : null;
   }
 
   /**

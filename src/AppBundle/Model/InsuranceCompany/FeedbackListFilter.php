@@ -30,9 +30,13 @@ class FeedbackListFilter
    * @param mixed $company
    * @return FeedbackListFilter
    */
-  public function setCompany($company)
+  public function setCompany($company, $force=false)
   {
-    $this->company = $company;
+    if (null !== $company || $force)
+    {
+      $this->company = $company;
+    }
+
     return $this;
   }
 

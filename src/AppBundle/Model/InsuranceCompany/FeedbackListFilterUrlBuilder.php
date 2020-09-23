@@ -6,6 +6,8 @@
 namespace AppBundle\Model\InsuranceCompany;
 
 
+use AppBundle\Form\InsuranceCompany\FeedbackListFilterType;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Routing\Router;
 
 class FeedbackListFilterUrlBuilder
@@ -14,10 +16,13 @@ class FeedbackListFilterUrlBuilder
 
   private $router;
 
-  public function __construct(FeedbackListFilter $originalFilter, Router $router)
+  private $formFactory;
+
+  public function __construct(FeedbackListFilter $originalFilter, Router $router, FormFactoryInterface $formFactory)
   {
     $this->originalFilter = $originalFilter;
     $this->router = $router;
+    $this->formFactory = $formFactory;
   }
 
   public function buildHttpQuery($values=[])
@@ -27,6 +32,32 @@ class FeedbackListFilterUrlBuilder
 
   public function buildUrl($values=[])
   {
+    $filter = $this->originalFilter;
+
+    /*
+     * Если мы хотим собрать ссылку с еще каким-то параметром фильтра, кроме тех, что мы уже отвалидировали,
+     * то нужно заново создать экземпляр формы фильтра и заполнить модель фильтра новыми значениями.
+     */
+    if (!empty($values))
+    {
+      //Главное - не уйти в бесконечную рекурсию
+      $form = $this->formFactory->create(FeedbackListFilterType::class, new FeedbackListFilter(), [
+        'url_builder' => $this
+      ]);
+
+      $form->submit($this->getFilterParams(isset($values['filter']) ? $values['filter'] : []));
+      if ($form->isValid())
+      {
+        $filter = $form->getData();
+      }
+    }
+
+    if ($filter->getCompany())
+    {
+      return $this->router->generate('company_review_list', array_filter(array_merge($this->getRouteParams($values), [
+        'slug' => $filter->getCompany()->getSlug()
+      ]), function($key) { return $key !== 'company'; }, ARRAY_FILTER_USE_KEY));
+    }
     return $this->router->generate('app_insurancecompany_feedback_index', $this->getRouteParams($values));
   }
 
@@ -58,12 +89,6 @@ class FeedbackListFilterUrlBuilder
 
   public function getBaseUrl()
   {
-    if ($this->originalFilter->getCompany())
-    {
-      return $this->router->generate('company_review_list', [
-        'slug' => $this->originalFilter->getCompany()->getSlug()
-      ]);
-    }
     return $this->router->generate('app_insurancecompany_feedback_index');
   }
 }

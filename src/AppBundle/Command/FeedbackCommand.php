@@ -331,7 +331,7 @@ class FeedbackCommand extends ContainerAwareCommand
       $feedback->setTitle($title);
       $feedback->setText($text);
       $feedback->setRegion($region);
-      $feedback->setUser($user);
+      $feedback->setAuthor($user);
       $feedback->setBranch($branch);
       $feedback->setValuation($valuation);
       $feedback->setReviewLetter($reviewLetter);

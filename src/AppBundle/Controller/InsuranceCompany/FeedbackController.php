@@ -11,6 +11,7 @@ use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\Company\FeedbackModerationStatus;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Entity\User\User;
+use AppBundle\Form\Feedback\FeedbackType;
 use AppBundle\Form\InsuranceCompany\FeedbackListFilterType;
 use AppBundle\Model\InsuranceCompany\Branch\BranchRatingHelper;
 use AppBundle\Model\InsuranceCompany\FeedbackListFilter;
@@ -19,6 +20,7 @@ use AppBundle\Model\Pagination;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -191,6 +193,15 @@ ORDER BY t.NAME
     $reviewListFilter = new FeedbackListFilter();
     $reviewListFilter->setPage($request->query->get('page', 1));
 
+    $reviewListUrlbuilder = new FeedbackListFilterUrlBuilder($reviewListFilter, $this->get('router'),
+      $this->get('form.factory'));
+
+    $reviewListFilterForm = $this->createForm(FeedbackListFilterType::class, $reviewListFilter, [
+      'url_builder' => $reviewListUrlbuilder
+    ]);
+
+    $filterParams = $request->query->get($reviewListFilterForm->getName(), []);
+
     if ($request->get('slug'))
     {
       $company = $this->getDoctrine()->getManager()->getRepository(Company::class)
@@ -202,14 +213,15 @@ ORDER BY t.NAME
       }
 
       $reviewListFilter->setCompany($company);
+
+      if (!isset($filterParams['company']))
+      {
+        //Обманываем форму фильтра, чтобы она думала, что мы отправили значение
+        $filterParams['company'] = $company->getId();
+      }
     }
 
-    $reviewListUrlbuilder = new FeedbackListFilterUrlBuilder($reviewListFilter, $this->get('router'));
-
-    $reviewListFilterForm = $this->createForm(FeedbackListFilterType::class, $reviewListFilter, [
-      'url_builder' => $reviewListUrlbuilder
-    ]);
-    $reviewListFilterForm->submit($request->query->get($reviewListFilterForm->getName()));
+    $reviewListFilterForm->submit($filterParams);
 
     /** @var QueryBuilder $reviewListQb */
     $reviewListQb = $this
@@ -296,6 +308,12 @@ ORDER BY t.NAME
    */
   public function newAction()
   {
-    return new Response('add-feedback');
+    $feedback = new Feedback();
+
+    $form = $this->createForm(FeedbackType::class, $feedback);
+
+    return $this->render('InsuranceCompany/Review/new.html.twig', [
+      'form' => $form->createView()
+    ]);
   }
 }
