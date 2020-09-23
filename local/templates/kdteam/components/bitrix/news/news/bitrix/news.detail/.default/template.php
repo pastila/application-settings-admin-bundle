@@ -14,6 +14,26 @@
 /** @var CBitrixComponent $component */
 $this->setFrameMode(true);
 ?>
+
+<meta property="og:type" content="article"/>
+<?php if ($arParams["DISPLAY_NAME"] != "N" && $arResult["NAME"]) {?>
+    <meta property="og:title" content="<?php echo $arResult["NAME"]?>"/>
+<?php }?>
+
+<?php $newsUrl =  (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"; ?>
+<meta property="og:url" content="<?= $newsUrl ?>"/>
+<?php if ($arParams["DISPLAY_PICTURE"] != "N" && is_array($arResult["DETAIL_PICTURE"])) {?>
+    <meta property="og:image" content="<?=$arResult["DETAIL_PICTURE"]["SRC"]?>"/>
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+<?php }?>
+<?php if ($arParams["DISPLAY_NAME"] != "N" && $arResult["NAME"]) {?>
+    <meta property="article:section" content="<?php echo $arResult["NAME"]?>">
+<?php }?>
+<?php if ($arParams["DISPLAY_DATE"] != "N" && $arResult["DISPLAY_ACTIVE_FROM"]) {?>
+    <meta property="article:published_time" content="<?=$arResult["DISPLAY_ACTIVE_FROM"]?>">
+<?php }?>
+
 <div class="white_block">
     <div class="news-detail flex-detail-news" itemscope itemtype="http://schema.org/NewsArticle">
         <link itemprop="mainEntityOfPage" href="<?= ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>" />
