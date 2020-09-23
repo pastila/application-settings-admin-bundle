@@ -4,6 +4,7 @@ namespace AppBundle\Entity\Company;
 
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Entity\User\User;
+use AppBundle\Model\Checkout\OrderStatus;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -268,6 +269,24 @@ class Feedback
   public function getModerationStatus()
   {
     return $this->moderationStatus;
+  }
+
+  public function getModerationStatusLabel ()
+  {
+    if ($this->moderationStatus === FeedbackModerationStatus::MODERATION_ACCEPTED)
+    {
+      return 'Одобрено';
+    }
+    elseif ($this->moderationStatus === FeedbackModerationStatus::MODERATION_REJECTED)
+    {
+      return 'Отклонено';
+    }
+    elseif ($this->moderationStatus === FeedbackModerationStatus::MODERATION_NONE)
+    {
+      return 'Неизвестно';
+    }
+
+    return $this->getModerationStatus();
   }
 
   /**

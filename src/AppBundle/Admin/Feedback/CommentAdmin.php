@@ -22,10 +22,18 @@ class CommentAdmin extends AbstractAdmin
   protected function configureListFields (ListMapper $list)
   {
     $list
-      ->add('feedback')
-      ->add('text')
-      ->add('user')
-      ->add('moderationStatus');
+      ->add('feedback', null, [
+        'label' => 'Отзыв',
+      ])
+      ->add('text', null, [
+        'label' => 'Текст',
+      ])
+      ->add('user', null, [
+        'label' => 'Пользователь',
+      ])
+      ->add('moderationStatus', null, [
+        'label' => 'Статус модерации',
+      ]);
   }
 
   /**

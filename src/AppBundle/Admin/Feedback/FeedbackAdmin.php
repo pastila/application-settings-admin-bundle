@@ -5,6 +5,7 @@ namespace AppBundle\Admin\Feedback;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
@@ -22,10 +23,36 @@ class FeedbackAdmin extends AbstractAdmin
   protected function configureListFields (ListMapper $list)
   {
     $list
-      ->add('branch')
-      ->add('title')
-      ->add('user')
-      ->add('moderationStatus');
+      ->add('branch', null, [
+        'label' => 'Отделение',
+      ])
+      ->add('region', null, [
+        'label' => 'Регион',
+      ])
+      ->add('title', null, [
+        'label' => 'Заголовок',
+      ])
+      ->add('user', null, [
+        'label' => 'Пользователь',
+      ])
+      ->add('moderationStatusLabel', null, [
+        'label' => 'Статус модерации',
+      ]);
+  }
+
+  protected function configureShowFields (ShowMapper $show)
+  {
+    $show
+      ->add('branch', null, [
+        'label' => 'Отделение',
+      ])
+      ->add('region', null, [
+        'label' => 'Регион',
+      ])
+      ->add('title', null, [
+        'label' => 'Заголовок',
+      ])
+    ;
   }
 
   /**
@@ -34,12 +61,13 @@ class FeedbackAdmin extends AbstractAdmin
   protected function configureFormFields (FormMapper $form)
   {
     $form
-      ->add('moderationStatus', null, [
-        'label' => 'Статус модерации',
+      ->add('moderationStatus', 'AppBundle\Form\Feedback\FeedbackStatusChoiceType',[
         'required' => true,
+        'label' => 'Статус модерации',
         'constraints' => [
           new NotBlank(),
         ],
-      ]);
+      ])
+    ;
   }
 }

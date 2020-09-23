@@ -76,12 +76,14 @@ sensio_framework_extra:
 
 sonata_admin:
     title: Раздел администрирования
-    templates:
-        edit:   ':CRUD:edit.html.twig'
+#    templates:
+#        edit:   ':CRUD:edit.html.twig'
     dashboard:
         groups:
-            users:
-                label: Пользователи
+            feedback:
+                label: Отзывы
+            comment:
+                label: Комментарии
     options:
         html5_validate: false
 
