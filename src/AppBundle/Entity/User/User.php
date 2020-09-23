@@ -12,6 +12,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
+  const ROLE_ADMIN = 'ROLE_ADMIN';
+
   /**
    * @var integer
    * @ORM\Id()
@@ -222,5 +224,11 @@ class User implements UserInterface
 
   }
 
-
+  /**
+   * @return string
+   */
+  public function __toString()
+  {
+    return $this->id ? $this->getFullName() : 'Новый пользователь';
+  }
 }

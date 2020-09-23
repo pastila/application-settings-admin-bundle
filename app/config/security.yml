@@ -28,3 +28,6 @@ security:
             guard:
                 authenticators:
                     - AppBundle\Security\BitrixAuthenticator
+
+#        access_control:
+#            - { path: ^/admin.*$, role: ROLE_ADMIN }

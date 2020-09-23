@@ -224,26 +224,6 @@ class CompanyBranch
   /**
    * @return string
    */
-  public function getLegalAddress()
-  {
-    return $this->legalAddress;
-  }
-
-  /**
-   * @param string $legalAddress
-   *
-   * @return string
-   */
-  public function setLegalAddress($legalAddress)
-  {
-    $this->legalAddress = $legalAddress;
-
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
   public function getCode()
   {
     return $this->code;
@@ -266,6 +246,6 @@ class CompanyBranch
    */
   public function __toString()
   {
-    return $this->id ? $this->name : '';
+    return $this->id ? $this->name : 'Новое отделение';
   }
 }

@@ -53,6 +53,12 @@ class Comment
   private $feedback;
 
   /**
+   * @var int
+   * @ORM\Column(type="integer", nullable=false)
+   */
+  private $moderationStatus = FeedbackModerationStatus::MODERATION_NONE;
+
+  /**
    * @return integer
    */
   public function getId()
@@ -116,6 +122,30 @@ class Comment
   public function setFeedback($feedback)
   {
     $this->feedback = $feedback;
+
+    return $this;
+  }
+
+  /**
+   * @return int
+   */
+  public function getModerationStatus()
+  {
+    return $this->moderationStatus;
+  }
+
+  /**
+   * @param $moderationStatus
+   * @return $this
+   */
+  public function setModerationStatus($moderationStatus)
+  {
+    if (null !== $moderationStatus && !in_array($moderationStatus, FeedbackModerationStatus::getAvailableValues()))
+    {
+      throw new \InvalidArgumentException();
+    }
+
+    $this->moderationStatus = $moderationStatus;
 
     return $this;
   }
