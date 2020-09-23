@@ -292,7 +292,7 @@ ORDER BY t.NAME
     {
       $reviewListQb
         ->andWhere('rv.moderation_status = :moderation_status')
-        ->setParameter(FeedbackModerationStatus::MODERATION_NONE);
+        ->setParameter('moderation_status', FeedbackModerationStatus::MODERATION_NONE);
     }
 
     $maxPerPage = 10;
