@@ -5,6 +5,7 @@ namespace AppBundle\Entity\Company;
 use Accurateweb\MediaBundle\Model\Image\ImageAwareInterface;
 use Accurateweb\MediaBundle\Model\Media\ImageInterface;
 use Accurateweb\MediaBundle\Model\Thumbnail\ImageThumbnail;
+use AppBundle\Sluggable\SluggableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -16,7 +17,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity("slug")
  * @ORM\Entity()
  */
-class Company implements ImageAwareInterface, ImageInterface
+class Company implements ImageAwareInterface, ImageInterface, SluggableInterface
 {
   /**
    * @var integer

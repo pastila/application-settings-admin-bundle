@@ -27,7 +27,6 @@ use AppBundle\Entity\Company\Company;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-
 class SlugSubscriber implements EventSubscriber
 {
   private $slugifier;
