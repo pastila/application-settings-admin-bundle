@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script type="text/javascript" src="/local/templates/kdteam/pages/js/main.min.js"></script>
+    <script type="text/javascript" src="/local/templates/kdteam/js/main.min.js"></script>
     <script type="text/javascript" src="/local/templates/kdteam/pages/feedback/add/main.min.js"></script>
     {{ parent() }}
 {% endblock %}
@@ -32,40 +32,17 @@
     <h1 class="page-title">Добавить отзыв о компании</h1>
 
     <!-- Wrap -->
-    <form id="form-comments">
+    {{ form_start(form, { attr: { id: "form-comments"} }) }}
     <div class="white_block">
 
     <div class="feedback__top">
         <div class="add_reviews-select">
-            {{ form_row(form.region) }}
-
             <label class="input__wrap_label" for="user_pass">Выбор региона: </label>
-            <div class="input__wrap">
-                <div class="input__ico">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255"
-                         viewBox="0 0 255 255">
-                        <path d="M0 63.75l127.5 127.5L255 63.75z"/>
-                    </svg>
-                </div>
-                <input id="referal" type="text" placeholder="Поиск по региону" autocomplete="off"/>
-                <ul style="cursor: pointer;" class="custom-serach__items" id="search_result">
-                    <?
-                                        $arOrder = Array("name" => "asc");
-                    $arFilter = Array("IBLOCK_ID" => 16);
-                    $res = CIBlockSection::GetList($arOrder, $arFilter, false);
-                    while ($ob = $res->GetNext()) {
-
-                    ?>
-                    <li value="<?= $ob[" ID
-                    "] ?>" class="custom-serach__items_item region "
-                    data-id-city="<?= $ob["ID"] ?>"><?= $ob["NAME"] ?></li>
-
-                    <? } ?>
-                </ul>
-            </div>
+            {{ form_row(form.region) }}
         </div>
         <div class="add_reviews-select">
             <label class="input__wrap_label" for="user_pass">Список страховых компаний : </label>
+            {{ form_row(form.company) }}
             <div class="input__wrap">
                 <div class="input__ico">
                     <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255"
@@ -89,45 +66,28 @@
     {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
     <div class="input__wrap name_user_no_Authorized">
         <label for="name_user" class="input__wrap_label">Введите свое имя</label>
-        <input id="name_user" type="name_user" name="name_user" placeholder="Имя" required
-               pattern="([а-яЁА-ЯЁ]+)">
+        {{ form_row(form.author_name, { attr: { placeholder: "Имя" } }) }}
+{#        <input id="name_user" type="name_user" name="name_user" placeholder="Имя" required#}
+{#               pattern="([а-яЁА-ЯЁ]+)">#}
     </div>
     {% endif %}
 
 
     <div class="input__wrap">
         <label for="name" class="input__wrap_label">Заголовок</label>
-        <input id="title" type="title" name="title" required>
+        {{ form_row(form.title) }}
+{#        <input id="title" type="title" name="title" required>#}
     </div>
 
     <div class="input__wrap">
         <label for="name" class="input__wrap_label">Описание</label>
-        <textarea rows="10" name="description" id="description" required></textarea>
+        {{ form_row(form.text, { attr: { rows: 10 }}) }}
+{#        <textarea rows="10" name="description" id="description" required></textarea>#}
     </div>
 
     <div class="feedback__bottom">
         <div class="feedback__bottom_star">
-            <!-- Rating Stars Box -->
-            <div class='rating-stars text-center input__wrap' data-select="star">
-                <label for="name" class="input__wrap_label">Оценка</label>
-                <ul id='stars'>
-                    <li class='star' title='Poor' data-value='1'>
-                        <i class='fa fa-star fa-fw'></i>
-                    </li>
-                    <li class='star' title='Fair' data-value='2'>
-                        <i class='fa fa-star fa-fw'></i>
-                    </li>
-                    <li class='star' title='Good' data-value='3'>
-                        <i class='fa fa-star fa-fw'></i>
-                    </li>
-                    <li class='star' title='Excellent' data-value='4'>
-                        <i class='fa fa-star fa-fw'></i>
-                    </li>
-                    <li class='star' title='WOW!!!' data-value='5'>
-                        <i class='fa fa-star fa-fw'></i>
-                    </li>
-                </ul>
-            </div>
+            {{ form_row(form.valuation) }}
 
             <div class="danger" style="display: none">Дайте оценку компании</div>
 
@@ -146,6 +106,7 @@
                 <!--                                    <span class="check-img"></span>-->
             </div>
 
+            {{ form_widget(form.submit) }}
             <button type="submit" class="smallMainBtn" id="submit">Отправить</button>
         </div>
     </div>
@@ -158,4 +119,5 @@
     {#            <!--                <p>Для того чтобы вернуться на страницу «отзывы», кликните <a style="text-decoration: underline"-->#}
     {#            <!--                                                                              href="/feedback/">сюда</a></p>-->#}
     {#            <!--            -->{% endif %}#}
+    </div>
 {% endblock %}
