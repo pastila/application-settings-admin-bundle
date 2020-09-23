@@ -34,9 +34,9 @@ for ($index = 0; $index < $itemSize; $index++) {
                 $strReturn .= '
         
 			<li class="active-breadcrumbs" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
-				<a itemprop="item" href="/"> '.$title.'
-				    <meta itemprop="name" content="'.$title.'">
-                    <meta property="position" content="'.$itemSize_for_Microdata.'">
+				<a itemprop="item" href="/"> '. htmlspecialchars($title) .'
+				    <meta itemprop="name" content="'. htmlspecialchars($title) .'">
+                    <meta property="position" content="'. htmlspecialchars($itemSize_for_Microdata) .'">
 				</a>
 			</li>';
             }else{
@@ -44,8 +44,8 @@ for ($index = 0; $index < $itemSize; $index++) {
         
 			<li class="active-breadcrumbs" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
 				<a itemprop="item" href="/news/">
-				    <span itemprop="name" class="active-breadcrumbs">'.$title.'</span>
-                    <meta property="position" content="'.$itemSize_for_Microdata.'">				
+				    <span itemprop="name" class="active-breadcrumbs">'. htmlspecialchars($title) .'</span>
+                    <meta property="position" content="'. htmlspecialchars($itemSize_for_Microdata) .'">				
                 </a>
 			</li>';
             }
@@ -57,9 +57,9 @@ for ($index = 0; $index < $itemSize; $index++) {
 
             $strReturn .= '
 			<li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
-				<a  itemprop="item" href="' . $arResult[$index]["LINK"] . '" title="' . $title . '" itemprop="url">
-					<span itemprop="name">'.$title.'</span>
-                    <meta property="position" content="'.$itemSize_for_Microdata.'">  
+				<a  itemprop="item" href="' . $arResult[$index]["LINK"] . '" title="' . htmlspecialchars($title) . '" itemprop="url">
+					<span itemprop="name">'. htmlspecialchars($title) .'</span>
+                    <meta property="position" content="'. htmlspecialchars($itemSize_for_Microdata) .'">  
 				</a>
 				
 			</li>';
@@ -67,9 +67,9 @@ for ($index = 0; $index < $itemSize; $index++) {
             $strReturn .= '
         
 			<li class="active-breadcrumbs" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
-				<a itemprop="item"> '.$title.'
-				    <meta itemprop="name" content="'.$title.'">
-                    <meta property="position" content="'.$itemSize_for_Microdata.'">
+				<a itemprop="item">'. htmlspecialchars($title) .'
+				    <meta itemprop="name" content="'. htmlspecialchars($title) .'">
+                    <meta property="position" content="'. htmlspecialchars($itemSize_for_Microdata) .'">
 				</a>
 			</li>';
         }
