@@ -104,13 +104,13 @@ window.addEventListener('DOMContentLoaded', () => {
             const btn = item.querySelector('.feedback__bottom_link');
             const showBlock = item.querySelector('.hidenComments');
             const count = item.querySelector('.comment-count');
-            
+
             if (count && count.innerText > 0) {
                 if (btn) {
                     btn.addEventListener('click', function(e) {
-                        
+
                         this.classList.toggle('active');
-    
+
                         if (btn.classList.contains('active')) {
                             showBlock.classList.add('active');
                         } else {
@@ -128,7 +128,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 $(document).on("click",".select-items div",function() {
-   let url = "/feedback/"+ $(this).attr("data-value");
+   let url = $(this).attr("data-value");
   window.open(url,"_self")
 })
     $(".button-comments").click(function(e) {

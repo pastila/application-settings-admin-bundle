@@ -35,7 +35,7 @@ class FeedbackType extends AbstractType
       ->add('title')
       ->add('text')
       ->add('valuation', BezbahilRatingType::class)
-      ->add('submit', SubmitType::class);
+    ;
   }
 
   protected function getCompanyChoices()

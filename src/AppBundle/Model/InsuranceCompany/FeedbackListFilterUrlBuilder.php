@@ -54,10 +54,14 @@ class FeedbackListFilterUrlBuilder
 
     if ($filter->getCompany())
     {
-      return $this->router->generate('company_review_list', array_filter(array_merge($this->getRouteParams($values), [
+      $routeParams = array_merge($this->getRouteParams($values), [
         'slug' => $filter->getCompany()->getSlug()
-      ]), function($key) { return $key !== 'company'; }, ARRAY_FILTER_USE_KEY));
+      ]);
+      unset($routeParams['filter']['company']);
+
+      return $this->router->generate('company_review_list', $routeParams);
     }
+
     return $this->router->generate('app_insurancecompany_feedback_index', $this->getRouteParams($values));
   }
 

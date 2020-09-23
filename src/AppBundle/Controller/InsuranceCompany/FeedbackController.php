@@ -190,6 +190,39 @@ ORDER BY t.NAME
 //        BX_RESIZE_IMAGE_PROPORTIONAL, true);
 //
 
+    $response = new Response();
+    $response->setPublic();
+
+    if ($request->query->count() === 0)
+    {
+      /** @var QueryBuilder $maxQb */
+      $maxQb = $maxUpdatedAt = $this
+        ->getDoctrine()
+        ->getManager()
+        ->getRepository(Feedback::class)
+        ->createQueryBuilder('rv');
+
+      $maxUpdatedAt = $maxQb
+        ->select('MAX(rv.updatedAt)')
+        ->getQuery()
+        ->getSingleScalarResult();
+
+      $response->setLastModified(new \DateTime($maxUpdatedAt));
+
+      if ($response->isNotModified($request))
+      {
+        return $response;
+      }
+    }
+    else
+    {
+      $response->setMaxAge(3600);
+
+      // (optional) set a custom Cache-Control directive
+      $response->headers->addCacheControlDirective('must-revalidate', true);
+    }
+
+
     $reviewListFilter = new FeedbackListFilter();
     $reviewListFilter->setPage($request->query->get('page', 1));
 
@@ -278,15 +311,16 @@ ORDER BY t.NAME
       'filterForm' => $reviewListFilterForm->createView(),
       'companyRating' => $this->branchRatingHelper->buildRating($reviewListFilter->getRegion()),
       'urlBuilder' => $reviewListUrlbuilder
-    ]);
+    ], $response);
   }
 
   /**
    * @param $id
    * @Route(path="/reviews/{id}", requirements={ "id": "\d+" })
    */
-  public function showAction($id)
+  public function showAction($id, Request $request)
   {
+    /** @var Feedback $review */
     $review = $this
       ->getDoctrine()
       ->getManager()
@@ -298,9 +332,20 @@ ORDER BY t.NAME
       throw new NotFoundHttpException(sprintf('Feedback %s not found', $id));
     }
 
+    $response = new Response();
+    $response->setLastModified($review->getUpdatedAt());
+
+    // Set response as public. Otherwise it will be private by default.
+    $response->setPublic();
+
+    if ($response->isNotModified($request))
+    {
+      return $response;
+    }
+
     return $this->render('InsuranceCompany/Review/show.html.twig', [
       'review' => $review
-    ]);
+    ], $response);
   }
 
   /**
