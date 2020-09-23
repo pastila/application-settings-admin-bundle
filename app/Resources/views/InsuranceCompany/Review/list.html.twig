@@ -28,7 +28,7 @@
     <!-- Breadcrumbs -->
     <ul class="breadcrumbs">
         {% if is_mobile() or is_tablet() %}
-            <li class="active-breadcrumbs"><a href="/" class="">Отзывы</a></li>
+            <li class="active-breadcrumbs"><a href="/" class="">Главная</a></li>
         {% else %}
             <li><a href="/">Главная</a></li>
             <li class="active-breadcrumbs">Отзывы</li>
@@ -43,8 +43,8 @@
 
         <!-- Add and All feedback btns -->
         <div class="feedback__btns">
-            <a href="/add-feedback/" class="whiteBtn">Добавить отзыв</a>
-            <a href="?comments=all" class="accentBtnBorder">Все отзывы</a>
+            <a href="{{ path('app_insurancecompany_feedback_new') }}" class="whiteBtn">Добавить отзыв</a>
+            <a href="{{ path('app_insurancecompany_feedback_index') }}" class="accentBtnBorder">Все отзывы</a>
             {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ urlBuilder.buildUrl({ filter: { moderation: 0 }}) }}" class="accentBtnBorder">Модерация отзывов</a>
             {% endif %}

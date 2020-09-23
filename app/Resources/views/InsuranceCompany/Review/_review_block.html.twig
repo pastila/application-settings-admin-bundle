@@ -1,5 +1,5 @@
 <div class="white_block white_block_riview_{{ review.id }}">
-    {% if review.updatedAt %}
+    {% if review.updatedAt > review.createdAt %}
         <span class="date_review">Дата изменения {{ review.updatedAt|date('d M, Y') }}</span>
     {% endif %}
     {% if review.fromLetter %}
@@ -43,7 +43,7 @@
         <!--                </div>-->
     </div>
     <!-- Title -->
-    <a href="/feedback/comment-{{ review.id }}/">
+    <a href="{{ path('app_insurancecompany_feedback_show', { id: review.id }) }}">
         <h3 class="feedback__title">{{ review.title }}</h3>
     </a>
 

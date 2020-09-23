@@ -16,10 +16,12 @@ use AppBundle\Model\InsuranceCompany\Branch\BranchRatingHelper;
 use AppBundle\Model\InsuranceCompany\FeedbackListFilter;
 use AppBundle\Model\InsuranceCompany\FeedbackListFilterUrlBuilder;
 use AppBundle\Model\Pagination;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class FeedbackController extends Controller
@@ -33,6 +35,7 @@ class FeedbackController extends Controller
 
   /**
    * @Route(path="/reviews")
+   * @Route(path="/companies/{slug}/reviews", name="company_review_list")
    */
   public function indexAction(Request $request)
   {
@@ -188,6 +191,19 @@ ORDER BY t.NAME
     $reviewListFilter = new FeedbackListFilter();
     $reviewListFilter->setPage($request->query->get('page', 1));
 
+    if ($request->get('slug'))
+    {
+      $company = $this->getDoctrine()->getManager()->getRepository(Company::class)
+        ->findOneBy(['slug' => $request->get('slug')]);
+
+      if (!$company)
+      {
+        throw $this->createNotFoundException();
+      }
+
+      $reviewListFilter->setCompany($company);
+    }
+
     $reviewListUrlbuilder = new FeedbackListFilterUrlBuilder($reviewListFilter, $this->get('router'));
 
     $reviewListFilterForm = $this->createForm(FeedbackListFilterType::class, $reviewListFilter, [
@@ -195,11 +211,14 @@ ORDER BY t.NAME
     ]);
     $reviewListFilterForm->submit($request->query->get($reviewListFilterForm->getName()));
 
+    /** @var QueryBuilder $reviewListQb */
     $reviewListQb = $this
       ->getDoctrine()
       ->getManager()
       ->getRepository(Feedback::class)
-      ->createQueryBuilder('rv')
+      ->createQueryBuilder('rv');
+
+    $reviewListQb
       ->innerJoin('rv.branch', 'rvb')
       ->innerJoin('rvb.company', 'rvc');
 
@@ -233,6 +252,8 @@ ORDER BY t.NAME
 
     $maxPerPage = 10;
 
+    $reviewListQb->orderBy('rv.createdAt', 'DESC');
+
     $pagination = new Pagination($reviewListQb, $reviewListFilter->getPage(), $maxPerPage);
 
     $reviews = $pagination->getIterator();
@@ -249,9 +270,31 @@ ORDER BY t.NAME
   }
 
   /**
-   * @Route(path="/add-feedback")
+   * @param $id
+   * @Route(path="/reviews/{id}", requirements={ "id": "\d+" })
    */
-  public function indexAdd()
+  public function showAction($id)
+  {
+    $review = $this
+      ->getDoctrine()
+      ->getManager()
+      ->getRepository(Feedback::class)
+      ->find($id);
+
+    if (!$review)
+    {
+      throw new NotFoundHttpException(sprintf('Feedback %s not found', $id));
+    }
+
+    return $this->render('InsuranceCompany/Review/show.html.twig', [
+      'review' => $review
+    ]);
+  }
+
+  /**
+   * @Route(path="/reviews/add")
+   */
+  public function newAction()
   {
     return new Response('add-feedback');
   }

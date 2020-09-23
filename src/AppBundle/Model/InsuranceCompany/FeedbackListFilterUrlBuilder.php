@@ -58,6 +58,12 @@ class FeedbackListFilterUrlBuilder
 
   public function getBaseUrl()
   {
+    if ($this->originalFilter->getCompany())
+    {
+      return $this->router->generate('company_review_list', [
+        'slug' => $this->originalFilter->getCompany()->getSlug()
+      ]);
+    }
     return $this->router->generate('app_insurancecompany_feedback_index');
   }
 }
