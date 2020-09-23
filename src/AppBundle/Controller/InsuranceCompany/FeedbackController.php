@@ -265,7 +265,8 @@ ORDER BY t.NAME
 
     $reviewListQb
       ->innerJoin('rv.branch', 'rvb')
-      ->innerJoin('rvb.company', 'rvc');
+      ->innerJoin('rvb.company', 'rvc')
+      ->leftJoin('rv.comments', 'rvct');
 
     if ($reviewListFilter->getRating())
     {
@@ -360,5 +361,54 @@ ORDER BY t.NAME
     return $this->render('InsuranceCompany/Review/new.html.twig', [
       'form' => $form->createView()
     ]);
+  }
+
+  /**
+   * @Route(path="/reviews/add-comment")
+   */
+  public function addCommentAction(Request $request, UserInterface $user = null)
+  {
+    $data = $request->request->all();
+    $userId = null !== $user ? $user->getId() : null;
+    $user = $this->getDoctrine()->getManager()->getRepository(User::class)
+      ->findOneBy(['id' => $userId]);
+    $text = isset($data['comment']) ? $data['comment'] : null;
+    $review_id = isset($data['review_id']) ? $data['review_id'] : null;
+    $feedback = $this->getDoctrine()->getManager()->getRepository(Feedback::class)
+      ->findOneBy(['id' => $review_id]);
+
+    $comment = new Comment();
+    $comment->setUser($user);
+    $comment->setText($text);
+    $comment->setFeedback($feedback);
+    $comment->setModerationStatus(FeedbackModerationStatus::MODERATION_NONE);
+    $comment->setCreatedAt(new \DateTime());
+    $comment->setUpdatedAt(new \DateTime());
+
+    $this->getDoctrine()->getManager()->persist($comment);
+    $this->getDoctrine()->getManager()->flush();
+
+    return $this->redirectToRoute('app_insurancecompany_feedback_index', [], 302);
+  }
+
+  /**
+   * @Route(path="/reviews/remove-comment", name="remove_comment_ajax")
+   */
+  public function removeCommentAction(Request $request)
+  {
+    if ($request->isXmlHttpRequest()) {
+      $data = $request->request->all();
+      $comment_id = isset($data['id']) ? $data['id'] : null;
+
+      $comment = $this->getDoctrine()->getManager()->getRepository(Comment::class)
+        ->findOneBy(['id' => $comment_id]);
+      if (!empty($comment)) {
+        $em = $this->getDoctrine()->getEntityManager();
+        $em->remove($comment);
+        $em->flush();
+      }
+
+      return new JsonResponse(1);
+    }
   }
 }

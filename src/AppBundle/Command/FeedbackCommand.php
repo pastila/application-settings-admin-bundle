@@ -2,6 +2,7 @@
 
 namespace AppBundle\Command;
 
+use AppBundle\Entity\Company\Citation;
 use AppBundle\Entity\Company\Comment;
 use AppBundle\Entity\Company\Company;
 use AppBundle\Entity\Company\CompanyBranch;
@@ -35,7 +36,8 @@ class FeedbackCommand extends ContainerAwareCommand
   /**
    * @param InputInterface $input
    * @param OutputInterface $output
-   * @return int|void|null
+   * @return int|void
+   * @throws \Exception
    */
   protected function execute(InputInterface $input, OutputInterface $output)
   {
@@ -49,6 +51,7 @@ class FeedbackCommand extends ContainerAwareCommand
     $this->fillCompanyBranch($entityManager, $doctrine, $input, $output);
     $this->fillFeedback($entityManager, $doctrine, $input, $output);
     $this->fillComment($entityManager, $doctrine, $input, $output);
+    $this->fillCitation($entityManager, $doctrine, $input, $output);
   }
 
   /**
@@ -63,7 +66,8 @@ class FeedbackCommand extends ContainerAwareCommand
       Company::class,
       CompanyBranch::class,
       Feedback::class,
-      Comment::class
+      Comment::class,
+      Citation::class
     ];
 
     foreach ($tables as $table) {
@@ -370,7 +374,6 @@ class FeedbackCommand extends ContainerAwareCommand
       $date = !empty($created) ? date("Y-m-d H:i:s", strtotime($created)) : date("Y-m-d H:i:s");
       $status = FeedbackModerationStatus::MODERATION_NONE;
 
-
       $sql .= "INSERT INTO s_company_feedback_comments(text, created_at, updated_at, moderation_status) VALUES('$text', '$date', '$date', $status); ";
     }
     $stmt = $conn->prepare($sql);
@@ -378,5 +381,14 @@ class FeedbackCommand extends ContainerAwareCommand
 
     $io = new SymfonyStyle($input, $output);
     $io->success('Fill Comment:' . count($result));
+  }
+
+  /**
+   * @param $entityManager
+   * @param $doctrine
+   */
+  private function fillCitation($entityManager, $doctrine, InputInterface $input, OutputInterface $output)
+  {
+    // todo empty in base
   }
 }
