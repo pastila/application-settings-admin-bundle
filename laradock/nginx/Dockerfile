@@ -22,8 +22,8 @@ RUN set -x ; \
     addgroup -g 82 -S www-data ; \
     adduser -u 82 -D -S -G www-data www-data && exit 0 ; exit 1
 
-ARG PHP_UPSTREAM_CONTAINER=php-fpm
-ARG PHP_UPSTREAM_PORT=9000
+#ARG PHP_UPSTREAM_CONTAINER=php-fpm
+#ARG PHP_UPSTREAM_PORT=9000
 
 #####################################
 # Set Timezone
@@ -31,12 +31,12 @@ ARG PHP_UPSTREAM_PORT=9000
 
 ARG TZ=Europe/Moscow
 ENV TZ ${TZ}
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone 
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 
 # Set upstream conf and remove the default conf
-RUN echo "upstream php-upstream { server ${PHP_UPSTREAM_CONTAINER}:${PHP_UPSTREAM_PORT}; }" > /etc/nginx/conf.d/upstream.conf \
-    && rm /etc/nginx/conf.d/default.conf
+#RUN echo "upstream php-upstream { server ${PHP_UPSTREAM_CONTAINER}:${PHP_UPSTREAM_PORT}; }" > /etc/nginx/conf.d/upstream.conf \
+#    && rm /etc/nginx/conf.d/default.conf
 
 CMD ["nginx"]
 

@@ -1,0 +1,84 @@
+{%- block form_row -%}
+    {{- form_errors(form) -}}
+    {{- form_widget(form) -}}
+{%- endblock form_row -%}
+
+{% block bezbahil_filter_choice_widget %}
+    <div class="custom-select column-reverse_select">
+        <select style="display: none">
+            <option value="">{{ label|raw }}</option>
+            {% for choice in choices %}
+                <option {% if value == choice.value %}class="activ_filter"{% endif %}
+                        value="{{ form.vars.url_builder.buildUrl({ filter: { (form.vars.name): choice.value } }) }}">{{ choice.label }}</option>
+            {% endfor %}
+        </select>
+        {% if value %}
+            <a data-tooltip="{{ form.vars.clear_label }}" data-position="bottom" class="refresh_active-link bottom"
+               href="{{ form.vars.url_builder.buildUrl({ filter: { (form.vars.name): '' } }) }}">
+                <div class="activ_filter after-select_activ-filter">
+                    {% for choice in choices %}
+                        {% if value == choice.value %}{{ choice.label }}{% endif %}
+                    {% endfor %}
+                </div>
+            </a>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block bezbahil_autocomplete_widget %}
+    <div class="input__wrap">
+        <div class="input__ico">
+            <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255"
+                 viewBox="0 0 255 255">
+                <path d="M0 63.75l127.5 127.5L255 63.75z"/>
+            </svg>
+        </div>
+        <input id="referal" type="text" placeholder="Поиск по региону" autocomplete="off"/>
+        <ul style="cursor: pointer;" class="custom-serach__items" id="search_result">
+            {% for label, key in form.vars.choices %}
+            <li value="{{ key }}" class="custom-serach__items_item region " data-id-city="{{ key }}">{{ label }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+
+{% block bezbahil_autocomplete_company_widget %}
+    <div class="input__wrap">
+        <div class="input__ico">
+            <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255"
+                 viewBox="0 0 255 255">
+                <path d="M0 63.75l127.5 127.5L255 63.75z"/>
+            </svg>
+        </div>
+        <input id="referal_two" type="text" placeholder="Поиск по страховым компаниям"
+               autocomplete="off"/>
+        <ul style="cursor: pointer;" class="custom-serach__items"
+            id="search_result_hospital">
+
+        </ul>
+    </div>
+{% endblock %}
+
+{% block bezbahil_rating_widget %}
+    <!-- Rating Stars Box -->
+    <div class='rating-stars text-center input__wrap' data-select="star">
+        <label for="name" class="input__wrap_label">Оценка</label>
+        <ul id='stars'>
+            <li class='star' title='Poor' data-value='1'>
+                <i class='fa fa-star fa-fw'></i>
+            </li>
+            <li class='star' title='Fair' data-value='2'>
+                <i class='fa fa-star fa-fw'></i>
+            </li>
+            <li class='star' title='Good' data-value='3'>
+                <i class='fa fa-star fa-fw'></i>
+            </li>
+            <li class='star' title='Excellent' data-value='4'>
+                <i class='fa fa-star fa-fw'></i>
+            </li>
+            <li class='star' title='WOW!!!' data-value='5'>
+                <i class='fa fa-star fa-fw'></i>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
