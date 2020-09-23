@@ -365,8 +365,10 @@ class FeedbackCommand extends ContainerAwareCommand
       $text = !empty($item['COMMENTS']) ? $item['COMMENTS']: null;
       $created = !empty($item['DATE_CREATE']) ? $item['DATE_CREATE'] : null;
       $date = !empty($created) ? date("Y-m-d H:i:s", strtotime($created)) : date("Y-m-d H:i:s");
+      $status = FeedbackModerationStatus::MODERATION_NONE;
 
-      $sql .= "INSERT INTO s_company_feedback_comments(text, created_at, updated_at) VALUES('$text', '$date', '$date'); ";
+
+      $sql .= "INSERT INTO s_company_feedback_comments(text, created_at, updated_at, moderation_status) VALUES('$text', '$date', '$date', $status); ";
     }
     $stmt = $conn->prepare($sql);
     $stmt->execute();
