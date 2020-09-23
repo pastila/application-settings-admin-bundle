@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block meta %}
+    {{ parent() }}
+    <meta name="robots" content="index, follow"/>
+    <meta name="title" content="Рейтинг страховых компаний работающих в системе ОМС"/>
+    <meta name="keywords"
+          content="медицинское страхование отзывы, бесплатное лечение, бесплатная медицинская помощь, рейтинг медицинских страховых компаний омс в москве"/>
+    <meta name="description" content="Рейтинг страховых компаний работающих в системе ОМС"/>
+{% endblock %}
+
+{% block title %}Рейтинг страховых компаний работающих в системе ОМС{% endblock %}
+
+{% block stylesheets %}
+    <link href="/local/templates/kdteam/pages/feedback/main.min.css?158626847510518" type="text/css" rel="stylesheet"/>
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="/local/templates/kdteam/js/main.min.js?1593497507172695"></script>
+    <script type="text/javascript" src="/local/templates/kdteam/pages/feedback/main.min.js?15862684754547"></script>
+    <script type="text/javascript" src="/local/templates/kdteam/js/readmore.min.js?1586268475879"></script>
+    {{ parent() }}
+{% endblock %}
+
+{% block main %}
+    <ul class="breadcrumbs">
+        {% if is_mobile() or is_tablet() %}
+            <li><a href="{{ path("app_insurancecompany_feedback_index") }}" class="active-breadcrumbs">{{ review.title }}</a></li>
+        {% else %}
+            <li><a href="/">Главная</a></li>
+            <li><a href="{{ path("app_insurancecompany_feedback_index") }}">Отзывы</a></li>
+            <li class="active-breadcrumbs">{{ review.title }}</li>
+        {% endif %}
+    </ul>
+
+    {% include "InsuranceCompany/Review/_review_block.html.twig" %}
+{% endblock %}

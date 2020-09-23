@@ -1,0 +1,108 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Рейтинг страховых компаний работающих в системе ОМС{% endblock %}
+
+{% block stylesheets %}
+    <link href="/local/templates/kdteam/pages/style/main.min.css" type="text/css" rel="stylesheet"/>
+    <link href="/local/templates/kdteam/pages/feedback/add/main.min.css" type="text/css" rel="stylesheet"/>
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="/local/templates/kdteam/js/main.min.js"></script>
+    <script type="text/javascript" src="/local/templates/kdteam/pages/feedback/add/main.min.js"></script>
+    {{ parent() }}
+{% endblock %}
+
+{% block main %}
+    <!-- Breadcrumbs -->
+    <ul class="breadcrumbs">
+        {% if is_mobile() or is_tablet() %}
+            <li class="active-breadcrumbs"><a href="{{ path("app_insurancecompany_feedback_index") }}" class="">Добавление
+                    отзыва</a></li>
+        {% else %}
+            <li><a href="/">Главная</a></li>
+            <li><a href="{{ path("app_insurancecompany_feedback_index") }}">Отзывы</a></li>
+            <li class="active-breadcrumbs">Добавление отзыва</li>
+        {% endif %}
+    </ul>
+
+    <!-- Pages Title -->
+    {#            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}#}
+    <h1 class="page-title">Добавить отзыв о компании</h1>
+
+    <!-- Wrap -->
+    {{ form_start(form, { attr: { id: "form-comments"} }) }}
+    <div class="white_block">
+
+    <div class="feedback__top">
+        <div class="add_reviews-select">
+            <label class="input__wrap_label" for="user_pass">Выбор региона: </label>
+            {{ form_row(form.region) }}
+        </div>
+        <div class="add_reviews-select">
+            <label class="input__wrap_label" for="user_pass">Список страховых компаний : </label>
+            {{ form_row(form.company) }}
+        </div>
+    </div>
+
+    <h3 class="feedback__title">
+        Расскажите о вашей ситуации
+    </h3>
+    {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+    <div class="input__wrap name_user_no_Authorized">
+        <label for="name_user" class="input__wrap_label">Введите свое имя</label>
+        {{ form_row(form.author_name, { attr: { placeholder: "Имя" } }) }}
+{#        <input id="name_user" type="name_user" name="name_user" placeholder="Имя" required#}
+{#               pattern="([а-яЁА-ЯЁ]+)">#}
+    </div>
+    {% endif %}
+
+
+    <div class="input__wrap">
+        <label for="name" class="input__wrap_label">Заголовок</label>
+        {{ form_row(form.title) }}
+{#        <input id="title" type="title" name="title" required>#}
+    </div>
+
+    <div class="input__wrap">
+        <label for="name" class="input__wrap_label">Описание</label>
+        {{ form_row(form.text, { attr: { rows: 10 }}) }}
+{#        <textarea rows="10" name="description" id="description" required></textarea>#}
+    </div>
+
+    <div class="feedback__bottom">
+        <div class="feedback__bottom_star">
+            {{ form_row(form.valuation) }}
+
+            <div class="danger" style="display: none">Дайте оценку компании</div>
+
+            <div class='success-box'>
+                <div class='text-message'></div>
+                <div class='clearfix'></div>
+            </div>
+        </div>
+
+        <div class="feedback__bottom_r">
+            <!-- Checkbox -->
+            <div class="wrap-chrckbox">
+                <!--                                <label class="check-label">-->
+                <!--                                    Согласен с правилами публикации отзывов на сайте-->
+                <!--                                    <input type="checkbox" value="" />-->
+                <!--                                    <span class="check-img"></span>-->
+            </div>
+
+            <button type="submit" class="smallMainBtn" id="submit">Отправить</button>
+        </div>
+    </div>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+    {#            <!--            -->{% else %}#}
+    {#            <!--                <h2 style="color: red;" class="page-title">Отзывы можно оставлять только авторизованным-->#}
+    {#            <!--                    пользователям!</h2>-->#}
+    {#            <!--                <p>Для того чтобы вернуться на страницу «отзывы», кликните <a style="text-decoration: underline"-->#}
+    {#            <!--                                                                              href="/feedback/">сюда</a></p>-->#}
+    {#            <!--            -->{% endif %}#}
+    </div>
+{% endblock %}

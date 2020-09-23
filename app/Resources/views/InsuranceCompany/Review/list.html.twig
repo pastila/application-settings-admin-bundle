@@ -1,0 +1,304 @@
+{% extends "base.html.twig" %}
+
+{% block meta %}
+    {{ parent() }}
+    <meta name="robots" content="index, follow"/>
+    <meta name="title" content="Рейтинг страховых компаний работающих в системе ОМС"/>
+    <meta name="keywords"
+          content="медицинское страхование отзывы, бесплатное лечение, бесплатная медицинская помощь, рейтинг медицинских страховых компаний омс в москве"/>
+    <meta name="description" content="Рейтинг страховых компаний работающих в системе ОМС"/>
+{% endblock %}
+
+{% block title %}Рейтинг страховых компаний работающих в системе ОМС{% endblock %}
+
+{% block stylesheets %}
+    <link href="/local/templates/kdteam/pages/feedback/main.min.css?158626847510518" type="text/css" rel="stylesheet"/>
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="/local/templates/kdteam/js/main.min.js?1593497507172695"></script>
+    <script type="text/javascript" src="/local/templates/kdteam/pages/feedback/main.min.js?15862684754547"></script>
+    <script type="text/javascript" src="/local/templates/kdteam/js/readmore.min.js?1586268475879"></script>
+    {{ parent() }}
+{% endblock %}
+
+
+{% block main %}
+    <!-- Breadcrumbs -->
+    <ul class="breadcrumbs">
+        {% if is_mobile() or is_tablet() %}
+            <li class="active-breadcrumbs"><a href="/" class="">Главная</a></li>
+        {% else %}
+            <li><a href="/">Главная</a></li>
+            <li class="active-breadcrumbs">Отзывы</li>
+        {% endif %}
+    </ul>
+
+    <!-- Pages Title -->
+    <h1 class="page-title">Отзывы о страховых медицинских организациях</h1>
+
+    <!-- ALL STEPS IN FORM -->
+    <form action="" class="white_block">
+
+        <!-- Add and All feedback btns -->
+        <div class="feedback__btns">
+            <a href="{{ path('app_insurancecompany_feedback_new') }}" class="whiteBtn">Добавить отзыв</a>
+            <a href="{{ path('app_insurancecompany_feedback_index') }}" class="accentBtnBorder">Все отзывы</a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ urlBuilder.buildUrl({ filter: { moderation: 0 }}) }}" class="accentBtnBorder">Модерация отзывов</a>
+            {% endif %}
+        </div>
+
+        <div class="feedback__filter">
+            {{ form_row(filterForm.company) }}
+            {{ form_row(filterForm.rating) }}
+            {{ form_row(filterForm.region) }}
+            {#                        <div class="custom-select column-reverse_select">#}
+            {#                            <select style="display: none" onchange="window.open(this.value)">#}
+
+            {#                                <option value="0">Оценка</option>#}
+            {#                                <?php#}
+            {#                            $bool_check_evalution = false;#}
+            {#                            $check_evalution = "";#}
+            {#                            if (isset($_GET["property_evaluation"]) || isset($_GET["property_name_company"]) || isset($_GET["property_region"]) || isset($_GET["property_kpp"])) {#}
+
+
+            {#                                $url_for_filter = "?";#}
+
+            {#                                foreach ($sort_url as $key => $filter) {#}
+            {#                                if ($key != "property_evaluation") {#}
+            {#                                $url_for_filter .= "$key=$filter&";#}
+            {#                                }#}
+            {#                                }#}
+
+            {#                                for ($i = 1; $i <= 5; ++$i) {#}
+            {#                                if ($url_for_filter == "") {#}
+            {#                                $url_for_filter = "?";#}
+            {#                                }#}
+            {#                                if ($_GET["property_evaluation"] != $i) {#}
+
+            {#                                ?>#}
+            {#                                <option value="<?= $url_for_filter ?>property_evaluation=<?= $i ?>" class="number_star">#}
+            {#                                    Оценки <?= $i ?>#}
+            {#                                </option>#}
+            {#                                <?php } else {#}
+            {#                                        if ($url_for_filter == "?") {#}
+            {#                                            $url_for_filter = "";#}
+            {#                                        }#}
+            {#                                        $bool_check_evalution = true;#}
+            {#                                        $check_evalution = $i;#}
+            {#                                        ?>#}
+            {#                                <option value="<?= $url_for_filter ?>" class="number_star activ_filter">#}
+            {#                                    Оценки <?= $i ?>#}
+            {#                                </option>#}
+
+            {#                                <?#}
+            {#                                    }#}
+            {#                                }#}
+            {#                            } else {#}
+            {#                                for ($i = 1; $i <= 5; ++$i) {#}
+            {#                                    ?>#}
+
+            {#                                <option value="?property_evaluation=<?= $i ?>" class="number_star">Оценки <?= $i ?>#}
+            {#                                </option>#}
+            {#                                <? }#}
+            {#                            } ?>#}
+
+
+            {#                            </select>#}
+            {#                            <?php if (isset($_GET["property_evaluation"]) || isset($_GET["property_kpp"]) || isset($_GET["property_region"])) {#}
+            {#                            if ($bool_check_evalution === true) {#}
+
+            {#                                $url_for_filter = "?";#}
+            {#                                foreach ($sort_url as $key => $filter) {#}
+
+            {#                            if ($key != "property_evaluation" && $key!="PAGEN_1") {#}
+            {#                            $url_for_filter .= "$key=$filter&";#}
+            {#                            }#}
+            {#                            }#}
+            {#                            if ($url_for_filter == "?") {#}
+            {#                            $url_for_filter = "/feedback/";#}
+            {#                            }#}
+            {#                            ?>#}
+            {#                            <a data-tooltip="Очистить оценку" data-position="bottom" class="refresh_active-link bottom"#}
+            {#                               href="<?= $url_for_filter ?>">#}
+            {#                                <div class="activ_filter after-select_activ-filter">#}
+            {#                                    Оценка <?= $check_evalution ?></div>#}
+            {#                            </a>#}
+            {#                            <? }#}
+            {#                        } ?>#}
+
+            {#                        </div>#}
+
+            {#                        <div class="custom-select column-reverse_select">#}
+            {#                            <select style="display: none" onchange="window.open(this.value)">#}
+            {#                                <option value="0">Регион</option>#}
+            {#                                <?php#}
+            {#                            $name_region = "";#}
+            {#                            $order = Array("name" => "asc");#}
+            {#                                $arFilter = Array("IBLOCK_ID" => 16);#}
+            {#                                $Section_filter = CIBlockSection::GetList($order, $arFilter, false);#}
+            {#                                if (isset($_GET["property_evaluation"]) || isset($_GET["property_name_company"]) ||#}
+            {#                                isset($_GET["property_region"]) || isset($_GET["property_kpp"])) {#}
+            {#                                while ($ob_section_filter = $Section_filter->GetNext()) {#}
+            {#                                if ($_GET["property_region"] != $ob_section_filter["ID"]) {#}
+            {#                                $url_for_filter = "?";#}
+            {#                                foreach ($sort_url as $key => $filter) {#}
+            {#                                if ($key != "property_region") {#}
+            {#                                $url_for_filter .= "$key=$filter&";#}
+            {#                                }#}
+            {#                                }#}
+            {#                                ?>#}
+            {#                                <option class="sidebar__item_lists_list"#}
+            {#                                        value="<?= $url_for_filter ?>property_region=<?= $ob_section_filter[" ID#}
+            {#                                "] ?>">#}
+            {#                                <?= $ob_section_filter["NAME"] ?>#}
+            {#                                </option>#}
+            {#                                <? } else {#}
+            {#                                        $url_for_filter = "?";#}
+            {#                                        $bool_check_region = true;#}
+
+            {#                                        $name_region = $ob_section_filter["NAME"];#}
+            {#                                        foreach ($sort_url as $key => $filter) {#}
+            {#                                if ($key != "property_region") {#}
+            {#                                $url_for_filter .= "$key=$filter&";#}
+            {#                                }#}
+            {#                                }#}
+            {#                                if ($url_for_filter == "?") {#}
+            {#                                $url_for_filter = "";#}
+            {#                                }#}
+            {#                                ?>#}
+            {#                                <option class="activ_filter" value="<?= $url_for_filter ?>">#}
+            {#                                    <?= $ob_section_filter["NAME"] ?>#}
+            {#                                </option>#}
+            {#                                <? }#}
+
+            {#                                }#}
+            {#                                ?>#}
+            {#                                <? } else {#}
+            {#                                while ($ob_section_filter = $Section_filter->GetNext()) {#}
+            {#                                ?>#}
+            {#                                <option class="sidebar__item_lists_list"#}
+            {#                                        value="?property_region=<?= $ob_section_filter[" ID#}
+            {#                                "] ?>">#}
+            {#                                <?= $ob_section_filter["NAME"] ?>#}
+            {#                                </option>#}
+            {#                                <? } ?>#}
+
+            {#                                <? } ?>#}
+            {#                            </select>#}
+            {#                            <?php if (isset($_GET["property_evaluation"]) || isset($_GET["property_kpp"]) || isset($_GET["property_region"])) {#}
+            {#                            if ($bool_check_region === true) {#}
+
+            {#                                $url_for_filter = "?";#}
+            {#                                foreach ($sort_url as $key => $filter) {#}
+
+            {#                            if ($key != "property_region" && $key!="PAGEN_1") {#}
+            {#                            $url_for_filter .= "$key=$filter&";#}
+            {#                            }#}
+            {#                            }#}
+            {#                            if ($url_for_filter == "?") {#}
+            {#                            $url_for_filter = "/feedback/";#}
+            {#                            }#}
+            {#                            ?>#}
+            {#                            <a data-tooltip="Очистить город" data-position="bottom" class="refresh_active-link bottom"#}
+            {#                               href="<?= $url_for_filter ?>">#}
+            {#                                <div class="activ_filter after-select_activ-filter">#}
+            {#                                    <?= $name_region ?></div>#}
+            {#                            </a>#}
+            {#                            <? }#}
+            {#                        } ?>#}
+
+            {#                        </div>#}
+
+            <a class="feedback__filter__reset" href="{{ path('app_insurancecompany_feedback_index') }}">Сбросить
+                фильтры</a>
+        </div>
+
+    </form>
+
+    <!-- Wrap -->
+    <div class="feedback">
+    <div class="feedback__wrap_white-blocks">
+    <!-- FeedBack block -->
+
+    {% if nbReviews == 0 %}
+        <div>
+            <p class="error title-medium">Отзывы не найдены</p>
+        </div>
+    {% else %}
+        {% for review in reviews %}
+           {% include "InsuranceCompany/Review/_review_block.html.twig" %}
+        {% endfor %}
+
+        {% if pagination.lastPage > 1 %}
+            <font class="text title_count_page">
+                Показано: {{ pagination.offset + 1 }}
+                - {{ min(pagination.offset + pagination.maxPerPage, pagination.lastResult) }}
+                из {{ pagination.nbResults }}
+            </font>
+            <font class="text block_pagen">
+                {% if pagination.page > 1 %}
+                    <a href="{{ urlBuilder.buildUrl({ page: 1 }) }}">Начало</a>
+                    <a href="{{ urlBuilder.buildUrl({ page: pagination.page - 1 }) }}">Пред.</a>
+                {% endif %}
+
+                {% for i in range(low=max(1, pagination.page - 3), high=min(max(1, pagination.page - 3) + 4, pagination.lastPage), step=1) %}
+                    {% if i != pagination.page %}
+                        <a title="{{ i }}"
+                           href="{{ urlBuilder.buildUrl({page: i}) }}">{{ i }}</a>
+                    {% else %}
+                        <b>{{ i }}</b>
+                    {% endif %}
+                {% endfor %}
+
+                {% if pagination.page < pagination.lastPage %}
+                    <a href="{{ urlBuilder.buildUrl({ page: pagination.page + 1 }) }}">След.</a>
+                    <a href="{{ urlBuilder.buildUrl({ page: pagination.lastPage }) }}">Конец</a>
+                {% endif %}
+            </font>
+
+        {% endif %}
+
+        </div>
+
+
+        {% if nbReviews %}
+            <div class="sidebar">
+                <!-- First Sidebar block -->
+                <div class="white_block">
+
+                    <h3 class="sidebar__item_title">Рейтинг страховых
+                        компаний{% if filter.region %} ({{ filter.region.name }}){% endif %}</h3>
+
+                    <ul class="sidebar__item_lists scrollbar">
+                        {% for i, company in companyRating %}
+                            <li class="sidebar__item_lists_list list_numbered-items">
+                                <span class="sidebar_count number">{{ i+1 }}</span>
+                                <a href="{{ urlBuilder.buildUrl({ filter: { company: company[0].kpp } }) }}"
+                                   class="sidebar__item_lists_list_link" id="company"
+                                   data-amount-star="{{ company.actualRating }}"
+                                   data-id="{{ company[0].id }}">{{ company[0].name }}</a>
+                                <span class="sidebar_count rating">{{ company.actualRating }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                    <div class="center__child">
+                        <a class="mainBtn" href="{{ path('app_insurancecompany_feedback_index') }}">Весь рейтинг</a>
+                    </div>
+                </div>
+
+
+            </div>
+        {% endif %}
+        </div>
+    {% endif %}
+    <div class="info_block white_block">
+        <p>Если у вас есть опыт обращения к своему страховому представителю, опишите его, вне зависимости от того,<br>
+            положительный он или отрицательный. Так вы внесете свой вклад в формирование рейтинга страховых компаний<br>
+            и возможно именно ваш отзыв станет решающим для посетителей сайта при выборе страховой компании. </p>
+    </div>
+    <!-- Second Sidebar block -->
+{% endblock %}
