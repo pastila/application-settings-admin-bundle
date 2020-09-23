@@ -59,7 +59,7 @@
 
     &__three {
         margin-bottom: 5vmin;
-        
+
         &_title {
             font-size: 1.8rem;
             margin-bottom: 5vmin;
@@ -102,7 +102,7 @@
             }
 
             &_bottom {
-                
+
                 &_text {
                     font-weight: bold;
                     font-size: 1.8rem;
@@ -154,15 +154,30 @@
         @media screen and (min-width: 577px){
             margin-bottom: 5vmin;
         }
+
+        .mainBtn {
+            position: absolute;
+            top: 8.8rem;
+            right: 7rem;
+
+            @media(max-width: 1399px) {
+                top: 5rem;
+                right: 4rem;
+            }
+
+            @media(max-width: 992px) {
+                position: static;
+            }
+        }
     }
 }
 
 @media screen and (min-width: 992px) {
     .block {
         &__top {
-    
+
             &_title {
-    
+
                 &_text {
                     font-size: 2.6rem;
                 }
@@ -227,7 +242,7 @@
                     &_text {
                         font-size: 1.8rem;
                     }
-                    
+
                     &_items {
                         &_item {
                             width: 20rem;
@@ -251,9 +266,9 @@
 @media screen and (min-width: 1200px) {
     .block {
         &__top {
-    
+
             &_title {
-    
+
                 &_text {
                     font-size: 3.6rem;
                 }
@@ -281,4 +296,8 @@
             }
         }
     }
+}
+
+.card {
+    position: relative;
 }
