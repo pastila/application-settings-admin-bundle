@@ -414,4 +414,32 @@ ORDER BY t.NAME
       return new JsonResponse(1);
     }
   }
+
+  /**
+   * @Route(path="/reviews/add-comment")
+   */
+  public function addCommentAction(Request $request, UserInterface $user = null)
+  {
+    $data = $request->request->all();
+    $userId = null !== $user ? $user->getId() : null;
+    $user = $this->getDoctrine()->getManager()->getRepository(User::class)
+      ->findOneBy(['id' => $userId]);
+    $text = isset($data['comment']) ? $data['comment'] : null;
+    $review_id = isset($data['review_id']) ? $data['review_id'] : null;
+    $feedback = $this->getDoctrine()->getManager()->getRepository(Feedback::class)
+      ->findOneBy(['id' => $review_id]);
+
+    $comment = new Comment();
+    $comment->setUser($user);
+    $comment->setText($text);
+    $comment->setFeedback($feedback);
+    $comment->setModerationStatus(FeedbackModerationStatus::MODERATION_NONE);
+    $comment->setCreatedAt(new \DateTime());
+    $comment->setUpdatedAt(new \DateTime());
+
+    $this->getDoctrine()->getManager()->persist($comment);
+    $this->getDoctrine()->getManager()->flush();
+
+    return $this->redirectToRoute('app_insurancecompany_feedback_index', [], 302);
+  }
 }

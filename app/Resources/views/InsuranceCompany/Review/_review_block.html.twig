@@ -69,13 +69,14 @@
             <a rel="nofollow" class="toggle_comment_dropdown opacity_block">Оставить комментарий</a>
         {% endif %}
         <div class="block_commented_styles block__commented">
-            <form action="">
+            <form action="reviews/add-comment" method="POST">
                 <div class="input__wrap">
                             <textarea minlength="10" name="comment" required
                                       data-id-comment="{{ review.id }}"></textarea>
                 </div>
+                <input name="review_id" type="hidden" value="{{ review.id }}">
                 <div class="danger hidden">Заполните поле</div>
-                <button type="submit" class="smallMainBtn button-comments" id="comments"
+                <button type="submit" class="smallMainBtn" id="comments"
                         data-id-comment="{{ review.id }}">Комментировать
                 </button>
             </form>
