@@ -33,7 +33,14 @@ class CommentAdmin extends AbstractAdmin
       ])
       ->add('moderationStatus', null, [
         'label' => 'Статус модерации',
-      ]);
+      ])
+      ->add('_action', null, array(
+        'label' => 'Действия',
+        'actions' => array(
+          'edit' => array(),
+          'delete' => array(),
+        )
+      ));
   }
 
   /**

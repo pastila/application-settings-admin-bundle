@@ -37,22 +37,14 @@ class FeedbackAdmin extends AbstractAdmin
       ])
       ->add('moderationStatusLabel', null, [
         'label' => 'Статус модерации',
-      ]);
-  }
-
-  protected function configureShowFields (ShowMapper $show)
-  {
-    $show
-      ->add('branch', null, [
-        'label' => 'Отделение',
       ])
-      ->add('region', null, [
-        'label' => 'Регион',
-      ])
-      ->add('title', null, [
-        'label' => 'Заголовок',
-      ])
-    ;
+      ->add('_action', null, array(
+        'label' => 'Действия',
+        'actions' => array(
+          'edit' => array(),
+          'delete' => array(),
+        )
+      ));
   }
 
   /**
