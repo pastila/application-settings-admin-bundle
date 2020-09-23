@@ -5,6 +5,7 @@
 
 namespace AppBundle\Controller\InsuranceCompany;
 
+use AppBundle\Entity\Company\Comment;
 use AppBundle\Entity\Company\Company;
 use AppBundle\Entity\Company\CompanyBranch;
 use AppBundle\Entity\Company\Feedback;
@@ -21,10 +22,12 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class FeedbackController extends Controller
 {

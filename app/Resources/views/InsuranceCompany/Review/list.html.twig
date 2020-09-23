@@ -21,6 +21,28 @@
     <script type="text/javascript" src="/local/templates/kdteam/pages/feedback/main.min.js?15862684754547"></script>
     <script type="text/javascript" src="/local/templates/kdteam/js/readmore.min.js?1586268475879"></script>
     {{ parent() }}
+    <script>
+        $( document ).ready(function() {
+            $(".delete_comment").click(function() {
+                var id = $(this).attr("data-id");
+                var data = {
+                    "case":"comment",
+                    "id":id,
+                };
+                $.ajax({
+                    dataType: 'html',
+                    url: "{{ url('remove_comment_ajax', {}, false) }}",
+                    type: 'POST',
+                    data: data,
+                    success: function(msg){
+                        if(msg == 1) {
+                            window.location.reload();
+                        }
+                    },
+                })
+            });
+        });
+    </script>
 {% endblock %}
 
 

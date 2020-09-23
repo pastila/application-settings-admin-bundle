@@ -61,7 +61,7 @@
             <img src="" alt="">
 
             <span class="comment-count">
-                        <?= $count_comments ?>
+                        {{ review.comments | length }}
                     </span>
             комментариев
         </a>
@@ -83,134 +83,25 @@
     </div>
     <!-- COMMETNS -->
     <div class="hidenComments">
-        <?php
-                    $ID_COMMENTS = $arProps["COMMENTS_TO_REWIEW"]["VALUE"]; /// комментарии
-                    $order = Array("date_active_from" => "desc");
-
-        $arSelectComments = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
-        $arFilterComments = Array("IBLOCK_ID" => 14, "ACTIVE" => "Y", "ID" => $ID_COMMENTS);
-        $resComments = CIBlockElement::GetList($order, $arFilterComments, false, false, $arSelectComments);
-        while ($obComments = $resComments->GetNextElement()) {
-        $arFieldsComments = $obComments->GetFields();
-        $arPropsComments = $obComments->GetProperties();
-        $newDateComments = FormatDate("d F, Y", MakeTimeStamp($arFieldsComments["DATE_ACTIVE_FROM"]));
-
-        $rsUserComments = CUser::GetByID($arPropsComments["AVTOR_COMMENTS"]["VALUE"]);
-        $arUserComments = $rsUserComments->Fetch();
-        $name_userComments = $arUserComments["NAME"];
-
-        // $file_comment = CFile::ResizeImageGet($arUserComments["PERSONAL_PHOTO"],
-        // array('width' => 50, 'height' => 50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
-
-
-        ?>
-        {% if is_granted('ROLE_ADMIN') %}
-        <div class="block_remove">
-
-            <div data-id="<?php echo $arFieldsComments[" ID
-            "]; ?>"
-            class="delet_comment remove_comment">Удалить
-            комментарий
-        </div>
-    </div>
-    {% endif %}
-    <div class="hidenComments__top">
-        <!--                    <img src="--><?php //echo $file_comment["src"] ?>
-        <!--" alt="OMS">-->
-
-
-        <? if ($arPropsComments["REPRESENTATIVE"]["VALUE"] == "1") { ?>
-        <div class="feedback_strah_user">
-            <p class="text_user">Представитель страховой службы</p>
-        </div>
-        <? } ?>
-        <div class="hidenComments__top_wrap">
-            <div class="hidenComments__top_name"><?= $name_userComments ?></div>
-
-            <div class="hidenComments__top_data"><?= $newDateComments ?></div>
-        </div>
-
-    </div>
-
-    <p><?= $arPropsComments["COMMENTS"]["VALUE"] ?></p>
-    <? if ($USER->IsAuthorized()) { ?>
-    <? if ($arPropsComments["CITED"]["VALUE"] == "") { ?>
-    <!--                        <a id="show-comment" class="hidenComments__link" href="#">Цитировать</a>-->
-    <div class="block_commented_styles">
-        <form action="">
-            <div class="input__wrap">
-                            <textarea minlength="10" name="cited" required
-                                      data-id-cited="<?= $arFieldsComments[" ID"] ?>"></textarea>
+        {% for comment in review.comments %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <form action="reviews/remove-comment" method="POST">
+                    <div class="block_remove">
+                        <div data-id="{{ comment.id }}" class="delete_comment remove_comment">
+                            Удалить комментарий
+                        </div>
+                    </div>
+                </form>
+            {% endif %}
+            <div class="hidenComments__top">
+                <div class="hidenComments__top_wrap">
+                    <div class="hidenComments__top_name">{{ comment.user.fullName }}</div>
+                    <div class="hidenComments__top_data">{{ comment.createdAt |date("d-m-Y") }}</div>
+                </div>
             </div>
-            <div class="danger hidden">Заполните поле</div>
-            <button type="submit" class="smallMainBtn button-cited" id="comments"
-                    data-id-cited="<?= $arFieldsComments[" ID
-            "] ?>">Цитировать
-            </button>
-        </form>
+            <p>{{comment.text}}</p>
+        {% endfor %}
     </div>
-    <? } ?>
-    <? } ?>
-    <!-- Цитаты-->
-    <?php if ($arPropsComments["CITED"]["VALUE"] != "") {  // цитаты к коментариям ?>
-    <div class="block_quotes">
-        <?php if ($USER->IsAdmin()) { ?>
-        <div class="block_remove">
-            <div class="delet_cation remove_comment"
-                 data-id="<?php echo $arFieldsQuote[" ID
-            "]; ?>">Удалить
-            цитату
-        </div>
-    </div>
-    <?php } ?>
-    <?
-
-                                $ID_Quote = $arPropsComments["CITED"]["VALUE"];
-                                $arSelectQuote = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_*");
-                                $arFilterQuote = Array("IBLOCK_ID" => 15, "ACTIVE" => "Y", "ID" => $ID_Quote);
-    $resQuote = CIBlockElement::GetList(false, $arFilterQuote, false, false,
-    $arSelectQuote);
-    while ($obQuote = $resQuote->GetNextElement()) {
-    $arFieldsQuote = $obQuote->GetFields();
-    $arPropsQuote = $obQuote->GetProperties();
-    $newDateQuote = FormatDate("d F, Y",
-    MakeTimeStamp($arFieldsQuote["DATE_ACTIVE_FROM"]));
-    $ID_USERQuote = $arPropsQuote["AVTOR_CIATION"]["VALUE"];
-    $rsUserQuote = CUser::GetByID($ID_USERQuote);
-    $arUserQuote = $rsUserQuote->Fetch();
-    $name_userQuote = $arUserQuote["NAME"];
-    // $file_quote = CFile::ResizeImageGet($arUserQuote["PERSONAL_PHOTO"],
-    // array('width' => 50, 'height' => 50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
-
-    ?>
-    <div class="hidenComments__top">
-
-        <!--                        <img src="--><?php //echo $file_quote["src"]; ?>
-        <!--" alt="OMS">-->
-
-
-        <? if ($arPropsQuote["REPRESENTATIVE"]["VALUE"] == "1") { ?>
-        <div class="feedback_strah_user">
-            <p class="text_user">Представитель страховой службы</p>
-        </div>
-        <? } ?>
-        <div class="hidenComments__top_wrap">
-            <div class="hidenComments__top_name"><?= $name_userQuote ?></div>
-            <div class="hidenComments__top_data"><?= $newDateQuote ?></div>
-        </div>
-
-
-    </div>
-
-    <p class="quotes_italic">« <?= $arPropsQuote["CIATION"]["VALUE"] ?> »</p>
-
-
-    <? } ?>
-
-</div>
-<? } ?>
-<? } ?>
-</div>
 
 {% if is_granted('ROLE_ADMIN') %}
     <div class="right_content-reviews">
@@ -246,5 +137,4 @@
         {% endif %}
     </div>
 {% endif %}
-
-</div><!-- FeedBack block END -->
+</div>
