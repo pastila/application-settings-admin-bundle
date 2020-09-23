@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new Sonata\AdminBundle\SonataAdminBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 
+            new Accurateweb\SlugifierBundle\AccuratewebSlugifierBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 //            new Accurateweb\ImagingBundle\AccuratewebImagingBundle(),
 //            new Accurateweb\MediaBundle\AccuratewebMediaBundle(),

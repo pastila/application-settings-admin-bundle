@@ -5,14 +5,15 @@ namespace AppBundle\Entity\Company;
 use Accurateweb\MediaBundle\Model\Image\ImageAwareInterface;
 use Accurateweb\MediaBundle\Model\Media\ImageInterface;
 use Accurateweb\MediaBundle\Model\Thumbnail\ImageThumbnail;
-use AppBundle\Entity\Geo\Region;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Company.
  *
  * @ORM\Table(name="s_companies")
+ * @UniqueEntity("slug")
  * @ORM\Entity()
  */
 class Company implements ImageAwareInterface, ImageInterface
@@ -24,6 +25,20 @@ class Company implements ImageAwareInterface, ImageInterface
    * @ORM\Column(type="integer")
    */
   protected $id;
+
+  /**
+   * @var string
+   *
+   * @ORM\Column(length=255, nullable=true)
+   */
+  protected $slugRoot;
+
+  /**
+   * @var string
+   *
+   * @ORM\Column(length=255, unique=true)
+   */
+  private $slug;
 
   /**
    * Название компании
@@ -75,7 +90,7 @@ class Company implements ImageAwareInterface, ImageInterface
   /**
    * Company constructor.
    */
-  public function __construct ()
+  public function __construct()
   {
     $this->feedbacks = new ArrayCollection();
     $this->branches = new ArrayCollection();
@@ -124,7 +139,7 @@ class Company implements ImageAwareInterface, ImageInterface
   /**
    * @return string
    */
-  public function getKpp ()
+  public function getKpp()
   {
     return $this->kpp;
   }
@@ -151,7 +166,7 @@ class Company implements ImageAwareInterface, ImageInterface
   /**
    * @return string
    */
-  public function getFile ()
+  public function getFile()
   {
     return $this->file;
   }
@@ -160,10 +175,9 @@ class Company implements ImageAwareInterface, ImageInterface
    * @param string $file
    * @return $this
    */
-  public function setFile ($file)
+  public function setFile($file)
   {
-    if ($file === null)
-    {
+    if ($file === null) {
       return $this;
     }
 
@@ -176,7 +190,7 @@ class Company implements ImageAwareInterface, ImageInterface
    * @param null $id
    * @return ImageInterface
    */
-  public function getImage ($id = null)
+  public function getImage($id = null)
   {
     return $this;
   }
@@ -185,7 +199,7 @@ class Company implements ImageAwareInterface, ImageInterface
    * @param ImageInterface $image
    * @return $this
    */
-  public function setImage (ImageInterface $image)
+  public function setImage(ImageInterface $image)
   {
     $this->setResourceId($image->getResourceId());
 
@@ -196,7 +210,7 @@ class Company implements ImageAwareInterface, ImageInterface
    * @param $id
    * @return mixed|null
    */
-  public function getImageOptions ($id)
+  public function getImageOptions($id)
   {
     return null;
   }
@@ -205,7 +219,7 @@ class Company implements ImageAwareInterface, ImageInterface
    * @param $id
    * @return $this
    */
-  public function setImageOptions ($id)
+  public function setImageOptions($id)
   {
     return $this;
   }
@@ -213,7 +227,7 @@ class Company implements ImageAwareInterface, ImageInterface
   /**
    * @return array
    */
-  public function getThumbnailDefinitions ()
+  public function getThumbnailDefinitions()
   {
     return array();
   }
@@ -223,23 +237,20 @@ class Company implements ImageAwareInterface, ImageInterface
    * @return ImageThumbnail
    * @throws \Exception
    */
-  public function getThumbnail ($id)
+  public function getThumbnail($id)
   {
     $definitions = $this->getThumbnailDefinitions();
 
     $found = false;
 
-    foreach ($definitions as $definition)
-    {
-      if ($definition->getId() == $id)
-      {
+    foreach ($definitions as $definition) {
+      if ($definition->getId() == $id) {
         $found = true;
         break;
       }
     }
 
-    if (!$found)
-    {
+    if (!$found) {
       throw new \Exception('Image thumbnail definition not found');
     }
 
@@ -249,7 +260,7 @@ class Company implements ImageAwareInterface, ImageInterface
   /**
    * @return string
    */
-  public function getResourceId ()
+  public function getResourceId()
   {
     return $this->getFile();
   }
@@ -257,7 +268,7 @@ class Company implements ImageAwareInterface, ImageInterface
   /**
    * @param $id
    */
-  public function setResourceId ($id)
+  public function setResourceId($id)
   {
     $this->setFile($id);
   }
@@ -270,6 +281,48 @@ class Company implements ImageAwareInterface, ImageInterface
   public function getLogo()
   {
     return 849;
+  }
+
+  public function getSlugSource()
+  {
+    return $this->getName();
+  }
+
+  /**
+   * @return string
+   */
+  public function getSlug()
+  {
+    return $this->slug;
+  }
+
+  /**
+   * @param string $slug
+   * @return $this
+   */
+  public function setSlug($slug)
+  {
+    $this->slug = $slug;
+
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getSlugRoot()
+  {
+    return $this->slugRoot;
+  }
+
+  /**
+   * @param string $slugRoot
+   * @return $this
+   */
+  public function setSlugRoot($slugRoot)
+  {
+    $this->slugRoot = $slugRoot;
+    return $this;
   }
 
   /**
