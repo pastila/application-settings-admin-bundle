@@ -230,6 +230,9 @@ class FeedbackCommand extends ContainerAwareCommand
   /**
    * @param $entityManager
    * @param $doctrine
+   * @param InputInterface $input
+   * @param OutputInterface $output
+   * @throws \Exception
    */
   private function fillFeedback($entityManager, $doctrine, InputInterface $input, OutputInterface $output)
   {
@@ -270,7 +273,7 @@ class FeedbackCommand extends ContainerAwareCommand
 //      $kpp = !empty($item['KPP']) ? ($item['KPP']) : null;
 //      $userName = !empty($item['USER_NAME']) ? ($item['USER_NAME']) : null;
       $created = !empty($item['DATE_CREATE']) ? $item['DATE_CREATE'] : null;
-      $date = !empty($created) ? DateTime::createFromFormat('Y-m-d H:m:s', $created) : null;
+      $date = !empty($created) ? new \DateTime($created): null;
       $reviewLetter = !empty($item['REVIEW_LETTER']) ? $item['REVIEW_LETTER'] : 0;
       $status = !empty($item['VERIFIED']) ?
         FeedbackModerationStatus::MODERATION_ACCEPTED: (!empty($item['REJECTED']) ? FeedbackModerationStatus::MODERATION_REJECTED : FeedbackModerationStatus::MODERATION_NONE);
