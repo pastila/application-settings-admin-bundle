@@ -20,3 +20,5 @@ node_modules
 /laradock/php-fpm/msmtprc
 /laradock/certbot/certs/*
 /vendor/*
+/var
+/vendor

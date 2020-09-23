@@ -61,7 +61,7 @@ while($ob = $res->GetNextElement()){
             </p>
             <a class="buttons__items_item_link" href="/forma-obrashenija/">
                 <p>
-                    Перейти в раздел <img src="/local/templates/kdteam/images/pages/home/arrow-right.svg">
+                    Перейти в раздел <img src="/local/templates/kdteam/images/pages/home/arrow-right.svg" alt="">
                 </p>
             </a>
         </div>
@@ -81,7 +81,7 @@ while($ob = $res->GetNextElement()){
             </p>
             <a class="buttons__items_item_link" href="/feedback/">
                 <p>
-                    Перейти в раздел <img src="/local/templates/kdteam/images/pages/home/arrow-right.svg">
+                    Перейти в раздел <img src="/local/templates/kdteam/images/pages/home/arrow-right.svg" alt="">
                 </p>
             </a>
         </div>
@@ -100,7 +100,7 @@ while($ob = $res->GetNextElement()){
                 <?php echo $text_3; ?>            </p>
             <a class="buttons__items_item_link" href="/news/">
                 <p>
-                    Перейти в раздел <img src="/local/templates/kdteam/images/pages/home/arrow-right.svg">
+                    Перейти в раздел <img src="/local/templates/kdteam/images/pages/home/arrow-right.svg" alt="">
                 </p>
             </a>
         </div>
