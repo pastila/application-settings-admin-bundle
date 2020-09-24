@@ -12,8 +12,42 @@
     <script type="text/javascript" src="/local/templates/kdteam/js/main.min.js"></script>
     <script type="text/javascript" src="/local/templates/kdteam/pages/feedback/add/main.min.js"></script>
     {{ parent() }}
-{% endblock %}
+    <script>
+        $(document).ready(function () {
+            $(".region-select").click(function () {
+                $(".search-second").css({"pointer-events":"inherit"});
+                let id_region = $(this).attr('value');
+                $('#referal').attr('data-id_region', id_region);
+                $('#referal').attr('data-region_check', 'check');
+                $('#referal_two').val('');
+                $('#region_select_id').attr('value', id_region);
 
+                $.post("{{ url('feedback_region_select_ajax', {}, false) }}", {
+                        region_id:$("#referal").attr("data-id_region")
+                    }, function(msg) {
+                        if ($('.error_region').length != 0) {
+                            $('.error_region').remove();
+                        }
+                        $('.hospital').each(function() {
+                            $(this).remove();
+                        });
+                        $('.hospital-empty').remove();
+                        setTimeout(function() {
+                            $('#search_result_hospital').append(msg);
+                        }, 100);
+                    });
+            });
+            $('body').on('click', '.company-select-item', function () {
+                let id_company = $(this).attr('value');
+                $('#company_select_id').attr('value', id_company);
+            });
+            $('.star-item').click(function () {
+                let star = $(this).attr('data-value');
+                $('#rating_select').attr('value', star);
+            });
+        });
+    </script>
+{% endblock %}
 {% block main %}
     <!-- Breadcrumbs -->
     <ul class="breadcrumbs">
@@ -32,7 +66,8 @@
     <h1 class="page-title">Добавить отзыв о компании</h1>
 
     <!-- Wrap -->
-    {{ form_start(form, { attr: { id: "form-comments"} }) }}
+{#    {{ form_start(form, { attr: 'action': {{ url('reviews_add', {}, false) }}, 'method': 'POST', id: "form-comments"} }) }}#}
+    {{ form_start(form, {'action': path('app_insurancecompany_feedback_new'), 'method': 'POST'}) }}
     <div class="white_block">
 
     <div class="feedback__top">
@@ -42,7 +77,7 @@
         </div>
         <div class="add_reviews-select">
             <label class="input__wrap_label" for="user_pass">Список страховых компаний : </label>
-            {{ form_row(form.company) }}
+            {{ form_row(form.branch) }}
         </div>
     </div>
 
@@ -92,7 +127,7 @@
                 <!--                                    <span class="check-img"></span>-->
             </div>
 
-            <button type="submit" class="smallMainBtn" id="submit">Отправить</button>
+            <button type="submit" class="smallMainBtn">Отправить</button>
         </div>
     </div>
     {{ form_rest(form) }}

@@ -4,7 +4,6 @@ namespace AppBundle\Entity\Company;
 
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Entity\User\User;
-use AppBundle\Model\Checkout\OrderStatus;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;

@@ -355,13 +355,46 @@ ORDER BY t.NAME
   }
 
   /**
-   * @Route(path="/reviews/add")
+   * @Route(path="/reviews/add", name="app_insurancecompany_feedback_new")
    */
-  public function newAction()
+  public function newAction(Request $request, UserInterface $user = null)
   {
     $feedback = new Feedback();
+    $form = $this->createForm(FeedbackType::class, $feedback, [
+      'csrf_protection' => false,
+    ]);
 
-    $form = $this->createForm(FeedbackType::class, $feedback);
+    /*** Data Adapter */
+    if ($request->isMethod('post')) {
+      $data = $request->request->all();
+      $userId = null !== $user ? $user->getId() : null;
+      $data_form = [
+        'author' => $userId,
+        'region' => $data['region_select_id'],
+        'branch' => $data['company_select_id'],
+        'text' => $data['feedback']['text'],
+        'title' => $data['feedback']['title'],
+        'valuation' => $data['rating_select'],
+      ];
+    }
+
+    if ($request->isMethod('post')) { //$form->isValid() todo
+      $sql = 'INSERT INTO s_company_feedbacks(user_id, region_id, branch_id, title, text, valuation, moderation_status, created_at, updated_at) 
+              VALUES(:author, :region, :branch, :title, :text, :valuation, :moderation_status, :createdAt, :createdAt)';
+      $entityManager = $this->getDoctrine()->getManager();
+      $stmt = $entityManager->getConnection()->prepare($sql);
+      $stmt->bindValue('author', $data_form['author']);
+      $stmt->bindValue('region', $data_form['region']);
+      $stmt->bindValue('branch', $data_form['branch']);
+      $stmt->bindValue('text', $data_form['text']);
+      $stmt->bindValue('title', $data_form['title']);
+      $stmt->bindValue('valuation', $data_form['valuation']);
+      $stmt->bindValue('moderation_status', FeedbackModerationStatus::MODERATION_NONE);
+      $stmt->bindValue('createdAt', date("Y-m-d H:i:s"));
+      $stmt->execute();
+
+      return $this->redirectToRoute('company_review_list');
+    }
 
     return $this->render('InsuranceCompany/Review/new.html.twig', [
       'form' => $form->createView()
@@ -485,6 +518,32 @@ ORDER BY t.NAME
       }
 
       return new JsonResponse(1);
+    }
+  }
+
+  /**
+   * @Route(path="/reviews/region-select", name="feedback_region_select_ajax")
+   */
+  public function regionSelectAction(Request $request)
+  {
+    if ($request->isXmlHttpRequest()) {
+      $data = $request->request->all();
+      $region_id = isset($data['region_id']) ? $data['region_id'] : null;
+
+      $branches = $this->getDoctrine()->getManager()->getRepository(CompanyBranch::class)
+        ->findBy([
+          'region' => $region_id
+        ]);
+      $content = '';
+      foreach ($branches as $branch) {
+        $content .= '<li value="'. $branch->getId() .'" class="custom-serach__items_item hospital company-select-item
+                      data-kpp="' .$branch->getKpp() . '">' .
+          $branch->getName() .'</li>';
+      }
+      $response = new Response();
+      $response->setContent($content);
+
+      return $response;
     }
   }
 }
