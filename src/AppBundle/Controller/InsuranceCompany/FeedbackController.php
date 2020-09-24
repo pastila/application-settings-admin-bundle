@@ -402,7 +402,7 @@ ORDER BY t.NAME
   }
 
   /**
-   * @Route(path="/reviews/add-comment")
+   * @Route(path="/reviews/add-comment", name="add_comment")
    */
   public function addCommentAction(Request $request, UserInterface $user = null)
   {
