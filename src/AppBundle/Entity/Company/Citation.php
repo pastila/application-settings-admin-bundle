@@ -109,7 +109,7 @@ class Citation
   /**
    * @return Comment|null
    */
-  public function getFeedback()
+  public function getComment()
   {
     return $this->comment;
   }
@@ -118,7 +118,7 @@ class Citation
    * @param $comment
    * @return $this
    */
-  public function setFeedback($comment)
+  public function setComment($comment)
   {
     $this->comment = $comment;
 

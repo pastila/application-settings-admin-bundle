@@ -5,6 +5,7 @@
 
 namespace AppBundle\Controller\InsuranceCompany;
 
+use AppBundle\Entity\Company\Citation;
 use AppBundle\Entity\Company\Comment;
 use AppBundle\Entity\Company\Company;
 use AppBundle\Entity\Company\CompanyBranch;
@@ -269,7 +270,8 @@ ORDER BY t.NAME
     $reviewListQb
       ->innerJoin('rv.branch', 'rvb')
       ->innerJoin('rvb.company', 'rvc')
-      ->leftJoin('rv.comments', 'rvct');
+      ->leftJoin('rv.comments', 'rvct')
+      ->leftJoin('rvct.citations', 'rvctcs');
 
     if ($reviewListFilter->getRating())
     {
@@ -403,11 +405,70 @@ ORDER BY t.NAME
       $data = $request->request->all();
       $comment_id = isset($data['id']) ? $data['id'] : null;
 
+      /**
+       * @var Comment $comment
+       */
       $comment = $this->getDoctrine()->getManager()->getRepository(Comment::class)
         ->findOneBy(['id' => $comment_id]);
       if (!empty($comment)) {
         $em = $this->getDoctrine()->getEntityManager();
+        foreach ($comment->getCitations() as $citation) {
+          $em->remove($citation);
+        }
         $em->remove($comment);
+        $em->flush();
+      }
+
+      return new JsonResponse(1);
+    }
+  }
+
+  /**
+   * @Route(path="/reviews/add-citation", name="add_citation_ajax")
+   */
+  public function addCitationAction(Request $request, UserInterface $user = null)
+  {
+    if ($request->isXmlHttpRequest()) {
+      $data = $request->request->all();
+      $comment_id = isset($data['id_comment']) ? $data['id_comment'] : null;
+      $message = isset($data['message']) ? $data['message'] : null;
+
+      $comment = $this->getDoctrine()->getManager()->getRepository(Comment::class)
+        ->findOneBy(['id' => $comment_id]);
+      if (!empty($comment)) {
+        $userId = null !== $user ? $user->getId() : null;
+        $user = $this->getDoctrine()->getManager()->getRepository(User::class)
+          ->findOneBy(['id' => $userId]);
+        $citation = new Citation();
+        $citation->setUser($user);
+        $citation->setComment($comment);
+        $citation->setText($message);
+//        $citation->setRepresentative();
+        $citation->setCreatedAt(new \DateTime());
+        $citation->setUpdatedAt(new \DateTime());
+
+        $this->getDoctrine()->getManager()->persist($citation);
+        $this->getDoctrine()->getManager()->flush();
+      }
+
+      return new JsonResponse(1);
+    }
+  }
+
+  /**
+   * @Route(path="/reviews/remove-citation", name="remove_citation_ajax")
+   */
+  public function removeCitationAction(Request $request)
+  {
+    if ($request->isXmlHttpRequest()) {
+      $data = $request->request->all();
+      $citation_id = isset($data['id']) ? $data['id'] : null;
+
+      $citation = $this->getDoctrine()->getManager()->getRepository(Citation::class)
+        ->findOneBy(['id' => $citation_id]);
+      if (!empty($citation)) {
+        $em = $this->getDoctrine()->getEntityManager();
+        $em->remove($citation);
         $em->flush();
       }
 

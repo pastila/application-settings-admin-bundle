@@ -4,6 +4,7 @@ namespace AppBundle\Entity\Company;
 
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Entity\User\User;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
@@ -57,6 +58,28 @@ class Comment
    * @ORM\Column(type="integer", nullable=false)
    */
   private $moderationStatus = FeedbackModerationStatus::MODERATION_NONE;
+
+  /**
+   * @var Citation[]|ArrayCollection
+   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Company\Citation", mappedBy="comment")
+   */
+  protected $citations;
+
+  /**
+   * Comment constructor.
+   */
+  public function __construct ()
+  {
+    $this->citations = new ArrayCollection();
+  }
+
+  /**
+   * @return Citation[]|ArrayCollection
+   */
+  public function getCitations()
+  {
+    return $this->citations;
+  }
 
   /**
    * @return integer

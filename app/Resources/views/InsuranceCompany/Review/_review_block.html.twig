@@ -95,12 +95,58 @@
                 </form>
             {% endif %}
             <div class="hidenComments__top">
+{#                <? if ($arPropsComments["REPRESENTATIVE"]["VALUE"] == "1") { ?>#}
+{#                <div class="feedback_strah_user">#}
+{#                    <p class="text_user">Представитель страховой службы</p>#}
+{#                </div>#}
+{#                <? } ?>#}
+
                 <div class="hidenComments__top_wrap">
                     <div class="hidenComments__top_name">{{ comment.user.fullName }}</div>
-                    <div class="hidenComments__top_data">{{ comment.createdAt |date("d-m-Y") }}</div>
+                    <div class="hidenComments__top_data">{{ comment.createdAt |date('d M, Y')  }}</div>
                 </div>
             </div>
             <p>{{comment.text}}</p>
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <div class="block_commented_styles">
+                    <form action="">
+                        <div class="input__wrap">
+                            <textarea minlength="10" name="cited" required
+                                      data-id-cited="{{comment.id}}"></textarea>
+                        </div>
+                        <div class="danger hidden">Заполните поле</div>
+                        <button type="submit" class="smallMainBtn button-cite" id="comments"
+                                data-id-cited="{{comment.id}}">Цитировать
+                        </button>
+                    </form>
+                </div>
+            {% endif %}
+            <!-- Цитаты-->
+            {% if comment.citations | length > 0 %}
+                <div class="block_quotes">
+                    {% for citation in comment.citations %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <div class="block_remove">
+                                <div class="delete_cation remove_comment"
+                                     data-id="{{ citation.id }}">Удалить цитату
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="hidenComments__top">
+                            {% if citation.representative %}
+                                <div class="feedback_strah_user">
+                                    <p class="text_user">Представитель страховой службы</p>
+                                </div>
+                            {% endif %}
+                            <div class="hidenComments__top_wrap">
+                                <div class="hidenComments__top_name">{{ citation.user.fullName }}</div>
+                                <div class="hidenComments__top_data">{{ citation.createdAt | date('d M, Y')  }}</div>
+                            </div>
+                        </div>
+                        <p class="quotes_italic">« {{ citation.text }} »</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
         {% endfor %}
     </div>
 
