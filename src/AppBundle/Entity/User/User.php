@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity\User;
 
+use AppBundle\Entity\Company\CompanyBranch;
+use AppBundle\Entity\Company\Feedback;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -46,6 +48,24 @@ class User implements UserInterface
    */
   protected $middleName;
 
+  /**
+   * Флаг, что представитель отделения в компании
+   * @var int
+   * @ORM\Column(type="integer", nullable=true)
+   */
+  private $representative;
+
+  /**
+   * Отделение, в котором пользователь является представителем
+   * @var null|CompanyBranch
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\CompanyBranch")
+   * @ORM\JoinColumn(name="branch_id", nullable=true, onDelete="RESTRICT")
+   */
+  private $branch;
+
+  /**
+   * @var
+   */
   private $isAdmin;
 
   /**
@@ -222,6 +242,45 @@ class User implements UserInterface
   public function eraseCredentials()
   {
 
+  }
+
+  /**
+   * @return int
+   */
+  public function getRepresentative()
+  {
+    return $this->representative;
+  }
+
+  /**
+   * @param $representative
+   * @return $this
+   */
+  public function setRepresentative($representative)
+  {
+    $this->representative = $representative;
+
+    return $this;
+  }
+
+  /**
+   * @return null|CompanyBranch
+   */
+  public function getBranch()
+  {
+    return $this->branch;
+  }
+
+  /**
+   * @param CompanyBranch $branch
+   *
+   * @return $this
+   */
+  public function setBranch($branch)
+  {
+    $this->branch = $branch;
+
+    return $this;
   }
 
   /**
