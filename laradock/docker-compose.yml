@@ -1,21 +1,5 @@
 version: '3.6'
 
-x-build: &php-fpm-build
-  expose:
-    - "9000"
-  restart: always
-  extra_hosts:
-    - "dockerhost:${DOCKER_HOST_IP}"
-    - "bezbahil.ru:84.201.185.203"
-  environment:
-    - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
-    - DOCKER_HOST=tcp://docker-in-docker:2375
-    - FAKETIME=${PHP_FPM_FAKETIME}
-  networks:
-    - backend
-  links:
-    - docker-in-docker
-
 networks:
   default:
     driver: ${NETWORKS_DRIVER}
@@ -45,7 +29,20 @@ services:
   ### PHP-FPM ##############################################
 
   php-fpm-symfony:
-    <<: *php-fpm-build
+    expose:
+      - "9000"
+    restart: always
+    extra_hosts:
+      - "dockerhost:${DOCKER_HOST_IP}"
+      - "bezbahil.ru:84.201.185.203"
+    environment:
+      - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
+      - DOCKER_HOST=tcp://docker-in-docker:2375
+      - FAKETIME=${PHP_FPM_FAKETIME}
+    networks:
+      - backend
+    links:
+      - docker-in-docker
     volumes:
       - ./php-fpm-symfony/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
       - ./php-fpm-symfony/laravel.ini:/usr/local/etc/php/conf.d/laravel.ini
@@ -92,7 +89,20 @@ services:
       context: ./php-fpm-symfony
 
   php-fpm-bitrix:
-    <<: *php-fpm-build
+    expose:
+      - "9000"
+    restart: always
+    extra_hosts:
+      - "dockerhost:${DOCKER_HOST_IP}"
+      - "bezbahil.ru:84.201.185.203"
+    environment:
+      - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
+      - DOCKER_HOST=tcp://docker-in-docker:2375
+      - FAKETIME=${PHP_FPM_FAKETIME}
+    networks:
+      - backend
+    links:
+      - docker-in-docker
     volumes:
       - ./php-fpm-bitrix/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
       - ./php-fpm-bitrix/laravel.ini:/usr/local/etc/php/conf.d/laravel.ini

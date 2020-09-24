@@ -5,6 +5,8 @@
 
 namespace AppBundle\Controller\InsuranceCompany;
 
+use AppBundle\Entity\Company\Citation;
+use AppBundle\Entity\Company\Comment;
 use AppBundle\Entity\Company\Company;
 use AppBundle\Entity\Company\CompanyBranch;
 use AppBundle\Entity\Company\Feedback;
@@ -21,10 +23,12 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class FeedbackController extends Controller
 {
@@ -265,7 +269,9 @@ ORDER BY t.NAME
 
     $reviewListQb
       ->innerJoin('rv.branch', 'rvb')
-      ->innerJoin('rvb.company', 'rvc');
+      ->innerJoin('rvb.company', 'rvc')
+      ->leftJoin('rv.comments', 'rvct')
+      ->leftJoin('rvct.citations', 'rvctcs');
 
     if ($reviewListFilter->getRating())
     {
@@ -292,7 +298,7 @@ ORDER BY t.NAME
     {
       $reviewListQb
         ->andWhere('rv.moderation_status = :moderation_status')
-        ->setParameter(FeedbackModerationStatus::MODERATION_NONE);
+        ->setParameter('moderation_status', FeedbackModerationStatus::MODERATION_NONE);
     }
 
     $maxPerPage = 10;
@@ -360,5 +366,125 @@ ORDER BY t.NAME
     return $this->render('InsuranceCompany/Review/new.html.twig', [
       'form' => $form->createView()
     ]);
+  }
+
+  /**
+   * @Route(path="/reviews/add-comment")
+   */
+  public function addCommentAction(Request $request, UserInterface $user = null)
+  {
+    $data = $request->request->all();
+    $userId = null !== $user ? $user->getId() : null;
+    $user = $this->getDoctrine()->getManager()->getRepository(User::class)
+      ->findOneBy(['id' => $userId]);
+    $text = isset($data['comment']) ? $data['comment'] : null;
+    $review_id = isset($data['review_id']) ? $data['review_id'] : null;
+    $feedback = $this->getDoctrine()->getManager()->getRepository(Feedback::class)
+      ->findOneBy(['id' => $review_id]);
+
+    $comment = new Comment();
+    $comment->setUser($user);
+    $comment->setText($text);
+    $comment->setFeedback($feedback);
+    $comment->setModerationStatus(FeedbackModerationStatus::MODERATION_NONE);
+    $comment->setCreatedAt(new \DateTime());
+    $comment->setUpdatedAt(new \DateTime());
+
+    $this->getDoctrine()->getManager()->persist($comment);
+    $this->getDoctrine()->getManager()->flush();
+
+    return $this->redirectToRoute('app_insurancecompany_feedback_index', [], 302);
+  }
+
+  /**
+   * @Route(path="/reviews/remove-comment", name="remove_comment_ajax")
+   */
+  public function removeCommentAction(Request $request)
+  {
+    if ($request->isXmlHttpRequest()) {
+      $data = $request->request->all();
+      $comment_id = isset($data['id']) ? $data['id'] : null;
+
+      /**
+       * @var Comment $comment
+       */
+      $comment = $this->getDoctrine()->getManager()->getRepository(Comment::class)
+        ->findOneBy(['id' => $comment_id]);
+      if (!empty($comment)) {
+        $em = $this->getDoctrine()->getEntityManager();
+        foreach ($comment->getCitations() as $citation) {
+          $em->remove($citation);
+        }
+        $em->remove($comment);
+        $em->flush();
+      }
+
+      return new JsonResponse(1);
+    }
+  }
+
+  /**
+   * @Route(path="/reviews/add-citation", name="add_citation_ajax")
+   */
+  public function addCitationAction(Request $request, UserInterface $user = null)
+  {
+    if ($request->isXmlHttpRequest()) {
+      $data = $request->request->all();
+      $comment_id = isset($data['id_comment']) ? $data['id_comment'] : null;
+      $message = isset($data['message']) ? $data['message'] : null;
+
+      $comment = $this->getDoctrine()->getManager()->getRepository(Comment::class)
+        ->findOneBy(['id' => $comment_id]);
+      if (!empty($comment)) {
+        $userId = null !== $user ? $user->getId() : null;
+        $user = $this->getDoctrine()->getManager()->getRepository(User::class)
+          ->findOneBy(['id' => $userId]);
+
+        $representative = false;
+        if ($user->getRepresentative()){
+          $feedback = $comment->getFeedback();
+          if (!empty($feedback)) {
+            $branch = $feedback->getBranch();
+            if (!empty($branch) && !empty($user->getBranch()) && $user->getBranch()->getId() === $branch->getId()){
+              $representative = true;
+            }
+          }
+        }
+
+        $citation = new Citation();
+        $citation->setUser($user);
+        $citation->setComment($comment);
+        $citation->setText($message);
+        $citation->setRepresentative($representative);
+        $citation->setCreatedAt(new \DateTime());
+        $citation->setUpdatedAt(new \DateTime());
+
+        $this->getDoctrine()->getManager()->persist($citation);
+        $this->getDoctrine()->getManager()->flush();
+      }
+
+      return new JsonResponse(1);
+    }
+  }
+
+  /**
+   * @Route(path="/reviews/remove-citation", name="remove_citation_ajax")
+   */
+  public function removeCitationAction(Request $request)
+  {
+    if ($request->isXmlHttpRequest()) {
+      $data = $request->request->all();
+      $citation_id = isset($data['id']) ? $data['id'] : null;
+
+      $citation = $this->getDoctrine()->getManager()->getRepository(Citation::class)
+        ->findOneBy(['id' => $citation_id]);
+      if (!empty($citation)) {
+        $em = $this->getDoctrine()->getEntityManager();
+        $em->remove($citation);
+        $em->flush();
+      }
+
+      return new JsonResponse(1);
+    }
   }
 }

@@ -115,6 +115,11 @@ class Feedback
     $this->comments = new ArrayCollection();
   }
 
+  public function getComments()
+  {
+    return $this->comments;
+  }
+
   /**
    * @return integer
    */

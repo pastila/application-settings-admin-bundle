@@ -2,6 +2,7 @@
 
 namespace AppBundle\Command;
 
+use AppBundle\Entity\Company\Citation;
 use AppBundle\Entity\Company\Comment;
 use AppBundle\Entity\Company\Company;
 use AppBundle\Entity\Company\CompanyBranch;
@@ -35,7 +36,8 @@ class FeedbackCommand extends ContainerAwareCommand
   /**
    * @param InputInterface $input
    * @param OutputInterface $output
-   * @return int|void|null
+   * @return int|void
+   * @throws \Exception
    */
   protected function execute(InputInterface $input, OutputInterface $output)
   {
@@ -43,12 +45,13 @@ class FeedbackCommand extends ContainerAwareCommand
     $doctrine = $this->getContainer()->get('doctrine');
 
     $this->clearTable($entityManager);
-    $this->fillUser($entityManager, $input, $output);
     $this->fillRegion($entityManager, $input, $output);
     $this->fillCompany($entityManager, $input, $output);
     $this->fillCompanyBranch($entityManager, $doctrine, $input, $output);
+    $this->fillUser($entityManager, $input, $output);
     $this->fillFeedback($entityManager, $doctrine, $input, $output);
     $this->fillComment($entityManager, $doctrine, $input, $output);
+    $this->fillCitation($entityManager, $doctrine, $input, $output);
   }
 
   /**
@@ -63,7 +66,8 @@ class FeedbackCommand extends ContainerAwareCommand
       Company::class,
       CompanyBranch::class,
       Feedback::class,
-      Comment::class
+      Comment::class,
+      Citation::class
     ];
 
     foreach ($tables as $table) {
@@ -106,7 +110,25 @@ class FeedbackCommand extends ContainerAwareCommand
   private function fillUser($entityManager, InputInterface $input, OutputInterface $output)
   {
     $conn = $entityManager->getConnection();
-    $stmt = $conn->prepare('SELECT * FROM b_user');
+    $sql = 'SELECT 
+                    u.LOGIN, 
+                    u.LAST_NAME,
+                    u.NAME,
+                    u.SECOND_NAME,
+                    uu.UF_REPRESENTATIVE as REPRESENTATIVE,   
+                    sr.SEARCHABLE_CONTENT as REGION_NAME, 
+                    srg.id as REGION_ID,                                     
+                    ec.SEARCHABLE_CONTENT as COMPANY_NAME,                      
+                    cp_kpp.VALUE as KPP,  
+                    scb.id as BRANCH_ID                   
+            FROM b_user u
+            LEFT JOIN b_uts_user uu ON uu.VALUE_ID = u.ID
+            LEFT JOIN b_iblock_section sr ON sr.ID = uu.UF_REGION AND uu.UF_REPRESENTATIVE = 1
+            LEFT JOIN s_regions srg ON (srg.name LIKE sr.SEARCHABLE_CONTENT)        
+            LEFT JOIN b_iblock_element ec ON ec.ID = uu.UF_INSURANCE_COMPANY AND uu.UF_REPRESENTATIVE = 1
+            LEFT JOIN b_iblock_element_property cp_kpp ON cp_kpp.IBLOCK_ELEMENT_ID = ec.ID AND cp_kpp.IBLOCK_PROPERTY_ID = 112
+            LEFT JOIN s_company_branches scb ON scb.kpp = cp_kpp.VALUE AND scb.region_id = srg.id';
+    $stmt = $conn->prepare($sql);
     $stmt->execute();
 
     $result = $stmt->fetchAll();
@@ -115,15 +137,20 @@ class FeedbackCommand extends ContainerAwareCommand
       $lastName = !empty($item['LAST_NAME']) ? $item['LAST_NAME'] : null;
       $firstName = !empty($item['NAME']) ? $item['NAME'] : null;
       $middleName = !empty($item['SECOND_NAME']) ? $item['SECOND_NAME'] : null;
+      $representative = !empty($item['REPRESENTATIVE']) ? $item['REPRESENTATIVE'] : null;
+      $branchId = !empty($item['BRANCH_ID']) ? $item['BRANCH_ID'] : null;
 
-      $user = new User();
-      $user->setLogin($login);
-      $user->setLastName($lastName);
-      $user->setFirstName($firstName);
-      $user->setMiddleName($middleName);
-      $entityManager->persist($user);
+      $sql = 'INSERT INTO s_users(login, last_name, first_name, middle_name, representative, branch_id) 
+              VALUES(:login, :lastName, :firstName, :middleName, :representative, :branchId)';
+      $stmt = $conn->prepare($sql);
+      $stmt->bindValue('login', $login);
+      $stmt->bindValue('lastName', $lastName);
+      $stmt->bindValue('firstName', $firstName);
+      $stmt->bindValue('middleName', $middleName);
+      $stmt->bindValue('representative', $representative);
+      $stmt->bindValue('branchId', $branchId);
+      $stmt->execute();
     }
-    $entityManager->flush();
 
     $io = new SymfonyStyle($input, $output);
     $io->success('Fill User:' . count($result));
@@ -370,7 +397,6 @@ class FeedbackCommand extends ContainerAwareCommand
       $date = !empty($created) ? date("Y-m-d H:i:s", strtotime($created)) : date("Y-m-d H:i:s");
       $status = FeedbackModerationStatus::MODERATION_NONE;
 
-
       $sql .= "INSERT INTO s_company_feedback_comments(text, created_at, updated_at, moderation_status) VALUES('$text', '$date', '$date', $status); ";
     }
     $stmt = $conn->prepare($sql);
@@ -378,5 +404,14 @@ class FeedbackCommand extends ContainerAwareCommand
 
     $io = new SymfonyStyle($input, $output);
     $io->success('Fill Comment:' . count($result));
+  }
+
+  /**
+   * @param $entityManager
+   * @param $doctrine
+   */
+  private function fillCitation($entityManager, $doctrine, InputInterface $input, OutputInterface $output)
+  {
+    // todo empty in base
   }
 }

@@ -4,17 +4,16 @@ namespace AppBundle\Entity\Company;
 
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Entity\User\User;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
- * Comment.
+ * Citation.
  *
- * @ORM\Table(name="s_company_feedback_comments")
+ * @ORM\Table(name="s_company_feedback_comment_citations")
  * @ORM\Entity()
  */
-class Comment
+class Citation
 {
   use TimestampableEntity;
 
@@ -36,7 +35,7 @@ class Comment
   private $user;
 
   /**
-   * Текст комментария
+   * Текст цитаты
    *
    * @var string
    *
@@ -45,41 +44,19 @@ class Comment
   private $text;
 
   /**
-   * Отзыв
+   * Комментарий
    *
-   * @var null|Feedback
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\Feedback")
-   * @ORM\JoinColumn(name="feedback_id", nullable=true, onDelete="RESTRICT")
+   * @var null|Comment
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\Comment")
+   * @ORM\JoinColumn(name="comment_id", nullable=true, onDelete="RESTRICT")
    */
-  private $feedback;
+  private $comment;
 
   /**
    * @var int
-   * @ORM\Column(type="integer", nullable=false)
+   * @ORM\Column(type="integer", nullable=true)
    */
-  private $moderationStatus = FeedbackModerationStatus::MODERATION_NONE;
-
-  /**
-   * @var Citation[]|ArrayCollection
-   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Company\Citation", mappedBy="comment")
-   */
-  protected $citations;
-
-  /**
-   * Comment constructor.
-   */
-  public function __construct ()
-  {
-    $this->citations = new ArrayCollection();
-  }
-
-  /**
-   * @return Citation[]|ArrayCollection
-   */
-  public function getCitations()
-  {
-    return $this->citations;
-  }
+  private $representative;
 
   /**
    * @return integer
@@ -130,21 +107,20 @@ class Comment
   }
 
   /**
-   * @return null|Feedback
+   * @return Comment|null
    */
-  public function getFeedback()
+  public function getComment()
   {
-    return $this->feedback;
+    return $this->comment;
   }
 
   /**
-   * @param Feedback $feedback
-   *
+   * @param $comment
    * @return $this
    */
-  public function setFeedback($feedback)
+  public function setComment($comment)
   {
-    $this->feedback = $feedback;
+    $this->comment = $comment;
 
     return $this;
   }
@@ -152,23 +128,18 @@ class Comment
   /**
    * @return int
    */
-  public function getModerationStatus()
+  public function getRepresentative()
   {
-    return $this->moderationStatus;
+    return $this->representative;
   }
 
   /**
-   * @param $moderationStatus
+   * @param $representative
    * @return $this
    */
-  public function setModerationStatus($moderationStatus)
+  public function setRepresentative($representative)
   {
-    if (null !== $moderationStatus && !in_array($moderationStatus, FeedbackModerationStatus::getAvailableValues()))
-    {
-      throw new \InvalidArgumentException();
-    }
-
-    $this->moderationStatus = $moderationStatus;
+    $this->representative = $representative;
 
     return $this;
   }

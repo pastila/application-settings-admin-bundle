@@ -21,6 +21,75 @@
     <script type="text/javascript" src="/local/templates/kdteam/pages/feedback/main.min.js?15862684754547"></script>
     <script type="text/javascript" src="/local/templates/kdteam/js/readmore.min.js?1586268475879"></script>
     {{ parent() }}
+    <script>
+        $(document).ready(function () {
+            $(".delete_comment").click(function () {
+                var id = $(this).attr("data-id");
+                var data = {
+                    "case": "comment",
+                    "id": id,
+                };
+                $.ajax({
+                    dataType: 'html',
+                    url: "{{ url('remove_comment_ajax', {}, false) }}",
+                    type: 'POST',
+                    data: data,
+                    success: function (msg) {
+                        if (msg == 1) {
+                            window.location.reload();
+                        }
+                    },
+                })
+            });
+        });
+        $(".button-cite").click(function (e) {
+            let error = [];
+            e.preventDefault();
+            var ID = $(this).attr("data-id-cited");
+            let id_comment = $(this).attr("data-id-cited");
+
+            let text_cited = $("[data-id-cited=" + ID + "]").val();
+            if (text_cited == "") {
+                $(this).siblings(".danger").css({"display": "block"});
+                error.push("text");
+            }
+            let data = {
+                "id_comment": id_comment,
+                "message": text_cited,
+            };
+            if (error.length == 0) {
+                $.ajax({
+                    url: "{{ url('add_citation_ajax', {}, false) }}",
+                    type: "POST",
+                    data: data,
+                    beforeSend: function () {
+                    }
+                }).done(function (msg) {
+                    if (msg == 1) {
+                        location.reload();
+                    }
+                })
+            }
+        });
+        $(".delete_cation").click(function() {
+            var id = $(this).attr("data-id");
+            var data = {
+                "case":"cation",
+                "id":id,
+            };
+            $.ajax({
+                dataType: 'html',
+                url: "{{ url('remove_citation_ajax', {}, false) }}",
+                type: 'POST',
+                data: data,
+                success: function(msg){
+                    if(msg == 1) {
+                        window.location.reload();
+                    }
+                },
+            })
+        });
+    </script>
 {% endblock %}
 
 
@@ -46,7 +115,8 @@
             <a href="{{ path('app_insurancecompany_feedback_new') }}" class="whiteBtn">Добавить отзыв</a>
             <a href="{{ path('app_insurancecompany_feedback_index') }}" class="accentBtnBorder">Все отзывы</a>
             {% if is_granted('ROLE_ADMIN') %}
-                <a href="{{ urlBuilder.buildUrl({ filter: { moderation: 0 }}) }}" class="accentBtnBorder">Модерация отзывов</a>
+                <a href="{{ urlBuilder.buildUrl({ filter: { moderation: 0 }}) }}" class="accentBtnBorder">Модерация
+                    отзывов</a>
             {% endif %}
         </div>
 
@@ -229,7 +299,7 @@
         </div>
     {% else %}
         {% for review in reviews %}
-           {% include "InsuranceCompany/Review/_review_block.html.twig" %}
+            {% include "InsuranceCompany/Review/_review_block.html.twig" %}
         {% endfor %}
 
         {% if pagination.lastPage > 1 %}
