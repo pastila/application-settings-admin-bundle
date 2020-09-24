@@ -439,11 +439,23 @@ ORDER BY t.NAME
         $userId = null !== $user ? $user->getId() : null;
         $user = $this->getDoctrine()->getManager()->getRepository(User::class)
           ->findOneBy(['id' => $userId]);
+
+        $representative = false;
+        if ($user->getRepresentative()){
+          $feedback = $comment->getFeedback();
+          if (!empty($feedback)) {
+            $branch = $feedback->getBranch();
+            if (!empty($branch) && !empty($user->getBranch()) && $user->getBranch()->getId() === $branch->getId()){
+              $representative = true;
+            }
+          }
+        }
+
         $citation = new Citation();
         $citation->setUser($user);
         $citation->setComment($comment);
         $citation->setText($message);
-//        $citation->setRepresentative();
+        $citation->setRepresentative($representative);
         $citation->setCreatedAt(new \DateTime());
         $citation->setUpdatedAt(new \DateTime());
 

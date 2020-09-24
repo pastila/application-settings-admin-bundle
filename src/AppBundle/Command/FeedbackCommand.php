@@ -49,9 +49,9 @@ class FeedbackCommand extends ContainerAwareCommand
     $this->fillCompany($entityManager, $input, $output);
     $this->fillCompanyBranch($entityManager, $doctrine, $input, $output);
     $this->fillUser($entityManager, $input, $output);
-//    $this->fillFeedback($entityManager, $doctrine, $input, $output);
-//    $this->fillComment($entityManager, $doctrine, $input, $output);
-//    $this->fillCitation($entityManager, $doctrine, $input, $output);
+    $this->fillFeedback($entityManager, $doctrine, $input, $output);
+    $this->fillComment($entityManager, $doctrine, $input, $output);
+    $this->fillCitation($entityManager, $doctrine, $input, $output);
   }
 
   /**
