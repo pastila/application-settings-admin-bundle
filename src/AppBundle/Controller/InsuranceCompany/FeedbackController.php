@@ -553,4 +553,30 @@ ORDER BY t.NAME
       return $response;
     }
   }
+
+  /**
+   * @Route(path="/reviews/admin-check", name="admin_check_ajax")
+   */
+  public function adminCheckAction(Request $request)
+  {
+    if ($request->isXmlHttpRequest()) {
+      $data = $request->request->all();
+      $id = !empty($data['id']) ? $data['id'] : null;
+      $accepted = !empty($data['accepted']) ? $data['accepted'] : null;
+      $reject = !empty($data['reject']) ? $data['reject'] : null;
+      $status = !empty($accepted) ?
+        FeedbackModerationStatus::MODERATION_ACCEPTED :
+        (!empty($reject) ? FeedbackModerationStatus::MODERATION_REJECTED : FeedbackModerationStatus::MODERATION_NONE);
+
+      $feedback = $this->getDoctrine()->getManager()->getRepository(Feedback::class)
+        ->findOneBy(['id' => $id]);
+      if (!empty($feedback)) {
+        $feedback->setModerationStatus($status);
+        $this->getDoctrine()->getManager()->persist($feedback);
+        $this->getDoctrine()->getManager()->flush();
+      }
+
+      return new JsonResponse(1);
+    }
+  }
 }
