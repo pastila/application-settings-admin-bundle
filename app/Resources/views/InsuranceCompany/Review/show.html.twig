@@ -9,7 +9,18 @@
     <meta name="description" content="Рейтинг страховых компаний работающих в системе ОМС"/>
 {% endblock %}
 
-{% block title %}Рейтинг страховых компаний работающих в системе ОМС{% endblock %}
+{% set title = review.title ~ " &mdash; " ~ review.company.name ~ " " ~ review.region.name ~ " &mdash; Рейтинг страховых компаний, работающих в системе ОМС &mdash; Без Бахил" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block meta %}
+    {{ parent() }}
+    <meta name="robots" content="index, follow"/>
+    <meta name="title" content="{{ title|escape() }}"/>
+    <meta name="keywords"
+          content="медицинское страхование отзывы, бесплатное лечение, бесплатная медицинская помощь, рейтинг медицинских страховых компаний омс в москве"/>
+    <meta name="description" content="Рейтинг страховых компаний работающих в системе ОМС{%if pagination.lastPage>1%} — Страница {{pagination.page}}{% endif %}"/>
+{% endblock %}
 
 {% block stylesheets %}
     <link href="/local/templates/kdteam/pages/feedback/main.min.css?158626847510518" type="text/css" rel="stylesheet"/>

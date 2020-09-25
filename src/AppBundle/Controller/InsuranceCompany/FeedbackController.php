@@ -217,8 +217,7 @@ ORDER BY t.NAME
       {
         return $response;
       }
-    }
-    else
+    } else
     {
       $response->setMaxAge(3600);
 
@@ -276,8 +275,8 @@ ORDER BY t.NAME
     if ($reviewListFilter->getRating())
     {
       $reviewListQb
-      ->andWhere('rv.valuation = :rating')
-      ->setParameter('rating', $reviewListFilter->getRating());
+        ->andWhere('rv.valuation = :rating')
+        ->setParameter('rating', $reviewListFilter->getRating());
     }
 
     if ($reviewListFilter->getCompany())
@@ -309,6 +308,13 @@ ORDER BY t.NAME
 
     $reviews = $pagination->getIterator();
 
+    $title = 'Отзывы о страховых медицинских организациях' . (($pagination->getPage() > 1) ? ' — Страница ' . $pagination->getPage() : '');
+
+    if ($reviewListFilter->getCompany())
+    {
+      $title = 'Отзывы о страховой медицинской организации &laquo;'.$reviewListFilter->getCompany()->getName().'&raquo;' . (($pagination->getPage() > 1) ? ' — Страница ' . $pagination->getPage() : '');
+    }
+
     return $this->render('InsuranceCompany/Review/list.html.twig', [
       'reviews' => $reviews,
       'nbReviews' => $pagination->getNbResults(),
@@ -316,7 +322,8 @@ ORDER BY t.NAME
       'filter' => $reviewListFilter,
       'filterForm' => $reviewListFilterForm->createView(),
       'companyRating' => $this->branchRatingHelper->buildRating($reviewListFilter->getRegion()),
-      'urlBuilder' => $reviewListUrlbuilder
+      'urlBuilder' => $reviewListUrlbuilder,
+      'title' => $title
     ], $response);
   }
 

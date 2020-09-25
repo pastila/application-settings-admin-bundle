@@ -3,13 +3,13 @@
 {% block meta %}
     {{ parent() }}
     <meta name="robots" content="index, follow"/>
-    <meta name="title" content="Рейтинг страховых компаний работающих в системе ОМС"/>
+    <meta name="title" content="{{ title }}"/>
     <meta name="keywords"
           content="медицинское страхование отзывы, бесплатное лечение, бесплатная медицинская помощь, рейтинг медицинских страховых компаний омс в москве"/>
-    <meta name="description" content="Рейтинг страховых компаний работающих в системе ОМС{%if pagination.lastPage>1%} — Страница {{pagination.page}}{% endif %}"/>
+    <meta name="description" content="{{ title }}"/>
 {% endblock %}
 
-{% block title %}Рейтинг страховых компаний работающих в системе ОМС{%if pagination.lastPage>1%} — Страница {{pagination.page}}{% endif %}{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block stylesheets %}
     <link href="/local/templates/kdteam/pages/feedback/main.min.css?158626847510518" type="text/css" rel="stylesheet"/>
@@ -37,7 +37,7 @@
     </ul>
 
     <!-- Pages Title -->
-    <h1 class="page-title">Отзывы о страховых медицинских организациях{%if pagination.lastPage>1%} — Страница {{pagination.page}}{% endif %}</h1>
+    <h1 class="page-title">{{ title }}</h1>
 
     <!-- ALL STEPS IN FORM -->
     <form action="" class="white_block">
