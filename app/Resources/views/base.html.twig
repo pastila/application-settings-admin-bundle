@@ -11,7 +11,7 @@
         <meta name="google-site-verification" content="6i-0zWPQEfVk1TaN63icBNxaPtFIwxrzlrG-w4oiTyg" />
     {% endblock %}
 
-    <title>{% block title %}<?php $APPLICATION->ShowTitle(); ?>{% endblock %}</title>
+    <title>{% block title %}Сервис &laquo;Без Бахил&raquo &mdash сохраняет здоровье и деньги{% endblock %}</title>
 
     <link rel="shortcut icon" href="/local/templates/kdteam/images/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -20,13 +20,8 @@
     <link rel="image_src" href="https://bezbahil.ru/local/templates/kdteam/images/png/header/logo-oms-white.jpg" />
 
     {% block stylesheets %}
-        <link href="/local/templates/kdteam/styles/main.min.css?158626847559632" type="text/css"  data-template-style="true"  rel="stylesheet" />    {% endblock %}
-    <?php
-    $asset->addCss(SITE_TEMPLATE_PATH . "/styles/main.min.css");
-    $asset->addJs(SITE_TEMPLATE_PATH . "/js/main.min.js");
-
-    CModule::IncludeModule("iblock");
-    ?>
+        <link href="/local/templates/kdteam/styles/main.min.css" type="text/css"  data-template-style="true"  rel="stylesheet" />
+    {% endblock %}
 
 {#    <?php if ($_SERVER[REQUEST_URI] === '/') { ?>#}
 {#    <script type="application/ld+json">#}
@@ -89,7 +84,7 @@ left:-9999px;" alt="" /></div></noscript>
 ?>
 
 <!-- Start Wrap -->
-<div class="wrap" <?php if ($APPLICATION->GetCurDir() === '/') {?> <?php } ?>>
+<div class="wrap">
 <!-- Header -->
 <header class="header">
     <div class="header__container">
