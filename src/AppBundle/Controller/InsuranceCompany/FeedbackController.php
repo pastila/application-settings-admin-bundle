@@ -400,7 +400,7 @@ ORDER BY t.NAME
       $stmt->bindValue('createdAt', date("Y-m-d H:i:s"));
       $stmt->execute();
 
-      return $this->redirectToRoute('company_review_list');
+      return $this->redirectToRoute('app_insurancecompany_feedback_index');
     }
 
     return $this->render('InsuranceCompany/Review/new.html.twig', [
