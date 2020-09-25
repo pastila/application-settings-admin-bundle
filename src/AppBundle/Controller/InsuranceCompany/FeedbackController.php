@@ -294,11 +294,11 @@ ORDER BY t.NAME
         ->setParameter('region', $reviewListFilter->getRegion());
     }
 
-    if ($reviewListFilter->getModeration())
+    if (isset($filterParams['moderation']))
     {
       $reviewListQb
-        ->andWhere('rv.moderation_status = :moderation_status')
-        ->setParameter('moderation_status', FeedbackModerationStatus::MODERATION_NONE);
+        ->andWhere('rv.moderationStatus = :moderationStatus')
+        ->setParameter('moderationStatus', $reviewListFilter->getModeration());
     }
 
     $maxPerPage = 10;
@@ -574,6 +574,8 @@ ORDER BY t.NAME
         $feedback->setModerationStatus($status);
         $this->getDoctrine()->getManager()->persist($feedback);
         $this->getDoctrine()->getManager()->flush();
+
+        // update rating company and branch
       }
 
       return new JsonResponse(1);
