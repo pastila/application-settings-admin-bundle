@@ -278,7 +278,7 @@
                         {% for i, company in companyRating %}
                             <li class="sidebar__item_lists_list list_numbered-items">
                                 <span class="sidebar_count number">{{ i+1 }}</span>
-                                <a href="{{ urlBuilder.buildUrl({ filter: { company: company[0].kpp } }) }}"
+                                <a href="{{ urlBuilder.buildUrl({ filter: { company: company[0].id } }) }}"
                                    class="sidebar__item_lists_list_link" id="company"
                                    data-amount-star="{{ company.actualRating }}"
                                    data-id="{{ company[0].id }}">{{ company[0].name }}</a>
