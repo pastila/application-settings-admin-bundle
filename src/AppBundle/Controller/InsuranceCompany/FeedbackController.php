@@ -331,7 +331,14 @@ ORDER BY t.NAME
       ->getDoctrine()
       ->getManager()
       ->getRepository(Feedback::class)
-      ->find($id);
+      ->createQueryBuilder('rv')
+      ->leftJoin('rv.comments', 'rvct')
+      ->leftJoin('rvct.citations', 'rvctcs')
+      ->andWhere('rv.id = :feedback_id')
+      ->setParameter('feedback_id', $id)
+      ->setMaxResults(1)
+      ->getQuery()
+      ->getOneOrNullResult();
 
     if (!$review)
     {
