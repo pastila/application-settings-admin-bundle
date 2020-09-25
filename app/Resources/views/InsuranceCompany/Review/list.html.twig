@@ -9,7 +9,7 @@
     <meta name="description" content="{{ title }}"/>
 {% endblock %}
 
-{% block title %}{{ title }}{% endblock %}
+{% block title %}{{ title|raw }}{% endblock %}
 
 {% block stylesheets %}
     <link href="/local/templates/kdteam/pages/feedback/main.min.css?158626847510518" type="text/css" rel="stylesheet"/>
