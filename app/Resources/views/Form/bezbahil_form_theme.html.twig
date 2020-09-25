@@ -25,7 +25,8 @@
     </div>
 {% endblock %}
 
-{% block bezbahil_autocomplete_widget %}
+{% block bezbahil_autocomplete_region_widget %}
+    <input type="hidden" id="region_select_id" name="region_select_id" value="">
     <div class="input__wrap">
         <div class="input__ico">
             <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255"
@@ -36,13 +37,14 @@
         <input id="referal" type="text" placeholder="Поиск по региону" autocomplete="off"/>
         <ul style="cursor: pointer;" class="custom-serach__items" id="search_result">
             {% for label, key in form.vars.choices %}
-            <li value="{{ key }}" class="custom-serach__items_item region " data-id-city="{{ key }}">{{ label }}</li>
+            <li value="{{ key }}" class="custom-serach__items_item region-select" data-id-city="{{ key }}">{{ label }}</li>
             {% endfor %}
         </ul>
     </div>
 {% endblock %}
 
 {% block bezbahil_autocomplete_company_widget %}
+    <input type="hidden" id="company_select_id" name="company_select_id" value="">
     <div class="input__wrap">
         <div class="input__ico">
             <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255"
@@ -52,31 +54,30 @@
         </div>
         <input id="referal_two" type="text" placeholder="Поиск по страховым компаниям"
                autocomplete="off"/>
-        <ul style="cursor: pointer;" class="custom-serach__items"
-            id="search_result_hospital">
-
+        <ul style="cursor: pointer;" class="custom-serach__items" id="search_result_hospital">
         </ul>
     </div>
 {% endblock %}
 
 {% block bezbahil_rating_widget %}
     <!-- Rating Stars Box -->
+    <input type="hidden" id="rating_select" name="rating_select" value="">
     <div class='rating-stars text-center input__wrap' data-select="star">
         <label for="name" class="input__wrap_label">Оценка</label>
         <ul id='stars'>
-            <li class='star' title='Poor' data-value='1'>
+            <li class='star star-item' title='Poor' data-value='1'>
                 <i class='fa fa-star fa-fw'></i>
             </li>
-            <li class='star' title='Fair' data-value='2'>
+            <li class='star star-item' title='Fair' data-value='2'>
                 <i class='fa fa-star fa-fw'></i>
             </li>
-            <li class='star' title='Good' data-value='3'>
+            <li class='star star-item' title='Good' data-value='3'>
                 <i class='fa fa-star fa-fw'></i>
             </li>
-            <li class='star' title='Excellent' data-value='4'>
+            <li class='star star-item' title='Excellent' data-value='4'>
                 <i class='fa fa-star fa-fw'></i>
             </li>
-            <li class='star' title='WOW!!!' data-value='5'>
+            <li class='star star-item' title='WOW!!!' data-value='5'>
                 <i class='fa fa-star fa-fw'></i>
             </li>
         </ul>

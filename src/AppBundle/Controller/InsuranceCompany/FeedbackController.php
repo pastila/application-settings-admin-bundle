@@ -294,11 +294,11 @@ ORDER BY t.NAME
         ->setParameter('region', $reviewListFilter->getRegion());
     }
 
-    if ($reviewListFilter->getModeration())
+    if (isset($filterParams['moderation']))
     {
       $reviewListQb
-        ->andWhere('rv.moderation_status = :moderation_status')
-        ->setParameter('moderation_status', FeedbackModerationStatus::MODERATION_NONE);
+        ->andWhere('rv.moderationStatus = :moderationStatus')
+        ->setParameter('moderationStatus', $reviewListFilter->getModeration());
     }
 
     $maxPerPage = 10;
@@ -331,7 +331,14 @@ ORDER BY t.NAME
       ->getDoctrine()
       ->getManager()
       ->getRepository(Feedback::class)
-      ->find($id);
+      ->createQueryBuilder('rv')
+      ->leftJoin('rv.comments', 'rvct')
+      ->leftJoin('rvct.citations', 'rvctcs')
+      ->andWhere('rv.id = :feedback_id')
+      ->setParameter('feedback_id', $id)
+      ->setMaxResults(1)
+      ->getQuery()
+      ->getOneOrNullResult();
 
     if (!$review)
     {
@@ -355,13 +362,46 @@ ORDER BY t.NAME
   }
 
   /**
-   * @Route(path="/reviews/add")
+   * @Route(path="/reviews/add", name="app_insurancecompany_feedback_new")
    */
-  public function newAction()
+  public function newAction(Request $request, UserInterface $user = null)
   {
     $feedback = new Feedback();
+    $form = $this->createForm(FeedbackType::class, $feedback, [
+      'csrf_protection' => false,
+    ]);
 
-    $form = $this->createForm(FeedbackType::class, $feedback);
+    /*** Data Adapter */
+    if ($request->isMethod('post')) {
+      $data = $request->request->all();
+      $userId = null !== $user ? $user->getId() : null;
+      $data_form = [
+        'author' => $userId,
+        'region' => $data['region_select_id'],
+        'branch' => $data['company_select_id'],
+        'text' => $data['feedback']['text'],
+        'title' => $data['feedback']['title'],
+        'valuation' => $data['rating_select'],
+      ];
+    }
+
+    if ($request->isMethod('post')) { //$form->isValid() todo
+      $sql = 'INSERT INTO s_company_feedbacks(user_id, region_id, branch_id, title, text, valuation, moderation_status, created_at, updated_at) 
+              VALUES(:author, :region, :branch, :title, :text, :valuation, :moderation_status, :createdAt, :createdAt)';
+      $entityManager = $this->getDoctrine()->getManager();
+      $stmt = $entityManager->getConnection()->prepare($sql);
+      $stmt->bindValue('author', $data_form['author']);
+      $stmt->bindValue('region', $data_form['region']);
+      $stmt->bindValue('branch', $data_form['branch']);
+      $stmt->bindValue('text', $data_form['text']);
+      $stmt->bindValue('title', $data_form['title']);
+      $stmt->bindValue('valuation', $data_form['valuation']);
+      $stmt->bindValue('moderation_status', FeedbackModerationStatus::MODERATION_NONE);
+      $stmt->bindValue('createdAt', date("Y-m-d H:i:s"));
+      $stmt->execute();
+
+      return $this->redirectToRoute('app_insurancecompany_feedback_index');
+    }
 
     return $this->render('InsuranceCompany/Review/new.html.twig', [
       'form' => $form->createView()
@@ -369,7 +409,7 @@ ORDER BY t.NAME
   }
 
   /**
-   * @Route(path="/reviews/add-comment")
+   * @Route(path="/reviews/add-comment", name="add_comment")
    */
   public function addCommentAction(Request $request, UserInterface $user = null)
   {
@@ -486,5 +526,114 @@ ORDER BY t.NAME
 
       return new JsonResponse(1);
     }
+  }
+
+  /**
+   * @Route(path="/reviews/region-select", name="feedback_region_select_ajax")
+   */
+  public function regionSelectAction(Request $request)
+  {
+    if ($request->isXmlHttpRequest()) {
+      $data = $request->request->all();
+      $region_id = isset($data['region_id']) ? $data['region_id'] : null;
+
+      $branches = $this->getDoctrine()->getManager()->getRepository(CompanyBranch::class)
+        ->findBy([
+          'region' => $region_id
+        ]);
+      $content = '';
+      foreach ($branches as $branch) {
+        $content .= '<li value="'. $branch->getId() .'" class="custom-serach__items_item hospital company-select-item
+                      data-kpp="' .$branch->getKpp() . '">' .
+          $branch->getName() .'</li>';
+      }
+      $response = new Response();
+      $response->setContent($content);
+
+      return $response;
+    }
+  }
+
+  /**
+   * @Route(path="/reviews/admin-check", name="admin_check_ajax")
+   */
+  public function adminCheckAction(Request $request)
+  {
+    if ($request->isXmlHttpRequest()) {
+      $data = $request->request->all();
+      $id = !empty($data['id']) ? $data['id'] : null;
+      $accepted = !empty($data['accepted']) ? $data['accepted'] : null;
+      $reject = !empty($data['reject']) ? $data['reject'] : null;
+      $status = !empty($accepted) ?
+        FeedbackModerationStatus::MODERATION_ACCEPTED :
+        (!empty($reject) ? FeedbackModerationStatus::MODERATION_REJECTED : FeedbackModerationStatus::MODERATION_NONE);
+
+      $feedback = $this->getDoctrine()->getManager()->getRepository(Feedback::class)
+        ->findOneBy(['id' => $id]);
+      if (!empty($feedback)) {
+        $feedback->setModerationStatus($status);
+        $this->getDoctrine()->getManager()->persist($feedback);
+        $this->getDoctrine()->getManager()->flush();
+
+        // update rating company and branch
+        $this->updateRating($feedback);
+      }
+
+      return new JsonResponse(1);
+    }
+  }
+
+  /**
+   * @param Feedback $feedback
+   */
+  public function updateRating($feedback)
+  {
+    $branch = $this->updateRatingObject(
+      Feedback::class,
+      'branch',
+      $feedback->getBranch(),
+      CompanyBranch::class);
+    $this->getDoctrine()->getManager()->persist($branch);
+    $this->getDoctrine()->getManager()->flush();
+
+    $company = $this->updateRatingObject(
+      CompanyBranch::class,
+      'company'
+      , $feedback->getCompany(),
+      Company::class);
+    $this->getDoctrine()->getManager()->persist($company);
+    $this->getDoctrine()->getManager()->flush();
+  }
+
+  /**
+   * @param $repo
+   * @param $param
+   * @param $model
+   * @param $class
+   * @return object|null
+   */
+  public function updateRatingObject($repo, $param, $model, $class)
+  {
+    $items = $this->getDoctrine()->getManager()->getRepository($repo)
+      ->createQueryBuilder('t')
+      ->where('t.' .$param. ' = :model')
+      ->andWhere('t.valuation > 0')
+      ->setParameter('model', $model)
+      ->getQuery()
+      ->getResult();
+
+    $valuationAll = 0;
+    foreach ($items as $key => $item)
+    {
+      $valuationAll += $item->getValuation();
+    }
+    $valuation = (float)($valuationAll / count($items));
+    $branch = $this->getDoctrine()->getManager()->getRepository($class)
+      ->findOneBy([
+        'id' => $model->getId()
+      ]);
+    $branch->setValuation($valuation);
+
+    return $branch;
   }
 }

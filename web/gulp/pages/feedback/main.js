@@ -198,8 +198,6 @@ $(document).on("click",".select-items div",function() {
 
 
 $(document).ready(function() {
-
-
   $(".delet_cation").click(function() {
     var id = $(this).attr("data-id");
     var data = {
@@ -219,22 +217,69 @@ $(document).ready(function() {
             })
   });
   $(".delet_comment").click(function() {
-    var id = $(this).attr("data-id");
-    var data = {
-      "case":"comment",
-      "id":id,
-    };
-    $.ajax({
-      dataType: 'html',
-      url: '/ajax/delet_feedback.php',
-      type: 'POST',
-      data: data,
-      success: function(msg){
-        if(msg == 1) {
-          window.location.reload();
+      var id = $(this).attr("data-id");
+      var data = {
+          "case": "comment",
+          "id": id,
+      };
+      $.ajax({
+          dataType: 'html',
+          url: "/reviews/remove-comment",
+          type: 'POST',
+          data: data,
+          success: function (msg) {
+              if (msg == 1) {
+                  window.location.reload();
+              }
+          },
+      })
+  });
+  $(".button-cite").click(function (e) {
+        let error = [];
+        e.preventDefault();
+        var ID = $(this).attr("data-id-cited");
+        let id_comment = $(this).attr("data-id-cited");
+
+        let text_cited = $("[data-id-cited=" + ID + "]").val();
+        if (text_cited == "") {
+            $(this).siblings(".danger").css({"display": "block"});
+            error.push("text");
         }
-      },
-    })
+        let data = {
+            "id_comment": id_comment,
+            "message": text_cited,
+        };
+        if (error.length == 0) {
+            $.ajax({
+                url: "/reviews/add-citation",
+                type: "POST",
+                data: data,
+                beforeSend: function () {
+                }
+            }).done(function (msg) {
+                if (msg == 1) {
+                    location.reload();
+                }
+            })
+        }
+  });
+  $(".delete_cation").click(function() {
+        var id = $(this).attr("data-id");
+        var data = {
+            "case":"cation",
+            "id":id,
+        };
+        $.ajax({
+            dataType: 'html',
+            url: "/reviews/remove-citation",
+            type: 'POST',
+            data: data,
+            success: function(msg){
+                if(msg == 1) {
+                    window.location.reload();
+                }
+            },
+        })
   });
   $(".dalete_review").click(function() {
     var id = $(this).attr("data-id");
@@ -258,9 +303,6 @@ $(document).ready(function() {
   $('.toggle_comment_dropdown').on('click', function (e) {
     $(this).parent().toggleClass('openedBlock');
   });
-
-
-
 });
 
 function  check_review(el) {
@@ -298,7 +340,7 @@ if(arr_check.length >0 ) {
 
       $.ajax({
             dataType: 'html',
-            url: '/ajax/for_admin/check-review.php',
+            url: '/reviews/admin-check',
             type: 'POST',
             data: data,
             beforeSend: function() {

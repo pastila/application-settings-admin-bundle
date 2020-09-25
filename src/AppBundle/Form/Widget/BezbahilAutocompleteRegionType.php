@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BezbahilAutocompleteType extends AbstractType
+class BezbahilAutocompleteRegionType extends AbstractType
 {
   public function configureOptions(OptionsResolver $resolver)
   {
@@ -25,6 +25,6 @@ class BezbahilAutocompleteType extends AbstractType
 
   public function getBlockPrefix()
   {
-    return 'bezbahil_autocomplete';
+    return 'bezbahil_autocomplete_region';
   }
 }

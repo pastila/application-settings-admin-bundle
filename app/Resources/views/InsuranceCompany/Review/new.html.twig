@@ -13,7 +13,6 @@
     <script type="text/javascript" src="/local/templates/kdteam/pages/feedback/add/main.min.js"></script>
     {{ parent() }}
 {% endblock %}
-
 {% block main %}
     <!-- Breadcrumbs -->
     <ul class="breadcrumbs">
@@ -32,7 +31,8 @@
     <h1 class="page-title">Добавить отзыв о компании</h1>
 
     <!-- Wrap -->
-    {{ form_start(form, { attr: { id: "form-comments"} }) }}
+{#    {{ form_start(form, { attr: 'action': {{ url('reviews_add', {}, false) }}, 'method': 'POST', id: "form-comments"} }) }}#}
+    {{ form_start(form, {'action': path('app_insurancecompany_feedback_new'), 'method': 'POST'}) }}
     <div class="white_block">
 
     <div class="feedback__top">
@@ -42,7 +42,7 @@
         </div>
         <div class="add_reviews-select">
             <label class="input__wrap_label" for="user_pass">Список страховых компаний : </label>
-            {{ form_row(form.company) }}
+            {{ form_row(form.branch) }}
         </div>
     </div>
 
@@ -92,7 +92,7 @@
                 <!--                                    <span class="check-img"></span>-->
             </div>
 
-            <button type="submit" class="smallMainBtn" id="submit">Отправить</button>
+            <button type="submit" class="smallMainBtn">Отправить</button>
         </div>
     </div>
     {{ form_rest(form) }}

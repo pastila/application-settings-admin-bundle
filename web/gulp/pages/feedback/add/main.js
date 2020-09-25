@@ -210,6 +210,40 @@ $(document).ready(function() {
     }, delay));
   });
 
+  $(".region-select").click(function () {
+    $(".search-second").css({"pointer-events":"inherit"});
+    let id_region = $(this).attr('value');
+    $('#referal').attr('data-id_region', id_region);
+    $('#referal').attr('data-region_check', 'check');
+    $('#referal_two').val('');
+    $('#region_select_id').attr('value', id_region);
+
+    $.post("/reviews/region-select", {
+      region_id:$("#referal").attr("data-id_region")
+    }, function(msg) {
+      if ($('.error_region').length != 0) {
+        $('.error_region').remove();
+      }
+      $('.hospital').each(function() {
+        $(this).remove();
+      });
+      $('.hospital-empty').remove();
+      setTimeout(function() {
+        $('#search_result_hospital').append(msg);
+      }, 100);
+    });
+  });
+
+  $('body').on('click', '.company-select-item', function () {
+    let id_company = $(this).attr('value');
+    $('#company_select_id').attr('value', id_company);
+  });
+
+  $('.star-item').click(function () {
+    let star = $(this).attr('data-value');
+    $('#rating_select').attr('value', star);
+  });
+
   $(document).on('click', '.region', function() {
 
     let id_region = $(this).attr('value');

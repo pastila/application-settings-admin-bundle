@@ -69,7 +69,7 @@
             <a rel="nofollow" class="toggle_comment_dropdown opacity_block">Оставить комментарий</a>
         {% endif %}
         <div class="block_commented_styles block__commented">
-            <form action="reviews/add-comment" method="POST">
+            <form action="{{ url('add_comment', {}, false) }}" method="POST">
                 <div class="input__wrap">
                             <textarea minlength="10" name="comment" required
                                       data-id-comment="{{ review.id }}"></textarea>
@@ -88,7 +88,7 @@
             {% if is_granted('ROLE_ADMIN') %}
                 <form action="reviews/remove-comment" method="POST">
                     <div class="block_remove">
-                        <div data-id="{{ comment.id }}" class="delete_comment remove_comment">
+                        <div data-id="{{ comment.id }}" class="delet_comment remove_comment">
                             Удалить комментарий
                         </div>
                     </div>
@@ -153,7 +153,7 @@
 {% if is_granted('ROLE_ADMIN') %}
     <div class="right_content-reviews">
 
-        {% if not filter.moderation is null %}
+        {% if (filter is defined) and (not filter.moderation is null) %}
 
             <div class="feedback__radio-btns">
                 <div id="checkbox-box_{{ review.id }}" class="wrap-chrckbox">
