@@ -576,9 +576,64 @@ ORDER BY t.NAME
         $this->getDoctrine()->getManager()->flush();
 
         // update rating company and branch
+        $this->updateRating($feedback);
       }
 
       return new JsonResponse(1);
     }
+  }
+
+  /**
+   * @param Feedback $feedback
+   */
+  public function updateRating($feedback)
+  {
+    $branch = $this->updateRatingObject(
+      Feedback::class,
+      'branch',
+      $feedback->getBranch(),
+      CompanyBranch::class);
+    $this->getDoctrine()->getManager()->persist($branch);
+    $this->getDoctrine()->getManager()->flush();
+
+    $company = $this->updateRatingObject(
+      CompanyBranch::class,
+      'company'
+      , $feedback->getCompany(),
+      Company::class);
+    $this->getDoctrine()->getManager()->persist($company);
+    $this->getDoctrine()->getManager()->flush();
+  }
+
+  /**
+   * @param $repo
+   * @param $param
+   * @param $model
+   * @param $class
+   * @return object|null
+   */
+  public function updateRatingObject($repo, $param, $model, $class)
+  {
+    $items = $this->getDoctrine()->getManager()->getRepository($repo)
+      ->createQueryBuilder('t')
+      ->where('t.' .$param. ' = :model')
+      ->andWhere('t.valuation > 0')
+      ->setParameter('model', $model)
+      ->getQuery()
+      ->getResult();
+
+    $valuationAll = 0;
+    foreach ($items as $key => $item)
+    {
+      $valuationAll += $item->getValuation();
+    }
+    $valuation = (float)($valuationAll / count($items));
+    $branch = $this->getDoctrine()->getManager()->getRepository($class)
+      ->findOneBy([
+        'id' => $model->getId()
+      ]);
+    $branch->setValuation($valuation);
+
+    return $branch;
   }
 }
