@@ -303,9 +303,6 @@ $(document).ready(function() {
   $('.toggle_comment_dropdown').on('click', function (e) {
     $(this).parent().toggleClass('openedBlock');
   });
-
-
-
 });
 
 function  check_review(el) {
@@ -343,7 +340,7 @@ if(arr_check.length >0 ) {
 
       $.ajax({
             dataType: 'html',
-            url: '/ajax/for_admin/check-review.php',
+            url: '/reviews/admin-check',
             type: 'POST',
             data: data,
             beforeSend: function() {
