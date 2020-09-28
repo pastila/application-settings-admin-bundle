@@ -7,26 +7,19 @@
     <!-- Если есть обращения в админке добавляем класс active -->
     <!-- И показываем блок с колличеством обращений -->
     <a class="active" href="/obrashcheniya/">
-                                <span id="number_calls" class="menu-req">
-                                    {{ nbAppeals }}
-                                </span>
-
+        <span id="number_calls" class="menu-req">
+            {{ nbAppeals }}
+        </span>
         <span class="header__r_nav_text">Ваши обращения</span>
     </a>
-
 </li>
 <li>
     <!-- Если есть обращения в админке добавляем класс active -->
     <!-- И показываем блок с колличеством обращений -->
-    <?php
-
-                    ?>
-
     <a class="" href="/reviews/">
         <div id="number_calls" class="menu-req">
             {{ nbReviews }}
         </div>
-
         <span class="header__r_nav_text">Ваши отзывы</span>
     </a>
 </li>
@@ -34,7 +27,7 @@
 <li>
     <a href="/otpravlennyye/">
         <div class="menu-req">
-                                    {{ nbSent}}
+            {{ nbSent}}
         </div>
         <span class="header__r_nav_text">Отправленные</span>
     </a>

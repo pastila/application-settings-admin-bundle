@@ -92,10 +92,6 @@ left:-9999px;" alt="" /></div></noscript>
             <img class="header__logo_img" src="/local/templates/kdteam/images/png/header/logo-oms-white.png"
                  alt="OMS">
         </a>
-
-
-
-
         {% if app.user %}
         <div class="header__r"><img class="header__r_auth_login_img" src="/images/message.svg" alt="OMS">
             <a style="font-size: 2rem; color: #fff; display: flex; padding-right: 2rem;padding-left: 1rem;" href="/vopros-otvet/"><span class="header__r_auth_user_hello">Вопрос - Ответ</span></a>
@@ -103,21 +99,11 @@ left:-9999px;" alt="" /></div></noscript>
                         <span class="header__r_auth_user_hello">
                             Добрый день,
                         </span>
-
                 <span class="header__r_auth_user_name">{{ app.user.fullName }}!</span>
             </a>
-
-
-
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                 {{ render(controller('AppBundle:User:_userPanel')) }}
-
-
-
-
-
-
-
-
+            {% endif %}
 
             <!-- <div class="header__r_auth">
                 <div class="header__r_auth_user-image">
