@@ -4,51 +4,43 @@
 namespace AppBundle\Controller;
 
 
-use AppBundle\Entity\Company\Feedback;
-use AppBundle\Repository\Company\CompanyRepository;
+use AppBundle\Helper\DataFromBitrix;
 use AppBundle\Repository\Company\FeedbackRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class UserController
+ * @package AppBundle\Controller
+ */
 class UserController extends AbstractController
 {
+  /**
+   * @var FeedbackRepository
+   */
   private $feedbackRepository;
 
+  /**
+   * UserController constructor.
+   * @param FeedbackRepository $feedbackRepository
+   */
   public function __construct(FeedbackRepository $feedbackRepository)
   {
     $this->feedbackRepository = $feedbackRepository;
   }
+
+  /**
+   * @param Request $request
+   * @return \Symfony\Component\HttpFoundation\Response
+   */
   public function _userPanelAction(Request $request)
   {
-    $ch = curl_init(sprintf('%s/ajax/get_obrashcheniya.php', 'http://nginx'));
-    try
+    $dataFromBitrix = new DataFromBitrix($request);
+    $dataFromBitrix->getData('%s/ajax/get_obrashcheniya.php');
+
+    if (!empty($dataFromBitrix->getInfo()['http_code']) && $dataFromBitrix->getInfo()['http_code'] === 200)
     {
-      curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        'X-SF-SECRET: 2851f0ae-9dc7-4a22-9283-b86abfa44900',
-        'X-SF-REMOTE-ADDR: ' . $request->getClientIp(),
-        'X-Requested-With: XmlHttpRequest'
-      ));
-
-      curl_setopt($ch, CURLOPT_COOKIE, sprintf('BX_USER_ID=%s;BITRIX_SM_LOGIN=%s;BITRIX_SM_SOUND_LOGIN_PLAYED=%s;PHPSESSID=%s',
-        $request->cookies->get('BX_USER_ID'),
-        $request->cookies->get('BITRIX_SM_LOGIN'),
-        $request->cookies->get('BITRIX_SM_SOUND_LOGIN_PLAYED'),
-        $request->cookies->get('PHPSESSID')
-      ));
-
-      curl_setopt($ch, CURLOPT_VERBOSE, true);
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-      $res = curl_exec($ch);
-      $info = curl_getinfo($ch);
-    } finally
-    {
-      curl_close($ch);
-    }
-
-    if ($info['http_code'] === 200)
-    {
-      $res = json_decode($res, true);
+      $res = json_decode($dataFromBitrix->getRes(), true);
 
       $nbAppeals = isset($res['nbAppeals']) ? $res['nbAppeals'] : null;
       $nbSent = isset($res['nbSent']) ? $res['nbSent'] : null;
