@@ -444,23 +444,27 @@ class FeedbackController extends Controller
         if (!empty($company->getEmailThird())) {
           $emails[] = $company->getEmailThird();
         }
-
         $url = $this->generateUrl('app_insurancecompany_feedback_show', ['id' => $feedback->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
 
-        $message = (new \Swift_Message('Hello Email'))
-          ->setFrom('send@example.com')
-          ->setTo($emails)
-          ->setBody(
-            $this->renderView(
-              'emails/feedback.html.twig', [
-                'url' => $url,
-                'date' => $feedback->getCreatedAt(),
-              ]
-            ),
-            'text/html'
-          )
-        ;
-        $this->get('mailer')->send($message);
+        try {
+          $message = (new \Swift_Message('Добавлен новый отзыв'))
+            ->setFrom('feedback@bezbahil.com')
+            ->setTo($emails)
+            ->setBody(
+              $this->renderView(
+                'emails/feedback.html.twig', [
+                  'url' => $url,
+                  'date' => $feedback->getCreatedAt(),
+                ]
+              ),
+              'text/html'
+            )
+          ;
+          $this->get('mailer')->send($message);
+        } catch(\Exception $e) {
+          $logger = $this->get('logger');
+          $logger->error('No send mail in admin_check_ajax');
+        }
       }
 
       return new JsonResponse(1);
