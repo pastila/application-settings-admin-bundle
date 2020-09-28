@@ -377,32 +377,28 @@ ORDER BY t.NAME
     $form = $this->createForm(FeedbackType::class, $feedback, [
       'csrf_protection' => false,
     ]);
+    $data = $request->request->all();
+    $userId = null !== $user ? $user->getId() : null;
 
-    /*** Data Adapter */
-    if ($request->isMethod('post')) {
-      $data = $request->request->all();
-      $userId = null !== $user ? $user->getId() : null;
-      $data_form = [
-        'author' => $userId,
-        'region' => $data['region_select_id'],
-        'branch' => $data['company_select_id'],
-        'text' => $data['feedback']['text'],
-        'title' => $data['feedback']['title'],
-        'valuation' => $data['rating_select'],
-      ];
-    }
-
-    if ($request->isMethod('post')) { //$form->isValid() todo
+    $newData = [
+      'author' => $userId,
+      'region' => $data['region_select_id'],
+      'branch' => $data['company_select_id'],
+      'valuation' => $data['rating_select'],
+    ];
+    $newData = array_merge($data['feedback'], $newData);
+    $form->submit($newData);
+    if ($form->isSubmitted()) {
       $sql = 'INSERT INTO s_company_feedbacks(user_id, region_id, branch_id, title, text, valuation, moderation_status, created_at, updated_at) 
               VALUES(:author, :region, :branch, :title, :text, :valuation, :moderation_status, :createdAt, :createdAt)';
       $entityManager = $this->getDoctrine()->getManager();
       $stmt = $entityManager->getConnection()->prepare($sql);
-      $stmt->bindValue('author', $data_form['author']);
-      $stmt->bindValue('region', $data_form['region']);
-      $stmt->bindValue('branch', $data_form['branch']);
-      $stmt->bindValue('text', $data_form['text']);
-      $stmt->bindValue('title', $data_form['title']);
-      $stmt->bindValue('valuation', $data_form['valuation']);
+      $stmt->bindValue('author', $newData['author']);
+      $stmt->bindValue('region', $newData['region']);
+      $stmt->bindValue('branch', $newData['branch']);
+      $stmt->bindValue('text', $newData['text']);
+      $stmt->bindValue('title', $newData['title']);
+      $stmt->bindValue('valuation', $newData['valuation']);
       $stmt->bindValue('moderation_status', FeedbackModerationStatus::MODERATION_NONE);
       $stmt->bindValue('createdAt', date("Y-m-d H:i:s"));
       $stmt->execute();

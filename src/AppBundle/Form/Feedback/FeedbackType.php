@@ -14,12 +14,13 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\SubmitButton;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class FeedbackType extends AbstractType
 {
   private $companyRepository;
   private $regionRepository;
-
 
   public function __construct(CompanyRepository $companyRepository, RegionRepository $regionRepository)
   {
@@ -31,7 +32,7 @@ class FeedbackType extends AbstractType
   {
     $builder
       ->add('region', BezbahilAutocompleteRegionType::class, [
-        'choices' => $this->getRegionChoices()
+        'choices' => $this->getRegionChoices(),
       ])
       ->add('branch', BezbahilAutocompleteCompanyType::class, [
         'choices' => $this->getCompanyChoices()
@@ -67,5 +68,10 @@ class FeedbackType extends AbstractType
     }
 
     return $choices;
+  }
+
+  public function configureOptions(OptionsResolver $resolver)
+  {
+    $resolver->setDefault('data_class', 'AppBundle\Entity\Company\Feedback');
   }
 }
