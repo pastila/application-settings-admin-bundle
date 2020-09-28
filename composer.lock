@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5d3b748101d4035b5f5d5d7fbee2e942",
+    "content-hash": "3fe7268fa52bc0a8e466dd4947d43ee9",
     "packages": [
         {
             "name": "accurateweb/client-application-bundle",
@@ -31,6 +31,35 @@
                 "issues": "https://github.com/accurateweb/client-application-bundle/issues"
             },
             "time": "2020-04-06T16:14:32+00:00"
+        },
+        {
+            "name": "accurateweb/email-template-bundle",
+            "version": "dev-development",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/accurateweb/email-template-bundle.git",
+                "reference": "7c9ef07de096f10d6f8bfc5f609cb4a53a53bbf7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/accurateweb/email-template-bundle/zipball/7c9ef07de096f10d6f8bfc5f609cb4a53a53bbf7",
+                "reference": "7c9ef07de096f10d6f8bfc5f609cb4a53a53bbf7",
+                "shasum": ""
+            },
+            "suggest": {
+                "sonata-project/admin-bundle": "Enable E-mail template administration with Sonata Admin"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Accurateweb\\EmailTemplateBundle\\": ""
+                }
+            },
+            "support": {
+                "source": "https://github.com/accurateweb/email-template-bundle/tree/development",
+                "issues": "https://github.com/accurateweb/email-template-bundle/issues"
+            },
+            "time": "2019-01-17T08:40:24+00:00"
         },
         {
             "name": "behat/transliterator",
@@ -4084,6 +4113,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "accurateweb/email-template-bundle": 20,
         "accurateweb/client-application-bundle": 20
     },
     "prefer-stable": false,

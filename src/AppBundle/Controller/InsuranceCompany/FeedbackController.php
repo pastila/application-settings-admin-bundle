@@ -11,7 +11,6 @@ use AppBundle\Entity\Company\Company;
 use AppBundle\Entity\Company\CompanyBranch;
 use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\Company\FeedbackModerationStatus;
-use AppBundle\Entity\Geo\Region;
 use AppBundle\Entity\User\User;
 use AppBundle\Form\Feedback\FeedbackType;
 use AppBundle\Form\InsuranceCompany\FeedbackListFilterType;
@@ -20,14 +19,13 @@ use AppBundle\Model\InsuranceCompany\FeedbackListFilter;
 use AppBundle\Model\InsuranceCompany\FeedbackListFilterUrlBuilder;
 use AppBundle\Model\Pagination;
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class FeedbackController extends Controller
@@ -45,155 +43,6 @@ class FeedbackController extends Controller
    */
   public function indexAction(Request $request)
   {
-//    if ($_GET)
-//    {
-//      $get_letter = $_GET;
-//      if (isset($get_letter["letter"]))
-//      {
-//        setcookie("letter", "yes", 0);
-//      }
-//    }
-//    $asset = Asset::getInstance();
-//
-//    $url = $APPLICATION->GetCurDir();
-//
-//
-//    CModule::IncludeModule("iblock");
-//    global $USER;
-//
-//    $sort_url = $_GET;
-//
-//    $array_all_company = array();
-
-    /**
-     * Получает список компаний и их КПП
-     * SELECT t.ID, t.IBLOCK_ID, t.NAME, t.DATE_ACTIVE_FROM, prop.VALUE as KPP, t.CODE
-     * FROM b_iblock_element t
-     * LEFT JOIN b_iblock_element_property prop on prop.IBLOCK_ELEMENT_ID = t.ID AND prop.IBLOCK_PROPERTY_ID = 112
-     * WHERE t.IBLOCK_ID = 16 AND t.ACTIVE = "Y"
-     * ORDER BY t.NAME
-     */
-
-//    $order = Array("name" => "asc");
-//    $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_KPP", "CODE");
-//    $arFilter = Array("IBLOCK_ID" => 16, "ACTIVE" => "Y");
-//    $res = \CIBlockElement::GetList($order, $arFilter, false, false, $arSelect);
-//    while ($ob = $res->GetNextElement())
-//    {
-//
-//      $arProps = $ob->GetFields();
-//
-//      $allReviews[$arProps['PROPERTY_KPP_VALUE']] = $arProps;
-//    }
-//    $countReviews = count($allReviews);
-
-
-//    $arFilter = Array(
-//      "IBLOCK_ID" => 13,
-//      "ACTIVE" => "Y",
-//      "USER_NO_AUTH" => false,
-//      "!PROPERTY_VERIFIED" => false,
-//    );
-//
-//    if (isset($sort_url["admin"]))
-//    {
-//      $arFilter = Array(
-//        "IBLOCK_ID" => 13,
-//        "ACTIVE" => "Y",
-//        $sort_url["admin"] => false,
-//        "!USER_NO_AUTH" => false,
-//      );
-//    } else
-//    {
-//      foreach ($sort_url as $key => $filter)
-//      {
-//        $key = mb_strtoupper($key);
-//        $arFilter += [$key => $filter];
-//      }
-//    }
-//
-//    $order = Array("created" => "desc");
-//    $arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "CREATED_DATE", "PROPERTY_*");
-//
-//
-//    $pagen = Array("nPageSize" => 10);
-//    if ($sort_url["comments"] == "all" && !isset($_GET["PAGEN_1"]))
-//    {
-//      $pagen = false;
-//    } else if (!isset($_GET["PAGEN_1"]))
-//    {
-//
-//      $pagen["iNumPage"] = 1;
-//    }
-//
-//
-    /*
-     * SELECT t.*, bip.*, prop.*
-FROM b_iblock_element t
-LEFT JOIN b_iblock_element_property prop on prop.IBLOCK_ELEMENT_ID = t.ID
-LEFT JOIN b_iblock_property bip ON prop.IBLOCK_PROPERTY_ID = bip.ID
-WHERE t.IBLOCK_ID = 13 AND t.ACTIVE = "Y"
-ORDER BY t.NAME
-     */
-//    $res = CIBlockElement::GetList($order, $arFilter, false, $pagen, $arSelect);
-//    if (!$sort_url["comments"] == "all")
-//    {
-//      $res->NavStart(0);
-//    }
-//    $is_elemnt = true;
-//if ($res->SelectedRowsCount() == 0) {
-//$is_elemnt = false;
-
-//    while ($ob = $res->GetNextElement())
-//    {
-//
-//      $arFields = $ob->GetFields();
-//      $arProps = $ob->GetProperties();
-//
-//      $newdata = explode(".", $arFields["CREATED_DATE"]);
-//      $newstrDate = $newdata[2] . '.' . $newdata[1] . '.' . $newdata[0];
-//
-//      $newDate = FormatDate("d F, Y", MakeTimeStamp($newstrDate));
-//      if ($sort_url["admin"] == "")
-//      {
-//        if ($arProps["NAME_USER"]["VALUE"] == "" && $arProps["VERIFIED"]["VALUE"] == "")
-//        {
-//          continue;
-//        }
-//      }
-////print_r($arProps["NAME_USER"]["VALUE"]);
-//      if ($arProps["NAME_USER"]["VALUE"] == "")
-//      {
-//        $name_user = $arProps["USER_NO_AUTH"]["VALUE"];
-//      } else
-//      {
-//        $ID_USER = $arProps["NAME_USER"]["VALUE"];
-//        $rsUser = CUser::GetByID($ID_USER);
-//        $arUser = $rsUser->Fetch();
-//        $name_user = $arUser["NAME"];
-//        if ($name_user == ""):
-//          $name_user = $arProps["USER_NO_AUTH"]["VALUE"];
-//        endif;
-//      }
-//      if (is_array($arProps["COMMENTS_TO_REWIEW"]["VALUE"]))
-//      {
-//        $count_comments = count($arProps["COMMENTS_TO_REWIEW"]["VALUE"]);
-//      } else
-//      {
-//        $count_comments = 0;
-//      }
-//      $city = CIBlockSection::GetByID($arProps["REGION"]["VALUE"])->GetNext();
-//      if ($arProps["NAME_COMPANY"]["VALUE"] == "")
-//      {
-//        continue;
-//      }
-//      $compani = CIBlockElement::GetByID($arProps["NAME_COMPANY"]["VALUE"])->GetNextElement()->GetProperties();
-//      $compani_fields = CIBlockElement::GetByID($arProps["NAME_COMPANY"]["VALUE"])->GetNextElement()->GetFields();
-//
-//      $file = CFile::ResizeImageGet($compani["LOGO_IMG"]["VALUE"], array('width' => 120, 'height' => 80),
-//        BX_RESIZE_IMAGE_PROPORTIONAL, true);
-//
-
     $response = new Response();
     $response->setPublic();
 
@@ -380,15 +229,17 @@ ORDER BY t.NAME
     $data = $request->request->all();
     $userId = null !== $user ? $user->getId() : null;
 
-    $newData = [
-      'author' => $userId,
-      'region' => $data['region_select_id'],
-      'branch' => $data['company_select_id'],
-      'valuation' => $data['rating_select'],
-    ];
-    $newData = array_merge($data['feedback'], $newData);
-    $form->submit($newData);
-    if ($form->isSubmitted()) {
+    if ($request->isMethod('post')) {
+      $newData = [
+        'author' => $userId,
+        'region' => $data['region_select_id'],
+        'branch' => $data['company_select_id'],
+        'valuation' => $data['rating_select'],
+      ];
+      $newData = array_merge($data['feedback'], $newData);
+      $form->submit($newData);
+    }
+    if ($form->isSubmitted() && !empty($newData['region'])  && !empty($newData['branch'])) {
       $sql = 'INSERT INTO s_company_feedbacks(user_id, region_id, branch_id, title, text, valuation, moderation_status, created_at, updated_at) 
               VALUES(:author, :region, :branch, :title, :text, :valuation, :moderation_status, :createdAt, :createdAt)';
       $entityManager = $this->getDoctrine()->getManager();
@@ -580,6 +431,36 @@ ORDER BY t.NAME
 
         // update rating company and branch
         $this->updateRating($feedback);
+
+        $branch = $feedback->getBranch();
+        $company = !empty($branch) ? $branch->getCompany() : null;
+        $emails = [];
+        if (!empty($company->getEmailFirst())) {
+          $emails[] = $company->getEmailFirst();
+        }
+        if (!empty($company->getEmailSecond())) {
+          $emails[] = $company->getEmailSecond();
+        }
+        if (!empty($company->getEmailThird())) {
+          $emails[] = $company->getEmailThird();
+        }
+
+        $url = $this->generateUrl('app_insurancecompany_feedback_show', ['id' => $feedback->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+
+        $message = (new \Swift_Message('Hello Email'))
+          ->setFrom('send@example.com')
+          ->setTo($emails)
+          ->setBody(
+            $this->renderView(
+              'emails/feedback.html.twig', [
+                'url' => $url,
+                'date' => $feedback->getCreatedAt(),
+              ]
+            ),
+            'text/html'
+          )
+        ;
+        $this->get('mailer')->send($message);
       }
 
       return new JsonResponse(1);
