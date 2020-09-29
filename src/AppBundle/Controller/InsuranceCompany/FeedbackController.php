@@ -240,11 +240,12 @@ class FeedbackController extends Controller
       $form->submit($newData);
     }
     if ($form->isSubmitted() && !empty($newData['region'])  && !empty($newData['branch'])) {
-      $sql = 'INSERT INTO s_company_feedbacks(user_id, region_id, branch_id, title, text, valuation, moderation_status, created_at, updated_at) 
-              VALUES(:author, :region, :branch, :title, :text, :valuation, :moderation_status, :createdAt, :createdAt)';
+      $sql = 'INSERT INTO s_company_feedbacks(user_id, region_id, branch_id, author_name, title, text, valuation, moderation_status, created_at, updated_at) 
+              VALUES(:author, :region, :branch, :author_name, :title, :text, :valuation, :moderation_status, :createdAt, :createdAt)';
       $entityManager = $this->getDoctrine()->getManager();
       $stmt = $entityManager->getConnection()->prepare($sql);
       $stmt->bindValue('author', $newData['author']);
+      $stmt->bindValue('author_name', $newData['author_name']);
       $stmt->bindValue('region', $newData['region']);
       $stmt->bindValue('branch', $newData['branch']);
       $stmt->bindValue('text', $newData['text']);
@@ -447,7 +448,7 @@ class FeedbackController extends Controller
         $url = $this->generateUrl('app_insurancecompany_feedback_show', ['id' => $feedback->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
 
         try {
-          $message = (new \Swift_Message('Добавлен новый отзыв'))
+          $message = (new \Swift_Message('Добавлен новый отзыв на bezbahil.ru'))
             ->setFrom('feedback@bezbahil.com')
             ->setTo($emails)
             ->setBody(

@@ -36,6 +36,15 @@ class Feedback
   private $author;
 
   /**
+   * Имя пользователя, который оставил отзыв, но не стал авторизовываться
+   *
+   * @var string
+   *
+   * @ORM\Column(name="author_name", type="string", length=255, nullable=true)
+   */
+  private $authorName;
+
+  /**
    * Регион
    *
    * @var null|Region
@@ -275,6 +284,9 @@ class Feedback
     return $this->moderationStatus;
   }
 
+  /**
+   * @return int|string
+   */
   public function getModerationStatusLabel ()
   {
     if ($this->moderationStatus === FeedbackModerationStatus::MODERATION_ACCEPTED)
@@ -332,6 +344,7 @@ class Feedback
     }
 
     $author->setFirstName($v);
+    $this->authorName = $this->author->getFullName();
 
     return $this;
   }
@@ -340,7 +353,7 @@ class Feedback
   {
     $author = $this->getAuthor();
 
-    return $author ? $author->getFirstName() : null;
+    return $author ? $author->getFirstName() : $this->authorName;
   }
 
   /**
