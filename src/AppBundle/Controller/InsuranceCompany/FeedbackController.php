@@ -53,14 +53,18 @@ class FeedbackController extends Controller
         ->getDoctrine()
         ->getManager()
         ->getRepository(Feedback::class)
-        ->createQueryBuilder('rv');
+        ->createQueryBuilder('rv')
+        ->leftJoin('rv.comments', 'rvct');
 
       $maxUpdatedAt = $maxQb
-        ->select('MAX(rv.updatedAt)')
+        ->select('MAX(rv.updatedAt), MAX(rvct.updatedAt)')
         ->getQuery()
-        ->getSingleScalarResult();
+        ->getResult();
+      $rvUpdateAt = !empty($maxUpdatedAt[0][1]) ? $maxUpdatedAt[0][1] : null;
+      $rvctUpdateAt = !empty($maxUpdatedAt[0][2]) ? $maxUpdatedAt[0][2] : null;
+      $max = $rvUpdateAt > $rvctUpdateAt ? $rvUpdateAt : $rvctUpdateAt;
 
-      $response->setLastModified(new \DateTime($maxUpdatedAt));
+      $response->setLastModified(new \DateTime($max));
 
       if ($response->isNotModified($request))
       {
@@ -449,7 +453,7 @@ class FeedbackController extends Controller
 
         try {
           $message = (new \Swift_Message('Добавлен новый отзыв на bezbahil.ru'))
-            ->setFrom('feedback@bezbahil.com')
+            ->setFrom('admin@bezbahil.com')
             ->setTo($emails)
             ->setBody(
               $this->renderView(
