@@ -16,7 +16,7 @@
     {% if pagination.page > 1 %}
         <link rel="canonical" href="{{ url('app_insurancecompany_feedback_index') }}">
     {% endif %}
-    {{ parent(path('app_insurancecompany_feedback_index')) }}
+    {{ parent() }}
 {% endblock %}
 
 {% block javascripts %}
