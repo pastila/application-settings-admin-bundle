@@ -6,6 +6,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Helper\DataFromBitrix;
 use AppBundle\Repository\Company\FeedbackRepository;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,12 +22,21 @@ class UserController extends AbstractController
   private $feedbackRepository;
 
   /**
+   * @var LoggerInterface
+   */
+  protected $logger;
+
+  /**
    * UserController constructor.
    * @param FeedbackRepository $feedbackRepository
    */
-  public function __construct(FeedbackRepository $feedbackRepository)
+  public function __construct(
+    FeedbackRepository $feedbackRepository,
+    LoggerInterface $logger
+  )
   {
     $this->feedbackRepository = $feedbackRepository;
+    $this->logger = $logger;
   }
 
   /**
@@ -35,7 +45,7 @@ class UserController extends AbstractController
    */
   public function _userPanelAction(Request $request)
   {
-    $dataFromBitrix = new DataFromBitrix($request);
+    $dataFromBitrix = new DataFromBitrix($request, $this->logger);
     $dataFromBitrix->getData('%s/ajax/get_obrashcheniya.php');
 
     if (!empty($dataFromBitrix->getInfo()['http_code']) && $dataFromBitrix->getInfo()['http_code'] === 200)

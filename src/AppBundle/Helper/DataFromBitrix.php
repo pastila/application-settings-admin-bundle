@@ -4,6 +4,7 @@
 namespace AppBundle\Helper;
 
 
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class DataFromBitrix
@@ -24,12 +25,21 @@ class DataFromBitrix
   private $request;
 
   /**
+   * @var LoggerInterface
+   */
+  protected $logger;
+
+  /**
    * DataFromBitrix constructor.
    * @param Request $request
    */
-  public function __construct(Request $request)
+  public function __construct(
+    Request $request,
+    LoggerInterface $logger
+  )
   {
     $this->request = $request;
+    $this->logger = $logger;
   }
 
   /**
@@ -57,6 +67,8 @@ class DataFromBitrix
 
       $this->res = curl_exec($ch);
       $this->info = curl_getinfo($ch);
+    } catch (\Exception $exception) {
+      $this->logger->error(sprintf('Error in DataFromBitrix: . %s', $exception->getMessage()));
     } finally {
       curl_close($ch);
     }
