@@ -245,30 +245,42 @@ class BitrixImportCommand extends ContainerAwareCommand
     $result = $stmt->fetchAll();
     $sql = '';
     foreach ($result as $item) {
-      $name = !empty($item['NAME']) ? str_replace('"', '',  $item['NAME']): null;
-      $code = !empty($item['CODE']) ? $item['CODE'] : null;
-      $kpp = !empty($item['KPP']) ? $item['KPP'] : null;
-      $company_id = !empty($item['COMPANY_ID']) ? $item['COMPANY_ID'] : null;
-      $region_id = !empty($item['REGION_ID']) ? $item['REGION_ID'] : null;
-      $amountStar = !empty($item['AMOUNT_STARS']) ? (float)$item['AMOUNT_STARS'] : 0;
-      $amountAllStar = !empty($item['ALL_AMOUNT_STAR']) ? (float)$item['ALL_AMOUNT_STAR'] : 0;
+        $name = !empty($item['NAME']) ? str_replace('"', '', $item['NAME']) : null;
+        $code = !empty($item['CODE']) ? $item['CODE'] : null;
+        $kpp = !empty($item['KPP']) ? $item['KPP'] : null;
+        $company_id = !empty($item['COMPANY_ID']) ? $item['COMPANY_ID'] : null;
+        $region_id = !empty($item['REGION_ID']) ? $item['REGION_ID'] : null;
+        $amountStar = !empty($item['AMOUNT_STARS']) ? (float)$item['AMOUNT_STARS'] : 0;
+        $amountAllStar = !empty($item['ALL_AMOUNT_STAR']) ? (float)$item['ALL_AMOUNT_STAR'] : 0;
 
-      $company = !empty($item['ALL_AMOUNT_STAR']) && !empty($company_id)? $doctrine->getRepository("AppBundle:Company\Company")
-        ->createQueryBuilder('c')
-        ->andWhere('c.id = :id')
-        ->setParameter('id', $company_id)
-        ->setMaxResults(1)
-        ->getQuery()
-        ->getOneOrNullResult() : null;
-      if (!empty($company)) {
-        $company->setValuation($amountAllStar);
-        $entityManager->persist($company);
-      }
-      $sql .= "INSERT INTO s_company_branches(name, kpp, code, company_id, region_id, valuation) VALUES('$name', '$kpp', '$code', $company_id, $region_id, $amountStar); ";
+        $company = (!empty($item['ALL_AMOUNT_STAR']) && !empty($company_id)) ? $doctrine->getRepository("AppBundle:Company\Company")
+            ->createQueryBuilder('c')
+            ->andWhere('c.id = :id')
+            ->setParameter('id', $company_id)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult() : null;
+
+        if ($company) {
+            $company->setValuation($amountAllStar);
+            $entityManager->persist($company);
+            $entityManager->flush();
+
+            $sql = "INSERT INTO s_company_branches(name, kpp, code, company_id, region_id, valuation) VALUES(:name, :kpp, :code, :company_id, :region_id, :valuation)";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':name', $name);
+            $stmt->bindValue(':kpp', $kpp);
+            $stmt->bindValue(':code', $kpp);
+            $stmt->bindValue(':company_id', $company_id);
+            $stmt->bindValue(':region_id', $region_id);
+            $stmt->bindValue(':valuation', $amountStar);
+            $stmt->execute();
+        }
     }
-    $entityManager->flush();
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
+
+
+
 
     $io = new SymfonyStyle($input, $output);
     $io->success('Fill Company Branch:' . count($result));
