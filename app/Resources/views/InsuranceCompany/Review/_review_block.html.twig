@@ -29,7 +29,7 @@
             </div>
         {% endif %}
         <div class="feedback__block_top_name">
-                    <span class="feedback__block_top_name_text">{{ review.authorName }}, {{ review.region.name }},
+                    <span class="feedback__block_top_name_text">{{ review.authorName }}, {{ review.region ? review.region.name : ''}},
                         {{ review.createdAt|date("d F, Y") }}</span>
 
             <!-- Company Name -->

@@ -10,18 +10,17 @@ use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\Company\FeedbackModerationStatus;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Entity\User\User;
-use DateTime;
-use Doctrine\ORM\EntityManager as EntityManagerAlias;
+use AppBundle\Helper\Feedback\CommonHelper;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\HttpFoundation\Response;
 
-class FeedbackCommand extends ContainerAwareCommand
+/**
+ * Class BitrixImportCommand
+ * @package AppBundle\Command
+ */
+class BitrixImportCommand extends ContainerAwareCommand
 {
   /**
    *
@@ -29,8 +28,8 @@ class FeedbackCommand extends ContainerAwareCommand
   protected function configure()
   {
     $this
-      ->setName('feedback:iblock')
-      ->setDescription('Set feedback');
+      ->setName('bitrix:import')
+      ->setDescription('Init tables symfony use by bitrix');
   }
 
   /**
@@ -44,7 +43,7 @@ class FeedbackCommand extends ContainerAwareCommand
     $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
     $doctrine = $this->getContainer()->get('doctrine');
 
-    $this->clearTable($entityManager);
+    $this->clearTables($entityManager);
     $this->fillRegion($entityManager, $input, $output);
     $this->fillCompany($entityManager, $input, $output);
     $this->fillCompanyBranch($entityManager, $doctrine, $input, $output);
@@ -57,9 +56,8 @@ class FeedbackCommand extends ContainerAwareCommand
   /**
    * @param $entityManager
    */
-  public function clearTable($entityManager)
+  public function clearTables($entityManager)
   {
-    $connection = $entityManager->getConnection();
     $tables = [
       User::class,
       Region::class,
@@ -69,7 +67,17 @@ class FeedbackCommand extends ContainerAwareCommand
       Comment::class,
       Citation::class
     ];
+    $common = new CommonHelper();
+    $common->clearTable($entityManager, $tables);
+  }
 
+  /**
+   * @param $entityManager
+   * @param $tables
+   */
+  public function clearTable($entityManager, $tables)
+  {
+    $connection = $entityManager->getConnection();
     foreach ($tables as $table) {
       $metaData = $entityManager->getClassMetadata($table);
       $connection->query('SET FOREIGN_KEY_CHECKS=0');
@@ -347,14 +355,6 @@ class FeedbackCommand extends ContainerAwareCommand
         $user->setMiddleName($middleName);
         $entityManager->persist($user);
       }
-
-      $company = !empty($item['KPP']) ? $doctrine->getRepository("AppBundle:Company\Company")
-        ->createQueryBuilder('c')
-        ->andWhere('c.kpp = :kpp')
-        ->setParameter('kpp', $item['KPP'])
-        ->setMaxResults(1)
-        ->getQuery()
-        ->getOneOrNullResult() : null;
 
       $branch = !empty($item['KPP']) ? $doctrine->getRepository("AppBundle:Company\CompanyBranch")
         ->createQueryBuilder('cb')
