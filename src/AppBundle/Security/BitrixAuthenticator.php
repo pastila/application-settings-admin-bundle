@@ -68,7 +68,6 @@ class BitrixAuthenticator extends AbstractGuardAuthenticator
   /**
    * @param Request $request
    * @return mixed|null
-   * @throws AuthenticatorRequestException
    */
   public function getCredentials(Request $request)
   {
