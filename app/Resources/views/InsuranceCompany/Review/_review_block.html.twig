@@ -34,8 +34,11 @@
 
             <!-- Company Name -->
             <div class="feedback__block_company-name">
-                {#                            {% set logo = bx_resize_img(review.company.logo, { width: 120, height: 80 }, 1, true) %}#}
-                {#                            <img src="{{ logo.src }}" alt="Логотип компании {{ review.company.name }}"/>#}
+                {{ render(controller('AppBundle:InsuranceCompany/Company:_logoPanel',
+                    {
+                        'logo_id': (review.branch ? review.branch.logoIdFromBitrix : null),
+                        'name': (review.branch ? review.branch.name : '')
+                    } )) }}
             </div>
         </div>
         <!--                <div class="feedback__block_top_data">-->

@@ -353,7 +353,7 @@ class Feedback
   {
     $author = $this->getAuthor();
 
-    return $author ? $author->getFirstName() : $this->authorName;
+    return $author ? $author->getFullName() : $this->authorName;
   }
 
   /**
