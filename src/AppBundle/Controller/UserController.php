@@ -4,6 +4,7 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Exception\BitrixRequestException;
 use AppBundle\Helper\DataFromBitrix;
 use AppBundle\Repository\Company\FeedbackRepository;
 use Psr\Log\LoggerInterface;
@@ -45,20 +46,16 @@ class UserController extends AbstractController
    */
   public function _userPanelAction(Request $request)
   {
-    $dataFromBitrix = new DataFromBitrix($request, $this->logger);
-    $dataFromBitrix->getData('%s/ajax/get_obrashcheniya.php');
+    $nbAppeals = null;
+    $nbSent = null;
 
-    if (!empty($dataFromBitrix->getInfo()['http_code']) && $dataFromBitrix->getInfo()['http_code'] === 200)
-    {
-      $res = json_decode($dataFromBitrix->getRes(), true);
-
-      $nbAppeals = isset($res['nbAppeals']) ? $res['nbAppeals'] : null;
-      $nbSent = isset($res['nbSent']) ? $res['nbSent'] : null;
-    }
-    else
-    {
-      $nbAppeals = null;
-      $nbSent = null;
+    $dataFromBitrix = new DataFromBitrix($request);
+    try {
+      $dataFromBitrix->getData('%s/ajax/get_obrashcheniya.php');
+      $nbAppeals = $dataFromBitrix->getParam('nbAppeals');
+      $nbSent = $dataFromBitrix->getParam('nbSent');
+    } catch (BitrixRequestException $exception) {
+      $this->logger->error(sprintf('Error get from bitrix panel: . %s', $exception->getMessage()));
     }
 
     $nbReviews = $this->feedbackRepository

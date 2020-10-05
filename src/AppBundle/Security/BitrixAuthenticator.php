@@ -7,6 +7,10 @@ namespace AppBundle\Security;
 
 
 use AppBundle\Entity\User\User;
+use AppBundle\Exception\AuthenticatorRequestException;
+use AppBundle\Exception\BitrixRequestException;
+use AppBundle\Helper\DataFromBitrix;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -16,13 +20,33 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 
+/**
+ * Class BitrixAuthenticator
+ * @package AppBundle\Security
+ */
 class BitrixAuthenticator extends AbstractGuardAuthenticator
 {
+  /**
+   * @var Security
+   */
   private $security;
 
-  public function __construct(Security $security)
+  /**
+   * @var LoggerInterface
+   */
+  protected $logger;
+
+  /**
+   * BitrixAuthenticator constructor.
+   * @param Security $security
+   */
+  public function __construct(
+    Security $security,
+    LoggerInterface $logger
+  )
   {
     $this->security = $security;
+    $this->logger = $logger;
   }
 
   public function supports(Request $request)
@@ -43,39 +67,19 @@ class BitrixAuthenticator extends AbstractGuardAuthenticator
 
   /**
    * @param Request $request
-   * @return mixed
+   * @return mixed|null
+   * @throws AuthenticatorRequestException
    */
   public function getCredentials(Request $request)
   {
-    $ch = curl_init(sprintf('%s/ajax/authenticated_user.php', 'http://nginx'));
-    try
-    {
-      curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        'X-SF-SECRET: 2851f0ae-9dc7-4a22-9283-b86abfa44900',
-        'X-SF-REMOTE-ADDR: ' . $request->getClientIp(),
-        'X-Requested-With: XmlHttpRequest'
-      ));
-
-      curl_setopt($ch, CURLOPT_COOKIE, sprintf('BX_USER_ID=%s;BITRIX_SM_LOGIN=%s;BITRIX_SM_SOUND_LOGIN_PLAYED=%s;PHPSESSID=%s',
-        $request->cookies->get('BX_USER_ID'),
-        $request->cookies->get('BITRIX_SM_LOGIN'),
-        $request->cookies->get('BITRIX_SM_SOUND_LOGIN_PLAYED'),
-        $request->cookies->get('PHPSESSID')
-      ));
-
-      curl_setopt($ch, CURLOPT_VERBOSE, true);
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-      $res = curl_exec($ch);
-      $info = curl_getinfo($ch);
-    } finally
-    {
-      curl_close($ch);
-    }
-
-    if ($info['http_code'] === 200)
-    {
-      return json_decode($res, true);
+    $dataFromBitrix = new DataFromBitrix($request);
+    try {
+      $dataFromBitrix->getData('%s/ajax/authenticated_user.php');
+      return $dataFromBitrix->getRes();
+    } catch (BitrixRequestException $exception) {
+      if (!($dataFromBitrix->getCode() === 401 && $dataFromBitrix->getParam('is_script'))) {
+        $this->logger->error(sprintf('Error from Bitrix Authenticator: . %s', $exception->getMessage()));
+      }
     }
 
     return null;
@@ -88,8 +92,7 @@ class BitrixAuthenticator extends AbstractGuardAuthenticator
    */
   public function getUser($credentials, UserProviderInterface $userProvider)
   {
-    if (null === $credentials)
-    {
+    if (null === $credentials) {
       // The token header was empty, authentication fails with HTTP Status
       // Code 401 "Unauthorized"
       return null;

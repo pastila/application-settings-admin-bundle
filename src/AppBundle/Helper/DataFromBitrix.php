@@ -4,6 +4,7 @@
 namespace AppBundle\Helper;
 
 
+use AppBundle\Exception\BitrixRequestException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -25,52 +26,46 @@ class DataFromBitrix
   private $request;
 
   /**
-   * @var LoggerInterface
-   */
-  protected $logger;
-
-  /**
    * DataFromBitrix constructor.
    * @param Request $request
    */
   public function __construct(
-    Request $request,
-    LoggerInterface $logger
+    Request $request
   )
   {
     $this->request = $request;
-    $this->logger = $logger;
   }
 
   /**
-   *
+   * @param $url
+   * @throws BitrixRequestException
    */
   public function getData($url)
   {
     $ch = curl_init(sprintf($url, 'http://nginx'));
-    try {
-      curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        'X-SF-SECRET: 2851f0ae-9dc7-4a22-9283-b86abfa44900',
-        'X-SF-REMOTE-ADDR: ' . $this->request->getClientIp(),
-        'X-Requested-With: XmlHttpRequest'
-      ));
 
-      curl_setopt($ch, CURLOPT_COOKIE, sprintf('BX_USER_ID=%s;BITRIX_SM_LOGIN=%s;BITRIX_SM_SOUND_LOGIN_PLAYED=%s;PHPSESSID=%s',
-        $this->request->cookies->get('BX_USER_ID'),
-        $this->request->cookies->get('BITRIX_SM_LOGIN'),
-        $this->request->cookies->get('BITRIX_SM_SOUND_LOGIN_PLAYED'),
-        $this->request->cookies->get('PHPSESSID')
-      ));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+      'X-SF-SECRET: 2851f0ae-9dc7-4a22-9283-b86abfa44900',
+      'X-SF-REMOTE-ADDR: ' . $this->request->getClientIp(),
+      'X-Requested-With: XmlHttpRequest'
+    ));
 
-      curl_setopt($ch, CURLOPT_VERBOSE, true);
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_COOKIE, sprintf('BX_USER_ID=%s;BITRIX_SM_LOGIN=%s;BITRIX_SM_SOUND_LOGIN_PLAYED=%s;PHPSESSID=%s',
+      $this->request->cookies->get('BX_USER_ID'),
+      $this->request->cookies->get('BITRIX_SM_LOGIN'),
+      $this->request->cookies->get('BITRIX_SM_SOUND_LOGIN_PLAYED'),
+      $this->request->cookies->get('PHPSESSID')
+    ));
 
-      $this->res = curl_exec($ch);
-      $this->info = curl_getinfo($ch);
-    } catch (\Exception $exception) {
-      $this->logger->error(sprintf('Error in DataFromBitrix: . %s', $exception->getMessage()));
-    } finally {
-      curl_close($ch);
+    curl_setopt($ch, CURLOPT_VERBOSE, true);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $this->res = curl_exec($ch);
+    $this->info = curl_getinfo($ch);
+    curl_close($ch);
+
+    if ($this->getCode() !== 200) {
+      throw new BitrixRequestException(sprintf('Failed request, http_code: %s.', $this->info['http_code']));
     }
   }
 
@@ -79,7 +74,7 @@ class DataFromBitrix
    */
   public function getRes()
   {
-    return $this->res;
+    return json_decode($this->res, true);
   }
 
   /**
@@ -88,5 +83,23 @@ class DataFromBitrix
   public function getInfo()
   {
     return $this->info;
+  }
+
+  /**
+   * @return |null
+   */
+  public function getCode()
+  {
+    return key_exists('http_code', $this->info) ? $this->info['http_code'] : null;
+  }
+
+  /**
+   * @param $attribute
+   * @return mixed|null
+   */
+  public function getParam($attribute)
+  {
+    $resArray = $this->getRes();
+    return key_exists($attribute, $resArray) ? $resArray[$attribute] : null;
   }
 }
