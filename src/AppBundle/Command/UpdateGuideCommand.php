@@ -67,11 +67,5 @@ class UpdateGuideCommand extends ContainerAwareCommand
     $companyBranchHelper->check();
     $io = new SymfonyStyle($input, $output);
     $io->success('CompanyBranch:' . $res);
-
-//    $common = new CommonHelper(); TODO требуется именно обновление
-//    $common->clearTable($entityManager, [User::class]);
-//    $userHelper = new UserHelper($entityManager,$logger);
-//    $userHelper->load();
-//    $userHelper->check();
   }
 }
