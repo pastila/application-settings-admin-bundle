@@ -1,0 +1,147 @@
+<?php
+
+namespace AppBundle\Helper\Feedback;
+
+use AppBundle\Entity\Company\Company;
+use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
+use Throwable;
+
+/**
+ * Class CompanyBranchHelper
+ * @package AppBundle\Helper\Feedback
+ */
+class CompanyBranchHelper
+{
+  /**
+   * @var EntityManagerInterface
+   */
+  private $entityManager;
+
+  /**
+   * @var LoggerInterface
+   */
+  protected $logger;
+
+  /**
+   * CompanyBranchHelper constructor.
+   * @param EntityManagerInterface $entityManager
+   * @param LoggerInterface $logger
+   */
+  public function __construct(
+    EntityManagerInterface $entityManager,
+    LoggerInterface $logger
+  )
+  {
+    $this->entityManager = $entityManager;
+    $this->logger = $logger;
+  }
+
+  /**
+   * @return int
+   * @throws \Doctrine\DBAL\DBALException
+   */
+  public function load()
+  {
+    $conn = $this->entityManager->getConnection();
+    $sql = 'SELECT e.ID, 
+                e.NAME, 
+                e.IBLOCK_ID, 
+                e.ACTIVE,  
+                e.CODE, 
+                epK.VALUE as KPP,
+                sC.ID as COMPANY_ID,
+                epR.SEARCHABLE_CONTENT as REGION_NAME,
+                sR.id as REGION_ID,
+                epVS.VALUE as AMOUNT_STARS,
+                epVAS.VALUE as ALL_AMOUNT_STAR
+            FROM b_iblock_element e
+            LEFT JOIN b_iblock_element_property epK ON epK.IBLOCK_ELEMENT_ID = e.ID AND epK.IBLOCK_PROPERTY_ID = 112     
+            LEFT JOIN s_companies sC ON sC.kpp = epK.VALUE  
+            LEFT JOIN b_iblock_section epR ON e.IBLOCK_SECTION_ID = epR.ID
+            LEFT JOIN s_regions sR ON (sR.name LIKE epR.SEARCHABLE_CONTENT)            
+            LEFT JOIN b_iblock_element_property epVS ON epVS.IBLOCK_ELEMENT_ID = e.ID AND epVS.IBLOCK_PROPERTY_ID = 146                
+            LEFT JOIN b_iblock_element_property epVAS ON epVAS.IBLOCK_ELEMENT_ID = e.ID AND epVAS.IBLOCK_PROPERTY_ID = 131      
+            WHERE e.IBLOCK_ID = 16 AND e.ACTIVE = "Y"';
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+
+    $result = $stmt->fetchAll();
+    $sql = '';
+    foreach ($result as $item) {
+      $name = !empty($item['NAME']) ? str_replace('"', '',  $item['NAME']): null;
+      $code = !empty($item['CODE']) ? $item['CODE'] : null;
+      $kpp = !empty($item['KPP']) ? $item['KPP'] : null;
+      $company_id = !empty($item['COMPANY_ID']) ? $item['COMPANY_ID'] : null;
+      $region_id = !empty($item['REGION_ID']) ? $item['REGION_ID'] : null;
+      $amountStar = !empty($item['AMOUNT_STARS']) ? (float)$item['AMOUNT_STARS'] : 0;
+      $amountAllStar = !empty($item['ALL_AMOUNT_STAR']) ? (float)$item['ALL_AMOUNT_STAR'] : 0;
+
+      $company = !empty($item['ALL_AMOUNT_STAR']) && !empty($company_id)? $this->entityManager->getRepository("AppBundle:Company\Company")
+        ->createQueryBuilder('c')
+        ->andWhere('c.id = :id')
+        ->setParameter('id', $company_id)
+        ->setMaxResults(1)
+        ->getQuery()
+        ->getOneOrNullResult() : null;
+      if (!empty($company)) {
+        $company->setValuation($amountAllStar);
+        $this->entityManager->persist($company);
+      }
+      $sql .= "INSERT INTO s_company_branches(name, kpp, code, company_id, region_id, valuation) VALUES('$name', '$kpp', '$code', $company_id, $region_id, $amountStar); ";
+    }
+    $this->entityManager->flush();
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+
+    return count($result);
+  }
+
+  /**
+   * @throws Throwable
+   */
+  public function check()
+  {
+    $this->checkFeedback();
+    $this->checkUser();
+  }
+
+  /**
+   * @throws Throwable
+   */
+  private function checkFeedback()
+  {
+    try {
+      $sql = 'UPDATE s_company_feedbacks scf 
+              LEFT JOIN s_company_branches scb ON scb.id = scf.branch_id
+              SET scf.branch_id = null
+              WHERE scf.branch_id IS NOT NULL AND scb.id IS NULL';
+      $stmt = $this->entityManager->getConnection()->prepare($sql);
+      $stmt->execute();
+    } catch (Throwable $exception) {
+      $this->logger->error(sprintf('Error update s_company_feedbacks: . %s', $exception->getMessage()));
+
+      throw $exception;
+    }
+  }
+
+
+  /**
+   * @throws Throwable
+   */
+  private function checkUser()
+  {
+    try {
+      $sql = 'UPDATE s_users su 
+              LEFT JOIN s_company_branches scb ON scb.id = su.branch_id
+              SET su.branch_id = null
+              WHERE su.branch_id IS NOT NULL AND scb.id IS NULL';
+      $stmt = $this->entityManager->getConnection()->prepare($sql);
+      $stmt->execute();
+    } catch (Throwable $exception) {
+      $this->logger->error(sprintf('Error update s_users: . %s', $exception->getMessage()));
+
+      throw $exception;
+    }
+  }
+}

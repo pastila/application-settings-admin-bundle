@@ -40,6 +40,10 @@ if ($USER->IsAuthorized())
 }
 
 http_response_code(401);
+header('Content-Type:application/json');
+echo json_encode([
+  'is_script' => true,
+]);
 exit;
 
 

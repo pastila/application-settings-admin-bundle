@@ -4,8 +4,10 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Exception\BitrixRequestException;
 use AppBundle\Helper\DataFromBitrix;
 use AppBundle\Repository\Company\FeedbackRepository;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,12 +23,21 @@ class UserController extends AbstractController
   private $feedbackRepository;
 
   /**
+   * @var LoggerInterface
+   */
+  protected $logger;
+
+  /**
    * UserController constructor.
    * @param FeedbackRepository $feedbackRepository
    */
-  public function __construct(FeedbackRepository $feedbackRepository)
+  public function __construct(
+    FeedbackRepository $feedbackRepository,
+    LoggerInterface $logger
+  )
   {
     $this->feedbackRepository = $feedbackRepository;
+    $this->logger = $logger;
   }
 
   /**
@@ -35,20 +46,16 @@ class UserController extends AbstractController
    */
   public function _userPanelAction(Request $request)
   {
+    $nbAppeals = null;
+    $nbSent = null;
+
     $dataFromBitrix = new DataFromBitrix($request);
-    $dataFromBitrix->getData('%s/ajax/get_obrashcheniya.php');
-
-    if (!empty($dataFromBitrix->getInfo()['http_code']) && $dataFromBitrix->getInfo()['http_code'] === 200)
-    {
-      $res = json_decode($dataFromBitrix->getRes(), true);
-
-      $nbAppeals = isset($res['nbAppeals']) ? $res['nbAppeals'] : null;
-      $nbSent = isset($res['nbSent']) ? $res['nbSent'] : null;
-    }
-    else
-    {
-      $nbAppeals = null;
-      $nbSent = null;
+    try {
+      $dataFromBitrix->getData('%s/ajax/get_obrashcheniya.php');
+      $nbAppeals = $dataFromBitrix->getParam('nbAppeals');
+      $nbSent = $dataFromBitrix->getParam('nbSent');
+    } catch (BitrixRequestException $exception) {
+      $this->logger->error(sprintf('Error get from bitrix panel: . %s', $exception->getMessage()));
     }
 
     $nbReviews = $this->feedbackRepository
