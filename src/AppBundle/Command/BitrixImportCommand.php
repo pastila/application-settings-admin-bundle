@@ -10,18 +10,17 @@ use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\Company\FeedbackModerationStatus;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Entity\User\User;
-use DateTime;
-use Doctrine\ORM\EntityManager as EntityManagerAlias;
+use AppBundle\Helper\Feedback\CommonHelper;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\HttpFoundation\Response;
 
-class FeedbackCommand extends ContainerAwareCommand
+/**
+ * Class BitrixImportCommand
+ * @package AppBundle\Command
+ */
+class BitrixImportCommand extends ContainerAwareCommand
 {
   /**
    *
@@ -29,8 +28,8 @@ class FeedbackCommand extends ContainerAwareCommand
   protected function configure()
   {
     $this
-      ->setName('feedback:iblock')
-      ->setDescription('Set feedback');
+      ->setName('bitrix:import')
+      ->setDescription('Init tables symfony use by bitrix');
   }
 
   /**
@@ -44,7 +43,7 @@ class FeedbackCommand extends ContainerAwareCommand
     $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
     $doctrine = $this->getContainer()->get('doctrine');
 
-    $this->clearTable($entityManager);
+    $this->clearTables($entityManager);
     $this->fillRegion($entityManager, $input, $output);
     $this->fillCompany($entityManager, $input, $output);
     $this->fillCompanyBranch($entityManager, $doctrine, $input, $output);
@@ -57,9 +56,8 @@ class FeedbackCommand extends ContainerAwareCommand
   /**
    * @param $entityManager
    */
-  public function clearTable($entityManager)
+  public function clearTables($entityManager)
   {
-    $connection = $entityManager->getConnection();
     $tables = [
       User::class,
       Region::class,
@@ -69,7 +67,17 @@ class FeedbackCommand extends ContainerAwareCommand
       Comment::class,
       Citation::class
     ];
+    $common = new CommonHelper();
+    $common->clearTable($entityManager, $tables);
+  }
 
+  /**
+   * @param $entityManager
+   * @param $tables
+   */
+  public function clearTable($entityManager, $tables)
+  {
+    $connection = $entityManager->getConnection();
     foreach ($tables as $table) {
       $metaData = $entityManager->getClassMetadata($table);
       $connection->query('SET FOREIGN_KEY_CHECKS=0');
@@ -222,14 +230,16 @@ class FeedbackCommand extends ContainerAwareCommand
                 epR.SEARCHABLE_CONTENT as REGION_NAME,
                 sR.id as REGION_ID,
                 epVS.VALUE as AMOUNT_STARS,
-                epVAS.VALUE as ALL_AMOUNT_STAR
+                epVAS.VALUE as ALL_AMOUNT_STAR,
+                epIMG.VALUE as IMAGE_ID
             FROM b_iblock_element e
             LEFT JOIN b_iblock_element_property epK ON epK.IBLOCK_ELEMENT_ID = e.ID AND epK.IBLOCK_PROPERTY_ID = 112     
             LEFT JOIN s_companies sC ON sC.kpp = epK.VALUE  
             LEFT JOIN b_iblock_section epR ON e.IBLOCK_SECTION_ID = epR.ID
             LEFT JOIN s_regions sR ON (sR.name LIKE epR.SEARCHABLE_CONTENT)            
             LEFT JOIN b_iblock_element_property epVS ON epVS.IBLOCK_ELEMENT_ID = e.ID AND epVS.IBLOCK_PROPERTY_ID = 146                
-            LEFT JOIN b_iblock_element_property epVAS ON epVAS.IBLOCK_ELEMENT_ID = e.ID AND epVAS.IBLOCK_PROPERTY_ID = 131      
+            LEFT JOIN b_iblock_element_property epVAS ON epVAS.IBLOCK_ELEMENT_ID = e.ID AND epVAS.IBLOCK_PROPERTY_ID = 131           
+            LEFT JOIN b_iblock_element_property epIMG ON epIMG.IBLOCK_ELEMENT_ID = e.ID AND epIMG.IBLOCK_PROPERTY_ID = 85       
             WHERE e.IBLOCK_ID = 16 AND e.ACTIVE = "Y"';
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -244,6 +254,7 @@ class FeedbackCommand extends ContainerAwareCommand
         $region_id = !empty($item['REGION_ID']) ? $item['REGION_ID'] : null;
         $amountStar = !empty($item['AMOUNT_STARS']) ? (float)$item['AMOUNT_STARS'] : 0;
         $amountAllStar = !empty($item['ALL_AMOUNT_STAR']) ? (float)$item['ALL_AMOUNT_STAR'] : 0;
+        $image_id = !empty($item['IMAGE_ID']) ? (float)$item['IMAGE_ID'] : null;
 
         $company = (!empty($item['ALL_AMOUNT_STAR']) && !empty($company_id)) ? $doctrine->getRepository("AppBundle:Company\Company")
             ->createQueryBuilder('c')
@@ -258,7 +269,8 @@ class FeedbackCommand extends ContainerAwareCommand
             $entityManager->persist($company);
             $entityManager->flush();
 
-            $sql = "INSERT INTO s_company_branches(name, kpp, code, company_id, region_id, valuation) VALUES(:name, :kpp, :code, :company_id, :region_id, :valuation)";
+            $sql = "INSERT INTO s_company_branches(name, kpp, code, company_id, region_id, valuation, logo_id_from_bitrix) 
+                    VALUES(:name, :kpp, :code, :company_id, :region_id, :valuation, :image_id)";
 
             $stmt = $conn->prepare($sql);
             $stmt->bindValue(':name', $name);
@@ -267,12 +279,10 @@ class FeedbackCommand extends ContainerAwareCommand
             $stmt->bindValue(':company_id', $company_id);
             $stmt->bindValue(':region_id', $region_id);
             $stmt->bindValue(':valuation', $amountStar);
+            $stmt->bindValue(':image_id', $image_id);
             $stmt->execute();
         }
     }
-
-
-
 
     $io = new SymfonyStyle($input, $output);
     $io->success('Fill Company Branch:' . count($result));
@@ -359,14 +369,6 @@ class FeedbackCommand extends ContainerAwareCommand
         $user->setMiddleName($middleName);
         $entityManager->persist($user);
       }
-
-      $company = !empty($item['KPP']) ? $doctrine->getRepository("AppBundle:Company\Company")
-        ->createQueryBuilder('c')
-        ->andWhere('c.kpp = :kpp')
-        ->setParameter('kpp', $item['KPP'])
-        ->setMaxResults(1)
-        ->getQuery()
-        ->getOneOrNullResult() : null;
 
       $branch = !empty($item['KPP']) ? $doctrine->getRepository("AppBundle:Company\CompanyBranch")
         ->createQueryBuilder('cb')

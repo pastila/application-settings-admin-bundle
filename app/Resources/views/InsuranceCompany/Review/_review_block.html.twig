@@ -1,6 +1,6 @@
 <div class="white_block white_block_riview_{{ review.id }}">
     {% if review.updatedAt > review.createdAt %}
-        <span class="date_review">Дата изменения {{ review.updatedAt|date('d M, Y') }}</span>
+        <span class="date_review">Дата изменения {{ review.updatedAt|prepareDate('d M, Y') }}</span>
     {% endif %}
     {% if review.fromLetter %}
         <h3 class="feedback__title">Возврат денежных средств</h3>
@@ -29,13 +29,16 @@
             </div>
         {% endif %}
         <div class="feedback__block_top_name">
-                    <span class="feedback__block_top_name_text">{{ review.authorName }}, {{ review.region.name }},
-                        {{ review.createdAt|date("d F, Y") }}</span>
+                    <span class="feedback__block_top_name_text">{{ review.authorName }}, {{ review.region ? review.region.name : ''}},
+                        {{ review.createdAt|prepareDate("d F, Y") }}</span>
 
             <!-- Company Name -->
             <div class="feedback__block_company-name">
-                {#                            {% set logo = bx_resize_img(review.company.logo, { width: 120, height: 80 }, 1, true) %}#}
-                {#                            <img src="{{ logo.src }}" alt="Логотип компании {{ review.company.name }}"/>#}
+                {{ render(controller('AppBundle:InsuranceCompany/Company:_logoPanel',
+                    {
+                        'logo_id': (review.branch ? review.branch.logoIdFromBitrix : null),
+                        'name': (review.branch ? review.branch.name : '')
+                    } )) }}
             </div>
         </div>
         <!--                <div class="feedback__block_top_data">-->
@@ -103,7 +106,7 @@
 
                 <div class="hidenComments__top_wrap">
                     <div class="hidenComments__top_name">{{ comment.user.fullName }}</div>
-                    <div class="hidenComments__top_data">{{ comment.createdAt |date('d M, Y')  }}</div>
+                    <div class="hidenComments__top_data">{{ comment.createdAt |prepareDate('d M, Y') }}</div>
                 </div>
             </div>
             <p>{{comment.text}}</p>
@@ -140,7 +143,7 @@
                             {% endif %}
                             <div class="hidenComments__top_wrap">
                                 <div class="hidenComments__top_name">{{ citation.user.fullName }}</div>
-                                <div class="hidenComments__top_data">{{ citation.createdAt | date('d M, Y')  }}</div>
+                                <div class="hidenComments__top_data">{{ citation.createdAt | prepareDate('d M, Y')  }}</div>
                             </div>
                         </div>
                         <p class="quotes_italic">« {{ citation.text }} »</p>

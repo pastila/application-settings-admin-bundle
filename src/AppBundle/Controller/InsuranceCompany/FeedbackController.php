@@ -41,7 +41,7 @@ class FeedbackController extends Controller
    * @Route(path="/reviews")
    * @Route(path="/companies/{slug}/reviews", name="company_review_list")
    */
-  public function indexAction(Request $request)
+  public function indexAction(Request $request, UserInterface $user = null)
   {
     $response = new Response();
     $response->setPublic();
@@ -118,6 +118,17 @@ class FeedbackController extends Controller
       ->getManager()
       ->getRepository(Feedback::class)
       ->createQueryBuilder('rv');
+
+    $reviewListQb
+      ->orWhere('rv.moderationStatus = :status')
+      ->setParameter('status', FeedbackModerationStatus::MODERATION_ACCEPTED);
+
+    $userId = (null !== $user) ? $user->getId() : null;
+    if (!empty($userId)) {
+      $reviewListQb
+        ->orWhere('rv.author = :user_id')
+        ->setParameter('user_id', $userId);
+    }
 
     $reviewListQb
       ->innerJoin('rv.branch', 'rvb')

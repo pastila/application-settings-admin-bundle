@@ -7,11 +7,11 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: ru
+    locale: "ru"
 
 framework:
     #esi: ~
-    translator:      { fallbacks: ["ru"] }
+#    translator:      { fallbacks: ["ru"] }
     secret: '%secret%'
     router:
         resource: '%kernel.project_dir%/app/config/routing.yml'
@@ -32,7 +32,11 @@ framework:
     assets: ~
     php_errors:
         log: true
-
+    templating:
+        engines: ['twig']
+    translator:
+        fallbacks: ['%locale%']
+        enabled: true
 # Twig Configuration
 twig:
     debug: '%kernel.debug%'
@@ -68,6 +72,8 @@ swiftmailer:
     host: '%mailer_host%'
     username: '%mailer_user%'
     password: '%mailer_password%'
+    port: '%mailer_port%'
+    encryption: '%mailer_encryption%'
     spool: { type: memory }
 
 sensio_framework_extra:

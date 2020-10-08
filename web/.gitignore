@@ -10,7 +10,6 @@ Thumbs.db
 /bitrix/php_interface/dbconn.php
 /bitrix/.settings.php
 .htaccess
-robots.txt
 *.txt
 *.xml
 *.log

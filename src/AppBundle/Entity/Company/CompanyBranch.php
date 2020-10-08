@@ -87,6 +87,24 @@ class CompanyBranch
   private $code;
 
   /**
+   * ID логотипа в системе БИТРИКС
+   *
+   * @var string
+   *
+   * @ORM\Column(name="logo_id_from_bitrix", type="string", length=256, nullable=true)
+   */
+  private $logoIdFromBitrix;
+
+  /**
+   * URL логотипа в системе БИТРИКС
+   *
+   * @var string
+   *
+   * @ORM\Column(name="logo_url_from_bitrix", type="string", length=256, nullable=true)
+   */
+  private $logoUrlFromBitrix;
+
+  /**
    * @var Feedback[]|ArrayCollection
    * @ORM\OneToMany(targetEntity="AppBundle\Entity\Company\Feedback", mappedBy="companyBranch")
    */
@@ -237,6 +255,26 @@ class CompanyBranch
   public function setCode($code)
   {
     $this->code = $code;
+
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getLogoIdFromBitrix()
+  {
+    return $this->logoIdFromBitrix;
+  }
+
+  /**
+   * @param string $logoIdFromBitrix
+   *
+   * @return string
+   */
+  public function setLogoIdFromBitrix($logoIdFromBitrix)
+  {
+    $this->logoIdFromBitrix = $logoIdFromBitrix;
 
     return $this;
   }
