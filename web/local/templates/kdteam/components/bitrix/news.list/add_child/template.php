@@ -116,7 +116,7 @@ $this->setFrameMode(true);
                     </div>
                     <div class="item_data">
                         <div class="logo_block">
-                            <img src="<?=$logo_company["SRC"]?>" alt="<?php $APPLICATION->ShowTitle(); ?>">
+                            <img src="<?=$logo_company["SRC"]?>" alt="<?php htmlspecialchars($hospital); ?>">
                         </div>
                         <p><?= $hospital ?></p>
                     </div>
