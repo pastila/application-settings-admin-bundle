@@ -193,7 +193,7 @@ class FeedbackController extends Controller
 
   /**
    * @param $id
-   * @Route(path="/reviews/{id}", requirements={ "id": "\d+" })
+   * @Route(path="/feedback/{id}", requirements={ "id": "\d+" })
    */
   public function showAction($id, Request $request)
   {
@@ -233,7 +233,7 @@ class FeedbackController extends Controller
   }
 
   /**
-   * @Route(path="/reviews/add", name="app_insurancecompany_feedback_new")
+   * @Route(path="/feedback/add", name="app_insurancecompany_feedback_new")
    */
   public function newAction(Request $request, UserInterface $user = null)
   {
@@ -279,7 +279,7 @@ class FeedbackController extends Controller
   }
 
   /**
-   * @Route(path="/reviews/add-comment", name="add_comment")
+   * @Route(path="/feedback/add-comment", name="add_comment")
    */
   public function addCommentAction(Request $request, UserInterface $user = null)
   {
@@ -307,7 +307,7 @@ class FeedbackController extends Controller
   }
 
   /**
-   * @Route(path="/reviews/remove-comment", name="remove_comment_ajax")
+   * @Route(path="/feedback/remove-comment", name="remove_comment_ajax")
    */
   public function removeCommentAction(Request $request)
   {
@@ -334,7 +334,7 @@ class FeedbackController extends Controller
   }
 
   /**
-   * @Route(path="/reviews/add-citation", name="add_citation_ajax")
+   * @Route(path="/feedback/add-citation", name="add_citation_ajax")
    */
   public function addCitationAction(Request $request, UserInterface $user = null)
   {
@@ -378,7 +378,7 @@ class FeedbackController extends Controller
   }
 
   /**
-   * @Route(path="/reviews/remove-citation", name="remove_citation_ajax")
+   * @Route(path="/feedback/remove-citation", name="remove_citation_ajax")
    */
   public function removeCitationAction(Request $request)
   {
@@ -399,7 +399,7 @@ class FeedbackController extends Controller
   }
 
   /**
-   * @Route(path="/reviews/region-select", name="feedback_region_select_ajax")
+   * @Route(path="/feedback/region-select", name="feedback_region_select_ajax")
    */
   public function regionSelectAction(Request $request)
   {
@@ -425,7 +425,7 @@ class FeedbackController extends Controller
   }
 
   /**
-   * @Route(path="/reviews/admin-check", name="admin_check_ajax")
+   * @Route(path="/feedback/admin-check", name="admin_check_ajax")
    */
   public function adminCheckAction(Request $request)
   {
