@@ -41,6 +41,7 @@ class UpdateGuideCommand extends ContainerAwareCommand
    */
   protected function execute(InputInterface $input, OutputInterface $output)
   {
+    $io = new SymfonyStyle($input, $output);
     $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
     $logger = $this->getContainer()->get('logger');
 
@@ -49,23 +50,18 @@ class UpdateGuideCommand extends ContainerAwareCommand
     $regionHelper = new RegionHelper($entityManager,$logger);
     $res = $regionHelper->load();
     $regionHelper->check();
-    $io = new SymfonyStyle($input, $output);
     $io->success('Region:' . $res);
 
     $common = new CommonHelper();
     $common->clearTable($entityManager, [Company::class]);
-    $companyHelper = new CompanyHelper($entityManager,$logger);
-    $res = $companyHelper->load();
+    $companyHelper = $this->getContainer()->get('AppBundle\Helper\Feedback\CompanyHelper');
+    $companyHelper->load();
     $companyHelper->check();
-    $io = new SymfonyStyle($input, $output);
-    $io->success('Company:' . $res);
 
     $common = new CommonHelper();
     $common->clearTable($entityManager, [CompanyBranch::class]);
-    $companyBranchHelper = new CompanyBranchHelper($entityManager,$logger);
-    $res = $companyBranchHelper->load();
+    $companyBranchHelper = $this->getContainer()->get('AppBundle\Helper\Feedback\CompanyBranchHelper');
+    $companyBranchHelper->load($io);
     $companyBranchHelper->check();
-    $io = new SymfonyStyle($input, $output);
-    $io->success('CompanyBranch:' . $res);
   }
 }
