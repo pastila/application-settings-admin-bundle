@@ -372,9 +372,9 @@ class FeedbackController extends Controller
         $this->getDoctrine()->getManager()->persist($citation);
         $this->getDoctrine()->getManager()->flush();
       }
-
-      return new JsonResponse(1);
     }
+
+    return new JsonResponse(1);
   }
 
   /**
