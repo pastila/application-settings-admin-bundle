@@ -46,7 +46,7 @@
     </div>
     <!-- Title -->
     <a href="{{ path('app_insurancecompany_feedback_show', { id: review.id }) }}">
-        <h1 class="feedback__title">{{ review.title }}</h1>
+        <{{ h_level }} class="feedback__title">{{ review.title }}</{{ h_level }}>
     </a>
 
     <!-- Text -->
@@ -88,7 +88,7 @@
     <div class="hidenComments">
         {% for comment in review.comments %}
             {% if is_granted('ROLE_ADMIN') %}
-                <form action="reviews/remove-comment" method="POST">
+                <form action="feedback/remove-comment" method="POST">
                     <div class="block_remove">
                         <div data-id="{{ comment.id }}" class="delet_comment remove_comment">
                             Удалить комментарий

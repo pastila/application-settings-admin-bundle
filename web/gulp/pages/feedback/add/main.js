@@ -218,7 +218,7 @@ $(document).ready(function() {
     $('#referal_two').val('');
     $('#region_select_id').attr('value', id_region);
 
-    $.post("/reviews/region-select", {
+    $.post("/feedback/region-select", {
       region_id:$("#referal").attr("data-id_region")
     }, function(msg) {
       if ($('.error_region').length != 0) {

@@ -28,6 +28,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Class FeedbackController
+ * @package AppBundle\Controller\InsuranceCompany
+ */
 class FeedbackController extends Controller
 {
   private $branchRatingHelper;
@@ -38,8 +42,8 @@ class FeedbackController extends Controller
   }
 
   /**
-   * @Route(path="/reviews")
-   * @Route(path="/companies/{slug}/reviews", name="company_review_list")
+   * @Route(path="/feedback")
+   * @Route(path="/companies/{slug}/feedback", name="company_review_list")
    */
   public function indexAction(Request $request, UserInterface $user = null)
   {
@@ -193,7 +197,7 @@ class FeedbackController extends Controller
 
   /**
    * @param $id
-   * @Route(path="/reviews/{id}", requirements={ "id": "\d+" })
+   * @Route(path="/feedback/{id}", requirements={ "id": "\d+" })
    */
   public function showAction($id, Request $request)
   {
@@ -233,7 +237,7 @@ class FeedbackController extends Controller
   }
 
   /**
-   * @Route(path="/reviews/add", name="app_insurancecompany_feedback_new")
+   * @Route(path="/feedback/add", name="app_insurancecompany_feedback_new")
    */
   public function newAction(Request $request, UserInterface $user = null)
   {
@@ -279,7 +283,7 @@ class FeedbackController extends Controller
   }
 
   /**
-   * @Route(path="/reviews/add-comment", name="add_comment")
+   * @Route(path="/feedback/add-comment", name="add_comment")
    */
   public function addCommentAction(Request $request, UserInterface $user = null)
   {
@@ -307,7 +311,7 @@ class FeedbackController extends Controller
   }
 
   /**
-   * @Route(path="/reviews/remove-comment", name="remove_comment_ajax")
+   * @Route(path="/feedback/remove-comment", name="remove_comment_ajax")
    */
   public function removeCommentAction(Request $request)
   {
@@ -334,7 +338,7 @@ class FeedbackController extends Controller
   }
 
   /**
-   * @Route(path="/reviews/add-citation", name="add_citation_ajax")
+   * @Route(path="/feedback/add-citation", name="add_citation_ajax")
    */
   public function addCitationAction(Request $request, UserInterface $user = null)
   {
@@ -378,7 +382,7 @@ class FeedbackController extends Controller
   }
 
   /**
-   * @Route(path="/reviews/remove-citation", name="remove_citation_ajax")
+   * @Route(path="/feedback/remove-citation", name="remove_citation_ajax")
    */
   public function removeCitationAction(Request $request)
   {
@@ -399,7 +403,7 @@ class FeedbackController extends Controller
   }
 
   /**
-   * @Route(path="/reviews/region-select", name="feedback_region_select_ajax")
+   * @Route(path="/feedback/region-select", name="feedback_region_select_ajax")
    */
   public function regionSelectAction(Request $request)
   {
@@ -425,7 +429,7 @@ class FeedbackController extends Controller
   }
 
   /**
-   * @Route(path="/reviews/admin-check", name="admin_check_ajax")
+   * @Route(path="/feedback/admin-check", name="admin_check_ajax")
    */
   public function adminCheckAction(Request $request)
   {
@@ -464,7 +468,7 @@ class FeedbackController extends Controller
 
         try {
           $message = (new \Swift_Message('Добавлен новый отзыв на bezbahil.ru'))
-            ->setFrom('admin@bezbahil.com')
+            ->setFrom($this->container->getParameter('mail_from'))
             ->setTo($emails)
             ->setBody(
               $this->renderView(

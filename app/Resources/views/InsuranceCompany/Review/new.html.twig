@@ -57,7 +57,11 @@
 {#               pattern="([а-яЁА-ЯЁ]+)">#}
     </div>
     {% endif %}
-
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <div style="display: none">
+            {{ form_row(form.author_name, { attr: { placeholder: "Имя" } }) }}
+        </div>
+    {% endif %}
 
     <div class="input__wrap">
         <label for="name" class="input__wrap_label">Заголовок</label>

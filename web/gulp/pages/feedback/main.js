@@ -148,7 +148,7 @@ $(document).on("click",".select-items div",function() {
 
       if(error.length == 0) {
         $.ajax({
-          url: "/ajax/add-comment.php",
+          url: "/feedback/add-comment",
           type: "POST",
           data: data,
           beforeSend: function() {
@@ -224,7 +224,7 @@ $(document).ready(function() {
       };
       $.ajax({
           dataType: 'html',
-          url: "/reviews/remove-comment",
+          url: "/feedback/remove-comment",
           type: 'POST',
           data: data,
           success: function (msg) {
@@ -251,7 +251,7 @@ $(document).ready(function() {
         };
         if (error.length == 0) {
             $.ajax({
-                url: "/reviews/add-citation",
+                url: "/feedback/add-citation",
                 type: "POST",
                 data: data,
                 beforeSend: function () {
@@ -271,7 +271,7 @@ $(document).ready(function() {
         };
         $.ajax({
             dataType: 'html',
-            url: "/reviews/remove-citation",
+            url: "/feedback/remove-citation",
             type: 'POST',
             data: data,
             success: function(msg){
@@ -340,7 +340,7 @@ if(arr_check.length >0 ) {
 
       $.ajax({
             dataType: 'html',
-            url: '/reviews/admin-check',
+            url: '/feedback/admin-check',
             type: 'POST',
             data: data,
             beforeSend: function() {
