@@ -148,7 +148,7 @@ $(document).on("click",".select-items div",function() {
 
       if(error.length == 0) {
         $.ajax({
-          url: "/ajax/add-comment.php",
+          url: "/feedback/add-comment",
           type: "POST",
           data: data,
           beforeSend: function() {
