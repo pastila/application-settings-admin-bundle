@@ -29,8 +29,7 @@
             </div>
         {% endif %}
         <div class="feedback__block_top_name">
-                    <span class="feedback__block_top_name_text">{{ review.authorName }}, {{ review.region ? review.region.name : ''}},
-                        {{ review.createdAt|prepareDate("d F, Y") }}</span>
+                    <span class="feedback__block_top_name_text">{{ review.authorName }}, {{review.region ?review.region.name|trim: ''}}, {{ review.createdAt|prepareDate("d F, Y") }}</span>
 
             <!-- Company Name -->
             <div class="feedback__block_company-name">
@@ -47,7 +46,7 @@
     </div>
     <!-- Title -->
     <a href="{{ path('app_insurancecompany_feedback_show', { id: review.id }) }}">
-        <h3 class="feedback__title">{{ review.title }}</h3>
+        <h1 class="feedback__title">{{ review.title }}</h1>
     </a>
 
     <!-- Text -->
@@ -66,7 +65,7 @@
             <span class="comment-count">
                         {{ review.comments | length }}
                     </span>
-            комментариев
+            {{ review.comments | length | ending_format(['комментарий', 'комментария', 'комментариев']) }}
         </a>
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             <a rel="nofollow" class="toggle_comment_dropdown opacity_block">Оставить комментарий</a>
@@ -146,7 +145,7 @@
                                 <div class="hidenComments__top_data">{{ citation.createdAt | prepareDate('d M, Y')  }}</div>
                             </div>
                         </div>
-                        <p class="quotes_italic">« {{ citation.text }} »</p>
+                        <p class="quotes_italic">«{{ citation.text }}»</p>
                     {% endfor %}
                 </div>
             {% endif %}

@@ -54,14 +54,16 @@ class CompanyBranchHelper
                 epR.SEARCHABLE_CONTENT as REGION_NAME,
                 sR.id as REGION_ID,
                 epVS.VALUE as AMOUNT_STARS,
-                epVAS.VALUE as ALL_AMOUNT_STAR
+                epVAS.VALUE as ALL_AMOUNT_STAR,
+                epIMG.VALUE as IMAGE_ID
             FROM b_iblock_element e
             LEFT JOIN b_iblock_element_property epK ON epK.IBLOCK_ELEMENT_ID = e.ID AND epK.IBLOCK_PROPERTY_ID = 112     
             LEFT JOIN s_companies sC ON sC.kpp = epK.VALUE  
             LEFT JOIN b_iblock_section epR ON e.IBLOCK_SECTION_ID = epR.ID
             LEFT JOIN s_regions sR ON (sR.name LIKE epR.SEARCHABLE_CONTENT)            
             LEFT JOIN b_iblock_element_property epVS ON epVS.IBLOCK_ELEMENT_ID = e.ID AND epVS.IBLOCK_PROPERTY_ID = 146                
-            LEFT JOIN b_iblock_element_property epVAS ON epVAS.IBLOCK_ELEMENT_ID = e.ID AND epVAS.IBLOCK_PROPERTY_ID = 131      
+            LEFT JOIN b_iblock_element_property epVAS ON epVAS.IBLOCK_ELEMENT_ID = e.ID AND epVAS.IBLOCK_PROPERTY_ID = 131           
+            LEFT JOIN b_iblock_element_property epIMG ON epIMG.IBLOCK_ELEMENT_ID = e.ID AND epIMG.IBLOCK_PROPERTY_ID = 85       
             WHERE e.IBLOCK_ID = 16 AND e.ACTIVE = "Y"';
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -69,30 +71,42 @@ class CompanyBranchHelper
     $result = $stmt->fetchAll();
     $sql = '';
     foreach ($result as $item) {
-      $name = !empty($item['NAME']) ? str_replace('"', '',  $item['NAME']): null;
+      $name = !empty($item['NAME']) ? str_replace('"', '', $item['NAME']) : null;
       $code = !empty($item['CODE']) ? $item['CODE'] : null;
       $kpp = !empty($item['KPP']) ? $item['KPP'] : null;
       $company_id = !empty($item['COMPANY_ID']) ? $item['COMPANY_ID'] : null;
       $region_id = !empty($item['REGION_ID']) ? $item['REGION_ID'] : null;
       $amountStar = !empty($item['AMOUNT_STARS']) ? (float)$item['AMOUNT_STARS'] : 0;
       $amountAllStar = !empty($item['ALL_AMOUNT_STAR']) ? (float)$item['ALL_AMOUNT_STAR'] : 0;
+      $image_id = !empty($item['IMAGE_ID']) ? (float)$item['IMAGE_ID'] : null;
 
-      $company = !empty($item['ALL_AMOUNT_STAR']) && !empty($company_id)? $this->entityManager->getRepository("AppBundle:Company\Company")
+      $company = (!empty($item['ALL_AMOUNT_STAR']) && !empty($company_id)) ? $this->entityManager->getRepository("AppBundle:Company\Company")
         ->createQueryBuilder('c')
         ->andWhere('c.id = :id')
         ->setParameter('id', $company_id)
         ->setMaxResults(1)
         ->getQuery()
         ->getOneOrNullResult() : null;
-      if (!empty($company)) {
+
+      if ($company) {
         $company->setValuation($amountAllStar);
         $this->entityManager->persist($company);
+        $this->entityManager->flush();
+
+        $sql = "INSERT INTO s_company_branches(name, kpp, code, company_id, region_id, valuation, logo_id_from_bitrix) 
+                    VALUES(:name, :kpp, :code, :company_id, :region_id, :valuation, :image_id)";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':name', $name);
+        $stmt->bindValue(':kpp', $kpp);
+        $stmt->bindValue(':code', $kpp);
+        $stmt->bindValue(':company_id', $company_id);
+        $stmt->bindValue(':region_id', $region_id);
+        $stmt->bindValue(':valuation', $amountStar);
+        $stmt->bindValue(':image_id', $image_id);
+        $stmt->execute();
       }
-      $sql .= "INSERT INTO s_company_branches(name, kpp, code, company_id, region_id, valuation) VALUES('$name', '$kpp', '$code', $company_id, $region_id, $amountStar); ";
     }
-    $this->entityManager->flush();
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
 
     return count($result);
   }

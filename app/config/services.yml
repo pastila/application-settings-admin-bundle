@@ -44,3 +44,8 @@ services:
             - '@validator'
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+
+    twig.extension.EndingFormatter:
+        class: StoreBundle\Twig\EndingFormatTwigExtension
+        tags:
+            - { name: twig.extension }
