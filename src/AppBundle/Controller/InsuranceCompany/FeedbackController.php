@@ -28,6 +28,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Class FeedbackController
+ * @package AppBundle\Controller\InsuranceCompany
+ */
 class FeedbackController extends Controller
 {
   private $branchRatingHelper;
@@ -464,7 +468,7 @@ class FeedbackController extends Controller
 
         try {
           $message = (new \Swift_Message('Добавлен новый отзыв на bezbahil.ru'))
-            ->setFrom('admin@bezbahil.com')
+            ->setFrom($this->container->getParameter('mail_from'))
             ->setTo($emails)
             ->setBody(
               $this->renderView(
