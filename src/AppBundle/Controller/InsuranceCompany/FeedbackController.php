@@ -38,8 +38,8 @@ class FeedbackController extends Controller
   }
 
   /**
-   * @Route(path="/reviews")
-   * @Route(path="/companies/{slug}/reviews", name="company_review_list")
+   * @Route(path="/feedback")
+   * @Route(path="/companies/{slug}/feedback", name="company_review_list")
    */
   public function indexAction(Request $request, UserInterface $user = null)
   {
