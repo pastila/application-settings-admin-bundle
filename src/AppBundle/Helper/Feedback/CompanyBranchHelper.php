@@ -38,10 +38,11 @@ class CompanyBranchHelper
   }
 
   /**
+   * @param $io
    * @return int
    * @throws \Doctrine\DBAL\DBALException
    */
-  public function load()
+  public function load($io)
   {
     $conn = $this->entityManager->getConnection();
     $sql = 'SELECT e.ID, 
@@ -69,10 +70,9 @@ class CompanyBranchHelper
     $stmt->execute();
 
     $result = $stmt->fetchAll();
-    $sql = '';
+    $nbImported = 0;
     foreach ($result as $item) {
       $name = !empty($item['NAME']) ? str_replace('"', '', $item['NAME']) : null;
-      $code = !empty($item['CODE']) ? $item['CODE'] : null;
       $kpp = !empty($item['KPP']) ? $item['KPP'] : null;
       $company_id = !empty($item['COMPANY_ID']) ? $item['COMPANY_ID'] : null;
       $region_id = !empty($item['REGION_ID']) ? $item['REGION_ID'] : null;
@@ -80,13 +80,19 @@ class CompanyBranchHelper
       $amountAllStar = !empty($item['ALL_AMOUNT_STAR']) ? (float)$item['ALL_AMOUNT_STAR'] : 0;
       $image_id = !empty($item['IMAGE_ID']) ? (float)$item['IMAGE_ID'] : null;
 
-      $company = (!empty($item['ALL_AMOUNT_STAR']) && !empty($company_id)) ? $this->entityManager->getRepository("AppBundle:Company\Company")
+      $company = !empty($company_id) ? $this->entityManager->getRepository("AppBundle:Company\Company")
         ->createQueryBuilder('c')
         ->andWhere('c.id = :id')
         ->setParameter('id', $company_id)
         ->setMaxResults(1)
         ->getQuery()
         ->getOneOrNullResult() : null;
+
+      if (empty($company))
+      {
+        $io->warning(sprintf('Branch %s for region %s not imported: no company found', $name, $region_id));
+        continue;
+      }
 
       if ($company) {
         $company->setValuation($amountAllStar);
@@ -105,10 +111,12 @@ class CompanyBranchHelper
         $stmt->bindValue(':valuation', $amountStar);
         $stmt->bindValue(':image_id', $image_id);
         $stmt->execute();
+        $nbImported++;
       }
     }
+    $io->success(sprintf('Fill Company Branch: %s out of %s', $nbImported, count($result)));
 
-    return count($result);
+    return $nbImported;
   }
 
   /**
