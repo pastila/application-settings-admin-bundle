@@ -71,7 +71,7 @@ $ID_USER = $USER->GetID();
 
                                 ?>
 
-            <a class="" href="/feedback/">
+            <a class="" href="/feedback">
                 <div id="number_calls" class="menu-req">
                     <?php echo $count_reviews?>
                 </div>

@@ -13,9 +13,6 @@ services:
         # this means you cannot fetch services directly from the container via $container->get()
         # if you need to do this, you can override this setting on individual services
         public: false
-        bind:
-            $mailerFrom: '%mail_from%'
-            $mailerSenderName: '%mail_sender_name%'
 
 
     _instanceof:
@@ -53,6 +50,9 @@ services:
         class: AppBundle\Twig\EndingFormatTwigExtension
         tags:
             - { name: twig.extension }
+
+    AppBundle\Helper\Feedback\RegionHelper:
+        public: true
 
     AppBundle\Helper\Feedback\CompanyHelper:
         public: true

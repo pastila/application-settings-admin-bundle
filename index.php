@@ -69,17 +69,17 @@ while($ob = $res->GetNextElement()){
     <!-- Item -->
     <div class="buttons__items_item">
         <div class="buttons__items_item_image-block">
-            <a class="buttons__items_item_img" href="/reviews"> <img src="/local/templates/kdteam/images/pages/home/Illustration3.svg" alt=""> </a>
+            <a class="buttons__items_item_img" href="/feedback"> <img src="/local/templates/kdteam/images/pages/home/Illustration3.svg" alt=""> </a>
         </div>
         <div class="buttons__items_item_title-block">
-            <a href="/reviews">
+            <a href="/feedback">
                 <h2 class="buttons__items_item_title">
                     <?php echo $title_text_2; ?> </h2>
             </a>
             <p>
                 <?php echo $text_2; ?>
             </p>
-            <a class="buttons__items_item_link" href="/reviews">
+            <a class="buttons__items_item_link" href="/feedback">
                 <p>
                     Перейти в раздел <img src="/local/templates/kdteam/images/pages/home/arrow-right.svg" alt="">
                 </p>

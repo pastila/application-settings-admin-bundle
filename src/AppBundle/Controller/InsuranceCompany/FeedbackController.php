@@ -259,7 +259,8 @@ class FeedbackController extends Controller
       $newData = array_merge($data['feedback'], $newData);
       $form->submit($newData);
     }
-    if ($form->isSubmitted() && !empty($newData['region'])  && !empty($newData['branch'])) {
+    if ($form->isSubmitted() && !empty($newData['region']) && !empty($newData['branch']))
+    {
       $sql = 'INSERT INTO s_company_feedbacks(user_id, region_id, branch_id, author_name, title, text, valuation, moderation_status, created_at, updated_at) 
               VALUES(:author, :region, :branch, :author_name, :title, :text, :valuation, :moderation_status, :createdAt, :createdAt)';
       $entityManager = $this->getDoctrine()->getManager();
@@ -274,6 +275,48 @@ class FeedbackController extends Controller
       $stmt->bindValue('moderation_status', FeedbackModerationStatus::MODERATION_NONE);
       $stmt->bindValue('createdAt', date("Y-m-d H:i:s"));
       $stmt->execute();
+      $id = $entityManager->getConnection()->lastInsertId();
+      $feedback = $this->getDoctrine()->getManager()->getRepository(Feedback::class)
+        ->findOneBy(['id' => $id]);
+
+      $branch = $feedback->getBranch();
+      $company = !empty($branch) ? $branch->getCompany() : null;
+      $emails = [];
+      if (!empty($company->getEmailFirst()))
+      {
+        $emails[] = $company->getEmailFirst();
+      }
+      if (!empty($company->getEmailSecond()))
+      {
+        $emails[] = $company->getEmailSecond();
+      }
+      if (!empty($company->getEmailThird()))
+      {
+        $emails[] = $company->getEmailThird();
+      }
+      $url = $this->generateUrl('app_insurancecompany_feedback_show', ['id' => $feedback->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+      $date = $feedback->getCreatedAt()->format('Y-m-d H:i:s');
+
+      try
+      {
+        $message = (new \Swift_Message('Новый отзыв'))
+          ->setFrom($this->container->getParameter('mailer_from'))
+          ->setTo($emails)
+          ->setBody(
+            $this->renderView(
+              'emails/feedback.html.twig', [
+                'url' => $url,
+                'date' => $date,
+              ]
+            ),
+            'text/html'
+          );
+        $this->get('mailer')->send($message);
+      } catch (\Exception $e)
+      {
+        $logger = $this->get('logger');
+        $logger->error('No send mail in admin-check:' . $e);
+      }
 
       return $this->redirectToRoute('app_insurancecompany_feedback_index');
     }
@@ -463,40 +506,6 @@ class FeedbackController extends Controller
 
         // update rating company and branch
         $this->updateRating($feedback);
-
-        $branch = $feedback->getBranch();
-        $company = !empty($branch) ? $branch->getCompany() : null;
-        $emails = [];
-        if (!empty($company->getEmailFirst())) {
-          $emails[] = $company->getEmailFirst();
-        }
-        if (!empty($company->getEmailSecond())) {
-          $emails[] = $company->getEmailSecond();
-        }
-        if (!empty($company->getEmailThird())) {
-          $emails[] = $company->getEmailThird();
-        }
-        $url = $this->generateUrl('app_insurancecompany_feedback_show', ['id' => $feedback->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-
-        try {
-          $message = (new \Swift_Message('Добавлен новый отзыв на bezbahil.ru'))
-            ->setFrom($this->container->getParameter('mail_from'))
-            ->setTo($emails)
-            ->setBody(
-              $this->renderView(
-                'emails/feedback.html.twig', [
-                  'url' => $url,
-                  'date' => $feedback->getCreatedAt(),
-                ]
-              ),
-              'text/html'
-            )
-          ;
-          $this->get('mailer')->send($message);
-        } catch(\Exception $e) {
-          $logger = $this->get('logger');
-          $logger->error('No send mail in admin_check_ajax');
-        }
       }
 
       return new JsonResponse(1);

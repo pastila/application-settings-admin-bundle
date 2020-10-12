@@ -4,8 +4,6 @@ namespace AppBundle\Controller\InsuranceCompany;
 
 use AppBundle\Exception\BitrixRequestException;
 use AppBundle\Helper\DataFromBitrix;
-use AppBundle\Helper\DataFromBitrixPayload;
-use AppBundle\Repository\Company\FeedbackRepository;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

@@ -43,19 +43,17 @@ class UpdateGuideCommand extends ContainerAwareCommand
   {
     $io = new SymfonyStyle($input, $output);
     $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
-    $logger = $this->getContainer()->get('logger');
 
     $common = new CommonHelper();
     $common->clearTable($entityManager, [Region::class]);
-    $regionHelper = new RegionHelper($entityManager,$logger);
-    $res = $regionHelper->load();
+    $regionHelper = $this->getContainer()->get('AppBundle\Helper\Feedback\RegionHelper');
+    $regionHelper->load($io);
     $regionHelper->check();
-    $io->success('Region:' . $res);
 
     $common = new CommonHelper();
     $common->clearTable($entityManager, [Company::class]);
     $companyHelper = $this->getContainer()->get('AppBundle\Helper\Feedback\CompanyHelper');
-    $companyHelper->load();
+    $companyHelper->load($io);
     $companyHelper->check();
 
     $common = new CommonHelper();
