@@ -480,7 +480,7 @@ class FeedbackController extends Controller
 
         try {
           $message = (new \Swift_Message('Добавлен новый отзыв на bezbahil.ru'))
-            ->setFrom($this->container->getParameter('mail_from'))
+            ->setFrom($this->container->getParameter('mailer_from'))
             ->setTo($emails)
             ->setBody(
               $this->renderView(
@@ -495,7 +495,7 @@ class FeedbackController extends Controller
           $this->get('mailer')->send($message);
         } catch(\Exception $e) {
           $logger = $this->get('logger');
-          $logger->error('No send mail in admin_check_ajax');
+          $logger->error('No send mail in admin-check:' . $e);
         }
       }
 

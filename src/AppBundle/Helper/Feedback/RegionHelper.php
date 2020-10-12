@@ -38,15 +38,18 @@ class RegionHelper
 
 
   /**
+   * @param $io
+   * @return int
    * @throws \Doctrine\DBAL\DBALException
    */
-  public function load()
+  public function load($io)
   {
     $conn = $this->entityManager->getConnection();
     $stmt = $conn->prepare('SELECT * FROM b_iblock_section WHERE IBLOCK_ID = 16 AND ACTIVE = "Y"');
     $stmt->execute();
 
     $result = $stmt->fetchAll();
+    $nbImported = 0;
     foreach ($result as $key => $item) {
       $name = !empty($item['SEARCHABLE_CONTENT']) ? $item['SEARCHABLE_CONTENT'] : null;
       $code = !empty($item['CODE']) ? $item['CODE'] : null;
@@ -55,10 +58,12 @@ class RegionHelper
       $region->setName($name);
       $region->setCode($code);
       $this->entityManager->persist($region);
+      $nbImported++;
     }
     $this->entityManager->flush();
+    $io->success(sprintf('Fill Region: %s out of %s', $nbImported, count($result)));
 
-    return count($result);
+    return $nbImported;
   }
 
   /**

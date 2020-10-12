@@ -11,6 +11,8 @@ use AppBundle\Entity\Company\FeedbackModerationStatus;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Entity\User\User;
 use AppBundle\Helper\Feedback\CommonHelper;
+use AppBundle\Helper\Feedback\CompanyBranchHelper;
+use AppBundle\Helper\Feedback\RegionHelper;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -40,13 +42,26 @@ class BitrixImportCommand extends ContainerAwareCommand
    */
   protected function execute(InputInterface $input, OutputInterface $output)
   {
+    $io = new SymfonyStyle($input, $output);
     $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
     $doctrine = $this->getContainer()->get('doctrine');
-
     $this->clearTables($entityManager);
-    $this->fillRegion($entityManager, $input, $output);
-    $this->fillCompany($entityManager, $input, $output);
-    $this->fillCompanyBranch($entityManager, $doctrine, $input, $output);
+
+    $common = new CommonHelper();
+    $common->clearTable($entityManager, [Region::class]);
+    $regionHelper = $this->getContainer()->get('AppBundle\Helper\Feedback\RegionHelper');
+    $regionHelper->load($io);
+
+    $common = new CommonHelper();
+    $common->clearTable($entityManager, [Company::class]);
+    $companyHelper = $this->getContainer()->get('AppBundle\Helper\Feedback\CompanyHelper');
+    $companyHelper->load($io);
+
+    $common = new CommonHelper();
+    $common->clearTable($entityManager, [CompanyBranch::class]);
+    $companyBranchHelper = $this->getContainer()->get('AppBundle\Helper\Feedback\CompanyBranchHelper');
+    $companyBranchHelper->load($io);
+
     $this->fillUser($entityManager, $input, $output);
     $this->fillFeedback($entityManager, $doctrine, $input, $output);
     $this->fillComment($entityManager, $doctrine, $input, $output);
@@ -78,38 +93,14 @@ class BitrixImportCommand extends ContainerAwareCommand
   public function clearTable($entityManager, $tables)
   {
     $connection = $entityManager->getConnection();
-    foreach ($tables as $table) {
+    foreach ($tables as $table)
+    {
       $metaData = $entityManager->getClassMetadata($table);
       $connection->query('SET FOREIGN_KEY_CHECKS=0');
       $query = $connection->getDatabasePlatform()->getTruncateTableSQL($metaData->getTableName());
       $connection->executeUpdate($query);
       $connection->query('SET FOREIGN_KEY_CHECKS=1');
     }
-  }
-
-  /**
-   * @param $entityManager
-   */
-  private function fillRegion($entityManager, InputInterface $input, OutputInterface $output)
-  {
-    $conn = $entityManager->getConnection();
-    $stmt = $conn->prepare('SELECT * FROM b_iblock_section WHERE IBLOCK_ID = 16 AND ACTIVE = "Y"');
-    $stmt->execute();
-
-    $result = $stmt->fetchAll();
-    foreach ($result as $key => $item) {
-      $name = !empty($item['SEARCHABLE_CONTENT']) ? $item['SEARCHABLE_CONTENT'] : null;
-      $code = !empty($item['CODE']) ? $item['CODE'] : null;
-
-      $region = new Region();
-      $region->setName($name);
-      $region->setCode($code);
-      $entityManager->persist($region);
-    }
-    $entityManager->flush();
-
-    $io = new SymfonyStyle($input, $output);
-    $io->success('Fill Region:' . count($result));
   }
 
   /**
@@ -140,7 +131,8 @@ class BitrixImportCommand extends ContainerAwareCommand
     $stmt->execute();
 
     $result = $stmt->fetchAll();
-    foreach ($result as $item) {
+    foreach ($result as $item)
+    {
       $login = !empty($item['LOGIN']) ? $item['LOGIN'] : null;
       $lastName = !empty($item['LAST_NAME']) ? $item['LAST_NAME'] : null;
       $firstName = !empty($item['NAME']) ? $item['NAME'] : null;
@@ -162,130 +154,6 @@ class BitrixImportCommand extends ContainerAwareCommand
 
     $io = new SymfonyStyle($input, $output);
     $io->success('Fill User:' . count($result));
-  }
-
-  /**
-   * @param $entityManager
-   */
-  private function fillCompany($entityManager, InputInterface $input, OutputInterface $output)
-  {
-    $conn = $entityManager->getConnection();
-    $sql = 'SELECT e.ID, 
-                    e.NAME, 
-                    e.IBLOCK_ID, 
-                    e.ACTIVE, 
-                    epKpp.VALUE as KPP,
-                    epI.VALUE as IMAGE,                    
-                    epE1.VALUE as EMAIL1,                    
-                    epE2.VALUE as EMAIL2,                    
-                    epE2.VALUE as EMAIL3
-            FROM b_iblock_element e
-            LEFT JOIN b_iblock_element_property epKpp ON epKpp.IBLOCK_ELEMENT_ID = e.ID AND epKpp.IBLOCK_PROPERTY_ID = 144    
-            LEFT JOIN b_iblock_element_property epI ON epI.IBLOCK_ELEMENT_ID = e.ID AND epI.IBLOCK_PROPERTY_ID = 139                
-            LEFT JOIN b_iblock_element_property epE1 ON epE1.IBLOCK_ELEMENT_ID = e.ID AND epE1.IBLOCK_PROPERTY_ID = 135      
-            LEFT JOIN b_iblock_element_property epE2 ON epE2.IBLOCK_ELEMENT_ID = e.ID AND epE2.IBLOCK_PROPERTY_ID = 136      
-            LEFT JOIN b_iblock_element_property epE3 ON epE3.IBLOCK_ELEMENT_ID = e.ID AND epE3.IBLOCK_PROPERTY_ID = 137                    
-            WHERE e.IBLOCK_ID = 24 AND e.ACTIVE = "Y"';
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
-
-    $result = $stmt->fetchAll();
-    foreach ($result as $item) {
-      $name = !empty($item['NAME']) ? str_replace('"', '',  $item['NAME']) : null;
-      $kpp = !empty($item['KPP']) ? $item['KPP'] : null;
-      $image = !empty($item['IMAGE']) ? $item['IMAGE'] : null;
-      $email1 = !empty($item['EMAIL1']) ? $item['EMAIL1'] : null;
-      $email2 = !empty($item['EMAIL2']) ? $item['EMAIL2'] : null;
-      $email3 = !empty($item['EMAIL3']) ? $item['EMAIL3'] : null;
-
-      $company = new Company();
-      $company->setName($name);
-      $company->setKpp($kpp);
-      $company->setFile($image);
-      $company->setEmailFirst($email1);
-      $company->setEmailSecond($email2);
-      $company->setEmailThird($email3);
-      $entityManager->persist($company);
-    }
-    $entityManager->flush();
-
-    $io = new SymfonyStyle($input, $output);
-    $io->success('Fill Company:' . count($result));
-  }
-
-  /**
-   * @param $entityManager
-   * @param $doctrine
-   */
-  private function fillCompanyBranch($entityManager, $doctrine, InputInterface $input, OutputInterface $output)
-  {
-    $conn = $entityManager->getConnection();
-    $sql = 'SELECT e.ID, 
-                e.NAME, 
-                e.IBLOCK_ID, 
-                e.ACTIVE,  
-                e.CODE, 
-                epK.VALUE as KPP,
-                sC.ID as COMPANY_ID,
-                epR.SEARCHABLE_CONTENT as REGION_NAME,
-                sR.id as REGION_ID,
-                epVS.VALUE as AMOUNT_STARS,
-                epVAS.VALUE as ALL_AMOUNT_STAR,
-                epIMG.VALUE as IMAGE_ID
-            FROM b_iblock_element e
-            LEFT JOIN b_iblock_element_property epK ON epK.IBLOCK_ELEMENT_ID = e.ID AND epK.IBLOCK_PROPERTY_ID = 112     
-            LEFT JOIN s_companies sC ON sC.kpp = epK.VALUE  
-            LEFT JOIN b_iblock_section epR ON e.IBLOCK_SECTION_ID = epR.ID
-            LEFT JOIN s_regions sR ON (sR.name LIKE epR.SEARCHABLE_CONTENT)            
-            LEFT JOIN b_iblock_element_property epVS ON epVS.IBLOCK_ELEMENT_ID = e.ID AND epVS.IBLOCK_PROPERTY_ID = 146                
-            LEFT JOIN b_iblock_element_property epVAS ON epVAS.IBLOCK_ELEMENT_ID = e.ID AND epVAS.IBLOCK_PROPERTY_ID = 131           
-            LEFT JOIN b_iblock_element_property epIMG ON epIMG.IBLOCK_ELEMENT_ID = e.ID AND epIMG.IBLOCK_PROPERTY_ID = 85       
-            WHERE e.IBLOCK_ID = 16 AND e.ACTIVE = "Y"';
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
-
-    $result = $stmt->fetchAll();
-    $sql = '';
-    foreach ($result as $item) {
-        $name = !empty($item['NAME']) ? str_replace('"', '', $item['NAME']) : null;
-        $code = !empty($item['CODE']) ? $item['CODE'] : null;
-        $kpp = !empty($item['KPP']) ? $item['KPP'] : null;
-        $company_id = !empty($item['COMPANY_ID']) ? $item['COMPANY_ID'] : null;
-        $region_id = !empty($item['REGION_ID']) ? $item['REGION_ID'] : null;
-        $amountStar = !empty($item['AMOUNT_STARS']) ? (float)$item['AMOUNT_STARS'] : 0;
-        $amountAllStar = !empty($item['ALL_AMOUNT_STAR']) ? (float)$item['ALL_AMOUNT_STAR'] : 0;
-        $image_id = !empty($item['IMAGE_ID']) ? (float)$item['IMAGE_ID'] : null;
-
-        $company = (!empty($item['ALL_AMOUNT_STAR']) && !empty($company_id)) ? $doctrine->getRepository("AppBundle:Company\Company")
-            ->createQueryBuilder('c')
-            ->andWhere('c.id = :id')
-            ->setParameter('id', $company_id)
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult() : null;
-
-        if ($company) {
-            $company->setValuation($amountAllStar);
-            $entityManager->persist($company);
-            $entityManager->flush();
-
-            $sql = "INSERT INTO s_company_branches(name, kpp, code, company_id, region_id, valuation, logo_id_from_bitrix) 
-                    VALUES(:name, :kpp, :code, :company_id, :region_id, :valuation, :image_id)";
-
-            $stmt = $conn->prepare($sql);
-            $stmt->bindValue(':name', $name);
-            $stmt->bindValue(':kpp', $kpp);
-            $stmt->bindValue(':code', $kpp);
-            $stmt->bindValue(':company_id', $company_id);
-            $stmt->bindValue(':region_id', $region_id);
-            $stmt->bindValue(':valuation', $amountStar);
-            $stmt->bindValue(':image_id', $image_id);
-            $stmt->execute();
-        }
-    }
-
-    $io = new SymfonyStyle($input, $output);
-    $io->success('Fill Company Branch:' . count($result));
   }
 
   /**
@@ -326,7 +194,8 @@ class BitrixImportCommand extends ContainerAwareCommand
     $stmt->execute();
 
     $result = $stmt->fetchAll();
-    foreach ($result as $item) {
+    foreach ($result as $item)
+    {
       $title = !empty($item['SEARCHABLE_CONTENT']) ? trim($item['SEARCHABLE_CONTENT']) : null;
       $text = !empty($item['TEXT']) ? trim($item['TEXT']) : null;
 //      $regionName  = !empty($item['REGION_NAME']) ? ($item['REGION_NAME']) : null;
@@ -334,10 +203,10 @@ class BitrixImportCommand extends ContainerAwareCommand
 //      $kpp = !empty($item['KPP']) ? ($item['KPP']) : null;
 //      $userName = !empty($item['USER_NAME']) ? ($item['USER_NAME']) : null;
       $created = !empty($item['DATE_CREATE']) ? $item['DATE_CREATE'] : null;
-      $date = !empty($created) ? new \DateTime($created): null;
+      $date = !empty($created) ? new \DateTime($created) : null;
       $reviewLetter = !empty($item['REVIEW_LETTER']) ? $item['REVIEW_LETTER'] : 0;
       $status = !empty($item['VERIFIED']) ?
-        FeedbackModerationStatus::MODERATION_ACCEPTED: (!empty($item['REJECTED']) ? FeedbackModerationStatus::MODERATION_REJECTED : FeedbackModerationStatus::MODERATION_NONE);
+        FeedbackModerationStatus::MODERATION_ACCEPTED : (!empty($item['REJECTED']) ? FeedbackModerationStatus::MODERATION_REJECTED : FeedbackModerationStatus::MODERATION_NONE);
 
       $region = !empty($item['REGION_NAME']) ? $doctrine->getRepository("AppBundle:Geo\Region")
         ->createQueryBuilder('r')
@@ -362,7 +231,8 @@ class BitrixImportCommand extends ContainerAwareCommand
         ->setMaxResults(1)
         ->getQuery()
         ->getOneOrNullResult() : null;
-      if (empty($user)) {
+      if (empty($user))
+      {
         $user = new User();
         $user->setLastName($lastName);
         $user->setFirstName($firstName);
@@ -417,8 +287,9 @@ class BitrixImportCommand extends ContainerAwareCommand
 
     $result = $stmt->fetchAll();
     $sql = '';
-    foreach ($result as $item) {
-      $text = !empty($item['COMMENTS']) ? $item['COMMENTS']: null;
+    foreach ($result as $item)
+    {
+      $text = !empty($item['COMMENTS']) ? $item['COMMENTS'] : null;
       $created = !empty($item['DATE_CREATE']) ? $item['DATE_CREATE'] : null;
       $date = !empty($created) ? date("Y-m-d H:i:s", strtotime($created)) : date("Y-m-d H:i:s");
       $status = FeedbackModerationStatus::MODERATION_NONE;

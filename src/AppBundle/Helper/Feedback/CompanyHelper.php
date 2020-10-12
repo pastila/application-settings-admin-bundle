@@ -38,10 +38,11 @@ class CompanyHelper
   }
 
   /**
+   * @param $io
    * @return int
    * @throws \Doctrine\DBAL\DBALException
    */
-  public function load()
+  public function load($io)
   {
     $conn = $this->entityManager->getConnection();
     $sql = 'SELECT e.ID, 
@@ -64,6 +65,7 @@ class CompanyHelper
     $stmt->execute();
 
     $result = $stmt->fetchAll();
+    $nbImported = 0;
     foreach ($result as $item) {
       $name = !empty($item['NAME']) ? str_replace('"', '',  $item['NAME']) : null;
       $kpp = !empty($item['KPP']) ? $item['KPP'] : null;
@@ -80,10 +82,12 @@ class CompanyHelper
       $company->setEmailSecond($email2);
       $company->setEmailThird($email3);
       $this->entityManager->persist($company);
+      $nbImported++;
     }
     $this->entityManager->flush();
+    $io->success(sprintf('Fill Company: %s out of %s', $nbImported, count($result)));
 
-    return count($result);
+    return $nbImported;
   }
 
   /**
