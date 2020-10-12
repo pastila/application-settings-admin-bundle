@@ -46,7 +46,7 @@
     </div>
     <!-- Title -->
     <a href="{{ path('app_insurancecompany_feedback_show', { id: review.id }) }}">
-        <h1 class="feedback__title">{{ review.title }}</h1>
+        <{{ h_level }} class="feedback__title">{{ review.title }}</{{ h_level }}>
     </a>
 
     <!-- Text -->
