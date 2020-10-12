@@ -12,6 +12,7 @@ use AppBundle\Entity\Company\CompanyBranch;
 use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\Company\FeedbackModerationStatus;
 use AppBundle\Entity\User\User;
+use AppBundle\Form\Feedback\CommentFormType;
 use AppBundle\Form\Feedback\FeedbackType;
 use AppBundle\Form\InsuranceCompany\FeedbackListFilterType;
 use AppBundle\Model\InsuranceCompany\Branch\BranchRatingHelper;
@@ -288,26 +289,37 @@ class FeedbackController extends Controller
   public function addCommentAction(Request $request, UserInterface $user = null)
   {
     $data = $request->request->all();
-    $userId = null !== $user ? $user->getId() : null;
-    $user = $this->getDoctrine()->getManager()->getRepository(User::class)
-      ->findOneBy(['id' => $userId]);
-    $text = isset($data['comment']) ? $data['comment'] : null;
-    $review_id = isset($data['review_id']) ? $data['review_id'] : null;
-    $feedback = $this->getDoctrine()->getManager()->getRepository(Feedback::class)
-      ->findOneBy(['id' => $review_id]);
-
     $comment = new Comment();
-    $comment->setUser($user);
-    $comment->setText($text);
-    $comment->setFeedback($feedback);
-    $comment->setModerationStatus(FeedbackModerationStatus::MODERATION_NONE);
-    $comment->setCreatedAt(new \DateTime());
-    $comment->setUpdatedAt(new \DateTime());
+    $form = $this->createForm(CommentFormType::class, $comment, [
+      'csrf_protection' => false,
+    ]);
+    $form->submit([
+      'feedback' => !empty($data['review_id']) ? $data['review_id'] : null,
+      'text' => !empty($data['comment']) ? $data['comment'] : null,
+    ]);
 
-    $this->getDoctrine()->getManager()->persist($comment);
-    $this->getDoctrine()->getManager()->flush();
+    if ($form->isSubmitted() && $form->isValid())
+    {
+      $userId = null !== $user ? $user->getId() : null;
+      $user = $this->getDoctrine()->getManager()->getRepository(User::class)
+        ->findOneBy(['id' => $userId]);
 
-    return $this->redirectToRoute('app_insurancecompany_feedback_index', [], 302);
+      $comment = $form->getData();
+      $comment->setUser($user);
+      $comment->setModerationStatus(FeedbackModerationStatus::MODERATION_NONE);
+      $comment->setCreatedAt(new \DateTime());
+      $comment->setUpdatedAt(new \DateTime());
+
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($comment);
+      $em->flush();
+
+      return new JsonResponse(1);
+    }
+
+    return new JsonResponse([
+      //errors
+    ], 400);
   }
 
   /**
