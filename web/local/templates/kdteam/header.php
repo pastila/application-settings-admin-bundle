@@ -200,7 +200,7 @@ $url = $APPLICATION->GetCurDir();
 
                                 ?>
 
-                            <a class="" href="/reviews/">
+                            <a class="" href="/feedback">
                                 <span id="number_calls" class="menu-req">
                                     <?php echo $count_reviews?>
                                 </span>
