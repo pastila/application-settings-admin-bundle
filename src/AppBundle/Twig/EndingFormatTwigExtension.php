@@ -12,10 +12,10 @@
  * Ответственность за нарушение авторских прав наступает в соответствии с действующим законодательством РФ.
  */
 
-namespace  StoreBundle\Twig;
+namespace  AppBundle\Twig;
 
 
-use StoreBundle\Util\EndingFormatter;
+use AppBundle\Util\EndingFormatter;
 
 class EndingFormatTwigExtension extends \Twig_Extension
 {
