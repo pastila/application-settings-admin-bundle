@@ -12,7 +12,7 @@
  * Ответственность за нарушение авторских прав наступает в соответствии с действующим законодательством РФ.
  */
 
-namespace StoreBundle\Util;
+namespace AppBundle\Util;
 
 /**
  * Описание класса EndingFormatter
