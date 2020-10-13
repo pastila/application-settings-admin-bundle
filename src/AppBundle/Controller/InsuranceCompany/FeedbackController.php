@@ -368,13 +368,9 @@ class FeedbackController extends Controller
       $em = $this->getDoctrine()->getManager();
       $em->persist($comment);
       $em->flush();
-
-      return new JsonResponse(1);
     }
 
-    return new JsonResponse([
-      //errors
-    ], 400);
+    return $this->redirectToRoute('app_insurancecompany_feedback_index', [], 302);
   }
 
   /**
