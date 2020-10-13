@@ -467,11 +467,8 @@ class FeedbackController extends Controller
         $citation->setUpdatedAt(new \DateTime());
 
         $comment = $citation->getComment();
-        $feedback = !empty($comment) ? $comment->getFeedback() : null;
-        if ($feedback)
-        {
-          $feedback->setUpdatedAt(new \DateTime());
-        }
+        $feedback = $comment->getFeedback();
+        $feedback->setUpdatedAt(new \DateTime());
         $em = $this->getDoctrine()->getManager();
         $em->persist($feedback);
         $em->persist($citation);
