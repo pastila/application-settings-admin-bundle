@@ -113,11 +113,11 @@ class BitrixAuthenticator extends AbstractGuardAuthenticator
       $user->setFirstName($credentials['firstName']);
       $user->setLastName($credentials['lastName']);
       $user->setMiddleName($credentials['middleName']);
-      $user->setIsAdmin($credentials['isAdmin']);
       $user->setRepresentative($credentials['representative']);
       $this->entityManager->persist($user);
       $this->entityManager->flush();
     }
+    $user->setIsAdmin($credentials['isAdmin']);
 
     return $user;
   }

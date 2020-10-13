@@ -289,7 +289,7 @@ $(document).ready(function() {
     };
     $.ajax({
       dataType: 'html',
-      url: '/ajax/delet_feedback.php',
+      url: '/feedback/remove',
       type: 'POST',
       data: data,
       success: function(msg){
