@@ -25,14 +25,24 @@ if ($USER->IsAuthorized())
   $rsUser = $USER->GetByLogin($USER->GetLogin());
   if ($arUser = $rsUser->Fetch())
   {
+    $id_user = $USER->GetID();
+    $email_user = $USER->GetEmail();
+    $rsUser = CUser::GetByID($id_user);
+    $person = $rsUser->Fetch();
+
     http_response_code(200);
     header('Content-Type:application/json');
     echo json_encode([
       'id' => $arUser['ID'],
       'fullName' => $USER->GetFullName(),
-      'email' =>  $arUser['EMAIL'],
-      'region' => $arUser['PERSONAL_STATE'],
-      'isAdmin' => $USER->IsAdmin()
+      'firstName' => $USER->GetFirstName(),
+      'lastName' => $USER->GetLastName(),
+      'middleName' => $USER->GetSecondName(),
+      'email' => $arUser['EMAIL'],
+      'isAdmin' => $USER->IsAdmin(),
+      'representative' => $person["UF_REPRESENTATIVE"],
+      'branch' => $person['UF_INSURANCE_COMPANY'],
+      'region' => $arUser['UF_REGION'],
     ]);
 
     exit;

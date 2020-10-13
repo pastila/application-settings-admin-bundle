@@ -304,7 +304,7 @@ class FeedbackController extends Controller
           ->setTo($emails)
           ->setBody(
             $this->renderView(
-              'emails/feedback.html.twig', [
+              'emails/feedback/new_for_boss.html.twig', [
                 'url' => $url,
                 'date' => $date,
               ]

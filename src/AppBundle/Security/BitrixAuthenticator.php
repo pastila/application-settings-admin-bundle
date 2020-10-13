@@ -7,9 +7,9 @@ namespace AppBundle\Security;
 
 
 use AppBundle\Entity\User\User;
-use AppBundle\Exception\AuthenticatorRequestException;
 use AppBundle\Exception\BitrixRequestException;
 use AppBundle\Helper\DataFromBitrix;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,16 +37,23 @@ class BitrixAuthenticator extends AbstractGuardAuthenticator
   protected $logger;
 
   /**
+   * @var EntityManagerInterface
+   */
+  private $entityManager;
+
+  /**
    * BitrixAuthenticator constructor.
    * @param Security $security
    */
   public function __construct(
     Security $security,
-    LoggerInterface $logger
+    LoggerInterface $logger,
+    EntityManagerInterface $entityManager
   )
   {
     $this->security = $security;
     $this->logger = $logger;
+    $this->entityManager = $entityManager;
   }
 
   public function supports(Request $request)
@@ -97,12 +104,21 @@ class BitrixAuthenticator extends AbstractGuardAuthenticator
       return null;
     }
 
-    $user = new User();
-
-    $user->setId($credentials['id']);
-    $user->setLogin($credentials['email']);
-    $user->setFirstName($credentials['fullName']);
-    $user->setIsAdmin($credentials['isAdmin']);
+    $userSearch =  $this->entityManager->getRepository(User::class)
+      ->findOneBy(['login' => $credentials['email']]);
+    if (empty($userSearch)) {
+      $user = new User();
+      $user->setLogin($credentials['email']);
+      $user->setFirstName($credentials['firstName']);
+      $user->setLastName($credentials['lastName']);
+      $user->setMiddleName($credentials['middleName']);
+      $user->setIsAdmin($credentials['isAdmin']);
+      $user->setRepresentative($credentials['representative']);
+      $this->entityManager->persist($user);
+      $this->entityManager->flush();
+    } else {
+      $user = $userSearch;
+    }
 
     return $user;
   }
