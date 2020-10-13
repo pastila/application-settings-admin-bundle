@@ -18,7 +18,7 @@ class Version20201013112529 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE s_company_feedbacks ADD bitrix_id INT NOT NULL');
+        $this->addSql('ALTER TABLE s_company_feedbacks ADD bitrix_id INT NULL');
     }
 
     /**
