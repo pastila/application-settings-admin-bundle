@@ -11,8 +11,10 @@ use AppBundle\Exception\BitrixRequestException;
 use AppBundle\Helper\DataFromBitrix;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
@@ -36,6 +38,8 @@ class BitrixAuthenticator extends AbstractGuardAuthenticator
    */
   protected $logger;
 
+  protected $router;
+
   /**
    * @var EntityManagerInterface
    */
@@ -48,11 +52,13 @@ class BitrixAuthenticator extends AbstractGuardAuthenticator
   public function __construct(
     Security $security,
     LoggerInterface $logger,
+    RouterInterface $router,
     EntityManagerInterface $entityManager
   )
   {
     $this->security = $security;
     $this->logger = $logger;
+    $this->router = $router;
     $this->entityManager = $entityManager;
   }
 
@@ -69,7 +75,8 @@ class BitrixAuthenticator extends AbstractGuardAuthenticator
    */
   public function start(Request $request, AuthenticationException $authException = null)
   {
-    // TODO: Implement start() method.
+    // У нас пока нет своей страницы логина, поэтому придется сделать, как в Битриксе - отправить человека на главную страницу
+    return new RedirectResponse('/');
   }
 
   /**

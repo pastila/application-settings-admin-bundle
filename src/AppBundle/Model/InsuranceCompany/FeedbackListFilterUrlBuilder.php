@@ -14,15 +14,19 @@ class FeedbackListFilterUrlBuilder
 {
   private $originalFilter;
 
+  private $routeName;
+
   private $router;
 
   private $formFactory;
 
-  public function __construct(FeedbackListFilter $originalFilter, Router $router, FormFactoryInterface $formFactory)
+  public function __construct(FeedbackListFilter $originalFilter, Router $router, FormFactoryInterface $formFactory,
+    $routeName='app_insurancecompany_feedback_index')
   {
     $this->originalFilter = $originalFilter;
     $this->router = $router;
     $this->formFactory = $formFactory;
+    $this->routeName = $routeName;
   }
 
   public function buildHttpQuery($values=[])
@@ -93,6 +97,6 @@ class FeedbackListFilterUrlBuilder
 
   public function getBaseUrl()
   {
-    return $this->router->generate('app_insurancecompany_feedback_index');
+    return $this->router->generate($this->routeName);
   }
 }

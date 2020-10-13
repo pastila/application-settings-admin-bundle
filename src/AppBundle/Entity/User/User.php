@@ -14,7 +14,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
+  const ROLE_USER = 'ROLE_USER';
   const ROLE_ADMIN = 'ROLE_ADMIN';
+  const ROLE_IC_REPRESENTATIVE = 'ROLE_IC_REPRESENTATIVE';
 
   /**
    * @var integer
@@ -202,11 +204,15 @@ class User implements UserInterface
    */
   public function getRoles()
   {
-    $roles = ['ROLE_USER'];
+    $roles = [self::ROLE_USER];
 
     if ($this->getIsAdmin())
     {
-      $roles[] = 'ROLE_ADMIN';
+      $roles[] = self::ROLE_ADMIN;
+    }
+    if ($this->getRepresentative())
+    {
+      $roles[] = self::ROLE_IC_REPRESENTATIVE;
     }
 
     return $roles;

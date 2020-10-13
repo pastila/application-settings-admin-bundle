@@ -1,0 +1,32 @@
+{% extends ":InsuranceCompany/Review:_review_block_base.html.twig" %}
+
+{% block review_after %}
+    <div class="feedback__bottom bottom_change-block">
+        <span class="feedback_change_star" data-id-rewiev="{{ review.id }}">Редактировать оценку</span>
+    </div>
+    <form action="" id="form_change_count_star" data-form-id="{{ review.id }}"
+    class="hidden form-change_star">
+    <div class='rating-stars text-center' data-select="star">
+        <ul id='stars'>
+            <li class='star' title='Плохо' data-star-id="{{ review.id }}" data-value='1'>
+            <i class='fa fa-star fa-fw'></i>
+            </li>
+            <li class='star' title='Неплохо' data-star-id="{{ review.id }}" data-value='2'>
+            <i class='fa fa-star fa-fw'></i>
+            </li>
+            <li class='star' title='Хорошо' data-star-id="{{ review.id }}" data-value='3'>
+            <i class='fa fa-star fa-fw'></i>
+            </li>
+            <li class='star' title='Прекрасно' data-star-id="{{ review.id }}" data-value='4'>
+            <i class='fa fa-star fa-fw'></i>
+            </li>
+            <li class='star' title='Отлично!' data-star-id="{{ review.id }}" data-value='5'>
+            <i class='fa fa-star fa-fw'></i>
+            </li>
+        </ul>
+    </div>
+    <button type="submit" class="change_count_star smallMainBtn"
+            data-id-rewiev="{{ review.id }}">Сохранить</button>
+    </form>
+    <div class="result-styles" id="result_change hidden" data-result-id="{{ review.id }}"></div>
+{% endblock %}

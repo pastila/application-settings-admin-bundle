@@ -66,7 +66,7 @@ $(document).ready(function() {
 
       data.id_rewievs = $(this).attr("data-id-rewiev");
           $.ajax({
-                url: '/ajax/change_amount_star.php',
+                url: '/cabinet/feedback/'+data.id_rewievs+'/rating',
                 type: 'POST',
                 data: data,
                 beforeSend: function() {

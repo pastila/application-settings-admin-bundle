@@ -29,5 +29,5 @@ security:
                 authenticators:
                     - AppBundle\Security\BitrixAuthenticator
 
-#        access_control:
-#            - { path: ^/admin.*$, role: ROLE_ADMIN }
+    access_control:
+        - { path: ^/cabinet, roles: ROLE_USER }
