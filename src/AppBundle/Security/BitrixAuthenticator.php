@@ -106,7 +106,7 @@ class BitrixAuthenticator extends AbstractGuardAuthenticator
 
     $user = $this->entityManager->getRepository(User::class)
       ->findOneBy(['login' => $credentials['email']]);
-    if ($user)
+    if (!$user)
     {
       $user = new User();
       $user->setLogin($credentials['email']);
