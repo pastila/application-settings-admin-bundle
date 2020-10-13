@@ -3,8 +3,10 @@
 namespace AppBundle\Repository\Company;
 
 use AppBundle\Entity\Company\Feedback;
+use AppBundle\Model\InsuranceCompany\FeedbackListFilter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -25,5 +27,10 @@ class FeedbackRepository extends ServiceEntityRepository
       ->setParameter('user', $user)
       ->getQuery()
       ->getSingleScalarResult();
+  }
+
+  public function applyFilter(QueryBuilder $qb, FeedbackListFilter $filter)
+  {
+
   }
 }

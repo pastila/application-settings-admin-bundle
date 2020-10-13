@@ -1,0 +1,192 @@
+<div class="white_block white_block_riview_{{ review.id }}">
+    {% if review.updatedAt > review.createdAt %}
+        <span class="date_review">Дата изменения {{ review.updatedAt|prepareDate('d M, Y') }}</span>
+    {% endif %}
+    {% if review.fromLetter %}
+        <h3 class="feedback__title">Возврат денежных средств</h3>
+    {% endif %}
+
+    <!-- top -->
+    <div class="feedback__block_top">
+
+        {% if review.valuation > 0 %}
+            <div class="feedback__block_top_star">
+
+                {% for i in 1..review.valuation %}
+                    <svg class="star star-active" xmlns="http://www.w3.org/2000/svg"
+                         viewBox="0 0 47.94 47.94">
+                        <path
+                                d="M26.285 2.486l5.407 10.956a2.58 2.58 0 0 0 1.944 1.412l12.091 1.757c2.118.308 2.963 2.91 1.431 4.403l-8.749 8.528a2.582 2.582 0 0 0-.742 2.285l2.065 12.042c.362 2.109-1.852 3.717-3.746 2.722l-10.814-5.685a2.585 2.585 0 0 0-2.403 0l-10.814 5.685c-1.894.996-4.108-.613-3.746-2.722l2.065-12.042a2.582 2.582 0 0 0-.742-2.285L.783 21.014c-1.532-1.494-.687-4.096 1.431-4.403l12.091-1.757a2.58 2.58 0 0 0 1.944-1.412l5.407-10.956c.946-1.919 3.682-1.919 4.629 0z"
+                                {% if review.moderationStatus == constant('AppBundle\\Entity\\Company\\FeedbackModerationStatus::MODERATION_NONE') %}
+                            fill="#c5d2e0"
+                        {% elseif review.moderationStatus == constant('AppBundle\\Entity\\Company\\FeedbackModerationStatus::MODERATION_REJECTED') %}
+                            fill="#3a4552"
+                        {% elseif review.moderationStatus == constant('AppBundle\\Entity\\Company\\FeedbackModerationStatus::MODERATION_ACCEPTED') %}
+                            fill="#00abd8"
+                                {% endif %}/>
+                    </svg>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="feedback__block_top_name">
+                    <span class="feedback__block_top_name_text">{{ review.authorName }}, {{review.region ?review.region.name|trim: ''}}, {{ review.createdAt|prepareDate("d F, Y") }}</span>
+
+            <!-- Company Name -->
+            <div class="feedback__block_company-name">
+                {{ render(controller('AppBundle:InsuranceCompany/Company:_logoPanel',
+                    {
+                        'logo_id': (review.branch ? review.branch.logoIdFromBitrix : null),
+                        'name': (review.branch ? review.branch.name : '')
+                    } )) }}
+            </div>
+        </div>
+        <!--                <div class="feedback__block_top_data">-->
+        <!--                    05 сент, 2019-->
+        <!--                </div>-->
+    </div>
+    <!-- Title -->
+    {% block title %}
+        <a href="{{ path('app_insurancecompany_feedback_show', { id: review.id }) }}">
+            <h3 class="feedback__title">{{ review.title }}</h3>
+        </a>
+    {% endblock %}
+
+    <!-- Text -->
+    <div class="srolling--parent">
+        <p class="feedback__text readmore__parent">{{ review.text }}</p>
+    </div>
+
+
+    <!-- Bottom -->
+    <div class="feedback__bottom">
+        <div class="feedback__bottom_name opacity_block">{{ review.company.name }}</div>
+
+        <a id="show-comments" class="feedback__bottom_link opacity_block">
+            <img src="" alt="">
+
+            <span class="comment-count">
+                        {{ review.comments | length }}
+                    </span>
+            {{ review.comments | length | ending_format(['комментарий', 'комментария', 'комментариев']) }}
+        </a>
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <a rel="nofollow" class="toggle_comment_dropdown opacity_block">Оставить комментарий</a>
+        {% endif %}
+        <div class="block_commented_styles block__commented">
+            <form action="{{ url('add_comment', {}, false) }}" method="POST">
+                <div class="input__wrap">
+                            <textarea minlength="10" name="comment" required
+                                      data-id-comment="{{ review.id }}"></textarea>
+                </div>
+                <input name="review_id" type="hidden" value="{{ review.id }}">
+                <div class="danger hidden">Заполните поле</div>
+                <button type="submit" class="smallMainBtn" id="comments"
+                        data-id-comment="{{ review.id }}">Комментировать
+                </button>
+            </form>
+        </div>
+    </div>
+
+    {% block review_after %}{% endblock %}
+
+    <!-- COMMETNS -->
+    <div class="hidenComments">
+        {% for comment in review.comments %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="block_remove">
+                    <div data-id="{{ comment.id }}" class="delet_comment remove_comment">
+                        Удалить комментарий
+                    </div>
+                </div>
+            {% endif %}
+            <div class="hidenComments__top">
+{#                <? if ($arPropsComments["REPRESENTATIVE"]["VALUE"] == "1") { ?>#}
+{#                <div class="feedback_strah_user">#}
+{#                    <p class="text_user">Представитель страховой службы</p>#}
+{#                </div>#}
+{#                <? } ?>#}
+
+                <div class="hidenComments__top_wrap">
+                    <div class="hidenComments__top_name">{{ comment.user.fullName }}</div>
+                    <div class="hidenComments__top_data">{{ comment.createdAt |prepareDate('d M, Y') }}</div>
+                </div>
+            </div>
+            <p>{{comment.text}}</p>
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <div class="block_commented_styles">
+                    <form action="">
+                        <div class="input__wrap">
+                            <textarea minlength="10" name="cited" required
+                                      data-id-cited="{{comment.id}}"></textarea>
+                        </div>
+                        <div class="danger hidden">Заполните поле</div>
+                        <button type="submit" class="smallMainBtn button-cite" id="comments"
+                                data-id-cited="{{comment.id}}">Цитировать
+                        </button>
+                    </form>
+                </div>
+            {% endif %}
+            <!-- Цитаты-->
+            {% if comment.citations | length > 0 %}
+                <div class="block_quotes">
+                    {% for citation in comment.citations %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <div class="block_remove">
+                                <div class="delete_cation remove_comment"
+                                     data-id="{{ citation.id }}">Удалить цитату
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="hidenComments__top">
+                            {% if citation.representative %}
+                                <div class="feedback_strah_user">
+                                    <p class="text_user">Представитель страховой службы</p>
+                                </div>
+                            {% endif %}
+                            <div class="hidenComments__top_wrap">
+                                <div class="hidenComments__top_name">{{ citation.user.fullName }}</div>
+                                <div class="hidenComments__top_data">{{ citation.createdAt | prepareDate('d M, Y')  }}</div>
+                            </div>
+                        </div>
+                        <p class="quotes_italic">«{{ citation.text }}»</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+{% if is_granted('ROLE_ADMIN') %}
+    <div class="right_content-reviews">
+
+        {% if (filter is defined) and (not filter.moderation is null) %}
+
+            <div class="feedback__radio-btns">
+                <div id="checkbox-box_{{ review.id }}" class="wrap-chrckbox">
+                    <label class="check-label years" data-chec="Y">
+                        промодерирован <input name="years" type="checkbox" value="accepted">
+                        <span class="check-img"></span>
+                    </label>
+                    <label class="check-label years" data-chec="Y">
+                        не по теме <input name="years" type="checkbox" value="reject">
+                        <span class="check-img"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="feedback__actions-btns">
+                <div class="feedback__actions-btns_btn mainBtn" onclick="check_review(this)"
+                     data-check-id="{{ review.id }}">
+                    Применить
+                </div>
+
+                <div class="accentBtnBorder dalete_review feedback__actions-btns_btn"
+                     title="Удалить отзыв"
+                     data-id="{{ review.id }}">
+                    Удалить отзыв
+                </div>
+            </div>
+
+        {% endif %}
+    </div>
+{% endif %}
+</div>

@@ -1,0 +1,69 @@
+{% extends "base.html.twig" %}
+
+{% block meta %}
+    {{ parent() }}
+    <meta name="robots" content="noindex, nofollow"/>
+    <meta name="title" content="{{ title }}"/>
+    <meta name="keywords"
+          content="медицинское страхование отзывы, бесплатное лечение, бесплатная медицинская помощь, рейтинг медицинских страховых компаний омс в москве"/>
+    <meta name="description" content="{{ title }}"/>
+{% endblock %}
+
+{% block title %}{{ title|raw }}{% endblock %}
+
+{% block stylesheets %}
+    <link href="/local/templates/kdteam/pages/reviews/reviews.min.css" type="text/css" rel="stylesheet"/>
+{#    {% if pagination.page > 1 %}#}
+{#        <link rel="canonical" href="{{ url('app_user_cabinet_feedback') }}">#}
+{#    {% endif %}#}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="/local/templates/kdteam/js/main.min.js"></script>
+    <script type="text/javascript" src="/local/templates/kdteam/pages/reviews/reviews.min.js"></script>
+    <script type="text/javascript" src="/local/templates/kdteam/js/readmore.min.js?1586268475879"></script>
+    {{ parent() }}
+{% endblock %}
+
+{% block main %}
+    <!-- Breadcrumbs -->
+    <ul class="breadcrumbs">
+        {% if is_mobile() or is_tablet() %}
+            <li class="active-breadcrumbs"><a href="/" class="">Главная</a></li>
+        {% else %}
+            <li><a href="/">Главная</a></li>
+            <li class="active-breadcrumbs">Ваши отзывы</li>
+        {% endif %}
+    </ul>
+
+{% if not is_granted('ROLE_IC_REPRESENTATIVE') %}
+<div class="grid-reviews">
+    <div class="grid-reviews__left">
+        <h1 class="page-title">Ваши отзывы</h1>
+    </div>
+    <div class="grid-reviews__right">
+        <a href="{{ path('app_insurancecompany_feedback_index') }}" class="mainBtn">Все отзывы</a>
+    </div>
+</div>
+<div class="reviews">
+    <div class="reviews__wrap_white-blocks">
+        {% if not nbReviews  %}
+            <h3 class="mb-2">Вы еще не оставили ни одного отзыва.
+                <br>
+            </h3>
+            <a href="{{ path('app_insurancecompany_feedback_new') }}" class="mainBtn">Поделитесь своим мнением</a>
+        {% else %}
+
+            {% for review in reviews %}
+                {% include "_review_block_cabinet.html.twig" %}
+            {% endfor %}
+        {% endif %}
+        <!-- top -->
+
+        {% include "InsuranceCompany/Review/_pagination.html.twig" %}
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

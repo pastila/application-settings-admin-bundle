@@ -76,37 +76,10 @@
         </div>
     {% else %}
         {% for review in reviews %}
-            {% include "InsuranceCompany/Review/_review_block.html.twig" with {'h_level': 'h3'} %}
+            {% include "InsuranceCompany/Review/_review_block.html.twig"  %}
         {% endfor %}
 
-        {% if pagination.lastPage > 1 %}
-            <font class="text title_count_page">
-                Показано: {{ pagination.offset + 1 }}
-                - {{ min(pagination.offset + pagination.maxPerPage, pagination.lastResult) }}
-                из {{ pagination.nbResults }}
-            </font>
-            <font class="text block_pagen">
-                {% if pagination.page > 1 %}
-                    <a href="{{ urlBuilder.buildUrl({ page: 1 }) }}">Начало</a>
-                    <a href="{{ urlBuilder.buildUrl({ page: pagination.page - 1 }) }}">Пред.</a>
-                {% endif %}
-
-                {% for i in range(low=max(1, pagination.page - 3), high=min(max(1, pagination.page - 3) + 4, pagination.lastPage), step=1) %}
-                    {% if i != pagination.page %}
-                        <a title="{{ i }}"
-                           href="{{ urlBuilder.buildUrl({page: i}) }}">{{ i }}</a>
-                    {% else %}
-                        <b>{{ i }}</b>
-                    {% endif %}
-                {% endfor %}
-
-                {% if pagination.page < pagination.lastPage %}
-                    <a href="{{ urlBuilder.buildUrl({ page: pagination.page + 1 }) }}">След.</a>
-                    <a href="{{ urlBuilder.buildUrl({ page: pagination.lastPage }) }}">Конец</a>
-                {% endif %}
-            </font>
-
-        {% endif %}
+        {% include "InsuranceCompany/Review/_pagination.html.twig" %}
 
         </div>
 
