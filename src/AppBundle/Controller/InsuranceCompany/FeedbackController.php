@@ -15,6 +15,7 @@ use AppBundle\Entity\User\User;
 use AppBundle\Form\Feedback\CommentFormType;
 use AppBundle\Form\Feedback\FeedbackType;
 use AppBundle\Form\InsuranceCompany\FeedbackListFilterType;
+use AppBundle\Helper\GetMessFromBitrix;
 use AppBundle\Model\InsuranceCompany\Branch\BranchRatingHelper;
 use AppBundle\Model\InsuranceCompany\FeedbackListFilter;
 use AppBundle\Model\InsuranceCompany\FeedbackListFilterUrlBuilder;
@@ -36,10 +37,15 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class FeedbackController extends Controller
 {
   private $branchRatingHelper;
+  private $mainMail;
 
-  public function __construct(BranchRatingHelper $branchRatingHelper)
+  public function __construct(
+    BranchRatingHelper $branchRatingHelper,
+    GetMessFromBitrix $mainMail
+  )
   {
     $this->branchRatingHelper = $branchRatingHelper;
+    $this->mainMail = $mainMail;
   }
 
   /**
@@ -124,15 +130,23 @@ class FeedbackController extends Controller
       ->getRepository(Feedback::class)
       ->createQueryBuilder('rv');
 
-    $reviewListQb
-      ->orWhere('rv.moderationStatus = :status')
-      ->setParameter('status', FeedbackModerationStatus::MODERATION_ACCEPTED);
-
-    $userId = (null !== $user) ? $user->getId() : null;
-    if (!empty($userId)) {
+    if (isset($filterParams['moderation']))
+    {
       $reviewListQb
-        ->orWhere('rv.author = :user_id')
-        ->setParameter('user_id', $userId);
+        ->andWhere('rv.moderationStatus = :moderationStatus')
+        ->setParameter('moderationStatus', $reviewListFilter->getModeration());
+    } else
+    {
+      $reviewListQb
+        ->orWhere('rv.moderationStatus = :status')
+        ->setParameter('status', FeedbackModerationStatus::MODERATION_ACCEPTED);
+      $userId = (null !== $user) ? $user->getId() : null;
+      if (!empty($userId))
+      {
+        $reviewListQb
+          ->orWhere('rv.author = :user_id')
+          ->setParameter('user_id', $userId);
+      }
     }
 
     $reviewListQb
@@ -162,13 +176,6 @@ class FeedbackController extends Controller
         ->setParameter('region', $reviewListFilter->getRegion());
     }
 
-    if (isset($filterParams['moderation']))
-    {
-      $reviewListQb
-        ->andWhere('rv.moderationStatus = :moderationStatus')
-        ->setParameter('moderationStatus', $reviewListFilter->getModeration());
-    }
-
     $maxPerPage = 10;
 
     $reviewListQb->orderBy('rv.createdAt', 'DESC');
@@ -181,7 +188,7 @@ class FeedbackController extends Controller
 
     if ($reviewListFilter->getCompany())
     {
-      $title = 'Отзывы о страховой медицинской организации &laquo;'.$reviewListFilter->getCompany()->getName().'&raquo;' . (($pagination->getPage() > 1) ? ' — Страница ' . $pagination->getPage() : '');
+      $title = 'Отзывы о страховой медицинской организации &laquo;' . $reviewListFilter->getCompany()->getName() . '&raquo;' . (($pagination->getPage() > 1) ? ' — Страница ' . $pagination->getPage() : '');
     }
 
     return $this->render('InsuranceCompany/Review/list.html.twig', [
@@ -194,6 +201,25 @@ class FeedbackController extends Controller
       'urlBuilder' => $reviewListUrlbuilder,
       'title' => $title
     ], $response);
+  }
+
+  /**
+   * @Route(path="/feedback/comment-{id}", name="company_feedback_old", requirements={ "id": "\d+" })
+   */
+  public function commentAction(Request $request)
+  {
+    $feedbackBitrixId = $request->get('id');
+    $feedback = $this->getDoctrine()->getManager()
+      ->getRepository(Feedback::class)
+      ->findOneBy(['bitrixId' => $feedbackBitrixId]);
+    if ($feedback)
+    {
+      return $this->redirectToRoute('app_insurancecompany_feedback_show', [
+        'id' => $feedback->getId()
+      ], 301);
+    }
+
+    return new Response(null, 404);
   }
 
   /**
@@ -279,44 +305,10 @@ class FeedbackController extends Controller
       $feedback = $this->getDoctrine()->getManager()->getRepository(Feedback::class)
         ->findOneBy(['id' => $id]);
 
-      $branch = $feedback->getBranch();
-      $company = !empty($branch) ? $branch->getCompany() : null;
-      $emails = [];
-      if (!empty($company->getEmailFirst()))
-      {
-        $emails[] = $company->getEmailFirst();
-      }
-      if (!empty($company->getEmailSecond()))
-      {
-        $emails[] = $company->getEmailSecond();
-      }
-      if (!empty($company->getEmailThird()))
-      {
-        $emails[] = $company->getEmailThird();
-      }
       $url = $this->generateUrl('app_insurancecompany_feedback_show', ['id' => $feedback->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
       $date = $feedback->getCreatedAt()->format('Y-m-d H:i:s');
-
-      try
-      {
-        $message = (new \Swift_Message('Новый отзыв'))
-          ->setFrom($this->container->getParameter('mailer_from'))
-          ->setTo($emails)
-          ->setBody(
-            $this->renderView(
-              'emails/feedback.html.twig', [
-                'url' => $url,
-                'date' => $date,
-              ]
-            ),
-            'text/html'
-          );
-        $this->get('mailer')->send($message);
-      } catch (\Exception $e)
-      {
-        $logger = $this->get('logger');
-        $logger->error('No send mail in admin-check:' . $e);
-      }
+      $mainMail = $this->mainMail->getMainMail($request);
+      $this->sendNewFeedback($mainMail, $url, $date);
 
       return $this->redirectToRoute('app_insurancecompany_feedback_index');
     }
@@ -324,6 +316,45 @@ class FeedbackController extends Controller
     return $this->render('InsuranceCompany/Review/new.html.twig', [
       'form' => $form->createView()
     ]);
+  }
+
+  /**
+   * @Route(path="/feedback/remove", name="app_insurancecompany_feedback_remove")
+   */
+  public function removeAction(Request $request, UserInterface $user = null)
+  {
+    if (!$user && !$user->isAdmin()) {
+      return new JsonResponse([
+      ], 400);
+    }
+    $data = $request->request->all();
+    $feedback_id = isset($data['id']) ? $data['id'] : null;
+
+    /**
+     * @var Feedback $feedback
+     */
+    $feedback = $this->getDoctrine()->getManager()->getRepository(Feedback::class)
+      ->findOneBy(['id' => $feedback_id]);
+    if ($feedback)
+    {
+      $em = $this->getDoctrine()->getEntityManager();
+      foreach ($feedback->getComments() as $comment)
+      {
+        foreach ($comment->getCitations() as $citation)
+        {
+          $em->remove($citation);
+        }
+        $em->remove($comment);
+      }
+      $em->remove($feedback);
+      $em->flush();
+
+      return new JsonResponse(1);
+    }
+
+    return new JsonResponse([
+      //errors
+    ], 400);
   }
 
   /**
@@ -356,13 +387,9 @@ class FeedbackController extends Controller
       $em = $this->getDoctrine()->getManager();
       $em->persist($comment);
       $em->flush();
-
-      return new JsonResponse(1);
     }
 
-    return new JsonResponse([
-      //errors
-    ], 400);
+    return $this->redirectToRoute('app_insurancecompany_feedback_index', [], 302);
   }
 
   /**
@@ -471,10 +498,11 @@ class FeedbackController extends Controller
           'region' => $region_id
         ]);
       $content = '';
-      foreach ($branches as $branch) {
-        $content .= '<li value="'. $branch->getId() .'" class="custom-serach__items_item hospital company-select-item
-                      data-kpp="' .$branch->getKpp() . '">' .
-          $branch->getName() .'</li>';
+      foreach ($branches as $branch)
+      {
+        $content .= '<li value="' . $branch->getId() . '" class="custom-serach__items_item hospital company-select-item
+                      data-kpp="' . $branch->getKpp() . '">' .
+          $branch->getName() . '</li>';
       }
       $response = new Response();
       $response->setContent($content);
@@ -497,6 +525,9 @@ class FeedbackController extends Controller
         FeedbackModerationStatus::MODERATION_ACCEPTED :
         (!empty($reject) ? FeedbackModerationStatus::MODERATION_REJECTED : FeedbackModerationStatus::MODERATION_NONE);
 
+      /**
+       * @var Feedback $feedback
+       */
       $feedback = $this->getDoctrine()->getManager()->getRepository(Feedback::class)
         ->findOneBy(['id' => $id]);
       if (!empty($feedback)) {
@@ -506,6 +537,25 @@ class FeedbackController extends Controller
 
         // update rating company and branch
         $this->updateRating($feedback);
+
+        $branch = $feedback->getBranch();
+        $company = !empty($branch) ? $branch->getCompany() : null;
+        $emails = [];
+        if (!empty($company->getEmailFirst()))
+        {
+          $emails[] = $company->getEmailFirst();
+        }
+        if (!empty($company->getEmailSecond()))
+        {
+          $emails[] = $company->getEmailSecond();
+        }
+        if (!empty($company->getEmailThird()))
+        {
+          $emails[] = $company->getEmailThird();
+        }
+        $url = $this->generateUrl('app_insurancecompany_feedback_show', ['id' => $feedback->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $date = $feedback->getCreatedAt()->format('Y-m-d H:i:s');
+        $this->sendNewFeedback($emails, $url, $date);
       }
 
       return new JsonResponse(1);
@@ -564,5 +614,34 @@ class FeedbackController extends Controller
     $branch->setValuation($valuation);
 
     return $branch;
+  }
+
+  /**
+   * @param $emailTo
+   * @param $url
+   * @param $date
+   */
+  private function sendNewFeedback($emailTo, $url, $date)
+  {
+    try
+    {
+      $message = (new \Swift_Message('Новый отзыв'))
+        ->setFrom($this->container->getParameter('mailer_from'))
+        ->setTo($emailTo)
+        ->setBody(
+          $this->renderView(
+            'emails/feedback/new_for_boss.html.twig', [
+              'url' => $url,
+              'date' => $date,
+            ]
+          ),
+          'text/html'
+        );
+      $this->get('mailer')->send($message);
+    } catch (\Exception $e)
+    {
+      $logger = $this->get('logger');
+      $logger->error('No send mail in admin-check:' . $e->getMessage());
+    }
   }
 }

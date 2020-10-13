@@ -27,6 +27,15 @@ class Feedback
   protected $id;
 
   /**
+   * ID отзыва в системе битрикс
+   *
+   * @var integer
+   *
+   * @ORM\Column(name="bitrix_id", type="integer", nullable=false)
+   */
+  private $bitrixId;
+
+  /**
    * Пользователь, который оставил отзыв
    *
    * @var null|User
@@ -134,6 +143,25 @@ class Feedback
   public function getId()
   {
     return $this->id;
+  }
+
+  /**
+   * @return int
+   */
+  public function getBitrixId()
+  {
+    return $this->bitrixId;
+  }
+
+  /**
+   * @param $bitrixId
+   * @return $this
+   */
+  public function setBitrixId($bitrixId)
+  {
+    $this->bitrixId = $bitrixId;
+
+    return $this;
   }
 
   /**

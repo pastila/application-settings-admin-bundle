@@ -49,25 +49,31 @@ class CompanyHelper
                     e.NAME, 
                     e.IBLOCK_ID, 
                     e.ACTIVE, 
-                    epKpp.VALUE as KPP,
-                    epI.VALUE as IMAGE,                    
-                    epE1.VALUE as EMAIL1,                    
-                    epE2.VALUE as EMAIL2,                    
-                    epE2.VALUE as EMAIL3
+                    ANY_VALUE(epKpp.VALUE) as KPP,
+                    ANY_VALUE(epI.VALUE) as IMAGE,                    
+                    ANY_VALUE(epE1.VALUE) as EMAIL1,                    
+                    ANY_VALUE(epE2.VALUE) as EMAIL2,                    
+                    ANY_VALUE(epE2.VALUE) as EMAIL3,
+                    ANY_VALUE(ieB.NAME) as NAME_BRANCH
             FROM b_iblock_element e
             LEFT JOIN b_iblock_element_property epKpp ON epKpp.IBLOCK_ELEMENT_ID = e.ID AND epKpp.IBLOCK_PROPERTY_ID = 144    
             LEFT JOIN b_iblock_element_property epI ON epI.IBLOCK_ELEMENT_ID = e.ID AND epI.IBLOCK_PROPERTY_ID = 139                
             LEFT JOIN b_iblock_element_property epE1 ON epE1.IBLOCK_ELEMENT_ID = e.ID AND epE1.IBLOCK_PROPERTY_ID = 135      
             LEFT JOIN b_iblock_element_property epE2 ON epE2.IBLOCK_ELEMENT_ID = e.ID AND epE2.IBLOCK_PROPERTY_ID = 136      
-            LEFT JOIN b_iblock_element_property epE3 ON epE3.IBLOCK_ELEMENT_ID = e.ID AND epE3.IBLOCK_PROPERTY_ID = 137                    
-            WHERE e.IBLOCK_ID = 24 AND e.ACTIVE = "Y"';
+            LEFT JOIN b_iblock_element_property epE3 ON epE3.IBLOCK_ELEMENT_ID = e.ID AND epE3.IBLOCK_PROPERTY_ID = 137   
+            LEFT JOIN b_iblock_element_property epK ON epK.VALUE = epKpp.VALUE AND epK.IBLOCK_PROPERTY_ID = 112
+            LEFT JOIN b_iblock_element ieB ON ieB.ID = epK.IBLOCK_ELEMENT_ID
+            WHERE e.IBLOCK_ID = 24 AND e.ACTIVE = "Y"
+            GROUP BY e.ID';
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
     $result = $stmt->fetchAll();
     $nbImported = 0;
     foreach ($result as $item) {
-      $name = !empty($item['NAME']) ? str_replace('"', '',  $item['NAME']) : null;
+      $name = !empty($item['NAME_BRANCH']) ? $item['NAME_BRANCH'] : $item['NAME'];
+      $name = str_replace('"', '', $name);
+      $name = trim($name);
       $kpp = !empty($item['KPP']) ? $item['KPP'] : null;
       $image = !empty($item['IMAGE']) ? $item['IMAGE'] : null;
       $email1 = !empty($item['EMAIL1']) ? $item['EMAIL1'] : null;
