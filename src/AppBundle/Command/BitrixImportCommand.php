@@ -196,6 +196,7 @@ class BitrixImportCommand extends ContainerAwareCommand
     $result = $stmt->fetchAll();
     foreach ($result as $item)
     {
+      $bitrixId = !empty($item['ID']) ? $item['ID'] : null;
       $title = !empty($item['SEARCHABLE_CONTENT']) ? trim($item['SEARCHABLE_CONTENT']) : null;
       $text = !empty($item['TEXT']) ? trim($item['TEXT']) : null;
 //      $regionName  = !empty($item['REGION_NAME']) ? ($item['REGION_NAME']) : null;
@@ -251,6 +252,7 @@ class BitrixImportCommand extends ContainerAwareCommand
         ->getOneOrNullResult() : null;
 
       $feedback = new Feedback();
+      $feedback->setBitrixId($bitrixId);
       $feedback->setTitle($title);
       $feedback->setText($text);
       $feedback->setRegion($region);

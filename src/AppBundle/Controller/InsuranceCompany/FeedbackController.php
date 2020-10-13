@@ -204,6 +204,25 @@ class FeedbackController extends Controller
   }
 
   /**
+   * @Route(path="/feedback/comment-{id}", name="company_feedback_old", requirements={ "id": "\d+" })
+   */
+  public function commentAction(Request $request)
+  {
+    $feedbackBitrixId = $request->get('id');
+    $feedback = $this->getDoctrine()->getManager()
+      ->getRepository(Feedback::class)
+      ->findOneBy(['bitrixId' => $feedbackBitrixId]);
+    if ($feedback)
+    {
+      return $this->redirectToRoute('app_insurancecompany_feedback_show', [
+        'id' => $feedback->getId()
+      ], 301);
+    }
+
+    return new Response(null, 404);
+  }
+
+  /**
    * @param $id
    * @Route(path="/feedback/{id}", requirements={ "id": "\d+" })
    */
