@@ -72,7 +72,7 @@ while($ob = $res->GetNextElement()){
             <a class="buttons__items_item_img" href="/feedback"> <img src="/local/templates/kdteam/images/pages/home/Illustration3.svg" alt=""> </a>
         </div>
         <div class="buttons__items_item_title-block">
-            <a href="/reviews">
+            <a href="/feedback">
                 <h2 class="buttons__items_item_title">
                     <?php echo $title_text_2; ?> </h2>
             </a>
