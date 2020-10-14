@@ -32,7 +32,7 @@ class PanelController extends Controller
   }
 
   /**
-   * @Route("/api/v1/panel")
+   * @Route("/api/v1/panel", name="api_panel", methods={"GET"}, requirements={ "user": "\d+" })
    */
   public function getPanelAction(Request $request)
   {
