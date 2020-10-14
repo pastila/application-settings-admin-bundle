@@ -39,6 +39,7 @@ if ($USER->IsAuthorized())
       'lastName' => $USER->GetLastName(),
       'middleName' => $USER->GetSecondName(),
       'email' => $arUser['EMAIL'],
+      'login' => $arUser['LOGIN'],
       'isAdmin' => $USER->IsAdmin(),
       'representative' => $person["UF_REPRESENTATIVE"],
       'branch' => $person['UF_INSURANCE_COMPANY'],
