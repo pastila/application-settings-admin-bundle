@@ -202,7 +202,9 @@ $url = $APPLICATION->GetCurDir();
                                   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                                   CURLOPT_CUSTOMREQUEST => "GET",
                                 ));
-                                $count_reviews = curl_exec($curl);
+                                $response = curl_exec($curl);
+                                $data = json_decode($response, true);
+                                $count_reviews = !empty($data['nbReviews']) ? $data['nbReviews'] : 0;
                                 curl_close($curl);
                                 ?>
 

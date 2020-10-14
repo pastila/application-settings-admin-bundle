@@ -4,16 +4,17 @@ namespace AppBundle\Controller\Api\V1;
 
 use AppBundle\Entity\User\User;
 use AppBundle\Repository\Company\FeedbackRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class PanelController
  * @package AppBundle\Controller\Api\V1
  */
-class PanelController extends Controller
+class PanelController extends AbstractController
 {
   /**
    * @var FeedbackRepository
@@ -36,24 +37,21 @@ class PanelController extends Controller
    */
   public function getPanelAction(Request $request)
   {
-    $login = $request->get('user');
-    if (empty($login))
-    {
-      return new Response(null);
-    }
-
     /**
      * @var User $user
      */
-    $user = $this->getDoctrine()->getManager()->getRepository(User::class)
-      ->findOneBy(['login' => $login]);
+    $user = $this->getDoctrine()->getManager()
+      ->getRepository(User::class)
+      ->findOneBy(['login' => $request->get('user')]);
     if (!$user)
     {
-      return new Response(null);
+      return new JsonResponse('user not found', 404, [], true);
     }
     $nbReviews = $this->feedbackRepository
       ->countUserReviews($user);
 
-    return new Response($nbReviews);
+    return new JsonResponse(json_encode([
+      'nbReviews' => $nbReviews
+    ]), 200, [], true);
   }
 }
