@@ -190,23 +190,8 @@ $url = $APPLICATION->GetCurDir();
                             <!-- И показываем блок с колличеством обращений -->
                             <?php
                                 //Количество обращений
-                                $USER_LOGIN = $USER->GetLogin();
-                                $curl = curl_init();
-                                curl_setopt_array($curl, array(
-                                  CURLOPT_URL => "http://nginx/api/v1/panel?user=" . $USER_LOGIN,
-                                  CURLOPT_RETURNTRANSFER => true,
-                                  CURLOPT_ENCODING => "",
-                                  CURLOPT_MAXREDIRS => 10,
-                                  CURLOPT_TIMEOUT => 0,
-                                  CURLOPT_FOLLOWLOCATION => true,
-                                  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                                  CURLOPT_CUSTOMREQUEST => "GET",
-                                ));
-                                $response = curl_exec($curl);
-                                $data = json_decode($response, true);
-                                $count_reviews = !empty($data['nbReviews']) ? $data['nbReviews'] : 0;
-                                curl_close($curl);
-                                ?>
+                                $count_reviews = getCountReviews($USER->GetLogin());
+                            ?>
 
                             <a class="" href="/feedback">
                                 <span id="number_calls" class="menu-req">
@@ -387,3 +372,26 @@ $url = $APPLICATION->GetCurDir();
         </header>
         <!-- Content -->
         <main class="main">
+
+<?php
+function getCountReviews($USER_LOGIN)
+{
+  $curl = curl_init();
+  curl_setopt_array($curl, array(
+    CURLOPT_URL => "http://nginx/api/v1/panel?user=" . $USER_LOGIN,
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => "",
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => "GET",
+  ));
+  $response = curl_exec($curl);
+  $data = json_decode($response, true);
+  $count_reviews = !empty($data['nbReviews']) ? $data['nbReviews'] : 0;
+  curl_close($curl);
+
+  return $count_reviews;
+}
+?>
