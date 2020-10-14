@@ -68,15 +68,4 @@ class UserController extends AbstractController
       'nbSent' => $nbSent,
     ]);
   }
-
-  /**
-   * @Route(path="/user/logout", name="user_logout")
-   */
-  public function adminCheckAction(Request $request)
-  {
-    $this->get('security.token_storage')->setToken(null);
-    $this->get('session')->invalidate();
-
-    return $this->redirect('/ajax/logout.php', 301);
-  }
 }
