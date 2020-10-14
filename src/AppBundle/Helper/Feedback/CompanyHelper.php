@@ -60,7 +60,7 @@ class CompanyHelper
             LEFT JOIN b_iblock_element_property epE1 ON epE1.IBLOCK_ELEMENT_ID = e.ID AND epE1.IBLOCK_PROPERTY_ID = 135      
             LEFT JOIN b_iblock_element_property epE2 ON epE2.IBLOCK_ELEMENT_ID = e.ID AND epE2.IBLOCK_PROPERTY_ID = 136      
             LEFT JOIN b_iblock_element_property epE3 ON epE3.IBLOCK_ELEMENT_ID = e.ID AND epE3.IBLOCK_PROPERTY_ID = 137                    
-            WHERE e.IBLOCK_ID = 24 AND e.ACTIVE = "Y"';
+            WHERE e.IBLOCK_ID = 24';
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
