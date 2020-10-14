@@ -10,6 +10,7 @@ use AppBundle\Repository\Company\FeedbackRepository;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class UserController
@@ -66,5 +67,16 @@ class UserController extends AbstractController
       'nbAppeals' => $nbAppeals,
       'nbSent' => $nbSent,
     ]);
+  }
+
+  /**
+   * @Route(path="/user/logout", name="user_logout")
+   */
+  public function adminCheckAction(Request $request)
+  {
+    $this->get('security.token_storage')->setToken(null);
+    $this->get('session')->invalidate();
+
+    return $this->redirect('/ajax/logout.php', 301);
   }
 }

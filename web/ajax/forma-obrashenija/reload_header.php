@@ -110,7 +110,7 @@ $ID_USER = $USER->GetID();
             </a>
         </li>
 
-        <a class="header__r_nav_link" href="/ajax/logout.php">Выйти</a>
+        <a class="header__r_nav_link" href="/user/logout">Выйти</a>
     </ul>
 
     <!-- <div class="header__r_auth_user-image"> -->

@@ -248,7 +248,7 @@ $url = $APPLICATION->GetCurDir();
                         </li>
 
                         <li>
-                            <a class="header__r_nav_link" href="/ajax/logout.php">Выйти</a>
+                            <a class="header__r_nav_link" href="/user/logout">Выйти</a>
                         </li>
                     </ul>
 
