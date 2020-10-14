@@ -363,6 +363,10 @@ class FeedbackController extends Controller
   public function addCommentAction(Request $request, UserInterface $user = null)
   {
     $data = $request->request->all();
+
+    /**
+     * @var Comment $comment
+     */
     $comment = new Comment();
     $form = $this->createForm(CommentFormType::class, $comment, [
       'csrf_protection' => false,
@@ -384,8 +388,12 @@ class FeedbackController extends Controller
       $comment->setCreatedAt(new \DateTime());
       $comment->setUpdatedAt(new \DateTime());
 
+      $feedback = $comment->getFeedback();
+      $feedback->setUpdatedAt(new \DateTime());
+
       $em = $this->getDoctrine()->getManager();
       $em->persist($comment);
+      $em->persist($feedback);
       $em->flush();
     }
 
@@ -447,6 +455,9 @@ class FeedbackController extends Controller
           }
         }
 
+        /**
+         * @var Citation $citation
+         */
         $citation = new Citation();
         $citation->setUser($user);
         $citation->setComment($comment);
@@ -455,8 +466,13 @@ class FeedbackController extends Controller
         $citation->setCreatedAt(new \DateTime());
         $citation->setUpdatedAt(new \DateTime());
 
-        $this->getDoctrine()->getManager()->persist($citation);
-        $this->getDoctrine()->getManager()->flush();
+        $comment = $citation->getComment();
+        $feedback = $comment->getFeedback();
+        $feedback->setUpdatedAt(new \DateTime());
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($feedback);
+        $em->persist($citation);
+        $em->flush();
       }
     }
 
