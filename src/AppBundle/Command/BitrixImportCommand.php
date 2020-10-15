@@ -110,7 +110,8 @@ class BitrixImportCommand extends ContainerAwareCommand
   {
     $conn = $entityManager->getConnection();
     $sql = 'SELECT 
-                    u.LOGIN, 
+                    u.LOGIN,                     
+                    u.EMAIL,
                     u.LAST_NAME,
                     u.NAME,
                     u.SECOND_NAME,
@@ -134,16 +135,18 @@ class BitrixImportCommand extends ContainerAwareCommand
     foreach ($result as $item)
     {
       $login = !empty($item['LOGIN']) ? $item['LOGIN'] : null;
+      $email = !empty($item['EMAIL']) ? $item['EMAIL'] : null;
       $lastName = !empty($item['LAST_NAME']) ? $item['LAST_NAME'] : null;
       $firstName = !empty($item['NAME']) ? $item['NAME'] : null;
       $middleName = !empty($item['SECOND_NAME']) ? $item['SECOND_NAME'] : null;
       $representative = !empty($item['REPRESENTATIVE']) ? $item['REPRESENTATIVE'] : null;
       $branchId = !empty($item['BRANCH_ID']) ? $item['BRANCH_ID'] : null;
 
-      $sql = 'INSERT INTO s_users(login, last_name, first_name, middle_name, representative, branch_id) 
-              VALUES(:login, :lastName, :firstName, :middleName, :representative, :branchId)';
+      $sql = 'INSERT INTO s_users(login, email, last_name, first_name, middle_name, representative, branch_id) 
+              VALUES(:login, :email, :lastName, :firstName, :middleName, :representative, :branchId)';
       $stmt = $conn->prepare($sql);
       $stmt->bindValue('login', $login);
+      $stmt->bindValue('email', $email);
       $stmt->bindValue('lastName', $lastName);
       $stmt->bindValue('firstName', $firstName);
       $stmt->bindValue('middleName', $middleName);

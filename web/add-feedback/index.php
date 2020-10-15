@@ -24,7 +24,7 @@ global $USER; ?>
                     <li class="active-breadcrumbs"><a href="/feedback/" class="">Добавление отзыва</a></li>
                 <?php } else { ?>
                     <li><a href="/">Главная</a></li>
-                    <li><a href="/feedback/">Отзывы</a></li>
+                    <li><a href="/feedback">Отзывы</a></li>
                     <li class="active-breadcrumbs">Добавление отзыва</li>
                 <?php } ?>
 
