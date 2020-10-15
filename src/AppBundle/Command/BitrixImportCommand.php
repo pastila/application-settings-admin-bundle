@@ -189,7 +189,7 @@ class BitrixImportCommand extends ContainerAwareCommand
             LEFT JOIN b_iblock_element_property epRL ON epRL.IBLOCK_ELEMENT_ID = e.ID AND epRL.IBLOCK_PROPERTY_ID = 114    
             LEFT JOIN b_iblock_element_property epK ON epK.IBLOCK_ELEMENT_ID = e.ID AND epK.IBLOCK_PROPERTY_ID = 130   
             LEFT JOIN b_iblock_element_property epU ON epU.IBLOCK_ELEMENT_ID = e.ID AND epU.IBLOCK_PROPERTY_ID = 150    
-            WHERE e.IBLOCK_ID = 13 AND e.ACTIVE = "Y"';
+            WHERE e.IBLOCK_ID = 13';
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
@@ -283,7 +283,7 @@ class BitrixImportCommand extends ContainerAwareCommand
                 epK.VALUE as COMMENTS
             FROM b_iblock_element e
             LEFT JOIN b_iblock_element_property epK ON epK.IBLOCK_ELEMENT_ID = e.ID AND epK.IBLOCK_PROPERTY_ID = 69         
-            WHERE e.IBLOCK_ID = 14 AND e.ACTIVE = "Y"';
+            WHERE e.IBLOCK_ID = 14';
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
