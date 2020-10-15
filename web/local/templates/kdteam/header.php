@@ -3,6 +3,35 @@ use Bitrix\Main\Page\Asset;
 if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     die();
 }
+
+function getCountReviews($login, $token)
+{
+    $url  = sprintf('http://nginx/api/v1/panel?user=%s&api_token=%s', $login, $token);
+    $ch = curl_init($url);
+    var_dump($_COOKIE['BX_USER_ID']);
+    curl_setopt($ch, CURLOPT_VERBOSE, true);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $res = curl_exec($ch);
+    $info = curl_getinfo($ch);
+    $code = key_exists('http_code', $info) ? $info['http_code'] : null;
+
+    $nbReviews = 0;
+    if ($code === 200)
+    {
+        $data = json_decode($res, true);
+        $nbReviews = !empty($data['nbReviews']) ? $data['nbReviews'] : 0;
+    }
+
+    return $nbReviews;
+}
+$count_reviews = 0;
+$api_token = '31409EDCC223DB7DAA72C54EE0107B9F';
+if ($USER->IsAuthorized())
+{
+  $count_reviews = getCountReviews($USER->GetLogin(), $api_token);
+}
+
 if($_GET){
     $get_letter= $_GET;
     if(isset($get_letter["letter"])){
@@ -188,11 +217,6 @@ $url = $APPLICATION->GetCurDir();
                         <li>
                             <!-- Если есть обращения в админке добавляем класс active -->
                             <!-- И показываем блок с колличеством обращений -->
-                            <?php
-                                //Количество обращений
-                                $count_reviews = getCountReviews($USER->GetLogin());
-                            ?>
-
                             <a class="" href="/feedback">
                                 <span id="number_calls" class="menu-req">
                                     <?php echo $count_reviews?>
@@ -373,25 +397,3 @@ $url = $APPLICATION->GetCurDir();
         <!-- Content -->
         <main class="main">
 
-<?php
-function getCountReviews($USER_LOGIN)
-{
-  $curl = curl_init();
-  curl_setopt_array($curl, array(
-    CURLOPT_URL => "http://nginx/api/v1/panel?user=" . $USER_LOGIN,
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_ENCODING => "",
-    CURLOPT_MAXREDIRS => 10,
-    CURLOPT_TIMEOUT => 0,
-    CURLOPT_FOLLOWLOCATION => true,
-    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    CURLOPT_CUSTOMREQUEST => "GET",
-  ));
-  $response = curl_exec($curl);
-  $data = json_decode($response, true);
-  $count_reviews = !empty($data['nbReviews']) ? $data['nbReviews'] : 0;
-  curl_close($curl);
-
-  return $count_reviews;
-}
-?>

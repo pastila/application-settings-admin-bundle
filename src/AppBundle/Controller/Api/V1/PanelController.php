@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class PanelController
@@ -22,21 +23,34 @@ class PanelController extends AbstractController
   private $feedbackRepository;
 
   /**
+   * @var
+   */
+  private $apiToken;
+
+  /**
    * PanelController constructor.
    * @param FeedbackRepository $feedbackRepository
+   * @param $apiToken
    */
   public function __construct(
-    FeedbackRepository $feedbackRepository
+    FeedbackRepository $feedbackRepository,
+    $apiToken
   )
   {
     $this->feedbackRepository = $feedbackRepository;
+    $this->apiToken = $apiToken;
   }
 
   /**
-   * @Route("/api/v1/panel", name="api_panel", methods={"GET"}, requirements={ "user": "\d+" })
+   * @Route("/api/v1/panel", name="api_panel", methods={"GET"}, requirements={ "user": "\d+", "api_token": "\d+" }))
    */
   public function getPanelAction(Request $request)
   {
+    if ($this->apiToken !== $request->get('api_token'))
+    {
+      return new Response(null, 403);
+    }
+
     /**
      * @var User $user
      */
