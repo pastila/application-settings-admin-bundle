@@ -106,12 +106,6 @@ class Company implements ImageAwareInterface, ImageInterface, SluggableInterface
   private $emailThird;
 
   /**
-   * @var Feedback[]|ArrayCollection
-   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Company\Feedback", mappedBy="company")
-   */
-  protected $feedbacks;
-
-  /**
    * @var CompanyBranch[]|ArrayCollection
    * @ORM\OneToMany(targetEntity="AppBundle\Entity\Company\CompanyBranch", mappedBy="company")
    */

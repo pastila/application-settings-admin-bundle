@@ -7,6 +7,7 @@ use AppBundle\Entity\User\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Feedback.
@@ -77,6 +78,12 @@ class Feedback
    * @var integer
    *
    * @ORM\Column(name="valuation", type="integer", nullable=true)
+   * @Assert\Range(
+   *      min = 1,
+   *      max = 5,
+   *      minMessage = "Оценка не может быть менее {{ limit }}",
+   *      maxMessage = "Оценка не может быть более {{ limit }}"
+   * )
    */
   private $valuation;
 

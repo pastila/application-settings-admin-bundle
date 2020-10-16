@@ -6,13 +6,17 @@
 namespace AppBundle\Controller\User;
 
 
+use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\User\User;
 use AppBundle\Model\InsuranceCompany\FeedbackListFilter;
 use AppBundle\Model\InsuranceCompany\FeedbackListFilterUrlBuilder;
 use AppBundle\Model\Pagination;
 use AppBundle\Repository\Company\FeedbackRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\BrowserKit\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -38,6 +42,7 @@ class CabinetController extends AbstractController
     $reviewListQb = $this
       ->reviewRepository
       ->createQueryBuilder('rv')
+      ->innerJoin('rv.branch', 'b')
       ->where('rv.author = :author')
       ->setParameters([
         ':author' => $user
@@ -70,12 +75,15 @@ class CabinetController extends AbstractController
    * Обновление оценки пользователем
    * @Route(path="/cabinet/feedback/{id}/rating")
    */
-  public function updateRatingAction($id)
+  public function updateRatingAction($id, Request $request)
   {
     $this->denyAccessUnlessGranted('ROLE_USER');
 
     $user = $this->getUser();
 
+    /**
+     * @var Feedback $review
+     */
     $review = $this->reviewRepository->findOneBy([
       'author' => $user,
       'id' => $id
@@ -85,6 +93,31 @@ class CabinetController extends AbstractController
     {
       throw new NotFoundHttpException(sprintf('Review %s not found or was not authored by user %s', $id, $user));
     }
+
+    $previousValue = $review->getValuation();
+
+    $review->setValuation($request->get('star'));
+
+    $validator = $this->get('validator');
+
+    $errors = $validator->validate($review);
+    if (count($errors))
+    {
+      return new JsonResponse([
+        'errors' => (string)$errors
+      ], 400);
+    }
+
+    if ($previousValue === $review->getValuation())
+    {
+      return new Response("0");
+    }
+
+    $em = $this->getDoctrine()->getManager();
+    $em->persist($review);
+    $em->flush();
+
+    return new Response("1");
 
     /*require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
     CModule::IncludeModule("iblock");

@@ -62,3 +62,11 @@ services:
 
     AppBundle\Helper\GetMessFromBitrix:
         public: true
+
+    AppBundle\EventListener\CompanyRatingAggregatorSubscriber:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+#            - '@autowired.AppBundle\Repository\Company\FeedbackRepository'
+#            - '@autowired.AppBundle\Repository\Company\CompanyBranchRepository'
+        tags:
+            - { name: "doctrine.event_subscriber" }

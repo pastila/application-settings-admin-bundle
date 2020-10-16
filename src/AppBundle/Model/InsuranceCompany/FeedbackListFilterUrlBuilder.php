@@ -66,7 +66,7 @@ class FeedbackListFilterUrlBuilder
       return $this->router->generate('company_review_list', $routeParams);
     }
 
-    return $this->router->generate('app_insurancecompany_feedback_index', $this->getRouteParams($values));
+    return $this->router->generate($this->routeName, $this->getRouteParams($values));
   }
 
   public function getRouteParams($values=[])
