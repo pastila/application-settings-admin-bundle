@@ -139,28 +139,30 @@ class FeedbackController extends Controller
 
     $response = new Response();
     $response->setPublic();
-
-    if ($request->query->count() === 0)
+    $cache = false;
+    if (null === $user)
     {
-      $maxQb = clone $reviewListQb;
-      $maxUpdatedAt = $maxQb
-        ->select('MAX(rv.updatedAt), MAX(rvct.updatedAt)')
-        ->getQuery()
-        ->getResult();
-      $rvUpdateAt = !empty($maxUpdatedAt[0][1]) ? $maxUpdatedAt[0][1] : null;
-      $rvctUpdateAt = !empty($maxUpdatedAt[0][2]) ? $maxUpdatedAt[0][2] : null;
-      $max = $rvUpdateAt > $rvctUpdateAt ? $rvUpdateAt : $rvctUpdateAt;
-
-      $response->setLastModified(new \DateTime($max));
-
-      if ($response->isNotModified($request))
+      if ($request->query->count() == 0 &&
+        ($request->attributes->get('_route') === 'app_insurancecompany_feedback_index' ||
+          $request->attributes->get('_route') === 'company_review_list'))
       {
-//        dump($max);
-//        die;
+        $cache = true;
+        $maxQb = clone $reviewListQb;
+        $maxUpdatedAt = $maxQb
+          ->select('MAX(rv.updatedAt)')
+          ->getQuery()
+          ->getSingleScalarResult();
 
-        return $response;
+        $response->setLastModified(new \DateTime($maxUpdatedAt));
+
+        if ($response->isNotModified($request))
+        {
+          return $response;
+        }
       }
-    } else
+    }
+
+    if (!$cache)
     {
       $response->setMaxAge(3600);
 
