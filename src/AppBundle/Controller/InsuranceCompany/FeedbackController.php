@@ -57,39 +57,6 @@ class FeedbackController extends Controller
     $response = new Response();
     $response->setPublic();
 
-    if ($request->query->count() === 0)
-    {
-      /** @var QueryBuilder $maxQb */
-      $maxQb = $maxUpdatedAt = $this
-        ->getDoctrine()
-        ->getManager()
-        ->getRepository(Feedback::class)
-        ->createQueryBuilder('rv')
-        ->leftJoin('rv.comments', 'rvct');
-
-      $maxUpdatedAt = $maxQb
-        ->select('MAX(rv.updatedAt), MAX(rvct.updatedAt)')
-        ->getQuery()
-        ->getResult();
-      $rvUpdateAt = !empty($maxUpdatedAt[0][1]) ? $maxUpdatedAt[0][1] : null;
-      $rvctUpdateAt = !empty($maxUpdatedAt[0][2]) ? $maxUpdatedAt[0][2] : null;
-      $max = $rvUpdateAt > $rvctUpdateAt ? $rvUpdateAt : $rvctUpdateAt;
-
-      $response->setLastModified(new \DateTime($max));
-
-      if ($response->isNotModified($request))
-      {
-        return $response;
-      }
-    } else
-    {
-      $response->setMaxAge(3600);
-
-      // (optional) set a custom Cache-Control directive
-      $response->headers->addCacheControlDirective('must-revalidate', true);
-    }
-
-
     $reviewListFilter = new FeedbackListFilter();
     $reviewListFilter->setPage($request->query->get('page', 1));
 
@@ -179,6 +146,31 @@ class FeedbackController extends Controller
     $maxPerPage = 10;
 
     $reviewListQb->orderBy('rv.createdAt', 'DESC');
+
+    if ($request->query->count() === 0)
+    {
+      $maxQb = clone $reviewListQb;
+      $maxUpdatedAt = $maxQb
+        ->select('MAX(rv.updatedAt), MAX(rvct.updatedAt)')
+        ->getQuery()
+        ->getResult();
+      $rvUpdateAt = !empty($maxUpdatedAt[0][1]) ? $maxUpdatedAt[0][1] : null;
+      $rvctUpdateAt = !empty($maxUpdatedAt[0][2]) ? $maxUpdatedAt[0][2] : null;
+      $max = $rvUpdateAt > $rvctUpdateAt ? $rvUpdateAt : $rvctUpdateAt;
+
+      $response->setLastModified(new \DateTime($max));
+
+      if ($response->isNotModified($request))
+      {
+        return $response;
+      }
+    } else
+    {
+      $response->setMaxAge(3600);
+
+      // (optional) set a custom Cache-Control directive
+      $response->headers->addCacheControlDirective('must-revalidate', true);
+    }
 
     $pagination = new Pagination($reviewListQb, $reviewListFilter->getPage(), $maxPerPage);
 
