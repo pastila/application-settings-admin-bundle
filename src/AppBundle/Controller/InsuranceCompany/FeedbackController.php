@@ -54,9 +54,6 @@ class FeedbackController extends Controller
    */
   public function indexAction(Request $request, UserInterface $user = null)
   {
-    $response = new Response();
-    $response->setPublic();
-
     $reviewListFilter = new FeedbackListFilter();
     $reviewListFilter->setPage($request->query->get('page', 1));
 
@@ -105,15 +102,8 @@ class FeedbackController extends Controller
     } else
     {
       $reviewListQb
-        ->orWhere('rv.moderationStatus = :status')
+        ->andWhere('rv.moderationStatus = :status')
         ->setParameter('status', FeedbackModerationStatus::MODERATION_ACCEPTED);
-      $userId = (null !== $user) ? $user->getId() : null;
-      if (!empty($userId))
-      {
-        $reviewListQb
-          ->orWhere('rv.author = :user_id')
-          ->setParameter('user_id', $userId);
-      }
     }
 
     $reviewListQb
@@ -147,6 +137,9 @@ class FeedbackController extends Controller
 
     $reviewListQb->orderBy('rv.createdAt', 'DESC');
 
+    $response = new Response();
+    $response->setPublic();
+
     if ($request->query->count() === 0)
     {
       $maxQb = clone $reviewListQb;
@@ -162,6 +155,9 @@ class FeedbackController extends Controller
 
       if ($response->isNotModified($request))
       {
+//        dump($max);
+//        die;
+
         return $response;
       }
     } else
