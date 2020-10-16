@@ -3,6 +3,35 @@ use Bitrix\Main\Page\Asset;
 if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     die();
 }
+
+function getCountReviews($login, $token)
+{
+    $url  = sprintf('http://nginx/api/v1/panel?user=%s&api_token=%s', $login, $token);
+    $ch = curl_init($url);
+    var_dump($_COOKIE['BX_USER_ID']);
+    curl_setopt($ch, CURLOPT_VERBOSE, true);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $res = curl_exec($ch);
+    $info = curl_getinfo($ch);
+    $code = key_exists('http_code', $info) ? $info['http_code'] : null;
+
+    $nbReviews = 0;
+    if ($code === 200)
+    {
+        $data = json_decode($res, true);
+        $nbReviews = !empty($data['nbReviews']) ? $data['nbReviews'] : 0;
+    }
+
+    return $nbReviews;
+}
+$count_reviews = 0;
+$api_token = '31409EDCC223DB7DAA72C54EE0107B9F';
+if ($USER->IsAuthorized())
+{
+  $count_reviews = getCountReviews($USER->GetLogin(), $api_token);
+}
+
 if($_GET){
     $get_letter= $_GET;
     if(isset($get_letter["letter"])){
@@ -188,18 +217,6 @@ $url = $APPLICATION->GetCurDir();
                         <li>
                             <!-- Если есть обращения в админке добавляем класс active -->
                             <!-- И показываем блок с колличеством обращений -->
-                            <?php
-                                //Количество обращений
-                                if (CModule::IncludeModule("iblock")) {
-
-                                    $arSelect = Array("ID", "IBLOCK_ID", "NAME",);
-                                    $arFilter = Array("IBLOCK_ID"=>13, "PROPERTY_NAME_USER"=>$ID_USER );
-                                    $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
-                                    $count_reviews = $res->SelectedRowsCount();
-                                    }
-
-                                ?>
-
                             <a class="" href="/feedback">
                                 <span id="number_calls" class="menu-req">
                                     <?php echo $count_reviews?>
@@ -240,7 +257,7 @@ $url = $APPLICATION->GetCurDir();
                         </li>
 
                         <li>
-                            <a class="header__r_nav_link" href="/ajax/logout.php">Выйти</a>
+                            <a class="header__r_nav_link" href="/logout">Выйти</a>
                         </li>
                     </ul>
 
@@ -379,3 +396,4 @@ $url = $APPLICATION->GetCurDir();
         </header>
         <!-- Content -->
         <main class="main">
+

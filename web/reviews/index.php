@@ -31,7 +31,7 @@ $arUser = $rsUser->Fetch();
             <h1 class="page-title">Ваши отзывы</h1>
         </div>
         <div class="grid-reviews__right">
-            <a href="/feedback/" class="mainBtn">Все отзывы</a>
+            <a href="/feedback" class="mainBtn">Все отзывы</a>
         </div>
     </div>
 <div class="reviews">

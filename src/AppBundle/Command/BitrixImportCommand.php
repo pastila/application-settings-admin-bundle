@@ -110,7 +110,8 @@ class BitrixImportCommand extends ContainerAwareCommand
   {
     $conn = $entityManager->getConnection();
     $sql = 'SELECT 
-                    u.LOGIN, 
+                    u.LOGIN,                     
+                    u.EMAIL,
                     u.LAST_NAME,
                     u.NAME,
                     u.SECOND_NAME,
@@ -134,16 +135,18 @@ class BitrixImportCommand extends ContainerAwareCommand
     foreach ($result as $item)
     {
       $login = !empty($item['LOGIN']) ? $item['LOGIN'] : null;
+      $email = !empty($item['EMAIL']) ? $item['EMAIL'] : null;
       $lastName = !empty($item['LAST_NAME']) ? $item['LAST_NAME'] : null;
       $firstName = !empty($item['NAME']) ? $item['NAME'] : null;
       $middleName = !empty($item['SECOND_NAME']) ? $item['SECOND_NAME'] : null;
       $representative = !empty($item['REPRESENTATIVE']) ? $item['REPRESENTATIVE'] : null;
       $branchId = !empty($item['BRANCH_ID']) ? $item['BRANCH_ID'] : null;
 
-      $sql = 'INSERT INTO s_users(login, last_name, first_name, middle_name, representative, branch_id) 
-              VALUES(:login, :lastName, :firstName, :middleName, :representative, :branchId)';
+      $sql = 'INSERT INTO s_users(login, email, last_name, first_name, middle_name, representative, branch_id) 
+              VALUES(:login, :email, :lastName, :firstName, :middleName, :representative, :branchId)';
       $stmt = $conn->prepare($sql);
       $stmt->bindValue('login', $login);
+      $stmt->bindValue('email', $email);
       $stmt->bindValue('lastName', $lastName);
       $stmt->bindValue('firstName', $firstName);
       $stmt->bindValue('middleName', $middleName);
@@ -189,7 +192,7 @@ class BitrixImportCommand extends ContainerAwareCommand
             LEFT JOIN b_iblock_element_property epRL ON epRL.IBLOCK_ELEMENT_ID = e.ID AND epRL.IBLOCK_PROPERTY_ID = 114    
             LEFT JOIN b_iblock_element_property epK ON epK.IBLOCK_ELEMENT_ID = e.ID AND epK.IBLOCK_PROPERTY_ID = 130   
             LEFT JOIN b_iblock_element_property epU ON epU.IBLOCK_ELEMENT_ID = e.ID AND epU.IBLOCK_PROPERTY_ID = 150    
-            WHERE e.IBLOCK_ID = 13 AND e.ACTIVE = "Y"';
+            WHERE e.IBLOCK_ID = 13';
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
@@ -283,7 +286,7 @@ class BitrixImportCommand extends ContainerAwareCommand
                 epK.VALUE as COMMENTS
             FROM b_iblock_element e
             LEFT JOIN b_iblock_element_property epK ON epK.IBLOCK_ELEMENT_ID = e.ID AND epK.IBLOCK_PROPERTY_ID = 69         
-            WHERE e.IBLOCK_ID = 14 AND e.ACTIVE = "Y"';
+            WHERE e.IBLOCK_ID = 14';
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 

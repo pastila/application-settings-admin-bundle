@@ -290,7 +290,7 @@ $countReviews = count($allReviews);
 
         </div>
 
-        <a class="feedback__filter__reset" href="/feedback/">Сбросить фильтры</a>
+        <a class="feedback__filter__reset" href="/feedback">Сбросить фильтры</a>
     </div>
 
 </form>
@@ -786,7 +786,7 @@ endif;
             </ul>
 
             <div class="center__child">
-                <a class="mainBtn" href="/feedback/">Весь рейтинг</a>
+                <a class="mainBtn" href="/feedback">Весь рейтинг</a>
             </div>
         </div>
 

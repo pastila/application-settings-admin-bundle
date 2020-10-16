@@ -21,3 +21,5 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
+
+    api_token: 31409EDCC223DB7DAA72C54EE0107B9F

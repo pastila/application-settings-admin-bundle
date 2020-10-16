@@ -59,7 +59,7 @@
 
     <!-- Bottom -->
     <div class="feedback__bottom">
-        <div class="feedback__bottom_name opacity_block">{{ review.company.name }}</div>
+        <div class="feedback__bottom_name opacity_block">{{ review.company ? review.company.name : ''}}</div>
 
         <a id="show-comments" class="feedback__bottom_link opacity_block">
             <img src="" alt="">

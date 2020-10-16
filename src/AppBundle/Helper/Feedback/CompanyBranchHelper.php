@@ -65,7 +65,7 @@ class CompanyBranchHelper
             LEFT JOIN b_iblock_element_property epVS ON epVS.IBLOCK_ELEMENT_ID = e.ID AND epVS.IBLOCK_PROPERTY_ID = 146                
             LEFT JOIN b_iblock_element_property epVAS ON epVAS.IBLOCK_ELEMENT_ID = e.ID AND epVAS.IBLOCK_PROPERTY_ID = 131           
             LEFT JOIN b_iblock_element_property epIMG ON epIMG.IBLOCK_ELEMENT_ID = e.ID AND epIMG.IBLOCK_PROPERTY_ID = 85       
-            WHERE e.IBLOCK_ID = 16 AND e.ACTIVE = "Y"';
+            WHERE e.IBLOCK_ID = 16';
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
