@@ -210,7 +210,7 @@ class FeedbackController extends Controller
    * @param $id
    * @Route(path="/feedback/{id}", requirements={ "id": "\d+" })
    */
-  public function showAction($id, Request $request)
+  public function showAction($id, Request $request, UserInterface $user = null)
   {
     /** @var Feedback $review */
     $review = $this
@@ -232,15 +232,23 @@ class FeedbackController extends Controller
     }
 
     $response = new Response();
-    $response->setLastModified($review->getUpdatedAt());
-
-    // Set response as public. Otherwise it will be private by default.
     $response->setPublic();
-
-    if ($response->isNotModified($request))
+    if (null === $user)
     {
-      return $response;
+      $response->setLastModified($review->getUpdatedAt());
+
+      if ($response->isNotModified($request))
+      {
+        return $response;
+      }
+    } else
+    {
+      $response->setMaxAge(3600);
+
+      // (optional) set a custom Cache-Control directive
+      $response->headers->addCacheControlDirective('must-revalidate', true);
     }
+
 
     return $this->render('InsuranceCompany/Review/show.html.twig', [
       'review' => $review
