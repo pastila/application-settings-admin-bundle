@@ -57,7 +57,7 @@ class CabinetController extends AbstractController
 
     $reviews = $pagination->getIterator();
 
-    return $this->render(':Cabinet:reviews.html.twig', [
+    return $this->render('Cabinet/reviews.html.twig', [
       'reviews' => $reviews,
       'nbReviews' => count($reviews),
       'title' => 'Ваши отзывы — Кабинет пользователя — БезБахил',
