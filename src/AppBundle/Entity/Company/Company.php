@@ -122,8 +122,29 @@ class Company implements ImageAwareInterface, ImageInterface, SluggableInterface
    */
   public function __construct()
   {
-    $this->feedbacks = new ArrayCollection();
     $this->branches = new ArrayCollection();
+  }
+
+  /**
+   * @return CompanyBranch[]|ArrayCollection
+   */
+  public function getBranches()
+  {
+    return $this->branches;
+  }
+
+  /**
+   * @return int
+   */
+  public function getFeedbacksCount()
+  {
+    $count = 0;
+    foreach ($this->branches as $branch)
+    {
+      $count += count($branch->getFeedbacks());
+    }
+
+    return $count;
   }
 
   /**

@@ -26,13 +26,33 @@
 {% endblock %}
 
 {% block main %}
-    <ul class="breadcrumbs">
+    <ul class="breadcrumbs" itemscope="" itemtype="http://schema.org/BreadcrumbList">
         {% if is_mobile() or is_tablet() %}
-            <li><a href="{{ path("app_insurancecompany_feedback_index") }}" class="active-breadcrumbs">{{ review.title }}</a></li>
+            <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a href="{{ path("app_insurancecompany_feedback_index") }}" class="active-breadcrumbs" itemprop="item">{{ review.title }}
+                    <meta itemprop="name" content="{{ review.title }}">
+                    <meta property="position" content="1">
+                </a>
+            </li>
         {% else %}
-            <li><a href="/">Главная</a></li>
-            <li><a href="{{ path("app_insurancecompany_feedback_index") }}">Отзывы</a></li>
-            <li class="active-breadcrumbs">{{ review.title }}</li>
+            <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a href="/" itemprop="item">Главная
+                    <meta itemprop="name" content="Главная">
+                    <meta property="position" content="1">
+                </a>
+            </li>
+            <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a href="{{ path("app_insurancecompany_feedback_index") }}" itemprop="item">Отзывы
+                    <meta itemprop="name" content="Отзывы">
+                    <meta property="position" content="2">
+                </a>
+            </li>
+            <li class="active-breadcrumbs" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a itemprop="item">{{ review.title }}
+                    <meta itemprop="name" content="{{ review.title }}">
+                    <meta property="position" content="3">
+                </a>
+            </li>
         {% endif %}
     </ul>
 
