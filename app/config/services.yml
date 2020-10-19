@@ -63,7 +63,6 @@ services:
     AppBundle\EventListener\CompanyRatingAggregatorSubscriber:
         arguments:
             - '@doctrine.orm.entity_manager'
-#            - '@autowired.AppBundle\Repository\Company\FeedbackRepository'
-#            - '@autowired.AppBundle\Repository\Company\CompanyBranchRepository'
+            - '@logger'
         tags:
             - { name: "doctrine.event_subscriber" }

@@ -12,6 +12,7 @@ use AppBundle\Entity\Company\CompanyBranch;
 use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\Company\FeedbackModerationStatus;
 use AppBundle\Entity\User\User;
+use AppBundle\Exception\BitrixRequestException;
 use AppBundle\Form\Feedback\CommentFormType;
 use AppBundle\Form\Feedback\FeedbackType;
 use AppBundle\Form\InsuranceCompany\FeedbackListFilterType;
@@ -57,7 +58,7 @@ class FeedbackController extends Controller
     $response = new Response();
     $response->setPublic();
 
-    if ($request->query->count() === 0)
+    if (!$this->getUser())
     {
       /** @var QueryBuilder $maxQb */
       $maxQb = $maxUpdatedAt = $this
@@ -81,14 +82,7 @@ class FeedbackController extends Controller
       {
         return $response;
       }
-    } else
-    {
-      $response->setMaxAge(3600);
-
-      // (optional) set a custom Cache-Control directive
-      $response->headers->addCacheControlDirective('must-revalidate', true);
     }
-
 
     $reviewListFilter = new FeedbackListFilter();
     $reviewListFilter->setPage($request->query->get('page', 1));
@@ -287,26 +281,33 @@ class FeedbackController extends Controller
       $newData = array_merge($data['feedback'], $newData);
       $form->submit($newData);
 
-      if ($form->isSubmitted() && $form->isValid())
-      {
-        $em = $this->getDoctrine()->getManager();
-        $userId = null !== $user ? $user->getId() : null;
-        $user = $em->getRepository(User::class)
-          ->findOneBy(['id' => $userId]);
+      if ($form->isSubmitted() && $form->isValid()) {
+          $em = $this->getDoctrine()->getManager();
+          $userId = null !== $user ? $user->getId() : null;
+          $user = $em->getRepository(User::class)
+              ->findOneBy(['id' => $userId]);
 
-        $feedback = $form->getData();
-        $feedback->setAuthor($user);
-        $feedback->setModerationStatus(FeedbackModerationStatus::MODERATION_NONE);
-        $feedback->setCreatedAt(new \DateTime());
-        $feedback->setUpdatedAt(new \DateTime());
+          $feedback = $form->getData();
+          $feedback->setAuthor($user);
+          $feedback->setModerationStatus(FeedbackModerationStatus::MODERATION_NONE);
+          $feedback->setCreatedAt(new \DateTime());
+          $feedback->setUpdatedAt(new \DateTime());
 
-        $em->persist($feedback);
-        $em->flush();
+          $em->persist($feedback);
+          $em->flush();
 
-        $url = $this->generateUrl('app_insurancecompany_feedback_show', ['id' => $feedback->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-        $date = $feedback->getCreatedAt()->format('Y-m-d H:i:s');
-        $mainMail = $this->mainMail->getMainMail($request);
-        $this->sendNewFeedback($mainMail, $url, $date);
+          $url = $this->generateUrl('app_insurancecompany_feedback_show', ['id' => $feedback->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+          $date = $feedback->getCreatedAt()->format('Y-m-d H:i:s');
+
+          try {
+              $mainMail = $this->mainMail->getMainMail($request);
+              $this->sendNewFeedback($mainMail, $url, $date);
+          } catch (BitrixRequestException $e) {
+              $this->get('logger')->warn('Unable to send notification about new review to site administrator. Could not resolve administrator email: ' . $e);
+          } catch (\Exception $e2)
+          {
+              $this->get('logger')->warn('Unable to send notification about new review to site administrator: ' . $e2);
+          }
 
         return $this->redirectToRoute('app_insurancecompany_feedback_index');
       }
@@ -530,27 +531,32 @@ class FeedbackController extends Controller
       $feedback = $this->getDoctrine()->getManager()->getRepository(Feedback::class)
         ->findOneBy(['id' => $id]);
       if (!empty($feedback)) {
-        $feedback->setModerationStatus($status);
-        $this->getDoctrine()->getManager()->persist($feedback);
-        $this->getDoctrine()->getManager()->flush();
+          $feedback->setModerationStatus($status);
+          $this->getDoctrine()->getManager()->persist($feedback);
+          $this->getDoctrine()->getManager()->flush();
 
-        $branch = $feedback->getBranch();
-        $emails = [];
-        if (!empty($branch->getEmailFirst()))
-        {
-          $emails[] = $branch->getEmailFirst();
-        }
-        if (!empty($branch->getEmailSecond()))
-        {
-          $emails[] = $branch->getEmailSecond();
-        }
-        if (!empty($branch->getEmailThird()))
-        {
-          $emails[] = $branch->getEmailThird();
-        }
-        $url = $this->generateUrl('app_insurancecompany_feedback_show', ['id' => $feedback->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-        $date = $feedback->getCreatedAt()->format('Y-m-d H:i:s');
-        $this->sendNewFeedback($emails, $url, $date);
+          $branch = $feedback->getBranch();
+          $emails = [];
+          if (!empty($branch->getEmailFirst())) {
+              $emails[] = $branch->getEmailFirst();
+          }
+          if (!empty($branch->getEmailSecond())) {
+              $emails[] = $branch->getEmailSecond();
+          }
+          if (!empty($branch->getEmailThird())) {
+              $emails[] = $branch->getEmailThird();
+          }
+          $url = $this->generateUrl('app_insurancecompany_feedback_show', ['id' => $feedback->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+          $date = $feedback->getCreatedAt()->format('Y-m-d H:i:s');
+
+          try
+          {
+              $this->sendNewFeedback($emails, $url, $date);
+          }
+          catch (\Exception $e)
+          {
+              $this->logger->err('Unable to send notification to insurance company representative: '.$e);
+          }
       }
 
       return new JsonResponse(1);
@@ -564,9 +570,7 @@ class FeedbackController extends Controller
    */
   private function sendNewFeedback($emailTo, $url, $date)
   {
-    try
-    {
-      $message = (new \Swift_Message('Новый отзыв'))
+     $message = (new \Swift_Message('Новый отзыв'))
         ->setFrom($this->container->getParameter('mailer_from'))
         ->setTo($emailTo)
         ->setBody(
@@ -578,11 +582,6 @@ class FeedbackController extends Controller
           ),
           'text/html'
         );
-      $this->get('mailer')->send($message);
-    } catch (\Exception $e)
-    {
-      $logger = $this->get('logger');
-      $logger->error('No send mail in admin-check:' . $e->getMessage());
-    }
+     $this->get('mailer')->send($message);
   }
 }

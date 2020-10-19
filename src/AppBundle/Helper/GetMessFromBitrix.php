@@ -39,8 +39,11 @@ class GetMessFromBitrix
     try {
       $dataFromBitrix->getData('%s/ajax/get_mess.php');
       $mainEmail = $dataFromBitrix->getParam('MAIN_EMAIL');
-    } catch (BitrixRequestException $exception) {
+    }
+    catch (BitrixRequestException $exception)
+    {
       $this->logger->error(sprintf('Error get from getEmail: . %s', $exception->getMessage()));
+      throw $exception;
     }
 
     return $mainEmail;

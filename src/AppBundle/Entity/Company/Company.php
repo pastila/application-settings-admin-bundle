@@ -77,35 +77,6 @@ class Company implements ImageAwareInterface, ImageInterface, SluggableInterface
   protected $file;
 
   /**
-   * Email №1 компании
-   *
-   * @var string
-   *
-   * @ORM\Column(name="email_first", type="string", length=256, nullable=true)
-   */
-  private $emailFirst;
-
-
-  /**
-   * Email №2 компании
-   *
-   * @var string
-   *
-   * @ORM\Column(name="email_second", type="string", length=256, nullable=true)
-   */
-  private $emailSecond;
-
-
-  /**
-   * Email №2 компании
-   *
-   * @var string
-   *
-   * @ORM\Column(name="email_third", type="string", length=256, nullable=true)
-   */
-  private $emailThird;
-
-  /**
    * @var Feedback[]|ArrayCollection
    * @ORM\OneToMany(targetEntity="AppBundle\Entity\Company\Feedback", mappedBy="company")
    */

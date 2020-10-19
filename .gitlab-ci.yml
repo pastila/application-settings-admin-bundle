@@ -11,11 +11,10 @@ before_script:
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
 
 deploy_staging:
-  type: deploy
   environment:
     name: staging
-    url: example.com
+    url: http://bezbahil.aw-dev.ru
   script:
-    - ssh -p2222 deployer@aw-dev.ru "cd /var/www/sites/bezbahil/releases/1 && git pull origin && exit"
+    - ssh deployer@aw-dev.ru "cd /var/www/sites/bezbahil/releases/1 && git pull origin && exit"
   only:
     - develop

@@ -18,7 +18,7 @@ networks:
         - subnet: 192.168.123.50/28
   traefik:
     external:
-      name: traefik_traefik
+      name: traefik_default
 
 volumes:
   percona:
@@ -158,7 +158,7 @@ services:
         - CHANGE_SOURCE=${CHANGE_SOURCE}
     labels:
       - "traefik.http.routers.bezbahilru.rule=Host(`bezbahil.docker`)"
-      - "traefik.docker.network=traefik_traefik"
+      - "traefik.docker.network=traefik_default"
     volumes:
       - ${APP_CODE_PATH_HOST_SF}:${APP_CODE_PATH_CONTAINER_SF}
       - ${DATA_PATH_LOGS}/nginx:/var/log/nginx
@@ -257,7 +257,7 @@ services:
     build: ./maildev
     labels:
       - "traefik.http.routers.bezbahilru_maildev.rule=Host(`mail.bezbahil.docker`)"
-      - "traefik.docker.network=traefik_traefik"
+      - "traefik.docker.network=traefik_default"
       - "traefik.http.services.bezbahilru_maildev_webapp.loadbalancer.server.port=80"
     networks:
       - backend

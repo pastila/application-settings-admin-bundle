@@ -129,7 +129,7 @@
                                    class="sidebar__item_lists_list_link" id="company"
                                    data-amount-star="{{ company.actualRating }}"
                                    data-id="{{ company[0].id }}">{{ company[0].name }}</a>
-                                <span class="sidebar_count rating">{{ company.actualRating | trim_number }}</span>
+                                <span class="sidebar_count rating">{{ company.actualRating | round(2) }}</span>
                             </li>
                         {% endfor %}
                     </ul>
