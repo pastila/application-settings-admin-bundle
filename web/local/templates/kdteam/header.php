@@ -217,7 +217,7 @@ $url = $APPLICATION->GetCurDir();
                         <li>
                             <!-- Если есть обращения в админке добавляем класс active -->
                             <!-- И показываем блок с колличеством обращений -->
-                            <a class="" href="/feedback">
+                            <a class="" href="/cabinet/feedback">
                                 <span id="number_calls" class="menu-req">
                                     <?php echo $count_reviews?>
                                 </span>
