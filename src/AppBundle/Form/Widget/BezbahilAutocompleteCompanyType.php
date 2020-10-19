@@ -6,21 +6,21 @@
 namespace AppBundle\Form\Widget;
 
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BezbahilAutocompleteCompanyType extends AbstractType
+class BezbahilAutocompleteCompanyType extends EntityType
 {
-  public function configureOptions(OptionsResolver $resolver)
+  public function __construct(RegistryInterface $registry)
   {
-    $resolver->setRequired('choices');
+    parent::__construct($registry);
   }
 
-  public function buildView(FormView $view, FormInterface $form, array $options)
+  public function configureOptions(OptionsResolver $resolver)
   {
-    $view->vars['choices'] = $options['choices'];
+    $resolver->setDefault('class', 'AppBundle\Entity\Company\CompanyBranch');
+    parent::configureOptions($resolver);
   }
 
   public function getBlockPrefix()
