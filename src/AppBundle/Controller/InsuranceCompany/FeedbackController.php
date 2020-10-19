@@ -555,19 +555,18 @@ class FeedbackController extends Controller
         $this->updateRating($feedback);
 
         $branch = $feedback->getBranch();
-        $company = !empty($branch) ? $branch->getCompany() : null;
         $emails = [];
-        if (!empty($company->getEmailFirst()))
+        if (!empty($branch->getEmailFirst()))
         {
-          $emails[] = $company->getEmailFirst();
+          $emails[] = $branch->getEmailFirst();
         }
-        if (!empty($company->getEmailSecond()))
+        if (!empty($branch->getEmailSecond()))
         {
-          $emails[] = $company->getEmailSecond();
+          $emails[] = $branch->getEmailSecond();
         }
-        if (!empty($company->getEmailThird()))
+        if (!empty($branch->getEmailThird()))
         {
-          $emails[] = $company->getEmailThird();
+          $emails[] = $branch->getEmailThird();
         }
         $url = $this->generateUrl('app_insurancecompany_feedback_show', ['id' => $feedback->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
         $date = $feedback->getCreatedAt()->format('Y-m-d H:i:s');
