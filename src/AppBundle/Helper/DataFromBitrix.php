@@ -57,7 +57,7 @@ class DataFromBitrix
       $this->request->cookies->get('PHPSESSID')
     ));
 
-    curl_setopt($ch, CURLOPT_VERBOSE, true);
+    //curl_setopt($ch, CURLOPT_VERBOSE, true);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
     $this->res = curl_exec($ch);

@@ -48,7 +48,7 @@ class Comment
    * Отзыв
    *
    * @var null|Feedback
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\Feedback")
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\Feedback", inversedBy="comments")
    * @ORM\JoinColumn(name="feedback_id", nullable=true, onDelete="RESTRICT")
    */
   private $feedback;

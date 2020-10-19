@@ -251,3 +251,14 @@ services:
       context: ./nodejs
     volumes:
       - ${APP_CODE_PATH_HOST_BX}:${APP_CODE_PATH_CONTAINER_BX}
+
+  ### MailDev ##############################################
+  maildev:
+    build: ./maildev
+    labels:
+      - "traefik.http.routers.bezbahilru_maildev.rule=Host(`mail.bezbahil.docker`)"
+      - "traefik.docker.network=traefik_traefik"
+      - "traefik.http.services.bezbahilru_maildev_webapp.loadbalancer.server.port=80"
+    networks:
+      - backend
+      - traefik

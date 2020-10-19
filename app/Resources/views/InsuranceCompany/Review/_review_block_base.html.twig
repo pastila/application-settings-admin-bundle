@@ -65,8 +65,8 @@
             <img src="" alt="">
 
             <span class="comment-count">
-                        {{ review.comments | length }}
-                    </span>
+                {{ review.comments | length }}
+            </span>
             {{ review.comments | length | ending_format(['комментарий', 'комментария', 'комментариев']) }}
         </a>
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}

@@ -106,7 +106,7 @@ class CompanyBranch
 
   /**
    * @var Feedback[]|ArrayCollection
-   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Company\Feedback", mappedBy="companyBranch")
+   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Company\Feedback", mappedBy="branch")
    */
   protected $feedbacks;
 
