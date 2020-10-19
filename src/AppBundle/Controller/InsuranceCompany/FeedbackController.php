@@ -57,38 +57,29 @@ class FeedbackController extends Controller
     $response = new Response();
     $response->setPublic();
 
-    if ($request->query->count() === 0)
+    if (null === $user &&
+      $request->query->count() == 0 &&
+      ($request->attributes->get('_route') === 'app_insurancecompany_feedback_index' ||
+        $request->attributes->get('_route') === 'company_review_list'))
     {
       /** @var QueryBuilder $maxQb */
       $maxQb = $maxUpdatedAt = $this
         ->getDoctrine()
         ->getManager()
         ->getRepository(Feedback::class)
-        ->createQueryBuilder('rv')
-        ->leftJoin('rv.comments', 'rvct');
+        ->createQueryBuilder('rv');
 
       $maxUpdatedAt = $maxQb
-        ->select('MAX(rv.updatedAt), MAX(rvct.updatedAt)')
+        ->select('MAX(rv.updatedAt)')
         ->getQuery()
-        ->getResult();
-      $rvUpdateAt = !empty($maxUpdatedAt[0][1]) ? $maxUpdatedAt[0][1] : null;
-      $rvctUpdateAt = !empty($maxUpdatedAt[0][2]) ? $maxUpdatedAt[0][2] : null;
-      $max = $rvUpdateAt > $rvctUpdateAt ? $rvUpdateAt : $rvctUpdateAt;
+        ->getSingleScalarResult();
 
-      $response->setLastModified(new \DateTime($max));
-
+      $response->setLastModified(new \DateTime($maxUpdatedAt));
       if ($response->isNotModified($request))
       {
         return $response;
       }
-    } else
-    {
-      $response->setMaxAge(3600);
-
-      // (optional) set a custom Cache-Control directive
-      $response->headers->addCacheControlDirective('must-revalidate', true);
     }
-
 
     $reviewListFilter = new FeedbackListFilter();
     $reviewListFilter->setPage($request->query->get('page', 1));
@@ -138,15 +129,8 @@ class FeedbackController extends Controller
     } else
     {
       $reviewListQb
-        ->orWhere('rv.moderationStatus = :status')
+        ->andWhere('rv.moderationStatus = :status')
         ->setParameter('status', FeedbackModerationStatus::MODERATION_ACCEPTED);
-      $userId = (null !== $user) ? $user->getId() : null;
-      if (!empty($userId))
-      {
-        $reviewListQb
-          ->orWhere('rv.author = :user_id')
-          ->setParameter('user_id', $userId);
-      }
     }
 
     $reviewListQb
@@ -226,7 +210,7 @@ class FeedbackController extends Controller
    * @param $id
    * @Route(path="/feedback/{id}", requirements={ "id": "\d+" })
    */
-  public function showAction($id, Request $request)
+  public function showAction($id, Request $request, UserInterface $user = null)
   {
     /** @var Feedback $review */
     $review = $this
@@ -248,15 +232,17 @@ class FeedbackController extends Controller
     }
 
     $response = new Response();
-    $response->setLastModified($review->getUpdatedAt());
-
-    // Set response as public. Otherwise it will be private by default.
     $response->setPublic();
-
-    if ($response->isNotModified($request))
+    if (null === $user)
     {
-      return $response;
+      $response->setLastModified($review->getUpdatedAt());
+
+      if ($response->isNotModified($request))
+      {
+        return $response;
+      }
     }
+
 
     return $this->render('InsuranceCompany/Review/show.html.twig', [
       'review' => $review
