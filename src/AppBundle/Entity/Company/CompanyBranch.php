@@ -119,6 +119,14 @@ class CompanyBranch
   }
 
   /**
+   * @return Feedback[]|ArrayCollection
+   */
+  public function getFeedbacks()
+  {
+    return $this->feedbacks;
+  }
+
+  /**
    * @return integer
    */
   public function getId()
