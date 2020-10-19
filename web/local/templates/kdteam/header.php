@@ -8,7 +8,7 @@ function getCountReviews($login, $token)
 {
     $url  = sprintf('http://nginx/api/v1/panel?user=%s&api_token=%s', $login, $token);
     $ch = curl_init($url);
-    var_dump($_COOKIE['BX_USER_ID']);
+
     curl_setopt($ch, CURLOPT_VERBOSE, true);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 

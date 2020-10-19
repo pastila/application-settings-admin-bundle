@@ -53,14 +53,14 @@ class FeedbackController extends Controller
    * @Route(path="/feedback")
    * @Route(path="/companies/{slug}/feedback", name="company_review_list")
    */
-  public function indexAction(Request $request, UserInterface $user = null)
+  public function indexAction(Request $request)
   {
     $response = new Response();
     $response->setPublic();
 
     if (!$this->getUser())
     {
-      /** @var QueryBuilder $maxQb */
+        /** @var QueryBuilder $maxQb */
       $maxQb = $this
         ->getDoctrine()
         ->getManager()
@@ -73,9 +73,13 @@ class FeedbackController extends Controller
         ->getSingleScalarResult();
 
       $response->setLastModified(new \DateTime($maxUpdatedAt));
+
       if ($response->isNotModified($request))
       {
-        return $response;
+          $response->headers->addCacheControlDirective('no-cache', true);
+          $response->headers->addCacheControlDirective('must-revalidate', true);
+
+          return $response;
       }
     }
 
@@ -237,7 +241,10 @@ class FeedbackController extends Controller
 
       if ($response->isNotModified($request))
       {
-        return $response;
+          $response->headers->addCacheControlDirective('no-cache', true);
+          $response->headers->addCacheControlDirective('must-revalidate', true);
+
+          return $response;
       }
     }
 
