@@ -268,49 +268,48 @@ class FeedbackController extends Controller
    */
   public function newAction(Request $request, UserInterface $user = null)
   {
+    /**
+     * @var Feedback $feedback
+     */
     $feedback = new Feedback();
     $form = $this->createForm(FeedbackType::class, $feedback, [
       'csrf_protection' => false,
     ]);
-    $data = $request->request->all();
-    $userId = null !== $user ? $user->getId() : null;
 
-    if ($request->isMethod('post')) {
+    if ($request->isMethod('post'))
+    {
+      $data = $request->request->all();
       $newData = [
-        'author' => $userId,
-        'region' => $data['region_select_id'],
-        'branch' => $data['company_select_id'],
-        'valuation' => $data['rating_select'],
+        'region' => !empty($data['region_select_id']) ? $data['region_select_id'] : null,
+        'branch' => !empty($data['company_select_id']) ? $data['company_select_id'] : null,
+        'valuation' => !empty($data['rating_select']) ? $data['rating_select'] : null,
       ];
       $newData = array_merge($data['feedback'], $newData);
       $form->submit($newData);
-    }
-    if ($form->isSubmitted() && !empty($newData['region']) && !empty($newData['branch']))
-    {
-      $sql = 'INSERT INTO s_company_feedbacks(user_id, region_id, branch_id, author_name, title, text, valuation, moderation_status, created_at, updated_at) 
-              VALUES(:author, :region, :branch, :author_name, :title, :text, :valuation, :moderation_status, :createdAt, :createdAt)';
-      $entityManager = $this->getDoctrine()->getManager();
-      $stmt = $entityManager->getConnection()->prepare($sql);
-      $stmt->bindValue('author', $newData['author']);
-      $stmt->bindValue('author_name', $newData['author_name']);
-      $stmt->bindValue('region', $newData['region']);
-      $stmt->bindValue('branch', $newData['branch']);
-      $stmt->bindValue('text', $newData['text']);
-      $stmt->bindValue('title', $newData['title']);
-      $stmt->bindValue('valuation', $newData['valuation']);
-      $stmt->bindValue('moderation_status', FeedbackModerationStatus::MODERATION_NONE);
-      $stmt->bindValue('createdAt', date("Y-m-d H:i:s"));
-      $stmt->execute();
-      $id = $entityManager->getConnection()->lastInsertId();
-      $feedback = $this->getDoctrine()->getManager()->getRepository(Feedback::class)
-        ->findOneBy(['id' => $id]);
 
-      $url = $this->generateUrl('app_insurancecompany_feedback_show', ['id' => $feedback->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-      $date = $feedback->getCreatedAt()->format('Y-m-d H:i:s');
-      $mainMail = $this->mainMail->getMainMail($request);
-      $this->sendNewFeedback($mainMail, $url, $date);
+      if ($form->isSubmitted() && $form->isValid())
+      {
+        $em = $this->getDoctrine()->getManager();
+        $userId = null !== $user ? $user->getId() : null;
+        $user = $em->getRepository(User::class)
+          ->findOneBy(['id' => $userId]);
 
-      return $this->redirectToRoute('app_insurancecompany_feedback_index');
+        $feedback = $form->getData();
+        $feedback->setAuthor($user);
+        $feedback->setModerationStatus(FeedbackModerationStatus::MODERATION_NONE);
+        $feedback->setCreatedAt(new \DateTime());
+        $feedback->setUpdatedAt(new \DateTime());
+
+        $em->persist($feedback);
+        $em->flush();
+
+        $url = $this->generateUrl('app_insurancecompany_feedback_show', ['id' => $feedback->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $date = $feedback->getCreatedAt()->format('Y-m-d H:i:s');
+        $mainMail = $this->mainMail->getMainMail($request);
+        $this->sendNewFeedback($mainMail, $url, $date);
+
+        return $this->redirectToRoute('app_insurancecompany_feedback_index');
+      }
     }
 
     return $this->render('InsuranceCompany/Review/new.html.twig', [
@@ -321,31 +320,15 @@ class FeedbackController extends Controller
   /**
    * @Route(path="/feedback/remove", name="app_insurancecompany_feedback_remove")
    */
-  public function removeAction(Request $request, UserInterface $user = null)
+  public function removeAction(Request $request)
   {
-    if (!$user && !$user->isAdmin()) {
-      return new JsonResponse([
-      ], 400);
-    }
-    $data = $request->request->all();
-    $feedback_id = isset($data['id']) ? $data['id'] : null;
+    $this->denyAccessUnlessGranted('ROLE_ADMIN');
+    $em = $this->getDoctrine()->getManager();
 
-    /**
-     * @var Feedback $feedback
-     */
-    $feedback = $this->getDoctrine()->getManager()->getRepository(Feedback::class)
-      ->findOneBy(['id' => $feedback_id]);
+    $feedback = $em->getRepository(Feedback::class)
+      ->find($request->get('id'));
     if ($feedback)
     {
-      $em = $this->getDoctrine()->getEntityManager();
-      foreach ($feedback->getComments() as $comment)
-      {
-        foreach ($comment->getCitations() as $citation)
-        {
-          $em->remove($citation);
-        }
-        $em->remove($comment);
-      }
       $em->remove($feedback);
       $em->flush();
 
@@ -551,9 +534,6 @@ class FeedbackController extends Controller
         $this->getDoctrine()->getManager()->persist($feedback);
         $this->getDoctrine()->getManager()->flush();
 
-        // update rating company and branch
-        $this->updateRating($feedback);
-
         $branch = $feedback->getBranch();
         $emails = [];
         if (!empty($branch->getEmailFirst()))
@@ -575,60 +555,6 @@ class FeedbackController extends Controller
 
       return new JsonResponse(1);
     }
-  }
-
-  /**
-   * @param Feedback $feedback
-   */
-  public function updateRating($feedback)
-  {
-    $branch = $this->updateRatingObject(
-      Feedback::class,
-      'branch',
-      $feedback->getBranch(),
-      CompanyBranch::class);
-    $this->getDoctrine()->getManager()->persist($branch);
-    $this->getDoctrine()->getManager()->flush();
-
-    $company = $this->updateRatingObject(
-      CompanyBranch::class,
-      'company'
-      , $feedback->getCompany(),
-      Company::class);
-    $this->getDoctrine()->getManager()->persist($company);
-    $this->getDoctrine()->getManager()->flush();
-  }
-
-  /**
-   * @param $repo
-   * @param $param
-   * @param $model
-   * @param $class
-   * @return object|null
-   */
-  public function updateRatingObject($repo, $param, $model, $class)
-  {
-    $items = $this->getDoctrine()->getManager()->getRepository($repo)
-      ->createQueryBuilder('t')
-      ->where('t.' .$param. ' = :model')
-      ->andWhere('t.valuation > 0')
-      ->setParameter('model', $model)
-      ->getQuery()
-      ->getResult();
-
-    $valuationAll = 0;
-    foreach ($items as $key => $item)
-    {
-      $valuationAll += $item->getValuation();
-    }
-    $valuation = (float)($valuationAll / count($items));
-    $branch = $this->getDoctrine()->getManager()->getRepository($class)
-      ->findOneBy([
-        'id' => $model->getId()
-      ]);
-    $branch->setValuation($valuation);
-
-    return $branch;
   }
 
   /**

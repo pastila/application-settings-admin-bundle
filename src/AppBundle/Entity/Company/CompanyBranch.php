@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Company.
  *
  * @ORM\Table(name="s_company_branches")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\Company\CompanyBranchRepository")
  */
 class CompanyBranch
 {
