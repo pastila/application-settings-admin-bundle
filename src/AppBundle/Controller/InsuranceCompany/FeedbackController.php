@@ -61,23 +61,18 @@ class FeedbackController extends Controller
     if (!$this->getUser())
     {
       /** @var QueryBuilder $maxQb */
-      $maxQb = $maxUpdatedAt = $this
+      $maxQb = $this
         ->getDoctrine()
         ->getManager()
         ->getRepository(Feedback::class)
-        ->createQueryBuilder('rv')
-        ->leftJoin('rv.comments', 'rvct');
+        ->createQueryBuilder('rv');
 
       $maxUpdatedAt = $maxQb
-        ->select('MAX(rv.updatedAt), MAX(rvct.updatedAt)')
+        ->select('MAX(rv.updatedAt)')
         ->getQuery()
-        ->getResult();
-      $rvUpdateAt = !empty($maxUpdatedAt[0][1]) ? $maxUpdatedAt[0][1] : null;
-      $rvctUpdateAt = !empty($maxUpdatedAt[0][2]) ? $maxUpdatedAt[0][2] : null;
-      $max = $rvUpdateAt > $rvctUpdateAt ? $rvUpdateAt : $rvctUpdateAt;
+        ->getSingleScalarResult();
 
-      $response->setLastModified(new \DateTime($max));
-
+      $response->setLastModified(new \DateTime($maxUpdatedAt));
       if ($response->isNotModified($request))
       {
         return $response;
@@ -132,15 +127,8 @@ class FeedbackController extends Controller
     } else
     {
       $reviewListQb
-        ->orWhere('rv.moderationStatus = :status')
+        ->andWhere('rv.moderationStatus = :status')
         ->setParameter('status', FeedbackModerationStatus::MODERATION_ACCEPTED);
-      $userId = (null !== $user) ? $user->getId() : null;
-      if (!empty($userId))
-      {
-        $reviewListQb
-          ->orWhere('rv.author = :user_id')
-          ->setParameter('user_id', $userId);
-      }
     }
 
     $reviewListQb
@@ -220,7 +208,7 @@ class FeedbackController extends Controller
    * @param $id
    * @Route(path="/feedback/{id}", requirements={ "id": "\d+" })
    */
-  public function showAction($id, Request $request)
+  public function showAction($id, Request $request, UserInterface $user = null)
   {
     /** @var Feedback $review */
     $review = $this
@@ -242,15 +230,17 @@ class FeedbackController extends Controller
     }
 
     $response = new Response();
-    $response->setLastModified($review->getUpdatedAt());
-
-    // Set response as public. Otherwise it will be private by default.
     $response->setPublic();
-
-    if ($response->isNotModified($request))
+    if (null === $user)
     {
-      return $response;
+      $response->setLastModified($review->getUpdatedAt());
+
+      if ($response->isNotModified($request))
+      {
+        return $response;
+      }
     }
+
 
     return $this->render('InsuranceCompany/Review/show.html.twig', [
       'review' => $review
@@ -281,33 +271,38 @@ class FeedbackController extends Controller
       $newData = array_merge($data['feedback'], $newData);
       $form->submit($newData);
 
-      if ($form->isSubmitted() && $form->isValid()) {
-          $em = $this->getDoctrine()->getManager();
-          $userId = null !== $user ? $user->getId() : null;
-          $user = $em->getRepository(User::class)
-              ->findOneBy(['id' => $userId]);
+      if ($form->isSubmitted() && $form->isValid())
+      {
+        $em = $this->getDoctrine()->getManager();
+        $userId = null !== $user ? $user->getId() : null;
+        $user = $em->getRepository(User::class)
+          ->findOneBy(['id' => $userId]);
 
-          $feedback = $form->getData();
-          $feedback->setAuthor($user);
-          $feedback->setModerationStatus(FeedbackModerationStatus::MODERATION_NONE);
-          $feedback->setCreatedAt(new \DateTime());
-          $feedback->setUpdatedAt(new \DateTime());
+        $feedback = $form->getData();
+        $feedback->setAuthor($user);
+        $feedback->setModerationStatus(FeedbackModerationStatus::MODERATION_NONE);
+        $feedback->setCreatedAt(new \DateTime());
+        $feedback->setUpdatedAt(new \DateTime());
 
-          $em->persist($feedback);
-          $em->flush();
+        $em->persist($feedback);
+        $em->flush();
 
-          $url = $this->generateUrl('app_insurancecompany_feedback_show', ['id' => $feedback->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-          $date = $feedback->getCreatedAt()->format('Y-m-d H:i:s');
+        $url = $this->generateUrl('app_insurancecompany_feedback_show', ['id' => $feedback->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $date = $feedback->getCreatedAt()->format('Y-m-d H:i:s');
 
-          try {
-              $mainMail = $this->mainMail->getMainMail($request);
-              $this->sendNewFeedback($mainMail, $url, $date);
-          } catch (BitrixRequestException $e) {
-              $this->get('logger')->warn('Unable to send notification about new review to site administrator. Could not resolve administrator email: ' . $e);
-          } catch (\Exception $e2)
-          {
-              $this->get('logger')->warn('Unable to send notification about new review to site administrator: ' . $e2);
-          }
+        try
+        {
+          $mainMail = $this->mainMail->getMainMail($request);
+          $this->sendNewFeedback($mainMail, $url, $date);
+        }
+        catch (BitrixRequestException $e)
+        {
+          $this->get('logger')->warn('Unable to send notification about new review to site administrator. Could not resolve administrator email: ' . $e);
+        }
+        catch (\Exception $e2)
+        {
+          $this->get('logger')->warn('Unable to send notification about new review to site administrator: ' . $e2);
+        }
 
         return $this->redirectToRoute('app_insurancecompany_feedback_index');
       }
@@ -531,32 +526,27 @@ class FeedbackController extends Controller
       $feedback = $this->getDoctrine()->getManager()->getRepository(Feedback::class)
         ->findOneBy(['id' => $id]);
       if (!empty($feedback)) {
-          $feedback->setModerationStatus($status);
-          $this->getDoctrine()->getManager()->persist($feedback);
-          $this->getDoctrine()->getManager()->flush();
+        $feedback->setModerationStatus($status);
+        $this->getDoctrine()->getManager()->persist($feedback);
+        $this->getDoctrine()->getManager()->flush();
 
-          $branch = $feedback->getBranch();
-          $emails = [];
-          if (!empty($branch->getEmailFirst())) {
-              $emails[] = $branch->getEmailFirst();
-          }
-          if (!empty($branch->getEmailSecond())) {
-              $emails[] = $branch->getEmailSecond();
-          }
-          if (!empty($branch->getEmailThird())) {
-              $emails[] = $branch->getEmailThird();
-          }
-          $url = $this->generateUrl('app_insurancecompany_feedback_show', ['id' => $feedback->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-          $date = $feedback->getCreatedAt()->format('Y-m-d H:i:s');
-
-          try
-          {
-              $this->sendNewFeedback($emails, $url, $date);
-          }
-          catch (\Exception $e)
-          {
-              $this->logger->err('Unable to send notification to insurance company representative: '.$e);
-          }
+        $branch = $feedback->getBranch();
+        $emails = [];
+        if (!empty($branch->getEmailFirst()))
+        {
+          $emails[] = $branch->getEmailFirst();
+        }
+        if (!empty($branch->getEmailSecond()))
+        {
+          $emails[] = $branch->getEmailSecond();
+        }
+        if (!empty($branch->getEmailThird()))
+        {
+          $emails[] = $branch->getEmailThird();
+        }
+        $url = $this->generateUrl('app_insurancecompany_feedback_show', ['id' => $feedback->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $date = $feedback->getCreatedAt()->format('Y-m-d H:i:s');
+        $this->sendNewFeedback($emails, $url, $date);
       }
 
       return new JsonResponse(1);
