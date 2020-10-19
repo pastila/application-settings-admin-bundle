@@ -56,7 +56,10 @@ class CompanyBranchHelper
                 sR.id as REGION_ID,
                 epVS.VALUE as AMOUNT_STARS,
                 epVAS.VALUE as ALL_AMOUNT_STAR,
-                epIMG.VALUE as IMAGE_ID
+                epIMG.VALUE as IMAGE_ID,                                 
+                epE1.VALUE as EMAIL1,                    
+                epE2.VALUE as EMAIL2,                    
+                epE2.VALUE as EMAIL3
             FROM b_iblock_element e
             LEFT JOIN b_iblock_element_property epK ON epK.IBLOCK_ELEMENT_ID = e.ID AND epK.IBLOCK_PROPERTY_ID = 112     
             LEFT JOIN s_companies sC ON sC.kpp = epK.VALUE  
@@ -64,7 +67,10 @@ class CompanyBranchHelper
             LEFT JOIN s_regions sR ON (sR.name LIKE epR.SEARCHABLE_CONTENT)            
             LEFT JOIN b_iblock_element_property epVS ON epVS.IBLOCK_ELEMENT_ID = e.ID AND epVS.IBLOCK_PROPERTY_ID = 146                
             LEFT JOIN b_iblock_element_property epVAS ON epVAS.IBLOCK_ELEMENT_ID = e.ID AND epVAS.IBLOCK_PROPERTY_ID = 131           
-            LEFT JOIN b_iblock_element_property epIMG ON epIMG.IBLOCK_ELEMENT_ID = e.ID AND epIMG.IBLOCK_PROPERTY_ID = 85       
+            LEFT JOIN b_iblock_element_property epIMG ON epIMG.IBLOCK_ELEMENT_ID = e.ID AND epIMG.IBLOCK_PROPERTY_ID = 85                      
+            LEFT JOIN b_iblock_element_property epE1 ON epE1.IBLOCK_ELEMENT_ID = e.ID AND epE1.IBLOCK_PROPERTY_ID = 81      
+            LEFT JOIN b_iblock_element_property epE2 ON epE2.IBLOCK_ELEMENT_ID = e.ID AND epE2.IBLOCK_PROPERTY_ID = 82      
+            LEFT JOIN b_iblock_element_property epE3 ON epE3.IBLOCK_ELEMENT_ID = e.ID AND epE3.IBLOCK_PROPERTY_ID = 83       
             WHERE e.IBLOCK_ID = 16';
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -79,6 +85,9 @@ class CompanyBranchHelper
       $amountStar = !empty($item['AMOUNT_STARS']) ? (float)$item['AMOUNT_STARS'] : 0;
       $amountAllStar = !empty($item['ALL_AMOUNT_STAR']) ? (float)$item['ALL_AMOUNT_STAR'] : 0;
       $image_id = !empty($item['IMAGE_ID']) ? (float)$item['IMAGE_ID'] : null;
+      $email1 = !empty($item['EMAIL1']) ? $item['EMAIL1'] : null;
+      $email2 = !empty($item['EMAIL2']) ? $item['EMAIL2'] : null;
+      $email3 = !empty($item['EMAIL3']) ? $item['EMAIL3'] : null;
 
       $company = !empty($company_id) ? $this->entityManager->getRepository("AppBundle:Company\Company")
         ->createQueryBuilder('c')
@@ -99,8 +108,8 @@ class CompanyBranchHelper
         $this->entityManager->persist($company);
         $this->entityManager->flush();
 
-        $sql = "INSERT INTO s_company_branches(name, kpp, code, company_id, region_id, valuation, logo_id_from_bitrix) 
-                    VALUES(:name, :kpp, :code, :company_id, :region_id, :valuation, :image_id)";
+        $sql = "INSERT INTO s_company_branches(name, kpp, code, company_id, region_id, valuation, logo_id_from_bitrix, email_first, email_second, email_third) 
+                    VALUES(:name, :kpp, :code, :company_id, :region_id, :valuation, :image_id, :email1, :email2, :email3)";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':name', $name);
@@ -110,6 +119,9 @@ class CompanyBranchHelper
         $stmt->bindValue(':region_id', $region_id);
         $stmt->bindValue(':valuation', $amountStar);
         $stmt->bindValue(':image_id', $image_id);
+        $stmt->bindValue(':email1', $email1);
+        $stmt->bindValue(':email2', $email2);
+        $stmt->bindValue(':email3', $email3);
         $stmt->execute();
         $nbImported++;
       }
