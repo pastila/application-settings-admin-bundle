@@ -241,12 +241,6 @@ class FeedbackController extends Controller
       {
         return $response;
       }
-    } else
-    {
-      $response->setMaxAge(3600);
-
-      // (optional) set a custom Cache-Control directive
-      $response->headers->addCacheControlDirective('must-revalidate', true);
     }
 
 
