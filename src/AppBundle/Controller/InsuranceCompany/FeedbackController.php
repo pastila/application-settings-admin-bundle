@@ -54,6 +54,33 @@ class FeedbackController extends Controller
    */
   public function indexAction(Request $request, UserInterface $user = null)
   {
+    $response = new Response();
+    $response->setPublic();
+
+    if (null === $user &&
+      $request->query->count() == 0 &&
+      ($request->attributes->get('_route') === 'app_insurancecompany_feedback_index' ||
+        $request->attributes->get('_route') === 'company_review_list'))
+    {
+      /** @var QueryBuilder $maxQb */
+      $maxQb = $maxUpdatedAt = $this
+        ->getDoctrine()
+        ->getManager()
+        ->getRepository(Feedback::class)
+        ->createQueryBuilder('rv');
+
+      $maxUpdatedAt = $maxQb
+        ->select('MAX(rv.updatedAt)')
+        ->getQuery()
+        ->getSingleScalarResult();
+
+      $response->setLastModified(new \DateTime($maxUpdatedAt));
+      if ($response->isNotModified($request))
+      {
+        return $response;
+      }
+    }
+
     $reviewListFilter = new FeedbackListFilter();
     $reviewListFilter->setPage($request->query->get('page', 1));
 
@@ -136,33 +163,6 @@ class FeedbackController extends Controller
     $maxPerPage = 10;
 
     $reviewListQb->orderBy('rv.createdAt', 'DESC');
-
-    $response = new Response();
-    $response->setPublic();
-    if (null === $user &&
-      $request->query->count() == 0 &&
-      ($request->attributes->get('_route') === 'app_insurancecompany_feedback_index' ||
-        $request->attributes->get('_route') === 'company_review_list'))
-    {
-      $maxQb = clone $reviewListQb;
-      $maxUpdatedAt = $maxQb
-        ->select('MAX(rv.updatedAt)')
-        ->getQuery()
-        ->getSingleScalarResult();
-
-      $response->setLastModified(new \DateTime($maxUpdatedAt));
-
-      if ($response->isNotModified($request))
-      {
-        return $response;
-      }
-    } else
-    {
-      $response->setMaxAge(3600);
-
-      // (optional) set a custom Cache-Control directive
-      $response->headers->addCacheControlDirective('must-revalidate', true);
-    }
 
     $pagination = new Pagination($reviewListQb, $reviewListFilter->getPage(), $maxPerPage);
 
