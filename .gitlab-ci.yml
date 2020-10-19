@@ -1,0 +1,21 @@
+image: alpine:3
+
+before_script:
+  - apt-get update -qq
+  - apt-get install -qq git
+  # Setup SSH deploy keys
+  - 'which ssh-agent || ( apt-get install -qq openssh-client )'
+  - eval $(ssh-agent -s)
+  - ssh-add <(echo "$SSH_PRIVATE_KEY")
+  - mkdir -p ~/.ssh
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+
+deploy_staging:
+  type: deploy
+  environment:
+    name: staging
+    url: example.com
+  script:
+    - ssh -p2222 deployer@aw-dev.ru "cd /var/www/sites/bezbahil/releases/1 && git pull origin && exit"
+  only:
+    - develop
