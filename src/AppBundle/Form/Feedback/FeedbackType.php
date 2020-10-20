@@ -58,19 +58,16 @@ class FeedbackType extends AbstractType
         'required' => true,
         'constraints' => [
           new NotBlank(),
+          new Length([
+            'max' => 255,
+          ]),
         ],
-        new Length([
-          'max' => 255,
-        ]),
       ])
       ->add('text', null, [
         'required' => true,
         'constraints' => [
           new NotBlank(),
         ],
-        new Length([
-          'max' => 255,
-        ]),
       ])
       ->add('valuation', BezbahilRatingType::class, [
         'required' => true,
