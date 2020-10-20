@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 
 class FeedbackType extends AbstractType
@@ -34,19 +35,42 @@ class FeedbackType extends AbstractType
   {
     $builder
       ->add('region', BezbahilAutocompleteRegionType::class, [
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+        ],
         'query_builder' => function(RegionRepository $repository){
           return $repository->createQueryBuilder('r')->orderBy('r.name');
         },
       ])
       ->add('branch', BezbahilAutocompleteCompanyType::class, [
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+        ],
         'query_builder' => function(CompanyBranchRepository $repository){
           return $repository->createQueryBuilder('b')->orderBy('b.name');
         },
       ])
       ->add('author_name')
-      ->add('title')
-      ->add('text')
-      ->add('valuation', BezbahilRatingType::class)
+      ->add('title', null, [
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+        ],
+      ])
+      ->add('text', null, [
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+        ],
+      ])
+      ->add('valuation', BezbahilRatingType::class, [
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+        ],
+      ])
     ;
   }
 
