@@ -32,7 +32,7 @@ class Feedback
    *
    * @var integer
    *
-   * @ORM\Column(name="bitrix_id", type="integer", nullable=false)
+   * @ORM\Column(name="bitrix_id", type="integer", nullable=true)
    */
   private $bitrixId;
 

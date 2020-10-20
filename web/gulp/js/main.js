@@ -702,7 +702,7 @@ console.log("1");
                 $('.header__r').html(msg);
               },
             }).done(function(msg) {
-              window.location.reload();
+
             });
 
           } else {

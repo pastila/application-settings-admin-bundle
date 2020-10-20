@@ -13,23 +13,30 @@ use AppBundle\Model\InsuranceCompany\FeedbackListFilterUrlBuilder;
 use AppBundle\Model\Pagination;
 use AppBundle\Repository\Company\FeedbackRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\BrowserKit\Response;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class CabinetController extends AbstractController
 {
   private $reviewRepository;
 
-  public function __construct(FeedbackRepository $feedbackRepository)
+  private $validator;
+
+  public function __construct(
+      FeedbackRepository $feedbackRepository,
+      ValidatorInterface $validator
+  )
   {
     $this->reviewRepository = $feedbackRepository;
+    $this->validator = $validator;
   }
 
-  /**
+
+    /**
    * Личный кабинет - Ваши отзывы
    * @Route(path="/cabinet/feedback")
    */
@@ -98,9 +105,7 @@ class CabinetController extends AbstractController
 
     $review->setValuation($request->get('star'));
 
-    $validator = $this->get('validator');
-
-    $errors = $validator->validate($review);
+    $errors = $this->validator->validate($review);
     if (count($errors))
     {
       return new JsonResponse([
