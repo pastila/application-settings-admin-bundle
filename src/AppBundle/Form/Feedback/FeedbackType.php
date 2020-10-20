@@ -71,9 +71,10 @@ class FeedbackType extends AbstractType
       ])
       ->add('valuation', BezbahilRatingType::class, [
         'required' => true,
-        'constraints' => [
-          new NotBlank(),
-        ],
+//в данный момент надо дать возможность любой отзыв написать, хоть и без оценки хоть и по сути не отзыв
+//        'constraints' => [
+//          new NotBlank(),
+//        ],
       ])
     ;
   }
