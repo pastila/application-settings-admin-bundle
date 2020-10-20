@@ -157,7 +157,7 @@
                 $(function(){
                     $.magnificPopup.open({
                         items: {
-                            src: '<div class="white-popup custom_styles_popup" >'+{{ message|json_encode }}+'</div>',
+                            src: '<div class="white-popup custom_styles_popup" >{{ message }}</div>',
                             type: 'inline',
                         },
                     });
