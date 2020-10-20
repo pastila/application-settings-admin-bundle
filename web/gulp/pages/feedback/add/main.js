@@ -369,33 +369,44 @@ $(document).ready(function() {
         data.id_compani = hospital;
       }
 
-      if(data_form[0]['value'] === "" ){
-        $("#"+data_form[0]["name"]).after('   <div class="popover_error">\n' +
-            '          <div class="popover_error_arrow"></div>\n' +
-            '          <div class="popover_error_image">\n' +
-            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
-            '          </div>\n' +
-            '          <div class="popover_error_text">\n' +
-            '        Заполните заголовок.\n' +
-            '      </div>\n' +
-            '      </div>');
-        this.empty_field.push('error');
-      }else{
-        data.head = data_form[0]['value'];
+      let feedback_title_item = document.getElementById('feedback_title');
+      if (typeof feedback_title_item !== 'undefined') {
+        let feedback_title = feedback_title_item.value;
+        if(feedback_title == "" ){
+          let div = document.createElement('div');
+          div.className = 'popover_error';
+          div.innerHTML =    '          <div class="popover_error_arrow"></div>\n' +
+              '          <div class="popover_error_image">\n' +
+              '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+              '          </div>\n' +
+              '          <div class="popover_error_text">\n' +
+              '        Заполните заголовок.\n' +
+              '      </div>\n';
+          feedback_title_item.after(div);
+          this.empty_field.push('error');
+        }else{
+          data.head = feedback_title;
+        }
       }
-      if(data_form[1]['value'] === "" ){
-        $("#"+data_form[1]["name"]).after('   <div class="popover_error">\n' +
-            '          <div class="popover_error_arrow"></div>\n' +
-            '          <div class="popover_error_image">\n' +
-            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
-            '          </div>\n' +
-            '          <div class="popover_error_text">\n' +
-            '        Заполните описание.\n' +
-            '      </div>\n' +
-            '      </div>');
-        this.empty_field.push('error');
-      }else{
-        data.text = data_form[1]['value'];
+
+      let feedback_text_item = document.getElementById('feedback_text');
+      if (typeof feedback_text_item !== 'undefined') {
+        let feedback_text = feedback_text_item.value;
+        if(feedback_text == "" ){
+          let div = document.createElement('div');
+          div.className = 'popover_error';
+          div.innerHTML =    '          <div class="popover_error_arrow"></div>\n' +
+              '          <div class="popover_error_image">\n' +
+              '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+              '          </div>\n' +
+              '          <div class="popover_error_text">\n' +
+              '        Заполните описание.\n' +
+              '      </div>\n';
+          feedback_text_item.after(div);
+          this.empty_field.push('error');
+        }else{
+          data.text = feedback_text;
+        }
       }
       if (data.id_city === 0) {
         $('[data-select=city]').next().css({'display': 'block'});
@@ -451,49 +462,64 @@ $(document).ready(function() {
         data.id_compani = hospital;
       }
 
-
-      if(data_form[0]['value'] === "" ){
-        $("#"+data_form[0]["name"]).after('   <div class="popover_error">\n' +
-            '          <div class="popover_error_arrow"></div>\n' +
-            '          <div class="popover_error_image">\n' +
-            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
-            '          </div>\n' +
-            '          <div class="popover_error_text">\n' +
-            '        Введите свое имя.\n' +
-            '      </div>\n' +
-            '      </div>');
-        this.empty_field.push('error');
-      }else{
-        data.name_user_no_Authorized = data_form[0]['value'];
+      let feedback_author_name_item = document.getElementById('feedback_author_name');
+      if (typeof feedback_author_name_item !== 'undefined') {
+        let feedback_author_name = feedback_author_name_item.value;
+        if(feedback_author_name == "" ){
+          let div = document.createElement('div');
+          div.className = 'popover_error';
+          div.innerHTML =    '          <div class="popover_error_arrow"></div>\n' +
+              '          <div class="popover_error_image">\n' +
+              '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+              '          </div>\n' +
+              '          <div class="popover_error_text">\n' +
+              '        Заполните заголовок.\n' +
+              '      </div>\n';
+          feedback_author_name_item.after(div);
+          this.empty_field.push('error');
+        }else{
+          data.name_user_no_Authorized = feedback_author_name;
+        }
       }
 
-      if(data_form[1]['value']  === "" ){
-        $("#"+data_form[1]["name"]).after('   <div class="popover_error">\n' +
-            '          <div class="popover_error_arrow"></div>\n' +
-            '          <div class="popover_error_image">\n' +
-            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
-            '          </div>\n' +
-            '          <div class="popover_error_text">\n' +
-            '        Заполните заголовок.\n' +
-            '      </div>\n' +
-            '      </div>');
-        this.empty_field.push('error');
-      }else{
-        data.head = data_form[1]['value'];
+      let feedback_title_item = document.getElementById('feedback_title');
+      if (typeof feedback_title_item !== 'undefined') {
+        let feedback_title = feedback_title_item.value;
+        if(feedback_title == "" ){
+          let div = document.createElement('div');
+          div.className = 'popover_error';
+          div.innerHTML =    '          <div class="popover_error_arrow"></div>\n' +
+              '          <div class="popover_error_image">\n' +
+              '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+              '          </div>\n' +
+              '          <div class="popover_error_text">\n' +
+              '        Заполните заголовок.\n' +
+              '      </div>\n';
+          feedback_title_item.after(div);
+          this.empty_field.push('error');
+        }else{
+          data.head = feedback_title;
+        }
       }
-      if(data_form[2]['value'] === ""){
-        $("#"+data_form[2]["name"]).after('   <div class="popover_error">\n' +
-            '          <div class="popover_error_arrow"></div>\n' +
-            '          <div class="popover_error_image">\n' +
-            '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
-            '          </div>\n' +
-            '          <div class="popover_error_text">\n' +
-            '        Заполните описание.\n' +
-            '      </div>\n' +
-            '      </div>');
-        this.empty_field.push('error');
-      }else{
-        data.text = data_form[2]['value'];
+
+      let feedback_text_item = document.getElementById('feedback_text');
+      if (typeof feedback_text_item !== 'undefined') {
+        let feedback_text = feedback_text_item.value;
+        if(feedback_text == "" ){
+          let div = document.createElement('div');
+          div.className = 'popover_error';
+          div.innerHTML =    '          <div class="popover_error_arrow"></div>\n' +
+              '          <div class="popover_error_image">\n' +
+              '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
+              '          </div>\n' +
+              '          <div class="popover_error_text">\n' +
+              '        Заполните описание.\n' +
+              '      </div>\n';
+          feedback_text_item.after(div);
+          this.empty_field.push('error');
+        }else{
+          data.text = feedback_text;
+        }
       }
 
 
