@@ -150,4 +150,21 @@
             и возможно именно ваш отзыв станет решающим для посетителей сайта при выборе страховой компании. </p>
     </div>
     <!-- Second Sidebar block -->
+
+    {% for label, messages in app.flashes(['magnific']) %}
+        {% for message in messages %}
+            <script type="application/javascript">
+                $(function(){
+                    $.magnificPopup.open({
+                        items: {
+                            src: '<div class="white-popup custom_styles_popup" >'+{{ message|json_encode }}+'</div>',
+                            type: 'inline',
+                        },
+                    });
+                })
+            </script>
+        {% endfor %}
+    {% endfor %}
+
+
 {% endblock %}
