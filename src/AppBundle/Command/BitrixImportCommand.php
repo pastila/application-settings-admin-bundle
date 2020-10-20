@@ -258,7 +258,6 @@ class BitrixImportCommand extends ContainerAwareCommand
       $feedback->setBitrixId($bitrixId);
       $feedback->setTitle($title);
       $feedback->setText($text);
-      $feedback->setRegion($region);
       $feedback->setAuthor($user);
       $feedback->setBranch($branch);
       $feedback->setValuation($valuation);

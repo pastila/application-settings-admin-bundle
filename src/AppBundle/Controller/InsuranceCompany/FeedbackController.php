@@ -138,8 +138,9 @@ class FeedbackController extends Controller
     $reviewListQb
       ->innerJoin('rv.branch', 'rvb')
       ->innerJoin('rvb.company', 'rvc')
-      ->leftJoin('rv.comments', 'rvct')
-      ->leftJoin('rvct.citations', 'rvctcs');
+//      ->leftJoin('rv.comments', 'rvct')
+//      ->leftJoin('rvct.citations', 'rvctcs')
+    ;
 
     if ($reviewListFilter->getRating())
     {

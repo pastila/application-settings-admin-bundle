@@ -54,14 +54,6 @@ class Feedback
    */
   private $authorName;
 
-  /**
-   * Регион
-   *
-   * @var null|Region
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Geo\Region")
-   * @ORM\JoinColumn(name="region_id", nullable=true, onDelete="RESTRICT")
-   */
-  private $region;
 
   /**
    * Филиал компании
