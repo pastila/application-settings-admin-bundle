@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 
@@ -58,12 +59,18 @@ class FeedbackType extends AbstractType
         'constraints' => [
           new NotBlank(),
         ],
+        new Length([
+          'max' => 255,
+        ]),
       ])
       ->add('text', null, [
         'required' => true,
         'constraints' => [
           new NotBlank(),
         ],
+        new Length([
+          'max' => 255,
+        ]),
       ])
       ->add('valuation', BezbahilRatingType::class, [
         'required' => true,
