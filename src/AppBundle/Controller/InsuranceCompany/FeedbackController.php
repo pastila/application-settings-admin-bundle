@@ -312,7 +312,7 @@ class FeedbackController extends Controller
           $this->get('logger')->warn('Unable to send notification about new review to site administrator: ' . $e2);
         }
 
-        $this->addFlash('magnific', 'Спасибо за отзыв. Он будет опубликован после модерации.');
+        $this->addFlash('magnific', 'Спасибо за отзыв! Он будет опубликован после модерации.');
 
         return $this->redirectToRoute('app_insurancecompany_feedback_index');
       }

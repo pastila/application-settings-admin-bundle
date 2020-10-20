@@ -24,6 +24,21 @@
     <script type="text/javascript" src="/local/templates/kdteam/pages/feedback/main.min.js?15862684754547"></script>
     <script type="text/javascript" src="/local/templates/kdteam/js/readmore.min.js?1586268475879"></script>
     {{ parent() }}
+
+    {% for label, messages in app.flashes(['magnific']) %}
+        {% for message in messages %}
+            <script type="application/javascript">
+                $(function(){
+                    $.magnificPopup.open({
+                        items: {
+                            src: '<div class="white-popup custom_styles_popup" >{{ message }}</div>',
+                            type: 'inline',
+                        },
+                    });
+                })
+            </script>
+        {% endfor %}
+    {% endfor %}
 {% endblock %}
 
 
@@ -150,21 +165,4 @@
             и возможно именно ваш отзыв станет решающим для посетителей сайта при выборе страховой компании. </p>
     </div>
     <!-- Second Sidebar block -->
-
-    {% for label, messages in app.flashes(['magnific']) %}
-        {% for message in messages %}
-            <script type="application/javascript">
-                $(function(){
-                    $.magnificPopup.open({
-                        items: {
-                            src: '<div class="white-popup custom_styles_popup" >{{ message }}</div>',
-                            type: 'inline',
-                        },
-                    });
-                })
-            </script>
-        {% endfor %}
-    {% endfor %}
-
-
 {% endblock %}
