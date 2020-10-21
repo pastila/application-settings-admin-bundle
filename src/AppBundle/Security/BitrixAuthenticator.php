@@ -126,12 +126,12 @@ class BitrixAuthenticator extends AbstractGuardAuthenticator
          * Если это новый пользовтаель
          */
         $user = new User();
-        $user->setBitrixId($credentials['id']);
       }
     }
     /**
      * Всегда обновление данных для пользователя в момент авторизации
      */
+    $user->setBitrixId($credentials['id']);
     $user->setLogin($credentials['login']);
     $user->setEmail($credentials['email']);
     $user->setFirstName($credentials['firstName']);
