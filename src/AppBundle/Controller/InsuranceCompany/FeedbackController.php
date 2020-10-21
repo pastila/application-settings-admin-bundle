@@ -26,6 +26,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -58,7 +59,8 @@ class FeedbackController extends Controller
     $response = new Response();
     $response->setPublic();
 
-    $flashbag = $this->get('session.flash_bag');
+    /** @var FlashBagInterface $flashbag */
+    $flashbag = $request->getSession()->getFlashBag();
 
     //Не кешируем страницу, если перешли со страницы создания отзыва, чтобы не закешировать диалог об успешной отправке отзыва
     if (!$this->getUser() && !$flashbag->has('magnific'))
