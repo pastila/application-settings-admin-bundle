@@ -31,27 +31,27 @@
             <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
                 <a href="{{ path("app_insurancecompany_feedback_index") }}" class="active-breadcrumbs" itemprop="item">{{ review.title }}
                     <meta itemprop="name" content="{{ review.title }}">
-                    <meta property="position" content="1">
                 </a>
+                <meta property="position" content="1">
             </li>
         {% else %}
             <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
                 <a href="/" itemprop="item">Главная
                     <meta itemprop="name" content="Главная">
-                    <meta property="position" content="1">
                 </a>
+                <meta property="position" content="1">
             </li>
             <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
                 <a href="{{ path("app_insurancecompany_feedback_index") }}" itemprop="item">Отзывы
                     <meta itemprop="name" content="Отзывы">
-                    <meta property="position" content="2">
                 </a>
+                <meta property="position" content="2">
             </li>
             <li class="active-breadcrumbs" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
                 <a itemprop="item">{{ review.title }}
                     <meta itemprop="name" content="{{ review.title }}">
-                    <meta property="position" content="3">
                 </a>
+                <meta property="position" content="3">
             </li>
         {% endif %}
     </ul>
