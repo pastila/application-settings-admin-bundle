@@ -9,6 +9,7 @@ use AppBundle\Entity\Company\Citation;
 use AppBundle\Entity\Company\Comment;
 use AppBundle\Entity\Company\Company;
 use AppBundle\Entity\Company\CompanyBranch;
+use AppBundle\Entity\Company\CompanyStatus;
 use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\Company\FeedbackModerationStatus;
 use AppBundle\Entity\User\User;
@@ -143,6 +144,9 @@ class FeedbackController extends Controller
     $reviewListQb
       ->innerJoin('rv.branch', 'rvb')
       ->innerJoin('rvb.company', 'rvc')
+      ->andWhere('rvb.status = :status')
+      ->andWhere('rvc.status = :status')
+      ->setParameter('status', CompanyStatus::ACTIVE);
 //      ->leftJoin('rv.comments', 'rvct')
 //      ->leftJoin('rvct.citations', 'rvctcs')
     ;
