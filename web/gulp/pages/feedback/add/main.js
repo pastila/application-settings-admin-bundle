@@ -369,8 +369,8 @@ $(document).ready(function() {
         data.id_compani = hospital;
       }
 
-      if(data_form[0]['value'] === "" ){
-        $("#"+data_form[0]["name"]).after('   <div class="popover_error">\n' +
+      if(data_form[3]['value'] === "" ){
+        $("*[name='"+data_form[3]["name"]+"']").after('   <div class="popover_error">\n' +
             '          <div class="popover_error_arrow"></div>\n' +
             '          <div class="popover_error_image">\n' +
             '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
@@ -381,10 +381,10 @@ $(document).ready(function() {
             '      </div>');
         this.empty_field.push('error');
       }else{
-        data.head = data_form[0]['value'];
+        data.head = data_form[3]['value'];
       }
-      if(data_form[1]['value'] === "" ){
-        $("#"+data_form[1]["name"]).after('   <div class="popover_error">\n' +
+      if(data_form[4]['value'] === "" ){
+        $("*[name='"+data_form[4]["name"]+"']").after('   <div class="popover_error">\n' +
             '          <div class="popover_error_arrow"></div>\n' +
             '          <div class="popover_error_image">\n' +
             '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
@@ -395,7 +395,7 @@ $(document).ready(function() {
             '      </div>');
         this.empty_field.push('error');
       }else{
-        data.text = data_form[1]['value'];
+        data.text = data_form[4]['value'];
       }
       if (data.id_city === 0) {
         $('[data-select=city]').next().css({'display': 'block'});
@@ -452,8 +452,8 @@ $(document).ready(function() {
       }
 
 
-      if(data_form[0]['value'] === "" ){
-        $("#"+data_form[0]["name"]).after('   <div class="popover_error">\n' +
+      if(data_form[2]['value'] === "" ){
+        $("*[name='"+data_form[2]["name"]+"']").after('   <div class="popover_error">\n' +
             '          <div class="popover_error_arrow"></div>\n' +
             '          <div class="popover_error_image">\n' +
             '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
@@ -464,11 +464,11 @@ $(document).ready(function() {
             '      </div>');
         this.empty_field.push('error');
       }else{
-        data.name_user_no_Authorized = data_form[0]['value'];
+        data.name_user_no_Authorized = data_form[2]['value'];
       }
 
-      if(data_form[1]['value']  === "" ){
-        $("#"+data_form[1]["name"]).after('   <div class="popover_error">\n' +
+      if(data_form[3]['value']  === "" ){
+        $("*[name='"+data_form[3]["name"]+"']").after('   <div class="popover_error">\n' +
             '          <div class="popover_error_arrow"></div>\n' +
             '          <div class="popover_error_image">\n' +
             '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
@@ -479,10 +479,10 @@ $(document).ready(function() {
             '      </div>');
         this.empty_field.push('error');
       }else{
-        data.head = data_form[1]['value'];
+        data.head = data_form[3]['value'];
       }
-      if(data_form[2]['value'] === ""){
-        $("#"+data_form[2]["name"]).after('   <div class="popover_error">\n' +
+      if(data_form[4]['value'] === ""){
+        $("*[name='"+data_form[4]["name"]+"']").after('   <div class="popover_error">\n' +
             '          <div class="popover_error_arrow"></div>\n' +
             '          <div class="popover_error_image">\n' +
             '          <img src="/local/templates/kdteam/images/svg/error.svg" alt="Ошибка">\n' +
@@ -493,7 +493,7 @@ $(document).ready(function() {
             '      </div>');
         this.empty_field.push('error');
       }else{
-        data.text = data_form[2]['value'];
+        data.text = data_form[4]['value'];
       }
 
 
@@ -513,37 +513,37 @@ $(document).ready(function() {
 
     },
 
-    send_data: function(data) {
-
-      $.ajax({
-        url: '/ajax/add_reviews.php',
-        type: 'POST',
-        data: data,
-        dataType: 'html',
-        beforeSend: function() {
-          delete_cookie('letter');
-
-        },
-
-      }).done(function(msg) {
-        if (msg == 1) {
-          $.magnificPopup.open({
-            items: {
-              src: '<div class="white-popup custom_styles_popup" >Спасибо за отзыв. Он будет опубликован после модерации.</div>',
-              type: 'inline',
-            },
-            callbacks: {
-              afterClose: function() {
-                document.location.href = '/feedback/'
-              },
-            },
-          });
-        }
-      });
-    },
+    // send_data: function(data) {
+    //
+    //   $.ajax({
+    //     url: '/ajax/add_reviews.php',
+    //     type: 'POST',
+    //     data: data,
+    //     dataType: 'html',
+    //     beforeSend: function() {
+    //       delete_cookie('letter');
+    //
+    //     },
+    //
+    //   }).done(function(msg) {
+    //     if (msg == 1) {
+    //       $.magnificPopup.open({
+    //         items: {
+    //           src: '<div class="white-popup custom_styles_popup" >Спасибо за отзыв. Он будет опубликован после модерации.</div>',
+    //           type: 'inline',
+    //         },
+    //         callbacks: {
+    //           afterClose: function() {
+    //             document.location.href = '/feedback/'
+    //           },
+    //         },
+    //       });
+    //     }
+    //   });
+    // },
   };
   $('#submit').click(function(e) {
-    e.preventDefault();
+    //e.preventDefault();
 
     var data_form = $('#form-comments').serializeArray();
     obj_review.empty_field = [];
@@ -552,18 +552,24 @@ $(document).ready(function() {
         $('.header__r_auth_reg').length > 0) {
       obj_review.user_no_Authorized(data_form);
 
-      if (obj_review.empty_field.length === 0) {
-
-        obj_review.send_data(data);
-
+      // if (obj_review.empty_field.length === 0) {
+      //
+      //   obj_review.send_data(data);
+      //
+      // }
+      if (obj_review.empty_field.length > 0) {
+        e.preventDefault();
       }
     } else {
       obj_review.user_Authorized(data_form);
 
-      if (obj_review.empty_field.length === 0) {
-
-        obj_review.send_data(data);
-
+      // if (obj_review.empty_field.length === 0) {
+      //
+      //   obj_review.send_data(data);
+      //
+      // }
+      if (obj_review.empty_field.length > 0) {
+        e.preventDefault();
       }
     }
 

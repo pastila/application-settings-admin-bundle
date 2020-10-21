@@ -7,6 +7,7 @@ namespace AppBundle\Form\Widget;
 
 
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class BezbahilRatingType extends IntegerType
 {

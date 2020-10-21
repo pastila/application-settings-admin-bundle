@@ -124,6 +124,11 @@ class Feedback
   protected $comments;
 
   /**
+   * @var
+   */
+  private $region;
+
+  /**
    * Company constructor.
    */
   public function __construct ()
@@ -363,15 +368,7 @@ class Feedback
 
   public function setAuthorName($v)
   {
-    $author = $this->getAuthor();
-    if (!$author)
-    {
-      $author = new User();
-      $this->setAuthor($author);
-    }
-
-    $author->setFirstName($v);
-    $this->authorName = $this->author->getFullName();
+    $this->authorName = $v;
 
     return $this;
   }

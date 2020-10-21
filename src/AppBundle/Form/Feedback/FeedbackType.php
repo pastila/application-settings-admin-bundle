@@ -13,6 +13,7 @@ use AppBundle\Repository\Company\CompanyRepository;
 use AppBundle\Repository\Geo\RegionRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\SubmitButton;
@@ -67,7 +68,7 @@ class FeedbackType extends AbstractType
         'required' => true,
         'constraints' => [
           new NotBlank(),
-        ],
+        ]
       ])
       ->add('valuation', BezbahilRatingType::class, [
         'required' => true,
@@ -76,6 +77,7 @@ class FeedbackType extends AbstractType
 //          new NotBlank(),
 //        ],
       ])
+      ->add('reviewLetter', HiddenType::class)
     ;
   }
 

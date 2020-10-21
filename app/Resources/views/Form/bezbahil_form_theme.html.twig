@@ -26,7 +26,7 @@
 {% endblock %}
 
 {% block bezbahil_autocomplete_region_widget %}
-    <input type="hidden" id="region_select_id" name="region_select_id" value="">
+    <input type="hidden" id="region_select_id" name="{{ form.vars.full_name }}" value="{{ form.vars.value }}">
     <div class="input__wrap">
         <div class="input__ico">
             <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255"
@@ -44,7 +44,7 @@
 {% endblock %}
 
 {% block bezbahil_autocomplete_company_widget %}
-    <input type="hidden" id="company_select_id" name="company_select_id" value="">
+    <input type="hidden" id="company_select_id" name="{{ form.vars.full_name }}" value="{{ form.vars.value }}">
     <div class="input__wrap">
         <div class="input__ico">
             <svg xmlns="http://www.w3.org/2000/svg" width="255" height="255"
@@ -61,7 +61,7 @@
 
 {% block bezbahil_rating_widget %}
     <!-- Rating Stars Box -->
-    <input type="hidden" id="rating_select" name="rating_select" value="">
+    <input type="hidden" id="rating_select" name="{{ form.vars.full_name }}" value="">
     <div class='rating-stars text-center input__wrap' data-select="star">
         <label for="name" class="input__wrap_label">Оценка</label>
         <ul id='stars'>
