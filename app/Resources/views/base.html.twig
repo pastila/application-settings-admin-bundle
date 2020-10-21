@@ -99,7 +99,7 @@ left:-9999px;" alt="" /></div></noscript>
                         <span class="header__r_auth_user_hello">
                             Добрый день,
                         </span>
-                <span class="header__r_auth_user_name">{{ app.user.fullName }}!</span>
+                <span class="header__r_auth_user_name">{{ app.user.firstLastName }}!</span>
             </a>
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                 {{ render(controller('AppBundle:User:_userPanel')) }}

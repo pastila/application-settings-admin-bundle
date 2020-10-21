@@ -112,19 +112,35 @@ class BitrixAuthenticator extends AbstractGuardAuthenticator
     }
 
     $user = $this->entityManager->getRepository(User::class)
-      ->findOneBy(['login' => $credentials['login']]);
+      ->findOneBy(['bitrixId' => $credentials['id']]);
     if (!$user)
     {
-      $user = new User();
-      $user->setLogin($credentials['login']);
-      $user->setEmail($credentials['email']);
-      $user->setFirstName($credentials['firstName']);
-      $user->setLastName($credentials['lastName']);
-      $user->setMiddleName($credentials['middleName']);
-      $user->setRepresentative($credentials['representative']);
-      $this->entityManager->persist($user);
-      $this->entityManager->flush();
+      /**
+       * Если bitrixId еще не был добавлен для этого пользователя, то поиск по login
+       */
+      $user = $this->entityManager->getRepository(User::class)
+        ->findOneBy(['login' => $credentials['login']]);
+      if (!$user)
+      {
+        /**
+         * Если это новый пользовтаель
+         */
+        $user = new User();
+      }
     }
+    /**
+     * Всегда обновление данных для пользователя в момент авторизации
+     */
+    $user->setBitrixId($credentials['id']);
+    $user->setLogin($credentials['login']);
+    $user->setEmail($credentials['email']);
+    $user->setFirstName($credentials['firstName']);
+    $user->setLastName($credentials['lastName']);
+    $user->setMiddleName($credentials['middleName']);
+    $user->setRepresentative($credentials['representative']);
+    $this->entityManager->persist($user);
+    $this->entityManager->flush();
+
     $user->setIsAdmin($credentials['isAdmin']);
 
     return $user;
