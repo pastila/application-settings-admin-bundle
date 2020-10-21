@@ -204,6 +204,22 @@ class User implements UserInterface
   }
 
   /**
+   * @return string
+   */
+  public function getFirstLastName()
+  {
+    $resultParts = [];
+    foreach ([$this->firstName, $this->lastName] as $namePart)
+    {
+      if ($namePart)
+      {
+        $resultParts[] = $namePart;
+      }
+    }
+    return implode(' ', $resultParts);
+  }
+
+  /**
    * @param string $middleName
    *
    * @return $this
