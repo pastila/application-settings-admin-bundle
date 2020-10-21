@@ -3,6 +3,7 @@
 namespace AppBundle\Helper\Feedback;
 
 use AppBundle\Entity\Company\Company;
+use AppBundle\Entity\Company\CompanyStatus;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Throwable;
@@ -50,6 +51,7 @@ class CompanyBranchHelper
                 e.IBLOCK_ID, 
                 e.ACTIVE,  
                 e.CODE, 
+                e.ACTIVE, 
                 epK.VALUE as KPP,
                 sC.ID as COMPANY_ID,
                 epR.SEARCHABLE_CONTENT as REGION_NAME,
@@ -77,7 +79,8 @@ class CompanyBranchHelper
 
     $result = $stmt->fetchAll();
     $nbImported = 0;
-    foreach ($result as $item) {
+    foreach ($result as $item)
+    {
       $name = !empty($item['NAME']) ? str_replace('"', '', $item['NAME']) : null;
       $kpp = !empty($item['KPP']) ? $item['KPP'] : null;
       $company_id = !empty($item['COMPANY_ID']) ? $item['COMPANY_ID'] : null;
@@ -88,6 +91,9 @@ class CompanyBranchHelper
       $email1 = !empty($item['EMAIL1']) ? $item['EMAIL1'] : null;
       $email2 = !empty($item['EMAIL2']) ? $item['EMAIL2'] : null;
       $email3 = !empty($item['EMAIL3']) ? $item['EMAIL3'] : null;
+      $status = !empty($item['ACTIVE']) ?
+        ($item['ACTIVE'] === 'Y' ? CompanyStatus::ACTIVE : CompanyStatus::NOT_ACTIVE) :
+        CompanyStatus::NOT_ACTIVE;
 
       $company = !empty($company_id) ? $this->entityManager->getRepository("AppBundle:Company\Company")
         ->createQueryBuilder('c')
@@ -103,13 +109,14 @@ class CompanyBranchHelper
         continue;
       }
 
-      if ($company) {
+      if ($company)
+      {
         $company->setValuation($amountAllStar);
         $this->entityManager->persist($company);
         $this->entityManager->flush();
 
-        $sql = "INSERT INTO s_company_branches(name, kpp, code, company_id, region_id, valuation, logo_id_from_bitrix, email_first, email_second, email_third) 
-                    VALUES(:name, :kpp, :code, :company_id, :region_id, :valuation, :image_id, :email1, :email2, :email3)";
+        $sql = "INSERT INTO s_company_branches(name, kpp, code, company_id, region_id, valuation, logo_id_from_bitrix, email_first, email_second, email_third, status) 
+                    VALUES(:name, :kpp, :code, :company_id, :region_id, :valuation, :image_id, :email1, :email2, :email3, :status)";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':name', $name);
@@ -122,6 +129,7 @@ class CompanyBranchHelper
         $stmt->bindValue(':email1', $email1);
         $stmt->bindValue(':email2', $email2);
         $stmt->bindValue(':email3', $email3);
+        $stmt->bindValue(':status', $status);
         $stmt->execute();
         $nbImported++;
       }
@@ -145,14 +153,16 @@ class CompanyBranchHelper
    */
   private function checkFeedback()
   {
-    try {
+    try
+    {
       $sql = 'UPDATE s_company_feedbacks scf 
               LEFT JOIN s_company_branches scb ON scb.id = scf.branch_id
               SET scf.branch_id = null
               WHERE scf.branch_id IS NOT NULL AND scb.id IS NULL';
       $stmt = $this->entityManager->getConnection()->prepare($sql);
       $stmt->execute();
-    } catch (Throwable $exception) {
+    } catch (Throwable $exception)
+    {
       $this->logger->error(sprintf('Error update s_company_feedbacks: . %s', $exception->getMessage()));
 
       throw $exception;
@@ -165,14 +175,16 @@ class CompanyBranchHelper
    */
   private function checkUser()
   {
-    try {
+    try
+    {
       $sql = 'UPDATE s_users su 
               LEFT JOIN s_company_branches scb ON scb.id = su.branch_id
               SET su.branch_id = null
               WHERE su.branch_id IS NOT NULL AND scb.id IS NULL';
       $stmt = $this->entityManager->getConnection()->prepare($sql);
       $stmt->execute();
-    } catch (Throwable $exception) {
+    } catch (Throwable $exception)
+    {
       $this->logger->error(sprintf('Error update s_users: . %s', $exception->getMessage()));
 
       throw $exception;
