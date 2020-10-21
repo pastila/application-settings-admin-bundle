@@ -7,6 +7,7 @@ namespace AppBundle\Form\InsuranceCompany;
 
 use AppBundle\Entity\Company\Company;
 use AppBundle\Entity\Company\CompanyBranch;
+use AppBundle\Entity\Company\CompanyStatus;
 use AppBundle\Entity\Company\FeedbackModerationStatus;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Form\BezbahilFilterChoiceType;
@@ -40,8 +41,13 @@ class FeedbackListFilterType extends AbstractType
     $builder
       ->add('company', BezbahilFilterEntityType::class, [
         'class' => Company::class,
+        'query_builder' => function (EntityRepository $er) {
+          return $er->createQueryBuilder('c')
+            ->andWhere('c.status = :status')
+            ->setParameter('status', CompanyStatus::ACTIVE);
+        },
         'url_builder' => $options['url_builder'],
-        'label' => 'Страховая компания <span>('.$this->companyRepository->countAll().')</span>',
+        'label' => 'Страховая компания <span>('.$this->companyRepository->countActiveAll().')</span>',
         'clear_label' => 'Очистить отзывы'
       ])
       ->add('rating', BezbahilFilterChoiceType::class, [

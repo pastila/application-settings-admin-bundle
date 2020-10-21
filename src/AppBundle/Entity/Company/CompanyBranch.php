@@ -135,6 +135,12 @@ class CompanyBranch
   private $emailThird;
 
   /**
+   * @var int
+   * @ORM\Column(type="integer", nullable=false)
+   */
+  private $status;
+
+  /**
    * @var Feedback[]|ArrayCollection
    * @ORM\OneToMany(targetEntity="AppBundle\Entity\Company\Feedback", mappedBy="branch")
    */
@@ -371,6 +377,38 @@ class CompanyBranch
   public function setEmailThird($emailThird)
   {
     $this->emailThird = $emailThird;
+
+    return $this;
+  }
+
+  /**
+   * @return int
+   */
+  public function getStatus()
+  {
+    return $this->status;
+  }
+
+  /**
+   * @return int|string
+   */
+  public function getStatusLabel ()
+  {
+    return CompanyStatus::getName($this->status);
+  }
+
+  /**
+   * @param $status
+   * @return $this
+   */
+  public function setStatus($status)
+  {
+    if (null !== $status && !in_array($status, CompanyStatus::getAvailableValues()))
+    {
+      throw new \InvalidArgumentException();
+    }
+
+    $this->status = $status;
 
     return $this;
   }

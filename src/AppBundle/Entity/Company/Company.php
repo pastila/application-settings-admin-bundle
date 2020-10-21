@@ -77,6 +77,12 @@ class Company implements ImageAwareInterface, ImageInterface, SluggableInterface
   protected $file;
 
   /**
+   * @var int
+   * @ORM\Column(type="integer", nullable=false)
+   */
+  private $status;
+
+  /**
    * @var Feedback[]|ArrayCollection
    * @ORM\OneToMany(targetEntity="AppBundle\Entity\Company\Feedback", mappedBy="company")
    */
@@ -186,58 +192,33 @@ class Company implements ImageAwareInterface, ImageInterface, SluggableInterface
   }
 
   /**
-   * @return string
+   * @return int
    */
-  public function getEmailFirst()
+  public function getStatus()
   {
-    return $this->emailFirst;
+    return $this->status;
   }
 
   /**
-   * @param string $emailFirst
+   * @return int|string
+   */
+  public function getStatusLabel ()
+  {
+    return CompanyStatus::getName($this->status);
+  }
+
+  /**
+   * @param $status
    * @return $this
    */
-  public function setEmailFirst($emailFirst)
+  public function setStatus($status)
   {
-    $this->emailFirst = $emailFirst;
+    if (null !== $status && !in_array($status, CompanyStatus::getAvailableValues()))
+    {
+      throw new \InvalidArgumentException();
+    }
 
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getEmailSecond()
-  {
-    return $this->emailSecond;
-  }
-
-  /**
-   * @param string $emailSecond
-   * @return $this
-   */
-  public function setEmailSecond($emailSecond)
-  {
-    $this->emailSecond = $emailSecond;
-
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getEmailThird()
-  {
-    return $this->emailThird;
-  }
-
-  /**
-   * @param string $emailThird
-   * @return $this
-   */
-  public function setEmailThird($emailThird)
-  {
-    $this->emailThird = $emailThird;
+    $this->status = $status;
 
     return $this;
   }

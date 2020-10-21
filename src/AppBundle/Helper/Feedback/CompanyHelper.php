@@ -3,6 +3,7 @@
 namespace AppBundle\Helper\Feedback;
 
 use AppBundle\Entity\Company\Company;
+use AppBundle\Entity\Company\CompanyStatus;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Throwable;
@@ -65,11 +66,15 @@ class CompanyHelper
       $name = !empty($item['NAME']) ? str_replace('"', '', $item['NAME']) : null;
       $kpp = !empty($item['KPP']) ? $item['KPP'] : null;
       $image = !empty($item['IMAGE']) ? $item['IMAGE'] : null;
+      $status = !empty($item['ACTIVE']) ?
+        ($item['ACTIVE'] === 'Y' ? CompanyStatus::ACTIVE : CompanyStatus::NOT_ACTIVE) :
+        CompanyStatus::NOT_ACTIVE;
 
       $company = new Company();
       $company->setName($name);
       $company->setKpp($kpp);
       $company->setFile($image);
+      $company->setStatus($status);
       $this->entityManager->persist($company);
       $nbImported++;
     }
