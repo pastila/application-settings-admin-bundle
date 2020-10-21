@@ -72,6 +72,15 @@ class User implements UserInterface
   private $branch;
 
   /**
+   * ID пользователя в системе битрикс
+   *
+   * @var integer
+   *
+   * @ORM\Column(name="bitrix_id", type="integer", nullable=true)
+   */
+  private $bitrixId;
+
+  /**
    * @var
    */
   private $isAdmin;
@@ -311,6 +320,25 @@ class User implements UserInterface
   public function setBranch($branch)
   {
     $this->branch = $branch;
+
+    return $this;
+  }
+
+  /**
+   * @return int
+   */
+  public function getBitrixId()
+  {
+    return $this->bitrixId;
+  }
+
+  /**
+   * @param $bitrixId
+   * @return $this
+   */
+  public function setBitrixId($bitrixId)
+  {
+    $this->bitrixId = $bitrixId;
 
     return $this;
   }
