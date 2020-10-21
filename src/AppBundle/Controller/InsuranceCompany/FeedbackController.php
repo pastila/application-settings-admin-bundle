@@ -569,7 +569,7 @@ class FeedbackController extends Controller
           }
           catch (\Exception $e)
           {
-            $this->get('logger')->warn('Unable to send notification about new review to site administrator: ' . $e);
+            $this->get('logger')->warn('Unable to send notification about new review to insurance branch: ' . $e);
           }
         }
       }
