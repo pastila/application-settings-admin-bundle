@@ -58,7 +58,10 @@ class FeedbackController extends Controller
     $response = new Response();
     $response->setPublic();
 
-    if (!$this->getUser())
+    $flashbag = $this->get('session.flash_bag');
+
+    //Не кешируем страницу, если перешли со страницы создания отзыва, чтобы не закешировать диалог об успешной отправке отзыва
+    if (!$this->getUser() && !$flashbag->has('magnific'))
     {
         /** @var QueryBuilder $maxQb */
       $maxQb = $this
