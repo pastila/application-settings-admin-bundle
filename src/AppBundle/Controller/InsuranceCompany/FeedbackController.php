@@ -561,7 +561,17 @@ class FeedbackController extends Controller
         }
         $url = $this->generateUrl('app_insurancecompany_feedback_show', ['id' => $feedback->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
         $date = $feedback->getCreatedAt()->format('Y-m-d H:i:s');
-        $this->sendNewFeedback($emails, $url, $date);
+
+        foreach ($emails as $email) {
+          try
+          {
+            $this->sendNewFeedback($email, $url, $date);
+          }
+          catch (\Exception $e)
+          {
+            $this->get('logger')->warn('Unable to send notification about new review to site administrator: ' . $e);
+          }
+        }
       }
 
       return new JsonResponse(1);
