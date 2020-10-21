@@ -12,6 +12,7 @@ use AppBundle\Entity\Company\CompanyBranch;
 use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\Company\FeedbackModerationStatus;
 use AppBundle\Entity\User\User;
+use AppBundle\Exception\BitrixRequestException;
 use AppBundle\Form\Feedback\CommentFormType;
 use AppBundle\Form\Feedback\FeedbackType;
 use AppBundle\Form\InsuranceCompany\FeedbackListFilterType;
@@ -52,43 +53,35 @@ class FeedbackController extends Controller
    * @Route(path="/feedback")
    * @Route(path="/companies/{slug}/feedback", name="company_review_list")
    */
-  public function indexAction(Request $request, UserInterface $user = null)
+  public function indexAction(Request $request)
   {
     $response = new Response();
     $response->setPublic();
 
-    if ($request->query->count() === 0)
+    if (!$this->getUser())
     {
-      /** @var QueryBuilder $maxQb */
-      $maxQb = $maxUpdatedAt = $this
+        /** @var QueryBuilder $maxQb */
+      $maxQb = $this
         ->getDoctrine()
         ->getManager()
         ->getRepository(Feedback::class)
-        ->createQueryBuilder('rv')
-        ->leftJoin('rv.comments', 'rvct');
+        ->createQueryBuilder('rv');
 
       $maxUpdatedAt = $maxQb
-        ->select('MAX(rv.updatedAt), MAX(rvct.updatedAt)')
+        ->select('MAX(rv.updatedAt)')
         ->getQuery()
-        ->getResult();
-      $rvUpdateAt = !empty($maxUpdatedAt[0][1]) ? $maxUpdatedAt[0][1] : null;
-      $rvctUpdateAt = !empty($maxUpdatedAt[0][2]) ? $maxUpdatedAt[0][2] : null;
-      $max = $rvUpdateAt > $rvctUpdateAt ? $rvUpdateAt : $rvctUpdateAt;
+        ->getSingleScalarResult();
 
-      $response->setLastModified(new \DateTime($max));
+      $response->setLastModified(new \DateTime($maxUpdatedAt));
 
       if ($response->isNotModified($request))
       {
-        return $response;
+          $response->headers->addCacheControlDirective('no-cache', true);
+          $response->headers->addCacheControlDirective('must-revalidate', true);
+
+          return $response;
       }
-    } else
-    {
-      $response->setMaxAge(3600);
-
-      // (optional) set a custom Cache-Control directive
-      $response->headers->addCacheControlDirective('must-revalidate', true);
     }
-
 
     $reviewListFilter = new FeedbackListFilter();
     $reviewListFilter->setPage($request->query->get('page', 1));
@@ -138,22 +131,16 @@ class FeedbackController extends Controller
     } else
     {
       $reviewListQb
-        ->orWhere('rv.moderationStatus = :status')
+        ->andWhere('rv.moderationStatus = :status')
         ->setParameter('status', FeedbackModerationStatus::MODERATION_ACCEPTED);
-      $userId = (null !== $user) ? $user->getId() : null;
-      if (!empty($userId))
-      {
-        $reviewListQb
-          ->orWhere('rv.author = :user_id')
-          ->setParameter('user_id', $userId);
-      }
     }
 
     $reviewListQb
       ->innerJoin('rv.branch', 'rvb')
       ->innerJoin('rvb.company', 'rvc')
-      ->leftJoin('rv.comments', 'rvct')
-      ->leftJoin('rvct.citations', 'rvctcs');
+//      ->leftJoin('rv.comments', 'rvct')
+//      ->leftJoin('rvct.citations', 'rvctcs')
+    ;
 
     if ($reviewListFilter->getRating())
     {
@@ -226,7 +213,7 @@ class FeedbackController extends Controller
    * @param $id
    * @Route(path="/feedback/{id}", requirements={ "id": "\d+" })
    */
-  public function showAction($id, Request $request)
+  public function showAction($id, Request $request, UserInterface $user = null)
   {
     /** @var Feedback $review */
     $review = $this
@@ -248,15 +235,20 @@ class FeedbackController extends Controller
     }
 
     $response = new Response();
-    $response->setLastModified($review->getUpdatedAt());
-
-    // Set response as public. Otherwise it will be private by default.
     $response->setPublic();
-
-    if ($response->isNotModified($request))
+    if (null === $user)
     {
-      return $response;
+      $response->setLastModified($review->getUpdatedAt());
+
+      if ($response->isNotModified($request))
+      {
+          $response->headers->addCacheControlDirective('no-cache', true);
+          $response->headers->addCacheControlDirective('must-revalidate', true);
+
+          return $response;
+      }
     }
+
 
     return $this->render('InsuranceCompany/Review/show.html.twig', [
       'review' => $review
@@ -268,49 +260,62 @@ class FeedbackController extends Controller
    */
   public function newAction(Request $request, UserInterface $user = null)
   {
+    /**
+     * @var Feedback $feedback
+     */
     $feedback = new Feedback();
     $form = $this->createForm(FeedbackType::class, $feedback, [
       'csrf_protection' => false,
     ]);
-    $data = $request->request->all();
-    $userId = null !== $user ? $user->getId() : null;
 
-    if ($request->isMethod('post')) {
+    if ($request->isMethod('post'))
+    {
+      $data = $request->request->all();
       $newData = [
-        'author' => $userId,
-        'region' => $data['region_select_id'],
-        'branch' => $data['company_select_id'],
-        'valuation' => $data['rating_select'],
+        'region' => !empty($data['region_select_id']) ? $data['region_select_id'] : null,
+        'branch' => !empty($data['company_select_id']) ? $data['company_select_id'] : null,
+        'valuation' => !empty($data['rating_select']) ? $data['rating_select'] : null,
       ];
       $newData = array_merge($data['feedback'], $newData);
       $form->submit($newData);
-    }
-    if ($form->isSubmitted() && !empty($newData['region']) && !empty($newData['branch']))
-    {
-      $sql = 'INSERT INTO s_company_feedbacks(user_id, region_id, branch_id, author_name, title, text, valuation, moderation_status, created_at, updated_at) 
-              VALUES(:author, :region, :branch, :author_name, :title, :text, :valuation, :moderation_status, :createdAt, :createdAt)';
-      $entityManager = $this->getDoctrine()->getManager();
-      $stmt = $entityManager->getConnection()->prepare($sql);
-      $stmt->bindValue('author', $newData['author']);
-      $stmt->bindValue('author_name', $newData['author_name']);
-      $stmt->bindValue('region', $newData['region']);
-      $stmt->bindValue('branch', $newData['branch']);
-      $stmt->bindValue('text', $newData['text']);
-      $stmt->bindValue('title', $newData['title']);
-      $stmt->bindValue('valuation', $newData['valuation']);
-      $stmt->bindValue('moderation_status', FeedbackModerationStatus::MODERATION_NONE);
-      $stmt->bindValue('createdAt', date("Y-m-d H:i:s"));
-      $stmt->execute();
-      $id = $entityManager->getConnection()->lastInsertId();
-      $feedback = $this->getDoctrine()->getManager()->getRepository(Feedback::class)
-        ->findOneBy(['id' => $id]);
 
-      $url = $this->generateUrl('app_insurancecompany_feedback_show', ['id' => $feedback->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-      $date = $feedback->getCreatedAt()->format('Y-m-d H:i:s');
-      $mainMail = $this->mainMail->getMainMail($request);
-      $this->sendNewFeedback($mainMail, $url, $date);
+      if ($form->isSubmitted() && $form->isValid())
+      {
+        $em = $this->getDoctrine()->getManager();
+        $userId = null !== $user ? $user->getId() : null;
+        $user = $em->getRepository(User::class)
+          ->findOneBy(['id' => $userId]);
 
-      return $this->redirectToRoute('app_insurancecompany_feedback_index');
+        $feedback = $form->getData();
+        $feedback->setAuthor($user);
+        $feedback->setModerationStatus(FeedbackModerationStatus::MODERATION_NONE);
+        $feedback->setCreatedAt(new \DateTime());
+        $feedback->setUpdatedAt(new \DateTime());
+
+        $em->persist($feedback);
+        $em->flush();
+
+        $url = $this->generateUrl('app_insurancecompany_feedback_show', ['id' => $feedback->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $date = $feedback->getCreatedAt()->format('Y-m-d H:i:s');
+
+        try
+        {
+          $mainMail = $this->mainMail->getMainMail($request);
+          $this->sendNewFeedback($mainMail, $url, $date);
+        }
+        catch (BitrixRequestException $e)
+        {
+          $this->get('logger')->warn('Unable to send notification about new review to site administrator. Could not resolve administrator email: ' . $e);
+        }
+        catch (\Exception $e2)
+        {
+          $this->get('logger')->warn('Unable to send notification about new review to site administrator: ' . $e2);
+        }
+
+        $this->addFlash('magnific', 'Спасибо за отзыв! Он будет опубликован после модерации.');
+
+        return $this->redirectToRoute('app_insurancecompany_feedback_index');
+      }
     }
 
     return $this->render('InsuranceCompany/Review/new.html.twig', [
@@ -321,31 +326,15 @@ class FeedbackController extends Controller
   /**
    * @Route(path="/feedback/remove", name="app_insurancecompany_feedback_remove")
    */
-  public function removeAction(Request $request, UserInterface $user = null)
+  public function removeAction(Request $request)
   {
-    if (!$user && !$user->isAdmin()) {
-      return new JsonResponse([
-      ], 400);
-    }
-    $data = $request->request->all();
-    $feedback_id = isset($data['id']) ? $data['id'] : null;
+    $this->denyAccessUnlessGranted('ROLE_ADMIN');
+    $em = $this->getDoctrine()->getManager();
 
-    /**
-     * @var Feedback $feedback
-     */
-    $feedback = $this->getDoctrine()->getManager()->getRepository(Feedback::class)
-      ->findOneBy(['id' => $feedback_id]);
+    $feedback = $em->getRepository(Feedback::class)
+      ->find($request->get('id'));
     if ($feedback)
     {
-      $em = $this->getDoctrine()->getEntityManager();
-      foreach ($feedback->getComments() as $comment)
-      {
-        foreach ($comment->getCitations() as $citation)
-        {
-          $em->remove($citation);
-        }
-        $em->remove($comment);
-      }
       $em->remove($feedback);
       $em->flush();
 
@@ -551,23 +540,19 @@ class FeedbackController extends Controller
         $this->getDoctrine()->getManager()->persist($feedback);
         $this->getDoctrine()->getManager()->flush();
 
-        // update rating company and branch
-        $this->updateRating($feedback);
-
         $branch = $feedback->getBranch();
-        $company = !empty($branch) ? $branch->getCompany() : null;
         $emails = [];
-        if (!empty($company->getEmailFirst()))
+        if (!empty($branch->getEmailFirst()))
         {
-          $emails[] = $company->getEmailFirst();
+          $emails[] = $branch->getEmailFirst();
         }
-        if (!empty($company->getEmailSecond()))
+        if (!empty($branch->getEmailSecond()))
         {
-          $emails[] = $company->getEmailSecond();
+          $emails[] = $branch->getEmailSecond();
         }
-        if (!empty($company->getEmailThird()))
+        if (!empty($branch->getEmailThird()))
         {
-          $emails[] = $company->getEmailThird();
+          $emails[] = $branch->getEmailThird();
         }
         $url = $this->generateUrl('app_insurancecompany_feedback_show', ['id' => $feedback->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
         $date = $feedback->getCreatedAt()->format('Y-m-d H:i:s');
@@ -579,69 +564,13 @@ class FeedbackController extends Controller
   }
 
   /**
-   * @param Feedback $feedback
-   */
-  public function updateRating($feedback)
-  {
-    $branch = $this->updateRatingObject(
-      Feedback::class,
-      'branch',
-      $feedback->getBranch(),
-      CompanyBranch::class);
-    $this->getDoctrine()->getManager()->persist($branch);
-    $this->getDoctrine()->getManager()->flush();
-
-    $company = $this->updateRatingObject(
-      CompanyBranch::class,
-      'company'
-      , $feedback->getCompany(),
-      Company::class);
-    $this->getDoctrine()->getManager()->persist($company);
-    $this->getDoctrine()->getManager()->flush();
-  }
-
-  /**
-   * @param $repo
-   * @param $param
-   * @param $model
-   * @param $class
-   * @return object|null
-   */
-  public function updateRatingObject($repo, $param, $model, $class)
-  {
-    $items = $this->getDoctrine()->getManager()->getRepository($repo)
-      ->createQueryBuilder('t')
-      ->where('t.' .$param. ' = :model')
-      ->andWhere('t.valuation > 0')
-      ->setParameter('model', $model)
-      ->getQuery()
-      ->getResult();
-
-    $valuationAll = 0;
-    foreach ($items as $key => $item)
-    {
-      $valuationAll += $item->getValuation();
-    }
-    $valuation = (float)($valuationAll / count($items));
-    $branch = $this->getDoctrine()->getManager()->getRepository($class)
-      ->findOneBy([
-        'id' => $model->getId()
-      ]);
-    $branch->setValuation($valuation);
-
-    return $branch;
-  }
-
-  /**
    * @param $emailTo
    * @param $url
    * @param $date
    */
   private function sendNewFeedback($emailTo, $url, $date)
   {
-    try
-    {
-      $message = (new \Swift_Message('Новый отзыв'))
+     $message = (new \Swift_Message('Новый отзыв'))
         ->setFrom($this->container->getParameter('mailer_from'))
         ->setTo($emailTo)
         ->setBody(
@@ -653,11 +582,6 @@ class FeedbackController extends Controller
           ),
           'text/html'
         );
-      $this->get('mailer')->send($message);
-    } catch (\Exception $e)
-    {
-      $logger = $this->get('logger');
-      $logger->error('No send mail in admin-check:' . $e->getMessage());
-    }
+     $this->get('mailer')->send($message);
   }
 }

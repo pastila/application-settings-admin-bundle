@@ -1,4 +1,6 @@
-<div class="white_block white_block_riview_{{ review.id }}">
+<div class="white_block white_block_riview_{{ review.id }}" itemscope itemtype="https://schema.org/Review">
+    <meta itemprop="datePublished" content="{{ review.updatedAt|date('Y-m-d') }}"/>
+
     {% if review.updatedAt > review.createdAt %}
         <span class="date_review">Дата изменения {{ review.updatedAt|prepareDate('d M, Y') }}</span>
     {% endif %}
@@ -10,8 +12,10 @@
     <div class="feedback__block_top">
 
         {% if review.valuation > 0 %}
-            <div class="feedback__block_top_star">
-
+            <div class="feedback__block_top_star" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+                <meta itemprop="worstRating" content="1">
+                <meta itemprop="ratingValue" content="{{ review.valuation }}">
+                <meta itemprop="bestRating" content="5"/>
                 {% for i in 1..review.valuation %}
                     <svg class="star star-active" xmlns="http://www.w3.org/2000/svg"
                          viewBox="0 0 47.94 47.94">
@@ -29,15 +33,20 @@
             </div>
         {% endif %}
         <div class="feedback__block_top_name">
-                    <span class="feedback__block_top_name_text">{{ review.authorName }}, {{review.region ?review.region.name|trim: ''}}, {{ review.createdAt|prepareDate("d F, Y") }}</span>
+                    <span class="feedback__block_top_name_text" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                        {{ review.authorName }}, {{ (review.branch and review.branch.region) ? review.branch.region.name|trim: ''}}, {{ review.createdAt|prepareDate("d F, Y") }}
+                        <meta itemprop="name" content="{{ review.authorName }}">
+                    </span>
 
             <!-- Company Name -->
-            <div class="feedback__block_company-name">
+            <div class="feedback__block_company-name" itemprop="itemReviewed" itemscope itemtype="https://schema.org/Organization">
                 {{ render(controller('AppBundle:InsuranceCompany/Company:_logoPanel',
                     {
                         'logo_id': (review.branch ? review.branch.logoIdFromBitrix : null),
                         'name': (review.branch ? review.branch.name : '')
                     } )) }}
+                <meta itemprop="name" content="{{ review.branch ? review.branch.name : '' }}">
+{#                <meta itemprop="email" content="{{ review.branch ? review.branch.emailFirst : '' }}">#}
             </div>
         </div>
         <!--                <div class="feedback__block_top_data">-->
@@ -47,13 +56,15 @@
     <!-- Title -->
     {% block title %}
         <a href="{{ path('app_insurancecompany_feedback_show', { id: review.id }) }}">
-            <h3 class="feedback__title">{{ review.title }}</h3>
+            <h3 class="feedback__title" itemprop="name">{{ review.title }}
+                <meta itemprop="url" content="{{ url('app_insurancecompany_feedback_show', { id: review.id }) }}"/>
+            </h3>
         </a>
     {% endblock %}
 
     <!-- Text -->
     <div class="srolling--parent">
-        <p class="feedback__text readmore__parent">{{ review.text }}</p>
+        <p class="feedback__text readmore__parent" itemprop="reviewBody">{{ review.text }}</p>
     </div>
 
 

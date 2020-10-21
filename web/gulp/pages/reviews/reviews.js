@@ -1,4 +1,33 @@
 $(document).ready(function() {
+    $(".button-cite").click(function (e) {
+        let error = [];
+        e.preventDefault();
+        var ID = $(this).attr("data-id-cited");
+        let id_comment = $(this).attr("data-id-cited");
+
+        let text_cited = $("[data-id-cited=" + ID + "]").val();
+        if (text_cited == "") {
+            $(this).siblings(".danger").css({"display": "block"});
+            error.push("text");
+        }
+        let data = {
+            "id_comment": id_comment,
+            "message": text_cited,
+        };
+        if (error.length == 0) {
+            $.ajax({
+                url: "/feedback/add-citation",
+                type: "POST",
+                data: data,
+                beforeSend: function () {
+                }
+            }).done(function (msg) {
+                if (msg == 1) {
+                    location.reload();
+                }
+            })
+        }
+    });
 
   function showComment() {
     const items = document.querySelectorAll('.white_block');

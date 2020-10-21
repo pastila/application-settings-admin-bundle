@@ -15,14 +15,33 @@
 {% endblock %}
 {% block main %}
     <!-- Breadcrumbs -->
-    <ul class="breadcrumbs">
+    <ul class="breadcrumbs" itemscope="" itemtype="http://schema.org/BreadcrumbList">
         {% if is_mobile() or is_tablet() %}
-            <li class="active-breadcrumbs"><a href="{{ path("app_insurancecompany_feedback_index") }}" class="">Добавление
-                    отзыва</a></li>
+            <li class="active-breadcrumbs" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a href="{{ path("app_insurancecompany_feedback_index") }}" class="" itemprop="item">Добавление отзыва
+                    <meta itemprop="name" content="Добавление отзыва">
+                    <meta property="position" content="1">
+                </a>
+            </li>
         {% else %}
-            <li><a href="/">Главная</a></li>
-            <li><a href="{{ path("app_insurancecompany_feedback_index") }}">Отзывы</a></li>
-            <li class="active-breadcrumbs">Добавление отзыва</li>
+            <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a href="/" itemprop="item">Главная
+                    <meta itemprop="name" content="Главная">
+                    <meta property="position" content="1">
+                </a>
+            </li>
+            <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a href="{{ path("app_insurancecompany_feedback_index") }}" itemprop="item">Отзывы
+                    <meta itemprop="name" content="Отзывы">
+                    <meta property="position" content="2">
+                </a>
+            </li>
+            <li class="active-breadcrumbs" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a itemprop="item">Добавление отзыва
+                    <meta itemprop="name" content="Добавление отзыва">
+                    <meta property="position" content="3">
+                </a>
+            </li>
         {% endif %}
     </ul>
 

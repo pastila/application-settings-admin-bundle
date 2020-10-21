@@ -77,33 +77,10 @@ class Company implements ImageAwareInterface, ImageInterface, SluggableInterface
   protected $file;
 
   /**
-   * Email №1 компании
-   *
-   * @var string
-   *
-   * @ORM\Column(name="email_first", type="string", length=256, nullable=true)
+   * @var Feedback[]|ArrayCollection
+   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Company\Feedback", mappedBy="company")
    */
-  private $emailFirst;
-
-
-  /**
-   * Email №2 компании
-   *
-   * @var string
-   *
-   * @ORM\Column(name="email_second", type="string", length=256, nullable=true)
-   */
-  private $emailSecond;
-
-
-  /**
-   * Email №2 компании
-   *
-   * @var string
-   *
-   * @ORM\Column(name="email_third", type="string", length=256, nullable=true)
-   */
-  private $emailThird;
+  protected $feedbacks;
 
   /**
    * @var CompanyBranch[]|ArrayCollection
@@ -116,8 +93,29 @@ class Company implements ImageAwareInterface, ImageInterface, SluggableInterface
    */
   public function __construct()
   {
-    $this->feedbacks = new ArrayCollection();
     $this->branches = new ArrayCollection();
+  }
+
+  /**
+   * @return CompanyBranch[]|ArrayCollection
+   */
+  public function getBranches()
+  {
+    return $this->branches;
+  }
+
+  /**
+   * @return int
+   */
+  public function getFeedbacksCount()
+  {
+    $count = 0;
+    foreach ($this->branches as $branch)
+    {
+      $count += count($branch->getFeedbacks());
+    }
+
+    return $count;
   }
 
   /**

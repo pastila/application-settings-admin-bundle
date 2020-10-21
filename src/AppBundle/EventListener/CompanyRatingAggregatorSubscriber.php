@@ -15,22 +15,23 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
+use Psr\Log\LoggerInterface;
 
 class CompanyRatingAggregatorSubscriber implements EventSubscriber
 {
-  private $companyBranchRepository;
-
-  private $feedbackRepository;
+  private $logger;
 
   private $em;
 
   public function __construct(
-    EntityManagerInterface $entityManager//,
+    EntityManagerInterface $entityManager,
+    LoggerInterface $logger//,
 //    FeedbackRepository $feedbackRepository,
 //    CompanyBranchRepository $companyBranchRepository
   )
   {
     $this->em = $entityManager;
+    $this->logger = $logger;
 //    $this->feedbackRepository = $feedbackRepository;
 //    $this->companyBranchRepository = $companyBranchRepository;
   }
@@ -71,7 +72,10 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
       $branch = $entity->getBranch();
       if ($branch)
       {
+        $this->logger->info(sprintf('Updating branch rating: %s', $branch->getCode()));
         $branch->setValuation($this->computeValuationForBranch($branch));
+
+        $this->logger->info(sprintf('Calculated rating is: %s', $branch->getValuation()));
 
         $this->em->persist($branch);
         $this->em->flush();
@@ -83,7 +87,11 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
       $company = $entity->getCompany();
       if ($company)
       {
-        $company->setValuation($this->computeValuationForCompany($company));
+
+       $this->logger->info(sprintf('Updating company rating: %s', $company->getKpp()));
+       $company->setValuation($this->computeValuationForCompany($company));
+
+       $this->logger->info(sprintf('Calculated rating is: %s', $company->getValuation()));
 
         $this->em->persist($company);
         $this->em->flush();
@@ -109,7 +117,7 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
       ->em->getRepository(CompanyBranch::class)
       ->createQueryBuilder('cb')
       ->select('avg(cb.valuation)')
-      ->where('cb.company = :company')
+      ->where('cb.company = :company AND cb.valuation > 0')
       ->setParameter(':company', $company)
       ->getQuery()
       ->getSingleScalarResult();

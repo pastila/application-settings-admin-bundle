@@ -8,13 +8,17 @@ namespace AppBundle\Form\Feedback;
 use AppBundle\Form\Widget\BezbahilAutocompleteCompanyType;
 use AppBundle\Form\Widget\BezbahilAutocompleteRegionType;
 use AppBundle\Form\Widget\BezbahilRatingType;
+use AppBundle\Repository\Company\CompanyBranchRepository;
 use AppBundle\Repository\Company\CompanyRepository;
 use AppBundle\Repository\Geo\RegionRepository;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 
 class FeedbackType extends AbstractType
@@ -32,15 +36,46 @@ class FeedbackType extends AbstractType
   {
     $builder
       ->add('region', BezbahilAutocompleteRegionType::class, [
-        'choices' => $this->getRegionChoices(),
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+        ],
+        'query_builder' => function(RegionRepository $repository){
+          return $repository->createQueryBuilder('r')->orderBy('r.name');
+        },
       ])
       ->add('branch', BezbahilAutocompleteCompanyType::class, [
-        'choices' => $this->getCompanyChoices()
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+        ],
+        'query_builder' => function(CompanyBranchRepository $repository){
+          return $repository->createQueryBuilder('b')->orderBy('b.name');
+        },
       ])
       ->add('author_name')
-      ->add('title')
-      ->add('text')
-      ->add('valuation', BezbahilRatingType::class)
+      ->add('title', null, [
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+          new Length([
+            'max' => 255,
+          ]),
+        ],
+      ])
+      ->add('text', null, [
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+        ],
+      ])
+      ->add('valuation', BezbahilRatingType::class, [
+        'required' => true,
+//в данный момент надо дать возможность любой отзыв написать, хоть и без оценки хоть и по сути не отзыв
+//        'constraints' => [
+//          new NotBlank(),
+//        ],
+      ])
     ;
   }
 

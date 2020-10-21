@@ -6,9 +6,9 @@
 namespace AppBundle\Form\Widget;
 
 
-use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
-class BezbahilRatingType extends AbstractType
+class BezbahilRatingType extends IntegerType
 {
   public function getBlockPrefix()
   {

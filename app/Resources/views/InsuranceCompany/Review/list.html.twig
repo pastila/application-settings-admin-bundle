@@ -24,17 +24,49 @@
     <script type="text/javascript" src="/local/templates/kdteam/pages/feedback/main.min.js?15862684754547"></script>
     <script type="text/javascript" src="/local/templates/kdteam/js/readmore.min.js?1586268475879"></script>
     {{ parent() }}
+
+    {% for label, messages in app.flashes(['magnific']) %}
+        {% for message in messages %}
+            <script type="application/javascript">
+                $(function(){
+                    $.magnificPopup.open({
+                        items: {
+                            src: '<div class="white-popup custom_styles_popup" >{{ message }}</div>',
+                            type: 'inline',
+                        },
+                    });
+                })
+            </script>
+        {% endfor %}
+    {% endfor %}
 {% endblock %}
 
 
 {% block main %}
+
     <!-- Breadcrumbs -->
-    <ul class="breadcrumbs">
+    <ul class="breadcrumbs" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+
         {% if is_mobile() or is_tablet() %}
-            <li class="active-breadcrumbs"><a href="/" class="">Главная</a></li>
+            <li class="active-breadcrumbs" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a href="/" class="" itemprop="item">Главная
+                    <meta itemprop="name" content="Главная">
+                    <meta property="position" content="1">
+                </a>
+            </li>
         {% else %}
-            <li><a href="/">Главная</a></li>
-            <li class="active-breadcrumbs">Отзывы</li>
+            <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a href="/" itemprop="item">Главная
+                    <meta itemprop="name" content="Главная">
+                    <meta property="position" content="1">
+                </a>
+            </li>
+            <li class="active-breadcrumbs" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a itemprop="item">Отзывы
+                    <meta itemprop="name" content="Отзывы">
+                    <meta property="position" content="2">
+                </a>
+            </li>
         {% endif %}
     </ul>
 
@@ -75,6 +107,18 @@
             <p class="error title-medium">Отзывы не найдены</p>
         </div>
     {% else %}
+        {% if app.request.get('_route') == 'company_review_list' %}
+            {% set company = reviews[0].company ? reviews[0].company : null %}
+            <div itemprop="aggregateRating" itemtype="http://schema.org/AggregateRating" itemscope="">
+                <meta itemprop="ratingValue"
+                      content="{{ company ? (company.valuation) : '' }}">
+                <meta itemprop="ratingCount"
+                      content="{{ company ? (company.getFeedbacksCount()) : '' }}">
+                <div itemprop="itemReviewed" itemscope itemtype="https://schema.org/Organization">
+                    <meta itemprop="name" content="{{ company.name }}"/>
+                </div>
+            </div>
+        {% endif %}
         {% for review in reviews %}
             {% include "InsuranceCompany/Review/_review_block.html.twig"  %}
         {% endfor %}
@@ -100,7 +144,7 @@
                                    class="sidebar__item_lists_list_link" id="company"
                                    data-amount-star="{{ company.actualRating }}"
                                    data-id="{{ company[0].id }}">{{ company[0].name }}</a>
-                                <span class="sidebar_count rating">{{ company.actualRating | trim_number }}</span>
+                                <span class="sidebar_count rating">{{ company.actualRating | round(2) }}</span>
                             </li>
                         {% endfor %}
                     </ul>

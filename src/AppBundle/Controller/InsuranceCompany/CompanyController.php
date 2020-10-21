@@ -40,10 +40,15 @@ class CompanyController extends AbstractController
   {
     $payload = '?logo_id=' . $logo_id;
     $dataFromBitrix = new DataFromBitrix($request);
-    try {
+    $src = null;
+
+    try
+    {
       $dataFromBitrix->getData('%s/ajax/get_resize_image.php' . $payload);
       $src = $dataFromBitrix->getParam('src');
-    } catch (BitrixRequestException $exception) {
+    }
+    catch (BitrixRequestException $exception)
+    {
       $this->logger->error(sprintf('Error get from bitrix logo: . %s', $exception->getMessage()));
     }
 

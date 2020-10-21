@@ -48,7 +48,7 @@ class Citation
    *
    * @var null|Comment
    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\Comment")
-   * @ORM\JoinColumn(name="comment_id", nullable=true, onDelete="RESTRICT")
+   * @ORM\JoinColumn(name="comment_id", nullable=true, onDelete="CASCADE")
    */
   private $comment;
 

@@ -32,7 +32,7 @@ class Feedback
    *
    * @var integer
    *
-   * @ORM\Column(name="bitrix_id", type="integer", nullable=false)
+   * @ORM\Column(name="bitrix_id", type="integer", nullable=true)
    */
   private $bitrixId;
 
@@ -54,14 +54,6 @@ class Feedback
    */
   private $authorName;
 
-  /**
-   * Регион
-   *
-   * @var null|Region
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Geo\Region")
-   * @ORM\JoinColumn(name="region_id", nullable=true, onDelete="RESTRICT")
-   */
-  private $region;
 
   /**
    * Филиал компании

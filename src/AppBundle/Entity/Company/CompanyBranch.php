@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Company.
  *
  * @ORM\Table(name="s_company_branches")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\Company\CompanyBranchRepository")
  */
 class CompanyBranch
 {
@@ -104,6 +104,36 @@ class CompanyBranch
    */
   private $logoUrlFromBitrix;
 
+
+  /**
+   * Email №1 компании
+   *
+   * @var string
+   *
+   * @ORM\Column(name="email_first", type="string", length=256, nullable=true)
+   */
+  private $emailFirst;
+
+
+  /**
+   * Email №2 компании
+   *
+   * @var string
+   *
+   * @ORM\Column(name="email_second", type="string", length=256, nullable=true)
+   */
+  private $emailSecond;
+
+
+  /**
+   * Email №2 компании
+   *
+   * @var string
+   *
+   * @ORM\Column(name="email_third", type="string", length=256, nullable=true)
+   */
+  private $emailThird;
+
   /**
    * @var Feedback[]|ArrayCollection
    * @ORM\OneToMany(targetEntity="AppBundle\Entity\Company\Feedback", mappedBy="branch")
@@ -116,6 +146,14 @@ class CompanyBranch
   public function __construct ()
   {
     $this->feedbacks = new ArrayCollection();
+  }
+
+  /**
+   * @return Feedback[]|ArrayCollection
+   */
+  public function getFeedbacks()
+  {
+    return $this->feedbacks;
   }
 
   /**
@@ -275,6 +313,64 @@ class CompanyBranch
   public function setLogoIdFromBitrix($logoIdFromBitrix)
   {
     $this->logoIdFromBitrix = $logoIdFromBitrix;
+
+    return $this;
+  }
+
+
+  /**
+   * @return string
+   */
+  public function getEmailFirst()
+  {
+    return $this->emailFirst;
+  }
+
+  /**
+   * @param string $emailFirst
+   * @return $this
+   */
+  public function setEmailFirst($emailFirst)
+  {
+    $this->emailFirst = $emailFirst;
+
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getEmailSecond()
+  {
+    return $this->emailSecond;
+  }
+
+  /**
+   * @param string $emailSecond
+   * @return $this
+   */
+  public function setEmailSecond($emailSecond)
+  {
+    $this->emailSecond = $emailSecond;
+
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getEmailThird()
+  {
+    return $this->emailThird;
+  }
+
+  /**
+   * @param string $emailThird
+   * @return $this
+   */
+  public function setEmailThird($emailThird)
+  {
+    $this->emailThird = $emailThird;
 
     return $this;
   }

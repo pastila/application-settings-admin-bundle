@@ -18,7 +18,7 @@ networks:
         - subnet: 192.168.123.50/28
   traefik:
     external:
-      name: traefik_traefik
+      name: traefik_default
 
 volumes:
   percona:
@@ -157,8 +157,9 @@ services:
         - PHP_UPSTREAM_PORT=${NGINX_PHP_UPSTREAM_PORT}
         - CHANGE_SOURCE=${CHANGE_SOURCE}
     labels:
+      - "traefik.enable=true"
       - "traefik.http.routers.bezbahilru.rule=Host(`bezbahil.docker`)"
-      - "traefik.docker.network=traefik_traefik"
+      - "traefik.docker.network=traefik_default"
     volumes:
       - ${APP_CODE_PATH_HOST_SF}:${APP_CODE_PATH_CONTAINER_SF}
       - ${DATA_PATH_LOGS}/nginx:/var/log/nginx
@@ -204,18 +205,18 @@ services:
 
 
 
-  ### LogStash a.krylov #######################################
-  logstash:
-    build:
-      context: ./logstash
-    volumes:
-      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
-      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
-      - ./logstash/pipeline/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
-      - ${DATA_PATH_LOGS}/:/var/log
-      - ./logstash/pattern/:/opt/logstash/patterns/
-    networks:
-      - backend
+#  ### LogStash a.krylov #######################################
+#  logstash:
+#    build:
+#      context: ./logstash
+#    volumes:
+#      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
+#      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+#      - ./logstash/pipeline/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+#      - ${DATA_PATH_LOGS}/:/var/log
+#      - ./logstash/pattern/:/opt/logstash/patterns/
+#    networks:
+#      - backend
 
 
   ### Certbot #########################################
@@ -256,8 +257,9 @@ services:
   maildev:
     build: ./maildev
     labels:
+      - "traefik.enable=true"
       - "traefik.http.routers.bezbahilru_maildev.rule=Host(`mail.bezbahil.docker`)"
-      - "traefik.docker.network=traefik_traefik"
+      - "traefik.docker.network=traefik_default"
       - "traefik.http.services.bezbahilru_maildev_webapp.loadbalancer.server.port=80"
     networks:
       - backend
