@@ -9,7 +9,7 @@ use Bitrix\Main\Application;
 
 Loader::includeModule('iblock');
 
-require '/var/www/vendor/autoload.php';
+require_once dirname(__FILE__).'/../vendor/autoload.php';
 
 global $USER;
 if ($_POST['id'] != "") {
