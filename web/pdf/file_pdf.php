@@ -256,7 +256,7 @@ if ($_POST['id'] != "") {
 
 //
                 $data = date('Y-m-d-h:i:s');
-                $name_file = "/var/www/upload/pdf/PDF_";
+                $name_file = "/var/www/web/upload/pdf/PDF_";
                 $name_file .= $data;
                 $name_file .= "_" . $email . "_";
                 $name_file .= "file.pdf";
