@@ -36,17 +36,17 @@ for ($index = 0; $index < $itemSize; $index++) {
 			<li class="active-breadcrumbs" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
 				<a itemprop="item" href="/"> '. htmlspecialchars($title) .'
 				    <meta itemprop="name" content="'. htmlspecialchars($title) .'">
-                    <meta property="position" content="'. htmlspecialchars($itemSize_for_Microdata) .'">
 				</a>
+        <meta property="position" content="'. htmlspecialchars($itemSize_for_Microdata) .'">
 			</li>';
             }else{
                 $strReturn .= '
         
 			<li class="active-breadcrumbs" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
 				<a itemprop="item" href="/news/">
-				    <span itemprop="name" class="active-breadcrumbs">'. htmlspecialchars($title) .'</span>
-                    <meta property="position" content="'. htmlspecialchars($itemSize_for_Microdata) .'">				
+				    <span itemprop="name" class="active-breadcrumbs">'. htmlspecialchars($title) .'</span>		
                 </a>
+        <meta property="position" content="'. htmlspecialchars($itemSize_for_Microdata) .'">		
 			</li>';
             }
 
@@ -59,8 +59,8 @@ for ($index = 0; $index < $itemSize; $index++) {
 			<li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
 				<a  itemprop="item" href="' . $arResult[$index]["LINK"] . '" title="' . htmlspecialchars($title) . '" itemprop="url">
 					<span itemprop="name">'. htmlspecialchars($title) .'</span>
-                    <meta property="position" content="'. htmlspecialchars($itemSize_for_Microdata) .'">  
 				</a>
+        <meta property="position" content="'. htmlspecialchars($itemSize_for_Microdata) .'">  
 				
 			</li>';
         } else {
@@ -69,8 +69,8 @@ for ($index = 0; $index < $itemSize; $index++) {
 			<li class="active-breadcrumbs" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
 				<a itemprop="item">'. htmlspecialchars($title) .'
 				    <meta itemprop="name" content="'. htmlspecialchars($title) .'">
-                    <meta property="position" content="'. htmlspecialchars($itemSize_for_Microdata) .'">
 				</a>
+        <meta property="position" content="'. htmlspecialchars($itemSize_for_Microdata) .'">
 			</li>';
         }
 

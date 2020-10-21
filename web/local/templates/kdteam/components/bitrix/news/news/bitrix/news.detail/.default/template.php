@@ -38,6 +38,10 @@ $this->setFrameMode(true);
     <div class="news-detail flex-detail-news" itemscope itemtype="http://schema.org/NewsArticle">
         <link itemprop="mainEntityOfPage" href="<?= ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>" />
         <meta itemprop="author" content="Без Бахил">
+        <meta itemprop="datePublished" content="<?= $arResult['TIMESTAMP_X'] ?>">
+        <meta itemprop="dateModified" content="<?= $arResult['TIMESTAMP_X'] ?>">
+        <meta itemprop="publisher" content="Администратор">
+        <meta itemprop="url" content="<?= ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]" ?>" />
 
         <div class="news-detail_image" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
             <?php if ($arParams["DISPLAY_PICTURE"] != "N" && is_array($arResult["DETAIL_PICTURE"])) {?>
