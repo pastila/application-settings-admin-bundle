@@ -24,6 +24,7 @@ class AppKernel extends Kernel
 
             new Accurateweb\SlugifierBundle\AccuratewebSlugifierBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 //            new Accurateweb\ImagingBundle\AccuratewebImagingBundle(),
 //            new Accurateweb\MediaBundle\AccuratewebMediaBundle(),
             new AppBundle\AppBundle(),

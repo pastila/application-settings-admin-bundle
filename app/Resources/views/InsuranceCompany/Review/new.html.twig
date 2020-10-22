@@ -51,7 +51,9 @@
 
     <!-- Wrap -->
 {#    {{ form_start(form, { attr: 'action': {{ url('reviews_add', {}, false) }}, 'method': 'POST', id: "form-comments"} }) }}#}
-    {{ form_start(form, {'action': path('app_insurancecompany_feedback_new'), 'method': 'POST'}) }}
+    {{ form_start(form, {'action': path('app_insurancecompany_feedback_new'), 'method': 'POST', 'attr': {
+        id: 'form-comments'
+    }}) }}
     <div class="white_block">
 
     <div class="feedback__top">
