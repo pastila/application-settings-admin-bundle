@@ -37,7 +37,7 @@
         <input id="referal" type="text" placeholder="Поиск по региону" autocomplete="off"/>
         <ul style="cursor: pointer;" class="custom-serach__items" id="search_result">
             {% for label, key in form.vars.choices %}
-            <li value="{{ key.value }}" class="custom-serach__items_item region-select" data-id-city="{{ key.value }}">{{ key.label }}</li>
+            <li value="{{ key.value }}" class="custom-serach__items_item region region-select" data-id-city="{{ key.value }}">{{ key.label }}</li>
             {% endfor %}
         </ul>
     </div>
