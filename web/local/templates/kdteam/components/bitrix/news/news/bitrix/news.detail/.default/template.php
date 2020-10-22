@@ -38,13 +38,21 @@ $this->setFrameMode(true);
     <div class="news-detail flex-detail-news" itemscope itemtype="http://schema.org/NewsArticle">
         <link itemprop="mainEntityOfPage" href="<?= ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>" />
         <meta itemprop="author" content="Без Бахил">
-        <meta itemprop="datePublished" content="<?= $arResult['TIMESTAMP_X'] ?>">
-        <meta itemprop="dateModified" content="<?= $arResult['TIMESTAMP_X'] ?>">
-        <meta itemprop="publisher" content="Администратор">
+        <meta itemprop="datePublished" content="<?= date('Y-m-d', strtotime($arResult['TIMESTAMP_X'])) ?>">
+        <meta itemprop="dateModified" content="<?= date('Y-m-d', strtotime($arResult['TIMESTAMP_X'])) ?>">
+        <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+            <link itemprop="url" href="<?= ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]" ?>">
+            <meta itemprop="name" content="Безбахил">
+            <div itemprop="logo" itemscope itemtype="https://www.schema.org/ImageObject">
+                <link itemprop="url" href="<?= "/local/templates/kdteam/images/favicon.png" ?>">
+                <link itemprop="contentUrl" href="<?= ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]"."/local/templates/kdteam/images/favicon.png" ?>" >
+            </div>
+        </div>
         <meta itemprop="url" content="<?= ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]" ?>" />
 
         <div class="news-detail_image" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
-            <?php if ($arParams["DISPLAY_PICTURE"] != "N" && is_array($arResult["DETAIL_PICTURE"])) {?>
+            <link itemprop="url" href="<?= "/local/templates/kdteam/images/favicon.png" ?>">
+            <?php if ($arParams["DISPLAY_PICTURE"] == "Y" && is_array($arResult["DETAIL_PICTURE"])) {?>
             <meta itemprop="height" content="<?=$arResult["DETAIL_PICTURE"]["HEIGHT"]?>">
             <meta itemprop="width" content="<?=$arResult["DETAIL_PICTURE"]["WIDTH"]?>">
             <meta itemprop="url" content="<?=$arResult["DETAIL_PICTURE"]["SRC"]?>">
