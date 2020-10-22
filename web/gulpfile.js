@@ -91,19 +91,20 @@ function images() {
           speed: 5,
           quality: [0.8, 0.9]
       }),
-      
-      imagemin.svgo({
-        plugins: [
-            { removeViewBox: false },
-            { removeUnusedNS: false },
-            { removeUselessStrokeAndFill: false },
-            { cleanupIDs: false },
-            { removeComments: true },
-            { removeEmptyAttrs: true },
-            { removeEmptyText: true },
-            { collapseGroups: true }
-        ]
-      })
+
+      // Отключил svgo, т.к. он ломает SVG
+      // imagemin.svgo({
+      //   plugins: [
+      //       { removeViewBox: false },
+      //       { removeUnusedNS: false },
+      //       { removeUselessStrokeAndFill: false },
+      //       { cleanupIDs: false },
+      //       { removeComments: true },
+      //       { removeEmptyAttrs: true },
+      //       { removeEmptyText: true },
+      //       { collapseGroups: true }
+      //   ]
+      // })
   ]))
   .pipe(dest(path.images.dist))
 }
@@ -162,6 +163,6 @@ function watchFiles() {
   //watch(path.fonts.watch, series(fonts, fontawesomeIcon));
   watch(path.fonts.watch, series(fonts));
 }
-  
+
 // export tasks
 exports.default = series(cleanAll, parallel(fonts, style, script, images, imageToWebp, watchFiles));
