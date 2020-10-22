@@ -267,10 +267,10 @@ class FeedbackController extends Controller
   /**
    * @Route(path="/feedback/add", name="app_insurancecompany_feedback_new")
    */
-  public function newAction(Request $request, User $user = null)
+  public function newAction(Request $request)
   {
     $feedback = new Feedback();
-    $feedback->setAuthor($user);
+    $feedback->setAuthor($this->getUser());
 
     if ($request->get('letter'))
     {
