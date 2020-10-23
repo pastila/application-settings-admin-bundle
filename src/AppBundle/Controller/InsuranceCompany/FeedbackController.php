@@ -12,6 +12,7 @@ use AppBundle\Entity\Company\CompanyBranch;
 use AppBundle\Entity\Company\CompanyStatus;
 use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\Company\FeedbackModerationStatus;
+use AppBundle\Entity\Geo\Region;
 use AppBundle\Entity\User\User;
 use AppBundle\Exception\BitrixRequestException;
 use AppBundle\Form\Feedback\CommentFormType;
@@ -499,31 +500,103 @@ class FeedbackController extends Controller
   }
 
   /**
-   * @Route(path="/feedback/region-select", name="feedback_region_select_ajax")
+   * @Route(path="/feedback/region-search", name="feedback_region_search")
    */
-  public function regionSelectAction(Request $request)
+  public function regionSearchAction(Request $request)
   {
-    if ($request->isXmlHttpRequest())
+    $data = $request->request->all();
+    $name_city = isset($data['name_city']) ? $data['name_city'] : null;
+
+    $regions = $this->getDoctrine()->getManager()
+      ->getRepository(Region::class)
+      ->createQueryBuilder('r')
+      ->andWhere('r.name LIKE :nameCity')
+      ->setParameter('nameCity', '%' . $name_city . '%')
+      ->getQuery()
+      ->getResult();
+
+    $content = '';
+    foreach ($regions as $region)
     {
-      $data = $request->request->all();
-      $region_id = isset($data['region_id']) ? $data['region_id'] : null;
-
-      $branches = $this->getDoctrine()->getManager()->getRepository(CompanyBranch::class)
-        ->findBy([
-          'region' => $region_id
-        ]);
-      $content = '';
-      foreach ($branches as $branch)
-      {
-        $content .= '<li value="' . $branch->getId() . '" class="custom-serach__items_item hospital company-select-item
-                      data-kpp="' . $branch->getKpp() . '">' .
-          $branch->getName() . '</li>';
-      }
-      $response = new Response();
-      $response->setContent($content);
-
-      return $response;
+      $content .= '<li value="' . $region->getId() . '" class="custom-serach__items_item region
+                      data-id-city="' . $region->getId() . '">' .
+        $region->getName() . '</li>';
     }
+    $response = new Response();
+    $response->setContent($content);
+
+    return $response;
+  }
+
+  /**
+   * @Route(path="/feedback/region-select", name="feedback_region_select")
+   */
+  public function companySelectAction(Request $request)
+  {
+    $data = $request->request->all();
+    $region_id = isset($data['region_id']) ? $data['region_id'] : null;
+
+    $branches = $this->getDoctrine()->getManager()
+      ->getRepository(CompanyBranch::class)
+      ->createQueryBuilder('cb')
+      ->innerJoin('cb.company', 'c')
+      ->where('cb.region = :region')
+      ->andWhere('c.status = :status')
+      ->andWhere('cb.status = :status')
+      ->setParameter('region', $region_id)
+      ->setParameter('status', CompanyStatus::ACTIVE)
+      ->groupBy('cb.id')
+      ->getQuery()
+      ->getResult();
+
+    $content = '';
+    foreach ($branches as $branch)
+    {
+      $content .= '<li value="' . $branch->getId() . '" class="custom-serach__items_item hospital company-select-item
+                      data-kpp="' . $branch->getKpp() . '">' .
+        $branch->getName() . '</li>';
+    }
+    $response = new Response();
+    $response->setContent($content);
+
+    return $response;
+  }
+
+  /**
+   * @Route(path="/feedback/company-search", name="feedback_company_search")
+   */
+  public function companySearchAction(Request $request)
+  {
+    $data = $request->request->all();
+    $region_id = isset($data['region_id']) ? $data['region_id'] : null;
+    $name_hospital = isset($data['name_hospital']) ? $data['name_hospital'] : null;
+
+    $branches = $this->getDoctrine()->getManager()
+      ->getRepository(CompanyBranch::class)
+      ->createQueryBuilder('cb')
+      ->innerJoin('cb.company', 'c')
+      ->andWhere('c.status = :status')
+      ->andWhere('cb.status = :status')
+      ->andWhere('cb.region = :regionId')
+      ->andWhere('cb.name LIKE :nameHospital')
+      ->setParameter('nameHospital', '%' . $name_hospital . '%')
+      ->setParameter('regionId', $region_id)
+      ->setParameter('status', CompanyStatus::ACTIVE)
+      ->groupBy('cb.id')
+      ->getQuery()
+      ->getResult();
+
+    $content = '';
+    foreach ($branches as $branch)
+    {
+      $content .= '<li value="' . $branch->getId() . '" class="custom-serach__items_item hospital company-select-item
+                    data-kpp="' . $branch->getKpp() . '">' .
+        $branch->getName() . '</li>';
+    }
+    $response = new Response();
+    $response->setContent($content);
+
+    return $response;
   }
 
   /**

@@ -183,7 +183,7 @@ $(document).ready(function() {
     clearTimeout($this.data('timer'));
     $this.data('timer', setTimeout(function() {
       $this.removeData('timer');
-      $.post('/ajax/personal-cabinet/search_region.php',
+      $.post('/feedback/region-search',
           {name_city: $this.val()}, function(msg) {
             if ($('.error_region').length != 0) {
               $('.error_region').remove();
@@ -210,30 +210,6 @@ $(document).ready(function() {
     }, delay));
   });
 
-  $(".region-select").click(function () {
-    $(".search-second").css({"pointer-events":"inherit"});
-    let id_region = $(this).attr('value');
-    $('#referal').attr('data-id_region', id_region);
-    $('#referal').attr('data-region_check', 'check');
-    $('#referal_two').val('');
-    $('#region_select_id').attr('value', id_region);
-
-    $.post("/feedback/region-select", {
-      region_id:$("#referal").attr("data-id_region")
-    }, function(msg) {
-      if ($('.error_region').length != 0) {
-        $('.error_region').remove();
-      }
-      $('.hospital').each(function() {
-        $(this).remove();
-      });
-      $('.hospital-empty').remove();
-      setTimeout(function() {
-        $('#search_result_hospital').append(msg);
-      }, 100);
-    });
-  });
-
   $('body').on('click', '.company-select-item', function () {
     let id_company = $(this).attr('value');
     $('#company_select_id').attr('value', id_company);
@@ -252,8 +228,9 @@ $(document).ready(function() {
     $('#referal_two').attr('data-id_region', '0');
     $('#referal_two').attr('data-id_region_kpp', '0');
     $('#referal_two').val('');
+    $('#region_select_id').attr('value', id_region);
 
-    $.post('/ajax/personal-cabinet/search_company.php',
+    $.post('/feedback/region-select',
         {region_id: $('#referal').attr('data-id_region')}, function(msg) {
           if ($('.error_region').length != 0) {
             $('.error_region').remove();
@@ -289,7 +266,7 @@ $(document).ready(function() {
     clearTimeout($this.data('timer'));
     $this.data('timer', setTimeout(function() {
       $this.removeData('timer');
-      $.post('/ajax/personal-cabinet/search_company.php', {
+      $.post('/feedback/company-search', {
         name_hospital: $this.val(),
         region_id: $('#referal').attr('data-id_region'),
       }, function(msg) {
