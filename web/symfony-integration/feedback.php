@@ -1,5 +1,10 @@
 <?php
 
+if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true)
+{
+  die();
+}
+
 /**
  * Получение кол-ва отзывов из symfony
  *
@@ -9,7 +14,7 @@
  */
 function getCountReviews($login, $token)
 {
-  $url  = sprintf('http://nginx/api/v1/panel?user=%s&api_token=%s', $login, $token);
+  $url = sprintf('http://nginx/api/v1/panel?user=%s&api_token=%s', $login, $token);
   $ch = curl_init($url);
 
   curl_setopt($ch, CURLOPT_VERBOSE, true);
