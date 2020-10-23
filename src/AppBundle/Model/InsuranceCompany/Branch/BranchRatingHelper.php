@@ -8,6 +8,7 @@ namespace AppBundle\Model\InsuranceCompany\Branch;
 
 use AppBundle\Entity\Company\Company;
 use AppBundle\Entity\Company\CompanyBranch;
+use AppBundle\Entity\Company\CompanyStatus;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Repository\Company\CompanyBranchRepository;
 use AppBundle\Repository\Company\CompanyRepository;
@@ -67,7 +68,10 @@ class BranchRatingHelper
       ->innerJoin('c.branches', 'cb')
       ->select(['c', 'SUM(cb.valuation) AS actualRating'])
       ->where('cb.region = :region AND cb.valuation > 0')
+      ->andWhere('c.status = :status')
+      ->andWhere('cb.status = :status')
       ->setParameter('region', $region)
+      ->setParameter('status', CompanyStatus::ACTIVE)
       ->orderBy('actualRating', 'DESC')
       ->groupBy('c.id')
       ->getQuery()
@@ -81,6 +85,8 @@ class BranchRatingHelper
       ->createQueryBuilder('cb')
       ->select(['cb, cb.valuation AS actualRating'])
       ->where('cb.valuation > 0')
+      ->andWhere('cb.status = :status')
+      ->setParameter('status', CompanyStatus::ACTIVE)
       ->orderBy('cb.valuation', 'DESC')
       ->getQuery()
       ->getResult();
