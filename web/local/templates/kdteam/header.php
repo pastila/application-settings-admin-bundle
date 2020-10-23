@@ -3,33 +3,13 @@ use Bitrix\Main\Page\Asset;
 if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     die();
 }
+require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/config.php");
+require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/feedback.php");
 
-function getCountReviews($login, $token)
-{
-    $url  = sprintf('http://nginx/api/v1/panel?user=%s&api_token=%s', $login, $token);
-    $ch = curl_init($url);
-
-    curl_setopt($ch, CURLOPT_VERBOSE, true);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-    $res = curl_exec($ch);
-    $info = curl_getinfo($ch);
-    $code = key_exists('http_code', $info) ? $info['http_code'] : null;
-
-    $nbReviews = 0;
-    if ($code === 200)
-    {
-        $data = json_decode($res, true);
-        $nbReviews = !empty($data['nbReviews']) ? $data['nbReviews'] : 0;
-    }
-
-    return $nbReviews;
-}
 $count_reviews = 0;
-$api_token = '31409EDCC223DB7DAA72C54EE0107B9F';
 if ($USER->IsAuthorized())
 {
-  $count_reviews = getCountReviews($USER->GetLogin(), $api_token);
+  $count_reviews = getCountReviews($USER->GetLogin(), API_TOKEN);
 }
 
 if($_GET){

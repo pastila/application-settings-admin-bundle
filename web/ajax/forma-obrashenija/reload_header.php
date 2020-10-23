@@ -1,5 +1,13 @@
 <?php require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
 CModule::IncludeModule("iblock");
+require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/config.php");
+require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/feedback.php");
+
+$count_reviews = 0;
+if ($USER->IsAuthorized())
+{
+  $count_reviews = getCountReviews($USER->GetLogin(), API_TOKEN);
+}
 
 $ID_USER = $USER->GetID();
 ?>
@@ -57,20 +65,6 @@ $ID_USER = $USER->GetID();
         </li>
 
         <li>
-            <!-- Если есть обращения в админке добавляем класс active -->
-            <!-- И показываем блок с колличеством обращений -->
-            <?php
-                                //Количество обращений
-                                if (CModule::IncludeModule("iblock")) {
-
-                                    $arSelect = Array("ID", "IBLOCK_ID", "NAME",);
-                                    $arFilter = Array("IBLOCK_ID"=>13, "PROPERTY_NAME_USER"=>$ID_USER );
-                                    $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
-                                    $count_reviews = $res->SelectedRowsCount();
-                                    }
-
-                                ?>
-
             <a class="" href="/cabinet/feedback">
                 <div id="number_calls" class="menu-req">
                     <?php echo $count_reviews?>
