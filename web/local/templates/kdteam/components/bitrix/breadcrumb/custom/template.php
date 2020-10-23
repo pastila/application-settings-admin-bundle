@@ -37,7 +37,7 @@ for ($index = 0; $index < $itemSize; $index++) {
 				<a itemprop="item" href="/"> '. htmlspecialchars($title) .'
 				    <meta itemprop="name" content="'. htmlspecialchars($title) .'">
 				</a>
-        <meta property="position" content="'. htmlspecialchars($itemSize_for_Microdata) .'">
+        <meta itemprop="position" content="'. htmlspecialchars($itemSize_for_Microdata) .'">
 			</li>';
             }else{
                 $strReturn .= '
@@ -46,7 +46,7 @@ for ($index = 0; $index < $itemSize; $index++) {
 				<a itemprop="item" href="/news/">
 				    <span itemprop="name" class="active-breadcrumbs">'. htmlspecialchars($title) .'</span>		
                 </a>
-        <meta property="position" content="'. htmlspecialchars($itemSize_for_Microdata) .'">		
+        <meta itemprop="position" content="'. htmlspecialchars($itemSize_for_Microdata) .'">		
 			</li>';
             }
 
@@ -60,7 +60,7 @@ for ($index = 0; $index < $itemSize; $index++) {
 				<a  itemprop="item" href="' . $arResult[$index]["LINK"] . '" title="' . htmlspecialchars($title) . '" itemprop="url">
 					<span itemprop="name">'. htmlspecialchars($title) .'</span>
 				</a>
-        <meta property="position" content="'. htmlspecialchars($itemSize_for_Microdata) .'">  
+        <meta itemprop="position" content="'. htmlspecialchars($itemSize_for_Microdata) .'">  
 				
 			</li>';
         } else {
@@ -70,7 +70,7 @@ for ($index = 0; $index < $itemSize; $index++) {
 				<a itemprop="item">'. htmlspecialchars($title) .'
 				    <meta itemprop="name" content="'. htmlspecialchars($title) .'">
 				</a>
-        <meta property="position" content="'. htmlspecialchars($itemSize_for_Microdata) .'">
+        <meta itemprop="position" content="'. htmlspecialchars($itemSize_for_Microdata) .'">
 			</li>';
         }
 
