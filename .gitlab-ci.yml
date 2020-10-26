@@ -9,18 +9,16 @@ cache:
   paths:
     - vendor/
 
-
-before_script:
-  # docker login asks for the password to be passed through stdin for security
-  # we use $CI_JOB_TOKEN here which is a special token provided by GitLab
-  - echo -n $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
-
 #  - sh ci/ci-php-install.sh
 #  - composer global require hirak/prestissimo
 #  - composer install -o
 
 build-fpm:
   stage: build
+  before_script:
+    # docker login asks for the password to be passed through stdin for security
+    # we use $CI_JOB_TOKEN here which is a special token provided by GitLab
+    - echo -n $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
   script:
     - source ./laradock/.env.test
     # fetches the latest image (not failing if image is not found)
@@ -70,6 +68,10 @@ build-fpm:
 
 build-percona:
   stage: build
+  before_script:
+    # docker login asks for the password to be passed through stdin for security
+    # we use $CI_JOB_TOKEN here which is a special token provided by GitLab
+    - echo -n $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
   script:
     - source ./laradock/.env.test
     # fetches the latest image (not failing if image is not found)
