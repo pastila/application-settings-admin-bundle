@@ -5,12 +5,9 @@ stages:
   - deploy_staging
 
 before_script:
-  # Setup SSH deploy keys
-  - 'which ssh-agent || ( apk add openssh-client )'
-  - eval $(ssh-agent -s)
-  - ssh-add <(echo "$SSH_PRIVATE_KEY")
-  - mkdir -p ~/.ssh
-  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  - sh scripts/ci-php-install.sh
+  - php bin/composer.phar global require hirak/prestissimo
+  - php bin/composer.phar install -o
 
 phpunit:
   stage: test
@@ -22,6 +19,13 @@ deploy_staging:
   environment:
     name: staging
     url: http://bezbahil.aw-dev.ru
+  before_script:
+    # Setup SSH deploy keys
+    - 'which ssh-agent || ( apk add openssh-client )'
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
     - ssh deployer@aw-dev.ru "cd /var/www/sites/bezbahil/releases/1 && git pull origin && exit"
   only:
