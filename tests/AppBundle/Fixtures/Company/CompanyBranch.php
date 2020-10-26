@@ -7,7 +7,7 @@ namespace Tests\AppBundle\Fixtures\Company;
 use AppBundle\Entity\Company\CompanyStatus;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Tests\AppBundle\Fixtures\Geo\Region;
 
 class CompanyBranch extends Fixture implements DependentFixtureInterface

@@ -91,6 +91,7 @@ phpunit:
   stage: test
   script:
     - source ./laradock/.env.test
+    - cp .env.test .env
     - sh ci/phpunit.sh
 
 phpstan:
