@@ -6,7 +6,7 @@ stages:
 
 before_script:
   - sh ci/ci-php-install.sh
-  - composer global require hirak/prestissimo
+#  - composer global require hirak/prestissimo
   - composer install -o
 
 phpunit:
