@@ -44,9 +44,7 @@ class CompanyRepository extends ServiceEntityRepository
   public function getActive()
   {
     return $this->createQueryBuilder('c')
-      ->innerJoin('c.branches', 'cb')
       ->andWhere('c.status = :status')
-      ->andWhere('cb.status = :status')
       ->setParameter('status', CompanyStatus::ACTIVE);
   }
 }
