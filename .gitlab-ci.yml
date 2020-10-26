@@ -9,11 +9,6 @@ cache:
   paths:
     - vendor/
 
-variables:
-  MYSQL_ROOT_PASSWORD: yggem1991
-  MYSQL_DATABASE: dbbezbahil
-  MYSQL_USER: ubezbahil
-  MYSQL_PASSWORD: BMnM@SNXiwz8
 
 before_script:
   # docker login asks for the password to be passed through stdin for security
@@ -27,7 +22,7 @@ before_script:
 build-fpm:
   stage: build
   script:
-    - source ./laradock/.env
+    - source ./laradock/.env.test
     # fetches the latest image (not failing if image is not found)
     - 'docker pull $CI_REGISTRY_IMAGE/php-fpm:latest || true'
     - >
@@ -41,7 +36,7 @@ build-fpm:
 build-percona:
   stage: build
   script:
-    - source ./laradock/.env
+    - source ./laradock/.env.test
     # fetches the latest image (not failing if image is not found)
     - 'docker pull $CI_REGISTRY_IMAGE/percona:latest || true'
     - >
@@ -56,12 +51,14 @@ phpunit:
   <<: *tests-image
   stage: test
   script:
+    - source ./laradock/.env.test
     - sh ci/phpunit.sh
 
 phpstan:
   <<: *tests-image
   stage: test
   script:
+    - source ./laradock/.env.test
     - sh ci/phpstan.sh
 
 deploy_staging:
