@@ -30,10 +30,8 @@ class CompanyRepository extends ServiceEntityRepository
   public function countActiveAll()
   {
     return $this
-      ->createQueryBuilder('c')
+      ->getActive()
       ->select('COUNT(c)')
-      ->andWhere('c.status = :status')
-      ->setParameter('status', CompanyStatus::ACTIVE)
       ->getQuery()
       ->getSingleScalarResult();
   }
@@ -46,5 +44,14 @@ class CompanyRepository extends ServiceEntityRepository
     return $this->createQueryBuilder('c')
       ->andWhere('c.status = :status')
       ->setParameter('status', CompanyStatus::ACTIVE);
+  }
+
+  /**
+   * @return \Doctrine\ORM\QueryBuilder
+   */
+  public function getWithBranchActive()
+  {
+    return $this->getActive()
+      ->innerJoin('c.branches', 'cb', 'WITH', 'cb.status = :status');
   }
 }

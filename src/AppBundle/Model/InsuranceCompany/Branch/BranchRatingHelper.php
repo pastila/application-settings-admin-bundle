@@ -63,8 +63,7 @@ class BranchRatingHelper
   {
     $repository = $this->companyRepository;
     return $repository
-      ->getActive()
-      ->innerJoin('c.branches', 'cb')
+      ->getWithBranchActive()
       ->select(['c', 'SUM(cb.valuation) AS actualRating'])
       ->andWhere('cb.region = :region AND cb.valuation > 0')
       ->setParameter('region', $region)
@@ -78,8 +77,7 @@ class BranchRatingHelper
   {
     $repo = $this->companyRepository;
     return $repo
-      ->getActive()
-      ->innerJoin('c.branches', 'cb')
+      ->getWithBranchActive()
       ->select(['c, c.valuation AS actualRating'])
       ->andWhere('c.valuation > 0')
       ->orderBy('c.valuation', 'DESC')
