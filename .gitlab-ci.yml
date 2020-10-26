@@ -27,10 +27,11 @@ build-fpm:
     - 'docker pull $CI_REGISTRY_IMAGE/php-fpm:latest || true'
     - >
       docker build
-        --pull
-        --cache-from $CI_REGISTRY_IMAGE/php-fpm:latest
-        --tag $CI_REGISTRY_IMAGE/php-fpm:latest ./laradock/php-fpm-symfony'
-      .
+      --pull
+      --cache-from $CI_REGISTRY_IMAGE/php-fpm:latest
+      --tag $CI_REGISTRY_IMAGE/php-fpm:latest
+      ./laradock/php-fpm-symfony
+
     - 'docker push $CI_REGISTRY_IMAGE/php-fpm:latest'
 
 build-percona:
@@ -41,10 +42,11 @@ build-percona:
     - 'docker pull $CI_REGISTRY_IMAGE/percona:latest || true'
     - >
       docker build
-        --pull
-        --cache-from $CI_REGISTRY_IMAGE/percona:latest
-        --tag $CI_REGISTRY_IMAGE/percona:latest ./laradock/percona'
-      .
+      --pull
+      --cache-from $CI_REGISTRY_IMAGE/percona:latest
+      --tag $CI_REGISTRY_IMAGE/percona:latest
+      ./laradock/percona
+
     - 'docker push $CI_REGISTRY_IMAGE/percona:latest'
 
 phpunit:
