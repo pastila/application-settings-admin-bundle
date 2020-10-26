@@ -6,6 +6,7 @@
 namespace Accurateweb\ImagingBundle\Adapter;
 
 
+use Accurateweb\ImagingBundle\Exception\ImagingException;
 use Accurateweb\ImagingBundle\Exception\UnsupportedMimeTypeException;
 use Accurateweb\ImagingBundle\Image\GdImage;
 use Accurateweb\ImagingBundle\Image\Image;
@@ -42,7 +43,7 @@ class GdImageAdapter implements AdapterInterface
     // Check that the GD extension is installed and configured
     if (!extension_loaded('gd'))
     {
-      throw new sfImageTransformException('The image processing library GD is not enabled. See PHP Manual for installation instructions.');
+      throw new ImagingException('The image processing library GD is not enabled. See PHP Manual for installation instructions.');
     }
   }
 

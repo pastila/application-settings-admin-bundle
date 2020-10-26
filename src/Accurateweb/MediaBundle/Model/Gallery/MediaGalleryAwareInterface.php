@@ -7,5 +7,5 @@ namespace Accurateweb\MediaBundle\Model\MediaGallery;
 
 interface MediaGalleryAwareInterface
 {
-  public function
+
 }

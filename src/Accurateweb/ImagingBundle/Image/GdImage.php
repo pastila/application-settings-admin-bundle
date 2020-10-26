@@ -7,7 +7,7 @@ namespace Accurateweb\ImagingBundle\Image;
 
 class GdImage extends Image
 {
-  public function __construct($resource, $mimeType)
+  public function __construct($resource, $mimeType=null)
   {
     parent::__construct($resource, imagesx($resource), imagesy($resource), $mimeType);
   }

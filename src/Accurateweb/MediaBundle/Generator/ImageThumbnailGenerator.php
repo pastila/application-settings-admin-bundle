@@ -65,7 +65,7 @@ class ImageThumbnailGenerator
             {
               $options = $resolver->resolve($image, $options);
             }
-            catch (Exception $e)
+            catch (\Exception $e)
             {
               //Filter is not configurable, so we skip it
               continue;

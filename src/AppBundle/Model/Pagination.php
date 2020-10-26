@@ -29,6 +29,8 @@ class Pagination
 
   private $nbResults;
 
+  private $paginator;
+
   public function __construct(QueryBuilder $queryBuilder, $page, $maxPerPage)
   {
     $this->page = $page;

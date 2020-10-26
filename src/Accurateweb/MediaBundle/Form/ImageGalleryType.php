@@ -81,7 +81,7 @@ class ImageGalleryType extends AbstractType
       $crop = array();
 
       if (!isset($options['size']))
-        throw new InvalidArgumentException('Crop option requires size parameter to be set');
+        throw new \InvalidArgumentException('Crop option requires size parameter to be set');
 
       if (isset($options['boxwidth']))
         $crop['boxWidth'] = $options['boxwidth'];
