@@ -1,7 +1,7 @@
 .tests-image: &tests-image
   image: $CI_REGISTRY_IMAGE/php-fpm:latest
   services:
-    - name: $CI_REGISTRY_IMAGE/mysql:latest
+    - name: $CI_REGISTRY_IMAGE/percona:latest
       alias: mysql
 
 cache:
