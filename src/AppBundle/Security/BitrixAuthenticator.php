@@ -45,6 +45,8 @@ class BitrixAuthenticator extends AbstractGuardAuthenticator
    */
   private $entityManager;
 
+  private $loadedUser;
+
   /**
    * BitrixAuthenticator constructor.
    * @param Security $security
@@ -64,8 +66,17 @@ class BitrixAuthenticator extends AbstractGuardAuthenticator
 
   public function supports(Request $request)
   {
-    //Нам надо проверять аутентификацию на каждый запрос
-    return true;
+      $dataFromBitrix = new DataFromBitrix($request);
+      try {
+          $this->loadedUser = $dataFromBitrix->getData('%s/ajax/authenticated_user.php');
+          return true;
+      } catch (BitrixRequestException $exception) {
+          if (!($dataFromBitrix->getCode() === 401 && $dataFromBitrix->getParam('is_script'))) {
+              $this->logger->error(sprintf('Error from Bitrix Authenticator: . %s', $exception->getMessage()));
+          }
+      }
+
+      return false;
   }
 
   /**
@@ -85,17 +96,9 @@ class BitrixAuthenticator extends AbstractGuardAuthenticator
    */
   public function getCredentials(Request $request)
   {
-    $dataFromBitrix = new DataFromBitrix($request);
-    try {
-      $dataFromBitrix->getData('%s/ajax/authenticated_user.php');
-      return $dataFromBitrix->getRes();
-    } catch (BitrixRequestException $exception) {
-      if (!($dataFromBitrix->getCode() === 401 && $dataFromBitrix->getParam('is_script'))) {
-        $this->logger->error(sprintf('Error from Bitrix Authenticator: . %s', $exception->getMessage()));
-      }
-    }
-
-    return null;
+    // $this->loadedUser must have been set in supports
+    // otherwise we should not be here
+    return $this->loadedUser;
   }
 
   /**
@@ -164,6 +167,7 @@ class BitrixAuthenticator extends AbstractGuardAuthenticator
   public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
   {
     // TODO: Implement onAuthenticationFailure() method.
+      return null;
   }
 
   /**
@@ -175,6 +179,7 @@ class BitrixAuthenticator extends AbstractGuardAuthenticator
   public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
   {
     // TODO: Implement onAuthenticationSuccess() method.
+    return null;
   }
 
   /**

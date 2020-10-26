@@ -67,6 +67,8 @@ class DataFromBitrix
     if ($this->getCode() !== 200) {
       throw new BitrixRequestException(sprintf('Failed request, http_code: %s.', $this->info['http_code']));
     }
+
+    return $this->getRes();
   }
 
   /**

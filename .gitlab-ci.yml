@@ -1,7 +1,7 @@
-default:
-  image: php:7.2-fpm
+.tests-image: &tests-image
+  image: $CI_REGISTRY_IMAGE/php-fpm:latest
   services:
-    - name: percona:5.7
+    - name: $CI_REGISTRY_IMAGE/mysql:latest
       alias: mysql
 
 cache:
@@ -16,16 +16,48 @@ variables:
   MYSQL_PASSWORD: BMnM@SNXiwz8
 
 before_script:
-  - sh ci/ci-php-install.sh
+  - 'docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY'
+
+#  - sh ci/ci-php-install.sh
 #  - composer global require hirak/prestissimo
-  - composer install -o
+#  - composer install -o
+
+build-fpm:
+  stage: build
+  script:
+    - source ./laradock/.env
+    # fetches the latest image (not failing if image is not found)
+    - 'docker pull $CI_REGISTRY_IMAGE/php-fpm:latest || true'
+    - >
+      docker build
+        --pull
+        --cache-from $CI_REGISTRY_IMAGE/php-fpm:latest
+        --tag $CI_REGISTRY_IMAGE/php-fpm:latest ./laradock/php-fpm-symfony'
+      .
+    - 'docker push $CI_REGISTRY_IMAGE/php-fpm:latest'
+
+build-percona:
+  stage: build
+  script:
+    - source ./laradock/.env
+    # fetches the latest image (not failing if image is not found)
+    - 'docker pull $CI_REGISTRY_IMAGE/percona:latest || true'
+    - >
+      docker build
+        --pull
+        --cache-from $CI_REGISTRY_IMAGE/percona:latest
+        --tag $CI_REGISTRY_IMAGE/percona:latest ./laradock/percona'
+      .
+    - 'docker push $CI_REGISTRY_IMAGE/percona:latest'
 
 phpunit:
+  <<: *tests-image
   stage: test
   script:
     - sh ci/phpunit.sh
 
 phpstan:
+  <<: *tests-image
   stage: test
   script:
     - sh ci/phpstan.sh
@@ -48,5 +80,6 @@ deploy_staging:
     - develop
 
 stages:
+  - build
   - test
   - deploy_staging
