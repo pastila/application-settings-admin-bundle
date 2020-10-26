@@ -19,10 +19,10 @@ cache:
     - vendor/
 
 variables:
-  MYSQL_DATABASE=dbbezbahil
-  MYSQL_USER=ubezbahil
-  MYSQL_PASSWORD=BMnM@SNXiwz8
-  MYSQL_ROOT_PASSWORD=yggem1991
+  MYSQL_DATABASE: dbbezbahil
+  MYSQL_USER: ubezbahil
+  MYSQL_PASSWORD: BMnM@SNXiwz8
+  MYSQL_ROOT_PASSWORD: yggem1991
 
 build-fpm:
   <<: *build-before
