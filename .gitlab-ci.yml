@@ -1,8 +1,19 @@
-image: php:7.2-fpm
+default:
+  image: php:7.2-fpm
+  services:
+    - name: percona:5.7
+      alias: mysql
 
-stages:
-  - test
-  - deploy_staging
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - vendor/
+
+variables:
+  MYSQL_ROOT_PASSWORD: yggem1991
+  MYSQL_DATABASE: dbbezbahil
+  MYSQL_USER: ubezbahil
+  MYSQL_PASSWORD: BMnM@SNXiwz8
 
 before_script:
   - sh ci/ci-php-install.sh
@@ -35,3 +46,7 @@ deploy_staging:
     - ssh deployer@aw-dev.ru "cd /var/www/sites/bezbahil/releases/1 && git pull origin && exit"
   only:
     - develop
+
+stages:
+  - test
+  - deploy_staging
