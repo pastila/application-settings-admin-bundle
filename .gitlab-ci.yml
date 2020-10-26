@@ -6,8 +6,8 @@ stages:
 
 before_script:
   - sh ci/ci-php-install.sh
-  - php bin/composer.phar global require hirak/prestissimo
-  - php bin/composer.phar install -o
+  - composer global require hirak/prestissimo
+  - composer install -o
 
 phpunit:
   stage: test
