@@ -1,4 +1,8 @@
-image: alpine:3
+image: php:7.2-fpm
+
+stages:
+  - test
+  - deploy_staging
 
 before_script:
   # Setup SSH deploy keys
@@ -8,8 +12,13 @@ before_script:
   - mkdir -p ~/.ssh
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
 
-deploy_staging:
+phpunit:
+  stage: test
+  script:
+    - sh ci/phpunit.sh
 
+deploy_staging:
+  stage: deploy_staging
   environment:
     name: staging
     url: http://bezbahil.aw-dev.ru
