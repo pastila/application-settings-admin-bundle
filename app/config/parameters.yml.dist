@@ -5,7 +5,7 @@ parameters:
     database_host: mysql
     database_port: ~
     database_name: dbbezbahil
-    database_user: root
+    database_user: %env(MYSQL_USER)%
     database_password: '%env(MYSQL_PASSWORD)%'
     # You should uncomment this if you want to use pdo_sqlite
     #database_path: '%kernel.project_dir%/var/data/data.sqlite'
@@ -24,5 +24,6 @@ parameters:
 
     api_token: 31409EDCC223DB7DAA72C54EE0107B9F
 
-
+# Environment variable defaults
+    env(MYSQL_USER): root
     env(MYSQL_PASSWORD): ~
