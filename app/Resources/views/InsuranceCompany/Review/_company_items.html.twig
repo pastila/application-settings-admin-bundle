@@ -1,0 +1,5 @@
+{% for branch in branches %}
+    <li value="{{ branch.id }}" class="custom-serach__items_item hospital company-select-item data-kpp="{{ branch.kpp }}">
+        {{ branch.name }}
+    </li>
+{% endfor %}

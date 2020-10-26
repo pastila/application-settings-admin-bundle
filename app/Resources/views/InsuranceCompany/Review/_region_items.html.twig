@@ -1,0 +1,5 @@
+{% for region in regions %}
+    <li value="{{ region.id }}" class="custom-serach__items_item region data-id-city="{{ region.id }}">
+        {{ region.name }}
+    </li>
+{% endfor %}

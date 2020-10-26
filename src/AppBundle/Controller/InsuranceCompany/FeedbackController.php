@@ -512,18 +512,12 @@ class FeedbackController extends Controller
       ->getQuery()
       ->getResult();
 
-    $content = '';
-    foreach ($regions as $region)
-    {
-      $content .= $this->renderView(
-        'InsuranceCompany/Review/_region_item.html.twig', [
-          'region_id' => $region->getId(),
-          'region_name' => $region->getName(),
-        ]
-      );
-    }
     $response = new Response();
-    $response->setContent($content);
+    $response->setContent($this->renderView(
+      'InsuranceCompany/Review/_region_items.html.twig', [
+        'regions' => $regions,
+      ]
+    ));
 
     return $response;
   }
@@ -545,19 +539,12 @@ class FeedbackController extends Controller
       ->getQuery()
       ->getResult();
 
-    $content = '';
-    foreach ($branches as $branch)
-    {
-      $content .= $this->renderView(
-        'InsuranceCompany/Review/_company_item.html.twig', [
-          'branch_id' => $branch->getId(),
-          'kpp' => $branch->getKpp(),
-          'branch_name' => $branch->getName(),
-        ]
-      );
-    }
     $response = new Response();
-    $response->setContent($content);
+    $response->setContent($this->renderView(
+      'InsuranceCompany/Review/_company_items.html.twig', [
+        'branches' => $branches,
+      ]
+    ));
 
     return $response;
   }
