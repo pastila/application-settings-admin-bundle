@@ -504,8 +504,7 @@ class FeedbackController extends Controller
    */
   public function regionSearchAction(Request $request)
   {
-    $data = $request->request->all();
-    $name_city = isset($data['name_city']) ? $data['name_city'] : null;
+    $name_city = $request->get('name_city');
 
     $regions = $this->getDoctrine()->getManager()
       ->getRepository(Region::class)
@@ -518,43 +517,12 @@ class FeedbackController extends Controller
     $content = '';
     foreach ($regions as $region)
     {
-      $content .= '<li value="' . $region->getId() . '" class="custom-serach__items_item region
-                      data-id-city="' . $region->getId() . '">' .
-        $region->getName() . '</li>';
-    }
-    $response = new Response();
-    $response->setContent($content);
-
-    return $response;
-  }
-
-  /**
-   * @Route(path="/feedback/region-select", name="feedback_region_select")
-   */
-  public function companySelectAction(Request $request)
-  {
-    $data = $request->request->all();
-    $region_id = isset($data['region_id']) ? $data['region_id'] : null;
-
-    $branches = $this->getDoctrine()->getManager()
-      ->getRepository(CompanyBranch::class)
-      ->createQueryBuilder('cb')
-      ->innerJoin('cb.company', 'c')
-      ->where('cb.region = :region')
-      ->andWhere('c.status = :status')
-      ->andWhere('cb.status = :status')
-      ->setParameter('region', $region_id)
-      ->setParameter('status', CompanyStatus::ACTIVE)
-      ->groupBy('cb.id')
-      ->getQuery()
-      ->getResult();
-
-    $content = '';
-    foreach ($branches as $branch)
-    {
-      $content .= '<li value="' . $branch->getId() . '" class="custom-serach__items_item hospital company-select-item
-                      data-kpp="' . $branch->getKpp() . '">' .
-        $branch->getName() . '</li>';
+      $content .= $this->renderView(
+        'InsuranceCompany/Review/_region_item.html.twig', [
+          'region_id' => $region->getId(),
+          'region_name' => $region->getName(),
+        ]
+      );
     }
     $response = new Response();
     $response->setContent($content);
@@ -567,21 +535,17 @@ class FeedbackController extends Controller
    */
   public function companySearchAction(Request $request)
   {
-    $data = $request->request->all();
-    $region_id = isset($data['region_id']) ? $data['region_id'] : null;
-    $name_hospital = isset($data['name_hospital']) ? $data['name_hospital'] : null;
+    $region_id = $request->get('region_id');
+    $name_hospital = $request->get('name_hospital');
+    $em = $this->getDoctrine()->getManager();
+    $repository = $em->getRepository(CompanyBranch::class);
 
-    $branches = $this->getDoctrine()->getManager()
-      ->getRepository(CompanyBranch::class)
-      ->createQueryBuilder('cb')
-      ->innerJoin('cb.company', 'c')
-      ->andWhere('c.status = :status')
-      ->andWhere('cb.status = :status')
+    $branches = $repository
+      ->getActive()
       ->andWhere('cb.region = :regionId')
       ->andWhere('cb.name LIKE :nameHospital')
       ->setParameter('nameHospital', '%' . $name_hospital . '%')
       ->setParameter('regionId', $region_id)
-      ->setParameter('status', CompanyStatus::ACTIVE)
       ->groupBy('cb.id')
       ->getQuery()
       ->getResult();
@@ -589,9 +553,13 @@ class FeedbackController extends Controller
     $content = '';
     foreach ($branches as $branch)
     {
-      $content .= '<li value="' . $branch->getId() . '" class="custom-serach__items_item hospital company-select-item
-                    data-kpp="' . $branch->getKpp() . '">' .
-        $branch->getName() . '</li>';
+      $content .= $this->renderView(
+        'InsuranceCompany/Review/_company_item.html.twig', [
+          'branch_id' => $branch->getId(),
+          'kpp' => $branch->getKpp(),
+          'branch_name' => $branch->getName(),
+        ]
+      );
     }
     $response = new Response();
     $response->setContent($content);

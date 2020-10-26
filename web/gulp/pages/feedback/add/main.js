@@ -230,7 +230,7 @@ $(document).ready(function() {
     $('#referal_two').val('');
     $('#region_select_id').attr('value', id_region);
 
-    $.post('/feedback/region-select',
+    $.post('/feedback/company-search',
         {region_id: $('#referal').attr('data-id_region')}, function(msg) {
           if ($('.error_region').length != 0) {
             $('.error_region').remove();
