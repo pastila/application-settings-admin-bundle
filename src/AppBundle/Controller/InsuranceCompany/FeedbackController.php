@@ -504,13 +504,11 @@ class FeedbackController extends Controller
    */
   public function regionSearchAction(Request $request)
   {
-    $name_city = $request->get('name_city');
-
     $regions = $this->getDoctrine()->getManager()
       ->getRepository(Region::class)
       ->createQueryBuilder('r')
       ->andWhere('r.name LIKE :nameCity')
-      ->setParameter('nameCity', '%' . $name_city . '%')
+      ->setParameter('nameCity', '%' . $request->get('name_city') . '%')
       ->getQuery()
       ->getResult();
 
@@ -535,17 +533,14 @@ class FeedbackController extends Controller
    */
   public function companySearchAction(Request $request)
   {
-    $region_id = $request->get('region_id');
-    $name_hospital = $request->get('name_hospital');
     $em = $this->getDoctrine()->getManager();
     $repository = $em->getRepository(CompanyBranch::class);
-
     $branches = $repository
       ->getActive()
       ->andWhere('cb.region = :regionId')
       ->andWhere('cb.name LIKE :nameHospital')
-      ->setParameter('nameHospital', '%' . $name_hospital . '%')
-      ->setParameter('regionId', $region_id)
+      ->setParameter('nameHospital', '%' . $request->get('name_hospital') . '%')
+      ->setParameter('regionId', $request->get('region_id'))
       ->groupBy('cb.id')
       ->getQuery()
       ->getResult();
