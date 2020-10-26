@@ -5,7 +5,7 @@ stages:
   - deploy_staging
 
 before_script:
-  - sh scripts/ci-php-install.sh
+  - sh ci/ci-php-install.sh
   - php bin/composer.phar global require hirak/prestissimo
   - php bin/composer.phar install -o
 
