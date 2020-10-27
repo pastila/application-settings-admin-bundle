@@ -32,6 +32,7 @@
         "ext-curl": "*",
         "accurateweb/client-application-bundle": "dev-master",
         "accurateweb/email-template-bundle": "dev-development",
+        "deployer/deployer": "^6.8",
         "doctrine/doctrine-bundle": "^1.10",
         "doctrine/doctrine-migrations-bundle": "^1.3",
         "doctrine/orm": "^2.5",

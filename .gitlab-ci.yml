@@ -103,24 +103,23 @@ phpstan:
     - source ./laradock/.env.test
     - sh ci/phpstan.sh
 
-deploy_staging:
-  stage: deploy_staging
-  environment:
-    name: staging
-    url: http://bezbahil.aw-dev.ru
-  before_script:
-    # Setup SSH deploy keys
-    - 'which ssh-agent || ( apk add openssh-client )'
-    - eval $(ssh-agent -s)
-    - ssh-add <(echo "$SSH_PRIVATE_KEY")
-    - mkdir -p ~/.ssh
-    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-  script:
-    - ssh deployer@aw-dev.ru "cd /var/www/sites/bezbahil/releases/1 && git pull origin && exit"
-  only:
-    - develop
+#deploy:
+#  stage: deploy
+#  image: atymic/php73-runner
+#  dependencies:
+#    - build:js
+#  before_script:
+#    - mkdir -p ~/.ssh
+#    - eval $(ssh-agent -s)
+#    - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+#    - chmod 644 ~/.ssh/known_hosts
+#    - echo "${PRIVATE_KEY}" | tr -d '\r' | ssh-add - > /dev/null
+#  script:
+#    - dep deploy staging --tag=$CI_COMMIT_REF_NAME -vvv
+#  only:
+#    - develop
 
 stages:
   - build
   - test
-  - deploy_staging
+#  - deploy_staging
