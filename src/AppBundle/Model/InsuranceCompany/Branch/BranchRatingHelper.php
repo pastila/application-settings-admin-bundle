@@ -8,6 +8,7 @@ namespace AppBundle\Model\InsuranceCompany\Branch;
 
 use AppBundle\Entity\Company\Company;
 use AppBundle\Entity\Company\CompanyBranch;
+use AppBundle\Entity\Company\CompanyStatus;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Repository\Company\CompanyBranchRepository;
 use AppBundle\Repository\Company\CompanyRepository;
@@ -42,14 +43,13 @@ class BranchRatingHelper
     try
     {
       return $this->branchRepository->findCompanyBranch($company, $region)->getRating();
-    }
-    catch (UnexpectedResultException $e)
+    } catch (UnexpectedResultException $e)
     {
       return null;
     }
   }
 
-  public function buildRating(Region $region=null)
+  public function buildRating(Region $region = null)
   {
     if ($region)
     {
@@ -61,12 +61,11 @@ class BranchRatingHelper
 
   public function buildRatingForRegion(Region $region)
   {
-    return $this
-      ->companyRepository
-      ->createQueryBuilder('c')
-      ->innerJoin('c.branches', 'cb')
+    $repository = $this->companyRepository;
+    return $repository
+      ->getWithBranchActive()
       ->select(['c', 'SUM(cb.valuation) AS actualRating'])
-      ->where('cb.region = :region AND cb.valuation > 0')
+      ->andWhere('cb.region = :region AND cb.valuation > 0')
       ->setParameter('region', $region)
       ->orderBy('actualRating', 'DESC')
       ->groupBy('c.id')
@@ -76,12 +75,12 @@ class BranchRatingHelper
 
   public function buildRatingOverall()
   {
-    return $this
-      ->companyRepository
-      ->createQueryBuilder('cb')
-      ->select(['cb, cb.valuation AS actualRating'])
-      ->where('cb.valuation > 0')
-      ->orderBy('cb.valuation', 'DESC')
+    $repo = $this->companyRepository;
+    return $repo
+      ->getWithBranchActive()
+      ->select(['c, c.valuation AS actualRating'])
+      ->andWhere('c.valuation > 0')
+      ->orderBy('c.valuation', 'DESC')
       ->getQuery()
       ->getResult();
   }

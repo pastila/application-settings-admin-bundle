@@ -12,6 +12,7 @@ use AppBundle\Entity\Company\CompanyBranch;
 use AppBundle\Entity\Company\CompanyStatus;
 use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\Company\FeedbackModerationStatus;
+use AppBundle\Entity\Geo\Region;
 use AppBundle\Entity\User\User;
 use AppBundle\Exception\BitrixRequestException;
 use AppBundle\Form\Feedback\CommentFormType;
@@ -499,31 +500,53 @@ class FeedbackController extends Controller
   }
 
   /**
-   * @Route(path="/feedback/region-select", name="feedback_region_select_ajax")
+   * @Route(path="/feedback/region-search", name="feedback_region_search")
    */
-  public function regionSelectAction(Request $request)
+  public function regionSearchAction(Request $request)
   {
-    if ($request->isXmlHttpRequest())
-    {
-      $data = $request->request->all();
-      $region_id = isset($data['region_id']) ? $data['region_id'] : null;
+    $regions = $this->getDoctrine()->getManager()
+      ->getRepository(Region::class)
+      ->createQueryBuilder('r')
+      ->andWhere('r.name LIKE :nameCity')
+      ->setParameter('nameCity', '%' . $request->get('name_city') . '%')
+      ->getQuery()
+      ->getResult();
 
-      $branches = $this->getDoctrine()->getManager()->getRepository(CompanyBranch::class)
-        ->findBy([
-          'region' => $region_id
-        ]);
-      $content = '';
-      foreach ($branches as $branch)
-      {
-        $content .= '<li value="' . $branch->getId() . '" class="custom-serach__items_item hospital company-select-item
-                      data-kpp="' . $branch->getKpp() . '">' .
-          $branch->getName() . '</li>';
-      }
-      $response = new Response();
-      $response->setContent($content);
+    $response = new Response();
+    $response->setContent($this->renderView(
+      'InsuranceCompany/Review/_region_items.html.twig', [
+        'regions' => $regions,
+      ]
+    ));
 
-      return $response;
-    }
+    return $response;
+  }
+
+  /**
+   * @Route(path="/feedback/company-search", name="feedback_company_search")
+   */
+  public function companySearchAction(Request $request)
+  {
+    $em = $this->getDoctrine()->getManager();
+    $repository = $em->getRepository(CompanyBranch::class);
+    $branches = $repository
+      ->getActive()
+      ->andWhere('cb.region = :regionId')
+      ->andWhere('cb.name LIKE :nameHospital')
+      ->setParameter('nameHospital', '%' . $request->get('name_hospital') . '%')
+      ->setParameter('regionId', $request->get('region_id'))
+      ->groupBy('cb.id')
+      ->getQuery()
+      ->getResult();
+
+    $response = new Response();
+    $response->setContent($this->renderView(
+      'InsuranceCompany/Review/_company_items.html.twig', [
+        'branches' => $branches,
+      ]
+    ));
+
+    return $response;
   }
 
   /**
