@@ -130,8 +130,9 @@ class FeedbackController extends Controller
       ->getRepository(Feedback::class)
       ->createQueryBuilder('rv');
 
-    if (isset($filterParams['moderation']) && $this->getUser() && $this->getUser()->getIsAdmin())
+    if (isset($filterParams['moderation']))
     {
+      $this->denyAccessUnlessGranted('ROLE_ADMIN');
       $reviewListQb
         ->andWhere('rv.moderationStatus = :moderationStatus')
         ->setParameter('moderationStatus', $reviewListFilter->getModeration());
