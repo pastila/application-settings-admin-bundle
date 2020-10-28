@@ -61,7 +61,7 @@ class CompanyBranchHelper
                 epIMG.VALUE as IMAGE_ID,                                 
                 epE1.VALUE as EMAIL1,                    
                 epE2.VALUE as EMAIL2,                    
-                epE2.VALUE as EMAIL3
+                epE3.VALUE as EMAIL3
             FROM b_iblock_element e
             LEFT JOIN b_iblock_element_property epK ON epK.IBLOCK_ELEMENT_ID = e.ID AND epK.IBLOCK_PROPERTY_ID = 112     
             LEFT JOIN s_companies sC ON sC.kpp = epK.VALUE  
