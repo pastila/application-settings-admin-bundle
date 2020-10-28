@@ -225,14 +225,11 @@ class FeedbackController extends Controller
    */
   public function showAction($id, Request $request, UserInterface $user = null)
   {
+    $em = $this->getDoctrine()->getManager();
+    $repository = $em->getRepository(Feedback::class);
+    
     /** @var Feedback $review */
-    $review = $this
-      ->getDoctrine()
-      ->getManager()
-      ->getRepository(Feedback::class)
-      ->createQueryBuilder('rv')
-      ->leftJoin('rv.comments', 'rvct')
-      ->leftJoin('rvct.citations', 'rvctcs')
+    $review = $repository->getFeedbackActive()
       ->andWhere('rv.id = :feedback_id')
       ->setParameter('feedback_id', $id)
       ->setMaxResults(1)
