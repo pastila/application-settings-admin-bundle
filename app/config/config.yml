@@ -80,26 +80,6 @@ sensio_framework_extra:
    router:
         annotations: false
 
-sonata_admin:
-    title: Раздел администрирования
-#    templates:
-#        edit:   ':CRUD:edit.html.twig'
-    dashboard:
-        groups:
-            feedback:
-                label: Отзывы
-            comment:
-                label: Комментарии
-    options:
-        html5_validate: false
-
-sonata_block:
-    default_contexts: [cms]
-    blocks:
-        # enable the SonataAdminBundle block
-        sonata.admin.block.admin_list:
-            contexts: [admin]
-
 stof_doctrine_extensions:
     default_locale: ru_RU
     orm:
