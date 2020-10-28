@@ -132,6 +132,7 @@ class FeedbackController extends Controller
 
     if (isset($filterParams['moderation']))
     {
+      $this->denyAccessUnlessGranted('ROLE_ADMIN');
       $reviewListQb
         ->andWhere('rv.moderationStatus = :moderationStatus')
         ->setParameter('moderationStatus', $reviewListFilter->getModeration());
@@ -351,6 +352,8 @@ class FeedbackController extends Controller
    */
   public function addCommentAction(Request $request, UserInterface $user = null)
   {
+    $this->denyAccessUnlessGranted(['ROLE_ADMIN', 'ROLE_USER']);
+
     $data = $request->request->all();
 
     /**
@@ -394,6 +397,8 @@ class FeedbackController extends Controller
    */
   public function removeCommentAction(Request $request)
   {
+    $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
     if ($request->isXmlHttpRequest())
     {
       $data = $request->request->all();
@@ -424,6 +429,8 @@ class FeedbackController extends Controller
    */
   public function addCitationAction(Request $request, UserInterface $user = null)
   {
+    $this->denyAccessUnlessGranted(['ROLE_ADMIN', 'ROLE_USER']);
+
     if ($request->isXmlHttpRequest())
     {
       $data = $request->request->all();
@@ -481,6 +488,8 @@ class FeedbackController extends Controller
    */
   public function removeCitationAction(Request $request)
   {
+    $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
     if ($request->isXmlHttpRequest())
     {
       $data = $request->request->all();
@@ -554,6 +563,8 @@ class FeedbackController extends Controller
    */
   public function adminCheckAction(Request $request)
   {
+    $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
     if ($request->isXmlHttpRequest())
     {
       $data = $request->request->all();
