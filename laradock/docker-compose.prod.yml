@@ -6,8 +6,8 @@ services:
     volumes:
       - ${APP_CODE_PATH_HOST_SF}:${APP_CODE_PATH_CONTAINER}
       - ./workspace/crontab/:/etc/cron.d
-      - ${APP_SHARED_PATH_HOST}/laradock/workspace/.ssh/authorized_keys:/root/.ssh/authorized_keys:ro
-      - ${APP_SHARED_PATH_HOST}/laradock/workspace/.ssh/config:/root/.ssh/config:ro
+      - ${APP_SHARED_PATH_HOST}/laradock/workspace/.ssh/authorized_keys:/root/.ssh/authorized_keys
+      - ${APP_SHARED_PATH_HOST}/laradock/workspace/.ssh/config:/root/.ssh/config
   php-fpm-symfony:
     volumes:
       - ./php-fpm-symfony/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
