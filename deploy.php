@@ -14,7 +14,7 @@ set('git_tty', true);
 
 // Shared files/dirs between deploys
 add('shared_files', [
-  '.env',
+  '.env', // Symfony app env
   'web/.htaccess',
   'web/ajax/for_admin/import/log_cmo.txt',
   'web/ajax/for_admin/import/log_mo.txt',
@@ -27,20 +27,18 @@ add('shared_files', [
   'web/cert1.pem',
   'web/export_2.csv',
   'web/export_f1111.csv',
-  'laradock/.env',
-  'laradock/certbot/certs/cert1.pem',
-  'laradock/certbot/certs/chain1.pem',
-  'laradock/certbot/certs/fullchain1.pem',
-  'laradock/certbot/certs/privkey1.pem',
+  'laradock/.env', // Laradock build env
   'laradock/docker-compose.yml',
   'laradock/nginx/sites/bezbahil.ru.conf',
   'laradock/nginx/sites/devdoc1.kdteam.su.conf',
+  'laradock/php-fpm-bitrix/msmtprc',
   'web/robots.txt',
   'web/sitemap.xml',
-  'ssh/send_mail_after_30_day.txt',
+  'web/ssh/send_mail_after_30_day.txt',
 ]);
 
 add('shared_dirs', [
+  'laradock/certbot/certs',
   'web/bitrix/backup',
   'web/bitrix/cache',
   'web/bitrix/managed_cache',
@@ -60,12 +58,26 @@ set('allow_anonymous_stats', false);
 // Hosts
 
 host('192.168.1.11')
-    ->stage('staging')
-    ->set('deploy_path', '/var/www/sites/bezbahil/{{application}}');
+    ->stage('staging-host')
+    ->user('deployer')
+    ->set('deploy_path', '/var/www/sites/bezbahil');
+
+host('192.168.1.11')
+  ->port(2022)
+  ->stage('staging-workspace')
+  ->user('root')
+  ->set('http_user', 'root')
+  ->set('writable_use_sudo', false)
+  ->set('writable_mode', 'chmod')
+  ->set('deploy_path', '/var/www');
+
 
 host('84.201.185.203')
   ->stage('prod')
   ->user('root')
+  ->set('http_user', 'root')
+  ->set('writable_use_sudo', false)
+  ->set('writable_mode', 'chmod')
   ->set('deploy_path', '/var/www');
 
 // Tasks
@@ -77,6 +89,29 @@ host('84.201.185.203')
 after('deploy:failed', 'deploy:unlock');
 
 // Migrate database before symlink new release.
+after('deploy:symlink', 'start_services');
 
-before('deploy:symlink', 'database:migrate');
+//before('deploy:symlink', 'database:migrate');
+
+task('prepare_workspace', [
+  'deploy:info',
+  'deploy:prepare',
+  'deploy:lock',
+  'deploy:release',
+  'deploy:update_code',
+  'deploy:clear_paths',
+  'deploy:create_cache_dir',
+  'deploy:shared',
+  'deploy:unlock',
+  'start_workspace',
+]);
+
+// build and start the workspace container
+task('start_workspace', function(){
+  run('cd {{release_path}}/laradock && docker-compose up -d workspace');
+});
+
+task('start_services', function(){
+  run('cd {{release_path}}/laradock && docker-compose up -d');
+});
 

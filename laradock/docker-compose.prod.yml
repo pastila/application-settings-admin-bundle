@@ -1,0 +1,105 @@
+# extends docker-compose.yml
+services:
+  php-fpm-symfony:
+    volumes:
+      - ./php-fpm-symfony/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
+      - ./php-fpm-symfony/laravel.ini:/usr/local/etc/php/conf.d/laravel.ini
+      - ./php-fpm-symfony/php${PHP_VERSION}/www.conf/www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
+      - ${APP_CODE_PATH_HOST_SF}:${APP_CODE_PATH_CONTAINER_SF}
+      - ${DATA_PATH_LOGS}/:/var/log
+      - ./php-fpm-symfony/msmtprc:/etc/msmtprc
+      # App shares
+      - ${APP_SHARED_PATH_HOST}/.env:/var/www/.env, // Symfony app env
+      - ${APP_SHARED_PATH_HOST}/web/.htaccess:/var/www/web/.htaccess
+      - ${APP_SHARED_PATH_HOST}/web/ajax/for_admin/import/log_cmo.txt:/var/www/web/ajax/for_admin/import/log_cmo.txt
+      - ${APP_SHARED_PATH_HOST}/web/ajax/for_admin/import/log_mo.txt:/var/www/web/ajax/for_admin/import/log_mo.txt
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/modules/updater.log:/var/www/web/bitrix/modules/updater.log
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/modules/updater_partner.log:/var/www/web/bitrix/modules/updater_partner.log
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/php_interface/dbconn.php:/var/www/web/bitrix/php_interface/dbconn.php
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/.settings.php:/var/www/web/bitrix/.settings.php
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/site_checker_797f0a4ef69e8b269ee562becb5b10e5.log:/var/www/web/bitrix/site_checker_797f0a4ef69e8b269ee562becb5b10e5.log
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/site_checker_afb111f71ba090216f391e97d08677c8.log:/var/www/web/bitrix/site_checker_afb111f71ba090216f391e97d08677c8.log
+      - ${APP_SHARED_PATH_HOST}/web/cert1.pem:/var/www/web/cert1.pem
+      - ${APP_SHARED_PATH_HOST}/web/export_2.csv:/var/www/web/export_2.csv
+      - ${APP_SHARED_PATH_HOST}/web/export_f1111.csv:/var/www/web/export_f1111.csv
+      - ${APP_SHARED_PATH_HOST}/laradock/.env:/var/www/laradock/.env // Laradock build env
+      - ${APP_SHARED_PATH_HOST}/web/robots.txt:/var/www/web/robots.txt
+      - ${APP_SHARED_PATH_HOST}/web/sitemap.xml:/var/www/web/sitemap.xml
+      - ${APP_SHARED_PATH_HOST}/web/ssh/send_mail_after_30_day.txt:/var/www/web/ssh/send_mail_after_30_day.txt
+      - ${APP_SHARED_PATH_HOST}/laradock/certbot/certs:/var/www/laradock/certbot/certs
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/backup:/var/www/web/bitrix/backup
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/cache:/var/www/web/bitrix/cache
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/managed_cache:/var/www/web/bitrix/managed_cache
+      - ${APP_SHARED_PATH_HOST}/web/bitrix_logs:/var/www/web/bitrix_logs
+      - ${APP_SHARED_PATH_HOST}/web/images:/var/www/web/images
+      - ${APP_SHARED_PATH_HOST}/web/upload:/var/www/web/upload
+
+  php-fpm-bitrix:
+    volumes:
+      - ./php-fpm-bitrix/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
+      - ./php-fpm-bitrix/laravel.ini:/usr/local/etc/php/conf.d/laravel.ini
+      - ./php-fpm-bitrix/php${PHP_VERSION}/www.conf/www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
+      - ${APP_CODE_PATH_HOST_BX}:${APP_CODE_PATH_CONTAINER_BX}
+      - ${DATA_PATH_LOGS}/:/var/log
+      - ./php-fpm-bitrix/msmtprc:/etc/msmtprc
+      # App shares
+      - ${APP_SHARED_PATH_HOST}/.env:/var/www/.env, // Symfony app env
+      - ${APP_SHARED_PATH_HOST}/web/.htaccess:/var/www/web/.htaccess
+      - ${APP_SHARED_PATH_HOST}/web/ajax/for_admin/import/log_cmo.txt:/var/www/web/ajax/for_admin/import/log_cmo.txt
+      - ${APP_SHARED_PATH_HOST}/web/ajax/for_admin/import/log_mo.txt:/var/www/web/ajax/for_admin/import/log_mo.txt
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/modules/updater.log:/var/www/web/bitrix/modules/updater.log
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/modules/updater_partner.log:/var/www/web/bitrix/modules/updater_partner.log
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/php_interface/dbconn.php:/var/www/web/bitrix/php_interface/dbconn.php
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/.settings.php:/var/www/web/bitrix/.settings.php
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/site_checker_797f0a4ef69e8b269ee562becb5b10e5.log:/var/www/web/bitrix/site_checker_797f0a4ef69e8b269ee562becb5b10e5.log
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/site_checker_afb111f71ba090216f391e97d08677c8.log:/var/www/web/bitrix/site_checker_afb111f71ba090216f391e97d08677c8.log
+      - ${APP_SHARED_PATH_HOST}/web/cert1.pem:/var/www/web/cert1.pem
+      - ${APP_SHARED_PATH_HOST}/web/export_2.csv:/var/www/web/export_2.csv
+      - ${APP_SHARED_PATH_HOST}/web/export_f1111.csv:/var/www/web/export_f1111.csv
+      - ${APP_SHARED_PATH_HOST}/laradock/.env:/var/www/laradock/.env // Laradock build env
+      - ${APP_SHARED_PATH_HOST}/web/robots.txt:/var/www/web/robots.txt
+      - ${APP_SHARED_PATH_HOST}/web/sitemap.xml:/var/www/web/sitemap.xml
+      - ${APP_SHARED_PATH_HOST}/web/ssh/send_mail_after_30_day.txt:/var/www/web/ssh/send_mail_after_30_day.txt
+      - ${APP_SHARED_PATH_HOST}/laradock/certbot/certs:/var/www/laradock/certbot/certs
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/backup:/var/www/web/bitrix/backup
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/cache:/var/www/web/bitrix/cache
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/managed_cache:/var/www/web/bitrix/managed_cache
+      - ${APP_SHARED_PATH_HOST}/web/bitrix_logs:/var/www/web/bitrix_logs
+      - ${APP_SHARED_PATH_HOST}/web/images:/var/www/web/images
+      - ${APP_SHARED_PATH_HOST}/web/upload:/var/www/web/upload
+
+
+  ### NGINX Server #########################################
+  nginx:
+    volumes:
+      - ${APP_CODE_PATH_HOST_SF}:${APP_CODE_PATH_CONTAINER_SF}
+      - ${DATA_PATH_LOGS}/nginx:/var/log/nginx
+      - ${NGINX_SITES_PATH}:/etc/nginx/sites-available
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ${APP_SHARED_PATH_HOST}/laradock/certbot/certs/:/var/certs:ro
+      - ${APP_SHARED_PATH_HOST}/laradock/certbot/letsencrypt/:/var/www/letsencrypt
+      # App shares
+      - ${APP_SHARED_PATH_HOST}/.env:/var/www/.env, // Symfony app env
+      - ${APP_SHARED_PATH_HOST}/web/.htaccess:/var/www/web/.htaccess
+      - ${APP_SHARED_PATH_HOST}/web/ajax/for_admin/import/log_cmo.txt:/var/www/web/ajax/for_admin/import/log_cmo.txt
+      - ${APP_SHARED_PATH_HOST}/web/ajax/for_admin/import/log_mo.txt:/var/www/web/ajax/for_admin/import/log_mo.txt
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/modules/updater.log:/var/www/web/bitrix/modules/updater.log
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/modules/updater_partner.log:/var/www/web/bitrix/modules/updater_partner.log
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/php_interface/dbconn.php:/var/www/web/bitrix/php_interface/dbconn.php
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/.settings.php:/var/www/web/bitrix/.settings.php
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/site_checker_797f0a4ef69e8b269ee562becb5b10e5.log:/var/www/web/bitrix/site_checker_797f0a4ef69e8b269ee562becb5b10e5.log
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/site_checker_afb111f71ba090216f391e97d08677c8.log:/var/www/web/bitrix/site_checker_afb111f71ba090216f391e97d08677c8.log
+      - ${APP_SHARED_PATH_HOST}/web/cert1.pem:/var/www/web/cert1.pem
+      - ${APP_SHARED_PATH_HOST}/web/export_2.csv:/var/www/web/export_2.csv
+      - ${APP_SHARED_PATH_HOST}/web/export_f1111.csv:/var/www/web/export_f1111.csv
+      - ${APP_SHARED_PATH_HOST}/laradock/.env:/var/www/laradock/.env // Laradock build env
+      - ${APP_SHARED_PATH_HOST}/web/robots.txt:/var/www/web/robots.txt
+      - ${APP_SHARED_PATH_HOST}/web/sitemap.xml:/var/www/web/sitemap.xml
+      - ${APP_SHARED_PATH_HOST}/web/ssh/send_mail_after_30_day.txt:/var/www/web/ssh/send_mail_after_30_day.txt
+      - ${APP_SHARED_PATH_HOST}/laradock/certbot/certs:/var/www/laradock/certbot/certs
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/backup:/var/www/web/bitrix/backup
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/cache:/var/www/web/bitrix/cache
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/managed_cache:/var/www/web/bitrix/managed_cache
+      - ${APP_SHARED_PATH_HOST}/web/bitrix_logs:/var/www/web/bitrix_logs
+      - ${APP_SHARED_PATH_HOST}/web/images:/var/www/web/images
+      - ${APP_SHARED_PATH_HOST}/web/upload:/var/www/web/upload
