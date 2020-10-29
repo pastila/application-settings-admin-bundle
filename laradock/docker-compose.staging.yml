@@ -4,7 +4,7 @@ version: '3'
 services:
   workspace:
     volumes:
-      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
+      - ${APP_DEPLOY_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
       - ./workspace/crontab/:/etc/cron.d
       - ${APP_SHARED_PATH_HOST}/laradock/workspace/.ssh/authorized_keys:/root/.ssh/authorized_keys
       - ${APP_SHARED_PATH_HOST}/laradock/workspace/.ssh/config:/root/.ssh/config

@@ -73,6 +73,11 @@ host('staging_workspace')
   ->set('writable_mode', 'chmod')
   ->set('deploy_path', '/var/www');
 
+host('staging')
+  ->hostname('192.168.1.11')
+  ->stage('staging')
+  ->user('deployer')
+  ->set('deploy_path', '/var/www/sites/bezbahil');
 
 host('84.201.185.203')
   ->stage('prod')
@@ -107,12 +112,22 @@ task('prepare_workspace', [
   'deploy:unlock'
 ]);
 
+task('fix_owner', function(){
+  $previousReleaseExist = test('[ -h release ]');
+
+  if ($previousReleaseExist)
+  {
+    run('chown `whoami`:`whoami` $(readlink release)');
+  }
+});
+
 // build and start the workspace container
 task('start_workspace', function(){
   run('cd {{release_path}}/laradock && docker-compose up -d workspace');
+  // fix ssh files owner
+  run('cd {{release_path}}/laradock && docker exec $(docker-compose ps -q workspace) sh -c "chown -R root:root /root/.ssh"');
 });
 
 task('start_services', function(){
   run('cd {{release_path}}/laradock && docker-compose up -d');
 });
-
