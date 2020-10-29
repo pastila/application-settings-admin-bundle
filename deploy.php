@@ -57,14 +57,16 @@ set('allow_anonymous_stats', false);
 
 // Hosts
 
-host('192.168.1.11')
-    ->stage('staging-host')
+host('staging_host')
+    ->hostname('192.168.1.11')
+    ->stage('staging_host')
     ->user('deployer')
     ->set('deploy_path', '/var/www/sites/bezbahil');
 
-host('192.168.1.11')
+host('staging_workspace')
+  ->hostname('192.168.1.11')
   ->port(2022)
-  ->stage('staging-workspace')
+  ->stage('staging_workspace')
   ->user('root')
   ->set('http_user', 'root')
   ->set('writable_use_sudo', false)
@@ -102,8 +104,7 @@ task('prepare_workspace', [
   'deploy:clear_paths',
   'deploy:create_cache_dir',
   'deploy:shared',
-  'deploy:unlock',
-  'start_workspace',
+  'deploy:unlock'
 ]);
 
 // build and start the workspace container
