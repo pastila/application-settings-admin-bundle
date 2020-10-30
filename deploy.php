@@ -79,8 +79,15 @@ host('staging')
   ->user('deployer')
   ->set('deploy_path', '/var/www/sites/bezbahil');
 
-host('84.201.185.203')
-  ->stage('prod')
+host('prod_host')
+  ->hostname('84.201.185.203')
+  ->stage('prod_host')
+  ->user('deployer')
+  ->set('deploy_path', '/var/www/bezbahilru');
+
+host('prod_workspace')
+  ->hostname('84.201.185.203')
+  ->stage('prod_workspace')
   ->user('root')
   ->set('http_user', 'root')
   ->set('writable_use_sudo', false)
