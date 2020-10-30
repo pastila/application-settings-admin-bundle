@@ -96,7 +96,7 @@ host('84.201.185.203')
 after('deploy:failed', 'deploy:unlock');
 
 // Migrate database before symlink new release.
-after('deploy:symlink', 'start_services');
+//after('deploy:symlink', 'start_services');
 
 //before('deploy:symlink', 'database:migrate');
 
@@ -129,5 +129,5 @@ task('start_workspace', function(){
 });
 
 task('start_services', function(){
-  run('cd {{release_path}}/laradock && docker-compose up -d');
+  run('cd {{current_path}}/laradock && docker-compose up -d');
 });

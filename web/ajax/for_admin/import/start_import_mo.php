@@ -39,12 +39,12 @@ ob_end_clean();
 ob_end_clean();
 ob_end_clean();
 
-require '/var/www/vendor/autoload.php';
+require '/var/www/web/vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-$dir = '/var/www/upload/import/sparrower_mo.xls';
+$dir = '/var/www/web/upload/import/sparrower_mo.xls';
 
 
 

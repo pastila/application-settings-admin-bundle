@@ -1,6 +1,11 @@
 # extends docker-compose.yml
 version: '3'
 
+networks:
+  traefik:
+    external:
+      name: traefik_traefik
+
 services:
   workspace:
     volumes:
@@ -42,6 +47,9 @@ services:
       - ${APP_SHARED_PATH_HOST}/web/bitrix_logs:/var/www/web/bitrix_logs
       - ${APP_SHARED_PATH_HOST}/web/images:/var/www/web/images
       - ${APP_SHARED_PATH_HOST}/web/upload:/var/www/web/upload
+      - ${APP_SHARED_PATH_HOST}/app/config/parameters.yml:/var/www/app/config/parameters.yml
+      - ${APP_SHARED_PATH_HOST}/var/logs:/var/www/var/logs
+      - ${APP_SHARED_PATH_HOST}/var/sessions:/var/www/var/sessions
 
   php-fpm-bitrix:
     volumes:
@@ -80,6 +88,10 @@ services:
 
   ### NGINX Server #########################################
   nginx:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.bezbahilru.rule=Host(`bezbahil.aw-dev.ru`)"
+      - "traefik.docker.network=traefik_traefik"
     volumes:
       - ${APP_CODE_PATH_HOST_SF}:${APP_CODE_PATH_CONTAINER_SF}
       - ${DATA_PATH_LOGS}/nginx:/var/log/nginx
@@ -112,3 +124,17 @@ services:
       - ${APP_SHARED_PATH_HOST}/web/bitrix_logs:/var/www/web/bitrix_logs
       - ${APP_SHARED_PATH_HOST}/web/images:/var/www/web/images
       - ${APP_SHARED_PATH_HOST}/web/upload:/var/www/web/upload
+    networks:
+      - traefik
+
+  ### MailDev ##############################################
+  maildev:
+    build: ./maildev
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.bezbahilru_maildev.rule=Host(`mail.bezbahil.aw-dev.ru`)"
+      - "traefik.docker.network=traefik_traefik"
+      - "traefik.http.services.bezbahilru_maildev_webapp.loadbalancer.server.port=80"
+    networks:
+      - backend
+      - traefik
