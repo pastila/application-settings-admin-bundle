@@ -138,7 +138,7 @@ if ($_POST["data_2"] != "") {
     header('Cache-control: max-age=0');
 
     $writer = new Xlsx($spreadsheet);
-    $writer->save('/var/www/upload/export/Выгрузка с ' . $_POST["data_1"] . ' по ' . $_POST["data_2"] . '.xlsx');
+    $writer->save('/var/www/web/upload/export/Выгрузка с ' . $_POST["data_1"] . ' по ' . $_POST["data_2"] . '.xlsx');
 
     $path = 'upload/export/Выгрузка с ' . $_POST["data_1"] . ' по ' . $_POST["data_2"] . '.xlsx';
 

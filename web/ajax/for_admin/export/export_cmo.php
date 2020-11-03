@@ -127,7 +127,7 @@ header('Cache-control: max-age=0');
 
 $writer = new Xlsx($spreadsheet);
 $date = date("Y-m-d-h:i:s");
-$writer->save('/var/www/upload/export/Выгрузка CMO '.$date.'.xlsx');
+$writer->save('/var/www/web/upload/export/Выгрузка CMO '.$date.'.xlsx');
 
 $path = 'upload/export/Выгрузка CMO '.$date.'.xlsx';
 

@@ -3,7 +3,7 @@ CModule::IncludeModule("iblock");
 
 
 if ($_FILES['import_file']) {
-    $uploads_dir = '/var/www/upload/import/';
+    $uploads_dir = '/var/www/web/upload/import/';
     $name = basename($_FILES["import_file"]["name"]);
 
     $uploads_dir .= $name;
