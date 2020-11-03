@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Feedback.
  *
  * @ORM\Table(name="s_company_feedbacks")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\Company\FeedbackRepository")
  */
 class Feedback
 {
