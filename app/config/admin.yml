@@ -1,11 +1,11 @@
 services:
-  app.feedback.admin:
-    class: AppBundle\Admin\Feedback\FeedbackAdmin
-    arguments: [~ ,'AppBundle\Entity\Company\Feedback', ~]
-    tags:
-      - { name: sonata.admin, group: 'feedback', manager_type: orm, label: 'Отзывы' }
-  app.comment.admin:
-    class: AppBundle\Admin\Feedback\CommentAdmin
-    arguments: [~ ,'AppBundle\Entity\Company\Comment', ~]
-    tags:
-      - { name: sonata.admin, group: 'comment', manager_type: orm, label: 'Комментарии' }
+#  app.feedback.admin:
+#    class: AppBundle\Admin\Feedback\FeedbackAdmin
+#    arguments: [~ ,'AppBundle\Entity\Company\Feedback', ~]
+#    tags:
+#      - { name: sonata.admin, group: 'feedback', manager_type: orm, label: 'Отзывы' }
+#  app.comment.admin:
+#    class: AppBundle\Admin\Feedback\CommentAdmin
+#    arguments: [~ ,'AppBundle\Entity\Company\Comment', ~]
+#    tags:
+#      - { name: sonata.admin, group: 'comment', manager_type: orm, label: 'Комментарии' }
