@@ -56,12 +56,12 @@ class ResizeFilter extends GdFilter
     // If the width or height is not valid then enforce the aspect ratio
     if (!is_numeric($width) || $width < 1)
     {
-      $width = round(($x / $y) * $height);
+      $this->width = round(($x / $y) * $height);
     }
 
     else if (!is_numeric($height) || $height < 1)
     {
-      $height = round(($y / $x) * $width);
+      $this->height = round(($y / $x) * $width);
     }
 
     $dest_resource = $this->createTransparentImage($image, $width, $height);

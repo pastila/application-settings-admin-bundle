@@ -14,12 +14,12 @@ class AutoCrop extends Crop
   {
     if ((double) $aspectRatio == 0)
     {
-      throw new \InvalidArgumentException('Aspect ratio must be a nonzero floating point value. "%s" given', $aspectRatio);
+      throw new InvalidArgumentException('Aspect ratio must be a nonzero floating point value. "%s" given', $aspectRatio);
     }
 
     if (!in_array($type, array('left-top', 'center-top', 'right-top', 'left-middle', 'right-middle', 'left-bottom', 'center-bottom', 'right-bottom', 'center-middle', 'center')))
     {
-      throw new \InvalidArgumentException('Autocrop type "%s" not supported', $type);
+      throw new InvalidArgumentException('Autocrop type "%s" not supported', $type);
     }
 
     parent::__construct();

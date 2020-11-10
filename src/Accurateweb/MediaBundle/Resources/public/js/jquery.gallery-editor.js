@@ -146,40 +146,43 @@
           var img = $(this).find('img'),
               src = img.attr('src'),
               imgdata = li.galleryEditorImage('getAllStuff');
-          img.attr('src', '/bundles/accuratewebmedia/images/ajax-loader-snake.gif');
+          // img.attr('src', '/bundles/accuratewebmedia/images/ajax-loader-snake.gif');
+          var url = self.options.onEdit.replace('image_id', imgdata.id);
+          window.open(url, '_blank');
+          return ;
           $.ajax({
-            url: self.options.onEdit,
-            data: {
-              image_id: imgdata.id
-            },
-            dataType: 'json',
+            url: url,
+            // data: {
+            //   image_id: imgdata.id
+            // },
+            dataType: 'html',
             success: function(r){
-              var $dlg = $('<div></div>').html('<form>'+r.f+'</form>').dialog({
+              var $dlg = $('<div></div>').html('<form>'+r+'</form>').dialog({
                 autoOpen: true,
                 title: 'Настройки изображения',
                 close: function() { $dlg.dialog('destroy'); $dlg.remove(); },
-                buttons: {
-                  'OK': function(){
-                    var form = $dlg.find('form');
-                    $.ajax({
-                      url: self.options.onEdit,
-                      type: 'post',
-                      dataType: 'json',
-                      data: form.serialize()+'&image_id='+imgdata.id,
-                      success: function(r){
-                        if (r.r === true){
-                          $dlg.dialog('close');
-                        } else {
-                          form.html(r.f);
-                        }
-                      }                      
-                    })
-                    
-                  },
-                  'Отмена': function(){
-                    $dlg.dialog('destroy');
-                  }
-                }
+                // buttons: {
+                //   'OK': function(){
+                //     var form = $dlg.find('form');
+                //     $.ajax({
+                //       url: self.options.onEdit,
+                //       type: 'post',
+                //       dataType: 'json',
+                //       data: form.serialize()+'&image_id='+imgdata.id,
+                //       success: function(r){
+                //         if (r.r === true){
+                //           $dlg.dialog('close');
+                //         } else {
+                //           form.html(r.f);
+                //         }
+                //       }
+                //     })
+                //
+                //   },
+                //   'Отмена': function(){
+                //     $dlg.dialog('destroy');
+                //   }
+                // }
               })
             },
             error: function(){

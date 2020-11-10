@@ -30,9 +30,9 @@ class ImageType extends AbstractType
       throw new \Exception();
     }
 
-    $image = $entity->getImage();
-
+    $image = $entity->getImage($options['image_id']);
     $imageUrl = null;
+
     if ($image)
     {
       $storage = $this->mediaManager->getMediaStorage($image);
@@ -62,7 +62,9 @@ class ImageType extends AbstractType
     $resolver->setDefaults(array(
       'compound' => false,
       //'data_class' => 'Symfony\Component\HttpFoundation\File\File',
-      'empty_data' => null
+      'empty_data' => null,
+      'image_id' => null,
+      'allow_file_upload' => true,
     ));
   }
 

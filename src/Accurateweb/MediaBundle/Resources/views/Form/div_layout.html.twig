@@ -1,7 +1,7 @@
 {% block aw_media_image_widget %}
   {% spaceless %}
     {% if url is not null %}
-      <img src="{{ url }}"/>
+      <img style="max-width: 100%;" src="{{ url }}"/>
     {% endif %}
 
     <input type="file" {{ block('widget_attributes') }} value="{{ value }}" />
@@ -43,7 +43,7 @@
             })
           },
           uploadUrl: {{ image_upload_url|json_encode|raw }},
-          onEdit: '%s'
+          onEdit: '{{ path('admin_app_store_catalog_product_productimage_edit', { 'id': 'image_id' }) }}'
         }, {{ js_options|json_encode }}));
       });
       /*]]>*/</script>

@@ -4,9 +4,9 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <service id="aw.media.storage.file" class="Accurateweb\MediaBundle\Model\Media\Storage\FileMediaStorage">
-           <argument>%kernel.root_dir%/../web/uploads</argument>
-           <argument>%kernel.root_dir%/../var/uploads</argument>
-           <argument>/uploads</argument>
+           <argument>%kernel.root_dir%/../web/upload</argument>
+           <argument>%kernel.root_dir%/../upload</argument>
+           <argument>/upload</argument>
         </service>
 
         <service id="aw.media.storage.provider" class="Accurateweb\MediaBundle\Model\Media\Storage\MediaStorageProvider">
@@ -17,12 +17,17 @@
             <argument type="service" id="aw.media.storage.provider"/>
         </service>
 
-        <service class="Accurateweb\MediaBundle\Form\ImageType">
+        <service id="accurateweb_media.form.image_type" class="Accurateweb\MediaBundle\Form\ImageType">
             <argument type="service" id="aw.media.manager"></argument>
             <tag name="form.type"/>
         </service>
 
-        <service class="Accurateweb\MediaBundle\Form\ImageGalleryType">
+        <service id="accurateweb_media.form.cropped_image_type" class="Accurateweb\MediaBundle\Form\CroppedImageType">
+            <argument type="service" id="aw.media.manager"></argument>
+            <tag name="form.type"/>
+        </service>
+
+        <service id="accurateweb_media.form.image_gallery_type" class="Accurateweb\MediaBundle\Form\ImageGalleryType">
             <argument type="service" id="router.default"/>
             <argument type="service" id="aw.media.manager"></argument>
             <tag name="form.type"/>
@@ -34,6 +39,8 @@
 
         <service class="Accurateweb\MediaBundle\EventListener\ImageUploadListener">
             <argument type="service" id="aw.media.image.uploader"/>
+            <argument type="service" id="annotations.reader"/>
+            <argument type="service" id="aw_media.thumbnail_generator"/>
             <tag name="doctrine.event_listener" event="prePersist"/>
             <tag name="doctrine.event_listener" event="preUpdate"/>
         </service>
@@ -44,7 +51,7 @@
             <argument type="service" id="aw_imaging.filter.factory.gd"></argument>
         </service>
 
-        <service class="Accurateweb\MediaBundle\Twig\MediaExtension">
+        <service id="accurateweb_media.twig.media_extension" class="Accurateweb\MediaBundle\Twig\MediaExtension">
             <argument type="service" id="aw.media.storage.file"></argument>
             <tag name="twig.extension" />
         </service>

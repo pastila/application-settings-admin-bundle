@@ -61,9 +61,7 @@ class MediaController extends Controller
   public function listAction(Request $request)
   {
     $gallery = $this->get('aw.media.manager')->getGallery($request->get('gallery_provider_id'), $request->get('gallery_id'));
-
     $medias = $gallery->getMediaObjectManager()->getRepository()->getAll();
-
     $result = [];
 
     foreach ($medias as $media)
@@ -78,7 +76,7 @@ class MediaController extends Controller
   {
     return [
       'id' => $media->getId(),
-      'public_url' => '/uploads/'.$media->getResourceId()
+      'public_url' => '/upload/'.$media->getResourceId()
     ];
   }
 }

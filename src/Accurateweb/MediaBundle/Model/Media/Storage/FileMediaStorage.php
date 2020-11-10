@@ -40,6 +40,16 @@ class FileMediaStorage implements MediaStorageInterface
     $this->urlPrefix = $urlPrefix;
   }
 
+  public function getUploadsDir()
+  {
+    return $this->uploadsDir;
+  }
+
+  public function getOriginalsDir()
+  {
+    return $this->originalsDir;
+  }
+
 
   public function store(MediaInterface $media, File $file)
   {
@@ -75,21 +85,37 @@ class FileMediaStorage implements MediaStorageInterface
 
   public function copy(MediaInterface $media, $baseDir, File $file)
   {
-    $path = $baseDir.'/'.$media->getResourceId();
+    if (!realpath($baseDir))
+    {
+      $dir = realpath(dirname($baseDir));
 
+      if (!$dir)
+      {
+        throw new FileException(sprintf('Unable to create the "%s" directory', $baseDir));
+      }
+
+      $baseDir = $dir . pathinfo($baseDir, PATHINFO_BASENAME);
+    }
+    else
+    {
+      $baseDir = realpath($baseDir);
+    }
+
+    $path = $baseDir.'/'.$media->getResourceId();
     $directory = pathinfo($path, PATHINFO_DIRNAME);
 
     if (!is_dir($directory))
     {
       if (false === @mkdir($directory, 0777, true) && !is_dir($directory))
       {
-        throw new FileException(sprintf('Unable to create the "%s" directory', $directory));
+        $error = error_get_last();
+        throw new FileException(sprintf('Unable to create the "%s" directory. %s', $directory, strip_tags($error['message'])));
       }
     }
-    elseif (!is_writable($directory))
-    {
-      throw new FileException(sprintf('Unable to write in the "%s" directory', $directory));
-    }
+//    elseif (!is_writable($directory))
+//    {
+//      throw new FileException(sprintf('Unable to write in the "%s" directory', $directory));
+//    }
 
     if (!@copy($file->getPathname(), $path))
     {

@@ -65,5 +65,8 @@ abstract class Image
     return $this->mimeType;
   }
 
+  public function refresh ()
+  {
 
+  }
 }

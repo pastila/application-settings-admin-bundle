@@ -5,6 +5,8 @@
 
 namespace Accurateweb\ImagingBundle\Filter;
 
+use Accurateweb\ImagingBundle\Filter\GD\CropFilter;
+use Accurateweb\ImagingBundle\Filter\GD\ResizeFilter;
 
 class GdFilterFactory implements FilterFactoryInterface
 {
@@ -13,8 +15,8 @@ class GdFilterFactory implements FilterFactoryInterface
   public function __construct()
   {
     $this->classMap = array(
-      'resize' => 'Accurateweb\ImagingBundle\Filter\GD\ResizeFilter',
-      'crop' => 'Accurateweb\ImagingBundle\Filter\GD\CropFilter'
+      'resize' => ResizeFilter::class,
+      'crop' => CropFilter::class
     );
   }
 

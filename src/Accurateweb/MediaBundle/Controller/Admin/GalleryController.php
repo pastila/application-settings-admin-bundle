@@ -3,8 +3,12 @@
 namespace Accurateweb\MediaBundle\Controller\Admin;
 
 use Accurateweb\MediaBundle\Generator\ImageThumbnailGenerator;
+use Accurateweb\MediaBundle\Model\Image\ImageAwareInterface;
 use Accurateweb\MediaBundle\Model\Media\ImageInterface;
+use Accurateweb\MediaBundle\Model\Media\Storage\MediaStorageInterface;
 use Accurateweb\MediaBundle\Model\Thumbnail\ImageThumbnail;
+use AppBundle\Entity\Store\Catalog\Product\ProductImage;
+use AppBundle\Media\Image\PhotoProductImage;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +30,23 @@ class GalleryController extends Controller
 
     foreach ($medias as $media)
     {
-      $result[] = $this->imageToArray($media);
+      if ($media instanceof ImageAwareInterface)
+      {
+        $image = $media->getImage();
+      }
+      else
+      {
+        $image = $media;
+      }
+
+      $data = $this->imageToArray($image);
+
+      if ($media instanceof ProductImage && $media->getYoutubeLink() && !$data['preview']['src'])
+      {
+        $data['preview']['src'] = '/images/youtube.jpg';
+      }
+
+      $result[] = $data;
     }
 
     return new JsonResponse($result);
@@ -45,8 +65,8 @@ class GalleryController extends Controller
       throw new NotFoundHttpException();
     }
 
+    /** @var MediaStorageInterface $storage */
     $storage = $this->get('aw.media.storage.provider')->getMediaStorage($media);
-
     $storage->remove($media);
 
     $mediaObjectManager->remove($media);
@@ -59,17 +79,25 @@ class GalleryController extends Controller
   {
     $thumbnail = new ImageThumbnail('preview', $media);
 
+    /** @var MediaStorageInterface $mediaStorage */
     $mediaStorage = $this->get('aw.media.storage.provider')->getMediaStorage($thumbnail);
 
     $thumbnailResource = $mediaStorage->retrieve($thumbnail);
     $mediaResource = $mediaStorage->retrieve($media);
+
+    $preview_src = $thumbnailResource ? $thumbnailResource->getUrl() : null;
+
+//    if (!$preview_src && $media->getYoutubeLink())
+//    {
+//      $preview_src = '/images/youtube.jpg';
+//    }
 
     return [
       'id' => $media->getId(),
       'crop' => array(null, null, null, null),
       'preview' => array(
         'id' => $thumbnail->getId(),
-        'src' => $thumbnailResource ? $thumbnailResource->getUrl() : null
+        'src' => $preview_src
       ),
       'src' => $mediaResource ? $mediaResource->getUrl() : null
     ];

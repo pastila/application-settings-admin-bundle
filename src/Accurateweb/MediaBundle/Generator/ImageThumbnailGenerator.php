@@ -9,10 +9,13 @@ namespace Accurateweb\MediaBundle\Generator;
 use Accurateweb\ImagingBundle\Adapter\AdapterInterface;
 use Accurateweb\ImagingBundle\Filter\FilterFactoryInterface;
 use Accurateweb\ImagingBundle\Filter\FilterOptionsResolverInterface;
+use Accurateweb\ImagingBundle\Image\Image;
 use Accurateweb\MediaBundle\Model\Media\ImageInterface;
 use Accurateweb\MediaBundle\Model\Media\Storage\MediaStorageInterface;
 use Accurateweb\MediaBundle\Model\Thumbnail\ImageThumbnail;
 use Accurateweb\MediaBundle\Model\Thumbnail\ThumbnailDefinition;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
 
 
 class ImageThumbnailGenerator
@@ -38,6 +41,7 @@ class ImageThumbnailGenerator
   public function generate(ImageInterface $media, $id=null)
   {
     $thumbnailDefinitions = $media->getThumbnailDefinitions();
+
     foreach ($thumbnailDefinitions as $definition)
     {
       /** @var $definition ThumbnailDefinition */
@@ -46,51 +50,82 @@ class ImageThumbnailGenerator
         continue;
       }
 
+
       $filename = $this->mediaStorage->getOriginalFilePath($media);
 
-      $image = $this->adapter->loadFromFile($filename);
-
-      $filterChain = $definition->getFilterChain();
-
-      foreach ($filterChain as $filterDefinition)
+      if (!is_file($filename))
       {
-        $options = $filterDefinition['options'];
+        throw new FileNotFoundException(sprintf('File %s not exists', $filename));
+      }
 
-        if (isset($filterDefinition['resolver']))
+      $mimeType = MimeTypeGuesser::getInstance()->guess($filename);
+
+      if (preg_match('/svg/', $mimeType))
+      {
+        $thumbnail = new ImageThumbnail($definition->getId(), $media);
+        $thumbnailPath = $this->mediaStorage->getPublicFilePath($thumbnail);
+        $thumbnailDir = pathinfo($thumbnailPath, PATHINFO_DIRNAME);
+
+        if (!is_dir($thumbnailDir))
         {
-          $resolver = $filterDefinition['resolver'];
-          if ($resolver instanceof FilterOptionsResolverInterface)
-          {
-            try
-            {
-              $options = $resolver->resolve($image, $options);
-            }
-            catch (\Exception $e)
-            {
-              //Filter is not configurable, so we skip it
-              continue;
-            }
-          }
+          @mkdir($thumbnailDir, 0777, true);
         }
 
-        $filter = $this->filterFactory->create($filterDefinition['id'], $options);
-
-        $filter->process($image);
+        copy($filename, $thumbnailPath);
       }
-
-      $thumbnail = new ImageThumbnail($definition->getId(), $media);
-
-      $thumbnailPath = $this->mediaStorage->getPublicFilePath($thumbnail);
-
-      $thumbnailDir = pathinfo($thumbnailPath, PATHINFO_DIRNAME);
-      if (!is_dir($thumbnailDir))
+      else
       {
-        @mkdir($thumbnailDir, 0777, true);
+        /** @var Image $image */
+        $image = $this->adapter->loadFromFile($filename);
+
+        if (!$image)
+        {
+          throw new \Exception(sprintf('Failed to load image %s', $filename));
+        }
+
+        $filterChain = $definition->getFilterChain();
+
+        foreach ($filterChain as $filterDefinition)
+        {
+          $options = $filterDefinition['options'];
+
+          if (isset($filterDefinition['resolver']))
+          {
+            $resolver = $filterDefinition['resolver'];
+
+            if ($resolver instanceof FilterOptionsResolverInterface)
+            {
+              try
+              {
+                $options = $resolver->resolve($image, $options);
+              }
+              catch (\Exception $e)
+              {
+                //Filter is not configurable, so we skip it
+                continue;
+              }
+            }
+          }
+
+          $filter = $this->filterFactory->create($filterDefinition['id'], $options);
+
+          $filter->process($image);
+          $image->refresh();
+        }
+
+        $thumbnail = new ImageThumbnail($definition->getId(), $media);
+        $thumbnailPath = $this->mediaStorage->getPublicFilePath($thumbnail);
+        $thumbnailDir = pathinfo($thumbnailPath, PATHINFO_DIRNAME);
+
+        if (!is_dir($thumbnailDir))
+        {
+          @mkdir($thumbnailDir, 0777, true);
+        }
+
+        $this->adapter->save($image, $thumbnailPath);
+
+        unset($image);
       }
-
-      $this->adapter->save($image, $thumbnailPath);
-
-      unset($image);
     }
   }
 }

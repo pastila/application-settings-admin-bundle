@@ -6,7 +6,6 @@
 namespace Accurateweb\ImagingBundle\Adapter;
 
 
-use Accurateweb\ImagingBundle\Exception\ImagingException;
 use Accurateweb\ImagingBundle\Exception\UnsupportedMimeTypeException;
 use Accurateweb\ImagingBundle\Image\GdImage;
 use Accurateweb\ImagingBundle\Image\Image;
@@ -24,7 +23,8 @@ class GdImageAdapter implements AdapterInterface
     'image/jpeg' => 'imagecreatefromjpeg',
     'image/jpg' => 'imagecreatefromjpeg',
     'image/gif' => 'imagecreatefromgif',
-    'image/png' => 'imagecreatefrompng'
+    'image/png' => 'imagecreatefrompng',
+    'image/webp' => 'imagecreatefromwebp',
   );
 
   /*
@@ -35,7 +35,8 @@ class GdImageAdapter implements AdapterInterface
     'image/jpeg' => 'imagejpeg',
     'image/jpg' => 'imagejpeg',
     'image/gif' => 'imagegif',
-    'image/png' => 'imagepng'
+    'image/png' => 'imagepng',
+    'image/webp' => 'imagewebp',
   );
 
   public function __construct()
@@ -43,7 +44,7 @@ class GdImageAdapter implements AdapterInterface
     // Check that the GD extension is installed and configured
     if (!extension_loaded('gd'))
     {
-      throw new ImagingException('The image processing library GD is not enabled. See PHP Manual for installation instructions.');
+      throw new sfImageTransformException('The image processing library GD is not enabled. See PHP Manual for installation instructions.');
     }
   }
 
@@ -70,12 +71,20 @@ class GdImageAdapter implements AdapterInterface
     }
 
     $resolver = new ExtensionMimeTypeResolver();
-
     $mimeType = $resolver->resolve($filename);
 
-    if (array_key_exists($mimeType, $this->loaders))
+    if ($mimeType && array_key_exists($mimeType, $this->loaders))
     {
-      $resource = $this->loaders[$mimeType]($filename);
+      if (!$resource = @$this->loaders[$mimeType]($filename))
+      {
+        $resource = @imagecreatefromjpeg($filename);
+      }
+
+      if (!$resource)
+      {
+        //FIXME
+        throw new FileNotFoundException(null, 0, null, $filename);
+      }
 
       return new GdImage($resource, $mimeType);
     }
@@ -112,6 +121,7 @@ class GdImageAdapter implements AdapterInterface
 
         case 'image/jpeg':
         case 'image/jpg':
+        case 'image/webp':
           $output = $this->creators[$mime]($image->getResource(), $filename,$this->getImageSpecificQuality($quality, $mime));
           break;
 

@@ -1,35 +1,30 @@
 <?php
-/**
- * @author Denis N. Ragozin <dragozin@accurateweb.ru>
- */
 
 namespace Accurateweb\MediaBundle\Command;
 
 use Accurateweb\ImagingBundle\Adapter\GdImageAdapter;
 use Accurateweb\ImagingBundle\Filter\GdFilterFactory;
 use Accurateweb\MediaBundle\Generator\ImageThumbnailGenerator;
-use Accurateweb\MediaBundle\Model\Image\ImageAwareInterface;
 use Accurateweb\MediaBundle\Model\Media\ImageInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+use Symfony\Component\HttpFoundation\File\File;
 
-class GenerateThumbnailsCommand extends ContainerAwareCommand
+class GenerateImagesCommand extends ContainerAwareCommand
 {
   protected function configure()
   {
     $this
-      ->setName('media:thumbnails:generate')
-      ->setDescription('Generate all registered thumbnails for images')
-      ->setHelp('Generates all registered thumbnails for images')
+      ->setName('media:images:generate')
+      ->setDescription('Generate all registered images')
+      ->setHelp('From var to web')
       ->addArgument('entity', null, 'Entity');
   }
 
   protected function execute(InputInterface $input, OutputInterface $output)
   {
-    $io = new SymfonyStyle($input, $output);
     $iterator = $this
       ->getContainer()
       ->get('doctrine.orm.entity_manager')
@@ -40,32 +35,30 @@ class GenerateThumbnailsCommand extends ContainerAwareCommand
     ;
 
     $mediaStorageProvider = $this->getContainer()->get('aw.media.storage.provider');
-    $generator = new ImageThumbnailGenerator($mediaStorageProvider->getMediaStorage(null), new GdImageAdapter(), new GdFilterFactory());
 
     foreach ($iterator as $media)
     {
-      $image = $media[0];
-
-      if ($image instanceof ImageAwareInterface)
-      {
-        $image = $image->getImage();
-      }
-
-      if (!$image instanceof ImageInterface)
+      if (!$media[0] instanceof ImageInterface || !$media[0]->getResourceId())
       {
         continue;
       }
 
-      try
-      {
-        $io->note(sprintf('%s generated', $image->getResourceId()));
-        $generator->generate($image);
-      }
-      catch (FileNotFoundException $e)
-      {
-        $io->error($e->getMessage());
-      }
+      $storage = $mediaStorageProvider->getMediaStorage($media[0]);
+      $original = $storage->getOriginalFilePath($media[0]);
+      $web = $storage->getPublicFilePath($media[0]);
 
+      if (file_exists($original) && !file_exists($web))
+      {
+        $f = new File($original);
+        $storage->copy($media[0], $storage->getUploadsDir(), $f);
+        $output->writeln(sprintf('Copy original -> public (%s)', $original));
+      }
+      elseif (file_exists($web) && !file_exists($original))
+      {
+        $f = new File($web);
+        $storage->copy($media[0], $storage->getOriginalsDir(), $f);
+        $output->writeln(sprintf('Copy public -> original (%s)', $web));
+      }
     }
   }
 }

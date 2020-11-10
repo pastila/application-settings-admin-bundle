@@ -14,6 +14,7 @@ class MediaStorageProvider
 
   public function __construct(MediaStorageInterface $storage)
   {
+    $this->galleryProviders = [];
     //File media storage is the only optino at the moment
     $this->storage = $storage;
   }
