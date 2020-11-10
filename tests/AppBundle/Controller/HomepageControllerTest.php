@@ -7,12 +7,14 @@ namespace Tests\AppBundle\Controller;
 use Tests\AppBundle\AppWebTestCase;
 use Tests\AppBundle\Fixtures\Number\Number;
 use Symfony\Component\DomCrawler\Crawler;
+use Tests\AppBundle\Fixtures\Question\Question;
 
 class HomepageControllerTest extends AppWebTestCase
 {
   protected function setUpFixtures()
   {
     $this->addFixture(new Number());
+    $this->addFixture(new Question());
   }
 
   public function testIndex()
@@ -56,5 +58,25 @@ class HomepageControllerTest extends AppWebTestCase
     $this->assertEquals('Example', $numbersHtml[1]['description'], 'Проверка, что Описание совпадает');
     $this->assertEquals('Go', $numbersHtml[1]['urlText'], 'Проверка, что Текст кнопки совпадает');
     $this->assertEquals('http://example.ru/', $numbersHtml[1]['url'], 'Проверка, что Ссылка совпадает');
+  }
+
+  /*** Проверка "Вопрос-ответ":
+   * https://jira.accurateweb.ru/browse/BEZBAHIL-89
+   **/
+  public function testQuestions()
+  {
+    $client = static::createClient();
+    $crawler = $client->request('GET', '/');
+
+    $questionsHtml = $crawler->filter('.b-question__item')->each(function (Crawler $node, $i)
+    {
+      return [
+        'question' => trim($node->filter('.b-question__item-title')->text()),
+        'answer' => trim($node->filter('.b-question__item-text')->text()),
+      ];
+    });
+    $this->assertTrue(count($questionsHtml) > 0, 'Проверка, что данные вообще нашлись');
+    $this->assertEquals('Пример вопроса', $questionsHtml[0]['question'], 'Проверка, что Вопрос совпадает');
+    $this->assertEquals('Пример ответа', $questionsHtml[0]['answer'], 'Проверка, что Ответ совпадает');
   }
 }
