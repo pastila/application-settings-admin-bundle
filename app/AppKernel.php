@@ -34,6 +34,7 @@ class AppKernel extends Kernel
 
             new Accurateweb\ImagingBundle\AccuratewebImagingBundle(),
             new Accurateweb\MediaBundle\AccuratewebMediaBundle(),
+            new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

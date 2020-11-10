@@ -111,3 +111,20 @@ sonata_core:
   form:
     mapping:
       enabled: false
+
+stfalcon_tinymce:
+  selector: ".tinymce"
+  language: "ru"
+  theme:
+    simple:
+      theme: "modern"
+      height: '260px'
+      plugins:
+        - "advlist autolink lists link image charmap print preview hr anchor pagebreak"
+        - "searchreplace wordcount visualblocks visualchars code fullscreen"
+        - "insertdatetime media nonbreaking save table contextmenu directionality"
+        - "emoticons template paste textcolor"
+      toolbar1: "newdocument | insertfile undo redo | cut copy paste insert pastetext | print | searchreplace | visualchars"
+      toolbar2: "styleselect  | formatselect | fontselect fontsizeselect | ltr rtl | bold italic underline strikethrough  removeformat subscript superscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent"
+      toolbar3: "media image | link unlink | blockquote hr openlink charmap anchor | emoticons | nonbreaking | insertdatetime |pagebreak | spellchecker | code |  table | quote document "
+      image_advtab: true

@@ -1,0 +1,9 @@
+{% extends '@SonataAdmin/CRUD/base_edit.html.twig' %}
+
+{% block javascripts %}
+    <script type="text/javascript">urlPrefix = '{{ app.request.getBaseURL() }}';</script>
+    {{ parent() }}
+    {{ tinymce_init({
+        tinymce_jquery: false,
+    }) }}
+{% endblock javascripts %}
