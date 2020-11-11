@@ -1,7 +1,43 @@
 <?php
 namespace Deployer;
 
+use function Deployer\Support\array_to_string;
+
 require 'recipe/symfony3.php';
+
+/**
+ * Run a command using service, specified in docker-compose.yml file
+ *
+ * @param $service
+ * @param $command
+ * @param array $options
+ */
+function runInDocker($service, $command, $options = [])
+{
+  $containerId = run(`docker-compose ps -q ${service}`);
+
+  if (!$containerId)
+  {
+    throw new \InvalidArgumentException(`Container ${service} not found.`);
+  }
+
+  $command = parse($command);
+  $workingPath = get('working_path', '');
+
+  if (!empty($workingPath)) {
+    $command = "cd $workingPath && ($command)";
+  }
+
+  $env = get('env', []) + ($options['env'] ?? []);
+  if (!empty($env)) {
+    $env = array_to_string($env);
+    $command = "export $env; $command";
+  }
+
+  $command = `docker exec ${containerId} sh -c "${command}"`;
+
+  return run($command);
+}
 
 // Project name
 set('application', 'my_project');
@@ -28,7 +64,6 @@ add('shared_files', [
   'web/export_2.csv',
   'web/export_f1111.csv',
   'laradock/.env', // Laradock build env
-  'laradock/docker-compose.yml',
   'laradock/nginx/sites/bezbahil.ru.conf',
   'laradock/nginx/sites/devdoc1.kdteam.su.conf',
   'laradock/php-fpm-bitrix/msmtprc',
@@ -49,9 +84,10 @@ add('shared_dirs', [
 
 // Writable dirs by web server
 add('writable_dirs', [
-    'web/bitrix/cache',
-    'web/bitrix/managed_cache',
-    'web/upload'
+  'web/bitrix/cache',
+  'web/bitrix/managed_cache',
+  'web/upload',
+  'web/vendor/mpdf/mpdf/tmp'
 ]);
 set('allow_anonymous_stats', false);
 
@@ -81,6 +117,7 @@ host('staging')
 
 host('prod_host')
   ->hostname('84.201.185.203')
+  ->port(2232)
   ->stage('prod_host')
   ->user('deployer')
   ->set('deploy_path', '/var/www/bezbahilru');
@@ -119,6 +156,7 @@ task('prepare_workspace', [
   'deploy:unlock'
 ]);
 
+desc('Fix file owner after build');
 task('fix_owner', function(){
   $previousReleaseExist = test('[ -h release ]');
 
@@ -137,4 +175,14 @@ task('start_workspace', function(){
 
 task('start_services', function(){
   run('cd {{current_path}}/laradock && docker-compose up -d');
+});
+
+desc('Installing vendors for Bitrix');
+task('deploy:vendors_bitrix', function()
+{
+  if (!commandExist('unzip'))
+  {
+    writeln('<comment>To speed up composer installation setup "unzip" command with PHP zip extension https://goo.gl/sxzFcD</comment>');
+  }
+  run('cd {{release_path}}/web && {{bin/composer}} {{composer_options}}');
 });

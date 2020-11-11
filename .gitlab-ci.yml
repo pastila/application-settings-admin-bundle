@@ -103,23 +103,23 @@ phpstan:
     - source ./laradock/.env.test
     - sh ci/phpstan.sh
 
-#deploy:
-#  stage: deploy
-#  image: atymic/php73-runner
+deploy:
+  stage: deploy
+  image: mwienk/php-deployer
 #  dependencies:
 #    - build:js
-#  before_script:
-#    - mkdir -p ~/.ssh
-#    - eval $(ssh-agent -s)
-#    - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-#    - chmod 644 ~/.ssh/known_hosts
-#    - echo "${PRIVATE_KEY}" | tr -d '\r' | ssh-add - > /dev/null
-#  script:
-#    - dep deploy staging --tag=$CI_COMMIT_REF_NAME -vvv
-#  only:
-#    - develop
+  before_script:
+    - mkdir -p ~/.ssh
+    - eval $(ssh-agent -s)
+    - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    - echo "${PRIVATE_KEY}" | tr -d '\r' | ssh-add - > /dev/null
+  script:
+    - dep deploy staging --tag=$CI_COMMIT_REF_NAME -vvv
+  only:
+    - develop
 
 stages:
   - build
   - test
-#  - deploy_staging
+  - deploy

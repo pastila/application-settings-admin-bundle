@@ -333,8 +333,6 @@ services:
     networks:
       - backend
 
-
-
   ### LogStash a.krylov #######################################
   logstash:
     build:
@@ -348,6 +346,12 @@ services:
     networks:
       - backend
 
+  ### Node.js ########################################################
+  node:
+    build:
+      context: ./nodejs
+    volumes:
+      - ${APP_CODE_PATH_HOST_BX}:${APP_CODE_PATH_CONTAINER_BX}
 
   ### Certbot #########################################
   certbot:

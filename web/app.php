@@ -1,5 +1,11 @@
 <?php
 
+if (isset($_SERVER['HTTP_X_SF_SECRET']))
+{
+  trigger_error("X-SF-SECRET header found. Wrong upstream? Please, check your nginx config.", E_USER_ERROR);
+  die;
+}
+
 use Symfony\Component\HttpFoundation\Request;
 
 require __DIR__.'/../vendor/autoload.php';
@@ -16,12 +22,6 @@ if (PHP_VERSION_ID < 70000) {
 // When using the HttpCache, you need to call the method in your front controller instead of relying on the configuration parameter
 //Request::enableHttpMethodParameterOverride();
 $request = Request::createFromGlobals();
-
-if ($request->headers->has('X-SF-SECRET'))
-{
-  trigger_error("X-SF-SECRET header found. Wrong upstream? Please, check your nginx config.");
-}
-
 $response = $kernel->handle($request);
 $response->send();
 $kernel->terminate($request, $response);
