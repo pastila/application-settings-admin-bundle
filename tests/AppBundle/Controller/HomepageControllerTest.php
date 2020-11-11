@@ -4,6 +4,7 @@
 namespace Tests\AppBundle\Controller;
 
 
+use AppBundle\Model\Obrashcheniya\Obrashcheniya;
 use Tests\AppBundle\AppWebTestCase;
 use Tests\AppBundle\Fixtures\Article\Article;
 use Tests\AppBundle\Fixtures\Company\Company;
@@ -309,6 +310,33 @@ class HomepageControllerTest extends AppWebTestCase
       ->getQuery()
       ->getResult();
     $this->assertTrue(!empty($contactUs));
+  }
+
+  /*** Проверка "Форма обращения: **/
+  public function testObrashcheniya()
+  {
+    $client = static::createClient();
+    $crawler = $client->request('GET', '/');
+
+    // Извлечение данных со страницы
+    $regionsHtml = $crawler->filter('.b-first__form .b-form__item--full .b-form__item-content option')->each(function (Crawler $node, $i)
+    {
+      return $node->text();
+    });
+    // Проверка, что данные вообще нашлись
+    $this->assertTrue(count($regionsHtml) > 0);
+    // Проверка, что Название региона совпадает
+    $this->assertEquals('Свердловская область', $regionsHtml[0]);
+
+    // Извлечение данных со страницы
+    $yearsHtml = $crawler->filter('.b-first__form .b-form__item-year .b-form__item-content option')->each(function (Crawler $node, $i)
+    {
+      return $node->text();
+    });
+    // Проверка, что данные вообще нашлись
+    $this->assertTrue(count($yearsHtml) > 0);
+    // Проверка, что первого года(проверка как пример содержания)
+    $this->assertEquals('2019 г.', $yearsHtml[0]);
   }
 
   /*** Проверка "Список регионов в модалке":
