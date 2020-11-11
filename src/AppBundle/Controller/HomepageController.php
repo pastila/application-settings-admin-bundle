@@ -2,14 +2,33 @@
 
 namespace AppBundle\Controller;
 
+use Accurateweb\SettingBundle\Model\Manager\SettingManagerInterface;
 use AppBundle\Entity\Number\Number;
 use AppBundle\Entity\Question\Question;
+use AppBundle\Helper\GetMessFromBitrix;
+use AppBundle\Model\InsuranceCompany\Branch\BranchRatingHelper;
+use AppBundle\Repository\Geo\RegionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomepageController extends Controller
 {
+  private $branchRatingHelper;
+  private $settingManager;
+  private $regionRepository;
+
+  public function __construct(
+    BranchRatingHelper $branchRatingHelper,
+    SettingManagerInterface $settingManager,
+    RegionRepository $regionRepository
+  )
+  {
+    $this->branchRatingHelper = $branchRatingHelper;
+    $this->settingManager = $settingManager;
+    $this->regionRepository = $regionRepository;
+  }
+
   /**
    * @Route("/", name="homepage")
    */
@@ -27,11 +46,23 @@ class HomepageController extends Controller
       ->getQuery()
       ->getResult();
 
+    /**
+     * Поиск региона
+     */
+    $regionId = $this->settingManager->getValue('region_default');
+    $region = null;
+    if ($regionId)
+    {
+      $region = $this->regionRepository->findOneBy(['id' => $regionId]);
+    }
+
     // replace this example code with whatever you need
     return $this->render('@App/homepage.html.twig', [
       'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
       'numbers' => $numbers,
-      'questions' => $questions
+      'questions' => $questions,
+      'companyRating' => array_slice($this->branchRatingHelper->buildRating($region), 0, 5),
+      'region' => $region
     ]);
   }
 }

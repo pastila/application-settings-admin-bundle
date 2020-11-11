@@ -71,6 +71,11 @@ class Region
     return $this->name;
   }
 
+  public function getNameWithoutCode()
+  {
+    return trim(preg_replace('/\d/', '',  $this->name));
+  }
+
   /**
    * @param string $name
    *

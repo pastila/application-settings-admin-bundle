@@ -3,11 +3,14 @@ imports:
   - { resource: security.yml }
   - { resource: services.yml }
   - { resource: admin.yml }
+  - { resource: settings.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
   locale: "ru"
+  aw.settings.admin.group: settings
+  aw.settings.admin.label: Настройки
 
 framework:
   #esi: ~
@@ -128,3 +131,7 @@ stfalcon_tinymce:
       toolbar2: "styleselect  | formatselect | fontselect fontsizeselect | ltr rtl | bold italic underline strikethrough  removeformat subscript superscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent"
       toolbar3: "media image | link unlink | blockquote hr openlink charmap anchor | emoticons | nonbreaking | insertdatetime |pagebreak | spellchecker | code |  table | quote document "
       image_advtab: true
+
+accurateweb_setting:
+  configuration:
+    class: AppBundle\Entity\Common\Setting
