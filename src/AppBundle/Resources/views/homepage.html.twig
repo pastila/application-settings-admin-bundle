@@ -58,42 +58,7 @@
                         услуги.
                     </div>
                 </div>
-                <div class="b-first__form">
-                    <form action="#" class="b-form">
-                        <div class="b-form__item b-form__item--full">
-                            <div class="b-form__item-title">Ваш регион</div>
-                            <div class="b-form__item-content">
-                                <select>
-                                    <option>Москва и область</option>
-                                    <option>Название региона</option>
-                                    <option>Еще одно название</option>
-                                    <option>Третье название</option>
-                                    <option>Четвертое название Четвертое название</option>
-                                    <option>Пятое название</option>
-                                    <option>Шестое название</option>
-                                    <option>Седьмое название</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="b-form__item">
-                            <div class="b-form__item-title">Год лечения</div>
-                            <div class="b-form__item-content">
-                                <select>
-                                    <option>2019 г.</option>
-                                    <option selected="">2020 г.</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="b-form__item">
-                            <div class="b-form__item-content">
-                                <button class="b-form__button btn2" type="submit">Вернуть деньги</button>
-                            </div>
-                        </div>
-                    </form><!-- b-form -->
-
-
-
-                </div>
+                {% include '@App/_obrashcheniya_form.html.twig' with {'form': form}%}
                 <div class="b-first__bottom">
                     <a href="#" class="b-first__button">
 

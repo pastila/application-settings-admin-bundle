@@ -11,6 +11,8 @@ use AppBundle\Entity\Number\Number;
 use AppBundle\Entity\Question\Question;
 use AppBundle\Model\InsuranceCompany\Branch\BranchRatingHelper;
 use AppBundle\Repository\Geo\RegionRepository;
+use AppBundle\Form\Obrashcheniya\ObrashcheniyaType;
+use AppBundle\Model\Obrashcheniya\Obrashcheniya;
 use AppBundle\Form\ContactUs\ContactUsType;
 use AppBundle\Service\ContactUs\ContactUsMailer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -27,13 +29,11 @@ class HomepageController extends Controller
   private $settingManager;
   private $regionRepository;
   private $locationService;
-  private $contactUsMailer;
 
   public function __construct(
     BranchRatingHelper $branchRatingHelper,
     SettingManagerInterface $settingManager,
     RegionRepository $regionRepository,
-    ContactUsMailer $contactUsMailer,
     Location $locationService
   )
   {
@@ -41,7 +41,6 @@ class HomepageController extends Controller
     $this->settingManager = $settingManager;
     $this->regionRepository = $regionRepository;
     $this->locationService = $locationService;
-    $this->contactUsMailer = $contactUsMailer;
   }
 
   /**
@@ -71,6 +70,11 @@ class HomepageController extends Controller
     $news = $em->getRepository(News::class)
       ->findNewsOrderByPublishedAt(6);
 
+    $obrashcheniya = new Obrashcheniya();
+    $form = $this->createForm(ObrashcheniyaType::class, $obrashcheniya, [
+      'csrf_protection' => false,
+    ]);
+
     /**
      * Получение региона по IP клиента
      */
@@ -95,6 +99,7 @@ class HomepageController extends Controller
       'feedbacks' => $feedbacks,
       'news' => $news,
       'region' => $region,
+      'form' => $form->createView(),
       'regions' => $regions
     ]);
   }
@@ -181,5 +186,13 @@ class HomepageController extends Controller
     return $this->render('@App/contact_us.html.twig', [
       'form' => $form->createView()
     ]);
+  }
+
+  /**
+   * @Route("/homepage-obrashcheniya", name="homepage_obrashcheniya")
+   */
+  public function obrashcheniyaAction(Request $request)
+  {
+    return $this->redirect('/forma-obrashenija');
   }
 }

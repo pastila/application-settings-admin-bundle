@@ -83,3 +83,11 @@
         </ul>
     </div>
 {% endblock %}
+
+{% block bezbahil_region_widget %}
+    <select>
+        {% for choice in choices %}
+            <option>{{ choice.label }}</option>
+        {% endfor %}
+    </select>
+{% endblock %}
