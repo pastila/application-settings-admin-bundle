@@ -19,6 +19,7 @@ class HomepageControllerTest extends AppWebTestCase
     $this->addFixture(new Question());
     $this->addFixture(new Feedback());
     $this->addFixture(new CompanyBranchRating());
+    $this->addFixture(new Feedback());
   }
 
   public function testIndex()
@@ -62,6 +63,36 @@ class HomepageControllerTest extends AppWebTestCase
     $this->assertEquals('Example', $numbersHtml[1]['description'], 'Проверка, что Описание совпадает');
     $this->assertEquals('Go', $numbersHtml[1]['urlText'], 'Проверка, что Текст кнопки совпадает');
     $this->assertEquals('http://example.ru/', $numbersHtml[1]['url'], 'Проверка, что Ссылка совпадает');
+  }
+
+  /*** Проверка "Слайдера отзывов":
+   * https://jira.accurateweb.ru/browse/BEZBAHIL-88
+   **/
+  public function testSlider()
+  {
+    $client = static::createClient();
+    $crawler = $client->request('GET', '/');
+
+    // Извлечение данных со страницы
+    $feedbacksHtml = $crawler->filter('.b-reviews__item')->each(function (Crawler $node, $i)
+    {
+      return [
+        'valuation' => $node->filter('.svg-icon--star')->count(),
+        'text' => trim($node->filter('.b-reviews__item-text')->text()),
+        'author' => trim($node->filter('.b-reviews__item-user .b-reviews__item-name')->text()),
+        'date' => trim($node->filter('.b-reviews__item-user .b-reviews__item-date')->text()),
+      ];
+    });
+    // Проверка, что данные вообще нашлись
+    $this->assertTrue(count($feedbacksHtml) > 0);
+    // Проверка, что Оценка совпадает
+    $this->assertEquals(4, $feedbacksHtml[0]['valuation']);
+    // Проверка, что Текст совпадает
+    $this->assertEquals('Foo', $feedbacksHtml[0]['text']);
+    // Проверка, что Автор совпадает
+    $this->assertEquals('From fixtures', $feedbacksHtml[0]['author']);
+    // Проверка, что Дата совпадает
+    $this->assertEquals('01 января, 2020', $feedbacksHtml[0]['date']);
   }
 
   /*** Проверка "Вопрос-ответ":
