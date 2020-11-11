@@ -8,7 +8,7 @@ use AppBundle\Entity\Company\CompanyStatus;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class Company extends Fixture
+class CompanyRating extends Fixture
 {
   /**
    * @param ObjectManager $manager
@@ -16,16 +16,15 @@ class Company extends Fixture
    */
   public function load(ObjectManager $manager)
   {
-    $sogazMed = new \AppBundle\Entity\Company\Company();
-    $sogazMed
-      ->setKpp('1027739008440')
-      ->setName('СОГАЗ-МЕД')
-      ->setValuation(4.5)
+    $akbars = new \AppBundle\Entity\Company\Company();
+    $akbars
+      ->setKpp('1041625409033')
+      ->setName('АКБАРС-МЕД')
+      ->setValuation(3.0)
       ->setStatus(CompanyStatus::ACTIVE);
-    $manager->persist($sogazMed);
-    //....
+    $manager->persist($akbars);
     $manager->flush();
 
-    $this->addReference('sogaz-med', $sogazMed);
+    $this->addReference('akbars', $akbars);
   }
 }
