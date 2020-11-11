@@ -11,6 +11,14 @@
         {
         "type": "vcs",
         "url": "git@github.com:accurateweb/client-application-bundle.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/accurateweb/image-bundle.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/accurateweb/media-bundle.git"
         }
     ],
     "autoload": {
@@ -32,6 +40,8 @@
         "ext-curl": "*",
         "accurateweb/client-application-bundle": "dev-master",
         "accurateweb/email-template-bundle": "dev-development",
+        "accurateweb/image-bundle": "2.x-dev",
+        "accurateweb/media-bundle": "2.x-dev",
         "deployer/deployer": "^6.8",
         "doctrine/doctrine-bundle": "^1.8.1",
         "doctrine/doctrine-migrations-bundle": "^1.3",
