@@ -357,7 +357,7 @@
                         <div class="b-rating__info">—  Не можете попасть к врачу или на исследование?</div>
                         <div class="b-rating__info">—  Не помог ваш страховой представитель?</div>
                         <div class="b-rating__bottom">
-                            <a href="#" class="b-rating__button btn2">Оставить отзыв</a>
+                            <a href="{{ path('app_insurancecompany_feedback_new') }}" class="b-rating__button btn2">Оставить отзыв</a>
                         </div>
                     </div>
                     {% include '@App/_rating_list.html.twig' with {'companyRating': companyRating}%}
