@@ -41,9 +41,8 @@ class NumberAdmin extends AbstractAdmin
       ->add('title', null, [
         'label' => 'Заголовок',
       ])
-      ->add('original', null, [
-        'template' => '@AccuratewebMedia/Admin/image_list_field.html.twig',
-        'label' => 'Изображение'
+      ->add('description', null, [
+        'label' => 'Описание'
       ])
       ->add('_action', null, [
         'actions' => [
