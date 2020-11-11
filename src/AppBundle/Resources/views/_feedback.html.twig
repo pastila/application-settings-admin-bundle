@@ -1,0 +1,42 @@
+<div class="b-reviews__item-wrap">
+    <div class="b-reviews__item">
+        <div class="b-reviews__star">
+            {% if feedback.valuation > 0 %}
+                {% for i in 1..feedback.valuation %}
+                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
+                        <svg class="svg-icon__link">
+                            <use xlink:href="#star"></use>
+                        </svg>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="b-reviews__item-text">
+            {{ feedback.text }}
+        </div>
+        <div class="b-reviews__item-content">
+            <div class="b-reviews__item-user">
+                <div class="b-reviews__item-icon">
+
+                    <div class="svg-icon svg-icon--lk" aria-hidden="true">
+                        <svg class="svg-icon__link">
+                            <use xlink:href="#lk"></use>
+                        </svg>
+                    </div>
+
+                </div>
+                <div class="b-reviews__item-in">
+                    <div class="b-reviews__item-name">{{ feedback.authorName }}</div>
+                    <div class="b-reviews__item-date"> {{ feedback.createdAt|prepareDate("d F, Y") }}</div>
+                </div>
+            </div>
+            <div class="b-reviews__item-logo">
+                {{ render(controller('AppBundle:InsuranceCompany/Company:_logoPanel',
+                    {
+                        'logo_id': (feedback.branch ? feedback.branch.logoIdFromBitrix : null),
+                        'name': (feedback.branch ? feedback.branch.name : '')
+                    } )) }}
+            </div>
+        </div>
+    </div>
+</div>
