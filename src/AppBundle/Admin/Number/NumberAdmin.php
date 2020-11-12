@@ -77,18 +77,4 @@ class NumberAdmin extends AbstractAdmin
       ])
     ;
   }
-
-  /**
-   * @param Number $object
-   * @return string|void
-   */
-  public function toString ($object)
-  {
-    if (!$object->getId())
-    {
-      return 'Новое изображение';
-    }
-
-    return $object->getOriginal();
-  }
 }

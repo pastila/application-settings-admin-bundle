@@ -2,9 +2,13 @@
 
 namespace AppBundle\Entity\Number;
 
+use Accurateweb\ImagingBundle\Filter\CropFilterOptionsResolver;
+use Accurateweb\ImagingBundle\Filter\FilterChain;
 use Accurateweb\MediaBundle\Model\Image\ImageAwareInterface;
 use Accurateweb\MediaBundle\Model\Media\ImageInterface;
-use AppBundle\Model\Media\OriginalImage;
+use Accurateweb\MediaBundle\Model\Gallery\MediaGalleryAwareInterface;
+use Accurateweb\MediaBundle\Model\Thumbnail\ImageThumbnail;
+use Accurateweb\MediaBundle\Model\Thumbnail\ThumbnailDefinition;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Accurateweb\MediaBundle\Annotation as Media;
@@ -13,7 +17,7 @@ use Accurateweb\MediaBundle\Annotation as Media;
  * @ORM\Table(name="s_numbers")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Number\NumberRepository")
  */
-class Number implements ImageAwareInterface
+class Number implements ImageAwareInterface, ImageInterface, MediaGalleryAwareInterface
 {
   /**
    * @var integer
@@ -85,7 +89,7 @@ class Number implements ImageAwareInterface
   /**
    * @return int
    */
-  public function getPosition ()
+  public function getPosition()
   {
     return $this->position;
   }
@@ -94,7 +98,7 @@ class Number implements ImageAwareInterface
    * @param int $position
    * @return $this
    */
-  public function setPosition ($position)
+  public function setPosition($position)
   {
     $this->position = $position;
     return $this;
@@ -183,63 +187,153 @@ class Number implements ImageAwareInterface
   /**
    * @return string
    */
-  public function getOriginal ()
+  public function __toString()
+  {
+    return $this->getId() ? $this->getTitle() : 'Новая запись';
+  }
+
+  /**
+   * @return string
+   */
+  public function getOriginal()
   {
     return $this->original;
   }
 
   /**
-   * @param string $original
+   * @param $original
    * @return $this
    */
-  public function setOriginal ($original)
+  public function setOriginal($original)
   {
-    if (null !== $original)
-    {
-      $this->original = $original;
-    }
+    $this->original = $original;
 
-    return $this;
-  }
-
-  public function getOriginalImage ()
-  {
-    return new OriginalImage('original', $this->getOriginal());
-  }
-
-  public function setOriginalImage (ImageInterface $image)
-  {
-    $this->setOriginal($image->getResourceId());
-    return $this;
-  }
-
-  public function getImage ($id = null)
-  {
-    return $this->getOriginalImage();
-  }
-
-  public function setImage (ImageInterface $image)
-  {
-    $this->setOriginal($image->getResourceId());
-
-    return $this;
-  }
-
-  public function getImageOptions ($id)
-  {
-    return null;
-  }
-
-  public function setImageOptions ($id)
-  {
     return $this;
   }
 
   /**
    * @return string
    */
-  public function __toString()
+  public function getResourceId()
   {
-    return $this->getId() ? $this->getTitle() : 'Новая запись';
+    return $this->getOriginal();
+  }
+
+  /**
+   * @param $resourceId string
+   */
+  public function setResourceId($resourceId)
+  {
+    $this->setOriginal($resourceId);
+  }
+
+  /**
+   * Get thumbnail definitions
+   *
+   * @return string[]
+   */
+  public function getThumbnailDefinitions()
+  {
+    return [
+      'preview' => new ThumbnailDefinition('preview', new FilterChain([
+        [
+          'id' => 'crop',
+          'options' => [],
+          'resolver' => new CropFilterOptionsResolver()
+        ],
+        [
+          'id' => 'resize',
+          'options' => ['size' => '80x80']
+        ]
+      ])),
+      'small' => new ThumbnailDefinition('small', new FilterChain([
+        [
+          'id' => 'crop',
+          'options' => [],
+          'resolver' => new CropFilterOptionsResolver()
+        ],
+        [
+          'id' => 'resize',
+          'options' => ['size' => 'x130']
+        ]
+      ]))
+    ];
+  }
+
+  /**
+   * @param string $id
+   * @return ImageThumbnail
+   * @throws \Exception
+   */
+  public function getThumbnail($id)
+  {
+    $definitions = $this->getThumbnailDefinitions();
+
+    $found = false;
+    foreach ($definitions as $definition)
+    {
+      if ($definition->getId() == $id)
+      {
+        $found = true;
+        break;
+      }
+    }
+
+    if (!$found)
+    {
+      throw new \Exception('Image thumbnail definition not found');
+    }
+
+    return new ImageThumbnail($id, $this);
+  }
+
+  /**
+   * @param $id
+   * @return ImageInterface
+   */
+  public function getImage($id = null)
+  {
+    return $this;
+  }
+
+  /**
+   * @param ImageInterface $image
+   * @return $this|mixed
+   */
+  public function setImage(ImageInterface $image)
+  {
+    $this->setResourceId($image->getResourceId());
+    return $this;
+  }
+
+  /**
+   * @param $id
+   * @return mixed
+   */
+  public function getImageOptions($id)
+  {
+    return null;
+  }
+
+  public function setImageOptions($id)
+  {
+  }
+
+  public function getOriginalImage ()
+  {
+    return $this->getImage();
+  }
+
+  public function setOriginalImage ($image)
+  {
+    return $this->setImage($image);
+  }
+
+  /**
+   * @return string
+   */
+  public function getGalleryProviderId ()
+  {
+    return 'numbers-photo';
   }
 }
