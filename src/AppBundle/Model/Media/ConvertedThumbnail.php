@@ -33,22 +33,4 @@ class ConvertedThumbnail extends ImageThumbnail
       }
     }
   }
-
-  public function getResourceId ()
-  {
-    if (!$this->ext)
-    {
-      return parent::getResourceId();
-    }
-
-    $imageResourceId = $this->image->getResourceId();
-    $extension = pathinfo($imageResourceId, PATHINFO_EXTENSION);
-    $this->resourceId = sprintf('%s/%s.%s',
-      substr($imageResourceId, 0, -strlen($extension) - 1),
-      $this->getId(),
-      $this->ext
-    );
-
-    return $this->resourceId;
-  }
 }

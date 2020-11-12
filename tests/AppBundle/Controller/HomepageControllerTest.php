@@ -38,14 +38,14 @@ class HomepageControllerTest extends AppWebTestCase
       ];
     });
     // Проверка, что данные вообще нашлись
-    $this->assertTrue(count($numbersHtml) > 0);
+    $this->assertTrue(count($numbersHtml) > 0, 'Проверка, что данные вообще нашлись');
     // Проверка, что Заголовок совпадает
-    $this->assertEquals('Title', $numbersHtml[0]['title']);
+    $this->assertEquals('Title', $numbersHtml[0]['title'], 'Проверка, что Заголовок совпадает');
     // Проверка, что Описание совпадает
-    $this->assertEquals('Description', $numbersHtml[0]['description']);
+    $this->assertEquals('Description', $numbersHtml[0]['description'], 'Проверка, что Описание совпадает');
     // Проверка, что Текст кнопки совпадает
-    $this->assertEquals('Go', $numbersHtml[0]['urlText']);
+    $this->assertEquals('Go', $numbersHtml[0]['urlText'], 'Проверка, что Текст кнопки совпадает');
     // Проверка, что Ссылка совпадает
-    $this->assertEquals('http://bezbahil.ru/', $numbersHtml[0]['url']);
+    $this->assertEquals('http://bezbahil.ru/', $numbersHtml[0]['url'], 'Проверка, что Ссылка совпадает');
   }
 }
