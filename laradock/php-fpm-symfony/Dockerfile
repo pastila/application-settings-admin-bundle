@@ -191,9 +191,9 @@ RUN if [ ${INSTALL_XDEBUG} = true ]; then \
     pecl install xdebug-2.5.5; \
   else \
     if [ $(php -r "echo PHP_MINOR_VERSION;") = "0" ]; then \
-      pecl install xdebug-2.9.0; \
+      pecl install xdebug-2.7.1; \
     else \
-      pecl install xdebug; \
+      pecl install xdebug-2.7.1; \
     fi \
   fi && \
   docker-php-ext-enable xdebug \
@@ -920,6 +920,14 @@ ARG INSTALL_XMLRPC=false
 RUN if [ ${INSTALL_XMLRPC} = true ]; then \
     docker-php-ext-install xmlrpc \
 ;fi
+
+###########################################################################
+# GD:
+###########################################################################
+RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl
+RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/
+RUN docker-php-ext-install gd
+
 
 ###########################################################################
 # Check PHP version:
