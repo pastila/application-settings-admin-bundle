@@ -12,12 +12,14 @@ use AppBundle\Entity\Question\Question;
 use AppBundle\Model\InsuranceCompany\Branch\BranchRatingHelper;
 use AppBundle\Repository\Geo\RegionRepository;
 use AppBundle\Form\Obrashcheniya\ObrashcheniyaType;
+use AppBundle\Helper\Year\Year;
 use AppBundle\Model\Obrashcheniya\Obrashcheniya;
 use AppBundle\Form\ContactUs\ContactUsType;
 use AppBundle\Service\ContactUs\ContactUsMailer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Accurateweb\ApplicationSettingsAdminBundle\Model\Manager\SettingManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -193,6 +195,15 @@ class HomepageController extends Controller
    */
   public function obrashcheniyaAction(Request $request)
   {
-    return $this->redirect('/forma-obrashenija');
+    $obrashcheniya = $request->request->get('obrashcheniya');
+    if (empty($obrashcheniya) || !key_exists('year', $obrashcheniya))
+    {
+      throw new NotFoundHttpException(sprintf('Year in obrashcheniya not found'));
+    }
+    $year = Year::getYear($obrashcheniya['year']);
+
+    return $this->redirectToRoute('forma_obrashenija', [
+      'year' => $year
+    ], 302);
   }
 }

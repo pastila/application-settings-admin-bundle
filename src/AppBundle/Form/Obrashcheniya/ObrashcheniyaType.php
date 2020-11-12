@@ -7,6 +7,7 @@ namespace AppBundle\Form\Obrashcheniya;
 
 
 use AppBundle\Form\Widget\BezbahilRegionType;
+use AppBundle\Helper\Year\Year;
 use AppBundle\Repository\Geo\RegionRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -25,7 +26,7 @@ class ObrashcheniyaType extends AbstractType
 
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
-    $years = $this->getChoicesYear();
+    $years = Year::getChoicesYear();
 
     $builder
       ->add('region', BezbahilRegionType::class, [
@@ -42,16 +43,6 @@ class ObrashcheniyaType extends AbstractType
         'choices' => $years,
         'data' => (count($years) - 1)
       ]);
-  }
-
-  public function getChoicesYear()
-  {
-    $years = [];
-    for ($i = 2019, $key = 0; $i <= date("Y"); $i++, $key++)
-    {
-      $years[$i . ' г.'] = $key;
-    }
-    return $years;
   }
 
   public function configureOptions(OptionsResolver $resolver)
