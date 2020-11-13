@@ -3,22 +3,30 @@
 
 namespace AppBundle\Entity\Common;
 
+use Accurateweb\GpnNewsBundle\Model\NewsInterface;
 use Accurateweb\ImagingBundle\Filter\CropFilterOptionsResolver;
 use Accurateweb\ImagingBundle\Filter\FilterChain;
 use Accurateweb\MediaBundle\Model\Image\ImageAwareInterface;
 use Accurateweb\MediaBundle\Model\Media\ImageInterface;
 use Accurateweb\MediaBundle\Model\Thumbnail\ImageThumbnail;
 use Accurateweb\MediaBundle\Model\Thumbnail\ThumbnailDefinition;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use NewsBundle\Model\News as Base;
+use Accurateweb\GpnNewsBundle\Model\News as Base;
 
 /**
  * Class News
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Common\NewsRepository")
- * @ORM\Table()
+ * @ORM\Table(name="s_news")
  */
 class News extends Base implements ImageAwareInterface, ImageInterface
 {
+  /**
+   * @var NewsInterface[]|ArrayCollection
+   * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Common\News")
+   */
+  protected $relatedNews;
+
   /**
    * @return string
    */
@@ -110,23 +118,17 @@ class News extends Base implements ImageAwareInterface, ImageInterface
   }
 
   /**
-   * @param $id
-   * @return mixed
+   * @return ImageInterface
    */
-  public function getImageOptions($id)
-  {
-    return null;
-  }
-
-  public function setImageOptions($id)
-  {
-  }
-
   public function getTeaserImage ()
   {
     return $this->getImage();
   }
 
+  /**
+   * @param $image
+   * @return $this|mixed
+   */
   public function setTeaserImage ($image)
   {
     return $this->setImage($image);

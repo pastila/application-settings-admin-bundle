@@ -1,0 +1,52 @@
+{% extends '@AccuratewebGpnNews/layout.html.twig' %}
+
+{% block content %}
+    <div class="page-inside">
+        <div class="container  container_wide">
+            <div class="center_no-left">
+                <div class="section-wrap">
+                    <div class="menu-left menu-left_come-back">
+                        <a class="menu-left__item active backward" href="{{ path('news_index', {'slug': news.slug}) }}">К
+                            списку новостей</a>
+                    </div>
+
+                    <div class="content-center">
+                        <div class="content-center__header">
+                            <span class="content-center__title">{{ news.title }}</span>
+                            <span class="content-center__date">{{ news.createdAt | formatDate }}</span>
+                        </div>
+
+                        {% if news.teaser %}
+                            <div class="content-center__image">
+                                <img src="{{ image_url(news) }}">
+                            </div>
+                        {% endif %}
+
+                        <div class="content-center__content">
+                            <span class="content-center__text_bold">{{ news.announce }}</span>
+                            {{ news.text | raw }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% if (news.relatedNews | length) > 0 %}
+                <aside class="right">
+                    <div class="aside-right__wrapper">
+                        <span class="aside-right__wrapper_header">Читайте также</span>
+                        {% for _item in news.relatedNews %}
+                            <div class="aside-right__wrapper_item">
+                                {% if _item.teaser %}
+                                    <img src="{{ image_url(_item) }}">
+                                {% endif %}
+                                <a class="aside-right__wrapper_text">{{ _item.title }}</a>
+                                <span class="aside-right__wrapper_date">{{ _item.createdAt | formatDate }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </aside>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

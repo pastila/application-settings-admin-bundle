@@ -1,0 +1,17 @@
+{% extends '@AccuratewebGpnNews/layout.html.twig' %}
+
+{% block content %}
+    <a href="{{ item.isExternal ? item.externalUrl : path('news_show', {'slug': item.slug}) }}"
+       class="block-item"
+       data-id="{{ item.id }}">
+        {% if item.teaser %}
+            <div class="block-item__image">
+                <img src="{{ image_url(item) }}">
+            </div>
+        {% endif %}
+        <div class="block-item__content">
+            <span class="block-item__content_date">{{ item.createdAt | formatDate }}</span>
+            <span class="block-item__content_text">{{ item.title }}</span>
+        </div>
+    </a>
+{% endblock %}

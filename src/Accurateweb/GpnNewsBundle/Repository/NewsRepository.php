@@ -1,24 +1,31 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: eobuh
- * Date: 30.05.2018
- * Time: 11:52
- */
 
-namespace NewsBundle\Repository;
+namespace Accurateweb\GpnNewsBundle\Repository;
 
+use Accurateweb\GpnNewsBundle\Model\NewsInterface;
 use Doctrine\ORM\EntityRepository;
-use NewsBundle\Model\News;
 
-class NewsRepository extends EntityRepository
+class NewsRepository extends EntityRepository implements NewsRepositoryInterface
 {
+  /**
+   * Возвращает QB для получения списка новостей, отсортированных от старых к новым
+   *
+   * @return \Doctrine\ORM\QueryBuilder
+   */
+  public function getNewsListQb()
+  {
+    return $this
+      ->createQueryBuilder('n')
+      ->where('n.isPublished = 1')
+      ->orderBy('n.publishedAt', 'DESC');
+  }
+
   /**
    * @param string $order
    * @param int $limit
-   * @return News[]
+   * @return NewsInterface[]
    */
-  public function findNewsOrderByCreatedAt($limit = 5, $order = 'DESC')
+  public function findNewsOrderByPublishedAt($limit = 5, $order = 'DESC')
   {
     $order = strtoupper($order);
     if (!in_array($order, ['ASC', 'DESC'], true))
@@ -31,8 +38,7 @@ class NewsRepository extends EntityRepository
       throw new \LogicException("Limit must be greater zero, not $limit");
     }
 
-    $qb = $this->createQueryBuilder('n')
-      ->where('n.isPublished = 1');
+    $qb = $this->createQueryBuilder('n')->where('n.isPublished = 1');
 
     if (null !== $limit)
     {

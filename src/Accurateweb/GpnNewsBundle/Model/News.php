@@ -1,27 +1,28 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: eobuh
- * Date: 30.05.2018
- * Time: 11:30
- */
 
-namespace NewsBundle\Model;
+namespace Accurateweb\GpnNewsBundle\Model;
 
 use Accurateweb\MediaBundle\Annotation\Image;
+use Accurateweb\GpnNewsBundle\Media\NewsImage;
 use Accurateweb\MediaBundle\Model\Image\ImageAwareInterface;
 use Accurateweb\MediaBundle\Model\Media\ImageInterface;
+use AppBundle\Sluggable\SluggableInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use AppBundle\Media\Text\NewsImage;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class News
- * @ORM\Entity(repositoryClass="NewsBundle\Repository\NewsRepository")
+ * @ORM\MappedSuperclass()
+ * @ORM\Entity(repositoryClass="Accurateweb\GpnNewsBundle\Repository\NewsRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity(fields={"slug"})
  */
-class News implements ImageAwareInterface
+class News implements ImageAwareInterface, NewsInterface, SluggableInterface
 {
+  use TimestampableEntity;
+
   /**
    * @var integer
    * @ORM\Column(type="integer")
@@ -64,12 +65,6 @@ class News implements ImageAwareInterface
   protected $publishedAt;
 
   /**
-   * @var \DateTime
-   * @ORM\Column(type="datetime")
-   */
-  protected $createdAt;
-
-  /**
    * @var string
    * @ORM\Column(name="image", length=255, nullable=true)
    * @Image(id="teaser")
@@ -93,6 +88,25 @@ class News implements ImageAwareInterface
    * @ORM\Column(type="string", length=256, nullable=true)
    */
   protected $externalUrl;
+
+  /**
+   * For use related news copy this filed in child class and set annotation:
+   * ORM\ManyToMany(targetEntity="path\to\childClass")
+   *
+   * @var NewsInterface[]|ArrayCollection
+   */
+  protected $relatedNews;
+
+  /**
+   * @var string
+   * @ORM\Column(type="string", length=256)
+   */
+  protected $slug;
+
+  public function __construct()
+  {
+    $this->relatedNews = new ArrayCollection();
+  }
 
   /**
    * @return int
@@ -179,6 +193,12 @@ class News implements ImageAwareInterface
    */
   public function getPublishedAt()
   {
+    if ($this->publishedAt !== null)
+    {
+      $tz = new \DateTimeZone('UTC');
+      return new \DateTime($this->publishedAt->format('Y-m-d H:i:s'), $tz);
+    }
+
     return $this->publishedAt;
   }
 
@@ -269,24 +289,6 @@ class News implements ImageAwareInterface
    */
   public function getImage($id = null)
   {
-    if (null == $this->teaser)
-    {
-      $matches = array();
-      /*      if (false === preg_match('/<img\s+src=["\']([^"\']+)["\']/', $this->announce, $matches))
-            {
-              return null;
-            }*/
-
-      if (isset($matches[1]))
-      {
-        $this->teaser = $matches[1];
-      }
-      else
-      {
-        return null;
-      }
-    }
-
     return new NewsImage('teaser', $this->teaser, $this->getTeaserImageOptions());
   }
 
@@ -296,24 +298,6 @@ class News implements ImageAwareInterface
   public function setImage(ImageInterface $teaser)
   {
     $this->teaser = $teaser ? $teaser->getResourceId() : null;
-  }
-
-
-  public function __toString()
-  {
-    return $this->getTitle() ? $this->getTitle() : '';
-  }
-
-  /**
-   * @ORM\PrePersist()
-   * @ORM\PreFlush()
-   */
-  public function setCreatedAtPrePersist()
-  {
-    if (!$this->getCreatedAt())
-    {
-      $this->setCreatedAt(new \DateTime());
-    }
   }
 
 
@@ -353,13 +337,55 @@ class News implements ImageAwareInterface
     return $this;
   }
 
-  public function setTeaserImage (ImageInterface $teaser)
+  /**
+   * @return ArrayCollection|News[]
+   */
+  public function getRelatedNews()
   {
-    $this->setImage($teaser);
+    return $this->relatedNews;
   }
 
-  public function getTeaserImage ()
+  /**
+   * @param ArrayCollection|News[] $relatedNews
+   * @return $this
+   */
+  public function setRelatedNews($relatedNews)
   {
-    return $this->getImage();
+    $this->relatedNews = $relatedNews;
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getSlug()
+  {
+    return $this->slug;
+  }
+
+  /**
+   * @param string $slug
+   * @return $this
+   */
+  public function setSlug($slug)
+  {
+    $this->slug = $slug;
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getSlugSource()
+  {
+    return $this->getTitle();
+  }
+
+  /**
+   * @return string
+   */
+  public function __toString()
+  {
+    return $this->getTitle() ?: 'New news';
   }
 }

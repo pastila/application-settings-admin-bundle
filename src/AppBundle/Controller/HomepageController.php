@@ -54,7 +54,7 @@ class HomepageController extends Controller
       ->getResult();
 
     $news = $em->getRepository(News::class)
-      ->findNewsOrderByCreatedAt();
+      ->findNewsOrderByPublishedAt();
 
     // replace this example code with whatever you need
     return $this->render('@App/homepage.html.twig', [

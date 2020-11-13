@@ -1,6 +1,0 @@
-services:
-    main.admin.news:
-      class: NewsBundle\Admin\NewsAdmin
-      arguments: [~, %aw.news.entity_class%,~]
-      tags:
-        -  { name: sonata.admin, group: %aw.news.admin.group%, manager_type: orm, label: %aw.news.admin.label% }
