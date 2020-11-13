@@ -11,6 +11,9 @@ parameters:
   locale: "ru"
   aw.settings.admin.group: settings
   aw.settings.admin.label: Настройки
+  aw.news.admin.group: text
+  aw.news.admin.label: "Новости"
+  aw.news.entity_class: AppBundle\Entity\Common\News
 
 framework:
   #esi: ~
@@ -96,6 +99,8 @@ sonata_admin:
     groups:
       main_page:
         label: Главная страница
+      text:
+        label: Текстовые разделы
       settings:
         label: Настройки
   options:
