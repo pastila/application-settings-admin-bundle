@@ -1,0 +1,15 @@
+<div id="insider" class="b-insider">
+    <div class="b-insider__content site-width">
+        <div class="b-insider__header">
+            <h3 class="b-insider__title">Медицинский инсайдер</h3>
+            <a href="#" class="b-insider__button btn">Все статьи</a>
+        </div>
+        <div class="b-insider__inner">
+            <div class="b-insider__slider">
+                {% for item in news %}
+                    {% include '@App/_insider.html.twig' with {'item': item}%}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div><!-- b-insider -->

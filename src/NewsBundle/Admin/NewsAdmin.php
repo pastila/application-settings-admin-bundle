@@ -39,7 +39,7 @@ class NewsAdmin extends AbstractAdmin
     $form
       ->tab("Основные")
         ->add("title")
-        ->add("announce", 'tinymce', [
+        ->add("announce", 'AppBundle\Form\Common\TinyMceType', [
           'attr' => [
             'class' => 'tinymce',
             'tinymce' => '{"theme":"simple"}',
@@ -47,36 +47,31 @@ class NewsAdmin extends AbstractAdmin
           ],
           'required' => true
         ])
-        ->add('text', 'tinymce', [
-          'attr' => [
-            'class' => 'tinymce',
-            'tinymce' => '{"theme":"simple"}',
-            'data-theme' => 'bbcode',
-          ],
-          'required' => true
-        ]
-        )
         ->add("isPublished")
-        ->add("publishedAt", "sonata_type_date_picker", [
+        ->add("publishedAt", 'Sonata\CoreBundle\Form\Type\DatePickerType', [
           'format' => 'd MMMM yyyy',
           'view_timezone' => 'UTC',
           'model_timezone' => 'UTC',
         ])
       ->end()
       ->end()
+      ->tab("Содержание")
+        ->add('text', 'AppBundle\Form\Common\TinyMceType', [
+            'attr' => [
+              'class' => 'tinymce',
+              'tinymce' => '{"theme":"simple"}',
+              'data-theme' => 'bbcode',
+            ],
+            'required' => true
+          ]
+        )
+      ->end()
+      ->end()
       ->tab("Изображение")
-        ->add('teaser', "Accurateweb\MediaBundle\Form\CroppedImageType", [
+        ->add('teaser', 'Accurateweb\MediaBundle\Form\ImageType', [
           'required' => false,
-          'label'=> 'Превью',
-          'boxWidth'=> 800,
-          'aspectRatio'=> 1.3,
-          'thumbnail' => 'preview',
+          'label' => 'Изображение',
         ])
-      ->end()
-      ->end()
-      ->tab('Внешние ссылки')
-        ->add('isExternal')
-        ->add('externalUrl')
       ->end()
       ->end()
     ;

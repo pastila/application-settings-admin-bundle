@@ -2,8 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Common\News;
 use AppBundle\Entity\Company\Feedback;
-use Accurateweb\ApplicationSettingsAdminBundle\Model\Manager\SettingManagerInterface;
 use AppBundle\Entity\Number\Number;
 use AppBundle\Entity\Question\Question;
 use AppBundle\Helper\GetMessFromBitrix;
@@ -12,6 +12,7 @@ use AppBundle\Repository\Geo\RegionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Accurateweb\ApplicationSettingsAdminBundle\Model\Manager\SettingManagerInterface;
 
 class HomepageController extends Controller
 {
@@ -52,6 +53,9 @@ class HomepageController extends Controller
       ->getQuery()
       ->getResult();
 
+    $news = $em->getRepository(News::class)
+      ->findNewsOrderByCreatedAt();
+
     // replace this example code with whatever you need
     return $this->render('@App/homepage.html.twig', [
       'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
@@ -60,6 +64,7 @@ class HomepageController extends Controller
       'companyRating' => array_slice($this->branchRatingHelper->buildRating(), 0, 5),
       'region' => null,
       'feedbacks' => $feedbacks,
+      'news' => $news,
     ]);
   }
 }

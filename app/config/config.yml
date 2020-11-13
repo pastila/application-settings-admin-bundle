@@ -17,7 +17,6 @@ parameters:
 
 framework:
   #esi: ~
-  #    translator:      { fallbacks: ["ru"] }
   secret: '%secret%'
   router:
     resource: '%kernel.project_dir%/app/config/routing.yml'
@@ -40,15 +39,15 @@ framework:
     log: true
   templating:
     engines: ['twig']
-  translator:
-    fallbacks: ['%locale%']
-    enabled: true
+  translator: { fallbacks: ['%locale%'] }
+
 # Twig Configuration
 twig:
   debug: '%kernel.debug%'
   strict_variables: '%kernel.debug%'
   form_themes:
     - 'Form/bezbahil_form_theme.html.twig'
+    - 'SonataCoreBundle:Form:datepicker.html.twig'
 
 # Doctrine Configuration
 doctrine:
