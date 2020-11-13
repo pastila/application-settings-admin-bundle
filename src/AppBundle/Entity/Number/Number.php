@@ -6,7 +6,6 @@ use Accurateweb\ImagingBundle\Filter\CropFilterOptionsResolver;
 use Accurateweb\ImagingBundle\Filter\FilterChain;
 use Accurateweb\MediaBundle\Model\Image\ImageAwareInterface;
 use Accurateweb\MediaBundle\Model\Media\ImageInterface;
-use Accurateweb\MediaBundle\Model\Gallery\MediaGalleryAwareInterface;
 use Accurateweb\MediaBundle\Model\Thumbnail\ImageThumbnail;
 use Accurateweb\MediaBundle\Model\Thumbnail\ThumbnailDefinition;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,7 +16,7 @@ use Accurateweb\MediaBundle\Annotation as Media;
  * @ORM\Table(name="s_numbers")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Number\NumberRepository")
  */
-class Number implements ImageAwareInterface, ImageInterface, MediaGalleryAwareInterface
+class Number implements ImageAwareInterface, ImageInterface
 {
   /**
    * @var integer
@@ -247,11 +246,6 @@ class Number implements ImageAwareInterface, ImageInterface, MediaGalleryAwareIn
         ]
       ])),
       'small' => new ThumbnailDefinition('small', new FilterChain([
-        [
-          'id' => 'crop',
-          'options' => [],
-          'resolver' => new CropFilterOptionsResolver()
-        ],
         [
           'id' => 'resize',
           'options' => ['size' => 'x130']
