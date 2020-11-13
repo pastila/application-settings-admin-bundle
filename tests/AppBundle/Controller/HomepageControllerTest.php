@@ -75,8 +75,9 @@ class HomepageControllerTest extends AppWebTestCase
         'answer' => trim($node->filter('.b-question__item-text')->text()),
       ];
     });
-    $this->assertTrue(count($questionsHtml) > 0, 'Проверка, что данные вообще нашлись');
-    $this->assertEquals('Пример вопроса', $questionsHtml[0]['question'], 'Проверка, что Вопрос совпадает');
-    $this->assertEquals('Пример ответа', $questionsHtml[0]['answer'], 'Проверка, что Ответ совпадает');
+    $textPrev = 'Вопрос-ответ: ';
+    $this->assertTrue(count($questionsHtml) > 0, $textPrev . 'Проверка, что данные вообще нашлись');
+    $this->assertEquals('Пример вопроса', $questionsHtml[0]['question'], $textPrev . 'Проверка, что Вопрос совпадает');
+    $this->assertEquals('Пример ответа', $questionsHtml[0]['answer'], $textPrev . 'Проверка, что Ответ совпадает');
   }
 }
