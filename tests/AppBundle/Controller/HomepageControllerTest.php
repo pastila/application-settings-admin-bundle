@@ -5,6 +5,7 @@ namespace Tests\AppBundle\Controller;
 
 
 use Tests\AppBundle\AppWebTestCase;
+use Tests\AppBundle\Fixtures\News\News;
 use Tests\AppBundle\Fixtures\Company\CompanyBranchRating;
 use Tests\AppBundle\Fixtures\Company\Feedback;
 use Tests\AppBundle\Fixtures\Number\Number;
@@ -18,6 +19,8 @@ class HomepageControllerTest extends AppWebTestCase
     $this->addFixture(new Number());
     $this->addFixture(new Question());
     $this->addFixture(new Feedback());
+    $this->addFixture(new CompanyBranchRating());
+    $this->addFixture(new News());
   }
 
   public function testIndex()
@@ -136,5 +139,26 @@ class HomepageControllerTest extends AppWebTestCase
     $this->assertEquals(4, $companyTopsHtml[1]['rating'], $textPrev . 'Проверка, что Рейтинг совпадает');
     $this->assertEquals('АКБАРС-МЕД', $companyTopsHtml[2]['name'], $textPrev . 'Проверка, что Компания совпадает');
     $this->assertEquals(3, $companyTopsHtml[2]['rating'], $textPrev . 'Проверка, что Рейтинг совпадает');
+  }
+
+  /*** Проверка "Блог, медицинский инсайдер": **/
+  public function testNews()
+  {
+    $client = static::createClient();
+    $crawler = $client->request('GET', '/');
+
+    // Извлечение данных со страницы
+    $newsHtml = $crawler->filter('.b-insider__item-content')->each(function (Crawler $node, $i)
+    {
+      return [
+        'title' => trim($node->filter('.b-insider__item-title')->text()),
+        'announce' => trim($node->filter('.b-insider__item-text')->text()),
+      ];
+    });
+
+    $textPrev = 'Блог: ';
+    $this->assertTrue(count($newsHtml) > 0, $textPrev . 'Проверка, что данные вообще нашлись');
+    $this->assertEquals('Заголовок', $newsHtml[0]['title'], $textPrev . 'Проверка, что Заголовок совпадает');
+    $this->assertEquals('Анонс статьи', $newsHtml[0]['announce'], $textPrev . 'Проверка, что Анонс совпадает');
   }
 }
