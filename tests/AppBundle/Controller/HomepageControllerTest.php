@@ -100,6 +100,7 @@ class HomepageControllerTest extends AppWebTestCase
     $client = static::createClient();
     $crawler = $client->request('GET', '/');
 
+    // Извлечение данных со страницы
     $questionsHtml = $crawler->filter('.b-question__item')->each(function (Crawler $node, $i)
     {
       return [
