@@ -51,10 +51,12 @@ class RegionHelper
     $result = $stmt->fetchAll();
     $nbImported = 0;
     foreach ($result as $key => $item) {
+      $bitrixId = !empty($item['ID']) ? $item['ID'] : null;
       $name = !empty($item['SEARCHABLE_CONTENT']) ? $item['SEARCHABLE_CONTENT'] : null;
       $code = !empty($item['CODE']) ? (trim(mb_substr($item['CODE'], 0, 3))) : null;
 
       $region = new \AppBundle\Entity\Geo\Region();
+      $region->setBitrixId($bitrixId);
       $region->setName($name);
       $region->setCode($code);
       $this->entityManager->persist($region);

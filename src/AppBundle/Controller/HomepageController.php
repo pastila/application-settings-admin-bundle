@@ -200,10 +200,13 @@ class HomepageController extends Controller
     {
       throw new NotFoundHttpException(sprintf('Year in obrashcheniya not found'));
     }
+    $em = $this->getDoctrine()->getManager();
+    $region = $em->getRepository(Region::class)
+      ->find($obrashcheniya['region']);
 
     return $this->redirectToRoute('forma_obrashenija', [
       'year' => Year::getYear($obrashcheniya['year']),
-      'region' => $obrashcheniya['region'],
+      'region' => $region->getBitrixId(),
     ], 302);
   }
 }

@@ -22,6 +22,14 @@ class Region implements UserLocationInterface
   protected $id;
 
   /**
+   * ID из bitrix
+   *
+   * @var null|string
+   * @ORM\Column(type="string", length=256, nullable=true)
+   */
+  protected $bitrixId;
+
+  /**
    * Название региона
    *
    * @var null|string
@@ -43,6 +51,26 @@ class Region implements UserLocationInterface
   public function getId()
   {
     return $this->id;
+  }
+
+  /**
+   * @return string
+   */
+  public function getBitrixId()
+  {
+    return $this->bitrixId;
+  }
+
+  /**
+   * @param string $bitrixId
+   *
+   * @return string
+   */
+  public function setBitrixId($bitrixId)
+  {
+    $this->bitrixId = $bitrixId;
+
+    return $this;
   }
 
   /**
