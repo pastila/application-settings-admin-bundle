@@ -97,21 +97,21 @@ set('workspace_service', 'workspace');
 
 // Hosts
 
-host('staging_host')
-    ->hostname('192.168.1.11')
-    ->stage('staging_host')
-    ->user('deployer')
-    ->set('deploy_path', '/var/www/sites/bezbahil');
+//host('staging_host')
+//    ->hostname('192.168.1.11')
+//    ->stage('staging_host')
+//    ->user('deployer')
+//    ->set('deploy_path', '/var/www/sites/bezbahil');
 
-host('staging_workspace')
-  ->hostname('staging.aw-dev.ru')
-  ->port(2232)
-  ->stage('staging_workspace')
-  ->user('root')
-  ->set('http_user', 'root')
-  ->set('writable_use_sudo', false)
-  ->set('writable_mode', 'chmod')
-  ->set('deploy_path', '/var/www');
+//host('staging_workspace')
+//  ->hostname('staging.aw-dev.ru')
+//  ->port(2232)
+//  ->stage('staging_workspace')
+//  ->user('root')
+//  ->set('http_user', 'root')
+//  ->set('writable_use_sudo', false)
+//  ->set('writable_mode', 'chmod')
+//  ->set('deploy_path', '/var/www');
 
 host('staging')
   ->hostname('staging.aw-dev.ru')
