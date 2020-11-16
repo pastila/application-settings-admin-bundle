@@ -16,6 +16,7 @@ final class Builder implements ContainerAwareInterface
 
   public function headerMenu(FactoryInterface $factory, array $options): ItemInterface
   {
+    $baseUrl = $this->container->get('router')->getContext()->getHost();
     $em = $this->container->get('doctrine')->getManager();
     $menu = $factory->createItem('root');
 
@@ -29,9 +30,16 @@ final class Builder implements ContainerAwareInterface
       /**
        * @var MenuFooter $item
        */
+      $iAnchor = false;
+      $url = $item->getUrl();
+      if (stripos($item->getUrl(), $baseUrl) !== false)
+      {
+        $iAnchor = stripos($item->getUrl(), '#');
+        $url = ($iAnchor !== false) ? (mb_substr($url, $iAnchor)) : $url;
+      }
       $menu->addChild($item->getText(), [
-        'uri' => $item->getUrl()
-      ])->setAttribute('isExternal', $item->getIsExternal());
+        'uri' => $url
+      ])->setAttribute('isAnchor', $iAnchor !== false);
     }
 
     return $menu;
@@ -39,6 +47,7 @@ final class Builder implements ContainerAwareInterface
 
   public function headerMenuMobile(FactoryInterface $factory, array $options): ItemInterface
   {
+    $baseUrl = $this->container->get('router')->getContext()->getHost();
     $em = $this->container->get('doctrine')->getManager();
     $menu = $factory->createItem('root');
     $menu->setChildrenAttribute('class', 'nav-mobile__list');
@@ -53,10 +62,17 @@ final class Builder implements ContainerAwareInterface
       /**
        * @var MenuFooter $item
        */
+      $iAnchor = false;
+      $url = $item->getUrl();
+      if (stripos($item->getUrl(), $baseUrl) !== false)
+      {
+        $iAnchor = stripos($item->getUrl(), '#');
+        $url = ($iAnchor !== false) ? (mb_substr($url, $iAnchor)) : $url;
+      }
       $menu->addChild($item->getText(), [
-        'uri' => $item->getUrl(),
+        'uri' => $url,
         'attributes' => ['class' => 'nav-mobile__list-item'],
-      ])->setAttribute('isExternal', $item->getIsExternal());;
+      ])->setAttribute('isAnchor', $iAnchor !== false);
     }
 
     return $menu;
@@ -64,6 +80,7 @@ final class Builder implements ContainerAwareInterface
 
   public function footerMenu(FactoryInterface $factory, array $options): ItemInterface
   {
+    $baseUrl = $this->container->get('router')->getContext()->getHost();
     $em = $this->container->get('doctrine')->getManager();
     $menu = $factory->createItem('root');
 
@@ -77,9 +94,16 @@ final class Builder implements ContainerAwareInterface
       /**
        * @var MenuFooter $item
        */
+      $iAnchor = false;
+      $url = $item->getUrl();
+      if (stripos($item->getUrl(), $baseUrl) !== false)
+      {
+        $iAnchor = stripos($item->getUrl(), '#');
+        $url = ($iAnchor !== false) ? (mb_substr($url, $iAnchor)) : $url;
+      }
       $menu->addChild($item->getText(), [
-        'uri' => $item->getUrl(),
-      ])->setAttribute('isExternal', $item->getIsExternal());
+        'uri' => $url,
+      ])->setAttribute('isAnchor', $iAnchor !== false);
     }
 
     return $menu;

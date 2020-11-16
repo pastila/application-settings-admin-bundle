@@ -6,6 +6,7 @@ namespace AppBundle\Entity\Menu;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class AbstractMenu
@@ -38,18 +39,11 @@ abstract class AbstractMenu
 
   /**
    * Ссылка/путь в меню
+   * @Assert\Url
    * @var string
    * @ORM\Column(type="string", length=255, nullable=true)
    */
   protected $url;
-
-  /**
-   * Флаг для определения, что url это внешний источник (на другой сайт, с указанием полного пути)
-   * Иначе это путь, для которого не надо указывать доменное имя
-   * @var boolean
-   * @ORM\Column(type="boolean", nullable=false)
-   */
-  protected $isExternal = false;
 
   /**
    * @return integer
@@ -110,24 +104,6 @@ abstract class AbstractMenu
   public function setUrl($url)
   {
     $this->url = $url;
-    return $this;
-  }
-
-  /**
-   * @return bool
-   */
-  public function getIsExternal()
-  {
-    return $this->isExternal;
-  }
-
-  /**
-   * @param $isExternal
-   * @return $this
-   */
-  public function setIsExternal($isExternal)
-  {
-    $this->isExternal = $isExternal;
     return $this;
   }
 

@@ -15,8 +15,8 @@ final class Version20201116070336 extends AbstractMigration
     // this up() migration is auto-generated, please modify it to your needs
     $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-    $this->addSql('CREATE TABLE s_menu_header (id INT AUTO_INCREMENT NOT NULL, position INT DEFAULT 0 NOT NULL, text VARCHAR(255) DEFAULT NULL, url VARCHAR(255) DEFAULT NULL, is_external TINYINT(1) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET UTF8 COLLATE `UTF8_unicode_ci` ENGINE = InnoDB');
-    $this->addSql('CREATE TABLE s_menu_footer (id INT AUTO_INCREMENT NOT NULL, position INT DEFAULT 0 NOT NULL, text VARCHAR(255) DEFAULT NULL, url VARCHAR(255) DEFAULT NULL, is_external TINYINT(1) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET UTF8 COLLATE `UTF8_unicode_ci` ENGINE = InnoDB');
+    $this->addSql('CREATE TABLE s_menu_header (id INT AUTO_INCREMENT NOT NULL, position INT DEFAULT 0 NOT NULL, text VARCHAR(255) DEFAULT NULL, url VARCHAR(255) DEFAULT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET UTF8 COLLATE `UTF8_unicode_ci` ENGINE = InnoDB');
+    $this->addSql('CREATE TABLE s_menu_footer (id INT AUTO_INCREMENT NOT NULL, position INT DEFAULT 0 NOT NULL, text VARCHAR(255) DEFAULT NULL, url VARCHAR(255) DEFAULT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET UTF8 COLLATE `UTF8_unicode_ci` ENGINE = InnoDB');
   }
 
   public function down(Schema $schema): void

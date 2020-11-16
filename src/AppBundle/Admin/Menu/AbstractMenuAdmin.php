@@ -65,26 +65,6 @@ abstract class AbstractMenuAdmin extends AbstractAdmin
       ])
       ->add('url', null, [
         'label' => 'Ссылка/путь'
-      ])
-      ->add('isExternal', null, [
-        'label' => 'Внешний источник (на другой сайт)'
       ]);
-  }
-
-  /**
-   * @param ErrorElement $errorElement
-   * @param AbstractMenu $object
-   */
-  public function validate(ErrorElement $errorElement, $object)
-  {
-    if ($object->getIsExternal())
-    {
-      if (filter_var($object->getUrl(), FILTER_VALIDATE_URL) === FALSE)
-      {
-        $errorElement->addViolation('Формат ссылки не верный!');
-      }
-    }
-
-    parent::validate($errorElement, $object);
   }
 }

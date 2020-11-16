@@ -55,7 +55,7 @@ class MenuHeaderAdmin extends AbstractAdmin
       ]);
   }
 
-  protected function configureFormFields (FormMapper $form)
+  protected function configureFormFields(FormMapper $form)
   {
     $form
       ->add('text', null, [
@@ -63,10 +63,6 @@ class MenuHeaderAdmin extends AbstractAdmin
       ])
       ->add('url', null, [
         'label' => 'Ссылка/путь'
-      ])
-      ->add('isExternal', null, [
-        'label' => 'Внешний источник'
-      ])
-    ;
+      ]);
   }
 }
