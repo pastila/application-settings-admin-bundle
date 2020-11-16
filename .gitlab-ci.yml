@@ -109,11 +109,17 @@ deploy:
 #  dependencies:
 #    - build:js
   before_script:
-    - mkdir -p ~/.ssh
+    # https://docs.gitlab.com/ee/ci/ssh_keys/
+    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
-    - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    
+    # https://docs.gitlab.com/ee/ci/ssh_keys/#verifying-the-ssh-host-keys
+    - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-    - echo "${PRIVATE_KEY}" | tr -d '\r' | ssh-add - > /dev/null
   script:
     - dep deploy staging --tag=$CI_COMMIT_REF_NAME -vvv
   only:
