@@ -40,6 +40,10 @@ class ObrashcheniyaType extends AbstractType
         },
       ])
       ->add('year', ChoiceType::class, [
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+        ],
         'choices' => $years,
         'data' => (count($years) - 1)
       ]);

@@ -196,14 +196,14 @@ class HomepageController extends Controller
   public function obrashcheniyaAction(Request $request)
   {
     $obrashcheniya = $request->request->get('obrashcheniya');
-    if (empty($obrashcheniya) || !key_exists('year', $obrashcheniya))
+    if (empty($obrashcheniya) || !key_exists('year', $obrashcheniya) || !key_exists('region', $obrashcheniya))
     {
       throw new NotFoundHttpException(sprintf('Year in obrashcheniya not found'));
     }
-    $year = Year::getYear($obrashcheniya['year']);
 
     return $this->redirectToRoute('forma_obrashenija', [
-      'year' => $year
+      'year' => Year::getYear($obrashcheniya['year']),
+      'region' => $obrashcheniya['region'],
     ], 302);
   }
 }
