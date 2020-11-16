@@ -93,12 +93,7 @@
                     <a href="#loacation" class="js-loacation">Москва и область</a>
                 </div>
                 <nav class="app-header__list">
-                    <ul>
-                        <li><a class="js-scroll" href="#first">Возврат денег за ОМС</a></li>
-                        <li><a class="js-scroll" href="#rating">Рейтинг страховых компаний</a></li>
-                        <li><a class="js-scroll" href="#work">О проекте</a></li>
-                        <li><a class="js-scroll" href="#faq">FAQ</a></li>
-                    </ul>
+                    {{ knp_menu_render('AppBundle:Builder:headerMenu') }}
                 </nav>
                 <a href="#" class="app-header__lk btn">
 
@@ -129,12 +124,7 @@
                         <a href="#loacation" class="js-loacation">Москва и область</a>
                     </div>
                 </div>
-                <ul class="nav-mobile__list">
-                    <li class="nav-mobile__list-item"><a class="js-scroll" href="#first">Возврат денег за ОМС</a></li>
-                    <li class="nav-mobile__list-item"><a class="js-scroll" href="#rating">Рейтинг страховых компаний</a></li>
-                    <li class="nav-mobile__list-item"><a class="js-scroll" href="#work">О проекте</a></li>
-                    <li class="nav-mobile__list-item"><a class="js-scroll" href="#faq">FAQ</a></li>
-                </ul>
+                {{ knp_menu_render('AppBundle:Builder:headerMenuMobile') }}
             </div>
         </div>
     </div>
@@ -584,14 +574,7 @@
                     страхования.
                 </div>
                 <nav class="app-footer__list">
-                    <ul>
-                        <li><a href="#" class="js-scroll">Страховым организациям</a></li>
-                        <li><a href="#" class="js-scroll">Контакты данные</a></li>
-                        <li><a href="#rating" class="js-scroll">Рейтинг страховых </a></li>
-                        <li><a href="#work" class="js-scroll">О нас</a></li>
-                        <li><a href="#reviews" class="js-scroll">Отзывы</a></li>
-                        <li><a href="#insider" class="js-scroll">Медицинский инсайдер</a></li>
-                    </ul>
+                    {{ knp_menu_render('AppBundle:Builder:footerMenu') }}
                 </nav>
             </div>
         </div>
