@@ -89,7 +89,11 @@ add('writable_dirs', [
   'web/upload',
   'web/vendor/mpdf/mpdf/tmp'
 ]);
+
 set('allow_anonymous_stats', false);
+
+// Workspace container service name
+set('workspace_service', 'workspace');
 
 // Hosts
 
@@ -100,8 +104,8 @@ host('staging_host')
     ->set('deploy_path', '/var/www/sites/bezbahil');
 
 host('staging_workspace')
-  ->hostname('192.168.1.11')
-  ->port(2022)
+  ->hostname('staging.aw-dev.ru')
+  ->port(2232)
   ->stage('staging_workspace')
   ->user('root')
   ->set('http_user', 'root')
@@ -110,7 +114,8 @@ host('staging_workspace')
   ->set('deploy_path', '/var/www');
 
 host('staging')
-  ->hostname('192.168.1.11')
+  ->hostname('staging.aw-dev.ru')
+  ->port(2222)
   ->stage('staging')
   ->user('deployer')
   ->set('deploy_path', '/var/www/sites/bezbahil');
@@ -156,6 +161,79 @@ task('prepare_workspace', [
   'deploy:unlock'
 ]);
 
+task('deploy', [
+  'deploy:info',
+  'deploy:prepare',
+  'deploy:lock',
+  'deploy:release',
+  'deploy:update_code',
+  'deploy:clear_paths',
+  'deploy:create_cache_dir',
+  'deploy:shared',
+  'start_workspace',
+  'deploy:assets',
+  'deploy:docker:vendors',
+  'deploy:docker:vendors_bitrix',
+  'deploy:docker:assets:install',
+  'deploy:docker:cache:clear',
+  'deploy:docker:cache:warmup',
+  'deploy:docker:database:migrate',
+  'deploy:writable',
+  'deploy:symlink',
+  'deploy:unlock',
+  'start_services',
+  'cleanup',
+])->desc('Deploy your project');
+
+/**
+ * Install assets from public dir of bundles
+ */
+task('deploy:docker:assets:install', function () {
+  runInDocker(get('workspace_service'), '{{bin/php}} {{bin/console}} assets:install {{console_options}} {{release_path}}/web');
+})->desc('Install bundle assets');
+
+
+/**
+ * Dump all assets to the filesystem
+ */
+task('deploy:docker:assetic:dump', function () {
+  if (get('dump_assets')) {
+    runInDocker(get('workspace_service'), '{{bin/php}} {{bin/console}} assetic:dump {{console_options}}');
+  }
+})->desc('Dump assets');
+
+/**
+ * Clear Cache
+ */
+task('deploy:docker:cache:clear', function () {
+  runInDocker(get('workspace_service'), '{{bin/php}} {{bin/console}} cache:clear {{console_options}} --no-warmup');
+})->desc('Clear cache');
+
+/**
+ * Warm up cache
+ */
+task('deploy:docker:cache:warmup', function () {
+  runInDocker(get('workspace_service'), '{{bin/php}} {{bin/console}} cache:warmup {{console_options}}');
+})->desc('Warm up cache');
+
+
+/**
+ * Migrate database
+ */
+task('deploy:docker:database:migrate', function () {
+  $options = '{{console_options}} --allow-no-migration';
+  if (get('migrations_config') !== '') {
+    $options = sprintf('%s --configuration={{release_path}}/{{migrations_config}}', $options);
+  }
+
+  runInDocker(get('workspace_service'), sprintf('{{bin/php}} {{bin/console}} doctrine:migrations:migrate %s', $options));
+})->desc('Migrate database');
+
+desc('Installing vendors');
+task('deploy:docker:vendors', function () {
+  runInDocker(get('workspace_service'), 'cd {{release_path}} && {{bin/composer}} {{composer_options}}');
+});
+
 desc('Fix file owner after build');
 task('fix_owner', function(){
   $previousReleaseExist = test('[ -h release ]');
@@ -178,11 +256,11 @@ task('start_services', function(){
 });
 
 desc('Installing vendors for Bitrix');
-task('deploy:vendors_bitrix', function()
+task('deploy:docker:vendors_bitrix', function()
 {
   if (!commandExist('unzip'))
   {
     writeln('<comment>To speed up composer installation setup "unzip" command with PHP zip extension https://goo.gl/sxzFcD</comment>');
   }
-  run('cd {{release_path}}/web && {{bin/composer}} {{composer_options}}');
+  runInDocker('php-fpm-bitrix', 'cd {{release_path}}/web && {{bin/composer}} {{composer_options}}');
 });
