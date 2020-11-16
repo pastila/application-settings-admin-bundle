@@ -165,6 +165,7 @@ task('deploy', [
   'deploy:info',
   'deploy:prepare',
   'deploy:lock',
+  'whoami',
   'deploy:release',
   'deploy:update_code',
   'deploy:clear_paths',
@@ -264,3 +265,7 @@ task('deploy:docker:vendors_bitrix', function()
   }
   runInDocker('php-fpm-bitrix', 'cd {{release_path}}/web && {{bin/composer}} {{composer_options}}');
 });
+
+task('whoami', function(){
+    run('whoami');
+})->desc('who am i?');
