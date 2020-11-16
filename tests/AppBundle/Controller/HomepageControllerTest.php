@@ -8,6 +8,8 @@ use Tests\AppBundle\AppWebTestCase;
 use Tests\AppBundle\Fixtures\News\News;
 use Tests\AppBundle\Fixtures\Company\Feedback;
 use Tests\AppBundle\Fixtures\Number\Number;
+use Tests\AppBundle\Fixtures\Menu\MenuFooter;
+use Tests\AppBundle\Fixtures\Menu\MenuHeader;
 use Symfony\Component\DomCrawler\Crawler;
 use Tests\AppBundle\Fixtures\Question\Question;
 
@@ -16,6 +18,8 @@ class HomepageControllerTest extends AppWebTestCase
   protected function setUpFixtures()
   {
     $this->addFixture(new Number());
+    $this->addFixture(new MenuFooter());
+    $this->addFixture(new MenuHeader());
     $this->addFixture(new Question());
     $this->addFixture(new Feedback());
     $this->addFixture(new News());
@@ -114,6 +118,63 @@ class HomepageControllerTest extends AppWebTestCase
     $this->assertTrue(count($questionsHtml) > 0, $textPrev . 'Проверка, что данные вообще нашлись');
     $this->assertEquals('Пример вопроса', $questionsHtml[0]['question'], $textPrev . 'Проверка, что Вопрос совпадает');
     $this->assertEquals('Пример ответа', $questionsHtml[0]['answer'], $textPrev . 'Проверка, что Ответ совпадает');
+  }
+
+  /*** Проверка "Меню Header": **/
+  public function testMenuHeader()
+  {
+    $client = static::createClient();
+    $crawler = $client->request('GET', '/');
+
+    // Извлечение данных со страницы
+    $headerHtml = $crawler->filter('.app-header__in .app-header__list li a')->each(function (Crawler $node, $i)
+    {
+      return [
+        'title' => $node->text(),
+        'url' => $node->attr('href'),
+      ];
+    });
+    $this->assertTrue(count($headerHtml) > 0, 'Проверка, что данные вообще нашлись');
+    $this->assertEquals('Header', $headerHtml[0]['title'], 'Проверка, что Заголовок меню совпадает');
+    $this->assertEquals('http://bezbahil.ru/', $headerHtml[0]['url'], 'Проверка, что URL меню совпадает');
+  }
+
+  /*** Проверка "Меню Header Mobile": **/
+  public function testMenuHeaderMobile()
+  {
+    $client = static::createClient();
+    $crawler = $client->request('GET', '/');
+
+    // Извлечение данных со страницы
+    $headerHtml = $crawler->filter('.nav-mobile__list li a')->each(function (Crawler $node, $i)
+    {
+      return [
+        'title' => $node->text(),
+        'url' => $node->attr('href'),
+      ];
+    });
+    $this->assertTrue(count($headerHtml) > 0, 'Проверка, что данные вообще нашлись');
+    $this->assertEquals('Header', $headerHtml[0]['title'], 'Проверка, что Заголовок моб.меню совпадает');
+    $this->assertEquals('http://bezbahil.ru/', $headerHtml[0]['url'], 'Проверка, что URL моб.меню совпадает');
+  }
+
+  /*** Проверка "Меню Footer": **/
+  public function testMenuFooter()
+  {
+    $client = static::createClient();
+    $crawler = $client->request('GET', '/');
+
+    // Извлечение данных со страницы
+    $headerHtml = $crawler->filter('.app-footer__list li a')->each(function (Crawler $node, $i)
+    {
+      return [
+        'title' => $node->text(),
+        'url' => $node->attr('href'),
+      ];
+    });
+    $this->assertTrue(count($headerHtml) > 0, 'Проверка, что данные вообще нашлись');
+    $this->assertEquals('Footer', $headerHtml[0]['title'], 'Проверка, что Заголовок меню совпадает');
+    $this->assertEquals('http://bezbahil.ru/', $headerHtml[0]['url'], 'Проверка, что URL меню совпадает');
   }
 
   /*** Проверка "Топ страховых компаний": **/

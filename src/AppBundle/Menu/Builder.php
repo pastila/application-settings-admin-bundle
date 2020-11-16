@@ -19,7 +19,6 @@ final class Builder implements ContainerAwareInterface
     $baseUrl = $this->container->get('router')->getContext()->getHost();
     $em = $this->container->get('doctrine')->getManager();
     $menu = $factory->createItem('root');
-
     $menuHeader = $em->getRepository(MenuHeader::class)
       ->getAll()
       ->getQuery()
@@ -51,7 +50,6 @@ final class Builder implements ContainerAwareInterface
     $em = $this->container->get('doctrine')->getManager();
     $menu = $factory->createItem('root');
     $menu->setChildrenAttribute('class', 'nav-mobile__list');
-
     $menuHeader = $em->getRepository(MenuHeader::class)
       ->getAll()
       ->getQuery()
@@ -83,7 +81,6 @@ final class Builder implements ContainerAwareInterface
     $baseUrl = $this->container->get('router')->getContext()->getHost();
     $em = $this->container->get('doctrine')->getManager();
     $menu = $factory->createItem('root');
-
     $menuFooter = $em->getRepository(MenuFooter::class)
       ->getAll()
       ->getQuery()
