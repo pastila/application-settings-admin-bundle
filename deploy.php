@@ -46,7 +46,7 @@ set('application', 'my_project');
 set('repository', 'git@git.accurateweb.ru:accurateweb/bezbahil.git');
 
 // [Optional] Allocate tty for git clone. Default value is false.
-set('git_tty', true);
+//set('git_tty', true);
 
 // Shared files/dirs between deploys
 add('shared_files', [
@@ -149,17 +149,17 @@ after('deploy:failed', 'deploy:unlock');
 
 //before('deploy:symlink', 'database:migrate');
 
-task('prepare_workspace', [
-  'deploy:info',
-  'deploy:prepare',
-  'deploy:lock',
-  'deploy:release',
-  'deploy:update_code',
-  'deploy:clear_paths',
-  'deploy:create_cache_dir',
-  'deploy:shared',
-  'deploy:unlock'
-]);
+//task('prepare_workspace', [
+//  'deploy:info',
+//  'deploy:prepare',
+//  'deploy:lock',
+//  'deploy:release',
+//  'deploy:update_code',
+//  'deploy:clear_paths',
+//  'deploy:create_cache_dir',
+//  'deploy:shared',
+//  'deploy:unlock'
+//]);
 
 task('deploy', [
   'deploy:info',
