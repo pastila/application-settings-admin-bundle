@@ -267,5 +267,6 @@ task('deploy:docker:vendors_bitrix', function()
 });
 
 task('foo', function(){
+  run('ls -la /home/deployer/.ssh');
   run('ssh -i ~/.ssh/id_rsa -v git@git.accurateweb.ru');
 })->desc('Foo!');
