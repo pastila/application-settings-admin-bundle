@@ -121,7 +121,7 @@ deploy:
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
 
-    - echo "Host staging.aw-dev.ru\n\tPort 2222" > ~/.ssh/config
+    - echo "Host staging.aw-dev.ru\n\tPort 2222\n\tRequestTTY Yes\n\n" > ~/.ssh/config
   script:
     - dep deploy staging --tag=$CI_COMMIT_REF_NAME -vvv
   only:
