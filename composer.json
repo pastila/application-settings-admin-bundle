@@ -11,6 +11,14 @@
         {
         "type": "vcs",
         "url": "git@github.com:accurateweb/client-application-bundle.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/accurateweb/image-bundle.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/accurateweb/media-bundle.git"
         }
     ],
     "autoload": {
@@ -32,14 +40,19 @@
         "ext-curl": "*",
         "accurateweb/client-application-bundle": "dev-master",
         "accurateweb/email-template-bundle": "dev-development",
+        "accurateweb/image-bundle": "2.x-dev",
+        "accurateweb/media-bundle": "2.x-dev",
         "deployer/deployer": "^6.8",
-        "doctrine/doctrine-bundle": "^1.10",
+        "doctrine/doctrine-bundle": "^1.8.1",
         "doctrine/doctrine-migrations-bundle": "^1.3",
         "doctrine/orm": "^2.5",
         "incenteev/composer-parameter-handler": "^2.0",
         "phpunit/phpunit": "^5.7",
+        "pixassociates/sortable-behavior-bundle": "^1.5",
         "sensio/distribution-bundle": "^5.0.19",
         "sensio/framework-extra-bundle": "^5.0.0",
+        "sonata-project/admin-bundle": "^3.4",
+        "sonata-project/doctrine-orm-admin-bundle": "^3.10",
         "stof/doctrine-extensions-bundle": "^1.3",
         "symfony/monolog-bundle": "^3.1.0",
         "symfony/polyfill-apcu": "^1.0",

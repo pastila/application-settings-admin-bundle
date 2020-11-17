@@ -1,0 +1,12 @@
+<div class="b-info">
+    <div class="b-info__content site-width">
+        <div class="b-info__inner">
+            <h4 class="b-info__title">Безбахил в цифрах</h4>
+            <div class="b-info__block">
+                {% for number in numbers %}
+                    {% include '@App/_number.html.twig' with {'number': number}%}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div><!-- b-info -->

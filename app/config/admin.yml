@@ -1,11 +1,10 @@
 services:
-  app.feedback.admin:
-    class: AppBundle\Admin\Feedback\FeedbackAdmin
-    arguments: [~ ,'AppBundle\Entity\Company\Feedback', ~]
+  app.admin.number:
+    class: AppBundle\Admin\Number\NumberAdmin
+    arguments:
+      - ~
+      - AppBundle\Entity\Number\Number
+      - PixSortableBehaviorBundle:SortableAdmin
     tags:
-      - { name: sonata.admin, group: 'feedback', manager_type: orm, label: 'Отзывы' }
-  app.comment.admin:
-    class: AppBundle\Admin\Feedback\CommentAdmin
-    arguments: [~ ,'AppBundle\Entity\Company\Comment', ~]
-    tags:
-      - { name: sonata.admin, group: 'comment', manager_type: orm, label: 'Комментарии' }
+      - { name: sonata.admin, manager_type: orm, group: 'numbers', label: 'БезБахил в цифрах' }
+

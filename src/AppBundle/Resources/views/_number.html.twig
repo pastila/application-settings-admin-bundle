@@ -1,0 +1,16 @@
+<div class="b-info__item">
+    <div class="b-info__item-image">
+        <img src="{{ image_thumbnail_url(number, null, 'small') }}" alt="">
+    </div>
+    <div class="b-info__item-number">{{ number.title }}</div>
+    <div class="b-info__item-text">{{ number.description }}</div>
+    <div class="b-info__item-more">
+        <a href="{{ number.url }}">{{ number.urlText }}
+            <div class="svg-icon svg-icon--arrow" aria-hidden="true">
+                <svg class="svg-icon__link">
+                    <use xlink:href="#arrow"></use>
+                </svg>
+            </div>
+        </a>
+    </div>
+</div>

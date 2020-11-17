@@ -23,6 +23,17 @@ class AppKernel extends Kernel
 //            new Accurateweb\MediaBundle\AccuratewebMediaBundle(),
             new AppBundle\AppBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+
+            new Pix\SortableBehaviorBundle\PixSortableBehaviorBundle(),
+            new Sonata\CoreBundle\SonataCoreBundle(),
+            new Sonata\BlockBundle\SonataBlockBundle(),
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+            new Sonata\AdminBundle\SonataAdminBundle(),
+            new Sonata\Doctrine\Bridge\Symfony\SonataDoctrineBundle(),
+
+            new Accurateweb\ImagingBundle\AccuratewebImagingBundle(),
+            new Accurateweb\MediaBundle\AccuratewebMediaBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

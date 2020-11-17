@@ -34,3 +34,4 @@ security:
 
     access_control:
         - { path: ^/cabinet, roles: ROLE_USER }
+        - { path: '^/admin', roles: ROLE_ADMIN }
