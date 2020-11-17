@@ -113,3 +113,6 @@ services:
       - ${APP_SHARED_PATH_HOST}/web/bitrix_logs:/var/www/web/bitrix_logs
       - ${APP_SHARED_PATH_HOST}/web/images:/var/www/web/images
       - ${APP_SHARED_PATH_HOST}/web/upload:/var/www/web/upload
+    ports:
+      - "${NGINX_HOST_HTTP_PORT}:80"
+      - "${NGINX_HOST_HTTPS_PORT}:443"

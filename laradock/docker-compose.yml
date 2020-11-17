@@ -305,9 +305,6 @@ services:
     environment:
       VIRTUAL_HOST: bezbahil.ru
     restart: always
-    ports:
-      - "${NGINX_HOST_HTTP_PORT}:80"
-      - "${NGINX_HOST_HTTPS_PORT}:443"
     depends_on:
       - php-fpm-bitrix
       - php-fpm-symfony
