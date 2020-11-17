@@ -178,11 +178,11 @@ task('deploy', [
   'deploy:docker:assets:install',
   'deploy:docker:cache:clear',
   'deploy:docker:cache:warmup',
-  'deploy:docker:database:migrate',
   'deploy:writable',
   'deploy:symlink',
   'deploy:unlock',
   'start_services',
+  'deploy:docker:database:migrate',
   'cleanup',
 ])->desc('Deploy your project');
 
@@ -268,4 +268,6 @@ task('deploy:docker:vendors_bitrix', function()
 
 task('whoami', function(){
     run('whoami');
+    run('cat /proc/sys/kernel/hostname');
+    run('cat ~/.ssh/id_rsa.pub');
 })->desc('who am i?');
