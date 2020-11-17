@@ -46,7 +46,7 @@ set('application', 'my_project');
 set('repository', 'git@git.accurateweb.ru:accurateweb/bezbahil.git');
 
 // [Optional] Allocate tty for git clone. Default value is false.
-set('git_tty', true);
+set('git_tty', false);
 
 // Shared files/dirs between deploys
 add('shared_files', [
@@ -267,5 +267,5 @@ task('deploy:docker:vendors_bitrix', function()
 });
 
 task('foo', function(){
-  run('ssh -i ~/.ssh/id_rsa git@git.accurateweb.ru');
+  run('ssh -i ~/.ssh/id_rsa -v git@git.accurateweb.ru');
 })->desc('Foo!');
