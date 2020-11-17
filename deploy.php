@@ -5,6 +5,28 @@ use function Deployer\Support\array_to_string;
 
 require 'recipe/symfony3.php';
 
+function dockerGetContainerId($service)
+{
+  return run('cd {{release_path}}/laradock && docker-compose ps -q '.$service);
+}
+
+function dockerServiceExists($service)
+{
+  return !!dockerGetContainerId($service);
+}
+
+function dockerRemoveService($service)
+{
+  $containerId = dockerGetContainerId($service);
+
+  if (!$containerId)
+  {
+    throw new \InvalidArgumentException(`Container ${service} not found.`);
+  }
+
+  return run('docker rm -f '.$containerId);
+}
+
 /**
  * Run a command using service, specified in docker-compose.yml file
  *
@@ -14,7 +36,7 @@ require 'recipe/symfony3.php';
  */
 function runInDocker($service, $command, $options = [])
 {
-  $containerId = run('cd {{release_path}}/laradock && docker-compose ps -q '.$service);
+  $containerId = dockerGetContainerId($service);
 
   if (!$containerId)
   {
@@ -40,7 +62,7 @@ function runInDocker($service, $command, $options = [])
     $opts[] = '-u '.$options['user'];
   }
 
-  $command = sprintf('docker exec %s %s sh -c "%s"', $containerId, implode(' ', $opts), $command);
+  $command = sprintf('docker exec %s %s sh -c "%s"', implode(' ', $opts), $containerId, $command);
 
   return run($command);
 }
@@ -101,11 +123,24 @@ set('allow_anonymous_stats', false);
 // Workspace container service name
 set('workspace_service', 'workspace');
 
+// App path inside docker conatiner
+set('docker_deploy_path', '/var/www');
+
+// Which services to start after deploy
+set('docker_start_services', [
+  'percona',
+  'php-fpm-symfony',
+  'php-fpm-bitrix',
+  'nginx'
+]);
+
 // Composer уже установлен в контейнере проекта
 set('bin/composer', 'composer');
 
 // Composer уже установлен в контейнере проекта
 set('bin/php', 'php');
+
+set('bin/console', '{{docker_deploy_path}}/bin/console');
 
 // Hosts
 
@@ -182,8 +217,8 @@ task('deploy', [
   'deploy:clear_paths',
   'deploy:create_cache_dir',
   'deploy:shared',
-  'start_workspace',
   'deploy:assets',
+  'prepare_workspace',
   'deploy:docker:vendors',
   'deploy:docker:vendors_bitrix',
   'deploy:docker:assets:install',
@@ -193,7 +228,7 @@ task('deploy', [
   'deploy:symlink',
   'deploy:unlock',
   'start_services',
-  'deploy:docker:database:migrate',
+//  'deploy:docker:database:migrate',
   'cleanup',
 ])->desc('Deploy your project');
 
@@ -201,7 +236,7 @@ task('deploy', [
  * Install assets from public dir of bundles
  */
 task('deploy:docker:assets:install', function () {
-  runInDocker(get('workspace_service'), '{{bin/php}} {{bin/console}} assets:install {{console_options}} {{release_path}}/web', [
+  runInDocker(get('workspace_service'), '{{bin/php}} {{bin/console}} assets:install {{console_options}} {{docker_deploy_path}}/web', [
     'user' => 'laradock'
   ]);
 })->desc('Install bundle assets');
@@ -267,14 +302,25 @@ task('fix_owner', function(){
 });
 
 // build and start the workspace container
-task('start_workspace', function(){
-  run('cd {{release_path}}/laradock && docker-compose up -d workspace');
+task('prepare_workspace', function(){
+  $workspaceService = get('workspace_service');
+
+  if (dockerServiceExists($workspaceService))
+  {
+    dockerRemoveService($workspaceService);
+  }
+
+  run('cd {{release_path}}/laradock && docker-compose up -d '.$workspaceService, ['env' => [
+    'APP_CODE_PATH_HOST' => get('release_path')
+  ]]);
   // fix ssh files owner
   //run('cd {{release_path}}/laradock && docker-compose exec --user=laradock workspace sh -c "chown -R root:root /root/.ssh"');
-});
+})->desc('Preparing workspace container');
 
 task('start_services', function(){
-  run('cd {{current_path}}/laradock && docker-compose up -d');
+  $services = get('docker_start_services');
+
+  run('cd {{current_path}}/laradock && docker-compose up -d '.implode(' ', $services));
 });
 
 desc('Installing vendors for Bitrix');
@@ -284,5 +330,7 @@ task('deploy:docker:vendors_bitrix', function()
   {
     writeln('<comment>To speed up composer installation setup "unzip" command with PHP zip extension https://goo.gl/sxzFcD</comment>');
   }
-  runInDocker('php-fpm-bitrix', 'cd {{docker_deploy_path}}/web && {{bin/composer}} {{composer_options}}');
+  runInDocker('workspace', 'cd {{docker_deploy_path}}/web && {{bin/composer}} {{composer_options}}', [
+    'user' => 'laradock'
+  ]);
 });
