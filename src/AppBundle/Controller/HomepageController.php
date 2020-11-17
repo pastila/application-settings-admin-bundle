@@ -206,7 +206,7 @@ class HomepageController extends Controller
 
     return $this->redirectToRoute('forma_obrashenija', [
       'year' => Year::getYear($obrashcheniya['year']),
-      'region' => $region->getBitrixId(),
+      'region' => !empty($region) ? $region->getBitrixCityHospitalId() : null,
     ], 302);
   }
 }
