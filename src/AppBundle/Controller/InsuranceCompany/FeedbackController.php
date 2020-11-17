@@ -41,15 +41,15 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class FeedbackController extends Controller
 {
   private $branchRatingHelper;
-  private $mainMail;
+  private $paramsFromBitrix;
 
   public function __construct(
     BranchRatingHelper $branchRatingHelper,
-    GetMessFromBitrix $mainMail
+    GetMessFromBitrix $paramsFromBitrix
   )
   {
     $this->branchRatingHelper = $branchRatingHelper;
-    $this->mainMail = $mainMail;
+    $this->paramsFromBitrix = $paramsFromBitrix;
   }
 
   /**
@@ -285,16 +285,15 @@ class FeedbackController extends Controller
     if ($form->isSubmitted() && $form->isValid())
     {
       $em = $this->getDoctrine()->getManager();
-
       $em->persist($feedback);
       $em->flush();
 
       try
       {
-        $mainMail = $this->mainMail->getMainMail($request);
-        if ($mainMail)
+        $paramsFromBitrix = $this->paramsFromBitrix->getParams($request);
+        if (!empty($paramsFromBitrix) && key_exists('MAIN_EMAIL', $paramsFromBitrix))
         {
-          $this->sendNewFeedback($feedback, $mainMail);
+          $this->sendNewFeedback($feedback, $paramsFromBitrix['MAIN_EMAIL']);
         }
         else
         {

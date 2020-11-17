@@ -8,16 +8,18 @@ use AppBundle\Entity\Common\News;
 use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Entity\Number\Number;
+use AppBundle\Exception\BitrixRequestException;
 use AppBundle\Entity\Question\Question;
+use AppBundle\Helper\GetMessFromBitrix;
 use AppBundle\Model\InsuranceCompany\Branch\BranchRatingHelper;
 use AppBundle\Repository\Geo\RegionRepository;
+use AppBundle\Form\ContactUs\ContactUsType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Accurateweb\ApplicationSettingsAdminBundle\Model\Manager\SettingManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
-use AppBundle\Form\ContactUs\ContactUsType;
 use AppBundle\Entity\ContactUs\ContactUs;
 
 class HomepageController extends Controller
@@ -26,18 +28,21 @@ class HomepageController extends Controller
   private $settingManager;
   private $regionRepository;
   private $locationService;
+  private $paramsFromBitrix;
 
   public function __construct(
     BranchRatingHelper $branchRatingHelper,
     SettingManagerInterface $settingManager,
     RegionRepository $regionRepository,
-    Location $locationService
+    Location $locationService,
+    GetMessFromBitrix $paramsFromBitrix
   )
   {
     $this->branchRatingHelper = $branchRatingHelper;
     $this->settingManager = $settingManager;
     $this->regionRepository = $regionRepository;
     $this->locationService = $locationService;
+    $this->paramsFromBitrix = $paramsFromBitrix;
   }
 
   /**
@@ -119,6 +124,7 @@ class HomepageController extends Controller
 
   /**
    * @Route("/modal-us", name="modal_us")
+   * @param Request $request
    */
   public function modalAction(Request $request)
   {
@@ -127,7 +133,7 @@ class HomepageController extends Controller
     $form = $this->createForm(ContactUsType::class, $contactUs, [
       'csrf_protection' => false,
     ]);
-    $content = $this->render('@App/modal/us.html.twig', [
+    $content = $this->render('@App/modal/contact_us.html.twig', [
       'form' => $form->createView()
     ]);
 
@@ -137,5 +143,74 @@ class HomepageController extends Controller
     $response->headers->set('Content-Type', 'text/html');
     $response->headers->set('X-Requested-With', 'XMLHttpRequest');
     $response->send();
+  }
+
+  /**
+   * @Route("/contact_us", name="contact_us")
+   * @param Request $request
+   * @return Response
+   */
+  public function contactUsAction(Request $request)
+  {
+    $contactUs = new ContactUs();
+    $contactUs->setAuthor($this->getUser());
+    $form = $this->createForm(ContactUsType::class, $contactUs, [
+      'csrf_protection' => false,
+    ]);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid())
+    {
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($contactUs);
+      $em->flush();
+
+      try
+      {
+        $paramsFromBitrix = $this->paramsFromBitrix->getParams($request);
+        if (!empty($paramsFromBitrix) && key_exists('DEFAULT_EMAIL_FROM', $paramsFromBitrix))
+        {
+          $this->sendNewContactUs($contactUs, $paramsFromBitrix['MAIN_EMAIL']);
+        }
+        else
+        {
+          $this->get('logger')->warn('Unable to send notification about new "contact us". Default email is not set');
+        }
+      }
+      catch (BitrixRequestException $e)
+      {
+        $this->get('logger')->warn('Unable to send notification about new "contact us". Could not resolve default email: ' . $e);
+      }
+      catch (\Exception $e2)
+      {
+        $this->get('logger')->warn('Unable to send notification about new "contact us": ' . $e2);
+      }
+    }
+
+    return $this->render('@App/contact_us.html.twig', [
+      'form' => $form->createView()
+    ]);
+  }
+
+  /**
+   * @param ContactUs $contactUs
+   * @param $email
+   */
+  private function sendNewContactUs(ContactUs $contactUs, $email)
+  {
+    $message = (new \Swift_Message('Обратная связь'))
+      ->setFrom($email)
+      ->setTo($email)
+      ->setBody(
+        $this->renderView(
+          'emails/contuct_us/for_admin_write_to_us.html.twig', [
+            'name' => $contactUs->getAuthorName(),
+            'email' => $contactUs->getEmail(),
+            'text' => $contactUs->getMessage()
+          ]
+        ),
+        'text/html'
+      );
+    $this->get('mailer')->send($message);
   }
 }

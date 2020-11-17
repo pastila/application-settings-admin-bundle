@@ -2,11 +2,10 @@
 
 namespace AppBundle\Entity\ContactUs;
 
-use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\User\User;
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="s_contact_us")
@@ -44,6 +43,7 @@ class ContactUs
   /**
    * Email отправителя
    *
+   * @Assert\Email
    * @var null|string
    * @ORM\Column(type="string", length=256, nullable=true)
    */
