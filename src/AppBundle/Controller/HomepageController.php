@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Accurateweb\ApplicationSettingsAdminBundle\Model\Manager\SettingManagerInterface;
+use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Form\ContactUs\ContactUsType;
+use AppBundle\Entity\ContactUs\ContactUs;
 
 class HomepageController extends Controller
 {
@@ -112,5 +115,27 @@ class HomepageController extends Controller
     $this->locationService->setResolvedLocation($resolvedLocation);
 
     return new JsonResponse(1);
+  }
+
+  /**
+   * @Route("/modal-us", name="modal_us")
+   */
+  public function modalAction(Request $request)
+  {
+    $contactUs = new ContactUs();
+    $contactUs->setAuthor($this->getUser());
+    $form = $this->createForm(ContactUsType::class, $contactUs, [
+      'csrf_protection' => false,
+    ]);
+    $content = $this->render('@App/modal/us.html.twig', [
+      'form' => $form->createView()
+    ]);
+
+    $response = new Response();
+    $response->setContent($content->getContent());
+    $response->setStatusCode(Response::HTTP_OK);
+    $response->headers->set('Content-Type', 'text/html');
+    $response->headers->set('X-Requested-With', 'XMLHttpRequest');
+    $response->send();
   }
 }

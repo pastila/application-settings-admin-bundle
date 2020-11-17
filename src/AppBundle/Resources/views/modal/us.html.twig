@@ -1,0 +1,35 @@
+
+<form id="feedback_modal" class="auth-form" enctype="multipart/form-data" >
+    <div class="close-modal" style="max-width: 10px">
+        <img src="/local/templates/kdteam/images/svg/close_modal.svg" alt="">
+    </div>
+
+    <div class="popup__wrap">
+        <div class="popup__wrap_tabs">
+            <h3 class="popup__wrap_tabs_title">
+                Напишите нам
+            </h3>
+        </div>
+        <div class="popup__wrap_middle">
+            <!-- Input -->
+            <div class="input__wrap">
+                <label class="input__wrap_label">Имя</label>
+                <input id="name" type="text" name="name" required>
+            </div>
+            <!-- Input -->
+            <div class="input__wrap">
+                <label class="input__wrap_label">Электронная почта</label>
+                <input id="email" type="email" name="email" required>
+            </div>
+        </div>
+        <div class="block_padd-modal">
+            <div class="input__wrap">
+                <label class="input__wrap_label">Сообщение</label>
+                <textarea class="textarea_input" minlength="10" name="text" required></textarea>
+            </div>
+        </div>
+        <div class="block_padd-modal">
+            <button type="submit" class="mainBtn" id="ask">Отправить</button>
+        </div>
+    </div>
+</form>
