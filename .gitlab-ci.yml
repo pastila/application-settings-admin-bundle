@@ -124,7 +124,9 @@ deploy:
 
     - echo "Host staging.aw-dev.ru\n\tPort 2222\n\tRequestTTY Yes\n\n" > ~/.ssh/config
   script:
-    - cd /var/www && vendor/bin/dep deploy staging --tag=$CI_COMMIT_REF_NAME -vvv
+    - pwd
+    - ls -la
+    - ./vendor/bin/dep deploy staging --tag=$CI_COMMIT_REF_NAME -vvv
   only:
     - develop
 
