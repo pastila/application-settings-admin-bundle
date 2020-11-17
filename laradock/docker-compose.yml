@@ -93,7 +93,6 @@ services:
       - "${WORKSPACE_SSH_PORT}:22"
     tty: true
     restart: always
-    user: laradock
     environment:
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
     networks:

@@ -34,7 +34,13 @@ function runInDocker($service, $command, $options = [])
     $command = "export $env; $command";
   }
 
-  $command = sprintf('docker exec %s sh -c "%s"', $containerId, $command);
+  $opts = [];
+  if (isset($options['user']))
+  {
+    $opts[] = '-u '.$options['user'];
+  }
+
+  $command = sprintf('docker exec %s %s sh -c "%s"', $containerId, implode(' ', $opts), $command);
 
   return run($command);
 }
@@ -195,7 +201,9 @@ task('deploy', [
  * Install assets from public dir of bundles
  */
 task('deploy:docker:assets:install', function () {
-  runInDocker(get('workspace_service'), '{{bin/php}} {{bin/console}} assets:install {{console_options}} {{release_path}}/web');
+  runInDocker(get('workspace_service'), '{{bin/php}} {{bin/console}} assets:install {{console_options}} {{release_path}}/web', [
+    'user' => 'laradock'
+  ]);
 })->desc('Install bundle assets');
 
 
@@ -204,7 +212,9 @@ task('deploy:docker:assets:install', function () {
  */
 task('deploy:docker:assetic:dump', function () {
   if (get('dump_assets')) {
-    runInDocker(get('workspace_service'), '{{bin/php}} {{bin/console}} assetic:dump {{console_options}}');
+    runInDocker(get('workspace_service'), '{{bin/php}} {{bin/console}} assetic:dump {{console_options}}', [
+      'user' => 'laradock'
+    ]);
   }
 })->desc('Dump assets');
 
@@ -212,14 +222,18 @@ task('deploy:docker:assetic:dump', function () {
  * Clear Cache
  */
 task('deploy:docker:cache:clear', function () {
-  runInDocker(get('workspace_service'), '{{bin/php}} {{bin/console}} cache:clear {{console_options}} --no-warmup');
+  runInDocker(get('workspace_service'), '{{bin/php}} {{bin/console}} cache:clear {{console_options}} --no-warmup', [
+    'user' => 'laradock'
+  ]);
 })->desc('Clear cache');
 
 /**
  * Warm up cache
  */
 task('deploy:docker:cache:warmup', function () {
-  runInDocker(get('workspace_service'), '{{bin/php}} {{bin/console}} cache:warmup {{console_options}}');
+  runInDocker(get('workspace_service'), '{{bin/php}} {{bin/console}} cache:warmup {{console_options}}', [
+    'user' => 'laradock'
+  ]);
 })->desc('Warm up cache');
 
 
@@ -237,7 +251,9 @@ task('deploy:docker:database:migrate', function () {
 
 desc('Installing vendors');
 task('deploy:docker:vendors', function () {
-  runInDocker(get('workspace_service'), '{{bin/composer}} {{composer_options}}');
+  runInDocker(get('workspace_service'), '{{bin/composer}} {{composer_options}}', [
+    'user' => 'laradock'
+  ]);
 });
 
 desc('Fix file owner after build');
@@ -254,7 +270,7 @@ task('fix_owner', function(){
 task('start_workspace', function(){
   run('cd {{release_path}}/laradock && docker-compose up -d workspace');
   // fix ssh files owner
-  run('cd {{release_path}}/laradock && docker exec $(docker-compose ps -q workspace) sh -c "chown -R root:root /root/.ssh"');
+  //run('cd {{release_path}}/laradock && docker-compose exec --user=laradock workspace sh -c "chown -R root:root /root/.ssh"');
 });
 
 task('start_services', function(){
