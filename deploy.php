@@ -165,7 +165,7 @@ task('deploy', [
   'deploy:info',
   'deploy:prepare',
   'deploy:lock',
-//  'whoami',
+  'foo',
   'deploy:release',
   'deploy:update_code',
   'deploy:clear_paths',
@@ -265,3 +265,7 @@ task('deploy:docker:vendors_bitrix', function()
   }
   runInDocker('php-fpm-bitrix', 'cd {{release_path}}/web && {{bin/composer}} {{composer_options}}');
 });
+
+task('foo', function(){
+  run('ssh git@git.accurateweb.ru');
+})->desc('Foo!');
