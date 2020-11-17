@@ -237,7 +237,6 @@ task('deploy:docker:database:migrate', function () {
 
 desc('Installing vendors');
 task('deploy:docker:vendors', function () {
-  runInDocker(get('workspace_service'), 'pwd && ls -la');
   runInDocker(get('workspace_service'), '{{bin/composer}} {{composer_options}}');
 });
 
