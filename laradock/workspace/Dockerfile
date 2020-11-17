@@ -816,7 +816,7 @@ RUN if [ ${INSTALL_PG_CLIENT} = true ]; then \
 USER root
 
 RUN apt-get update -yqq \
-    && apt-get -yqq install nasm 
+    && apt-get -yqq install nasm
 
 ###########################################################################
 # Dusk Dependencies:
@@ -875,7 +875,15 @@ RUN php -v | head -n 1 | grep -q "PHP ${LARADOCK_PHP_VERSION}."
 #--------------------------------------------------------------------------
 #
 
+#
+# ---------------------------------------------------------
+# For composer to work properly we need unzip
+# ---------------------------------------------------------
+#
 USER root
+
+RUN apt-get update -yqq \
+    && apt-get -yqq install unzip
 
 # Clean up
 RUN apt-get clean && \
