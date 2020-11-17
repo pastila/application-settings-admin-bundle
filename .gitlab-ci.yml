@@ -105,11 +105,10 @@
 
 deploy:
   stage: deploy
-  image: $CI_REGISTRY_IMAGE/php-fpm:latest
+  image: mwienk/php-deployer
 #  dependencies:
 #    - build:js
   before_script:
-    - composer install -o
     # https://docs.gitlab.com/ee/ci/ssh_keys/
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
@@ -124,9 +123,7 @@ deploy:
 
     - echo "Host staging.aw-dev.ru\n\tPort 2222\n\tRequestTTY Yes\n\n" > ~/.ssh/config
   script:
-    - pwd
-    - ls -la
-    - ./vendor/bin/dep deploy staging --tag=$CI_COMMIT_REF_NAME -vvv
+    - dep deploy staging --tag=$CI_COMMIT_REF_NAME -vvv
   only:
     - develop
 

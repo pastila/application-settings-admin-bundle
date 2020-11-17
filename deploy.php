@@ -14,7 +14,7 @@ require 'recipe/symfony3.php';
  */
 function runInDocker($service, $command, $options = [])
 {
-  $containerId = run(`docker-compose ps -q ${service}`);
+  $containerId = run('cd {{release_path}}/laradock && docker-compose ps -q '.$service);
 
   if (!$containerId)
   {
@@ -34,7 +34,7 @@ function runInDocker($service, $command, $options = [])
     $command = "export $env; $command";
   }
 
-  $command = `docker exec ${containerId} sh -c "${command}"`;
+  $command = sprintf('docker exec %s sh -c "%s"', $containerId, $command);
 
   return run($command);
 }
@@ -94,6 +94,12 @@ set('allow_anonymous_stats', false);
 
 // Workspace container service name
 set('workspace_service', 'workspace');
+
+// Composer уже установлен в контейнере проекта
+set('bin/composer', 'composer');
+
+// Composer уже установлен в контейнере проекта
+set('bin/php', 'php');
 
 // Hosts
 
@@ -165,7 +171,6 @@ task('deploy', [
   'deploy:info',
   'deploy:prepare',
   'deploy:lock',
-  'foo',
   'deploy:release',
   'deploy:update_code',
   'deploy:clear_paths',
@@ -232,7 +237,8 @@ task('deploy:docker:database:migrate', function () {
 
 desc('Installing vendors');
 task('deploy:docker:vendors', function () {
-  runInDocker(get('workspace_service'), 'cd {{release_path}} && {{bin/composer}} {{composer_options}}');
+  runInDocker(get('workspace_service'), 'pwd && ls -la');
+  runInDocker(get('workspace_service'), '{{bin/composer}} {{composer_options}}');
 });
 
 desc('Fix file owner after build');
@@ -263,10 +269,5 @@ task('deploy:docker:vendors_bitrix', function()
   {
     writeln('<comment>To speed up composer installation setup "unzip" command with PHP zip extension https://goo.gl/sxzFcD</comment>');
   }
-  runInDocker('php-fpm-bitrix', 'cd {{release_path}}/web && {{bin/composer}} {{composer_options}}');
+  runInDocker('php-fpm-bitrix', 'cd {{docker_deploy_path}}/web && {{bin/composer}} {{composer_options}}');
 });
-
-task('foo', function(){
-  run('ls -la /home/deployer/.ssh');
-  run('ssh -i ~/.ssh/id_rsa -v git@git.accurateweb.ru');
-})->desc('Foo!');
