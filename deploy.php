@@ -114,7 +114,6 @@ set('workspace_service', 'workspace');
 //  ->set('deploy_path', '/var/www');
 
 host('staging')
-  ->identityFile('~/.ssh/id_rsa')
   ->hostname('staging.aw-dev.ru')
   ->port(2222)
   ->stage('staging')
