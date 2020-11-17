@@ -1,107 +1,107 @@
-#.tests-image: &tests-image
-#  image: $CI_REGISTRY_IMAGE/php-fpm:latest
-#  services:
-#    - name: $CI_REGISTRY_IMAGE/percona:latest
-#      alias: mysql
-#  before_script:
-#    - composer install -o
-#
-#.build-before: &build-before
-#  stage: build
-#  before_script:
-#    # docker login asks for the password to be passed through stdin for security
-#    # we use $CI_JOB_TOKEN here which is a special token provided by GitLab
-#    - echo -n $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
-#
-#cache:
-#  key: ${CI_COMMIT_REF_SLUG}
-#  paths:
-#    - vendor/
-#
-#variables:
-#  MYSQL_DATABASE: dbbezbahil
-#  MYSQL_USER: ubezbahil
-#  MYSQL_PASSWORD: BMnM@SNXiwz8
-#  MYSQL_ROOT_PASSWORD: yggem1991
-#
-#build-fpm:
-#  <<: *build-before
-#  script:
-#    - source ./laradock/.env.test
-#    # fetches the latest image (not failing if image is not found)
-#    - 'docker pull $CI_REGISTRY_IMAGE/php-fpm:latest || true'
-#    - >
-#      docker build
-#      --pull
-#      --build-arg LARADOCK_PHP_VERSION=$PHP_VERSION
-#      --build-arg LARADOCK_PHALCON_VERSION=$PHALCON_VERSION
-#      --build-arg INSTALL_XDEBUG=$PHP_FPM_INSTALL_XDEBUG
-#      --build-arg INSTALL_PHPDBG=$PHP_FPM_INSTALL_PHPDBG
-#      --build-arg INSTALL_BLACKFIRE=$INSTALL_BLACKFIRE
-#      --build-arg INSTALL_SSH2=$PHP_FPM_INSTALL_SSH2
-#      --build-arg INSTALL_SOAP=$PHP_FPM_INSTALL_SOAP
-#      --build-arg INSTALL_IMAP=$PHP_FPM_INSTALL_IMAP
-#      --build-arg INSTALL_MONGO=$PHP_FPM_INSTALL_MONGO
-#      --build-arg INSTALL_AMQP=$PHP_FPM_INSTALL_AMQP
-#      --build-arg INSTALL_MSSQL=$PHP_FPM_INSTALL_MSSQL
-#      --build-arg INSTALL_ZIP_ARCHIVE=$PHP_FPM_INSTALL_ZIP_ARCHIVE
-#      --build-arg INSTALL_BCMATH=$PHP_FPM_INSTALL_BCMATH
-#      --build-arg INSTALL_GMP=$PHP_FPM_INSTALL_GMP
-#      --build-arg INSTALL_PHPREDIS=$PHP_FPM_INSTALL_PHPREDIS
-#      --build-arg INSTALL_MEMCACHED=$PHP_FPM_INSTALL_MEMCACHED
-#      --build-arg INSTALL_OPCACHE=$PHP_FPM_INSTALL_OPCACHE
-#      --build-arg INSTALL_EXIF=$PHP_FPM_INSTALL_EXIF
-#      --build-arg INSTALL_AEROSPIKE=$PHP_FPM_INSTALL_AEROSPIKE
-#      --build-arg AEROSPIKE_PHP_REPOSITORY=$AEROSPIKE_PHP_REPOSITORY
-#      --build-arg INSTALL_MYSQLI=$PHP_FPM_INSTALL_MYSQLI
-#      --build-arg INSTALL_PGSQL=$PHP_FPM_INSTALL_PGSQL
-#      --build-arg INSTALL_PG_CLIENT=$PHP_FPM_INSTALL_PG_CLIENT
-#      --build-arg INSTALL_TOKENIZER=$PHP_FPM_INSTALL_TOKENIZER
-#      --build-arg INSTALL_INTL=$PHP_FPM_INSTALL_INTL
-#      --build-arg INSTALL_GHOSTSCRIPT=$PHP_FPM_INSTALL_GHOSTSCRIPT
-#      --build-arg INSTALL_LDAP=$PHP_FPM_INSTALL_LDAP
-#      --build-arg INSTALL_PHALCON=$PHP_FPM_INSTALL_PHALCON
-#      --build-arg INSTALL_SWOOLE=$PHP_FPM_INSTALL_SWOOLE
-#      --build-arg INSTALL_IMAGE_OPTIMIZERS=$PHP_FPM_INSTALL_IMAGE_OPTIMIZERS
-#      --build-arg INSTALL_IMAGEMAGICK=$PHP_FPM_INSTALL_IMAGEMAGICK
-#      --build-arg INSTALL_CALENDAR=$PHP_FPM_INSTALL_CALENDAR
-#      --build-arg INSTALL_FAKETIME=$PHP_FPM_INSTALL_FAKETIME
-#      --build-arg INSTALL_IONCUBE=$PHP_FPM_INSTALL_IONCUBE
-#      --cache-from $CI_REGISTRY_IMAGE/php-fpm:latest
-#      --tag $CI_REGISTRY_IMAGE/php-fpm:latest
-#      ./laradock/php-fpm-symfony
-#
-#    - 'docker push $CI_REGISTRY_IMAGE/php-fpm:latest'
-#
-#build-percona:
-#  <<: *build-before
-#  script:
-#    - source ./laradock/.env.test
-#    # fetches the latest image (not failing if image is not found)
-#    - 'docker pull $CI_REGISTRY_IMAGE/percona:latest || true'
-#    - >
-#      docker build
-#      --pull
-#      --cache-from $CI_REGISTRY_IMAGE/percona:latest
-#      --tag $CI_REGISTRY_IMAGE/percona:latest
-#      ./laradock/percona
-#
-#    - 'docker push $CI_REGISTRY_IMAGE/percona:latest'
-#
-#phpunit:
-#  <<: *tests-image
-#  stage: test
-#  script:
-#    - source ./laradock/.env.test
-#    - cp .env.test .env
-#    - sh ci/phpunit.sh
-#
-#phpstan:
-#  <<: *tests-image
-#  stage: test
-#  script:
-#    - source ./laradock/.env.test
-#    - sh ci/phpstan.sh
+.tests-image: &tests-image
+  image: $CI_REGISTRY_IMAGE/php-fpm:latest
+  services:
+    - name: $CI_REGISTRY_IMAGE/percona:latest
+      alias: mysql
+  before_script:
+    - composer install -o
+
+.build-before: &build-before
+  stage: build
+  before_script:
+    # docker login asks for the password to be passed through stdin for security
+    # we use $CI_JOB_TOKEN here which is a special token provided by GitLab
+    - echo -n $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - vendor/
+
+variables:
+  MYSQL_DATABASE: dbbezbahil
+  MYSQL_USER: ubezbahil
+  MYSQL_PASSWORD: BMnM@SNXiwz8
+  MYSQL_ROOT_PASSWORD: yggem1991
+
+build-fpm:
+  <<: *build-before
+  script:
+    - source ./laradock/.env.test
+    # fetches the latest image (not failing if image is not found)
+    - 'docker pull $CI_REGISTRY_IMAGE/php-fpm:latest || true'
+    - >
+      docker build
+      --pull
+      --build-arg LARADOCK_PHP_VERSION=$PHP_VERSION
+      --build-arg LARADOCK_PHALCON_VERSION=$PHALCON_VERSION
+      --build-arg INSTALL_XDEBUG=$PHP_FPM_INSTALL_XDEBUG
+      --build-arg INSTALL_PHPDBG=$PHP_FPM_INSTALL_PHPDBG
+      --build-arg INSTALL_BLACKFIRE=$INSTALL_BLACKFIRE
+      --build-arg INSTALL_SSH2=$PHP_FPM_INSTALL_SSH2
+      --build-arg INSTALL_SOAP=$PHP_FPM_INSTALL_SOAP
+      --build-arg INSTALL_IMAP=$PHP_FPM_INSTALL_IMAP
+      --build-arg INSTALL_MONGO=$PHP_FPM_INSTALL_MONGO
+      --build-arg INSTALL_AMQP=$PHP_FPM_INSTALL_AMQP
+      --build-arg INSTALL_MSSQL=$PHP_FPM_INSTALL_MSSQL
+      --build-arg INSTALL_ZIP_ARCHIVE=$PHP_FPM_INSTALL_ZIP_ARCHIVE
+      --build-arg INSTALL_BCMATH=$PHP_FPM_INSTALL_BCMATH
+      --build-arg INSTALL_GMP=$PHP_FPM_INSTALL_GMP
+      --build-arg INSTALL_PHPREDIS=$PHP_FPM_INSTALL_PHPREDIS
+      --build-arg INSTALL_MEMCACHED=$PHP_FPM_INSTALL_MEMCACHED
+      --build-arg INSTALL_OPCACHE=$PHP_FPM_INSTALL_OPCACHE
+      --build-arg INSTALL_EXIF=$PHP_FPM_INSTALL_EXIF
+      --build-arg INSTALL_AEROSPIKE=$PHP_FPM_INSTALL_AEROSPIKE
+      --build-arg AEROSPIKE_PHP_REPOSITORY=$AEROSPIKE_PHP_REPOSITORY
+      --build-arg INSTALL_MYSQLI=$PHP_FPM_INSTALL_MYSQLI
+      --build-arg INSTALL_PGSQL=$PHP_FPM_INSTALL_PGSQL
+      --build-arg INSTALL_PG_CLIENT=$PHP_FPM_INSTALL_PG_CLIENT
+      --build-arg INSTALL_TOKENIZER=$PHP_FPM_INSTALL_TOKENIZER
+      --build-arg INSTALL_INTL=$PHP_FPM_INSTALL_INTL
+      --build-arg INSTALL_GHOSTSCRIPT=$PHP_FPM_INSTALL_GHOSTSCRIPT
+      --build-arg INSTALL_LDAP=$PHP_FPM_INSTALL_LDAP
+      --build-arg INSTALL_PHALCON=$PHP_FPM_INSTALL_PHALCON
+      --build-arg INSTALL_SWOOLE=$PHP_FPM_INSTALL_SWOOLE
+      --build-arg INSTALL_IMAGE_OPTIMIZERS=$PHP_FPM_INSTALL_IMAGE_OPTIMIZERS
+      --build-arg INSTALL_IMAGEMAGICK=$PHP_FPM_INSTALL_IMAGEMAGICK
+      --build-arg INSTALL_CALENDAR=$PHP_FPM_INSTALL_CALENDAR
+      --build-arg INSTALL_FAKETIME=$PHP_FPM_INSTALL_FAKETIME
+      --build-arg INSTALL_IONCUBE=$PHP_FPM_INSTALL_IONCUBE
+      --cache-from $CI_REGISTRY_IMAGE/php-fpm:latest
+      --tag $CI_REGISTRY_IMAGE/php-fpm:latest
+      ./laradock/php-fpm-symfony
+
+    - 'docker push $CI_REGISTRY_IMAGE/php-fpm:latest'
+
+build-percona:
+  <<: *build-before
+  script:
+    - source ./laradock/.env.test
+    # fetches the latest image (not failing if image is not found)
+    - 'docker pull $CI_REGISTRY_IMAGE/percona:latest || true'
+    - >
+      docker build
+      --pull
+      --cache-from $CI_REGISTRY_IMAGE/percona:latest
+      --tag $CI_REGISTRY_IMAGE/percona:latest
+      ./laradock/percona
+
+    - 'docker push $CI_REGISTRY_IMAGE/percona:latest'
+
+phpunit:
+  <<: *tests-image
+  stage: test
+  script:
+    - source ./laradock/.env.test
+    - cp .env.test .env
+    - sh ci/phpunit.sh
+
+phpstan:
+  <<: *tests-image
+  stage: test
+  script:
+    - source ./laradock/.env.test
+    - sh ci/phpstan.sh
 
 deploy:
   stage: deploy
@@ -128,6 +128,6 @@ deploy:
     - develop
 
 stages:
-#  - build
-#  - test
+  - build
+  - test
   - deploy
