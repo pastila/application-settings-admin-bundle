@@ -83,16 +83,11 @@ class HomepageControllerTest extends AppWebTestCase
         'date' => trim($node->filter('.b-reviews__item-user .b-reviews__item-date')->text()),
       ];
     });
-    // Проверка, что данные вообще нашлись
-    $this->assertTrue(count($feedbacksHtml) > 0);
-    // Проверка, что Оценка совпадает
-    $this->assertEquals(4, $feedbacksHtml[0]['valuation']);
-    // Проверка, что Текст совпадает
-    $this->assertEquals('Foo', $feedbacksHtml[0]['text']);
-    // Проверка, что Автор совпадает
-    $this->assertEquals('From fixtures', $feedbacksHtml[0]['author']);
-    // Проверка, что Дата совпадает
-    $this->assertEquals('01 января, 2020', $feedbacksHtml[0]['date']);
+    $this->assertTrue(count($feedbacksHtml) > 0, 'Проверка, что данные вообще нашлись');
+    $this->assertEquals(4, $feedbacksHtml[0]['valuation'], 'Проверка, что Оценка совпадает');
+    $this->assertEquals('Foo', $feedbacksHtml[0]['text'], 'Проверка, что Текст совпадает');
+    $this->assertEquals('From fixtures', $feedbacksHtml[0]['author'], 'Проверка, что Автор совпадает');
+    $this->assertEquals('01 января, 2020', $feedbacksHtml[0]['date'], 'Проверка, что Дата совпадает');
   }
 
   /*** Проверка "Вопрос-ответ":
