@@ -102,8 +102,6 @@ sonata_admin:
         label: Текстовые разделы
       settings:
         label: Настройки
-      menu:
-        label: Меню навигации
   options:
     html5_validate: false
 
