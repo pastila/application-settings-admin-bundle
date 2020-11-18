@@ -28,7 +28,7 @@ class HomepageControllerTest extends AppWebTestCase
     /**
      * Проверка, что страница открывается
      */
-    $crawler = $client->request('GET', '/');
+    $client->request('GET', '/');
     $this->assertEquals(200, $client->getResponse()->getStatusCode());
   }
 
@@ -99,11 +99,8 @@ class HomepageControllerTest extends AppWebTestCase
         'rating' => $node->filter('.svg-icon--star')->count(),
       ];
     });
-    // Проверка, что данные вообще нашлись
-    $this->assertTrue(count($companyTopsHtml) > 0);
-    // Проверка, что Компания совпадает
-    $this->assertEquals('АКБАРС-МЕД', $companyTopsHtml[0]['name']);
-    // Проверка, что Рейтинг совпадает
-    $this->assertEquals(3, $companyTopsHtml[0]['rating']);
+    $this->assertTrue(count($companyTopsHtml) > 0, ' Проверка, что данные вообще нашлись');
+    $this->assertEquals('АКБАРС-МЕД', $companyTopsHtml[0]['name'], 'Проверка, что Компания совпадает');
+    $this->assertEquals(3, $companyTopsHtml[0]['rating'], 'Проверка, что Рейтинг совпадает');
   }
 }
