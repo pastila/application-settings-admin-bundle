@@ -122,6 +122,6 @@ class Question
    */
   public function __toString()
   {
-    return $this->getId() ? $this->getAnswer() : 'Новый вопрос';
+    return $this->getId() ? $this->getQuestion() : 'Новый вопрос';
   }
 }
