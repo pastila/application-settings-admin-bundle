@@ -220,15 +220,10 @@ class Number implements ImageAwareInterface, ImageInterface
   {
     if (!is_null($this->original))
     {
-      if (!strripos($this->original, '.svg'))
-      {
-        return true;
-      }
-
-      return false;
+      $array = explode(".", $this->original);
+      return (end($array) === 'svg') ? true : false;
     }
-
-    return null;
+    return false;
   }
 
   /**
