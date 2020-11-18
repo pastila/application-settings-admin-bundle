@@ -46,14 +46,22 @@ class HomepageController extends Controller
       ->getQuery()
       ->getResult();
 
-    /**
-     * Поиск региона
-     */
-    $regionId = $this->settingManager->getValue('region_default');
     $region = null;
-    if ($regionId)
+    if (false)
     {
-      $region = $this->regionRepository->findOneBy(['id' => $regionId]);
+      /**
+       * Поиск региона TODO: реализуется в след.задачах
+       */
+    } else
+    {
+      /**
+       * Если регион не был получен, то берем выбранный по умолчанию
+       */
+      $regionId = $this->settingManager->getValue('region_default');
+      if ($regionId)
+      {
+        $region = $this->regionRepository->findOneBy(['id' => $regionId]);
+      }
     }
 
     // replace this example code with whatever you need
