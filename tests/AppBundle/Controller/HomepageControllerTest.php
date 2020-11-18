@@ -24,9 +24,14 @@ class HomepageControllerTest extends AppWebTestCase
      */
     $crawler = $client->request('GET', '/');
     $this->assertEquals(200, $client->getResponse()->getStatusCode());
+  }
 
+  /*** Проверка "Безбахил в цифрах": **/
+  public function testNumber()
+  {
+    $client = static::createClient();
+    $crawler = $client->request('GET', '/');
 
-    /*** Проверка "Безбахил в цифрах": **/
     // Извлечение данных со страницы
     $numbersHtml = $crawler->filter('.b-info__item')->each(function (Crawler $node, $i)
     {
@@ -37,15 +42,17 @@ class HomepageControllerTest extends AppWebTestCase
         'url' => $node->filter('.b-info__item-more a')->attr('href'),
       ];
     });
-    // Проверка, что данные вообще нашлись
-    $this->assertTrue(count($numbersHtml) > 0, 'Проверка, что данные вообще нашлись');
-    // Проверка, что Заголовок совпадает
-    $this->assertEquals('Title', $numbersHtml[0]['title'], 'Проверка, что Заголовок совпадает');
-    // Проверка, что Описание совпадает
+    $this->assertTrue(count($numbersHtml) > 1, 'Проверка, что данные вообще нашлись');
+
+    // Проверка, что запись, с позицией 1 отобразиться первой:
+    $this->assertEquals('999', $numbersHtml[0]['title'], 'Проверка, что Заголовок совпадает');
     $this->assertEquals('Description', $numbersHtml[0]['description'], 'Проверка, что Описание совпадает');
-    // Проверка, что Текст кнопки совпадает
     $this->assertEquals('Go', $numbersHtml[0]['urlText'], 'Проверка, что Текст кнопки совпадает');
-    // Проверка, что Ссылка совпадает
     $this->assertEquals('http://bezbahil.ru/', $numbersHtml[0]['url'], 'Проверка, что Ссылка совпадает');
+
+    $this->assertEquals('100 500', $numbersHtml[1]['title'], 'Проверка, что Заголовок совпадает');
+    $this->assertEquals('Example', $numbersHtml[1]['description'], 'Проверка, что Описание совпадает');
+    $this->assertEquals('Go', $numbersHtml[1]['urlText'], 'Проверка, что Текст кнопки совпадает');
+    $this->assertEquals('http://example.ru/', $numbersHtml[1]['url'], 'Проверка, что Ссылка совпадает');
   }
 }

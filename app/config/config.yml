@@ -91,8 +91,8 @@ sonata_admin:
   title: Раздел администрирования
   dashboard:
     groups:
-      numbers:
-        label: БезБахил в цифрах
+      main_page:
+        label: Главная страница
       settings:
         label: Настройки
   options:

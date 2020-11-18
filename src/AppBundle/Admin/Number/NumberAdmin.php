@@ -6,6 +6,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class NumberAdmin extends AbstractAdmin
 {
@@ -13,14 +14,13 @@ class NumberAdmin extends AbstractAdmin
 
   protected $datagridValues = array(
     '_page' => 1,
-    '_sort_order' => 'ASC',
+    '_sort_order' => 'DESC',
     '_sort_by' => 'position',
   );
 
   public function getFilterParameters()
   {
     $filter = parent::getFilterParameters();
-
 
     return $filter;
   }
@@ -39,10 +39,10 @@ class NumberAdmin extends AbstractAdmin
   {
     $list
       ->add('title', null, [
-        'label' => 'Заголовок',
+        'label' => 'Число',
       ])
       ->add('description', null, [
-        'label' => 'Описание'
+        'label' => 'Подпись'
       ])
       ->add('_action', null, [
         'actions' => [
@@ -59,21 +59,21 @@ class NumberAdmin extends AbstractAdmin
   protected function configureFormFields (FormMapper $form)
   {
     $form
-      ->add('title', null, [
-        'label' => 'Заголовок',
-      ])
-      ->add('description', null, [
-        'label' => 'Описание',
-      ])
-      ->add('url', null, [
-        'label' => 'url',
-      ])
-      ->add('urlText', null, [
-        'label' => 'Текст ссылки',
-      ])
       ->add('original', 'Accurateweb\MediaBundle\Form\ImageType', [
         'required' => false,
         'label' => 'Изображение',
+      ])
+      ->add('title',  TextType::class, [
+        'label' => 'Число',
+      ])
+      ->add('description', TextType::class, [
+        'label' => 'Подпись',
+      ])
+      ->add('url', TextType::class, [
+        'label' => 'Адрес ссылки',
+      ])
+      ->add('urlText', TextType::class, [
+        'label' => 'Текст ссылки',
       ])
     ;
   }

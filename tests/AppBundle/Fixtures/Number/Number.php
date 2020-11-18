@@ -15,14 +15,25 @@ class Number extends Fixture
    */
   public function load(ObjectManager $manager)
   {
-    $number = new \AppBundle\Entity\Number\Number();
-    $number->setTitle('Title');
-    $number->setDescription('Description');
-    $number->setUrl('http://bezbahil.ru/');
-    $number->setUrlText('Go');
-    $manager->persist($number);
+    $numberOne = new \AppBundle\Entity\Number\Number();
+    $numberOne->setPosition(1);
+    $numberOne->setTitle('999');
+    $numberOne->setDescription('Description');
+    $numberOne->setUrl('http://bezbahil.ru/');
+    $numberOne->setUrlText('Go');
+    $manager->persist($numberOne);
     $manager->flush();
 
-    $this->addReference('number-simple', $number);
+    $numberTwo = new \AppBundle\Entity\Number\Number();
+    $numberTwo->setPosition(2);
+    $numberTwo->setTitle('100 500');
+    $numberTwo->setDescription('Example');
+    $numberTwo->setUrl('http://example.ru/');
+    $numberTwo->setUrlText('Go');
+    $manager->persist($numberTwo);
+    $manager->flush();
+
+    $this->addReference('number-simple-one', $numberOne);
+    $this->addReference('number-simple-two', $numberTwo);
   }
 }
