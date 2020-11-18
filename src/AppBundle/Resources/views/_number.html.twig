@@ -1,9 +1,9 @@
 <div class="b-info__item">
     <div class="b-info__item-image">
-        {% if (check_image(number)) %}
-            <img src="{{ image_thumbnail_url(number, null, 'small') }}" alt="">
-        {% else %}
+        {% if number.isImageSvg %}
             <img src="{{ image_url(number) }}" alt="">
+        {% else %}
+            <img src="{{ image_thumbnail_url(number, null, 'small') }}" alt="">
         {% endif %}
     </div>
     <div class="b-info__item-number">{{ number.title }}</div>

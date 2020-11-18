@@ -214,6 +214,24 @@ class Number implements ImageAwareInterface, ImageInterface
   }
 
   /**
+   * @return bool|null
+   */
+  public function getIsImageSvg()
+  {
+    if (!is_null($this->original))
+    {
+      if (!strripos($this->original, '.svg'))
+      {
+        return true;
+      }
+
+      return false;
+    }
+
+    return null;
+  }
+
+  /**
    * @return string
    */
   public function getResourceId()
