@@ -323,20 +323,18 @@ class HomepageControllerTest extends AppWebTestCase
     {
       return $node->text();
     });
-    // Проверка, что данные вообще нашлись
-    $this->assertTrue(count($regionsHtml) > 0);
-    // Проверка, что Название региона совпадает
-    $this->assertEquals('Свердловская область', $regionsHtml[0]);
+    $textPrev = 'Форма обращения: ';
+
+    $this->assertTrue(count($regionsHtml) > 0, $textPrev . 'Проверка, что данные по регионам вообще нашлись');
+    $this->assertEquals('Свердловская область', $regionsHtml[0], $textPrev . 'Проверка, что Название региона совпадает');
 
     // Извлечение данных со страницы
     $yearsHtml = $crawler->filter('.b-first__form .b-form__item-year .b-form__item-content option')->each(function (Crawler $node, $i)
     {
       return $node->text();
     });
-    // Проверка, что данные вообще нашлись
-    $this->assertTrue(count($yearsHtml) > 0);
-    // Проверка, что первого года(проверка как пример содержания)
-    $this->assertEquals('2019 г.', $yearsHtml[0]);
+    $this->assertTrue(count($yearsHtml) > 0, $textPrev . 'Проверка, что года вообще нашлись');
+    $this->assertEquals('2019 г.', $yearsHtml[0], $textPrev . 'Проверка, проверка содержания');
   }
 
   /*** Проверка "Список регионов в модалке":
