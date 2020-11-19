@@ -108,7 +108,7 @@ class Sypexgeo implements GeoInterface
   protected function getGeobaseData ()
   {
     // получаем данные по ip
-    $link = 'http://api.sypexgeo.net/json/' . '212.220.186.164'; //. $this->ip; TODO!!!! тест
+    $link = 'http://api.sypexgeo.net/json/' . $this->ip;
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $link);
     curl_setopt($ch, CURLOPT_HEADER, false);

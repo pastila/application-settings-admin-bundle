@@ -16,6 +16,7 @@ namespace AppBundle\Service;
 
 use Accurateweb\LocationBundle\GeoLocation\GeoInterface;
 use AppBundle\Repository\Geo\RegionRepository;
+use Complex\Exception;
 
 class GeoLocation
 {
@@ -45,14 +46,12 @@ class GeoLocation
       return trim($n);
     }, $codes);
 
-    $region = $this->regionRepository
+    return $this->regionRepository
       ->createQueryBuilder('r')
       ->andWhere('r.code IN (:codes)')
       ->setParameter('codes', $codes)
       ->getQuery()
       ->setMaxResults(1)
-      ->getSingleResult();
-
-    return $region;
+      ->getFirstResult();
   }
 }
