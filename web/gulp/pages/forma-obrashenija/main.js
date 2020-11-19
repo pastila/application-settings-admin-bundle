@@ -2,6 +2,89 @@
 
 $(document).ready(function () {
 
+  function getURLParameter(parameter) {
+    var params = window
+        .location
+        .search
+        .replace('?', '')
+        .split('&')
+        .reduce(
+            function (p, e) {
+              var a = e.split('=');
+              p[decodeURIComponent(a[0])] = decodeURIComponent(a[1]);
+              return p;
+            }, {}
+        );
+    return params[parameter];
+  };
+
+  var yearURLParameter = getURLParameter(`year`);
+  var regionURLParameter = getURLParameter(`region`);
+
+  function  fillRegionInput(region) {
+      let select_region = $(`.region[value=${region}]`).text();
+      $('#referal_forma').val(select_region);
+      $("#referal_forma").attr("data-id_region", region);
+      $('#region_name').text(select_region);
+      $('#referal_forma').attr('data-region_check', 'check');
+
+      let component = $('#hospitals');
+      $.ajax({
+        dataType: 'html',
+        url: '/ajax/form_hospitals.php',
+        type: 'POST',
+        data: { id: region, year: $("#selected_year").val() },
+        beforeSend: function () {
+        },
+        success: function (result) {
+          $(component).html(result);
+          $('#region_name').text(select_region);
+
+          $('#hosptital_name').html('Не выбрано');
+          $('#street_name').html('Не выбрано');
+          $('#boss_name').html('Не выбрано');
+          search_region();
+          search_hospital();
+        },
+      }).done(function (msg) {
+      });
+  }
+
+  function fillYearInput(year) {
+    $("#selected_year").val(year);
+    var currentYear = $("#selected_year").val();
+    $(`[name=years][data-value=${currentYear}]`).prop('checked', true)
+    let component = $('#hospitals');
+    $.ajax({
+      dataType: 'html',
+      url: '/ajax/form_hospitals.php',
+      type: 'POST',
+      data: {id: "",},
+      beforeSend: function () {
+      },
+      success: function (result) {
+        $(component).html(result);
+        $('#region_name').html('Не выбрано');
+        $('#hosptital_name').html('Не выбрано');
+        $('#street_name').html('Не выбрано');
+        $('#boss_name').html('Не выбрано');
+
+        arr_step[2].attr("for", "");
+        arr_span_further[2].addClass("disabled");
+
+        search_hospital();
+        search_region();
+      },
+    }).done(function (msg) {
+    });
+  }
+
+  function transitionStep1_2 () {
+    arr_step[0].attr("for", "step-2");
+    arr_span_further[0].removeClass("disabled");
+    arr_step[0].trigger("click");
+  }
+
   $(document).on("click", "#generate_form_fix", function (e) {
         if ($('.header__r_auth_reg').length == 1 && ($(".header__r_auth_reg").attr("data-rigstration") == 0)) {
 
@@ -31,7 +114,6 @@ $(document).ready(function () {
   });
 
 
-
   $(document).on("click", ".diagnoz_search_js", function () {
     $("#grid").addClass('disabled');
 
@@ -56,7 +138,6 @@ $(document).ready(function () {
     $(".steps_items_item_button").each(function() {
       arr_span_further.push($(this));
     });
-
 
 
     if ($("#selected_year").val() != "") {
@@ -90,9 +171,7 @@ $(document).ready(function () {
       var year = $(this).attr("data-year");
       $("#selected_year").val(year);
     }
-
   });
-
 
   search_region();
   search_class();
@@ -128,6 +207,7 @@ $(document).ready(function () {
       $('#search_result_hospital').fadeOut();
     }
   });
+
   $(document).on('click', '.region', function () {
     var arr_step = [];
     var arr_span_further = [];
@@ -148,7 +228,6 @@ $(document).ready(function () {
     let component = $('#hospitals');
     arr_step[2].attr("for","");
     arr_span_further[2].addClass("disabled");
-
 
     $.ajax({
       dataType: 'html',
@@ -268,8 +347,6 @@ $(document).ready(function () {
         arr_step[2].trigger("click");
       });
 
-
-
     });
     $('#referal_two_forma').on('keyup', function () {
       var $this = $(this);
@@ -330,7 +407,6 @@ $(document).ready(function () {
       }, delay));
     });
   }
-
 
 
 
@@ -415,17 +491,18 @@ $(document).ready(function () {
     $(div).find('input:checked').each(function () {
       years.push(this.value);
     });
+
     if (years.length == 0) {
       $(".wrap-chrckbox:first").after(
         '<p class="label danger"  >Выберите год</p>');
       error.push("error7");
     }
+
     let plan = [];
     let div_last = $('.plannet');
     $(div_last).find('input:checked').each(function () {
       plan.push(this.value);
     });
-
 
     if (plan.length == 0) {
       div_last.after(
@@ -445,7 +522,6 @@ $(document).ready(function () {
         //     $('.register_before_review').removeClass('hidden');
         //   }, 700);
         // } else {
-
 
           $.post('/ajax/diagnoz.php',
             {
@@ -496,7 +572,6 @@ $(document).ready(function () {
                     type: 'inline',
                   },
                 });
-
               }
             }, 'html');
         // }
@@ -509,7 +584,6 @@ $(document).ready(function () {
         });
       }
     }
-
   });
 
   $(document).on('click', '#option', function () {
@@ -570,7 +644,6 @@ $(document).ready(function () {
   });
 
 
-
   $(document).on('click', '.error_class', function () {
     $.magnificPopup.open({
       items: {
@@ -603,7 +676,6 @@ $(document).ready(function () {
       },
     });
   });
-
 
 
 
@@ -642,8 +714,6 @@ $(document).ready(function () {
       },
     });
   });
-
-});
 
 function search_class() {
   // ------ choose_class ------
@@ -726,7 +796,6 @@ function search_subgroup() {
   $(document).on('click', '#subgroup_input', function () {
     $('#search_result_subgroup').css('display', 'block');
   });
-
 
   $(document).mouseup(function (e) {
     let container = $('#subgroup_input');
@@ -1062,7 +1131,6 @@ function keyup_diagnoz_global() {
     });
 
 
-
     var delay = 500;
     clearTimeout($this.data('timer'));
     $this.data('timer', setTimeout(function () {
@@ -1170,33 +1238,38 @@ $(document).ready(function() {
       arr_step.push($(this));
     }
   });
-  $(".steps_items_item_button").each(function() {
+
+  $(".steps_items_item_button").each(function () {
     arr_span_further.push($(this));
   });
 
   $("[name=years]").change(function() {
     arr_step[0].attr("for","step-2");
     arr_span_further[0].removeClass("disabled");
-
   });
   arr_span_further[0].click(function() {
     arr_step[0].trigger("click");
-
   });
-
 
 
   $("[data-planned]").change(function() {
     arr_step[1].attr("for","step-3");
     arr_span_further[1].removeClass("disabled");
 
+    if (regionURLParameter) {
+      fillRegionInput(regionURLParameter);
+    }
   });
-  arr_span_further[1].click(function() {
+
+  arr_span_further[1].click(function () {
     arr_step[1].trigger("click");
 
   });
 
+  if (yearURLParameter) {
+    fillYearInput(yearURLParameter);
+    transitionStep1_2 ();
+  }
 
-
-
+  $(".steps-wrap").show();
 });
