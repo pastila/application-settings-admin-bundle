@@ -88,6 +88,31 @@ build-percona:
 
     - 'docker push $CI_REGISTRY_IMAGE/percona:latest'
 
+#build-node:
+#  <<: *build-before
+#  script:
+#    - source ./laradock/.env.test
+#    # fetches the latest image (not failing if image is not found)
+#    - 'docker pull $CI_REGISTRY_IMAGE/node:latest || true'
+#    - >
+#      docker build
+#      --pull
+#      --cache-from $CI_REGISTRY_IMAGE/node:latest
+#      --tag $CI_REGISTRY_IMAGE/node:latest
+#      ./laradock/node
+#
+#    - 'docker push $CI_REGISTRY_IMAGE/node:latest'
+#
+#build-assets:
+#  image: $CI_REGISTRY_IMAGE/node:latest
+#  script:
+#    - gulp
+#  artifacts:
+#    paths:
+#      - web/local/templates/kdteam/js
+#      - web/local/templates/kdteam/styles
+#      - web/local/templates/kdteam/pages
+
 phpunit:
   <<: *tests-image
   stage: test
@@ -95,6 +120,13 @@ phpunit:
     - source ./laradock/.env.test
     - cp .env.test .env
     - sh ci/phpunit.sh
+  artifacts:
+    when: always
+    paths:
+      - var/logs/phpunit-unit.xml
+    reports:
+      junit:
+        - var/logs/phpunit-unit.xml
 
 phpstan:
   <<: *tests-image
@@ -103,7 +135,7 @@ phpstan:
     - source ./laradock/.env.test
     - sh ci/phpstan.sh
 
-deploy:
+deploy_staging:
   stage: deploy
   image: mwienk/php-deployer
 #  dependencies:
@@ -121,11 +153,34 @@ deploy:
     - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
 
-    - echo "Host staging.aw-dev.ru\n\tPort 2222\n\tRequestTTY Yes\n\n" > ~/.ssh/config
+    - echo "Host staging.aw-dev.ru\n\tPort 2222\n" > ~/.ssh/config
   script:
     - dep deploy staging --tag=$CI_COMMIT_REF_NAME -vvv
   only:
     - develop
+
+deploy_master:
+  stage: deploy
+  image: mwienk/php-deployer
+  #  dependencies:
+  #    - build:js
+  before_script:
+    # https://docs.gitlab.com/ee/ci/ssh_keys/
+    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+
+    # https://docs.gitlab.com/ee/ci/ssh_keys/#verifying-the-ssh-host-keys
+    - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - dep deploy staging --tag=$CI_COMMIT_REF_NAME -vvv
+  only:
+    - master
+
 
 stages:
   - build
