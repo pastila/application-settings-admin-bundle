@@ -6,7 +6,10 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class NumberAdmin extends AbstractAdmin
 {
@@ -14,7 +17,7 @@ class NumberAdmin extends AbstractAdmin
 
   protected $datagridValues = array(
     '_page' => 1,
-    '_sort_order' => 'DESC',
+    '_sort_order' => 'ASC',
     '_sort_by' => 'position',
   );
 
@@ -56,25 +59,52 @@ class NumberAdmin extends AbstractAdmin
       ]);
   }
 
-  protected function configureFormFields (FormMapper $form)
+  protected function configureFormFields(FormMapper $form)
   {
     $form
       ->add('original', 'Accurateweb\MediaBundle\Form\ImageType', [
         'required' => false,
         'label' => 'Изображение',
       ])
-      ->add('title',  TextType::class, [
+      ->add('title', TextType::class, [
         'label' => 'Число',
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+          new Length([
+            'max' => 255,
+          ]),
+        ],
       ])
-      ->add('description', TextType::class, [
+      ->add('description', TextareaType::class, [
         'label' => 'Подпись',
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+          new Length([
+            'max' => 512,
+          ]),
+        ],
       ])
       ->add('url', TextType::class, [
         'label' => 'Адрес ссылки',
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+          new Length([
+            'max' => 512,
+          ]),
+        ],
       ])
       ->add('urlText', TextType::class, [
         'label' => 'Текст ссылки',
-      ])
-    ;
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+          new Length([
+            'max' => 255,
+          ]),
+        ],
+      ]);
   }
 }
