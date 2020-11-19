@@ -111,6 +111,7 @@ class HomepageControllerTest extends AppWebTestCase
         'answer' => trim($node->filter('.b-question__item-text')->text()),
       ];
     });
+
     $textPrev = 'Вопрос-ответ: ';
     $this->assertTrue(count($questionsHtml) > 0, $textPrev . 'Проверка, что данные вообще нашлись');
     $this->assertEquals('Пример вопроса', $questionsHtml[0]['question'], $textPrev . 'Проверка, что Вопрос совпадает');
@@ -141,7 +142,9 @@ class HomepageControllerTest extends AppWebTestCase
     $this->assertEquals(3, $companyTopsHtml[2]['rating'], $textPrev . 'Проверка, что Рейтинг совпадает');
   }
 
-  /*** Проверка "Блог, медицинский инсайдер": **/
+  /*** Проверка "Блог, медицинский инсайдер":
+   * https://jira.accurateweb.ru/browse/BEZBAHIL-91
+   **/
   public function testNews()
   {
     $client = static::createClient();
