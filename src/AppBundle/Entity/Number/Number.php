@@ -205,9 +205,25 @@ class Number implements ImageAwareInterface, ImageInterface
    */
   public function setOriginal($original)
   {
-    $this->original = $original;
+    if (!is_null($original))
+    {
+      $this->original = $original;
+    }
 
     return $this;
+  }
+
+  /**
+   * @return bool|null
+   */
+  public function getIsImageSvg()
+  {
+    if (!is_null($this->original))
+    {
+      $array = explode(".", $this->original);
+      return (end($array) === 'svg') ? true : false;
+    }
+    return false;
   }
 
   /**
@@ -321,13 +337,5 @@ class Number implements ImageAwareInterface, ImageInterface
   public function setOriginalImage ($image)
   {
     return $this->setImage($image);
-  }
-
-  /**
-   * @return string
-   */
-  public function getGalleryProviderId ()
-  {
-    return 'numbers-photo';
   }
 }
