@@ -277,7 +277,9 @@ class HomepageControllerTest extends AppWebTestCase
     $this->assertEquals('Анонс статьи2', $newsHtml[1]['announce'], $textPrev . 'Проверка, что Анонс совпадает');
   }
 
-  /*** Проверка страницы "Форма Написать нам: **/
+  /*** Проверка страницы "Форма Написать нам:
+   * https://jira.accurateweb.ru/browse/BEZBAHIL-97
+   */
   public function testContactUs()
   {
     $client = static::createClient();
