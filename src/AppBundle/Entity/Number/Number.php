@@ -29,9 +29,9 @@ class Number implements ImageAwareInterface, ImageInterface
   /**
    * @Gedmo\SortablePosition
    * @var integer
-   * @ORM\Column(type="integer", nullable=false, options={"default"=0})
+   * @ORM\Column(type="integer", nullable=false)
    */
-  private $position = 0;
+  private $position;
 
   /**
    * Заголовок

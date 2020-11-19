@@ -26,7 +26,9 @@ class HomepageControllerTest extends AppWebTestCase
     $this->assertEquals(200, $client->getResponse()->getStatusCode());
   }
 
-  /*** Проверка "Безбахил в цифрах": **/
+  /*** Проверка "Безбахил в цифрах":
+  https://jira.accurateweb.ru/browse/BEZBAHIL-90
+   **/
   public function testNumber()
   {
     $client = static::createClient();
