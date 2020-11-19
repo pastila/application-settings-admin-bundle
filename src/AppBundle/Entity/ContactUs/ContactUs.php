@@ -150,6 +150,6 @@ class ContactUs
    */
   public function __toString()
   {
-    return $this->getId() ? $this->getName() : 'Новое сообщение';
+    return $this->getId() ? $this->getAuthorName() : 'Новое сообщение';
   }
 }
