@@ -32,11 +32,10 @@ class HomepageControllerTest extends AppWebTestCase
   {
     $client = static::createClient();
 
-    /**
-     * Проверка, что страница открывается
-     */
     $client->request('GET', '/');
-    $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    $this->assertEquals(200, $client->getResponse()->getStatusCode(), 'Проверка, что главная страница открывается');
+    $client->request('GET', '/contact_us');
+    $this->assertEquals(200, $client->getResponse()->getStatusCode(), 'Проверка, что страница "Написать нам" открывается');
   }
 
   /*** Проверка "Безбахил в цифрах":
@@ -276,5 +275,36 @@ class HomepageControllerTest extends AppWebTestCase
     $this->assertEquals('Анонс статьи1', $newsHtml[0]['announce'], $textPrev . 'Проверка, что Анонс совпадает');
     $this->assertEquals('Заголовок2', $newsHtml[1]['title'], $textPrev . 'Проверка, что Заголовок совпадает');
     $this->assertEquals('Анонс статьи2', $newsHtml[1]['announce'], $textPrev . 'Проверка, что Анонс совпадает');
+  }
+
+  /*** Проверка страницы "Форма Написать нам: **/
+  public function testContactUs()
+  {
+    $client = static::createClient();
+
+    $client->request('POST', '/contact_us', [
+      'contact_us' => [
+        "author_name" => 'Фон Браун',
+        "email" => 'brayn@mail.com',
+        "message" => 'Как отправить обращение?'
+      ]
+    ], [],
+      [
+        'HTTP_X-Requested-With' => 'XMLHttpRequest',
+      ]);
+
+    /*
+     * Проверка, что форма "Написать нам" была сохранена в базе
+     */
+    $contactUs = $this->getEntityManager()
+      ->getRepository(\AppBundle\Entity\ContactUs\ContactUs::class)
+      ->createQueryBuilder('cu')
+      ->andWhere('cu.authorName = :author_name')
+      ->setParameters([
+        'author_name' => 'Фон Браун',
+      ])
+      ->getQuery()
+      ->getResult();
+    $this->assertTrue(!empty($contactUs));
   }
 }
