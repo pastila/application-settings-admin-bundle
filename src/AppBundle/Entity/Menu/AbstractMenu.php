@@ -26,9 +26,9 @@ abstract class AbstractMenu
   /**
    * @Gedmo\SortablePosition
    * @var integer
-   * @ORM\Column(type="integer", nullable=false, options={"default"=0})
+   * @ORM\Column(type="integer", nullable=false)
    */
-  protected $position = 0;
+  protected $position;
 
   /**
    * Текст в меню

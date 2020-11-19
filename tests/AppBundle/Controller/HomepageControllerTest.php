@@ -120,7 +120,11 @@ class HomepageControllerTest extends AppWebTestCase
     $this->assertEquals('Пример ответа', $questionsHtml[0]['answer'], $textPrev . 'Проверка, что Ответ совпадает');
   }
 
-  /*** Проверка "Меню Header": **/
+
+
+  /*** Проверка "Меню Header":
+   * https://jira.accurateweb.ru/browse/BEZBAHIL-92
+   **/
   public function testMenuHeader()
   {
     $client = static::createClient();
@@ -134,12 +138,15 @@ class HomepageControllerTest extends AppWebTestCase
         'url' => $node->attr('href'),
       ];
     });
-    $this->assertTrue(count($headerHtml) > 0, 'Проверка, что данные вообще нашлись');
-    $this->assertEquals('Header', $headerHtml[0]['title'], 'Проверка, что Заголовок меню совпадает');
-    $this->assertEquals('http://bezbahil.ru/', $headerHtml[0]['url'], 'Проверка, что URL меню совпадает');
+    $textPrev = 'Меню Header: ';
+    $this->assertTrue(count($headerHtml) > 0, $textPrev . 'Проверка, что данные вообще нашлись');
+    $this->assertEquals('Header', $headerHtml[0]['title'], $textPrev . 'Проверка, что Заголовок меню совпадает');
+    $this->assertEquals('http://bezbahil.ru/', $headerHtml[0]['url'], $textPrev . 'Проверка, что URL меню совпадает');
   }
 
-  /*** Проверка "Меню Header Mobile": **/
+  /*** Проверка "Меню Header Mobile":
+   * https://jira.accurateweb.ru/browse/BEZBAHIL-92
+   **/
   public function testMenuHeaderMobile()
   {
     $client = static::createClient();
@@ -153,12 +160,15 @@ class HomepageControllerTest extends AppWebTestCase
         'url' => $node->attr('href'),
       ];
     });
-    $this->assertTrue(count($headerHtml) > 0, 'Проверка, что данные вообще нашлись');
-    $this->assertEquals('Header', $headerHtml[0]['title'], 'Проверка, что Заголовок моб.меню совпадает');
-    $this->assertEquals('http://bezbahil.ru/', $headerHtml[0]['url'], 'Проверка, что URL моб.меню совпадает');
+    $textPrev = 'Меню Header Mobile: ';
+    $this->assertTrue(count($headerHtml) > 0, $textPrev . 'Проверка, что данные вообще нашлись');
+    $this->assertEquals('Header', $headerHtml[0]['title'], $textPrev . 'Проверка, что Заголовок моб.меню совпадает');
+    $this->assertEquals('http://bezbahil.ru/', $headerHtml[0]['url'], $textPrev . 'Проверка, что URL моб.меню совпадает');
   }
 
-  /*** Проверка "Меню Footer": **/
+  /*** Проверка "Меню Footer":
+   * https://jira.accurateweb.ru/browse/BEZBAHIL-92
+   **/
   public function testMenuFooter()
   {
     $client = static::createClient();
@@ -172,9 +182,10 @@ class HomepageControllerTest extends AppWebTestCase
         'url' => $node->attr('href'),
       ];
     });
-    $this->assertTrue(count($headerHtml) > 0, 'Проверка, что данные вообще нашлись');
-    $this->assertEquals('Footer', $headerHtml[0]['title'], 'Проверка, что Заголовок меню совпадает');
-    $this->assertEquals('http://bezbahil.ru/', $headerHtml[0]['url'], 'Проверка, что URL меню совпадает');
+    $textPrev = 'Меню Footer: ';
+    $this->assertTrue(count($headerHtml) > 0, $textPrev . 'Проверка, что данные вообще нашлись');
+    $this->assertEquals('Footer', $headerHtml[0]['title'], $textPrev . 'Проверка, что Заголовок меню совпадает');
+    $this->assertEquals('http://bezbahil.ru/', $headerHtml[0]['url'], $textPrev . 'Проверка, что URL меню совпадает');
   }
 
   /*** Проверка "Топ страховых компаний": **/
