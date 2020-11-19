@@ -74,3 +74,10 @@ services:
 
     AppBundle\Helper\MenuBuilder:
         public: true
+
+    app.location.geo:
+      class: AppBundle\Service\GeoLocation
+      public: false
+      autowire: false
+      arguments:
+        - '@aw.location.geo'

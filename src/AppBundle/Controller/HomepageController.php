@@ -13,22 +13,27 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Accurateweb\ApplicationSettingsAdminBundle\Model\Manager\SettingManagerInterface;
+use AppBundle\Service\GeoLocation;
+use Accurateweb\LocationBundle\LocationResolver\GeoLocationResolver;
 
 class HomepageController extends Controller
 {
   private $branchRatingHelper;
   private $settingManager;
   private $regionRepository;
+  private $geoLocationResolver;
 
   public function __construct(
     BranchRatingHelper $branchRatingHelper,
     SettingManagerInterface $settingManager,
-    RegionRepository $regionRepository
+    RegionRepository $regionRepository,
+    GeoLocation $geoLocationResolver
   )
   {
     $this->branchRatingHelper = $branchRatingHelper;
     $this->settingManager = $settingManager;
     $this->regionRepository = $regionRepository;
+    $this->geoLocationResolver = $geoLocationResolver;
   }
 
   /**
@@ -56,6 +61,11 @@ class HomepageController extends Controller
     $news = $em->getRepository(News::class)
       ->findNewsOrderByPublishedAt();
 
+    /**
+     * Получение региона по IP клиента
+     */
+    $region = $this->geoLocationResolver->getRegion();
+
     // replace this example code with whatever you need
     return $this->render('@App/homepage.html.twig', [
       'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
@@ -65,6 +75,7 @@ class HomepageController extends Controller
       'region' => null,
       'feedbacks' => $feedbacks,
       'news' => $news,
+      'region' => $region,
     ]);
   }
 }

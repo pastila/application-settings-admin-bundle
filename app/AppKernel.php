@@ -37,6 +37,7 @@ class AppKernel extends Kernel
             new Accurateweb\ApplicationSettingsAdminBundle\AccuratewebApplicationSettingsAdminBundle(),
             new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
             new \Accurateweb\NewsBundle\AccuratewebNewsBundle(),
+            new Accurateweb\LocationBundle\AccuratewebLocationBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
