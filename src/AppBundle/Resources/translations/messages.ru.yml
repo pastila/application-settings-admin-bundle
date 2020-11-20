@@ -1,9 +1,9 @@
 Number List: Список "Безбахил в цифрах"
 Number Create: Создать новую запись
-Menu Header List: Список "Верхнего меню"
-Menu Footer List: Список "Нижнего меню"
-Menu Header Create: Создание нового элемента меню
-Menu Footer Create: Создание нового элемента меню
+Menu Header List: Меню шапки
+Menu Footer List: Меню футера
+Menu Header Create: Новый элемент меню
+Menu Footer Create: Новый элемент меню
 Question List: Список "Вопрос-ответ"
 Question Create: Создать новый "Вопрос-ответ"
 Alias: Алиас
