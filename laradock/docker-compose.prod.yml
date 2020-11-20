@@ -54,7 +54,8 @@ services:
       - ${DATA_PATH_LOGS}/:/var/log
       - ./php-fpm-bitrix/msmtprc:/etc/msmtprc
       # App shares
-      - ${APP_SHARED_PATH_HOST}/.env:/var/www/.env, // Symfony app env
+      # Symfony app env
+      - ${APP_SHARED_PATH_HOST}/.env:/var/www/.env
       - ${APP_SHARED_PATH_HOST}/web/.htaccess:/var/www/web/.htaccess
       - ${APP_SHARED_PATH_HOST}/web/ajax/for_admin/import/log_cmo.txt:/var/www/web/ajax/for_admin/import/log_cmo.txt
       - ${APP_SHARED_PATH_HOST}/web/ajax/for_admin/import/log_mo.txt:/var/www/web/ajax/for_admin/import/log_mo.txt
@@ -67,7 +68,8 @@ services:
       - ${APP_SHARED_PATH_HOST}/web/cert1.pem:/var/www/web/cert1.pem
       - ${APP_SHARED_PATH_HOST}/web/export_2.csv:/var/www/web/export_2.csv
       - ${APP_SHARED_PATH_HOST}/web/export_f1111.csv:/var/www/web/export_f1111.csv
-      - ${APP_SHARED_PATH_HOST}/laradock/.env:/var/www/laradock/.env // Laradock build env
+      # Laradock build env
+      - ${APP_SHARED_PATH_HOST}/laradock/.env:/var/www/laradock/.env
       - ${APP_SHARED_PATH_HOST}/web/robots.txt:/var/www/web/robots.txt
       - ${APP_SHARED_PATH_HOST}/web/sitemap.xml:/var/www/web/sitemap.xml
       - ${APP_SHARED_PATH_HOST}/web/ssh/send_mail_after_30_day.txt:/var/www/web/ssh/send_mail_after_30_day.txt

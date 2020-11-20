@@ -68,7 +68,7 @@ function runInDocker($service, $command, $options = [])
 }
 
 // Project name
-set('application', 'my_project');
+set('application', 'bezbahil');
 
 // Project repository
 set('repository', 'git@git.accurateweb.ru:accurateweb/bezbahil.git');
@@ -165,23 +165,15 @@ host('staging')
   ->port(2222)
   ->stage('staging')
   ->user('deployer')
+  ->set('keep_releases', 2)
   ->set('deploy_path', '/var/www/sites/bezbahil');
 
-host('prod_host')
+host('prod')
   ->hostname('84.201.185.203')
   ->port(2232)
-  ->stage('prod_host')
+  ->stage('prod')
   ->user('deployer')
   ->set('deploy_path', '/var/www/bezbahilru');
-
-host('prod_workspace')
-  ->hostname('84.201.185.203')
-  ->stage('prod_workspace')
-  ->user('root')
-  ->set('http_user', 'root')
-  ->set('writable_use_sudo', false)
-  ->set('writable_mode', 'chmod')
-  ->set('deploy_path', '/var/www');
 
 // Tasks
 //task('update_services', function () {
