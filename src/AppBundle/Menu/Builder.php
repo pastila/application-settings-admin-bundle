@@ -24,24 +24,7 @@ final class Builder implements ContainerAwareInterface
       ->getQuery()
       ->getResult();
 
-    foreach ($menuHeader as $item)
-    {
-      /**
-       * @var MenuFooter $item
-       */
-      $iAnchor = false;
-      $url = $item->getUrl();
-      if (stripos($item->getUrl(), $baseUrl) !== false)
-      {
-        $iAnchor = stripos($item->getUrl(), '#');
-        $url = ($iAnchor !== false) ? (mb_substr($url, $iAnchor)) : $url;
-      }
-      $menu->addChild($item->getText(), [
-        'uri' => $url
-      ])->setAttribute('isAnchor', $iAnchor !== false);
-    }
-
-    return $menu;
+    return  $this->getMenu($menu, $menuHeader, $baseUrl, null);
   }
 
   public function headerMenuMobile(FactoryInterface $factory, array $options): ItemInterface
@@ -49,31 +32,13 @@ final class Builder implements ContainerAwareInterface
     $baseUrl = $this->container->get('router')->getContext()->getHost();
     $em = $this->container->get('doctrine')->getManager();
     $menu = $factory->createItem('root');
-    $menu->setChildrenAttribute('class', 'nav-mobile__list');
     $menuHeader = $em->getRepository(MenuHeader::class)
       ->getAll()
       ->getQuery()
       ->getResult();
+    $menu->setChildrenAttribute('class', 'nav-mobile__list');
 
-    foreach ($menuHeader as $item)
-    {
-      /**
-       * @var MenuFooter $item
-       */
-      $iAnchor = false;
-      $url = $item->getUrl();
-      if (stripos($item->getUrl(), $baseUrl) !== false)
-      {
-        $iAnchor = stripos($item->getUrl(), '#');
-        $url = ($iAnchor !== false) ? (mb_substr($url, $iAnchor)) : $url;
-      }
-      $menu->addChild($item->getText(), [
-        'uri' => $url,
-        'attributes' => ['class' => 'nav-mobile__list-item'],
-      ])->setAttribute('isAnchor', $iAnchor !== false);
-    }
-
-    return $menu;
+    return  $this->getMenu($menu, $menuHeader, $baseUrl, ['class' => 'nav-mobile__list-item']);
   }
 
   public function footerMenu(FactoryInterface $factory, array $options): ItemInterface
@@ -86,7 +51,19 @@ final class Builder implements ContainerAwareInterface
       ->getQuery()
       ->getResult();
 
-    foreach ($menuFooter as $item)
+    return $this->getMenu($menu, $menuFooter, $baseUrl, null);
+  }
+
+  /**
+   * @param $menu
+   * @param $menuItems
+   * @param $baseUrl
+   * @param null $attributes
+   * @return mixed
+   */
+  private function getMenu($menu, $menuItems, $baseUrl, $attributes = null)
+  {
+    foreach ($menuItems as $item)
     {
       /**
        * @var MenuFooter $item
@@ -98,9 +75,12 @@ final class Builder implements ContainerAwareInterface
         $iAnchor = stripos($item->getUrl(), '#');
         $url = ($iAnchor !== false) ? (mb_substr($url, $iAnchor)) : $url;
       }
-      $menu->addChild($item->getText(), [
-        'uri' => $url,
-      ])->setAttribute('isAnchor', $iAnchor !== false);
+      $option = ['uri' => $url];
+      if ($attributes !== null)
+      {
+        $option['attributes'] = $attributes;
+      }
+      $menu->addChild($item->getText(), $option)->setAttribute('isAnchor', $iAnchor !== false);
     }
 
     return $menu;

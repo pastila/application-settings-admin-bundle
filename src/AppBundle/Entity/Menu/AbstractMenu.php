@@ -4,15 +4,13 @@ namespace AppBundle\Entity\Menu;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\MappedSuperclass;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * Class AbstractMenu
- * @package AppBundle\Entity\Menu
- */
-abstract class AbstractMenu
+/** @MappedSuperclass */
+class AbstractMenu
 {
   use TimestampableEntity;
   /**
@@ -21,21 +19,21 @@ abstract class AbstractMenu
    * @ORM\GeneratedValue(strategy="AUTO")
    * @ORM\Column(type="integer")
    */
-  protected $id;
+  private $id;
 
   /**
    * @Gedmo\SortablePosition
    * @var integer
    * @ORM\Column(type="integer", nullable=false)
    */
-  protected $position;
+  private $position;
 
   /**
    * Текст в меню
    * @var string
    * @ORM\Column(type="string", length=255, nullable=true)
    */
-  protected $text;
+  private $text;
 
   /**
    * Ссылка/путь в меню
@@ -43,7 +41,7 @@ abstract class AbstractMenu
    * @var string
    * @ORM\Column(type="string", length=255, nullable=true)
    */
-  protected $url;
+  private $url;
 
   /**
    * @return integer
