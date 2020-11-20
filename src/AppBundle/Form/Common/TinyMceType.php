@@ -7,7 +7,8 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 
 /**
- * @SuppressWarnings(PHPMD)
+ * Class TinyMceType
+ * @package AppBundle\Form\Common
  */
 class TinyMceType extends TextareaType
 {

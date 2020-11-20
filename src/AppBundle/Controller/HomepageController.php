@@ -23,7 +23,7 @@ class HomepageController extends Controller
       ->getResult();
 
     $questions = $em->getRepository(Question::class)
-      ->getAll()
+      ->getQueryAllSortByPosition()
       ->getQuery()
       ->getResult();
 

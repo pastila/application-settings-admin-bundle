@@ -14,7 +14,7 @@ class QuestionRepository extends SortableRepository
   /**
    * @return QueryBuilder
    */
-  public function getAll()
+  public function getQueryAllSortByPosition()
   {
     $qb = $this->createQueryBuilder('q')
       ->orderBy('q.position', 'ASC');
