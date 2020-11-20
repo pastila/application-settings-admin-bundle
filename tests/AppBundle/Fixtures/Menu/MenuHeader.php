@@ -15,12 +15,19 @@ class MenuHeader extends Fixture
    */
   public function load(ObjectManager $manager)
   {
-    $header = new \AppBundle\Entity\Menu\MenuHeader();
-    $header->setText('Header');
-    $header->setUrl('http://bezbahil.ru/');
-    $manager->persist($header);
-    $manager->flush();
+    $header1 = new \AppBundle\Entity\Menu\MenuHeader();
+    $header1->setPosition(1);
+    $header1->setText('меню_шапка_1');
+    $header1->setUrl('http://bezbahil.ru/1');
+    $manager->persist($header1);
+    $header2 = new \AppBundle\Entity\Menu\MenuHeader();
+    $header2->setPosition(2);
+    $header2->setText('меню_шапка_2');
+    $header2->setUrl('http://bezbahil.ru/2');
+    $manager->persist($header2);
 
-    $this->addReference('menu_header-simple', $header);
+    $manager->flush();
+    $this->addReference('menu_header-simple_1', $header1);
+    $this->addReference('menu_header-simple_2', $header2);
   }
 }

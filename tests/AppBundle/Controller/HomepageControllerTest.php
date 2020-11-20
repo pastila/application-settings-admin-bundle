@@ -139,9 +139,11 @@ class HomepageControllerTest extends AppWebTestCase
       ];
     });
     $textPrev = 'Меню Header: ';
-    $this->assertTrue(count($headerHtml) > 0, $textPrev . 'Проверка, что данные вообще нашлись');
-    $this->assertEquals('Header', $headerHtml[0]['title'], $textPrev . 'Проверка, что Заголовок меню совпадает');
-    $this->assertEquals('http://bezbahil.ru/', $headerHtml[0]['url'], $textPrev . 'Проверка, что URL меню совпадает');
+    $this->assertTrue(count($headerHtml) > 1, $textPrev . 'Проверка, что данные вообще нашлись');
+    $this->assertEquals('меню_шапка_1', $headerHtml[0]['title'], $textPrev . 'Проверка, что Заголовок меню совпадает');
+    $this->assertEquals('http://bezbahil.ru/1', $headerHtml[0]['url'], $textPrev . 'Проверка, что URL меню совпадает');
+    $this->assertEquals('меню_шапка_2', $headerHtml[1]['title'], $textPrev . 'Проверка, что Заголовок моб.меню совпадает');
+    $this->assertEquals('http://bezbahil.ru/2', $headerHtml[1]['url'], $textPrev . 'Проверка, что URL моб.меню совпадает');
   }
 
   /*** Проверка "Меню Header Mobile":
@@ -161,9 +163,11 @@ class HomepageControllerTest extends AppWebTestCase
       ];
     });
     $textPrev = 'Меню Header Mobile: ';
-    $this->assertTrue(count($headerHtml) > 0, $textPrev . 'Проверка, что данные вообще нашлись');
-    $this->assertEquals('Header', $headerHtml[0]['title'], $textPrev . 'Проверка, что Заголовок моб.меню совпадает');
-    $this->assertEquals('http://bezbahil.ru/', $headerHtml[0]['url'], $textPrev . 'Проверка, что URL моб.меню совпадает');
+    $this->assertTrue(count($headerHtml) > 1, $textPrev . 'Проверка, что данные вообще нашлись');
+    $this->assertEquals('меню_шапка_1', $headerHtml[0]['title'], $textPrev . 'Проверка, что Заголовок моб.меню совпадает');
+    $this->assertEquals('http://bezbahil.ru/1', $headerHtml[0]['url'], $textPrev . 'Проверка, что URL моб.меню совпадает');
+    $this->assertEquals('меню_шапка_2', $headerHtml[1]['title'], $textPrev . 'Проверка, что Заголовок моб.меню совпадает');
+    $this->assertEquals('http://bezbahil.ru/2', $headerHtml[1]['url'], $textPrev . 'Проверка, что URL моб.меню совпадает');
   }
 
   /*** Проверка "Меню Footer":
@@ -183,9 +187,11 @@ class HomepageControllerTest extends AppWebTestCase
       ];
     });
     $textPrev = 'Меню Footer: ';
-    $this->assertTrue(count($headerHtml) > 0, $textPrev . 'Проверка, что данные вообще нашлись');
-    $this->assertEquals('Footer', $headerHtml[0]['title'], $textPrev . 'Проверка, что Заголовок меню совпадает');
-    $this->assertEquals('http://bezbahil.ru/', $headerHtml[0]['url'], $textPrev . 'Проверка, что URL меню совпадает');
+    $this->assertTrue(count($headerHtml) > 1, $textPrev . 'Проверка, что данные вообще нашлись');
+    $this->assertEquals('меню_футер_1', $headerHtml[0]['title'], $textPrev . 'Проверка, что Заголовок меню совпадает');
+    $this->assertEquals('http://bezbahil.ru/1', $headerHtml[0]['url'], $textPrev . 'Проверка, что URL меню совпадает');
+    $this->assertEquals('меню_футер_2', $headerHtml[1]['title'], $textPrev . 'Проверка, что Заголовок меню совпадает');
+    $this->assertEquals('http://bezbahil.ru/2', $headerHtml[1]['url'], $textPrev . 'Проверка, что URL меню совпадает');
   }
 
   /*** Проверка "Топ страховых компаний": **/
