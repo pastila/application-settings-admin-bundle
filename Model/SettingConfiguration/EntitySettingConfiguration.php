@@ -7,7 +7,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class EntitySettingConfiguration extends AbstractSettingConfiguration implements DataTransformerInterface
 {
-  private $repository;
+  protected $repository;
 
   public function __construct ($name, EntityRepository $repository, $description)
   {
