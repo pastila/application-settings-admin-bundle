@@ -34,7 +34,7 @@ class AppKernel extends Kernel
 
             new Accurateweb\ImagingBundle\AccuratewebImagingBundle(),
             new Accurateweb\MediaBundle\AccuratewebMediaBundle(),
-            new Accurateweb\SettingBundle\AccuratewebSettingBundle(),
+            new Accurateweb\ApplicationSettingsAdminBundle\AccuratewebApplicationSettingsAdminBundle(),
             new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
         ];
 

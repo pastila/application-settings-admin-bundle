@@ -132,6 +132,6 @@ stfalcon_tinymce:
       toolbar3: "media image | link unlink | blockquote hr openlink charmap anchor | emoticons | nonbreaking | insertdatetime |pagebreak | spellchecker | code |  table | quote document "
       image_advtab: true
 
-accurateweb_setting:
+accurateweb_application_settings_admin:
   configuration:
     class: AppBundle\Entity\Common\Setting

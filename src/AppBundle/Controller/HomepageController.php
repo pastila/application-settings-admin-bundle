@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use Accurateweb\SettingBundle\Model\Manager\SettingManagerInterface;
+use Accurateweb\ApplicationSettingsAdminBundle\Model\Manager\SettingManagerInterface;
 use AppBundle\Entity\Number\Number;
 use AppBundle\Entity\Question\Question;
 use AppBundle\Helper\GetMessFromBitrix;

@@ -3,7 +3,7 @@
 
 namespace AppBundle\Entity\Common;
 
-use Accurateweb\SettingBundle\Model\Entity\Setting as BaseSetting;
+use Accurateweb\ApplicationSettingsAdminBundle\Model\Entity\Setting as BaseSetting;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

@@ -1,6 +1,6 @@
 services:
   app.settings.region_default:
-    class: Accurateweb\SettingBundle\Model\SettingConfiguration\EntitySettingConfiguration
+    class: AppBundle\Model\SettingConfiguration\SelectEntitySettingConfiguration
     arguments:
       - 'region_default'
       - '@AppBundle\Repository\Geo\RegionRepository'
