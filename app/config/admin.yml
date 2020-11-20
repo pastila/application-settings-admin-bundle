@@ -8,3 +8,11 @@ services:
     tags:
       - { name: sonata.admin, manager_type: orm, group: 'main_page', label: 'БезБахил в цифрах' }
 
+  app.admin.question:
+    class: AppBundle\Admin\Question\QuestionAdmin
+    arguments:
+      - ~
+      - AppBundle\Entity\Question\Question
+      - PixSortableBehaviorBundle:SortableAdmin
+    tags:
+      - { name: sonata.admin, manager_type: orm, group: 'main_page', label: 'Вопрос-ответ' }

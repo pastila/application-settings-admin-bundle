@@ -1000,121 +1000,34 @@
                 </div>
             </div>
         </div><!-- b-reviews -->
+
         <div id="faq" class="b-question">
             <div class="b-question__content site-width">
                 <div class="b-question__block">
                     <h3 class="b-question__title">Вопрос-ответ</h3>
-                    <div class="b-question__item">
-                        <div class="b-question__item-title">
+                    {% for question in questions %}
+                        <div class="b-question__item">
+                            <div class="b-question__item-title">
 
-                            <div class="svg-icon svg-icon--question" aria-hidden="true">
-                                <svg class="svg-icon__link">
-                                    <use xlink:href="#question"></use>
-                                </svg>
+                                <div class="svg-icon svg-icon--question" aria-hidden="true">
+                                    <svg class="svg-icon__link">
+                                        <use xlink:href="#question"></use>
+                                    </svg>
+                                </div>
+                                {{ question.question }}
                             </div>
-
-                            Мне точно вернут деньги после направления обращения?
-                        </div>
-                        <div class="b-question__item-text">
-                            <p>
-                                Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать
-                                несколько абзацев более менее осмысленного текста рыбы на русском языке,
-                                а начинающему оратору отточить навык публичных выступлений в домашни
-                                условиях.
-                            </p>
-                            <p>
-                                При создании генератора мы использовали небезизвестный универсальный код речей.
-                                Текст генерируется абзацами случайным образом от двух до десяти предложений
-                                в абзаце, что позволяет сделать текст более привлекательным и живым для визуально-
-                                слухового восприятия.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="b-question__item">
-                        <div class="b-question__item-title">
-
-                            <div class="svg-icon svg-icon--question" aria-hidden="true">
-                                <svg class="svg-icon__link">
-                                    <use xlink:href="#question"></use>
-                                </svg>
+                            <div class="b-question__item-text">
+                                {{ question.answer | raw }}
                             </div>
-
-                            Я получал помощь раньше 2019 года, а на сайте только 2019 и 2020 год.
-                            Почему я не могу оформить заявление?
                         </div>
-                        <div class="b-question__item-text">
-                            <p>
-                                Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать
-                                несколько абзацев более менее осмысленного текста рыбы на русском языке,
-                                а начинающему оратору отточить навык публичных выступлений в домашни
-                                условиях.
-                            </p>
-                            <p>
-                                При создании генератора мы использовали небезизвестный универсальный код речей.
-                                Текст генерируется абзацами случайным образом от двух до десяти предложений
-                                в абзаце, что позволяет сделать текст более привлекательным и живым для визуально-
-                                слухового восприятия.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="b-question__item">
-                        <div class="b-question__item-title">
-
-                            <div class="svg-icon svg-icon--question" aria-hidden="true">
-                                <svg class="svg-icon__link">
-                                    <use xlink:href="#question"></use>
-                                </svg>
-                            </div>
-
-                            В списке нет моей страховой компании
-                        </div>
-                        <div class="b-question__item-text">
-                            <p>
-                                Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать
-                                несколько абзацев более менее осмысленного текста рыбы на русском языке,
-                                а начинающему оратору отточить навык публичных выступлений в домашни
-                                условиях.
-                            </p>
-                            <p>
-                                При создании генератора мы использовали небезизвестный универсальный код речей.
-                                Текст генерируется абзацами случайным образом от двух до десяти предложений
-                                в абзаце, что позволяет сделать текст более привлекательным и живым для визуально-
-                                слухового восприятия.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="b-question__item">
-                        <div class="b-question__item-title">
-
-                            <div class="svg-icon svg-icon--question" aria-hidden="true">
-                                <svg class="svg-icon__link">
-                                    <use xlink:href="#question"></use>
-                                </svg>
-                            </div>
-
-                            В списке нет моей больницы
-                        </div>
-                        <div class="b-question__item-text">
-                            <p>
-                                Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать
-                                несколько абзацев более менее осмысленного текста рыбы на русском языке,
-                                а начинающему оратору отточить навык публичных выступлений в домашни
-                                условиях.
-                            </p>
-                            <p>
-                                При создании генератора мы использовали небезизвестный универсальный код речей.
-                                Текст генерируется абзацами случайным образом от двух до десяти предложений
-                                в абзаце, что позволяет сделать текст более привлекательным и живым для визуально-
-                                слухового восприятия.
-                            </p>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
                 <div class="b-question__image">
                     <img src="/landing/img/oic_question.svg" alt="">
                 </div>
             </div>
         </div><!-- b-question -->
+
         {% include '@App/_numbers.html.twig' with {'numbers': numbers}%}
         <div class="b-return">
             <div class="b-return__content site-width">
