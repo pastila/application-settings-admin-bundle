@@ -165,6 +165,13 @@ host('staging')
   ->port(2222)
   ->stage('staging')
   ->user('deployer')
+  ->set('docker_start_services', [
+    'percona',
+    'php-fpm-symfony',
+    'php-fpm-bitrix',
+    'nginx',
+    'maildev'
+  ])
   ->set('keep_releases', 2)
   ->set('deploy_path', '/var/www/sites/bezbahil');
 
