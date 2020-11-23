@@ -159,7 +159,7 @@ deploy_staging:
 
     - echo "Host staging.aw-dev.ru\n\tPort 2222\n" > ~/.ssh/config
   script:
-    - DEPLOY_ARTIFACTS=true; dep deploy staging --tag=$CI_COMMIT_REF_NAME -vvv
+    - dep deploy staging --tag=$CI_COMMIT_REF_NAME -vvv
   only:
     - develop
 
