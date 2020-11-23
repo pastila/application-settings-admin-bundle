@@ -10,7 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /** @MappedSuperclass */
-class AbstractMenu
+abstract class AbstractMenu
 {
   use TimestampableEntity;
   /**

@@ -14,7 +14,7 @@ class MenuFooterRepository extends SortableRepository
   /**
    * @return QueryBuilder
    */
-  public function getAll()
+  public function getQueryAllByPosition()
   {
     $qb = $this->createQueryBuilder('mf')
       ->orderBy('mf.position', 'ASC');

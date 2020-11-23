@@ -594,26 +594,7 @@
                         <a href="#">Политика по обработке персональных данных</a>
                     </div>
                 </div>
-                <div class="app-footer__soc">
-                    <a href="#" target="_blank">
-
-                        <div class="svg-icon svg-icon--soc_teleg" aria-hidden="true">
-                            <svg class="svg-icon__link">
-                                <use xlink:href="#soc_teleg"></use>
-                            </svg>
-                        </div>
-
-                    </a>
-                    <a href="#" target="_blank">
-
-                        <div class="svg-icon svg-icon--soc_inst" aria-hidden="true">
-                            <svg class="svg-icon__link">
-                                <use xlink:href="#soc_inst"></use>
-                            </svg>
-                        </div>
-
-                    </a>
-                </div>
+                {{ knp_menu_render('AppBundle:Builder:socialMenu') }}
             </div>
         </div>
     </footer><!-- b:app-footer -->

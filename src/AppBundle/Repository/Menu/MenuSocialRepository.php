@@ -6,10 +6,10 @@ use Gedmo\Sortable\Entity\Repository\SortableRepository;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- * Class MenuHeaderRepository
+ * Class MenuSocialRepository
  * @package AppBundle\Repository\Menu
  */
-class MenuHeaderRepository extends SortableRepository
+class MenuSocialRepository extends SortableRepository
 {
   /**
    * @return QueryBuilder

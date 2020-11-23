@@ -30,7 +30,7 @@ services:
       - AppBundle\Entity\Menu\MenuHeader
       - PixSortableBehaviorBundle:SortableAdmin
     tags:
-      - { name: sonata.admin, manager_type: orm, group: 'main_page', label: 'Верхнее меню (Header)' }
+      - { name: sonata.admin, manager_type: orm, group: 'main_page', label: 'Меню шапки' }
 
   app.admin.menu_footer:
     class: AppBundle\Admin\Menu\MenuFooterAdmin
@@ -39,4 +39,13 @@ services:
       - AppBundle\Entity\Menu\MenuFooter
       - PixSortableBehaviorBundle:SortableAdmin
     tags:
-      - { name: sonata.admin, manager_type: orm, group: 'main_page', label: 'Нижнее меню (Footer)' }
+      - { name: sonata.admin, manager_type: orm, group: 'main_page', label: 'Меню футера' }
+
+  app.admin.menu_social:
+    class: AppBundle\Admin\Menu\MenuSocialAdmin
+    arguments:
+      - ~
+      - AppBundle\Entity\Menu\MenuSocial
+      - PixSortableBehaviorBundle:SortableAdmin
+    tags:
+      - { name: sonata.admin, manager_type: orm, group: 'main_page', label: 'Меню "Соц.сети"' }
