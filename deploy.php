@@ -4,6 +4,7 @@ namespace Deployer;
 use function Deployer\Support\array_to_string;
 
 require 'recipe/symfony3.php';
+require 'recipe/rsync.php';
 
 function dockerGetContainerId($service)
 {
