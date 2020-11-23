@@ -7,7 +7,7 @@
     - composer install -o
 
 .build-before: &build-before
-  stage: build
+  stage: build-containers
   before_script:
     # docker login asks for the password to be passed through stdin for security
     # we use $CI_JOB_TOKEN here which is a special token provided by GitLab
@@ -88,30 +88,34 @@ build-percona:
 
     - 'docker push $CI_REGISTRY_IMAGE/percona:latest'
 
-#build-node:
-#  <<: *build-before
-#  script:
-#    - source ./laradock/.env.test
-#    # fetches the latest image (not failing if image is not found)
-#    - 'docker pull $CI_REGISTRY_IMAGE/node:latest || true'
-#    - >
-#      docker build
-#      --pull
-#      --cache-from $CI_REGISTRY_IMAGE/node:latest
-#      --tag $CI_REGISTRY_IMAGE/node:latest
-#      ./laradock/node
-#
-#    - 'docker push $CI_REGISTRY_IMAGE/node:latest'
-#
-#build-assets:
-#  image: $CI_REGISTRY_IMAGE/node:latest
-#  script:
-#    - gulp
-#  artifacts:
-#    paths:
-#      - web/local/templates/kdteam/js
-#      - web/local/templates/kdteam/styles
-#      - web/local/templates/kdteam/pages
+build-node:
+  <<: *build-before
+  script:
+    - source ./laradock/.env.test
+    # fetches the latest image (not failing if image is not found)
+    - 'docker pull $CI_REGISTRY_IMAGE/node:latest || true'
+    - >
+      docker build
+      --pull
+      --cache-from $CI_REGISTRY_IMAGE/node:latest
+      --tag $CI_REGISTRY_IMAGE/node:latest
+      ./laradock/nodejs
+
+    - 'docker push $CI_REGISTRY_IMAGE/node:latest'
+
+build-assets:
+  image: $CI_REGISTRY_IMAGE/node:latest
+  stage: build-app
+  script:
+    - cd web
+    - npm install
+    - gulp
+  artifacts:
+    when: always
+    paths:
+      - web/local/templates/kdteam/js
+      - web/local/templates/kdteam/styles
+      - web/local/templates/kdteam/pages
 
 phpunit:
   <<: *tests-image
@@ -138,8 +142,8 @@ phpstan:
 deploy_staging:
   stage: deploy
   image: mwienk/php-deployer
-#  dependencies:
-#    - build:js
+  dependencies:
+    - build-assets
   before_script:
     # https://docs.gitlab.com/ee/ci/ssh_keys/
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
@@ -155,7 +159,7 @@ deploy_staging:
 
     - echo "Host staging.aw-dev.ru\n\tPort 2222\n" > ~/.ssh/config
   script:
-    - dep deploy staging --tag=$CI_COMMIT_REF_NAME -vvv
+    - DEPLOY_ARTIFACTS=true; dep deploy staging --tag=$CI_COMMIT_REF_NAME -vvv
   only:
     - develop
 
@@ -183,6 +187,7 @@ deploy_master:
 
 
 stages:
-  - build
+  - build-containers
+  - build-app
   - test
   - deploy
