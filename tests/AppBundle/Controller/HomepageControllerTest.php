@@ -5,6 +5,8 @@ namespace Tests\AppBundle\Controller;
 
 
 use Tests\AppBundle\AppWebTestCase;
+use Tests\AppBundle\Fixtures\Company\CompanyBranchRating;
+use Tests\AppBundle\Fixtures\Menu\MenuSocial;
 use Tests\AppBundle\Fixtures\News\News;
 use Tests\AppBundle\Fixtures\Company\Feedback;
 use Tests\AppBundle\Fixtures\Number\Number;
@@ -20,6 +22,7 @@ class HomepageControllerTest extends AppWebTestCase
     $this->addFixture(new Number());
     $this->addFixture(new MenuFooter());
     $this->addFixture(new MenuHeader());
+    $this->addFixture(new MenuSocial());
     $this->addFixture(new Question());
     $this->addFixture(new Feedback());
     $this->addFixture(new News());
@@ -105,7 +108,6 @@ class HomepageControllerTest extends AppWebTestCase
     $client = static::createClient();
     $crawler = $client->request('GET', '/');
 
-    // Извлечение данных со страницы
     $questionsHtml = $crawler->filter('.b-question__item')->each(function (Crawler $node, $i)
     {
       return [
@@ -113,7 +115,6 @@ class HomepageControllerTest extends AppWebTestCase
         'answer' => trim($node->filter('.b-question__item-text')->text()),
       ];
     });
-
     $textPrev = 'Вопрос-ответ: ';
     $this->assertTrue(count($questionsHtml) > 0, $textPrev . 'Проверка, что данные вообще нашлись');
     $this->assertEquals('Пример вопроса', $questionsHtml[0]['question'], $textPrev . 'Проверка, что Вопрос совпадает');
@@ -134,7 +135,7 @@ class HomepageControllerTest extends AppWebTestCase
     $headerHtml = $crawler->filter('.app-header__in .app-header__list li a')->each(function (Crawler $node, $i)
     {
       return [
-        'title' => $node->text(),
+        'title' => trim($node->text()),
         'url' => $node->attr('href'),
       ];
     });
@@ -158,7 +159,7 @@ class HomepageControllerTest extends AppWebTestCase
     $headerHtml = $crawler->filter('.nav-mobile__list li a')->each(function (Crawler $node, $i)
     {
       return [
-        'title' => $node->text(),
+        'title' => trim($node->text()),
         'url' => $node->attr('href'),
       ];
     });
@@ -182,7 +183,7 @@ class HomepageControllerTest extends AppWebTestCase
     $headerHtml = $crawler->filter('.app-footer__list li a')->each(function (Crawler $node, $i)
     {
       return [
-        'title' => $node->text(),
+        'title' => trim($node->text()),
         'url' => $node->attr('href'),
       ];
     });
@@ -241,5 +242,26 @@ class HomepageControllerTest extends AppWebTestCase
     $this->assertEquals('Анонс статьи1', $newsHtml[0]['announce'], $textPrev . 'Проверка, что Анонс совпадает');
     $this->assertEquals('Заголовок2', $newsHtml[1]['title'], $textPrev . 'Проверка, что Заголовок совпадает');
     $this->assertEquals('Анонс статьи2', $newsHtml[1]['announce'], $textPrev . 'Проверка, что Анонс совпадает');
+  }
+
+  /*** Проверка "Меню Social":
+   * https://jira.accurateweb.ru/browse/BEZBAHIL-92
+   **/
+  public function testMenuSocial()
+  {
+    $client = static::createClient();
+    $crawler = $client->request('GET', '/');
+
+    // Извлечение данных со страницы
+    $headerHtml = $crawler->filter('.app-footer__soc a')->each(function (Crawler $node, $i)
+    {
+      return [
+        'url' => $node->attr('href'),
+      ];
+    });
+    $textPrev = 'Меню Social: ';
+    $this->assertTrue(count($headerHtml) > 1, $textPrev . 'Проверка, что данные вообще нашлись');
+    $this->assertEquals('http://vk.ru', $headerHtml[0]['url'], $textPrev . 'Проверка, что URL меню совпадает');
+    $this->assertEquals('http://instagram.ru', $headerHtml[1]['url'], $textPrev . 'Проверка, что URL меню совпадает');
   }
 }
