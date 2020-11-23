@@ -200,6 +200,15 @@ after('deploy:failed', 'deploy:unlock');
 //  'deploy:unlock'
 //]);
 
+set('rsync', array_merge(get('rsync'), [
+    'include' => [
+        'web/local/templates/kdteam/js',
+        'web/local/templates/kdteam/styles',
+        'web/local/templates/kdteam/pages',
+    ],
+    'options' => [] //No delete
+]));
+
 task('deploy', [
   'deploy:info',
   'deploy:prepare',
@@ -211,9 +220,11 @@ task('deploy', [
   'deploy:shared',
   'deploy:assets',
   'prepare_workspace',
+  'deploy:upload_artifacts',
   'deploy:docker:vendors',
   'deploy:docker:vendors_bitrix',
   'deploy:docker:assets:install',
+  'rsync', //rsync assets
   'deploy:docker:cache:clear',
   'deploy:docker:cache:warmup',
   'deploy:writable',
@@ -326,3 +337,4 @@ task('deploy:docker:vendors_bitrix', function()
     'user' => 'laradock'
   ]);
 });
+
