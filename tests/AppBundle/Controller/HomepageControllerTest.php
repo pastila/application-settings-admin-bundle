@@ -101,7 +101,9 @@ class HomepageControllerTest extends AppWebTestCase
     });
     $textPrev = 'Топ страховых компаний: ';
     $this->assertTrue(count($companyTopsHtml) > 0, $textPrev . 'Проверка, что данные вообще нашлись');
-    $this->assertEquals('АКБАРС-МЕД', $companyTopsHtml[0]['name'], $textPrev . 'Проверка, что Компания совпадает');
-    $this->assertEquals(3, $companyTopsHtml[0]['rating'], $textPrev . 'Проверка, что Рейтинг совпадает');
+    $this->assertEquals('ИНГОССТРАХ-М', $companyTopsHtml[0]['name'], $textPrev . 'Проверка, что Компания совпадает');
+    $this->assertEquals(5, $companyTopsHtml[0]['rating'], $textPrev . 'Проверка, что Рейтинг совпадает');
+    $this->assertEquals('АКБАРС-МЕД', $companyTopsHtml[1]['name'], $textPrev . 'Проверка, что Компания совпадает');
+    $this->assertEquals(3, $companyTopsHtml[1]['rating'], $textPrev . 'Проверка, что Рейтинг совпадает');
   }
 }

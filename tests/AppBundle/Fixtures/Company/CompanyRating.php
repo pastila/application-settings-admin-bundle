@@ -23,8 +23,18 @@ class CompanyRating extends Fixture
       ->setValuation(3.0)
       ->setStatus(CompanyStatus::ACTIVE);
     $manager->persist($akbars);
+
+    $ingostach_m = new \AppBundle\Entity\Company\Company();
+    $ingostach_m
+      ->setKpp('1045207042528')
+      ->setName('ИНГОССТРАХ-М')
+      ->setValuation(5.0)
+      ->setStatus(CompanyStatus::ACTIVE);
+    $manager->persist($ingostach_m);
+
     $manager->flush();
 
     $this->addReference('akbars', $akbars);
+    $this->addReference('ingostach_m', $ingostach_m);
   }
 }

@@ -37,8 +37,19 @@ class CompanyBranchRating extends Fixture implements DependentFixtureInterface
       ->setValuation(3.0)
       ->setStatus(CompanyStatus::ACTIVE);
     $manager->persist($akbars66);
+
+    $ingostach_m66 = new \AppBundle\Entity\Company\CompanyBranch();
+    $ingostach_m66
+      ->setCompany($this->getReference('ingostach_m'))
+      ->setRegion($this->getReference('region-66'))
+      ->setName('ИНГОССТРАХ-М')
+      ->setValuation(5.0)
+      ->setStatus(CompanyStatus::ACTIVE);
+    $manager->persist($ingostach_m66);
+
     $manager->flush();
 
     $this->addReference('akbars-66', $akbars66);
+    $this->addReference('ingostach_m66', $ingostach_m66);
   }
 }
