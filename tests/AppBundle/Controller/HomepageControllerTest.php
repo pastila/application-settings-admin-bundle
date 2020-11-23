@@ -33,7 +33,7 @@ class HomepageControllerTest extends AppWebTestCase
   }
 
   /*** Проверка "Безбахил в цифрах":
-  https://jira.accurateweb.ru/browse/BEZBAHIL-90
+   * https://jira.accurateweb.ru/browse/BEZBAHIL-90
    **/
   public function testNumber()
   {
@@ -99,8 +99,9 @@ class HomepageControllerTest extends AppWebTestCase
         'rating' => $node->filter('.svg-icon--star')->count(),
       ];
     });
-    $this->assertTrue(count($companyTopsHtml) > 0, ' Проверка, что данные вообще нашлись');
-    $this->assertEquals('АКБАРС-МЕД', $companyTopsHtml[0]['name'], 'Проверка, что Компания совпадает');
-    $this->assertEquals(3, $companyTopsHtml[0]['rating'], 'Проверка, что Рейтинг совпадает');
+    $textPrev = 'Топ страховых компаний: ';
+    $this->assertTrue(count($companyTopsHtml) > 0, $textPrev . 'Проверка, что данные вообще нашлись');
+    $this->assertEquals('АКБАРС-МЕД', $companyTopsHtml[0]['name'], $textPrev . 'Проверка, что Компания совпадает');
+    $this->assertEquals(3, $companyTopsHtml[0]['rating'], $textPrev . 'Проверка, что Рейтинг совпадает');
   }
 }
