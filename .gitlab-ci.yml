@@ -103,6 +103,23 @@ build-node:
 
     - 'docker push $CI_REGISTRY_IMAGE/node:latest'
 
+build-deployer:
+  <<: *build-before
+  script:
+    # - source ./laradock/.env.test
+    # fetches the latest image (not failing if image is not found)
+    - 'docker pull $CI_REGISTRY_IMAGE/deployer:latest || true'
+    - >
+      docker build
+      --pull
+      --cache-from $CI_REGISTRY_IMAGE/deployer:latest
+      --tag $CI_REGISTRY_IMAGE/deployer:latest
+      ./docker/deployer
+
+    - 'docker push $CI_REGISTRY_IMAGE/deployer:latest'
+  only:
+    - develop
+
 build-assets:
   image: $CI_REGISTRY_IMAGE/node:latest
   stage: build-app
@@ -141,8 +158,9 @@ phpstan:
 
 deploy_staging:
   stage: deploy
-  image: mwienk/php-deployer
+  image: $CI_REGISTRY_IMAGE/deployer
   dependencies:
+    - build-deployer
     - build-assets
   before_script:
     # https://docs.gitlab.com/ee/ci/ssh_keys/
