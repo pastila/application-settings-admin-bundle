@@ -1,3 +1,3 @@
 FROM mwienk/php-deployer:latest
 
-RUN apk add rsync
+RUN apk update && apk add rsync
