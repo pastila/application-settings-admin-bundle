@@ -87,3 +87,6 @@ services:
         - '@AppBundle\Repository\Geo\RegionRepository'
       tags:
         - { name: aw.location.resolver, priority: -1 }
+
+    Accurateweb\EmailTemplateBundle\Email\Factory\EmailFactory:
+      alias: aw_email_templating.template.factory

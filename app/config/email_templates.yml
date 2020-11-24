@@ -1,0 +1,27 @@
+aw_email_templating:
+  templating:
+    loader: aw_email_templating.template.loader.doctrine
+    entity: AppBundle\Entity\Messaging\EmailTemplate
+  email_templates:
+    email_contact_us:
+      description: 'Обратная связь'
+      variables:
+        name: { description: "Имя" }
+        email: { description: "Email" }
+        text: { description: "Сообщение" }
+      defaults:
+        subject: "Обратная связь"
+        body: |
+          Пользователь по имени  %%name%% (с почтой %%email%%) решил связаться с администрацией . <br>
+          Вопрос : %%text%% <br>
+
+    email_feedback:
+      description: 'Отзыв'
+      variables:
+        date: { description: "Дата" }
+        url: { description: "Url на отзыв" }
+      defaults:
+        subject: "Отзыв"
+        body: |
+          О вашей компании оставили отзыв  %%date%% <br>
+          Ссылка на страницу с  <a href ="%%url%%">отзывом</a>
