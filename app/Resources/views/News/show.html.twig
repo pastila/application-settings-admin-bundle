@@ -1,0 +1,65 @@
+{% extends "base.html.twig" %}
+
+{% set title = news.title %}
+
+{% block meta %}
+    {{ parent() }}
+{% endblock %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block stylesheets %}
+    <link href="/local/templates/kdteam/pages/news/news.min.css" type="text/css" rel="stylesheet"/>
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="/local/templates/kdteam/js/main.min.js"></script>
+    <script type="text/javascript" src="/local/templates/kdteam/pages/news/news.min.js"></script>
+    {{ parent() }}
+{% endblock %}
+
+{% block main %}
+    <ul class="breadcrumbs" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+        {% if is_mobile() or is_tablet() %}
+            <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a href="{{ path("news_list") }}" class="active-breadcrumbs" itemprop="item">{{ title }}
+                    <meta itemprop="name" content="{{ title }}">
+                </a>
+                <meta itemprop="position" content="1">
+            </li>
+        {% else %}
+            <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a href="/" itemprop="item">Главная
+                    <meta itemprop="name" content="Главная">
+                </a>
+                <meta itemprop="position" content="1">
+            </li>
+            <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a href="{{ path("news_list") }}" itemprop="item">Новости
+                    <meta itemprop="name" content="Новости">
+                </a>
+                <meta itemprop="position" content="2">
+            </li>
+            <li class="active-breadcrumbs" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a itemprop="item">{{ title }}
+                    <meta itemprop="name" content="{{ title }}">
+                </a>
+                <meta itemprop="position" content="3">
+            </li>
+        {% endif %}
+    </ul>
+    <h1 class="page-title">Читать про ОМС</h1>
+    <div class="container">
+        <p class="back_link-block"><a class="back_link" href="{{ path("news_list") }}">Возврат к списку</a></p>
+        <div class="white_block">
+            <div class="news-detail flex-detail-news">
+                <div class="content-news">
+                    <p itemprop="articleBody">
+                        {{ news.text |raw }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

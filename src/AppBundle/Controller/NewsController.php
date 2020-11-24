@@ -39,7 +39,7 @@ class NewsController extends Controller
       throw $this->createNotFoundException(sprintf('Новость «%s» не найдена. Возможно, она была удалена.', $slug));
     }
 
-    return $this->render('@App/news_show.html.twig', [
+    return $this->render('News/show.html.twig', [
       'news' => $news
     ]);
   }
