@@ -883,7 +883,7 @@ RUN php -v | head -n 1 | grep -q "PHP ${LARADOCK_PHP_VERSION}."
 USER root
 
 RUN apt-get update -yqq \
-    && apt-get -yqq install unzip rsync
+    && apt-get -yqq install unzip
 
 # Clean up
 RUN apt-get clean && \
