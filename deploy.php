@@ -321,7 +321,7 @@ task('prepare_workspace', function(){
     dockerRemoveService($workspaceService);
   }
 
-  run('cd {{release_path}}/laradock && docker-compose up -d '.$workspaceService, ['env' => [
+  run('cd {{release_path}}/laradock && docker-compose up -d --build '.$workspaceService, ['env' => [
     'APP_CODE_PATH_HOST' => get('release_path')
   ]]);
   // fix ssh files owner
