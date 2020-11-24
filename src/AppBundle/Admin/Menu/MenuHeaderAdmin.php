@@ -7,6 +7,6 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 
-class MenuHeaderAdmin extends AbstractAdmin
+class MenuHeaderAdmin extends AbstractMenuAdmin
 {
 }
