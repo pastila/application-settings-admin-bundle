@@ -12,36 +12,35 @@ use Tests\AppBundle\Fixtures\Geo\Region;
 
 class CompanyBranch extends Fixture implements DependentFixtureInterface
 {
-    /**
-     * @return array
-     */
-    function getDependencies()
-    {
-        return [
-          Company::class,
-          Region::class
-        ];
-    }
+  /**
+   * @return array
+   */
+  function getDependencies()
+  {
+    return [
+      Company::class,
+      Region::class
+    ];
+  }
 
-    /**
-     * @param ObjectManager $manager
-     * @return mixed
-     */
-    public function load(ObjectManager $manager)
-    {
-        $sogazMed66 = new \AppBundle\Entity\Company\CompanyBranch();
-        $sogazMed66
-            ->setCompany($this->getReference('sogaz-med'))
-            ->setRegion($this->getReference('region-66'))
-            ->setName('СОГАЗ-МЕД')
-            ->setStatus(CompanyStatus::ACTIVE)
-        ;
+  /**
+   * @param ObjectManager $manager
+   * @return mixed
+   */
+  public function load(ObjectManager $manager)
+  {
+    $sogazMed66 = new \AppBundle\Entity\Company\CompanyBranch();
+    $sogazMed66
+      ->setCompany($this->getReference('sogaz-med'))
+      ->setRegion($this->getReference('region-66'))
+      ->setName('СОГАЗ-МЕД')
+      ->setValuation(4.5)
+      ->setStatus(CompanyStatus::ACTIVE);
+    $manager->persist($sogazMed66);
 
-        $manager->persist($sogazMed66);
+    $manager->flush();
 
-        $manager->flush();
-
-        $this->addReference('sogaz-med-66', $sogazMed66);
-    }
+    $this->addReference('sogaz-med-66', $sogazMed66);
+  }
 
 }

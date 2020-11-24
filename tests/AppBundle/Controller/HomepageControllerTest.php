@@ -5,6 +5,8 @@ namespace Tests\AppBundle\Controller;
 
 
 use Tests\AppBundle\AppWebTestCase;
+use Tests\AppBundle\Fixtures\Company\CompanyBranchRating;
+use Tests\AppBundle\Fixtures\Company\Feedback;
 use Tests\AppBundle\Fixtures\Number\Number;
 use Symfony\Component\DomCrawler\Crawler;
 use Tests\AppBundle\Fixtures\Question\Question;
@@ -15,6 +17,8 @@ class HomepageControllerTest extends AppWebTestCase
   {
     $this->addFixture(new Number());
     $this->addFixture(new Question());
+    $this->addFixture(new Feedback());
+    $this->addFixture(new CompanyBranchRating());
   }
 
   public function testIndex()
@@ -24,12 +28,12 @@ class HomepageControllerTest extends AppWebTestCase
     /**
      * Проверка, что страница открывается
      */
-    $crawler = $client->request('GET', '/');
+    $client->request('GET', '/');
     $this->assertEquals(200, $client->getResponse()->getStatusCode());
   }
 
   /*** Проверка "Безбахил в цифрах":
-  https://jira.accurateweb.ru/browse/BEZBAHIL-90
+   * https://jira.accurateweb.ru/browse/BEZBAHIL-90
    **/
   public function testNumber()
   {
@@ -79,5 +83,27 @@ class HomepageControllerTest extends AppWebTestCase
     $this->assertTrue(count($questionsHtml) > 0, $textPrev . 'Проверка, что данные вообще нашлись');
     $this->assertEquals('Пример вопроса', $questionsHtml[0]['question'], $textPrev . 'Проверка, что Вопрос совпадает');
     $this->assertEquals('Пример ответа', $questionsHtml[0]['answer'], $textPrev . 'Проверка, что Ответ совпадает');
+  }
+
+  /*** Проверка "Топ страховых компаний": **/
+  public function testCompanyRating()
+  {
+    $client = static::createClient();
+    $crawler = $client->request('GET', '/');
+
+    // Извлечение данных со страницы
+    $companyTopsHtml = $crawler->filter('.b-rating__item')->each(function (Crawler $node, $i)
+    {
+      return [
+        'name' => $node->filter('.b-rating__item-title')->text(),
+        'rating' => $node->filter('.svg-icon--star')->count(),
+      ];
+    });
+    $textPrev = 'Топ страховых компаний: ';
+    $this->assertTrue(count($companyTopsHtml) > 0, $textPrev . 'Проверка, что данные вообще нашлись');
+    $this->assertEquals('ИНГОССТРАХ-М', $companyTopsHtml[0]['name'], $textPrev . 'Проверка, что Компания совпадает');
+    $this->assertEquals(5, $companyTopsHtml[0]['rating'], $textPrev . 'Проверка, что Рейтинг совпадает');
+    $this->assertEquals('АКБАРС-МЕД', $companyTopsHtml[1]['name'], $textPrev . 'Проверка, что Компания совпадает');
+    $this->assertEquals(3, $companyTopsHtml[1]['rating'], $textPrev . 'Проверка, что Рейтинг совпадает');
   }
 }

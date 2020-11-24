@@ -357,216 +357,33 @@
                         <div class="b-rating__info">—  Не можете попасть к врачу или на исследование?</div>
                         <div class="b-rating__info">—  Не помог ваш страховой представитель?</div>
                         <div class="b-rating__bottom">
-                            <a href="#" class="b-rating__button btn2">Оставить отзыв</a>
+                            <a href="{{ path('app_insurancecompany_feedback_new') }}" class="b-rating__button btn2">Оставить отзыв</a>
                         </div>
                     </div>
+
                     <div class="b-rating__part b-rating__part--block">
                         <div class="b-rating__block">
-                            <div class="b-rating__part-title">Топ страховых компаний в регионе Москва и МО</div>
+                            <div class="b-rating__part-title">Топ страховых компаний в {%if region%}"{{region.nameWithoutCode}}"{%else%}России{%endif%}</div>
                             <div class="b-rating__items">
-                                <div class="b-rating__item">
-                                    <div class="b-rating__item-title">Медстрах</div>
-                                    <div class="b-rating__item-star">
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
+                                {% for i, company in companyRating %}
+                                    <div class="b-rating__item">
+                                        <div class="b-rating__item-title">{{ company[0].name }}</div>
+                                        <div class="b-rating__item-star">
+                                            {% if company.actualRating > 0 %}
+                                                {% for i in 1..(company.actualRating | round(2)) %}
+                                                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
+                                                        <svg class="svg-icon__link">
+                                                            <use xlink:href="#star"></use>
+                                                        </svg>
+                                                    </div>
+                                                {% endfor %}
+                                            {% endif %}
                                         </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
                                     </div>
-                                </div>
-                                <div class="b-rating__item">
-                                    <div class="b-rating__item-title">Капитал</div>
-                                    <div class="b-rating__item-star">
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="b-rating__item">
-                                    <div class="b-rating__item-title">ВТБ</div>
-                                    <div class="b-rating__item-star">
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="b-rating__item">
-                                    <div class="b-rating__item-title">МАКС-М </div>
-                                    <div class="b-rating__item-star">
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="b-rating__item">
-                                    <div class="b-rating__item-title">РЕСО-МЕД </div>
-                                    <div class="b-rating__item-star">
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-                                    </div>
-                                </div>
+                                {% endfor %}
                             </div>
                             <div class="b-rating__more">
-                                <a href="#">Весь рейтинг
+                                <a href="{% if region %}{{ path('app_insurancecompany_feedback_index', { filter: {region: region.id} }) }}{% else %}'#'{% endif %}">Весь рейтинг
                                     <div class="svg-icon svg-icon--arrow" aria-hidden="true">
                                         <svg class="svg-icon__link">
                                             <use xlink:href="#arrow"></use>
@@ -576,6 +393,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div><!-- b-rating -->
