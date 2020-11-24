@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% set title = news.title %}
+{% set title = 'Новости' %}
 
 {% block meta %}
     {{ parent() }}
@@ -36,31 +36,36 @@
                 <meta itemprop="position" content="1">
             </li>
             <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
-                <a href="{{ path("news_list") }}" itemprop="item">Новости
+                <a itemprop="item">Новости
                     <meta itemprop="name" content="Новости">
                 </a>
                 <meta itemprop="position" content="2">
-            </li>
-            <li class="active-breadcrumbs" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
-                <a itemprop="item">{{ title }}
-                    <meta itemprop="name" content="{{ title }}">
-                </a>
-                <meta itemprop="position" content="3">
             </li>
         {% endif %}
     </ul>
     <h1 class="page-title">Читать про ОМС</h1>
     <div class="container">
         <div>
-            <p class="back_link-block"><a class="back_link" href="{{ path("news_list") }}">Возврат к списку</a></p>
-            <div class="white_block">
-                <div class="news-detail flex-detail-news">
-                    <div class="content-news">
-                        <p itemprop="articleBody">
-                            {{ news.text |raw }}
-                        </p>
+            <div class="news_container">
+                {% for item in news %}
+                    <div class="col-1">
+                        <div class="news_item white_block">
+                            <div class="news_item_image">
+                                <img src="{{ image_thumbnail_url(item, null, 'main_lg') }}" alt="">
+                            </div>
+                            <div class="news_item_content">
+                                <a class="news_item_content_title" href="{{ path('news_show', { slug: item.slug }) }}">
+                                    <h3>{{ item.title }}</h3>
+                                </a>
+                                <div class="news_item_content_text">
+                                    {{ item.announce }}
+                                </div>
+                                <div class="news_item_content_date">{{ item.publishedAt|prepareDate("d F, Y") }}</div>
+                                <a href="{{ path('news_show', { slug: item.slug }) }}">Продолжить чтение</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>

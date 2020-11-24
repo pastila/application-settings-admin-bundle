@@ -18,7 +18,7 @@ class NewsController extends Controller
     $news = $em->getRepository(News::class)
       ->findNewsOrderByPublishedAt();
 
-    return $this->render('@App/news_list.html.twig', [
+    return $this->render('News/list.html.twig', [
       'news' => $news
     ]);
   }
