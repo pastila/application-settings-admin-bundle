@@ -534,7 +534,35 @@
                 </div>
             </div>
         </div><!-- b-return -->
-        {% include '@App/_insiders.html.twig' with {'news': news}%}
+
+        <div id="insider" class="b-insider">
+            <div class="b-insider__content site-width">
+                <div class="b-insider__header">
+                    <h3 class="b-insider__title">Медицинский инсайдер</h3>
+                    <a href="{{ path("news_list") }}" class="b-insider__button btn">Все статьи</a>
+                </div>
+                <div class="b-insider__inner">
+                    <div class="b-insider__slider">
+                        {% for item in news %}
+                            <div class="b-insider__item-wrap" href="{{ path('news_show', { slug: item.slug }) }}">
+                                <div class="b-insider__item">
+                                    <div style="background-image: url({{ image_thumbnail_url(item, null, 'main_lg') }});" class="b-insider__item-image">
+                                        <img src="{{ image_thumbnail_url(item, null, 'main_lg') }}" alt="">
+                                    </div>
+                                    <div class="b-insider__item-content">
+                                        <div class="b-insider__item-title">{{ item.title }}</div>
+                                        <div class="b-insider__item-text">
+                                            {{ item.announce | raw }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div><!-- b-insider -->
+
     </div><!-- b:m-content -->
 
     <footer class="app-footer">
