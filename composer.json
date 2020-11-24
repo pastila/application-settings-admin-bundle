@@ -19,6 +19,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/accurateweb/media-bundle.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/accurateweb/application-settings-admin-bundle.git"
         }
     ],
     "autoload": {
@@ -38,6 +42,7 @@
     "require": {
         "php": ">=7.2",
         "ext-curl": "*",
+        "accurateweb/application-settings-admin-bundle": "dev-development",
         "accurateweb/client-application-bundle": "dev-master",
         "accurateweb/email-template-bundle": "dev-development",
         "accurateweb/image-bundle": "2.x-dev",

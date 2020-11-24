@@ -1,0 +1,9 @@
+services:
+  app.settings.region_default:
+    class: AppBundle\Model\SettingConfiguration\SelectEntitySettingConfiguration
+    arguments:
+      - 'region_default'
+      - '@AppBundle\Repository\Geo\RegionRepository'
+      - 'Регион по умолчанию'
+    tags:
+      - { name: aw.setting.configuration }

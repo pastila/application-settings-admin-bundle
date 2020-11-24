@@ -228,11 +228,11 @@ task('deploy', [
   'deploy:shared',
   'deploy:assets',
   'prepare_workspace',
-  'deploy:upload_artifacts',
+//  'deploy:upload_artifacts',
+  'rsync', //rsync artifacts
   'deploy:docker:vendors',
   'deploy:docker:vendors_bitrix',
   'deploy:docker:assets:install',
-  'rsync', //rsync assets
   'deploy:docker:cache:clear',
   'deploy:docker:cache:warmup',
   'deploy:writable',

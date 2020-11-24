@@ -357,216 +357,33 @@
                         <div class="b-rating__info">—  Не можете попасть к врачу или на исследование?</div>
                         <div class="b-rating__info">—  Не помог ваш страховой представитель?</div>
                         <div class="b-rating__bottom">
-                            <a href="#" class="b-rating__button btn2">Оставить отзыв</a>
+                            <a href="{{ path('app_insurancecompany_feedback_new') }}" class="b-rating__button btn2">Оставить отзыв</a>
                         </div>
                     </div>
+
                     <div class="b-rating__part b-rating__part--block">
                         <div class="b-rating__block">
-                            <div class="b-rating__part-title">Топ страховых компаний в регионе Москва и МО</div>
+                            <div class="b-rating__part-title">Топ страховых компаний в {%if region%}"{{region.nameWithoutCode}}"{%else%}России{%endif%}</div>
                             <div class="b-rating__items">
-                                <div class="b-rating__item">
-                                    <div class="b-rating__item-title">Медстрах</div>
-                                    <div class="b-rating__item-star">
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
+                                {% for i, company in companyRating %}
+                                    <div class="b-rating__item">
+                                        <div class="b-rating__item-title">{{ company[0].name }}</div>
+                                        <div class="b-rating__item-star">
+                                            {% if company.actualRating > 0 %}
+                                                {% for i in 1..(company.actualRating | round(2)) %}
+                                                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
+                                                        <svg class="svg-icon__link">
+                                                            <use xlink:href="#star"></use>
+                                                        </svg>
+                                                    </div>
+                                                {% endfor %}
+                                            {% endif %}
                                         </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
                                     </div>
-                                </div>
-                                <div class="b-rating__item">
-                                    <div class="b-rating__item-title">Капитал</div>
-                                    <div class="b-rating__item-star">
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="b-rating__item">
-                                    <div class="b-rating__item-title">ВТБ</div>
-                                    <div class="b-rating__item-star">
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="b-rating__item">
-                                    <div class="b-rating__item-title">МАКС-М </div>
-                                    <div class="b-rating__item-star">
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="b-rating__item">
-                                    <div class="b-rating__item-title">РЕСО-МЕД </div>
-                                    <div class="b-rating__item-star">
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-
-                                        <div class="svg-icon svg-icon--star" aria-hidden="true">
-                                            <svg class="svg-icon__link">
-                                                <use xlink:href="#star"></use>
-                                            </svg>
-                                        </div>
-
-                                    </div>
-                                </div>
+                                {% endfor %}
                             </div>
                             <div class="b-rating__more">
-                                <a href="#">Весь рейтинг
+                                <a href="{% if region %}{{ path('app_insurancecompany_feedback_index', { filter: {region: region.id} }) }}{% else %}'#'{% endif %}">Весь рейтинг
                                     <div class="svg-icon svg-icon--arrow" aria-hidden="true">
                                         <svg class="svg-icon__link">
                                             <use xlink:href="#arrow"></use>
@@ -576,426 +393,63 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div><!-- b-rating -->
-
 
         <div id="reviews" class="b-reviews">
             <div class="b-reviews__content site-width">
                 <div class="b-reviews__header">
                     <h3 class="b-reviews__title">Отзывы о сервисе</h3>
-                    <a href="#" class="b-reviews__button btn">Все отзывы</a>
+                    <a href="{{ path("app_insurancecompany_feedback_index") }}" class="b-reviews__button btn">Все отзывы</a>
                 </div>
                 <div class="b-reviews__inner">
                     <div class="b-reviews__slider">
-                        <div class="b-reviews__item-wrap">
-                            <div class="b-reviews__item">
-                                <div class="b-reviews__star">
-
-                                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
+                        {% for feedback in feedbacks %}
+                            <div class="b-reviews__item-wrap">
+                                <div class="b-reviews__item">
+                                    <div class="b-reviews__star">
+                                        {% if feedback.valuation > 0 %}
+                                            {% for i in 1..feedback.valuation %}
+                                                <div class="svg-icon svg-icon--star active" aria-hidden="true">
+                                                    <svg class="svg-icon__link">
+                                                        <use xlink:href="#star"></use>
+                                                    </svg>
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
                                     </div>
-
-
-                                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
+                                    <div class="b-reviews__item-text">
+                                        {{ feedback.text }}
                                     </div>
+                                    <div class="b-reviews__item-content">
+                                        <div class="b-reviews__item-user">
+                                            <div class="b-reviews__item-icon">
 
+                                                <div class="svg-icon svg-icon--lk" aria-hidden="true">
+                                                    <svg class="svg-icon__link">
+                                                        <use xlink:href="#lk"></use>
+                                                    </svg>
+                                                </div>
 
-                                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-
-                                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-
-                                    <div class="svg-icon svg-icon--star" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-                                </div>
-                                <div class="b-reviews__item-text">
-                                    Самая большая страховая компания в Тюменской
-                                    области. Качественно выполняют свою работу. Отдел
-                                    по защите прав работает достаточно неспешно,
-                                    но работает.
-                                </div>
-                                <div class="b-reviews__item-content">
-                                    <div class="b-reviews__item-user">
-                                        <div class="b-reviews__item-icon">
-
-                                            <div class="svg-icon svg-icon--lk" aria-hidden="true">
-                                                <svg class="svg-icon__link">
-                                                    <use xlink:href="#lk"></use>
-                                                </svg>
                                             </div>
-
+                                            <div class="b-reviews__item-in">
+                                                <div class="b-reviews__item-name">{{ feedback.authorName }}</div>
+                                                <div class="b-reviews__item-date"> {{ feedback.createdAt|prepareDate("d F, Y") }}</div>
+                                            </div>
                                         </div>
-                                        <div class="b-reviews__item-in">
-                                            <div class="b-reviews__item-name">Бессонова Полина, Тюмень</div>
-                                            <div class="b-reviews__item-date">21 Марта, 2020</div>
+                                        <div class="b-reviews__item-logo">
+                                            {{ render(controller('AppBundle:InsuranceCompany/Company:_logoPanel',
+                                                {
+                                                    'logo_id': (feedback.branch ? feedback.branch.logoIdFromBitrix : null),
+                                                    'name': (feedback.branch ? feedback.branch.name : '')
+                                                } )) }}
                                         </div>
-                                    </div>
-                                    <div class="b-reviews__item-logo">
-                                        <img src="/landing/img/alfa-logo.png" alt="">
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="b-reviews__item-wrap">
-                            <div class="b-reviews__item">
-                                <div class="b-reviews__star">
-
-                                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-
-                                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-
-                                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-
-                                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-
-                                    <div class="svg-icon svg-icon--star" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-                                </div>
-                                <div class="b-reviews__item-text">
-                                    В компании работают внимательные, доброжелательные
-                                    сотрудники, которые охотно отвечают все возникающие
-                                    вопросы. Врач-эксперт доходчиво объяснила мои права
-                                    при мед. обслуживании в стационаре. И нет у них
-                                    очереди, что очень радует. Спасибо!!!
-                                </div>
-                                <div class="b-reviews__item-content">
-                                    <div class="b-reviews__item-user">
-                                        <div class="b-reviews__item-icon">
-
-                                            <div class="svg-icon svg-icon--lk" aria-hidden="true">
-                                                <svg class="svg-icon__link">
-                                                    <use xlink:href="#lk"></use>
-                                                </svg>
-                                            </div>
-
-                                        </div>
-                                        <div class="b-reviews__item-in">
-                                            <div class="b-reviews__item-name">Бессонова Полина, Тюмень</div>
-                                            <div class="b-reviews__item-date">21 Марта, 2020</div>
-                                        </div>
-                                    </div>
-                                    <div class="b-reviews__item-logo">
-                                        <img src="/landing/img/maks-logo.png" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="b-reviews__item-wrap">
-                            <div class="b-reviews__item">
-                                <div class="b-reviews__star">
-
-                                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-
-                                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-
-                                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-
-                                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-
-                                    <div class="svg-icon svg-icon--star" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-                                </div>
-                                <div class="b-reviews__item-text">
-                                    Самая большая страховая компания в Тюменской
-                                    области. Качественно выполняют свою работу. Отдел
-                                    по защите прав работает достаточно неспешно,
-                                    но работает.
-                                </div>
-                                <div class="b-reviews__item-content">
-                                    <div class="b-reviews__item-user">
-                                        <div class="b-reviews__item-icon">
-
-                                            <div class="svg-icon svg-icon--lk" aria-hidden="true">
-                                                <svg class="svg-icon__link">
-                                                    <use xlink:href="#lk"></use>
-                                                </svg>
-                                            </div>
-
-                                        </div>
-                                        <div class="b-reviews__item-in">
-                                            <div class="b-reviews__item-name">Бессонова Полина, Тюмень</div>
-                                            <div class="b-reviews__item-date">21 Марта, 2020</div>
-                                        </div>
-                                    </div>
-                                    <div class="b-reviews__item-logo">
-                                        <img src="/landing/img/akbars-logo.png" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="b-reviews__item-wrap">
-                            <div class="b-reviews__item">
-                                <div class="b-reviews__star">
-
-                                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-
-                                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-
-                                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-
-                                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-
-                                    <div class="svg-icon svg-icon--star" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-                                </div>
-                                <div class="b-reviews__item-text">
-                                    Самая большая страховая компания в Тюменской
-                                    области. Качественно выполняют свою работу. Отдел
-                                    по защите прав работает достаточно неспешно,
-                                    но работает.
-                                </div>
-                                <div class="b-reviews__item-content">
-                                    <div class="b-reviews__item-user">
-                                        <div class="b-reviews__item-icon">
-
-                                            <div class="svg-icon svg-icon--lk" aria-hidden="true">
-                                                <svg class="svg-icon__link">
-                                                    <use xlink:href="#lk"></use>
-                                                </svg>
-                                            </div>
-
-                                        </div>
-                                        <div class="b-reviews__item-in">
-                                            <div class="b-reviews__item-name">Бессонова Полина, Тюмень</div>
-                                            <div class="b-reviews__item-date">21 Марта, 2020</div>
-                                        </div>
-                                    </div>
-                                    <div class="b-reviews__item-logo">
-                                        <img src="/landing/img/akbars-logo.png" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="b-reviews__item-wrap">
-                            <div class="b-reviews__item">
-                                <div class="b-reviews__star">
-
-                                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-
-                                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-
-                                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-
-                                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-
-                                    <div class="svg-icon svg-icon--star" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-                                </div>
-                                <div class="b-reviews__item-text">
-                                    В компании работают внимательные, доброжелательные
-                                    сотрудники, которые охотно отвечают все возникающие
-                                    вопросы. Врач-эксперт доходчиво объяснила мои права
-                                    при мед. обслуживании в стационаре. И нет у них
-                                    очереди, что очень радует. Спасибо!!!
-                                </div>
-                                <div class="b-reviews__item-content">
-                                    <div class="b-reviews__item-user">
-                                        <div class="b-reviews__item-icon">
-
-                                            <div class="svg-icon svg-icon--lk" aria-hidden="true">
-                                                <svg class="svg-icon__link">
-                                                    <use xlink:href="#lk"></use>
-                                                </svg>
-                                            </div>
-
-                                        </div>
-                                        <div class="b-reviews__item-in">
-                                            <div class="b-reviews__item-name">Бессонова Полина, Тюмень</div>
-                                            <div class="b-reviews__item-date">21 Марта, 2020</div>
-                                        </div>
-                                    </div>
-                                    <div class="b-reviews__item-logo">
-                                        <img src="/landing/img/akbars-logo.png" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="b-reviews__item-wrap">
-                            <div class="b-reviews__item">
-                                <div class="b-reviews__star">
-
-                                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-
-                                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-
-                                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-
-                                    <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-
-                                    <div class="svg-icon svg-icon--star" aria-hidden="true">
-                                        <svg class="svg-icon__link">
-                                            <use xlink:href="#star"></use>
-                                        </svg>
-                                    </div>
-
-                                </div>
-                                <div class="b-reviews__item-text">
-                                    Самая большая страховая компания в Тюменской
-                                    области. Качественно выполняют свою работу. Отдел
-                                    по защите прав работает достаточно неспешно,
-                                    но работает.
-                                </div>
-                                <div class="b-reviews__item-content">
-                                    <div class="b-reviews__item-user">
-                                        <div class="b-reviews__item-icon">
-
-                                            <div class="svg-icon svg-icon--lk" aria-hidden="true">
-                                                <svg class="svg-icon__link">
-                                                    <use xlink:href="#lk"></use>
-                                                </svg>
-                                            </div>
-
-                                        </div>
-                                        <div class="b-reviews__item-in">
-                                            <div class="b-reviews__item-name">Бессонова Полина, Тюмень</div>
-                                            <div class="b-reviews__item-date">21 Марта, 2020</div>
-                                        </div>
-                                    </div>
-                                    <div class="b-reviews__item-logo">
-                                        <img src="/landing/img/akbars-logo.png" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        {% endfor %}
                     </div>
                 </div>
             </div>
