@@ -62,7 +62,7 @@ class NumberAdmin extends AbstractAdmin
   protected function configureFormFields(FormMapper $form)
   {
     $form
-      ->add('original', 'Accurateweb\MediaBundle\Form\ImageType', [
+      ->add('teaser', 'Accurateweb\MediaBundle\Form\ImageType', [
         'required' => false,
         'label' => 'Изображение',
       ])

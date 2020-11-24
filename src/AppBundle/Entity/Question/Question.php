@@ -2,12 +2,8 @@
 
 namespace AppBundle\Entity\Question;
 
-use Accurateweb\MediaBundle\Model\Image\ImageAwareInterface;
-use Accurateweb\MediaBundle\Model\Media\ImageInterface;
-use AppBundle\Model\Media\OriginalImage;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Accurateweb\MediaBundle\Annotation as Media;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
