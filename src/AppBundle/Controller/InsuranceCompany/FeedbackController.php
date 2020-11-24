@@ -186,7 +186,7 @@ class FeedbackController extends Controller
 
     if ($reviewListFilter->getCompany())
     {
-      $title = 'Отзывы о страховой медицинской организации &laquo;' . $reviewListFilter->getCompany()->getName() . '&raquo;' . (($pagination->getPage() > 1) ? ' — Страница ' . $pagination->getPage() : '');
+      $title = 'Отзывы о страховой медицинской организации «' . $reviewListFilter->getCompany()->getName() . '»' . (($pagination->getPage() > 1) ? ' — Страница ' . $pagination->getPage() : '');
     }
 
     return $this->render('InsuranceCompany/Review/list.html.twig', [
@@ -228,7 +228,7 @@ class FeedbackController extends Controller
   {
     $em = $this->getDoctrine()->getManager();
     $repository = $em->getRepository(Feedback::class);
-    
+
     /** @var Feedback $review */
     $review = $repository->getFeedbackActive()
       ->andWhere('rv.id = :feedback_id')

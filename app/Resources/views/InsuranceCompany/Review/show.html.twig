@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% set title = review.title ~ " &mdash; " ~ (review.company ? review.company.name : '') ~ " " ~ (review.region ? review.region.name : '') ~ " &mdash; Рейтинг страховых компаний, работающих в системе ОМС &mdash; Без Бахил" %}
+{% set title = review.title ~ " — " ~ (review.company ? review.company.name : '') ~ " " ~ (review.region ? review.region.name : '') ~ " — Рейтинг страховых компаний, работающих в системе ОМС — «Без Бахил»" %}
 
 {% block meta %}
     {{ parent() }}
