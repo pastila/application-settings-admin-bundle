@@ -18,8 +18,6 @@ class HomepageControllerTest extends AppWebTestCase
     $this->addFixture(new Number());
     $this->addFixture(new Question());
     $this->addFixture(new Feedback());
-    $this->addFixture(new CompanyBranchRating());
-    $this->addFixture(new Feedback());
   }
 
   public function testIndex()
@@ -133,7 +131,9 @@ class HomepageControllerTest extends AppWebTestCase
     $this->assertTrue(count($companyTopsHtml) > 0, $textPrev . 'Проверка, что данные вообще нашлись');
     $this->assertEquals('ИНГОССТРАХ-М', $companyTopsHtml[0]['name'], $textPrev . 'Проверка, что Компания совпадает');
     $this->assertEquals(5, $companyTopsHtml[0]['rating'], $textPrev . 'Проверка, что Рейтинг совпадает');
-    $this->assertEquals('АКБАРС-МЕД', $companyTopsHtml[1]['name'], $textPrev . 'Проверка, что Компания совпадает');
-    $this->assertEquals(3, $companyTopsHtml[1]['rating'], $textPrev . 'Проверка, что Рейтинг совпадает');
+    $this->assertEquals('СОГАЗ-МЕД', $companyTopsHtml[1]['name'], $textPrev . 'Проверка, что Компания совпадает');
+    $this->assertEquals(4, $companyTopsHtml[1]['rating'], $textPrev . 'Проверка, что Рейтинг совпадает');
+    $this->assertEquals('АКБАРС-МЕД', $companyTopsHtml[2]['name'], $textPrev . 'Проверка, что Компания совпадает');
+    $this->assertEquals(3, $companyTopsHtml[2]['rating'], $textPrev . 'Проверка, что Рейтинг совпадает');
   }
 }
