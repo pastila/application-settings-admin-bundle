@@ -108,7 +108,9 @@ add('shared_dirs', [
   'web/bitrix/managed_cache',
   'web/bitrix_logs',
   'web/images',
-  'web/upload'
+  'web/upload',
+  'var/uploads', //sf app uploads private
+  'web/uploads'  //sf app uploads public
 ]);
 
 // Writable dirs by web server
