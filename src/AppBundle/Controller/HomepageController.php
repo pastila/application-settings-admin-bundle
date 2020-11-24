@@ -46,31 +46,13 @@ class HomepageController extends Controller
       ->getQuery()
       ->getResult();
 
-    $region = null;
-    if (false)
-    {
-      /**
-       * Поиск региона TODO: реализуется в след.задачах
-       */
-    } else
-    {
-      /**
-       * Если регион не был получен, то берем выбранный по умолчанию
-       */
-      $regionId = $this->settingManager->getValue('region_default');
-      if ($regionId)
-      {
-        $region = $this->regionRepository->findOneBy(['id' => $regionId]);
-      }
-    }
-
     // replace this example code with whatever you need
     return $this->render('@App/homepage.html.twig', [
       'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
       'numbers' => $numbers,
       'questions' => $questions,
       'companyRating' => array_slice($this->branchRatingHelper->buildRating($region), 0, 5),
-      'region' => $region
+      'region' => null
     ]);
   }
 }
