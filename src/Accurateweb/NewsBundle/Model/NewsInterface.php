@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Accurateweb\GpnNewsBundle\Model;
+namespace Accurateweb\NewsBundle\Model;
 
 use Accurateweb\MediaBundle\Model\Media\ImageInterface;
 use AppBundle\Media\Text\NewsImage;

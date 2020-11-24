@@ -1,9 +1,9 @@
 <?php
 
-namespace Accurateweb\GpnNewsBundle\Controller;
+namespace Accurateweb\NewsBundle\Controller;
 
-use Accurateweb\GpnNewsBundle\Exception\PageNotFoundException;
-use Accurateweb\GpnNewsBundle\Model\NewsInterface;
+use Accurateweb\NewsBundle\Exception\PageNotFoundException;
+use Accurateweb\NewsBundle\Model\NewsInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;

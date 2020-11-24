@@ -3,7 +3,7 @@
 
 namespace AppBundle\Entity\Common;
 
-use Accurateweb\GpnNewsBundle\Model\NewsInterface;
+use Accurateweb\NewsBundle\Model\NewsInterface;
 use Accurateweb\ImagingBundle\Filter\CropFilterOptionsResolver;
 use Accurateweb\ImagingBundle\Filter\FilterChain;
 use Accurateweb\MediaBundle\Model\Image\ImageAwareInterface;
@@ -12,7 +12,7 @@ use Accurateweb\MediaBundle\Model\Thumbnail\ImageThumbnail;
 use Accurateweb\MediaBundle\Model\Thumbnail\ThumbnailDefinition;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Accurateweb\GpnNewsBundle\Model\News as Base;
+use Accurateweb\NewsBundle\Model\News as Base;
 
 /**
  * Class News

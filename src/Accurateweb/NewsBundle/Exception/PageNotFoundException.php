@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Accurateweb\GpnNewsBundle\Exception;
+namespace Accurateweb\NewsBundle\Exception;
 
 
 use Throwable;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Accurateweb\GpnNewsBundle\DependencyInjection;
+namespace Accurateweb\NewsBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

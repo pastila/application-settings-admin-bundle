@@ -3,7 +3,7 @@
 
 namespace AppBundle\Admin\Common;
 
-use Accurateweb\GpnNewsBundle\Admin\NewsAdmin as Base;
+use Accurateweb\NewsBundle\Admin\NewsAdmin as Base;
 use Sonata\AdminBundle\Form\FormMapper;
 
 class NewsAdmin extends Base

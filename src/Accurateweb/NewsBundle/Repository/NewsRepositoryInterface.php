@@ -6,9 +6,9 @@
  * Time: 12:50
  */
 
-namespace Accurateweb\GpnNewsBundle\Repository;
+namespace Accurateweb\NewsBundle\Repository;
 
-use Accurateweb\GpnNewsBundle\Model\NewsInterface;
+use Accurateweb\NewsBundle\Model\NewsInterface;
 
 interface NewsRepositoryInterface
 {

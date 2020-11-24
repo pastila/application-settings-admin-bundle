@@ -1,29 +1,29 @@
 services:
     main.admin.news:
-      class: Accurateweb\GpnNewsBundle\Admin\NewsAdmin
+      class: Accurateweb\NewsBundle\Admin\NewsAdmin
       arguments: [~, %aw.news.entity_class%,~]
       tags:
         -  { name: sonata.admin, group: %aw.news.admin.group%, manager_type: orm, label: %aw.news.admin.label% }
 
     aw.news.repository:
-      class: Accurateweb\GpnNewsBundle\Repository\NewsRepository
+      class: Accurateweb\NewsBundle\Repository\NewsRepository
       factory: ['@doctrine.orm.entity_manager', 'getRepository']
       arguments: [ %aw.news.entity_class%]
 
     aw.news.adapter:
-      class: Accurateweb\GpnNewsBundle\DataAdapter\NewsDataAdapter
+      class: Accurateweb\NewsBundle\DataAdapter\NewsDataAdapter
       tags:
         - { name: aw.client_application.adapter, alias: aw.news }
 
     aw.service.news:
-      class: Accurateweb\GpnNewsBundle\Service\NewsService
+      class: Accurateweb\NewsBundle\Service\NewsService
       arguments:
         - '@aw.news.repository'
         - '@twig'
         - '@aw.news.adapter'
 
     aw.twig.render_pagination_extension:
-      class: Accurateweb\GpnNewsBundle\Twig\RenderPaginationExtension
+      class: Accurateweb\NewsBundle\Twig\RenderPaginationExtension
       arguments: ['@twig']
       tags:
           - { name: twig.extension }

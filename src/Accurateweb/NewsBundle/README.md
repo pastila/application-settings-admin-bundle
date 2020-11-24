@@ -24,9 +24,9 @@ composer require accurateweb/gpn_news_bundle dev-master
 
 namespace AppBundle\Entity\Common;
 
-use Accurateweb\GpnNewsBundle\Model\NewsInterface;
+use Accurateweb\NewsBundle\Model\NewsInterface;
 use Doctrine\ORM\Mapping as ORM;
-use \Accurateweb\GpnNewsBundle\Model\News as Base;
+use \Accurateweb\NewsBundle\Model\News as Base;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Common\NewsRepository")
@@ -47,7 +47,7 @@ class News extends Base
 
 namespace AppBundle\Repository\Common;
 
-use \Accurateweb\GpnNewsBundle\Repository\NewsRepository as Base;
+use \Accurateweb\NewsBundle\Repository\NewsRepository as Base;
 
 class NewsRepository extends Base
 {

@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Accurateweb\GpnNewsBundle\DataAdapter;
+namespace Accurateweb\NewsBundle\DataAdapter;
 
 use Accurateweb\ClientApplicationBundle\DataAdapter\ClientApplicationModelAdapterInterface;
-use Accurateweb\GpnNewsBundle\Model\NewsInterface;
+use Accurateweb\NewsBundle\Model\NewsInterface;
 use AppBundle\Sluggable\SluggableInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

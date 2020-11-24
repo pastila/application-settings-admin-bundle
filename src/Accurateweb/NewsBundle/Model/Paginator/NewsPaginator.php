@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Accurateweb\GpnNewsBundle\Model\Paginator;
+namespace Accurateweb\NewsBundle\Model\Paginator;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
 

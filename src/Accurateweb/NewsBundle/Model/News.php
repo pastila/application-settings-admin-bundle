@@ -1,9 +1,9 @@
 <?php
 
-namespace Accurateweb\GpnNewsBundle\Model;
+namespace Accurateweb\NewsBundle\Model;
 
 use Accurateweb\MediaBundle\Annotation\Image;
-use Accurateweb\GpnNewsBundle\Media\NewsImage;
+use Accurateweb\NewsBundle\Media\NewsImage;
 use Accurateweb\MediaBundle\Model\Image\ImageAwareInterface;
 use Accurateweb\MediaBundle\Model\Media\ImageInterface;
 use AppBundle\Sluggable\SluggableInterface;
@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\MappedSuperclass()
- * @ORM\Entity(repositoryClass="Accurateweb\GpnNewsBundle\Repository\NewsRepository")
+ * @ORM\Entity(repositoryClass="Accurateweb\NewsBundle\Repository\NewsRepository")
  * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity(fields={"slug"})
  */

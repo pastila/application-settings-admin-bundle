@@ -1,13 +1,13 @@
 <?php
 
 
-namespace Accurateweb\GpnNewsBundle\Service;
+namespace Accurateweb\NewsBundle\Service;
 
 use Accurateweb\ClientApplicationBundle\DataAdapter\ClientApplicationModelAdapterInterface;
-use Accurateweb\GpnNewsBundle\Exception\PageNotFoundException;
-use Accurateweb\GpnNewsBundle\Model\NewsInterface;
-use Accurateweb\GpnNewsBundle\Model\Paginator\NewsPaginator;
-use Accurateweb\GpnNewsBundle\Repository\NewsRepositoryInterface;
+use Accurateweb\NewsBundle\Exception\PageNotFoundException;
+use Accurateweb\NewsBundle\Model\NewsInterface;
+use Accurateweb\NewsBundle\Model\Paginator\NewsPaginator;
+use Accurateweb\NewsBundle\Repository\NewsRepositoryInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Twig\Environment;

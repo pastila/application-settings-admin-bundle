@@ -1,8 +1,8 @@
 <?php
 
-namespace Accurateweb\GpnNewsBundle\Repository;
+namespace Accurateweb\NewsBundle\Repository;
 
-use Accurateweb\GpnNewsBundle\Model\NewsInterface;
+use Accurateweb\NewsBundle\Model\NewsInterface;
 use Doctrine\ORM\EntityRepository;
 
 class NewsRepository extends EntityRepository implements NewsRepositoryInterface

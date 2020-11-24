@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Accurateweb\GpnNewsBundle\Media;
+namespace Accurateweb\NewsBundle\Media;
 
 use Accurateweb\ImagingBundle\Filter\CropFilterOptionsResolver;
 use Accurateweb\ImagingBundle\Filter\FilterChain;

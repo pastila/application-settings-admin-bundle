@@ -4,7 +4,7 @@
 namespace AppBundle\Repository\Common;
 
 
-use Accurateweb\GpnNewsBundle\Repository\NewsRepository as Base;
+use Accurateweb\NewsBundle\Repository\NewsRepository as Base;
 
 class NewsRepository extends Base
 {

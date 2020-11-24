@@ -1,8 +1,8 @@
 <?php
 
-namespace Accurateweb\GpnNewsBundle\Admin;
+namespace Accurateweb\NewsBundle\Admin;
 
-use Accurateweb\GpnNewsBundle\Model\NewsInterface;
+use Accurateweb\NewsBundle\Model\NewsInterface;
 use Accurateweb\MediaBundle\Form\ImageType;
 use AppBundle\Form\Common\TinyMceType;
 use Doctrine\ORM\EntityRepository;

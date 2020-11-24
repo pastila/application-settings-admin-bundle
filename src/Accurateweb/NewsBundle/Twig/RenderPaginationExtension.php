@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Accurateweb\GpnNewsBundle\Twig;
+namespace Accurateweb\NewsBundle\Twig;
 
 
 use Twig\Environment;
