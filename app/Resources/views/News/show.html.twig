@@ -49,12 +49,27 @@
             </li>
         {% endif %}
     </ul>
-    <h1 class="page-title">Читать про ОМС</h1>
+    <h1 class="page-title">{{ title }}</h1>
     <div class="container">
         <div>
             <p class="back_link-block"><a class="back_link" href="{{ path("news_list") }}">Возврат к списку</a></p>
             <div class="white_block">
-                <div class="news-detail flex-detail-news">
+                <div class="news-detail flex-detail-news" itemscope itemtype="http://schema.org/NewsArticle">
+
+                    <link itemprop="mainEntityOfPage" href="{{ url('news_show', {slug: news.slug }) }}" />
+                    <meta itemprop="author" content="Без Бахил">
+                    <meta itemprop="datePublished" content="{{ news.publishedAt |prepareDate('Y-m-d') }}">
+                    <meta itemprop="dateModified" content="{{ news.createdAt |prepareDate('Y-m-d') }}">
+                    <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+                        <link itemprop="url" href="{{ url('homepage') }}">
+                        <meta itemprop="name" content="Безбахил">
+                        <div itemprop="logo" itemscope itemtype="https://www.schema.org/ImageObject">
+                            <link itemprop="url" href="/local/templates/kdteam/images/favicon.png">
+                            <link itemprop="contentUrl" href="{{ app.request.getSchemeAndHttpHost() }}/local/templates/kdteam/images/favicon.png" >
+                        </div>
+                    </div>
+                    <meta itemprop="url" content="{{ app.request.getSchemeAndHttpHost() }}" />
+
                     <div class="content-news">
                         <p itemprop="articleBody">
                             {{ news.text |raw }}

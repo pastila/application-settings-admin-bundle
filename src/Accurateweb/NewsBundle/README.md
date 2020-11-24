@@ -1,15 +1,6 @@
 ### Bundle requires: 
 ImagingBundle, MediaBundle, ClientApplicationBundle, SlugifierBundle
 ### Install
-- Add repository in composer.json 
-```
- "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@git.accurateweb.ru:gpn/gpn_news_bundle.git"
-        }
-    ],
-```
 - Install bundle 
 ```
 composer require accurateweb/gpn_news_bundle dev-master
