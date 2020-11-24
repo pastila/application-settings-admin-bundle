@@ -6,7 +6,6 @@ namespace Tests\AppBundle\Controller;
 
 use Tests\AppBundle\AppWebTestCase;
 use Tests\AppBundle\Fixtures\News\News;
-use Tests\AppBundle\Fixtures\Company\CompanyBranchRating;
 use Tests\AppBundle\Fixtures\Company\Feedback;
 use Tests\AppBundle\Fixtures\Number\Number;
 use Symfony\Component\DomCrawler\Crawler;
@@ -19,7 +18,6 @@ class HomepageControllerTest extends AppWebTestCase
     $this->addFixture(new Number());
     $this->addFixture(new Question());
     $this->addFixture(new Feedback());
-    $this->addFixture(new CompanyBranchRating());
     $this->addFixture(new News());
   }
 
