@@ -18,90 +18,38 @@ final class Builder implements ContainerAwareInterface
 
   public function headerMenu(FactoryInterface $factory, array $options): ItemInterface
   {
-    $baseUrl = $this->container->get('router')->getContext()->getHost();
-    $em = $this->container->get('doctrine')->getManager();
     $menu = $factory->createItem('root');
-    $menuHeader = $em->getRepository(MenuHeader::class)
-      ->getQueryAllByPosition()
-      ->getQuery()
-      ->getResult();
+    $helper = $this->container->get('AppBundle\Helper\MenuBuilder');
 
-    return $this->getMenu($menu, $menuHeader, $baseUrl, null);
+    return $helper->getMenu($menu, MenuHeader::class, ['class' => 'nav-mobile__list-item']);
   }
 
   public function headerMenuMobile(FactoryInterface $factory, array $options): ItemInterface
   {
-    $baseUrl = $this->container->get('router')->getContext()->getHost();
-    $em = $this->container->get('doctrine')->getManager();
     $menu = $factory->createItem('root');
-    $menuHeader = $em->getRepository(MenuHeader::class)
-      ->getQueryAllByPosition()
-      ->getQuery()
-      ->getResult();
     $menu->setChildrenAttribute('class', 'nav-mobile__list');
+    $helper = $this->container->get('AppBundle\Helper\MenuBuilder');
 
-    return $this->getMenu($menu, $menuHeader, $baseUrl, ['class' => 'nav-mobile__list-item']);
+    return $helper->getMenu($menu, MenuHeader::class, ['class' => 'nav-mobile__list-item']);
   }
 
   public function footerMenu(FactoryInterface $factory, array $options): ItemInterface
   {
-    $baseUrl = $this->container->get('router')->getContext()->getHost();
-    $em = $this->container->get('doctrine')->getManager();
     $menu = $factory->createItem('root');
-    $menuFooter = $em->getRepository(MenuFooter::class)
-      ->getQueryAllByPosition()
-      ->getQuery()
-      ->getResult();
+    $helper = $this->container->get('AppBundle\Helper\MenuBuilder');
 
-    return $this->getMenu($menu, $menuFooter, $baseUrl, null);
+    return $helper->getMenu($menu, MenuFooter::class, null);
   }
 
   public function socialMenu(FactoryInterface $factory, array $options): ItemInterface
   {
-    $baseUrl = $this->container->get('router')->getContext()->getHost();
-    $em = $this->container->get('doctrine')->getManager();
     $menu = $factory->createItem('root');
-    $menuFooter = $em->getRepository(MenuSocial::class)
-      ->getQueryAllByPosition()
-      ->getQuery()
-      ->getResult();
     $menu->setChildrenAttribute('class', 'app-footer__soc');
     $menu->setAttributes([
       'isDiv' => true
     ]);
-    $menu = $this->getMenu($menu, $menuFooter, $baseUrl, ['isLiHide' => true, 'target' => '_blank', 'image' => true]);
+    $helper = $this->container->get('AppBundle\Helper\MenuBuilder');
 
-    return $menu;
-  }
-
-  /**
-   * @param $menu
-   * @param $menuItems
-   * @param $baseUrl
-   * @param null $attributes
-   * @param null $childrenAttributes
-   * @return mixed
-   */
-  private function getMenu($menu, $menuItems, $baseUrl, $attributes = null)
-  {
-    foreach ($menuItems as $item)
-    {
-      /**
-       * @var AbstractMenu $item
-       */
-      $iAnchor = false;
-      $url = $item->getUrl();
-      if (stripos($item->getUrl(), $baseUrl) !== false)
-      {
-        $iAnchor = stripos($item->getUrl(), '#');
-        $url = ($iAnchor !== false) ? (mb_substr($url, $iAnchor)) : $url;
-      }
-      $option = ['uri' => $url];
-      $attributes = empty($attributes) ? [] : $attributes;
-      $option['attributes'] = array_merge($attributes, ['base' => $item]);
-      $menu->addChild($item->getText(), $option)->setAttribute('isAnchor', $iAnchor !== false);
-    }
-
-    return $menu;
+    return $helper->getMenu($menu, MenuSocial::class, ['isLiHide' => true, 'target' => '_blank', 'image' => true]);
   }
 }

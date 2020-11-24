@@ -71,3 +71,6 @@ services:
         class: AppBundle\Menu\Builder
         arguments:
             - "@knp_menu.factory"
+
+    AppBundle\Helper\MenuBuilder:
+        public: true
