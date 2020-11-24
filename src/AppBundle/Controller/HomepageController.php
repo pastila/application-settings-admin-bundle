@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Company\Feedback;
 use Accurateweb\ApplicationSettingsAdminBundle\Model\Manager\SettingManagerInterface;
 use AppBundle\Entity\Number\Number;
 use AppBundle\Entity\Question\Question;
@@ -46,13 +47,19 @@ class HomepageController extends Controller
       ->getQuery()
       ->getResult();
 
+    $feedbacks = $em->getRepository(Feedback::class)
+      ->getFeedbackActive()
+      ->getQuery()
+      ->getResult();
+
     // replace this example code with whatever you need
     return $this->render('@App/homepage.html.twig', [
       'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
       'numbers' => $numbers,
       'questions' => $questions,
       'companyRating' => array_slice($this->branchRatingHelper->buildRating(), 0, 5),
-      'region' => null
+      'region' => null,
+      'feedbacks' => $feedbacks,
     ]);
   }
 }
