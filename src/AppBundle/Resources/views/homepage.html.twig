@@ -544,15 +544,24 @@
                 <div class="b-insider__inner">
                     <div class="b-insider__slider">
                         {% for item in news %}
-                            <div class="b-insider__item-wrap" href="{{ path('news_show', { slug: item.slug }) }}">
+                            <div class="b-insider__item-wrap">
                                 <div class="b-insider__item">
-                                    <div style="background-image: url({{ image_thumbnail_url(item, null, 'main_lg') }});" class="b-insider__item-image">
-                                        <img src="{{ image_thumbnail_url(item, null, 'main_lg') }}" alt="">
+                                    <div style="background-image: url({{ image_thumbnail_url(item, null, 'main_lg') }});"
+                                         class="b-insider__item-image">
+                                        <a href="{{ path('news_show', { slug: item.slug }) }}" class="b-insider__item-link">
+                                            <img src="{{ image_thumbnail_url(item, null, 'main_lg') }}" alt="">
+                                        </a>
                                     </div>
                                     <div class="b-insider__item-content">
-                                        <div class="b-insider__item-title">{{ item.title }}</div>
+                                        <div class="b-insider__item-title">
+                                            <a href="{{ path('news_show', { slug: item.slug }) }}" class="b-insider__item-link">
+                                                {{ item.title }}
+                                            </a>
+                                        </div>
                                         <div class="b-insider__item-text">
-                                            {{ item.announce | raw }}
+                                            <a href="{{ path('news_show', { slug: item.slug }) }}" class="b-insider__item-link">
+                                                {{ item.announce | raw }}
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
