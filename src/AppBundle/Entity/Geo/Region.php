@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity\Geo;
 
+use Accurateweb\LocationBundle\Model\ResolvedUserLocation;
+use Accurateweb\LocationBundle\Model\UserLocationInterface;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -9,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="s_regions")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Geo\RegionRepository")
  */
-class Region
+class Region implements UserLocationInterface
 {
   /**
    * @var integer
@@ -86,6 +88,24 @@ class Region
     $this->name = $name;
 
     return $this;
+  }
+
+  public function getLocationId()
+  {
+    return $this->getId();
+  }
+
+  public function getLocationName()
+  {
+    return $this->getName();
+  }
+
+  public function getResolvedLocation()
+  {
+    $l = new ResolvedUserLocation();
+    $l->setRegionName($this->getName());
+
+    return $l;
   }
 
   /**

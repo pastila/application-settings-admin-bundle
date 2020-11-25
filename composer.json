@@ -23,6 +23,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/accurateweb/application-settings-admin-bundle.git"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/accurateweb/location-bundle.git"
         }
     ],
     "autoload": {
@@ -44,6 +48,7 @@
         "ext-curl": "*",
         "accurateweb/application-settings-admin-bundle": "dev-development",
         "accurateweb/client-application-bundle": "dev-master",
+        "accurateweb/location-bundle": "dev-master",
         "accurateweb/email-template-bundle": "dev-development",
         "accurateweb/image-bundle": "2.x-dev",
         "accurateweb/media-bundle": "2.x-dev",

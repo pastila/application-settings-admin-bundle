@@ -74,3 +74,16 @@ services:
 
     AppBundle\Helper\MenuBuilder:
         public: true
+
+    aw.location.repository:
+      class: 'AppBundle\Repository\Geo\RegionRepository'
+      arguments:
+        - '@doctrine'
+
+    aw.location.resolver.default:
+      class: AppBundle\Resolver\DefaultRegionResolver
+      arguments:
+        - '@aw.settings.manager'
+        - '@AppBundle\Repository\Geo\RegionRepository'
+      tags:
+        - { name: aw.location.resolver, priority: -1 }

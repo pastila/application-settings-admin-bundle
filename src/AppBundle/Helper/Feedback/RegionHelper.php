@@ -52,7 +52,7 @@ class RegionHelper
     $nbImported = 0;
     foreach ($result as $key => $item) {
       $name = !empty($item['SEARCHABLE_CONTENT']) ? $item['SEARCHABLE_CONTENT'] : null;
-      $code = !empty($item['CODE']) ? $item['CODE'] : null;
+      $code = !empty($item['CODE']) ? (trim(mb_substr($item['CODE'], 0, 3))) : null;
 
       $region = new \AppBundle\Entity\Geo\Region();
       $region->setName($name);

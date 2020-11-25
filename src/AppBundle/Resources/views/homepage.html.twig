@@ -67,7 +67,7 @@
 <![endif]-->
 
 <div class="app__wrapper">
-
+    {% set _region = region ? region.nameWithoutCode : 'Вся Россия' %}
     <header class="app-header">
         <div class="app-header__content site-width">
             <a href="#" class="app-header__menu-button">
@@ -90,7 +90,7 @@
                     </div>
 
                     <span>Ваш регион: </span>
-                    <a href="#loacation" class="js-loacation">Москва и область</a>
+                    <a href="#loacation" class="js-loacation">{{ _region }}</a>
                 </div>
                 <nav class="app-header__list">
                     {{ knp_menu_render('AppBundle:Builder:headerMenu') }}
@@ -121,7 +121,7 @@
                         </div>
 
                         <span>Ваш регион: </span>
-                        <a href="#loacation" class="js-loacation">Москва и область</a>
+                        <a href="#loacation" class="js-loacation">{{ _region }}</a>
                     </div>
                 </div>
                 {{ knp_menu_render('AppBundle:Builder:headerMenuMobile') }}
@@ -353,7 +353,7 @@
 
                     <div class="b-rating__part b-rating__part--block">
                         <div class="b-rating__block">
-                            <div class="b-rating__part-title">Топ страховых компаний в {%if region%}"{{region.nameWithoutCode}}"{%else%}России{%endif%}</div>
+                            <div class="b-rating__part-title">Топ страховых компаний в {{ _region }}</div>
                             <div class="b-rating__items">
                                 {% for i, company in companyRating %}
                                     <div class="b-rating__item">
