@@ -12,6 +12,7 @@ use AppBundle\Entity\Question\Question;
 use AppBundle\Model\InsuranceCompany\Branch\BranchRatingHelper;
 use AppBundle\Repository\Geo\RegionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Accurateweb\ApplicationSettingsAdminBundle\Model\Manager\SettingManagerInterface;
