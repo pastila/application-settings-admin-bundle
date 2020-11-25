@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c7bddf9fc861522f39413c20e5e63674",
+    "content-hash": "2e61fa78fc65c74071e7ce9f765281e0",
     "packages": [
         {
             "name": "accurateweb/application-settings-admin-bundle",
@@ -125,6 +125,33 @@
                 "issues": "https://github.com/accurateweb/image-bundle/issues"
             },
             "time": "2020-11-05T08:52:17+00:00"
+        },
+        {
+            "name": "accurateweb/location-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/accurateweb/location-bundle.git",
+                "reference": "a7c8aa681b7a7d552f3e599ac774fa280f84c75d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/accurateweb/location-bundle/zipball/a7c8aa681b7a7d552f3e599ac774fa280f84c75d",
+                "reference": "a7c8aa681b7a7d552f3e599ac774fa280f84c75d",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Accurateweb\\LocationBundle\\": ""
+                }
+            },
+            "support": {
+                "source": "https://github.com/accurateweb/location-bundle/tree/master",
+                "issues": "https://github.com/accurateweb/location-bundle/issues"
+            },
+            "time": "2020-11-25T09:05:00+00:00"
         },
         {
             "name": "accurateweb/media-bundle",
@@ -3160,24 +3187,24 @@
         },
         {
             "name": "pimple/pimple",
-            "version": "v3.3.0",
+            "version": "v3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/silexphp/Pimple.git",
-                "reference": "e55d12f9d6a0e7f9c85992b73df1267f46279930"
+                "reference": "21e45061c3429b1e06233475cc0e1f6fc774d5b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silexphp/Pimple/zipball/e55d12f9d6a0e7f9c85992b73df1267f46279930",
-                "reference": "e55d12f9d6a0e7f9c85992b73df1267f46279930",
+                "url": "https://api.github.com/repos/silexphp/Pimple/zipball/21e45061c3429b1e06233475cc0e1f6fc774d5b0",
+                "reference": "21e45061c3429b1e06233475cc0e1f6fc774d5b0",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2.5",
+                "php": ">=7.2.5",
                 "psr/container": "^1.0"
             },
             "require-dev": {
-                "symfony/phpunit-bridge": "^3.4|^4.4|^5.0"
+                "symfony/phpunit-bridge": "^5.0"
             },
             "type": "library",
             "extra": {
@@ -3207,10 +3234,9 @@
                 "dependency injection"
             ],
             "support": {
-                "issues": "https://github.com/silexphp/Pimple/issues",
-                "source": "https://github.com/silexphp/Pimple/tree/master"
+                "source": "https://github.com/silexphp/Pimple/tree/v3.3.1"
             },
-            "time": "2020-03-03T09:12:48+00:00"
+            "time": "2020-11-24T20:35:42+00:00"
         },
         {
             "name": "pixassociates/sortable-behavior-bundle",
@@ -7469,6 +7495,7 @@
     "stability-flags": {
         "accurateweb/application-settings-admin-bundle": 20,
         "accurateweb/client-application-bundle": 20,
+        "accurateweb/location-bundle": 20,
         "accurateweb/email-template-bundle": 20,
         "accurateweb/image-bundle": 20,
         "accurateweb/media-bundle": 20

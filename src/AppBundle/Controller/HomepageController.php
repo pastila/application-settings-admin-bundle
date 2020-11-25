@@ -2,38 +2,37 @@
 
 namespace AppBundle\Controller;
 
+use Accurateweb\LocationBundle\Exception\LocationServiceException;
+use Accurateweb\LocationBundle\Service\Location;
 use AppBundle\Entity\Common\News;
 use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\Number\Number;
 use AppBundle\Entity\Question\Question;
-use AppBundle\Helper\GetMessFromBitrix;
 use AppBundle\Model\InsuranceCompany\Branch\BranchRatingHelper;
 use AppBundle\Repository\Geo\RegionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Accurateweb\ApplicationSettingsAdminBundle\Model\Manager\SettingManagerInterface;
-use AppBundle\Service\GeoLocation;
-use Accurateweb\LocationBundle\LocationResolver\GeoLocationResolver;
 
 class HomepageController extends Controller
 {
   private $branchRatingHelper;
   private $settingManager;
   private $regionRepository;
-  private $geoLocationResolver;
+  private $locationService;
 
   public function __construct(
     BranchRatingHelper $branchRatingHelper,
     SettingManagerInterface $settingManager,
     RegionRepository $regionRepository,
-    GeoLocation $geoLocationResolver
+    Location $locationService
   )
   {
     $this->branchRatingHelper = $branchRatingHelper;
     $this->settingManager = $settingManager;
     $this->regionRepository = $regionRepository;
-    $this->geoLocationResolver = $geoLocationResolver;
+    $this->locationService = $locationService;
   }
 
   /**
@@ -64,7 +63,14 @@ class HomepageController extends Controller
     /**
      * Получение региона по IP клиента
      */
-    $region = $this->geoLocationResolver->getRegion();
+    try
+    {
+      $region = $this->locationService->getLocation();
+    } catch (LocationServiceException $e)
+    {
+      $this->get('logger')->err('Unable to determine user region.');
+      throw $e;
+    }
 
     // replace this example code with whatever you need
     return $this->render('@App/homepage.html.twig', [
@@ -72,7 +78,6 @@ class HomepageController extends Controller
       'numbers' => $numbers,
       'questions' => $questions,
       'companyRating' => array_slice($this->branchRatingHelper->buildRating(), 0, 5),
-      'region' => null,
       'feedbacks' => $feedbacks,
       'news' => $news,
       'region' => $region,
