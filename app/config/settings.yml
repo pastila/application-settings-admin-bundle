@@ -7,3 +7,39 @@ services:
       - 'Регион по умолчанию'
     tags:
       - { name: aw.setting.configuration }
+
+  app.settings.agreement:
+    class: Accurateweb\ApplicationSettingsAdminBundle\Model\SettingConfiguration\StringSettingConfiguration
+    arguments:
+      - 'agreement'
+      - 'Адрес страницы с пользовательским соглашением'
+      - ~
+    tags:
+      - { name: aw.setting.configuration }
+
+  app.settings.personal_data:
+    class: Accurateweb\ApplicationSettingsAdminBundle\Model\SettingConfiguration\StringSettingConfiguration
+    arguments:
+      - 'personal_data'
+      - 'Адрес страницы с политикой по обработке персональных данных'
+      - ~
+    tags:
+      - { name: aw.setting.configuration }
+
+  app.settings.social_telegram:
+    class: Accurateweb\ApplicationSettingsAdminBundle\Model\SettingConfiguration\StringSettingConfiguration
+    arguments:
+      - 'social_telegram'
+      - 'Адрес чата в Telegram'
+      - ~
+    tags:
+      - { name: aw.setting.configuration }
+
+  app.settings.social_instagram:
+    class: Accurateweb\ApplicationSettingsAdminBundle\Model\SettingConfiguration\StringSettingConfiguration
+    arguments:
+      - 'social_instagram'
+      - 'Адрес страницы Instagram ленты'
+      - ~
+    tags:
+      - { name: aw.setting.configuration }

@@ -93,12 +93,7 @@
                     <a href="#loacation" class="js-loacation">Москва и область</a>
                 </div>
                 <nav class="app-header__list">
-                    <ul>
-                        <li><a class="js-scroll" href="#first">Возврат денег за ОМС</a></li>
-                        <li><a class="js-scroll" href="#rating">Рейтинг страховых компаний</a></li>
-                        <li><a class="js-scroll" href="#work">О проекте</a></li>
-                        <li><a class="js-scroll" href="#faq">FAQ</a></li>
-                    </ul>
+                    {{ knp_menu_render('AppBundle:Builder:headerMenu') }}
                 </nav>
                 <a href="#" class="app-header__lk btn">
 
@@ -129,12 +124,7 @@
                         <a href="#loacation" class="js-loacation">Москва и область</a>
                     </div>
                 </div>
-                <ul class="nav-mobile__list">
-                    <li class="nav-mobile__list-item"><a class="js-scroll" href="#first">Возврат денег за ОМС</a></li>
-                    <li class="nav-mobile__list-item"><a class="js-scroll" href="#rating">Рейтинг страховых компаний</a></li>
-                    <li class="nav-mobile__list-item"><a class="js-scroll" href="#work">О проекте</a></li>
-                    <li class="nav-mobile__list-item"><a class="js-scroll" href="#faq">FAQ</a></li>
-                </ul>
+                {{ knp_menu_render('AppBundle:Builder:headerMenuMobile') }}
             </div>
         </div>
     </div>
@@ -584,14 +574,7 @@
                     страхования.
                 </div>
                 <nav class="app-footer__list">
-                    <ul>
-                        <li><a href="#" class="js-scroll">Страховым организациям</a></li>
-                        <li><a href="#" class="js-scroll">Контакты данные</a></li>
-                        <li><a href="#rating" class="js-scroll">Рейтинг страховых </a></li>
-                        <li><a href="#work" class="js-scroll">О нас</a></li>
-                        <li><a href="#reviews" class="js-scroll">Отзывы</a></li>
-                        <li><a href="#insider" class="js-scroll">Медицинский инсайдер</a></li>
-                    </ul>
+                    {{ knp_menu_render('AppBundle:Builder:footerMenu') }}
                 </nav>
             </div>
         </div>
@@ -605,32 +588,30 @@
                         © bezbahil.ru, 2020
                     </div>
                     <div class="app-footer__agree">
-                        <a href="#">Пользовательское соглашение</a>
+                        <a href="{{ setting('agreement') }}">Пользовательское соглашение</a>
                     </div>
                     <div class="app-footer__personal">
-                        <a href="#">Политика по обработке персональных данных</a>
+                        <a href="{{ setting('personal_data') }}">Политика по обработке персональных данных</a>
                     </div>
                 </div>
-                <div class="app-footer__soc">
-                    <a href="#" target="_blank">
 
+                <div class="app-footer__soc">
+                    <a href="{{ setting('social_telegram') }}" target="_blank">
                         <div class="svg-icon svg-icon--soc_teleg" aria-hidden="true">
                             <svg class="svg-icon__link">
                                 <use xlink:href="#soc_teleg"></use>
                             </svg>
                         </div>
-
                     </a>
-                    <a href="#" target="_blank">
-
+                    <a href="{{ setting('social_instagram') }}" target="_blank">
                         <div class="svg-icon svg-icon--soc_inst" aria-hidden="true">
                             <svg class="svg-icon__link">
                                 <use xlink:href="#soc_inst"></use>
                             </svg>
                         </div>
-
                     </a>
                 </div>
+
             </div>
         </div>
     </footer><!-- b:app-footer -->

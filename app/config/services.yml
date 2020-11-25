@@ -66,3 +66,11 @@ services:
             - '@logger'
         tags:
             - { name: "doctrine.event_subscriber" }
+
+    app.menu_builder:
+        class: AppBundle\Menu\Builder
+        arguments:
+            - "@knp_menu.factory"
+
+    AppBundle\Helper\MenuBuilder:
+        public: true

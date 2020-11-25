@@ -1,5 +1,11 @@
 Number List: Список "Безбахил в цифрах"
 Number Create: Создать новую запись
+Menu Header List: Меню шапки
+Menu Footer List: Меню футера
+Menu Social List: Меню "Соц.сети"
+Menu Header Create: Новый элемент меню
+Menu Footer Create: Новый элемент меню
+Menu Social Create: Новый элемент меню
 Question List: Список "Вопрос-ответ"
 Question Create: Создать новый "Вопрос-ответ"
 Alias: Алиас

@@ -8,17 +8,23 @@ use Tests\AppBundle\AppWebTestCase;
 use Tests\AppBundle\Fixtures\News\News;
 use Tests\AppBundle\Fixtures\Company\Feedback;
 use Tests\AppBundle\Fixtures\Number\Number;
+use Tests\AppBundle\Fixtures\Menu\MenuFooter;
+use Tests\AppBundle\Fixtures\Menu\MenuHeader;
 use Symfony\Component\DomCrawler\Crawler;
 use Tests\AppBundle\Fixtures\Question\Question;
+use Tests\AppBundle\Fixtures\Setting\Setting;
 
 class HomepageControllerTest extends AppWebTestCase
 {
   protected function setUpFixtures()
   {
     $this->addFixture(new Number());
+    $this->addFixture(new MenuFooter());
+    $this->addFixture(new MenuHeader());
     $this->addFixture(new Question());
     $this->addFixture(new Feedback());
     $this->addFixture(new News());
+    $this->addFixture(new Setting());
   }
 
   public function testIndex()
@@ -101,7 +107,6 @@ class HomepageControllerTest extends AppWebTestCase
     $client = static::createClient();
     $crawler = $client->request('GET', '/');
 
-    // Извлечение данных со страницы
     $questionsHtml = $crawler->filter('.b-question__item')->each(function (Crawler $node, $i)
     {
       return [
@@ -109,11 +114,116 @@ class HomepageControllerTest extends AppWebTestCase
         'answer' => trim($node->filter('.b-question__item-text')->text()),
       ];
     });
-
     $textPrev = 'Вопрос-ответ: ';
     $this->assertTrue(count($questionsHtml) > 0, $textPrev . 'Проверка, что данные вообще нашлись');
     $this->assertEquals('Пример вопроса', $questionsHtml[0]['question'], $textPrev . 'Проверка, что Вопрос совпадает');
     $this->assertEquals('Пример ответа', $questionsHtml[0]['answer'], $textPrev . 'Проверка, что Ответ совпадает');
+  }
+
+
+
+  /*** Проверка "Меню Header":
+   * https://jira.accurateweb.ru/browse/BEZBAHIL-92
+   **/
+  public function testMenuHeader()
+  {
+    $client = static::createClient();
+    $crawler = $client->request('GET', '/');
+
+    // Извлечение данных со страницы
+    $headerHtml = $crawler->filter('.app-header__in .app-header__list li a')->each(function (Crawler $node, $i)
+    {
+      return [
+        'title' => trim($node->text()),
+        'url' => $node->attr('href'),
+      ];
+    });
+    $textPrev = 'Меню Header: ';
+    $this->assertTrue(count($headerHtml) > 1, $textPrev . 'Проверка, что данные вообще нашлись');
+    $this->assertEquals('меню_шапка_1', $headerHtml[0]['title'], $textPrev . 'Проверка, что Заголовок меню совпадает');
+    $this->assertEquals('http://bezbahil.ru/1', $headerHtml[0]['url'], $textPrev . 'Проверка, что URL меню совпадает');
+    $this->assertEquals('меню_шапка_2', $headerHtml[1]['title'], $textPrev . 'Проверка, что Заголовок моб.меню совпадает');
+    $this->assertEquals('http://bezbahil.ru/2', $headerHtml[1]['url'], $textPrev . 'Проверка, что URL моб.меню совпадает');
+  }
+
+  /*** Проверка "Меню Header Mobile":
+   * https://jira.accurateweb.ru/browse/BEZBAHIL-92
+   **/
+  public function testMenuHeaderMobile()
+  {
+    $client = static::createClient();
+    $crawler = $client->request('GET', '/');
+
+    // Извлечение данных со страницы
+    $headerHtml = $crawler->filter('.nav-mobile__list li a')->each(function (Crawler $node, $i)
+    {
+      return [
+        'title' => trim($node->text()),
+        'url' => $node->attr('href'),
+      ];
+    });
+    $textPrev = 'Меню Header Mobile: ';
+    $this->assertTrue(count($headerHtml) > 1, $textPrev . 'Проверка, что данные вообще нашлись');
+    $this->assertEquals('меню_шапка_1', $headerHtml[0]['title'], $textPrev . 'Проверка, что Заголовок моб.меню совпадает');
+    $this->assertEquals('http://bezbahil.ru/1', $headerHtml[0]['url'], $textPrev . 'Проверка, что URL моб.меню совпадает');
+    $this->assertEquals('меню_шапка_2', $headerHtml[1]['title'], $textPrev . 'Проверка, что Заголовок моб.меню совпадает');
+    $this->assertEquals('http://bezbahil.ru/2', $headerHtml[1]['url'], $textPrev . 'Проверка, что URL моб.меню совпадает');
+  }
+
+  /*** Проверка "Меню Footer":
+   * https://jira.accurateweb.ru/browse/BEZBAHIL-92
+   **/
+  public function testMenuFooter()
+  {
+    $client = static::createClient();
+    $crawler = $client->request('GET', '/');
+
+    // Извлечение данных со страницы
+    $headerHtml = $crawler->filter('.app-footer__list li a')->each(function (Crawler $node, $i)
+    {
+      return [
+        'title' => trim($node->text()),
+        'url' => $node->attr('href'),
+      ];
+    });
+    $textPrev = 'Меню Footer: ';
+    $this->assertTrue(count($headerHtml) > 1, $textPrev . 'Проверка, что данные вообще нашлись');
+    $this->assertEquals('меню_футер_1', $headerHtml[0]['title'], $textPrev . 'Проверка, что Заголовок меню совпадает');
+    $this->assertEquals('http://bezbahil.ru/1', $headerHtml[0]['url'], $textPrev . 'Проверка, что URL меню совпадает');
+    $this->assertEquals('меню_футер_2', $headerHtml[1]['title'], $textPrev . 'Проверка, что Заголовок меню совпадает');
+    $this->assertEquals('http://bezbahil.ru/2', $headerHtml[1]['url'], $textPrev . 'Проверка, что URL меню совпадает');
+  }
+
+  /*** Проверка "Меню Footer":
+   * https://jira.accurateweb.ru/browse/BEZBAHIL-92
+   **/
+  public function testMenuSocial()
+  {
+    $client = static::createClient();
+    $crawler = $client->request('GET', '/');
+
+    $socialHtml = $crawler->filter('.app-footer__soc a')->each(function (Crawler $node, $i)
+    {
+      return [
+        'url' => $node->attr('href'),
+      ];
+    });
+    $textPrev = 'Меню Social: ';
+    $this->assertTrue(count($socialHtml) > 1, $textPrev . 'Проверка, что данные вообще нашлись');
+    $this->assertEquals('#social_telegram', $socialHtml[0]['url'], $textPrev . 'Проверка, что ссылка на telegram верная');
+    $this->assertEquals('#social_instagram', $socialHtml[1]['url'], $textPrev . 'Проверка, что ссылка на instagram верная');
+  }
+
+  /*** Проверка "Меню c пользовательским соглашением и политикой по обработке персональных данных":
+   * https://jira.accurateweb.ru/browse/BEZBAHIL-92
+   **/
+  public function testMenuAgreementAndPersonal()
+  {
+    $client = static::createClient();
+    $crawler = $client->request('GET', '/');
+
+    $this->assertEquals('#agreement', $crawler->filter('.app-footer__agree a')->attr('href'), 'Проверка, что Адрес страницы с пользовательским соглашением совпадает');
+    $this->assertEquals('#personal_data', $crawler->filter('.app-footer__personal a')->attr('href'), 'Проверка, что сАдрес страницы с политикой по обработке персональных данных совпадает');
   }
 
   /*** Проверка "Топ страховых компаний": **/

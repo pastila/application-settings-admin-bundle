@@ -22,3 +22,21 @@ services:
     arguments: [~, %aw.news.entity_class%,~]
     tags:
       -  { name: sonata.admin, group: %aw.news.admin.group%, manager_type: orm, label: %aw.news.admin.label% }
+
+  app.admin.menu_header:
+    class: AppBundle\Admin\Menu\MenuHeaderAdmin
+    arguments:
+      - ~
+      - AppBundle\Entity\Menu\MenuHeader
+      - PixSortableBehaviorBundle:SortableAdmin
+    tags:
+      - { name: sonata.admin, manager_type: orm, group: 'main_page', label: 'Меню шапки' }
+
+  app.admin.menu_footer:
+    class: AppBundle\Admin\Menu\MenuFooterAdmin
+    arguments:
+      - ~
+      - AppBundle\Entity\Menu\MenuFooter
+      - PixSortableBehaviorBundle:SortableAdmin
+    tags:
+      - { name: sonata.admin, manager_type: orm, group: 'main_page', label: 'Меню футера' }
