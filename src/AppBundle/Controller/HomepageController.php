@@ -91,16 +91,23 @@ class HomepageController extends Controller
    */
   public function selectLocationAction(Request $request)
   {
-    $data = $request->request->all();
-    $data = ['id' => 3];
+    $em = $this->getDoctrine()->getManager();
+    $repository = $em->getRepository(Region::class);
 
     /**
      * @var Region $region
      */
-    $region = $this->getDoctrine()->getManager()->getRepository(Region::class)
-      ->findOneBy(['id' => $data['id']]);
+    $region = $repository->findOneBy(['id' => $request->get('region_id')]);
+    if (!$region)
+    {
+      return new JsonResponse([
+        'Not found region: ' . $request->get('region_id')
+      ], 400);
+    }
 
     $resolvedLocation = $region->getResolvedLocation();
     $this->locationService->setResolvedLocation($resolvedLocation);
+
+    return new JsonResponse(1);
   }
 }
