@@ -4,6 +4,10 @@
 
 {% block meta %}
     {{ parent() }}
+
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="{{ title }}"/>
+    <meta property="og:url" content="{{ url('news_show', {slug: news.slug }) }}"/>
 {% endblock %}
 
 {% block title %}{{ title }}{% endblock %}
