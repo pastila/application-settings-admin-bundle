@@ -3,10 +3,8 @@
 namespace AppBundle\Menu;
 
 
-use AppBundle\Entity\Menu\AbstractMenu;
 use AppBundle\Entity\Menu\MenuFooter;
 use AppBundle\Entity\Menu\MenuHeader;
-use AppBundle\Entity\Menu\MenuSocial;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -39,17 +37,5 @@ final class Builder implements ContainerAwareInterface
     $helper = $this->container->get('AppBundle\Helper\MenuBuilder');
 
     return $helper->getMenu($menu, MenuFooter::class, null);
-  }
-
-  public function socialMenu(FactoryInterface $factory, array $options): ItemInterface
-  {
-    $menu = $factory->createItem('root');
-    $menu->setChildrenAttribute('class', 'app-footer__soc');
-    $menu->setAttributes([
-      'isDiv' => true
-    ]);
-    $helper = $this->container->get('AppBundle\Helper\MenuBuilder');
-
-    return $helper->getMenu($menu, MenuSocial::class, ['isLiHide' => true, 'target' => '_blank', 'image' => true]);
   }
 }

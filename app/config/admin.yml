@@ -40,12 +40,3 @@ services:
       - PixSortableBehaviorBundle:SortableAdmin
     tags:
       - { name: sonata.admin, manager_type: orm, group: 'main_page', label: 'Меню футера' }
-
-  app.admin.menu_social:
-    class: AppBundle\Admin\Menu\MenuSocialAdmin
-    arguments:
-      - ~
-      - AppBundle\Entity\Menu\MenuSocial
-      - PixSortableBehaviorBundle:SortableAdmin
-    tags:
-      - { name: sonata.admin, manager_type: orm, group: 'main_page', label: 'Меню "Соц.сети"' }

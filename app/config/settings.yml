@@ -25,3 +25,21 @@ services:
       - ~
     tags:
       - { name: aw.setting.configuration }
+
+  app.settings.social_telegram:
+    class: Accurateweb\ApplicationSettingsAdminBundle\Model\SettingConfiguration\StringSettingConfiguration
+    arguments:
+      - 'social_telegram'
+      - 'Адрес чата в Telegram'
+      - ~
+    tags:
+      - { name: aw.setting.configuration }
+
+  app.settings.social_instagram:
+    class: Accurateweb\ApplicationSettingsAdminBundle\Model\SettingConfiguration\StringSettingConfiguration
+    arguments:
+      - 'social_instagram'
+      - 'Адрес страницы Instagram ленты'
+      - ~
+    tags:
+      - { name: aw.setting.configuration }
