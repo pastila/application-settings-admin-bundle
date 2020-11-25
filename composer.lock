@@ -132,12 +132,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/accurateweb/location-bundle.git",
-                "reference": "a7c8aa681b7a7d552f3e599ac774fa280f84c75d"
+                "reference": "fe30fff61df512f6ec18812f5cca1448fc60bd75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/accurateweb/location-bundle/zipball/a7c8aa681b7a7d552f3e599ac774fa280f84c75d",
-                "reference": "a7c8aa681b7a7d552f3e599ac774fa280f84c75d",
+                "url": "https://api.github.com/repos/accurateweb/location-bundle/zipball/fe30fff61df512f6ec18812f5cca1448fc60bd75",
+                "reference": "fe30fff61df512f6ec18812f5cca1448fc60bd75",
                 "shasum": ""
             },
             "default-branch": true,
@@ -151,7 +151,7 @@
                 "source": "https://github.com/accurateweb/location-bundle/tree/master",
                 "issues": "https://github.com/accurateweb/location-bundle/issues"
             },
-            "time": "2020-11-25T09:05:00+00:00"
+            "time": "2020-11-25T13:13:17+00:00"
         },
         {
             "name": "accurateweb/media-bundle",
