@@ -70,7 +70,15 @@
                     </div>
                     <meta itemprop="url" content="{{ app.request.getSchemeAndHttpHost() }}" />
 
+                    <div class="news-detail_image" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
+                        <link itemprop="url" href="/local/templates/kdteam/images/favicon.png">
+                    </div>
+
                     <div class="content-news">
+                        <span class="news-date-time date_news" itemprop="datePublished" >{{ news.publishedAt |prepareDate('Y-m-d') }}</span>
+                        <meta itemprop="headline" content="{{ news.title }}">
+                        <meta itemprop="description" content="{{ news.announce }}">
+
                         <p itemprop="articleBody">
                             {{ news.text |raw }}
                         </p>
