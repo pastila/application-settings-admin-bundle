@@ -79,7 +79,8 @@
                     </div>
 
                     <div class="content-news">
-                        <span class="news-date-time date_news" itemprop="datePublished" >{{ news.publishedAt |prepareDate('Y-m-d') }}</span>
+                        <span class="news-date-time date_news">  {{ news.publishedAt |prepareDate('d F, Y') }}</span>
+                        <meta itemprop="datePublished" content="{{ news.publishedAt |prepareDate('Y-m-d') }}">
                         <meta itemprop="headline" content="{{ news.title }}">
                         <meta itemprop="description" content="{{ news.announce }}">
 

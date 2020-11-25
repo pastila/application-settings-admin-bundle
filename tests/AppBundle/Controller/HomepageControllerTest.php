@@ -158,8 +158,10 @@ class HomepageControllerTest extends AppWebTestCase
     });
 
     $textPrev = 'Блог: ';
-    $this->assertTrue(count($newsHtml) > 0, $textPrev . 'Проверка, что данные вообще нашлись');
-    $this->assertEquals('Заголовок', $newsHtml[0]['title'], $textPrev . 'Проверка, что Заголовок совпадает');
-    $this->assertEquals('Анонс статьи', $newsHtml[0]['announce'], $textPrev . 'Проверка, что Анонс совпадает');
+    $this->assertTrue(count($newsHtml) > 1, $textPrev . 'Проверка, что данные вообще нашлись');
+    $this->assertEquals('Заголовок1', $newsHtml[0]['title'], $textPrev . 'Проверка, что Заголовок совпадает');
+    $this->assertEquals('Анонс статьи1', $newsHtml[0]['announce'], $textPrev . 'Проверка, что Анонс совпадает');
+    $this->assertEquals('Заголовок2', $newsHtml[1]['title'], $textPrev . 'Проверка, что Заголовок совпадает');
+    $this->assertEquals('Анонс статьи2', $newsHtml[1]['announce'], $textPrev . 'Проверка, что Анонс совпадает');
   }
 }
