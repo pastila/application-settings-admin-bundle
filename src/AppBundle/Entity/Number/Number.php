@@ -4,10 +4,12 @@ namespace AppBundle\Entity\Number;
 
 use Accurateweb\ImagingBundle\Filter\CropFilterOptionsResolver;
 use Accurateweb\ImagingBundle\Filter\FilterChain;
+use Accurateweb\MediaBundle\Exception\OperationNotSupportedException;
 use Accurateweb\MediaBundle\Model\Image\ImageAwareInterface;
 use Accurateweb\MediaBundle\Model\Media\ImageInterface;
 use Accurateweb\MediaBundle\Model\Thumbnail\ImageThumbnail;
 use Accurateweb\MediaBundle\Model\Thumbnail\ThumbnailDefinition;
+use AppBundle\Model\Media\NumberImage;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Accurateweb\MediaBundle\Annotation as Media;
@@ -16,7 +18,7 @@ use Accurateweb\MediaBundle\Annotation as Media;
  * @ORM\Table(name="s_numbers")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Number\NumberRepository")
  */
-class Number implements ImageAwareInterface, ImageInterface
+class Number implements ImageAwareInterface
 {
   /**
    * @var integer
@@ -72,10 +74,10 @@ class Number implements ImageAwareInterface, ImageInterface
   /**
    * @var string
    *
-   * @ORM\Column(name="original", type="string", length=255, nullable=true)
-   * @Media\Image(id="original")
+   * @ORM\Column(name="image", type="string", length=255, nullable=true)
+   * @Media\Image(id="number")
    */
-  protected $original;
+  protected $teaser;
 
   /**
    * @return integer
@@ -194,20 +196,20 @@ class Number implements ImageAwareInterface, ImageInterface
   /**
    * @return string
    */
-  public function getOriginal()
+  public function getTeaser()
   {
-    return $this->original;
+    return $this->teaser;
   }
 
   /**
-   * @param $original
+   * @param $teaser
    * @return $this
    */
-  public function setOriginal($original)
+  public function setTeaser($teaser)
   {
-    if (!is_null($original))
+    if (!is_null($teaser))
     {
-      $this->original = $original;
+      $this->teaser = $teaser;
     }
 
     return $this;
@@ -218,83 +220,12 @@ class Number implements ImageAwareInterface, ImageInterface
    */
   public function getIsImageSvg()
   {
-    if (!is_null($this->original))
+    if (!is_null($this->teaser))
     {
-      $array = explode(".", $this->original);
+      $array = explode(".", $this->teaser);
       return (end($array) === 'svg') ? true : false;
     }
     return false;
-  }
-
-  /**
-   * @return string
-   */
-  public function getResourceId()
-  {
-    return $this->getOriginal();
-  }
-
-  /**
-   * @param $resourceId string
-   */
-  public function setResourceId($resourceId)
-  {
-    $this->setOriginal($resourceId);
-  }
-
-  /**
-   * Get thumbnail definitions
-   *
-   * @return string[]
-   */
-  public function getThumbnailDefinitions()
-  {
-    return [
-      'preview' => new ThumbnailDefinition('preview', new FilterChain([
-        [
-          'id' => 'crop',
-          'options' => [],
-          'resolver' => new CropFilterOptionsResolver()
-        ],
-        [
-          'id' => 'resize',
-          'options' => ['size' => '80x80']
-        ]
-      ])),
-      'small' => new ThumbnailDefinition('small', new FilterChain([
-        [
-          'id' => 'resize',
-          'options' => ['size' => 'x130']
-        ]
-      ]))
-    ];
-  }
-
-  /**
-   * @param string $id
-   * @return ImageThumbnail
-   * @throws \Exception
-   */
-  public function getThumbnail($id)
-  {
-    $definitions = $this->getThumbnailDefinitions();
-
-    $found = false;
-    foreach ($definitions as $definition)
-    {
-      if ($definition->getId() == $id)
-      {
-        $found = true;
-        break;
-      }
-    }
-
-    if (!$found)
-    {
-      throw new \Exception('Image thumbnail definition not found');
-    }
-
-    return new ImageThumbnail($id, $this);
   }
 
   /**
@@ -303,7 +234,7 @@ class Number implements ImageAwareInterface, ImageInterface
    */
   public function getImage($id = null)
   {
-    return $this;
+    return new NumberImage('number', $this->teaser);
   }
 
   /**
@@ -312,8 +243,18 @@ class Number implements ImageAwareInterface, ImageInterface
    */
   public function setImage(ImageInterface $image)
   {
-    $this->setResourceId($image->getResourceId());
+    $this->setTeaser($image->getResourceId());
     return $this;
+  }
+
+  public function setTeaserImage ($image)
+  {
+    return $this->setImage($image);
+  }
+
+  public function getTeaserImage ()
+  {
+    return $this->getImage();
   }
 
   /**
@@ -327,15 +268,6 @@ class Number implements ImageAwareInterface, ImageInterface
 
   public function setImageOptions($id)
   {
-  }
-
-  public function getOriginalImage ()
-  {
-    return $this->getImage();
-  }
-
-  public function setOriginalImage ($image)
-  {
-    return $this->setImage($image);
+    throw new OperationNotSupportedException();
   }
 }
