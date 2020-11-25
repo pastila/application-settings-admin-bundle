@@ -12,6 +12,7 @@ use Tests\AppBundle\Fixtures\Menu\MenuFooter;
 use Tests\AppBundle\Fixtures\Menu\MenuHeader;
 use Symfony\Component\DomCrawler\Crawler;
 use Tests\AppBundle\Fixtures\Question\Question;
+use Tests\AppBundle\Fixtures\Setting\Setting;
 
 class HomepageControllerTest extends AppWebTestCase
 {
@@ -23,6 +24,7 @@ class HomepageControllerTest extends AppWebTestCase
     $this->addFixture(new Question());
     $this->addFixture(new Feedback());
     $this->addFixture(new News());
+    $this->addFixture(new Setting());
   }
 
   public function testIndex()
@@ -190,6 +192,38 @@ class HomepageControllerTest extends AppWebTestCase
     $this->assertEquals('http://bezbahil.ru/1', $headerHtml[0]['url'], $textPrev . 'Проверка, что URL меню совпадает');
     $this->assertEquals('меню_футер_2', $headerHtml[1]['title'], $textPrev . 'Проверка, что Заголовок меню совпадает');
     $this->assertEquals('http://bezbahil.ru/2', $headerHtml[1]['url'], $textPrev . 'Проверка, что URL меню совпадает');
+  }
+
+  /*** Проверка "Меню Footer":
+   * https://jira.accurateweb.ru/browse/BEZBAHIL-92
+   **/
+  public function testMenuSocial()
+  {
+    $client = static::createClient();
+    $crawler = $client->request('GET', '/');
+
+    $socialHtml = $crawler->filter('.app-footer__soc a')->each(function (Crawler $node, $i)
+    {
+      return [
+        'url' => $node->attr('href'),
+      ];
+    });
+    $textPrev = 'Меню Social: ';
+    $this->assertTrue(count($socialHtml) > 1, $textPrev . 'Проверка, что данные вообще нашлись');
+    $this->assertEquals('#social_telegram', $socialHtml[0]['url'], $textPrev . 'Проверка, что ссылка на telegram верная');
+    $this->assertEquals('#social_instagram', $socialHtml[1]['url'], $textPrev . 'Проверка, что ссылка на instagram верная');
+  }
+
+  /*** Проверка "Меню c пользовательским соглашением и политикой по обработке персональных данных":
+   * https://jira.accurateweb.ru/browse/BEZBAHIL-92
+   **/
+  public function testMenuAgreementAndPersonal()
+  {
+    $client = static::createClient();
+    $crawler = $client->request('GET', '/');
+
+    $this->assertEquals('#agreement', $crawler->filter('.app-footer__agree a')->attr('href'), 'Проверка, что Адрес страницы с пользовательским соглашением совпадает');
+    $this->assertEquals('#personal_data', $crawler->filter('.app-footer__personal a')->attr('href'), 'Проверка, что сАдрес страницы с политикой по обработке персональных данных совпадает');
   }
 
   /*** Проверка "Топ страховых компаний": **/
