@@ -240,7 +240,7 @@ class HomepageControllerTest extends AppWebTestCase
     {
       return [
         'name' => $node->filter('.b-rating__item-title')->text(),
-        'rating' => $node->filter('.svg-icon--star')->count(),
+        'rating' => $node->filter('.svg-icon--star.active')->count(),
       ];
     });
     $textPrev = 'Топ страховых компаний: ';
