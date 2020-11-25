@@ -56,6 +56,8 @@ class HomepageController extends Controller
 
     $feedbacks = $em->getRepository(Feedback::class)
       ->getFeedbackActive()
+      ->setMaxResults(6)
+      ->orderBy('rv.createdAt', 'DESC')
       ->getQuery()
       ->getResult();
 
