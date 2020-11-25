@@ -62,5 +62,4 @@ class CompanyBranch extends Fixture implements DependentFixtureInterface
     $this->addReference('akbars-66', $akbars66);
     $this->addReference('ingostach_m66', $ingostach_m66);
   }
-
 }
