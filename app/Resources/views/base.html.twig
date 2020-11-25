@@ -1,303 +1,250 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="ru">
 
 <head>
-    {% block meta %}
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="HandheldFriendly" content="true">
-        <meta name="yandex-verification" content="3117711c7cf9d47f" />
-        <meta name="google-site-verification" content="6i-0zWPQEfVk1TaN63icBNxaPtFIwxrzlrG-w4oiTyg" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="yandex-verification" content="3117711c7cf9d47f"/>
+    <meta name="google-site-verification" content="6i-0zWPQEfVk1TaN63icBNxaPtFIwxrzlrG-w4oiTyg"/>
+{#    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />#}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="robots" content="index, follow"/>
+    <meta name="keywords" content="bezbahil"/>
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE">
+    <meta name="format-detection" content="telephone=no">
+
+    <meta name="theme-color" content="">
+
+    {% block metaDescription %}
+        <meta name="description"
+              content="Мы помогаем вернуть деньги за лечение по полису обязательного медицинского страхования: профессионально и бесплатно. Оформите заявку прямо сейчас!"/>
     {% endblock %}
 
-    <title>{% block title %}Сервис «Без Бахил» сохраняет здоровье и деньги{% endblock %}</title>
+    {% block title %}
+        <title>Сервис «Без Бахил» сохраняет здоровье и деньги</title>
+    {% endblock %}
 
-    <link rel="shortcut icon" href="/local/templates/kdteam/images/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-{#    <?php $APPLICATION->ShowHead(); ?>#}
+    <link type="image/png" href="/landing/favicon.png" rel="icon">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/landing/apple-touch-icon.png?v=zX7n49rwEM">
+    <link rel="icon" type="image/png" sizes="32x32" href="/landing/favicon-32x32.png?v=zX7n49rwEM">
+    <link rel="icon" type="image/png" sizes="16x16" href="/landing/favicon-16x16.png?v=zX7n49rwEM">
+    <link rel="shortcut icon" href="/landing/favicon.ico?v=zX7n49rwEM">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://bezbahil.ru"/>
+    <meta property="og:title" content="Bezbahil.ru"/>
+    <meta property="og:site_name" content="Без Бахил. Лечись бесплатно!"/>
+    <meta property="og:description" content="Сервис bezbahil — сохраняет здоровье и деньги."/>
+    <meta property="og:locale" content="ru_RU"/>
+{#    <meta property="og:image" content="http://bezbahil.docker/local/templates/kdteam/images/png/header/logo-oms-white.png"/>#}
     <meta property = "og:image" content="https://bezbahil.ru/local/templates/kdteam/images/png/header/logo-oms-white.jpg"/>
-    <link rel="image_src" href="https://bezbahil.ru/local/templates/kdteam/images/png/header/logo-oms-white.jpg" />
-
-    {% block stylesheets %}
-        <link href="/local/templates/kdteam/styles/main.min.css" type="text/css"  data-template-style="true"  rel="stylesheet" />
-    {% endblock %}
-
-{#    <?php if ($_SERVER[REQUEST_URI] === '/') { ?>#}
-{#    <script type="application/ld+json">#}
-{#        {#}
-{#            "@context": "http://schema.org/",#}
-{#            "@type": "WebSite",#}
-{#            "name": "Без Бахил",#}
-{#            "url": "https://bezbahil.ru/"#}
-{#        }#}
-{#    </script>#}
-{#    <?php }?>#}
-
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript" >
-        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-            m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)
-
-                [0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-        ym(57673804, "init", {
-            clickmap:true,
-            trackLinks:true,
-            accurateTrackBounce:true,
-            webvisor:true
-        });
-    </script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/57673804" style="position:absolute;
-
-left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
-
-
-    <!-- Google Tag Manager -->
-    <script data-skip-moving="true">
-        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-N3VBFGG');
-    </script>
-    <!-- End Google Tag Manager -->
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 
     <!-- Адмитад -->
-    <meta name="verify-admitad" content="d368515aeb" />
+    <meta name="verify-admitad" content="d368515aeb"/>
     <!-- /Адмитад -->
-    <!--  JivoSite -->
-    <script src="//code-ya.jivosite.com/widget/u0hymF3kCA" async></script>
-    <!-- / JivoSite -->
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://bezbahil.ru">
+    <meta property="twitter:title" content="">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://okc.media/bb/img/bb-default.png">
+
+    <link rel="image_src" href="https://bezbahil.ru/local/templates/kdteam/images/png/header/logo-oms-white.jpg"/>
+
+    {% block stylesheets %}{% endblock %}
 </head>
 
-<body>
-<!-- Google Tag Manager (noscript) -->
-<noscript>
-    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N3VBFGG"
-            height="0" width="0" style="display:none;visibility:hidden"></iframe>
-</noscript>
-<!-- End Google Tag Manager (noscript) -->
-{#<?php $APPLICATION->ShowPanel();#}
-{#?>#}
+<body class="app">
+
+<svg class="main-svg-sprite main-svg-sprite--icons" xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+    <symbol viewBox="0 0 26 10" id="arrow" xmlns="http://www.w3.org/2000/svg">
+        <g data-name="Layer 2">
+            <path d="M20.34.23a.6.6 0 00-.87-.08.63.63 0 00-.08.88l.08.08 4.43 3.28H.59a.63.63 0 00-.59.67.62.62 0 00.59.59H23.9l-4.44 3.28a.66.66 0 000 .89.62.62 0 00.87 0l5.49-4.36a.62.62 0 000-.87z"
+                  data-name="Layer 1"></path>
+        </g>
+    </symbol>
+    <symbol viewBox="0 0 13 7" id="arrow_drop" xmlns="http://www.w3.org/2000/svg">
+        <g data-name="Layer 2">
+            <path d="M6.58 7A.79.79 0 007 6.79l5.63-5.2a.92.92 0 00.23-1.21.76.76 0 00-1.11-.23.86.86 0 00-.14.13L6.5 5 1.39.28A.76.76 0 00.26.23a.91.91 0 000 1.23.8.8 0 00.13.13L6 6.79a.78.78 0 00.58.21z"
+                  data-name="Layer 1"></path>
+        </g>
+    </symbol>
+    <symbol viewBox="0 0 30 30" id="close" xmlns="http://www.w3.org/2000/svg">
+        <g data-name="Layer 2">
+            <path d="M15 0a15 15 0 1015 15A15 15 0 0015 0zm6.66 19.37a1.66 1.66 0 01.15 2.44 1.53 1.53 0 01-1.09.47 1.92 1.92 0 01-1.35-.62L15 17.29l-4.37 4.37a1.69 1.69 0 01-2.44.15 1.66 1.66 0 01.15-2.44L12.71 15l-4.37-4.37a1.66 1.66 0 01-.15-2.44 1.69 1.69 0 012.44.15L15 12.71l4.37-4.37a1.69 1.69 0 012.44-.15 1.66 1.66 0 01-.15 2.44L17.29 15z"
+                  data-name="Layer 1"></path>
+        </g>
+    </symbol>
+    <symbol viewBox="0 0 18 18" id="lk" xmlns="http://www.w3.org/2000/svg">
+        <g data-name="Layer 2">
+            <path d="M9 18a9 9 0 10-9-9 9 9 0 009 9zm0-1.38a7.58 7.58 0 01-5.39-2.25 7.6 7.6 0 0110.78 0A7.58 7.58 0 019 16.62zM6.23 8A2.77 2.77 0 119 10.75 2.77 2.77 0 016.23 8zM9 1.38a7.61 7.61 0 016.28 11.92 9.11 9.11 0 00-3.61-2.14 4.15 4.15 0 10-5.34 0 9.11 9.11 0 00-3.61 2.14A7.61 7.61 0 019 1.38z"
+                  data-name="Layer 1"></path>
+        </g>
+    </symbol>
+    <symbol viewBox="0 0 11 13" id="location" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <style>.ecls-1 {
+                    fill: #b2b2b2;
+                    fill-rule: evenodd
+                }</style>
+        </defs>
+        <g id="eLayer_2" data-name="Layer 2">
+            <path class="ecls-1"
+                  d="M5.47 13C7.38 10.86 11 8.36 11 5.4a5.5 5.5 0 00-11 0c0 2.96 3.62 5.46 5.47 7.6zm0-9.84A2.27 2.27 0 113.2 5.4a2.29 2.29 0 012.27-2.24z"
+                  id="eLayer_1-2" data-name="Layer 1"></path>
+        </g>
+    </symbol>
+    <symbol viewBox="0 0 24 24" id="menu" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+    </symbol>
+    <symbol viewBox="0 0 20 20" id="ok" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <style>.gcls-1 {
+                    fill: #009b3a
+                }</style>
+        </defs>
+        <g id="gLayer_2" data-name="Layer 2">
+            <g id="gLayer_1-2" data-name="Layer 1">
+                <path class="gcls-1"
+                      d="M10 20A10 10 0 100 10a10 10 0 0010 10zm0-17.8A7.8 7.8 0 112.2 10 7.82 7.82 0 0110 2.2z"></path>
+                <path class="gcls-1"
+                      d="M14.54 7.91l-1.56-1.56-4.31 4.3-1.65-1.64-1.56 1.55 3.21 3.21 5.87-5.86z"></path>
+            </g>
+        </g>
+    </symbol>
+    <symbol viewBox="0 0 18 18" id="question" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <style>.hcls-1 {
+                    fill: #fa7167
+                }</style>
+        </defs>
+        <g id="hLayer_2" data-name="Layer 2">
+            <g id="hLayer_1-2" data-name="Layer 1">
+                <path class="hcls-1"
+                      d="M15.37 2.64A9 9 0 002.63 15.36 9 9 0 1015.37 2.64zm-1.11 11.61A7.43 7.43 0 019 16.44a7.34 7.34 0 01-5.26-2.19 7.44 7.44 0 1110.52 0z"></path>
+                <path class="hcls-1"
+                      d="M7.71 13.13a1 1 0 001.89 0 .95.95 0 00-1.89 0zM9 4.2c-1.86 0-3.62.85-3.62 2.87h1.47C6.85 6 8 5.53 9 5.53s2.1.27 2.1 1.51c0 .92-.8 1.12-1.51 1.45-1 .4-1.66.91-1.66 2.75H9.4c0-.9.18-1.23.8-1.54.8-.47 2.42-.73 2.42-2.66S10.86 4.2 9 4.2z"></path>
+            </g>
+        </g>
+    </symbol>
+    <symbol viewBox="0 0 12 23" id="scroll" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <style>.icls-1 {
+                    fill: #134469
+                }</style>
+        </defs>
+        <g id="iLayer_2" data-name="Layer 2">
+            <g id="iLayer_1-2" data-name="Layer 1">
+                <path class="icls-1"
+                      d="M6 1.55A4.57 4.57 0 001.5 6.2v6.2A4.58 4.58 0 006 17.06a4.58 4.58 0 004.5-4.66V6.2A4.57 4.57 0 006 1.55zM6 0a6.11 6.11 0 016 6.2v6.2a6.11 6.11 0 01-6 6.21 6.11 6.11 0 01-6-6.21V6.2A6.11 6.11 0 016 0z"></path>
+                <path class="icls-1"
+                      d="M5.25 4.65a.75.75 0 111.5 0v4.14a.75.75 0 11-1.5 0zM6.37 22.9a.74.74 0 01-1-.29.79.79 0 01.28-1.06l3.5-2.07a.74.74 0 011 .29.79.79 0 01-.28 1.06z"></path>
+                <path class="icls-1"
+                      d="M6.37 21.55a.79.79 0 01.28 1.06.74.74 0 01-1 .29l-3.5-2.07a.79.79 0 01-.28-1.06.74.74 0 011-.29z"></path>
+            </g>
+        </g>
+    </symbol>
+    <symbol viewBox="0 0 32 32" id="search" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19.427 20.427a8.5 8.5 0 112-2l5.585 5.585c.55.55.546 1.431 0 1.976l-.023.023a1.398 1.398 0 01-1.976 0l-5.585-5.585zM14.5 20a6.5 6.5 0 100-13 6.5 6.5 0 000 13z"></path>
+    </symbol>
+    <symbol viewBox="0 0 17 17" id="soc_inst" xmlns="http://www.w3.org/2000/svg">
+        <g data-name="Layer 2">
+            <g data-name="Layer 1">
+                <path d="M8.5 4.08a4.39 4.39 0 104.39 4.39A4.4 4.4 0 008.5 4.08zm0 7.2a2.81 2.81 0 112.81-2.81 2.83 2.83 0 01-2.81 2.81z"></path>
+                <circle cx="13.06" cy="3.98" r=".99"></circle>
+                <path d="M15.63 1.41A4.87 4.87 0 0012 0H5a4.7 4.7 0 00-5 5v7a4.91 4.91 0 001.44 3.66A5 5 0 005 17h7a5 5 0 003.59-1.34A4.89 4.89 0 0017 12V5a4.9 4.9 0 00-1.37-3.59zM15.49 12a3.37 3.37 0 01-1 2.5 3.57 3.57 0 01-2.5.89H5a3.57 3.57 0 01-2.5-.89 3.45 3.45 0 01-.92-2.5V5a3.42 3.42 0 01.92-2.5A3.5 3.5 0 015 1.58h7.06a3.46 3.46 0 012.51.92 3.56 3.56 0 01.92 2.5v7z"></path>
+            </g>
+        </g>
+    </symbol>
+    <symbol viewBox="0 0 17 15" id="soc_teleg" xmlns="http://www.w3.org/2000/svg">
+        <g data-name="Layer 2">
+            <path d="M17 1.37l-2.61 12.72c-.2.9-.7 1.13-1.42.7l-3.91-3-1.88 1.88a1 1 0 01-.79.4l.28-4.18L13.92 3c.31-.3-.07-.46-.49-.17l-9 5.94L.61 7.5c-.83-.28-.85-.88.18-1.31L15.87.08c.7-.28 1.31.16 1.13 1.29z"
+                  data-name="Layer 1"></path>
+        </g>
+    </symbol>
+    <symbol viewBox="0 0 16 16" id="star" xmlns="http://www.w3.org/2000/svg">
+        <g data-name="Layer 2">
+            <path d="M16 5.92a.43.43 0 00-.34-.27l-5-.69L8.29.23A.42.42 0 007.91 0a.43.43 0 00-.38.25l-2.17 4.8-5 .84a.43.43 0 00-.36.29.41.41 0 00.1.42l3.7 3.66-.8 5.26a.41.41 0 00.17.41.42.42 0 00.45 0l4.45-2.53 4.51 2.39a.43.43 0 00.45 0 .4.4 0 00.16-.41l-.93-5.24 3.58-3.77a.42.42 0 00.16-.45z"
+                  data-name="Layer 1"></path>
+        </g>
+    </symbol>
+</svg>
+<svg class="main-svg-sprite main-svg-sprite--colored" xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+    <symbol id="marmelad" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <style>.ast6 {
+                fill: #fff
+            }</style>
+        <path fill="#f7e018"
+              d="M272 274.8c-37.5 0-67.9-30.4-67.9-67.9 0-31.4-25.6-57-57-57-37.5 0-67.9-30.4-67.9-67.9s30.4-67.9 67.9-67.9c106.3 0 192.8 86.5 192.8 192.8 0 37.5-30.4 67.9-67.9 67.9z"></path>
+        <path fill="#1988c6"
+              d="M243.8 394.9c0-37.5 30.4-67.9 67.9-67.9 31.4 0 57-25.6 57-57 0-37.5 30.4-67.9 67.9-67.9s67.9 30.4 67.9 67.9c0 106.3-86.5 192.8-192.8 192.8-37.5 0-67.9-30.4-67.9-67.9z"></path>
+        <path fill="#f16524"
+              d="M133.5 200.3c31.3 20.7 39.9 62.8 19.2 94.1-17.3 26.2-10.1 61.6 16.1 79 31.3 20.7 39.9 62.8 19.2 94.1s-62.8 39.9-94.1 19.2C5.2 427.9-19.2 308.1 39.4 219.5c20.7-31.3 62.8-39.9 94.1-19.2z"></path>
+        <path fill="#e5cd1a"
+              d="M234.1 206.9c0-31.4-25.6-57-57-57-37.5 0-67.9-30.4-67.9-67.9 0-33.7 24.5-61.7 56.7-67-6.2-.6-12.5-.9-18.8-.9-37.5 0-67.9 30.4-67.9 67.9s30.4 67.9 67.9 67.9c31.4 0 57 25.6 57 57 0 37.5 30.4 67.9 67.9 67.9 5.2 0 10.2-.6 15-1.7-30.3-6.8-52.9-33.8-52.9-66.2z"></path>
+        <path fill="#1c73ba"
+              d="M273.8 394.9c0-37.5 30.4-67.9 67.9-67.9 31.4 0 57-25.6 57-57 0-32.3 22.6-59.4 52.9-66.2-4.8-1.1-9.8-1.7-15-1.7-37.5 0-67.9 30.4-67.9 67.9 0 31.4-25.6 57-57 57-37.5 0-67.9 30.4-67.9 67.9s30.4 67.9 67.9 67.9c6.4 0 12.6-.3 18.8-.9-32.1-5.3-56.7-33.3-56.7-67z"></path>
+        <path fill="#e54c21"
+              d="M123.9 486.6C35.2 427.9 10.8 308.1 69.4 219.5c10.1-15.2 25.2-25.1 41.7-28.8-26.8-6.1-55.7 4.5-71.7 28.8C-19.2 308.2 5.2 428 93.9 486.6c16.1 10.6 35 13.5 52.4 9.6-7.8-1.8-15.4-5-22.4-9.6z"></path>
+        <path d="M347.4 206.9c0-110.4-89.8-200.3-200.3-200.3-41.6 0-75.4 33.8-75.4 75.4s33.8 75.4 75.4 75.4c27.3 0 49.5 22.2 49.5 49.5 0 41.6 33.8 75.4 75.4 75.4 41.6 0 75.4-33.8 75.4-75.4zm-135.8 0c0-35.6-28.9-64.5-64.5-64.5-33.3 0-60.4-27.1-60.4-60.4s27.1-60.4 60.4-60.4c102.2 0 185.3 83.1 185.3 185.3 0 33.3-27.1 60.4-60.4 60.4s-60.4-27.1-60.4-60.4z"></path>
+        <path d="M120.7 82h-15c0 22.9 18.6 41.4 41.4 41.4 17.7 0 34.7 5.5 49 15.9l8.8-12.1c-16.9-12.3-36.9-18.8-57.8-18.8-14.5.1-26.4-11.8-26.4-26.4zm186.7 80.2c-12.8-45.8-44.8-84.1-87.7-105l-6.6 13.5c39.1 19 68.2 53.8 79.8 95.5l14.5-4zM190.9 62.1c4.5 1.4 9.1 3 13.5 4.8l5.7-13.9c-4.8-2-9.8-3.8-14.8-5.3l-4.4 14.4zM185.2 45c-5.1-1.2-10.3-2.2-15.5-2.9l-2 14.9c4.7.6 9.4 1.5 14.1 2.6l3.4-14.6z"
+              class="ast6"></path>
+        <path d="M436.6 194.7c-41.6 0-75.4 33.8-75.4 75.4 0 27.3-22.2 49.5-49.5 49.5-41.6 0-75.4 33.8-75.4 75.4s33.8 75.4 75.4 75.4c110.4 0 200.3-89.8 200.3-200.3 0-41.6-33.8-75.4-75.4-75.4zM311.7 455.3c-33.3 0-60.4-27.1-60.4-60.4s27.1-60.4 60.4-60.4c35.6 0 64.5-28.9 64.5-64.5 0-33.3 27.1-60.4 60.4-60.4S497 236.7 497 270c0 102.2-83.1 185.3-185.3 185.3z"></path>
+        <path d="M407.5 312.4l14.1 5.1c1.8-5.1 3.3-10.3 4.3-15.6l-14.7-2.8c-.9 4.6-2.1 9-3.7 13.3zm-10.7 20.3l12.2 8.7c3.1-4.4 5.9-9.1 8.3-13.9l-13.4-6.6c-2 4.1-4.4 8-7.1 11.8z"></path>
+        <path d="M363.3 326.9c-14.2 12.9-32.5 19.9-51.6 19.9-26.5 0-48.1 21.6-48.1 48.1h15c0-18.2 14.8-33.1 33.1-33.1 22.8 0 44.7-8.5 61.6-23.8l-10-11.1z"
+              class="ast6"></path>
+        <path d="M365.6 418.5l5.1 14.1c4.9-1.8 9.8-3.8 14.5-6l-6.4-13.6c-4.3 2.1-8.7 3.9-13.2 5.5zm-22.9 6.4l2.9 14.7c5.1-1 10.2-2.3 15.2-3.8l-4.3-14.4c-4.5 1.5-9.2 2.6-13.8 3.5zm-23.7 2.9l.7 15c5.2-.2 10.5-.7 15.6-1.4l-2-14.9c-4.8.7-9.5 1.1-14.3 1.3z"></path>
+        <path d="M481.9 254.1l-14.1 5c1.2 3.5 1.9 7.2 1.9 11 0 32.2-9.7 63.3-28 89.7l12.3 8.5c20.1-29 30.7-63 30.7-98.3 0-5.4-1-10.8-2.8-15.9zM454 225.3c-5.5-2.2-11.4-3.3-17.4-3.3v15c4.1 0 8.1.8 11.9 2.2l5.5-13.9zm10.2 26.5l12.5-8.3c-3.3-5-7.4-9.2-12.3-12.7l-8.7 12.2c3.4 2.5 6.2 5.4 8.5 8.8z"
+              class="ast6"></path>
+        <path d="M172.9 367c-22.8-15-29-45.8-14-68.6 11.1-16.8 15-36.9 11-56.6-4-19.7-15.5-36.7-32.3-47.8-16.8-11.1-36.9-15-56.6-11-19.7 4-36.7 15.5-47.8 32.3-60.9 92.1-35.5 216.6 56.6 277.5 12.5 8.3 26.8 12.5 41.4 12.5 5.1 0 10.2-.5 15.2-1.5 19.7-4 36.7-15.5 47.8-32.3s15-36.9 11-56.6c-4-19.8-15.5-36.8-32.3-47.9zm8.8 96.2c-8.9 13.5-22.5 22.6-38.3 25.9-15.8 3.2-31.9.1-45.4-8.8C12.8 424-10.7 308.8 45.7 223.6c8.9-13.5 22.5-22.6 38.3-25.9 4.1-.8 8.1-1.2 12.2-1.2 11.7 0 23.2 3.4 33.2 10 13.5 8.9 22.6 22.5 25.9 38.3 3.2 15.8.1 31.9-8.8 45.4-19.6 29.7-11.4 69.7 18.2 89.4 13.5 8.9 22.6 22.5 25.9 38.3 3.1 15.8 0 31.9-8.9 45.3z"></path>
+        <path d="M116.8 452C100.1 441 86 427.1 75 410.8l-12.4 8.4c12.2 18 27.6 33.2 45.9 45.3 6.9 4.5 14.7 6.9 22.8 6.9 2.8 0 5.6-.3 8.4-.9l-3-14.7c-7 1.5-14.1.1-19.9-3.8zm5.1-200.4c.4 1.8.5 3.6.5 5.4 0 5.1-1.5 10.2-4.4 14.5-10.7 16.2-16.3 34.8-16.3 54.1 0 6.6.7 13.3 2 19.9l14.7-3c-1.1-5.6-1.7-11.3-1.7-16.9 0-16.3 4.8-32.1 13.8-45.8 4.5-6.8 6.9-14.7 6.9-22.8 0-2.8-.3-5.6-.8-8.4-.3-1.3-.6-2.6-1-3.9l-14.3 4.4c.3.8.5 1.7.6 2.5zm-3.9-9.5l12.4-8.4c-3-4.5-6.9-8.3-11.5-11.4-.6-.4-1.1-.7-1.7-1.1l-7.7 12.9c.4.2.7.5 1.1.7 3 2 5.4 4.4 7.4 7.3zm-15.7-10.9l3.6-14.6c-5.9-1.5-12.1-1.6-18.2-.3l3 14.7c3.9-.8 7.9-.7 11.6.2z"
+              class="ast6"></path>
+    </symbol>
+</svg>
+
+<!--[if lte IE 9]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience and security.</p>
+<![endif]-->
 
 <!-- Start Wrap -->
-<div class="wrap">
-<!-- Header -->
-<header class="header">
-    <div class="header__container">
-        <a class="header__logo" href="/">
-            <img class="header__logo_img" src="/local/templates/kdteam/images/png/header/logo-oms-white.png"
-                 alt="OMS">
-        </a>
-        {% if app.user %}
-        <div class="header__r"><img class="header__r_auth_login_img" src="/images/message.svg" alt="OMS">
-            <a style="font-size: 2rem; color: #fff; display: flex; padding-right: 2rem;padding-left: 1rem;" href="/vopros-otvet/"><span class="header__r_auth_user_hello">Вопрос - Ответ</span></a>
-            <a rel="nofollow" href="javascript:void(0)" id="show-mnu" class="header__r_auth_user">
-                        <span class="header__r_auth_user_hello">
-                            Добрый день,
-                        </span>
-                <span class="header__r_auth_user_name">{{ app.user.firstLastName }}!</span>
-            </a>
-            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                {{ render(controller('AppBundle:User:_userPanel')) }}
-            {% endif %}
-
-            <!-- <div class="header__r_auth">
-                <div class="header__r_auth_user-image">
-                    <?php
-                    $rsUser = CUser::GetByID($ID_USER);
-                    $person = $rsUser->Fetch();
-
-                    $file = CFile::ResizeImageGet($person["PERSONAL_PHOTO"], array('width'=>50, 'height'=>50), BX_RESIZE_IMAGE_PROPORTIONAL, true);
-                    if($url != "/personal-cabinet/") {
-                        if ($person['UF_INSURANCE_COMPANY'] != '') {
-                        if (CIBlockElement::GetByID($person['UF_INSURANCE_COMPANY'])->SelectedRowsCount() != 0) {
-                            $res = CIBlockElement::GetByID($person['UF_INSURANCE_COMPANY'])->GetNextElement()->GetFields();
-                        if ($res["ACTIVE"] != "Y") {
-                            ?>
-
-                            <script> $('body').css({'overflow': 'hidden'});
-                              setTimeout(function() {
-                                $.magnificPopup.open({
-                                  items: {
-                                    src: '<div class="white-popup custom_styles_popup">'+
-                                    '<p>Уважаемый пользователь!</p>'+
-                                    '<p>Страховая компания, указанная в вашем личном кабинете, прекратила свою '+
-                                    'деятельность. Формирование обращения в адрес страховой компании недоступно. '+
-                                    'Для выяснения своей страховой принадлежности и дальнейших действий по выбору '+
-                                    'СМО необходимо обратиться в территориальный фонд ОМС своего региона. '+
-                                    'После того, как определитесь с новой страховой компанией и сделаете '+
-                                    'отметку на полисе ОМС, укажите ее данные в '+
-                                    '<a href="/personal-cabinet/"> личном кабинете </a>.</p></div>',
-                                    type: 'inline',
-                                  },
-                                });
-                                $('body').css({'overflow': 'initial'});
-                              }, 1000);</script>
-                        <? }
-                        }else{
-                        ?>
-                            <script> $('body').css({'overflow': 'hidden'});
-                              setTimeout(function() {
-                                $.magnificPopup.open({
-                                  items: {
-                                    src: '<div class="white-popup custom_styles_popup">'+
-                                    '<p>Уважаемый пользователь!</p>'+
-                                    '<p>Страховая компания, указанная в вашем личном кабинете, прекратила свою '+
-                                    'деятельность. Формирование обращения в адрес страховой компании недоступно. '+
-                                    'Для выяснения своей страховой принадлежности и дальнейших действий по выбору '+
-                                    'СМО необходимо обратиться в территориальный фонд ОМС своего региона. '+
-                                    'После того, как определитесь с новой страховой компанией и сделаете '+
-                                    'отметку на полисе ОМС, укажите ее данные в '+
-                                    '<a href="/personal-cabinet/"> личном кабинете </a>.</p></div>',
-                                    type: 'inline',
-                                  },
-                                });
-                                $('body').css({'overflow': 'initial'});
-                              }, 1000);</script>
-                        <?
-                        } ?>
-
-                        <? }else{
-                        ?>
-                            <script> $('body').css({'overflow': 'hidden'});
-                              setTimeout(function() {
-                                $.magnificPopup.open({
-                                  items: {
-                                    src: '<div class="white-popup custom_styles_popup">'+
-                                    '<p>Уважаемый пользователь!</p>'+
-                                    '<p>Страховая компания, указанная в вашем личном кабинете, прекратила свою '+
-                                    'деятельность. Формирование обращения в адрес страховой компании недоступно. '+
-                                    'Для выяснения своей страховой принадлежности и дальнейших действий по выбору '+
-                                    'СМО необходимо обратиться в территориальный фонд ОМС своего региона. '+
-                                    'После того, как определитесь с новой страховой компанией и сделаете '+
-                                    'отметку на полисе ОМС, укажите ее данные в '+
-                                    '<a href="/personal-cabinet/"> личном кабинете </a>.</p></div>',
-                                    type: 'inline',
-                                  },
-                                });
-                                $('body').css({'overflow': 'initial'});
-                              }, 1000);</script>
-                        <?
-                        }
-                    }
-
-                    ?>
-
-                  <img src="-->
-            <?//=$file["src"]?>
-            <!--" alt="">
-                </div>
-            </div> -->
-        </div>
-        {% else %}
-
-        <div class="header__r" style="display: flex;">
-            <div class="header__r_auth">
-<span class="header__r_auth_login">
-<img class="header__r_auth_login_img" src="/images/message.svg" alt="OMS">
-<a style="font-size: 2rem;" href="/vopros-otvet/"><div class="header__r_auth_login_text">Вопрос - Ответ</div></a></span>
-                <span href="/local/templates/kdteam/includes/ajax-auth-login.php" id="login-link"
-                class="header__r_auth_login">
-                <img class="header__r_auth_login_img"
-                     src="/images/key.svg" alt="OMS">
-                <div class="header__r_auth_login_text">
-                    Вход
-                </div>
-                </span>
-
-                <span href="/local/templates/kdteam/includes/ajax-auth-reg.php" id="reg-link"
-                data-rigstration="0" class="header__r_auth_reg">
-                <img class="header__r_auth_login_img"
-                     src="/images/edit.svg" alt="OMS">
-                <div class="header__r_auth_login_text">
-                    Регистрация
-                </div>
-                </span>
-            </div>
-
-            <span href="/local/templates/kdteam/includes/ajax-feedback.php"
-            class="header__r_mainBtn headerBtn" id="write-us_modal">
-            <svg style="fill: #ffffff; width: 2rem; height: 3rem;"
-                 class="header__r_auth_login_img hidden-desk--image" xmlns="http://www.w3.org/2000/svg"
-                 viewBox="0 0 512 512">
-                <path
-                        d="M486.4 59.733H25.6c-14.138 0-25.6 11.461-25.6 25.6v341.333c0 14.138 11.461 25.6 25.6 25.6h460.8c14.138 0 25.6-11.461 25.6-25.6V85.333c0-14.138-11.461-25.6-25.6-25.6zm8.533 366.934a8.533 8.533 0 01-8.533 8.533H25.6a8.533 8.533 0 01-8.533-8.533V85.333A8.533 8.533 0 0125.6 76.8h460.8a8.533 8.533 0 018.533 8.533v341.334z" />
-                <path
-                        d="M470.076 93.898a8.53 8.53 0 00-6.229 1.966L266.982 261.239a17.068 17.068 0 01-21.965 0L48.154 95.863a8.535 8.535 0 00-10.974 13.073l196.864 165.367c12.688 10.683 31.224 10.683 43.913 0L474.82 108.937a8.532 8.532 0 001.049-12.023 8.524 8.524 0 00-5.793-3.016zM164.124 273.13a8.535 8.535 0 00-8.229 2.65l-119.467 128a8.532 8.532 0 1012.476 11.639l119.467-128a8.532 8.532 0 00-4.247-14.289zM356.105 275.78a8.534 8.534 0 10-12.476 11.639l119.467 128a8.533 8.533 0 0012.476-11.64L356.105 275.78z" />
-            </svg>
-
-            <div class="hidden-text-mob">
-                Написать нам
-            </div>
-            </span>
-        </div>
-        {% endif %}
-    </div>
-</header>
-<!-- Content -->
-<main class="main">
+<div class="app__wrapper">
+    <!-- Header -->
+    {% include '_header.html.twig' %}
+    <!-- Content -->
+    <div class="app__content">
         {% block main %}{% endblock %}
-</main>
-
-<!-- Footer -->
-<footer class="footer">
-    <div class="footer__container">
-        <div class="footer__logo">
-            <img src="/local/templates/kdteam/images/png/logo-footer-white.png" alt="OMS">
-        </div>
-
-        <ul class="footer__menu">
-            <li>
-                <a href="/insurance-companies/">Страховым организациям</a>
-            </li>
-            <li>
-                <a href="/about/">О нас</a>
-            </li>
-            <li>
-                <a href="/contact_us/">Контакты</a>
-            </li>
-            <li>
-                <a href="{{ path('app_insurancecompany_feedback_index') }}">Отзывы</a>
-            </li>
-            <li>
-                <a href="/news/">Новости</a>
-            </li>
-            <li>
-                <a href="/terms-of-use/">Пользовательское соглашение</a>
-            </li>
-            <li>
-                <a href="/personal-data-processing/">Политика по обработке персональных данных</a>
-            </li>
-        </ul>
-
-        <div class="footer__developer">
-            <span class="footer__developer_title">Разработали сайт:</span>
-            <div class="footer__developer_content">
-                <a href="http://kdteam.su/" target="_blank">
-                    <svg class="footer__developer_content_image" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 41">
-                        <g fill-rule="nonzero" fill="none">
-                            <path fill="#FF4653" d="M25.8 5l-5-5-20 20 20 20.1 5-5-15-15.1z"></path>
-                            <path fill="#1EC89E" d="M25.781 24.92l14.99-14.991 5.021 5.02-14.99 14.99z"></path>
-                            <path fill="#2541B1" d="M50.8 0l-5 5 15 15-15 15.1 5 5 20-20.1z"></path>
-                            <g fill="#2541B1">
-                                <path d="M90.5 30.7h-4.7V9h4.7v21.7zM97.1 9h5.5l-6.8 10.6 7.4 11.2h-5.9l-6.7-10.9v-.1L97.1 9zM105.9 9h6.8c7.1 0 10.3 3.4 10.3 10.4 0 5.5-2.2 11.3-10.2 11.3H106V9h-.1zm4.7 17.8h1.7c4.4 0 5.7-2.8 5.7-7 0-5.2-2.3-6.9-5.7-6.9h-1.7v13.9zM129.5 12.9h-5.4V9h15.5v3.9h-5.4v17.8h-4.7zM155.6 29.1c-1.4 1.1-3.1 2-6.4 2-5.5 0-8.3-3.1-8.3-9.1 0-5.7 3.2-9 8.2-9 4.5 0 7 2.8 7 7.1 0 .9 0 1.8-.2 3.1h-10.4c.1 2.8 1.3 4.3 4.3 4.3 1.9 0 3.2-.9 3.8-1.6l2 3.2zM145.5 20h6.2v-.5c0-2-.9-3.1-2.8-3.1-2.1 0-3.3 1.6-3.4 3.6zM172 18.7v7c0 1 .4 1.4 1.2 1.4h.5v3.2c-.7.5-1.5.6-2.3.6-1.7 0-2.6-.8-3.2-1.9h-.1c-.7.9-2 2-4.5 2-3.4 0-5.2-2.3-5.2-4.8 0-4 3.6-5.9 9.1-5.6v-1.4c0-2-1.1-2.5-2.5-2.5-1.7 0-2.6 1-3 2l-3.3-2.4c.7-1 2.4-3.3 6.3-3.3 4.6-.1 7 1.5 7 5.7zm-4.4 5c-3.1-.2-4.6.5-4.6 2 0 1 .7 1.7 1.9 1.7 1.1 0 2.2-.5 2.7-1.2v-2.5zM195.4 12.8c3.4 0 5.4 1.8 5.4 5.8v12.1h-4.7V19.5c0-2-1.1-2.7-2.3-2.7-1.2 0-2.4.8-2.9 2v12h-4.7v-11c0-2-.9-3.1-2.5-3.1-1.1 0-2.3.9-2.7 2.1v11.9h-4.7V13.2h3.8l.8 1.6h.1c1.1-1.4 2.9-2 4.6-2 2.7 0 3.7 1.1 4.4 2.4h.1c1.1-1.2 2.8-2.4 5.3-2.4z"></path>
-                            </g>
-                        </g>
-                    </svg>
-                </a>
-            </div>
-        </div>
     </div>
-</footer>
-
+    <!-- Footer -->
+    {% include '_footer.html.twig' %}
 
 </div><!-- END Wrap -->
-</body>
+
+<button type="button" class="page-scroller">
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20"
+         height="20" viewBox="0 0 20 20" class="page-scroller__ctrl">
+        <path d="M2.582 13.891c-0.272 0.268-0.709 0.268-0.979 0s-0.271-0.701 0-0.969l7.908-7.83c0.27-0.268 0.707-0.268 0.979 0l7.908 7.83c0.27 0.268 0.27 0.701 0 0.969s-0.709 0.268-0.978 0l-7.42-7.141-7.418 7.141z"></path>
+    </svg>
+</button><!-- b:m-page-scroller -->
+
 {% block javascripts %}
-    <script src="/local/templates/kdteam/js/validator.min.js"></script>
+    <script src="/landing/js/vendors/jquery-3.4.1.min.js"></script>
+    <script src="/landing/js/plugins.min.js"></script>
+    <script src="/landing/js/app.js"></script>
 {% endblock %}
+
+</body>
+
 </html>
