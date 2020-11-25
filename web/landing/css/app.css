@@ -2517,6 +2517,10 @@ a {
   opacity: 1;
 }
 
+.b-reviews__item-link {
+  color: #515151;
+}
+
 .b-reviews__item-text {
   font-size: 16px;
   font-weight: 500;

@@ -421,7 +421,9 @@
                                         {% endif %}
                                     </div>
                                     <div class="b-reviews__item-text">
-                                        {{ feedback.text }}
+                                        <a class="b-reviews__item-link" href="{{ path('app_insurancecompany_feedback_show', { id: feedback.id }) }}">
+                                            {{ feedback.text }}
+                                        </a>
                                     </div>
                                     <div class="b-reviews__item-content">
                                         <div class="b-reviews__item-user">
