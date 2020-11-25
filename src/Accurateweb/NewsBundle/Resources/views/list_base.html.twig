@@ -1,0 +1,23 @@
+{% extends '@AccuratewebGpnNews/layout.html.twig' %}
+
+{% block content %}
+    <div class="page-inside">
+        <div class="container">
+            <span class="content-title outer-title">Новости</span>
+
+            <div id="news-list" class="news-wrapper__row-three">
+                {% for item in news %}
+                    {% if lead_amount > 0 and loop.index <= lead_amount %}
+                        {% include '@AccuratewebGpnNews/item_lead.html.twig' %}
+                    {% else %}
+                        {% include '@AccuratewebGpnNews/item.html.twig' %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            {% if showMore %}
+                {{ newsShowMore(current_page) }}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

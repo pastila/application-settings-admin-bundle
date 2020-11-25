@@ -1,0 +1,95 @@
+{% extends "base.html.twig" %}
+
+{% set title = news.title %}
+
+{% block meta %}
+    {{ parent() }}
+
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="{{ title }}"/>
+    <meta property="og:url" content="{{ url('news_show', {slug: news.slug }) }}"/>
+{% endblock %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block stylesheets %}
+    <link href="/local/templates/kdteam/pages/news/news.min.css" type="text/css" rel="stylesheet"/>
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="/local/templates/kdteam/js/main.min.js"></script>
+    <script type="text/javascript" src="/local/templates/kdteam/pages/news/news.min.js"></script>
+    {{ parent() }}
+{% endblock %}
+
+{% block main %}
+    <ul class="breadcrumbs" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+        {% if is_mobile() or is_tablet() %}
+            <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a href="{{ path("news_list") }}" class="active-breadcrumbs" itemprop="item">{{ title }}
+                    <meta itemprop="name" content="{{ title }}">
+                </a>
+                <meta itemprop="position" content="1">
+            </li>
+        {% else %}
+            <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a href="/" itemprop="item">Главная
+                    <meta itemprop="name" content="Главная">
+                </a>
+                <meta itemprop="position" content="1">
+            </li>
+            <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a href="{{ path("news_list") }}" itemprop="item">Новости
+                    <meta itemprop="name" content="Новости">
+                </a>
+                <meta itemprop="position" content="2">
+            </li>
+            <li class="active-breadcrumbs" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a itemprop="item">{{ title }}
+                    <meta itemprop="name" content="{{ title }}">
+                </a>
+                <meta itemprop="position" content="3">
+            </li>
+        {% endif %}
+    </ul>
+    <h1 class="page-title">{{ title }}</h1>
+    <div class="container">
+        <div>
+            <p class="back_link-block"><a class="back_link" href="{{ path("news_list") }}">Возврат к списку</a></p>
+            <div class="white_block">
+                <div class="news-detail flex-detail-news" itemscope itemtype="http://schema.org/NewsArticle">
+
+                    <link itemprop="mainEntityOfPage" href="{{ url('news_show', {slug: news.slug }) }}" />
+                    <meta itemprop="author" content="Без Бахил">
+                    <meta itemprop="datePublished" content="{{ news.publishedAt |prepareDate('Y-m-d') }}">
+                    <meta itemprop="dateModified" content="{{ news.createdAt |prepareDate('Y-m-d') }}">
+                    <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+                        <link itemprop="url" href="{{ url('homepage') }}">
+                        <meta itemprop="name" content="Безбахил">
+                        <div itemprop="logo" itemscope itemtype="https://www.schema.org/ImageObject">
+                            <link itemprop="url" href="/local/templates/kdteam/images/favicon.png">
+                            <link itemprop="contentUrl" href="{{ app.request.getSchemeAndHttpHost() }}/local/templates/kdteam/images/favicon.png" >
+                        </div>
+                    </div>
+                    <meta itemprop="url" content="{{ app.request.getSchemeAndHttpHost() }}" />
+
+                    <div class="news-detail_image" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
+                        <link itemprop="url" href="/local/templates/kdteam/images/favicon.png">
+                    </div>
+
+                    <div class="content-news">
+                        <span class="news-date-time date_news">  {{ news.publishedAt |prepareDate('d F, Y') }}</span>
+                        <meta itemprop="datePublished" content="{{ news.publishedAt |prepareDate('Y-m-d') }}">
+                        <meta itemprop="headline" content="{{ news.title }}">
+                        <meta itemprop="description" content="{{ news.announce }}">
+
+                        <p itemprop="articleBody">
+                            {{ news.text |raw }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

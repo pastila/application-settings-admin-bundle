@@ -1,0 +1,11 @@
+{
+  "name": "accurateweb/gpn_news_bundle",
+  "suggest": {
+    "sonata-project/admin-bundle": "News for GPN"
+  },
+  "autoload": {
+    "psr-4" : {
+      "Accurateweb\\NewsBundle\\" : ""
+    }
+  }
+}

@@ -1,5 +1,165 @@
 Number List: Список "Безбахил в цифрах"
 Number Create: Создать новую запись
-Action: Действие
 Question List: Список "Вопрос-ответ"
 Question Create: Создать новый "Вопрос-ответ"
+Alias: Алиас
+Title: Заголовок
+Text: Текст
+Announce: Краткое описание
+Published At: Дата публикации
+Published: Опубликовано
+News Create: Создание новости
+News List: Список новостей
+Interview Create: Создание интервью
+Interview List: Список интервью
+Article Create: Создание статьи
+Article List: Список статей
+Glossary List: Глоссарий
+Term: Термин
+Value: Значение
+Action: Действия
+Glossary Create: Добавить термин
+Questioner: Автор вопроса
+Question: Вопрос
+Answer: Ответ
+Appeal List: Обращения
+Appeal Create: Создание обращения
+Created At: Создано
+Faq List: Вопросы и ответы
+Faq Create: Создание вопроса
+Quote List: Цитаты
+Quote Create: Создание цитаты
+Button Url: Ссылка кнопки
+File: Файл
+Video: Видео
+Remove Video: Удалить видео
+Path: Имя файла
+External Url: Внешняя ссылка
+External Reference: Внешняя ссылка
+External Reference Text: Текст ссылки
+External Reference Type: Внешний вид
+Liked: Похожие материалы
+User Question List: Вопросы пользователей
+User Question Create: Создать
+User Question Edit: Редактировать
+Visitor Fio: ФИО
+Ask At: Вопрос задан
+Answer At: Ответ дан
+Visitor: Пользователь
+Block Type: Тип блока
+Name: Название
+Old Name: Старое название (было)
+Sub Title: Анонс
+Can Not: Так нельзя
+Can: Я поступаю так
+View On Main: Выводить на главной
+Weight: Вес
+Value List: Ценности
+Value Create: Добавить ценность
+Hotspot List: Клик-зоны
+Hotspot Create: Добавить клик-зону
+Main Page Teaser List: Тизер на главной
+Check List: Проверь себя
+Check Create: Добавить блок "Проверь себя"
+Info List: Информация
+Info Create: Добавить блок информации
+Position: Должность
+Quote Quotes: Цитаты, закреплённые в этом блоке
+Quote Quote List: Список текстовых цитат
+Author: Автор
+City: Город
+Department: Подразделение
+Company: ДО
+Phone Number: Тел.
+Fio: ФИО
+Patronymic: Отчество
+Lastname: Фамилия
+Firstname: Имя
+Story List: Список историй
+Create Story: Создать историю
+Client: Пользователь
+Story Create: Создать историю
+Story Delete: Удалить историю
+Quiz Page Text List: Текст на странице «Проверь себя»
+Appeal Rule List: О комитете
+Appeal Type Create: Создать тип обращения
+Appeal Type List: Список типов обращений
+Description: Описание
+Appeal Schema Item List: Схема рассмотрения обращения
+Appeal Schema Item Create: Этап рассмотрения обращения
+Updated At: Обновлено
+Decision: Кто ответил
+Setting List: Список настроек
+Appeal New Appeal: Новое обращение
+Post: Должность
+User List: Список пользователей
+Enabled: Активен
+Appeal Create Appeal: Создать обращение
+Appeal Status List: Список статусов обращений
+Appeal Status Create: Создать новый статус обращения
+Committee Member List: Состав комитета
+Profile Url: Ссылка на профиль
+Members: Состав комитета по этике
+Codex: Кодекс
+Member Block List: Состав комитета
+Chairmen: Председатель
+Type: Тип
+Block List: Список блоков
+Block Department: Департамент
+Show Name In Filter: Показывть название в фильтре и карточке истории
+Department List: Список ДО
+Block: Блок
+Gpn User List: Список пользователей
+Company List: Список ДО
+Company Create: Создать ДО
+Gpn User Create: Создать пользователя
+Video List: Видео
+Video Create: Добавить видео
+Teaser: Тизер
+Book List: Книги
+Book Create: Создать
+Nb Views: Просмотры
+Nb Likes: Нравится
+Subject: Тема
+corporate-culture: Корпоративная культура
+involvement: Вовлеченность
+transformation: Трансформация
+Is Published: Опубликовано
+Team Member List: Члены команды
+Photo: Фото
+Slug: Алиас
+glossary: Глоссарий
+Widgets: Виджеты
+Corporate Culture Article List: Корпоративная культура
+Involvement Article List: Вовлеченность
+Involvement Article Create: Создание статьи
+book: Книги
+video: Видео
+Leader Article List: Лидерство
+Leader Article Create: Создание статьи
+best-practice: Лучшие практики
+leader: Лидерство
+Value Article List: Ценности
+Value Article Create: Создание статьи
+Best Practice List: Лучшие практики
+Best Practice Create: Создание лучшей практики
+Display On Homepage: Отображать на главной
+Display In Section: Отображать в разделе
+value: Ценности
+Transformation Article List: Трансформация
+Transformation Article Create: Создать статью
+Presentation List: Презентации
+Presentation Create: Новая презентация
+Best Practice Group List: Группы лучших практик
+Best Practice Group Create: Создание группы
+Group: Группа
+adding: Дополняющая
+main: Основная
+Practice Type: Тип
+Implementaion Stages: Этапы реализации
+Required Resources: Необходимые ресурсы
+Possible Risks: Возможные риски
+Obtained Result: Полученный результат
+Main Image: Главное изображение
+Is External: Внешний источник
+Related News: Связанные новости

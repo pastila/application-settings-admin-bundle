@@ -534,136 +534,43 @@
                 </div>
             </div>
         </div><!-- b-return -->
+
         <div id="insider" class="b-insider">
             <div class="b-insider__content site-width">
                 <div class="b-insider__header">
                     <h3 class="b-insider__title">Медицинский инсайдер</h3>
-                    <a href="#" class="b-insider__button btn">Все статьи</a>
+                    <a href="{{ path("news_list") }}" class="b-insider__button btn">Все статьи</a>
                 </div>
                 <div class="b-insider__inner">
                     <div class="b-insider__slider">
-                        <div class="b-insider__item-wrap">
-                            <div class="b-insider__item">
-                                <div style="background-image: url(/landing/img/pic1.png);" class="b-insider__item-image">
-                                    <img src="img/pic1.png" alt="">
-                                </div>
-                                <div class="b-insider__item-content">
-                                    <div class="b-insider__item-title">Куда уходят страховые компании</div>
-                                    <div class="b-insider__item-text">
-                                        И что не так с полисами ВТБ МС
+                        {% for item in news %}
+                            <div class="b-insider__item-wrap">
+                                <div class="b-insider__item">
+                                    <div style="background-image: url({{ image_thumbnail_url(item, null, 'main_lg') }});"
+                                         class="b-insider__item-image">
+                                        <a href="{{ path('news_show', { slug: item.slug }) }}" class="b-insider__item-link">
+                                            <img src="{{ image_thumbnail_url(item, null, 'main_lg') }}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="b-insider__item-content">
+                                        <div class="b-insider__item-title">
+                                            <a href="{{ path('news_show', { slug: item.slug }) }}" class="b-insider__item-link">
+                                                {{ item.title }}
+                                            </a>
+                                        </div>
+                                        <div class="b-insider__item-text">
+                                            <a href="{{ path('news_show', { slug: item.slug }) }}" class="b-insider__item-link">
+                                                {{ item.announce | raw }}
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="b-insider__item-wrap">
-                            <div class="b-insider__item">
-                                <div style="background-image: url(/landing/img/pic2.png);" class="b-insider__item-image">
-                                    <img src="/landing/img/pic2.png" alt="">
-                                </div>
-                                <div class="b-insider__item-content">
-                                    <div class="b-insider__item-title">Не пытайтесь повторить</div>
-                                    <div class="b-insider__item-text">
-                                        Почему лучше звонить страховому
-                                        представителю и не пытаться отстаивать
-                                        права самостоятельно
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="b-insider__item-wrap">
-                            <div class="b-insider__item">
-                                <div style="background-image: url(/landing/img/pic3.png);" class="b-insider__item-image">
-                                    <img src="/landing/img/pic3.png" alt="">
-                                </div>
-                                <div class="b-insider__item-content">
-                                    <div class="b-insider__item-title">Российский полис против китайского вируса</div>
-                                    <div class="b-insider__item-text">
-                                        Как лечат в России COVID-19
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="b-insider__item-wrap">
-                            <div class="b-insider__item">
-                                <div style="background-image: url(/landing/img/pic4.png);" class="b-insider__item-image">
-                                    <img src="/landing/img/pic4.png" alt="">
-                                </div>
-                                <div class="b-insider__item-content">
-                                    <div class="b-insider__item-title">Не пытайтесь повторить</div>
-                                    <div class="b-insider__item-text">
-                                        Почему лучше звонить страховому
-                                        представителю и не пытаться отстаивать
-                                        права самостоятельно
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="b-insider__item-wrap">
-                            <div class="b-insider__item">
-                                <div style="background-image: url(/landing/img/pic1.png);" class="b-insider__item-image">
-                                    <img src="/landing/img/pic1.png" alt="">
-                                </div>
-                                <div class="b-insider__item-content">
-                                    <div class="b-insider__item-title">Куда уходят страховые компании</div>
-                                    <div class="b-insider__item-text">
-                                        И что не так с полисами ВТБ МС
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="b-insider__item-wrap">
-                            <div class="b-insider__item">
-                                <div style="background-image: url(/landing/img/pic2.png);" class="b-insider__item-image">
-                                    <img src="/landing/img/pic2.png" alt="">
-                                </div>
-                                <div class="b-insider__item-content">
-                                    <div class="b-insider__item-title">Не пытайтесь повторить</div>
-                                    <div class="b-insider__item-text">
-                                        Почему лучше звонить страховому
-                                        представителю и не пытаться отстаивать
-                                        права самостоятельно
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="b-insider__item-wrap">
-                            <div class="b-insider__item">
-                                <div style="background-image: url(/landing/img/pic3.png);" class="b-insider__item-image">
-                                    <img src="/landing/img/pic3.png" alt="">
-                                </div>
-                                <div class="b-insider__item-content">
-                                    <div class="b-insider__item-title">Российский полис против китайского вируса</div>
-                                    <div class="b-insider__item-text">
-                                        Как лечат в России COVID-19
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="b-insider__item-wrap">
-                            <div class="b-insider__item">
-                                <div style="background-image: url(/landing/img/pic4.png);" class="b-insider__item-image">
-                                    <img src="/landing/img/pic4.png" alt="">
-                                </div>
-                                <div class="b-insider__item-content">
-                                    <div class="b-insider__item-title">Не пытайтесь повторить</div>
-                                    <div class="b-insider__item-text">
-                                        Почему лучше звонить страховому
-                                        представителю и не пытаться отстаивать
-                                        права самостоятельно
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
         </div><!-- b-insider -->
-
-
 
     </div><!-- b:m-content -->
 

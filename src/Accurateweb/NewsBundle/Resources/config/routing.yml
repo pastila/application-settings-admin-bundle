@@ -1,0 +1,16 @@
+news_more:
+  path: /news/more
+  defaults: { _controller: AccuratewebGpnNewsBundle:News:loadMore }
+  methods: [GET]
+
+news_index:
+  path: /news
+  defaults: { _controller: AccuratewebGpnNewsBundle:News:index }
+  methods: [GET]
+
+
+news_show:
+  path: /news/{slug}/show
+  defaults: { _controller: AccuratewebGpnNewsBundle:News:show }
+  methods: [GET]
+

@@ -1,0 +1,72 @@
+{% extends "base.html.twig" %}
+
+{% set title = 'Новости' %}
+
+{% block meta %}
+    {{ parent() }}
+{% endblock %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block stylesheets %}
+    <link href="/local/templates/kdteam/pages/news/news.min.css" type="text/css" rel="stylesheet"/>
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="/local/templates/kdteam/js/main.min.js"></script>
+    <script type="text/javascript" src="/local/templates/kdteam/pages/news/news.min.js"></script>
+    {{ parent() }}
+{% endblock %}
+
+{% block main %}
+    <ul class="breadcrumbs" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+        {% if is_mobile() or is_tablet() %}
+            <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a href="{{ path("news_list") }}" class="active-breadcrumbs" itemprop="item">{{ title }}
+                    <meta itemprop="name" content="{{ title }}">
+                </a>
+                <meta itemprop="position" content="1">
+            </li>
+        {% else %}
+            <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a href="/" itemprop="item">Главная
+                    <meta itemprop="name" content="Главная">
+                </a>
+                <meta itemprop="position" content="1">
+            </li>
+            <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a itemprop="item">Новости
+                    <meta itemprop="name" content="Новости">
+                </a>
+                <meta itemprop="position" content="2">
+            </li>
+        {% endif %}
+    </ul>
+    <h1 class="page-title">Читать про ОМС</h1>
+    <div class="container">
+        <div>
+            <div class="news_container">
+                {% for item in news %}
+                    <div class="col-1">
+                        <div class="news_item white_block">
+                            <div class="news_item_image">
+                                <img src="{{ image_thumbnail_url(item, null, 'main_lg') }}" alt="">
+                            </div>
+                            <div class="news_item_content">
+                                <a class="news_item_content_title" href="{{ path('news_show', { slug: item.slug }) }}">
+                                    <h3>{{ item.title }}</h3>
+                                </a>
+                                <div class="news_item_content_text">
+                                    {{ item.announce }}
+                                </div>
+                                <div class="news_item_content_date">{{ item.publishedAt|prepareDate("d F, Y") }}</div>
+                                <a href="{{ path('news_show', { slug: item.slug }) }}">Продолжить чтение</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
