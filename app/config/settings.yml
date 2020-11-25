@@ -7,3 +7,21 @@ services:
       - 'Регион по умолчанию'
     tags:
       - { name: aw.setting.configuration }
+
+  app.settings.agreement:
+    class: Accurateweb\ApplicationSettingsAdminBundle\Model\SettingConfiguration\StringSettingConfiguration
+    arguments:
+      - 'agreement'
+      - 'Адрес страницы с пользовательским соглашением'
+      - ~
+    tags:
+      - { name: aw.setting.configuration }
+
+  app.settings.personal_data:
+    class: Accurateweb\ApplicationSettingsAdminBundle\Model\SettingConfiguration\StringSettingConfiguration
+    arguments:
+      - 'personal_data'
+      - 'Адрес страницы с политикой по обработке персональных данных'
+      - ~
+    tags:
+      - { name: aw.setting.configuration }

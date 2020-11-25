@@ -588,10 +588,10 @@
                         © bezbahil.ru, 2020
                     </div>
                     <div class="app-footer__agree">
-                        <a href="#">Пользовательское соглашение</a>
+                        <a href="{{ setting('agreement') }}">Пользовательское соглашение</a>
                     </div>
                     <div class="app-footer__personal">
-                        <a href="#">Политика по обработке персональных данных</a>
+                        <a href="{{ setting('personal_data') }}">Политика по обработке персональных данных</a>
                     </div>
                 </div>
                 {{ knp_menu_render('AppBundle:Builder:socialMenu') }}
