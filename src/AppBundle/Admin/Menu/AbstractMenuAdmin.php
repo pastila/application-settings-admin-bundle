@@ -43,7 +43,7 @@ abstract class AbstractMenuAdmin extends AbstractAdmin
         'label' => 'Текст'
       ])
       ->add('url', null, [
-        'label' => 'Ссылка/путь'
+        'label' => 'Url адрес страницы'
       ])
       ->add('_action', null, [
         'actions' => [
@@ -64,7 +64,7 @@ abstract class AbstractMenuAdmin extends AbstractAdmin
         'label' => 'Текст'
       ])
       ->add('url', null, [
-        'label' => 'Ссылка/путь'
+        'label' => 'Url адрес страницы'
       ]);
   }
 }

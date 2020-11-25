@@ -56,7 +56,7 @@ class MenuSocialAdmin extends AbstractMenuAdmin
           ]),
         ],
       ])
-      ->add('original', 'Accurateweb\MediaBundle\Form\ImageType', [
+      ->add('teaser', 'Accurateweb\MediaBundle\Form\ImageType', [
         'required' => false,
         'label' => 'Изображение',
       ]);

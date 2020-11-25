@@ -5,10 +5,12 @@ namespace AppBundle\Entity\Menu;
 
 use Accurateweb\ImagingBundle\Filter\CropFilterOptionsResolver;
 use Accurateweb\ImagingBundle\Filter\FilterChain;
+use Accurateweb\MediaBundle\Exception\OperationNotSupportedException;
 use Accurateweb\MediaBundle\Model\Image\ImageAwareInterface;
 use Accurateweb\MediaBundle\Model\Media\ImageInterface;
 use Accurateweb\MediaBundle\Model\Thumbnail\ImageThumbnail;
 use Accurateweb\MediaBundle\Model\Thumbnail\ThumbnailDefinition;
+use AppBundle\Model\Media\MenuSocialImage;
 use Doctrine\ORM\Mapping as ORM;
 use Accurateweb\MediaBundle\Annotation as Media;
 
@@ -16,34 +18,34 @@ use Accurateweb\MediaBundle\Annotation as Media;
  * @ORM\Table(name="s_menu_social")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Menu\MenuSocialRepository")
  */
-class MenuSocial extends AbstractMenu implements ImageAwareInterface, ImageInterface
+class MenuSocial extends AbstractMenu implements ImageAwareInterface
 {
   /**
    * @var string
    *
-   * @ORM\Column(name="original", type="string", length=255, nullable=true)
-   * @Media\Image(id="original")
+   * @ORM\Column(name="image", type="string", length=255, nullable=true)
+   * @Media\Image(id="number")
    */
-  protected $original;
+  protected $teaser;
 
 
   /**
    * @return string
    */
-  public function getOriginal()
+  public function getTeaser()
   {
-    return $this->original;
+    return $this->teaser;
   }
 
   /**
-   * @param $original
+   * @param $teaser
    * @return $this
    */
-  public function setOriginal($original)
+  public function setTeaser($teaser)
   {
-    if (!is_null($original))
+    if (!is_null($teaser))
     {
-      $this->original = $original;
+      $this->teaser = $teaser;
     }
 
     return $this;
@@ -54,92 +56,21 @@ class MenuSocial extends AbstractMenu implements ImageAwareInterface, ImageInter
    */
   public function getIsImageSvg()
   {
-    if (!is_null($this->original))
+    if (!is_null($this->teaser))
     {
-      $array = explode(".", $this->original);
+      $array = explode(".", $this->teaser);
       return (end($array) === 'svg') ? true : false;
     }
     return false;
   }
 
   /**
-   * @return string
-   */
-  public function getResourceId()
-  {
-    return $this->getOriginal();
-  }
-
-  /**
-   * @param $resourceId string
-   */
-  public function setResourceId($resourceId)
-  {
-    $this->setOriginal($resourceId);
-  }
-
-  /**
-   * Get thumbnail definitions
-   *
-   * @return string[]
-   */
-  public function getThumbnailDefinitions()
-  {
-    return [
-      'preview' => new ThumbnailDefinition('preview', new FilterChain([
-        [
-          'id' => 'crop',
-          'options' => [],
-          'resolver' => new CropFilterOptionsResolver()
-        ],
-        [
-          'id' => 'resize',
-          'options' => ['size' => '80x80']
-        ]
-      ])),
-      'icon' => new ThumbnailDefinition('icon', new FilterChain([
-        [
-          'id' => 'resize',
-          'options' => ['size' => 'x35']
-        ]
-      ]))
-    ];
-  }
-
-  /**
-   * @param string $id
-   * @return ImageThumbnail
-   * @throws \Exception
-   */
-  public function getThumbnail($id)
-  {
-    $definitions = $this->getThumbnailDefinitions();
-
-    $found = false;
-    foreach ($definitions as $definition)
-    {
-      if ($definition->getId() == $id)
-      {
-        $found = true;
-        break;
-      }
-    }
-
-    if (!$found)
-    {
-      throw new \Exception('Image thumbnail definition not found');
-    }
-
-    return new ImageThumbnail($id, $this);
-  }
-
-  /**
    * @param $id
-   * @return ImageInterface
+   * @return MenuSocialImage
    */
   public function getImage($id = null)
   {
-    return $this;
+    return new MenuSocialImage('menu_social', $this->teaser);
   }
 
   /**
@@ -148,8 +79,18 @@ class MenuSocial extends AbstractMenu implements ImageAwareInterface, ImageInter
    */
   public function setImage(ImageInterface $image)
   {
-    $this->setResourceId($image->getResourceId());
+    $this->setTeaser($image->getResourceId());
     return $this;
+  }
+
+  public function setTeaserImage ($image)
+  {
+    return $this->setImage($image);
+  }
+
+  public function getTeaserImage ()
+  {
+    return $this->getImage();
   }
 
   /**
@@ -161,17 +102,12 @@ class MenuSocial extends AbstractMenu implements ImageAwareInterface, ImageInter
     return null;
   }
 
+  /**
+   * @param $id
+   * @throws OperationNotSupportedException
+   */
   public function setImageOptions($id)
   {
-  }
-
-  public function getOriginalImage ()
-  {
-    return $this->getImage();
-  }
-
-  public function setOriginalImage ($image)
-  {
-    return $this->setImage($image);
+    throw new OperationNotSupportedException();
   }
 }
