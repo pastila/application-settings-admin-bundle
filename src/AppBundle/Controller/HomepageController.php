@@ -6,6 +6,7 @@ use Accurateweb\LocationBundle\Exception\LocationServiceException;
 use Accurateweb\LocationBundle\Service\Location;
 use AppBundle\Entity\Common\News;
 use AppBundle\Entity\Company\Feedback;
+use AppBundle\Entity\Geo\Region;
 use AppBundle\Entity\Number\Number;
 use AppBundle\Entity\Question\Question;
 use AppBundle\Model\InsuranceCompany\Branch\BranchRatingHelper;
@@ -82,5 +83,24 @@ class HomepageController extends Controller
       'news' => $news,
       'region' => $region,
     ]);
+  }
+
+  /**
+   * @Route(path="/select-location", name="homepage_select_location")
+   * @param Request $request
+   */
+  public function selectLocationAction(Request $request)
+  {
+    $data = $request->request->all();
+    $data = ['id' => 3];
+
+    /**
+     * @var Region $region
+     */
+    $region = $this->getDoctrine()->getManager()->getRepository(Region::class)
+      ->findOneBy(['id' => $data['id']]);
+
+    $resolvedLocation = $region->getResolvedLocation();
+    $this->locationService->setResolvedLocation($resolvedLocation);
   }
 }
