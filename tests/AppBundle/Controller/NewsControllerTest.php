@@ -5,6 +5,7 @@ namespace Tests\AppBundle\Controller;
 
 
 use Tests\AppBundle\AppWebTestCase;
+use Tests\AppBundle\Fixtures\Geo\Region;
 use Tests\AppBundle\Fixtures\News\News;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -12,6 +13,7 @@ class NewsControllerTest extends AppWebTestCase
 {
   protected function setUpFixtures()
   {
+    $this->addFixture(new Region());
     $this->addFixture(new News());
   }
 
