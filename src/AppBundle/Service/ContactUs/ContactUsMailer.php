@@ -38,12 +38,10 @@ class ContactUsMailer
    */
   public function sendContactUs (ContactUs $contactUs)
   {
-    $mail = $this->settingManager->getValue('default_email');
-
     $message = $this->emailFactory->createMessage('email_contact_us', [
       $this->mailerFrom => $this->mailerSenderName,
     ],
-      $mail,
+      $this->settingManager->getValue('default_email'),
       [
         'name' => $contactUs->getAuthorName(),
         'email' => $contactUs->getEmail(),

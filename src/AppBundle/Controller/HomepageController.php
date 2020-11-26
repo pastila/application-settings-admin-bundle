@@ -8,9 +8,7 @@ use AppBundle\Entity\Common\News;
 use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Entity\Number\Number;
-use AppBundle\Exception\BitrixRequestException;
 use AppBundle\Entity\Question\Question;
-use AppBundle\Helper\GetMessFromBitrix;
 use AppBundle\Model\InsuranceCompany\Branch\BranchRatingHelper;
 use AppBundle\Repository\Geo\RegionRepository;
 use AppBundle\Form\ContactUs\ContactUsType;
@@ -32,7 +30,6 @@ class HomepageController extends Controller
   private $contactUsMailer;
 
   public function __construct(
- GetMessFromBitrix $paramsFromBitrix,
     BranchRatingHelper $branchRatingHelper,
     SettingManagerInterface $settingManager,
     RegionRepository $regionRepository,

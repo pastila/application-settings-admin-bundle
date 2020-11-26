@@ -5,6 +5,7 @@
 
 namespace AppBundle\Controller\InsuranceCompany;
 
+use Accurateweb\ApplicationSettingsAdminBundle\Model\Manager\SettingManagerInterface;
 use AppBundle\Entity\Company\Citation;
 use AppBundle\Entity\Company\Comment;
 use AppBundle\Entity\Company\Company;
@@ -23,6 +24,7 @@ use AppBundle\Model\InsuranceCompany\Branch\BranchRatingHelper;
 use AppBundle\Model\InsuranceCompany\FeedbackListFilter;
 use AppBundle\Model\InsuranceCompany\FeedbackListFilterUrlBuilder;
 use AppBundle\Model\Pagination;
+use AppBundle\Service\Feedback\FeedbackMailer;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -42,14 +44,20 @@ class FeedbackController extends Controller
 {
   private $branchRatingHelper;
   private $paramsFromBitrix;
+  private $feedbackMailer;
+  protected $settingManager;
 
   public function __construct(
+    FeedbackMailer $feedbackMailer,
     BranchRatingHelper $branchRatingHelper,
+    SettingManagerInterface $settingManager,
     GetMessFromBitrix $paramsFromBitrix
   )
   {
     $this->branchRatingHelper = $branchRatingHelper;
     $this->paramsFromBitrix = $paramsFromBitrix;
+    $this->feedbackMailer = $feedbackMailer;
+    $this->settingManager = $settingManager;
   }
 
   /**
@@ -288,27 +296,20 @@ class FeedbackController extends Controller
       $em->persist($feedback);
       $em->flush();
 
-      try
+      if (!empty($this->settingManager->getValue('main_email')))
       {
-        $paramsFromBitrix = $this->paramsFromBitrix->getParams($request);
-        if (!empty($paramsFromBitrix) && key_exists('MAIN_EMAIL', $paramsFromBitrix))
+        try
         {
-          $this->sendNewFeedback($feedback, $paramsFromBitrix['MAIN_EMAIL']);
+          $this->feedbackMailer->sendFeedback($feedback, $this->settingManager->getValue('main_email'));
         }
-        else
+        catch (\Exception $e)
         {
-          $this->get('logger')->warn('Unable to send notification about new review to site administrator. Administrator email is not set');
+          $this->get('logger')->error('Unable to send notification about new review to site administrator: ' . $e->getMessage());
         }
-      }
-      catch (BitrixRequestException $e)
+      } else
       {
-        $this->get('logger')->warn('Unable to send notification about new review to site administrator. Could not resolve administrator email: ' . $e);
+        $this->get('logger')->warn('Unable to send notification about new review to site administrator. Administrator email is not set');
       }
-      catch (\Exception $e2)
-      {
-        $this->get('logger')->warn('Unable to send notification about new review to site administrator: ' . $e2);
-      }
-
       $this->addFlash('magnific', 'Спасибо за отзыв! Он будет опубликован после модерации.');
 
       return $this->redirectToRoute('app_insurancecompany_feedback_index');
@@ -601,41 +602,16 @@ class FeedbackController extends Controller
         {
           try
           {
-            $this->sendNewFeedback($feedback, $email);
-          } catch (\Exception $e)
+            $this->feedbackMailer->sendFeedback($feedback, $email);
+          }
+          catch (\Exception $e)
           {
-            $this->get('logger')->warn('Unable to send notification about new review to insurance branch: ' . $e);
+            $this->get('logger')->error('Unable to send notification about new review to insurance branch: ' . $e->getMessage());
           }
         }
       }
 
       return new JsonResponse(1);
     }
-  }
-
-  /**
-   * @param $emailTo
-   * @param $url
-   * @param $date
-   */
-  private function sendNewFeedback(Feedback $feedback, $emailTo)
-  {
-    $url = $this->generateUrl('app_insurancecompany_feedback_show', [
-      'id' => $feedback->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
-    $date = $feedback->getCreatedAt()->format('Y-m-d H:i:s');
-
-    $message = (new \Swift_Message('Новый отзыв'))
-      ->setFrom($this->container->getParameter('mailer_from'))
-      ->setTo($emailTo)
-      ->setBody(
-        $this->renderView(
-          'emails/feedback/new_for_boss.html.twig', [
-            'url' => $url,
-            'date' => $date,
-          ]
-        ),
-        'text/html'
-      );
-    $this->get('mailer')->send($message);
   }
 }

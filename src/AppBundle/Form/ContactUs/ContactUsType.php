@@ -18,7 +18,7 @@ class ContactUsType extends AbstractType
         'required' => true,
         'constraints' => [
           new NotBlank(),
-          new Length(['min' => 3]),
+          new Length(['min' => 3, 'max' => 255]),
         ]
       ])
       ->add('email', null, [
@@ -33,7 +33,7 @@ class ContactUsType extends AbstractType
         'required' => true,
         'constraints' => [
           new NotBlank(),
-          new Length(['min' => 10]),
+          new Length(['min' => 10, 'max' => 512]),
         ]
       ]);
   }

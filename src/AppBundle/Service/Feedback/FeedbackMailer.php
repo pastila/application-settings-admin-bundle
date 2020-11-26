@@ -15,14 +15,12 @@ class FeedbackMailer
   protected $mailerFrom;
   protected $mailerSenderName;
   protected $router;
-  protected $settingManager;
 
   public function __construct(
     \Swift_Mailer $mailer,
     EmailFactory $emailFactory,
     $mailerFrom,
     $mailerSenderName,
-    SettingManagerInterface $settingManager,
     RouterInterface $router
   )
   {
@@ -31,18 +29,18 @@ class FeedbackMailer
     $this->mailerFrom = $mailerFrom;
     $this->mailerSenderName = $mailerSenderName;
     $this->router = $router;
-    $this->settingManager = $settingManager;
   }
 
   /**
    * @param Feedback $feedback
+   * @param $email
    */
-  public function sendFeedback(Feedback $feedback)
+  public function sendFeedback(Feedback $feedback, $email)
   {
     $message = $this->emailFactory->createMessage('email_feedback', [
       $this->mailerFrom => $this->mailerSenderName,
     ],
-      $this->settingManager->getValue('main_email'),
+      $email,
       [
         'date' => $feedback->getCreatedAt()->format('Y-m-d H:i:s'),
         'url' => $this->router->generate('app_insurancecompany_feedback_show', [
