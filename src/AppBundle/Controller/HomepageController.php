@@ -125,29 +125,6 @@ class HomepageController extends Controller
   }
 
   /**
-   * @Route("/modal-us", name="modal_us")
-   * @param Request $request
-   */
-  public function modalAction(Request $request)
-  {
-    $contactUs = new ContactUs();
-    $contactUs->setAuthor($this->getUser());
-    $form = $this->createForm(ContactUsType::class, $contactUs, [
-      'csrf_protection' => false,
-    ]);
-    $content = $this->render('@App/modal/contact_us.html.twig', [
-      'form' => $form->createView()
-    ]);
-
-    $response = new Response();
-    $response->setContent($content->getContent());
-    $response->setStatusCode(Response::HTTP_OK);
-    $response->headers->set('Content-Type', 'text/html');
-    $response->headers->set('X-Requested-With', 'XMLHttpRequest');
-    $response->send();
-  }
-
-  /**
    * @Route("/contact_us", name="contact_us")
    * @param Request $request
    * @return Response
@@ -159,8 +136,9 @@ class HomepageController extends Controller
     $form = $this->createForm(ContactUsType::class, $contactUs, [
       'csrf_protection' => false,
     ]);
-    $form->handleRequest($request);
+    $data = $request->request->all();
 
+    $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid())
     {
       $em = $this->getDoctrine()->getManager();
@@ -175,6 +153,28 @@ class HomepageController extends Controller
       {
         $this->get('logger')->error('Failed to send contact us: ' . $e->getMessage());
       }
+      if ($request->isXmlHttpRequest())
+      {
+        return new JsonResponse(1);
+      }
+    }
+
+    /**
+     * Если пришел ajax запрос на создание формы
+     */
+    if ($request->isXmlHttpRequest() && empty($data))
+    {
+      $content = $this->render('@App/modal/contact_us.html.twig', [
+        'form' => $form->createView()
+      ]);
+
+      $response = new Response();
+      $response->setContent($content->getContent());
+      $response->setStatusCode(Response::HTTP_OK);
+      $response->headers->set('Content-Type', 'text/html');
+      $response->headers->set('X-Requested-With', 'XMLHttpRequest');
+      $response->send();
+      die;
     }
 
     return $this->render('@App/contact_us.html.twig', [
