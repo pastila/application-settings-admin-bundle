@@ -2,24 +2,49 @@
 
 $(document).ready(function () {
 
-  function getURLParameter(parameter) {
-    var params = window
-        .location
-        .search
-        .replace('?', '')
-        .split('&')
-        .reduce(
-            function (p, e) {
-              var a = e.split('=');
-              p[decodeURIComponent(a[0])] = decodeURIComponent(a[1]);
-              return p;
-            }, {}
-        );
-    return params[parameter];
-  };
+  class Url {
+    constructor(url) {
+      const urlL = url.split('#')[0];
+      const urlParams = {};
 
-  var yearURLParameter = getURLParameter(`year`);
-  var regionURLParameter = getURLParameter(`region`);
+      let queryString = urlL.split('?')[1];
+      if (!queryString) {
+        if (urlL.search('=') !== false) {
+          queryString = urlL;
+        }
+      }
+      if (queryString) {
+        const keyValuePairs = queryString.split('&');
+        for (let i = 0; i < keyValuePairs.length; i++) {
+          const keyValuePair = keyValuePairs[i].split('=');
+          const paramName = keyValuePair[0];
+          const paramValue = keyValuePair[1] || '';
+
+          urlParams[paramName] = decodeURIComponent(paramValue.replace(/\+/g, ' '));
+        }
+      }
+
+      this.searchParams = urlParams;
+    }
+
+    /**
+     * Поиск значения параметра по названию. Если параметр встречался в поисковой строке несколько раз,
+     * вернет последнее вхождение параметра
+     *
+     * @param {String} name
+     * @return {String}|null
+     */
+    searchParam(name) {
+      if (typeof this.searchParams[name] !== 'undefined') {
+        return this.searchParams[name];
+      }
+      return null;
+    }
+  }
+
+  var currentUrl = document.location.href;
+  var yearURLParameter = new Url(currentUrl).searchParam(`year`);
+  var regionURLParameter = new Url(currentUrl).searchParam(`region`);
 
   function  fillRegionInput(region) {
       let select_region = $(`.region[value=${region}]`).text();
