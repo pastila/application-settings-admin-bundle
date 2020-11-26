@@ -82,7 +82,7 @@ class HomepageControllerTest extends AppWebTestCase
     $feedbacksHtml = $crawler->filter('.b-reviews__item')->each(function (Crawler $node, $i)
     {
       return [
-        'valuation' => $node->filter('.svg-icon--star.active')->count(),
+        'valuation' => $node->filter('.svg-icon--star')->count(),
         'text' => trim($node->filter('.b-reviews__item-text')->text()),
         'author' => trim($node->filter('.b-reviews__item-user .b-reviews__item-name')->text()),
         'date' => trim($node->filter('.b-reviews__item-user .b-reviews__item-date')->text()),
