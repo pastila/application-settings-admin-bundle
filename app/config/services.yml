@@ -11,6 +11,8 @@ services:
         public: false
         bind:
             $apiToken: '%api_token%'
+            $mailerFrom: '%mailer_from%'
+            $mailerSenderName: '%mailer_sender_name%'
 
     _instanceof:
         Accurateweb\ClientApplicationBundle\DataAdapter\ClientApplicationModelAdapterInterface:
@@ -42,6 +44,10 @@ services:
             - '@validator'
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+
+    AppBundle\Service\:
+        resource: '../../src/AppBundle/Service'
+        public: true
 
 #    twig.extension.EndingFormatter:
 #        class: AppBundle\Twig\EndingFormatTwigExtension

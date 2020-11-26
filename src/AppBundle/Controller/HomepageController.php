@@ -14,6 +14,7 @@ use AppBundle\Helper\GetMessFromBitrix;
 use AppBundle\Model\InsuranceCompany\Branch\BranchRatingHelper;
 use AppBundle\Repository\Geo\RegionRepository;
 use AppBundle\Form\ContactUs\ContactUsType;
+use AppBundle\Service\ContactUs\ContactUsMailer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,21 +29,22 @@ class HomepageController extends Controller
   private $settingManager;
   private $regionRepository;
   private $locationService;
-  private $paramsFromBitrix;
+  private $contactUsMailer;
 
   public function __construct(
+ GetMessFromBitrix $paramsFromBitrix,
     BranchRatingHelper $branchRatingHelper,
     SettingManagerInterface $settingManager,
     RegionRepository $regionRepository,
-    Location $locationService,
-    GetMessFromBitrix $paramsFromBitrix
+    ContactUsMailer $contactUsMailer,
+    Location $locationService
   )
   {
     $this->branchRatingHelper = $branchRatingHelper;
     $this->settingManager = $settingManager;
     $this->regionRepository = $regionRepository;
     $this->locationService = $locationService;
-    $this->paramsFromBitrix = $paramsFromBitrix;
+    $this->contactUsMailer = $contactUsMailer;
   }
 
   /**
@@ -167,50 +169,16 @@ class HomepageController extends Controller
 
       try
       {
-        $paramsFromBitrix = $this->paramsFromBitrix->getParams($request);
-        if (!empty($paramsFromBitrix) && key_exists('DEFAULT_EMAIL_FROM', $paramsFromBitrix))
-        {
-          $this->sendNewContactUs($contactUs, $paramsFromBitrix['MAIN_EMAIL']);
-        }
-        else
-        {
-          $this->get('logger')->warn('Unable to send notification about new "contact us". Default email is not set');
-        }
+        $this->contactUsMailer->sendContactUs($contactUs);
       }
-      catch (BitrixRequestException $e)
+      catch (\Exception $e)
       {
-        $this->get('logger')->warn('Unable to send notification about new "contact us". Could not resolve default email: ' . $e);
-      }
-      catch (\Exception $e2)
-      {
-        $this->get('logger')->warn('Unable to send notification about new "contact us": ' . $e2);
+        $this->get('logger')->error('Failed to send contact us: ' . $e->getMessage());
       }
     }
 
     return $this->render('@App/contact_us.html.twig', [
       'form' => $form->createView()
     ]);
-  }
-
-  /**
-   * @param ContactUs $contactUs
-   * @param $email
-   */
-  private function sendNewContactUs(ContactUs $contactUs, $email)
-  {
-    $message = (new \Swift_Message('Обратная связь'))
-      ->setFrom($email)
-      ->setTo($email)
-      ->setBody(
-        $this->renderView(
-          'emails/contuct_us/for_admin_write_to_us.html.twig', [
-            'name' => $contactUs->getAuthorName(),
-            'email' => $contactUs->getEmail(),
-            'text' => $contactUs->getMessage()
-          ]
-        ),
-        'text/html'
-      );
-    $this->get('mailer')->send($message);
   }
 }

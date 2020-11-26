@@ -2,6 +2,7 @@
 
 namespace AppBundle\Service\ContactUs;
 
+use Accurateweb\ApplicationSettingsAdminBundle\Model\Manager\SettingManagerInterface;
 use Accurateweb\EmailTemplateBundle\Email\Factory\EmailFactory;
 use AppBundle\Entity\ContactUs\ContactUs;
 use Symfony\Component\Routing\RouterInterface;
@@ -13,12 +14,14 @@ class ContactUsMailer
   protected $mailerFrom;
   protected $mailerSenderName;
   protected $router;
+  protected $settingManager;
 
   public function __construct (
     \Swift_Mailer $mailer,
     EmailFactory $emailFactory,
     $mailerFrom,
     $mailerSenderName,
+    SettingManagerInterface $settingManager,
     RouterInterface $router
   )
   {
@@ -27,6 +30,7 @@ class ContactUsMailer
     $this->mailerFrom = $mailerFrom;
     $this->mailerSenderName = $mailerSenderName;
     $this->router = $router;
+    $this->settingManager = $settingManager;
   }
 
   /**
@@ -34,10 +38,12 @@ class ContactUsMailer
    */
   public function sendContactUs (ContactUs $contactUs)
   {
+    $mail = $this->settingManager->getValue('default_email');
+
     $message = $this->emailFactory->createMessage('email_contact_us', [
       $this->mailerFrom => $this->mailerSenderName,
     ],
-      'todo@todo.ru',
+      $mail,
       [
         'name' => $contactUs->getAuthorName(),
         'email' => $contactUs->getEmail(),
