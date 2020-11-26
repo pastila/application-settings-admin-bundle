@@ -1,5 +1,4 @@
 
-
 let popupHTML = null
 
 $.ajax({
