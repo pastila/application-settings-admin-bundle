@@ -34,7 +34,7 @@ class CompanyBranch extends Fixture implements DependentFixtureInterface
       ->setCompany($this->getReference('sogaz-med'))
       ->setRegion($this->getReference('region-66'))
       ->setName('СОГАЗ-МЕД')
-      ->setValuation(4.5)
+      ->setValuation(4.0)
       ->setStatus(CompanyStatus::ACTIVE);
     $manager->persist($sogazMed66);
 
