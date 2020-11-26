@@ -96,3 +96,6 @@ services:
 
     Accurateweb\EmailTemplateBundle\Email\Factory\EmailFactory:
       alias: aw_email_templating.template.factory
+
+    email_service:
+      class: AppBundle\Service\Rabbit\EmailService
