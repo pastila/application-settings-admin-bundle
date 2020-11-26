@@ -43,7 +43,7 @@ class Feedback extends Fixture implements DependentFixtureInterface
       ->setBranch($this->getReference('sogaz-med-66'))
       ->setAuthorName('Армстронг')
       ->setText('Привет Мир!')
-      ->setValuation(5)
+      ->setValuation(4)
       ->setCreatedAt(new \DateTime('2020-01-02'))
       ->setUpdatedAt(new \DateTime('2020-01-02'))
       ->setModerationStatus(FeedbackModerationStatus::MODERATION_ACCEPTED);

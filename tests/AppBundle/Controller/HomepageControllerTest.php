@@ -5,6 +5,7 @@ namespace Tests\AppBundle\Controller;
 
 
 use Tests\AppBundle\AppWebTestCase;
+use Tests\AppBundle\Fixtures\Company\Company;
 use Tests\AppBundle\Fixtures\News\News;
 use Tests\AppBundle\Fixtures\Company\Feedback;
 use Tests\AppBundle\Fixtures\Number\Number;
@@ -89,7 +90,7 @@ class HomepageControllerTest extends AppWebTestCase
       ];
     });
     $this->assertTrue(count($feedbacksHtml) > 1, 'Проверка, что данные вообще нашлись');
-    $this->assertEquals(5, $feedbacksHtml[0]['valuation'], 'Проверка, что Оценка совпадает');
+    $this->assertEquals(4, $feedbacksHtml[0]['valuation'], 'Проверка, что Оценка совпадает');
     $this->assertEquals('Привет Мир!', $feedbacksHtml[0]['text'], 'Проверка, что Текст совпадает');
     $this->assertEquals('Армстронг', $feedbacksHtml[0]['author'], 'Проверка, что Автор совпадает');
     $this->assertEquals('02 января, 2020', $feedbacksHtml[0]['date'], 'Проверка, что Дата совпадает');
@@ -226,14 +227,16 @@ class HomepageControllerTest extends AppWebTestCase
     $this->assertEquals('#personal_data', $crawler->filter('.app-footer__personal a')->attr('href'), 'Проверка, что сАдрес страницы с политикой по обработке персональных данных совпадает');
   }
 
-  /*** Проверка "Топ страховых компаний": **/
+  /*** Проверка "Топ страховых компаний":
+   * https://jira.accurateweb.ru/browse/BEZBAHIL-87
+   **/
   public function testCompanyRating()
   {
     $client = static::createClient();
     $crawler = $client->request('GET', '/');
 
     // Извлечение данных со страницы
-    $companyTopsHtml = $crawler->filter('.b-rating__item')->each(function (Crawler $node, $i)
+    $companyTopsHtml = $crawler->filter('.b-rating__block .b-rating__item')->each(function (Crawler $node, $i)
     {
       return [
         'name' => $node->filter('.b-rating__item-title')->text(),

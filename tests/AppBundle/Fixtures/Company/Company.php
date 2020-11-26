@@ -20,7 +20,7 @@ class Company extends Fixture
     $sogazMed
       ->setKpp('1027739008440')
       ->setName('СОГАЗ-МЕД')
-      ->setValuation(4.5)
+      ->setValuation(4.0)
       ->setStatus(CompanyStatus::ACTIVE);
     $manager->persist($sogazMed);
 

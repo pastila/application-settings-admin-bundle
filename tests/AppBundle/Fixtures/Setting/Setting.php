@@ -15,6 +15,11 @@ class Setting extends Fixture
    */
   public function load(ObjectManager $manager)
   {
+    $region_default = new \AppBundle\Entity\Common\Setting();
+    $region_default->setName('region_default');
+    $region_default->setValue('2');
+    $manager->persist($region_default);
+
     $agreement = new \AppBundle\Entity\Common\Setting();
     $agreement->setName('agreement');
     $agreement->setValue('#agreement');
@@ -37,6 +42,7 @@ class Setting extends Fixture
 
     $manager->flush();
 
+    $this->addReference('setting-region_default', $region_default);
     $this->addReference('setting-agreement', $agreement);
     $this->addReference('setting-personal_data', $agreement);
     $this->addReference('setting-social_telegram', $agreement);
