@@ -6,9 +6,11 @@ require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_be
 CModule::IncludeModule("iblock");
 
 $all_bcc = Config\Option::get("main", "all_bcc", "");
+$DEFAULT_EMAIL_FROM = COption::GetOptionString("main", "email_from", "admin@".$GLOBALS["SERVER_NAME"]);
 
   header('Content-Type: applicaion/json');
   echo json_encode([
-    'MAIN_EMAIL' => $all_bcc
+    'MAIN_EMAIL' => $all_bcc,
+    'DEFAULT_EMAIL_FROM' => $DEFAULT_EMAIL_FROM,
   ]);
   exit;

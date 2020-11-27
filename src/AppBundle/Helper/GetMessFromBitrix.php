@@ -30,22 +30,24 @@ class GetMessFromBitrix
   }
 
   /**
-   * @param Request $request
-   * @return mixed|null
+   * @param $request
+   * @return array|mixed
+   * @throws BitrixRequestException
    */
-  public function getMainMail(Request $request)
+  public function getParams($request)
   {
+    $params = [];
     $dataFromBitrix = new DataFromBitrix($request);
     try {
       $dataFromBitrix->getData('%s/ajax/get_mess.php');
-      $mainEmail = $dataFromBitrix->getParam('MAIN_EMAIL');
+      $params = $dataFromBitrix->getRes();
     }
     catch (BitrixRequestException $exception)
     {
-      $this->logger->error(sprintf('Error get from getEmail: . %s', $exception->getMessage()));
+      $this->logger->error(sprintf('Error get from getParams: . %s', $exception->getMessage()));
       throw $exception;
     }
 
-    return $mainEmail;
+    return $params;
   }
 }

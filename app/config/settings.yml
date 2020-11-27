@@ -43,3 +43,21 @@ services:
       - ~
     tags:
       - { name: aw.setting.configuration }
+
+  app.settings.default_email:
+    class: Accurateweb\ApplicationSettingsAdminBundle\Model\SettingConfiguration\StringSettingConfiguration
+    arguments:
+      - 'default_email'
+      - 'Email адрес по умолчанию'
+      - 'noreply@bezbahil.ru'
+    tags:
+      - { name: aw.setting.configuration }
+
+  app.settings.main_email:
+    class: Accurateweb\ApplicationSettingsAdminBundle\Model\SettingConfiguration\StringSettingConfiguration
+    arguments:
+      - 'main_email'
+      - 'Главный Email адрес'
+      - 'info@bezbahil.ru'
+    tags:
+      - { name: aw.setting.configuration }

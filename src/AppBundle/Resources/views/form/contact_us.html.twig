@@ -1,0 +1,39 @@
+{{ form_start(form, {'action': path('contact_us'), 'method': 'POST', 'attr': {
+    id: 'feedback_modal'
+}}) }}
+
+    <div class="close-modal" style="max-width: 10px">
+        <img src="/local/templates/kdteam/images/svg/close_modal.svg" alt="">
+    </div>
+
+    <div class="popup__wrap">
+        <div class="popup__wrap_tabs">
+            <h3 class="popup__wrap_tabs_title">
+                Напишите нам
+            </h3>
+        </div>
+        <div class="popup__wrap_middle">
+            <!-- Input -->
+            <div class="input__wrap">
+                <label class="input__wrap_label">Имя</label>
+                {{ form_row(form.author_name, { attr: { placeholder: "Имя" } }) }}
+            </div>
+            <!-- Input -->
+            <div class="input__wrap">
+                <label class="input__wrap_label">Электронная почта</label>
+                {{ form_row(form.email, { attr: { placeholder: "Email" } }) }}
+            </div>
+        </div>
+        <div class="block_padd-modal">
+            <div class="input__wrap">
+                <label class="input__wrap_label">Сообщение</label>
+                {{ form_row(form.message, { attr: { rows: 10 }}) }}
+            </div>
+        </div>
+        <div class="block_padd-modal">
+            <button type="submit" class="mainBtn" id="ask">Отправить</button>
+        </div>
+    </div>
+
+{{ form_rest(form) }}
+{{ form_end(form) }}
