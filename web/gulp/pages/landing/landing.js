@@ -118,7 +118,9 @@ $(function () {
       $('.b-info').addClass('is-visible');
     }
   }).trigger('scroll');
-  var locationWindow = $('[data-remodal-id=loacation]').remodal();
+  if ($('[data-remodal-id=loacation]')) {
+    var locationWindow = $('[data-remodal-id=loacation]').remodal();
+  }
   $('.js-loacation').on('click', function (event) {
     event.preventDefault();
     locationWindow.open();
@@ -239,70 +241,16 @@ $(function () {
   }
 
   function initContactUsBtn() {
-    let popupHTML = null
     const contactUsBtn = document.querySelector(`.app-footer__contact-us-btn`);
+    const popupElement = document.querySelector(`.popup-write-us`);
 
-    $.ajax({
-      dataType: 'html',
-      url: '/app_dev.php/contact_us',
-      type: 'GET',
-      beforeSend: function () {
-      },
-      success: function (result) {
+    function onContactUsBtnClick () {
+      const popupContuctUs = new PopupContactUs(popupElement);
+      popupContuctUs.open();
+      popupContuctUs.submitForm();
+    }
 
-        popupHTML = result
-        contactUsBtn.addEventListener(`click`, onContactUsBtnClick);
-
-      },
-    }).done(function (msg) {
-    });
-
-    function onContactUsBtnClick(evt) {
-      evt.preventDefault();
-
-      function changePopupEventsState(isAddType) {
-        const method = isAddType === true ? `addEventListener` : `removeEventListener`;
-        const methodReverse = isAddType === true ? `removeEventListener` : `addEventListener`;
-
-        contactUsBtn[methodReverse](`click`, onContactUsBtnClick);
-        closeBtn[method](`click`, onCloseBtnClick);
-        popupElement[method](`click`, onPopupElementClick);
-        document[method](`click`, onEscPress);
-      }
-
-      const popupElement = document.createElement(`div`);
-      popupElement.classList.add(`popup-write-us`);
-
-      popupElement.insertAdjacentHTML(`beforeend`, popupHTML);
-      document.body.insertAdjacentElement(`beforeend`, popupElement);
-      const closeBtn = popupElement.querySelector(`.close-modal`);
-
-      function onCloseBtnClick (evt) {
-        evt.preventDefault();
-        changePopupEventsState(false);
-        popupElement.remove();
-      }
-
-      function onPopupElementClick (evt) {
-        if(evt.target===popupElement) {
-          evt.preventDefault();
-          changePopupEventsState(false);
-          popupElement.remove();
-        }
-      }
-
-      function onEscPress(evt) {
-        if (evt.key === `Escape`) {
-          evt.preventDefault();
-          changePopupEventsState(false);
-          popupElement.remove();
-        }
-      }
-
-      changePopupEventsState(true);
-
-    };
-
+    contactUsBtn.addEventListener(`click`, onContactUsBtnClick)
   };
 
   initContactUsBtn();

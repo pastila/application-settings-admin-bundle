@@ -4176,9 +4176,17 @@ a {
   right: 0;
   bottom: 0;
   background: rgba(0,0,0, 0.7);
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
+
+  &__error-message {
+    max-width: 240px;
+    font-size: 20px;
+    margin: 30px 0;
+    display: block;
+    text-align: center;
+  }
 }
 
 .feedback_form {
