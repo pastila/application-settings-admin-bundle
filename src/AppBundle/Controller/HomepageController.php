@@ -81,7 +81,7 @@ class HomepageController extends Controller
       'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
       'numbers' => $numbers,
       'questions' => $questions,
-      'companyRating' => array_slice($this->branchRatingHelper->buildRating(), 0, 5),
+      'companyRating' => array_slice($this->branchRatingHelper->buildRating($region), 0, 5),
       'feedbacks' => $feedbacks,
       'news' => $news,
       'region' => $region,
