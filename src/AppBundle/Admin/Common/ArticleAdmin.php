@@ -20,6 +20,7 @@ class ArticleAdmin extends Base
 
   public function toString($object)
   {
+    $s = null;
     if ($object instanceof Article)
     {
       if (mb_strlen($object->getTitle(), 'UTF-8') > 35)
@@ -46,30 +47,30 @@ class ArticleAdmin extends Base
   {
     $form
       ->tab("Основные")
-        ->add("title")
-        ->add("announce",  TextareaType::class)
-        ->add('text', TinyMceType::class, [
-            'attr' => [
-              'class' => 'tinymce',
-              'tinymce' => '{"theme":"simple"}',
-              'data-theme' => 'bbcode',
-            ],
-            'required' => true
-          ]
-        )
-        ->add("isPublished")
-        ->add("publishedAt", DatePickerType::class, [
-          'format' => 'd MMMM yyyy',
-          'view_timezone' => 'UTC',
-          'model_timezone' => 'UTC',
-        ])
-        ->end()
+      ->add("title")
+      ->add("announce", TextareaType::class)
+      ->add('text', TinyMceType::class, [
+          'attr' => [
+            'class' => 'tinymce',
+            'tinymce' => '{"theme":"simple"}',
+            'data-theme' => 'bbcode',
+          ],
+          'required' => true
+        ]
+      )
+      ->add("isPublished")
+      ->add("publishedAt", DatePickerType::class, [
+        'format' => 'd MMMM yyyy',
+        'view_timezone' => 'UTC',
+        'model_timezone' => 'UTC',
+      ])
+      ->end()
       ->end()
       ->tab("Изображение")
-        ->add('teaser', 'Accurateweb\MediaBundle\Form\ImageType', [
-          'required' => false,
-          'label' => 'Изображение',
-        ])
+      ->add('teaser', 'Accurateweb\MediaBundle\Form\ImageType', [
+        'required' => false,
+        'label' => 'Изображение',
+      ])
       ->end()
       ->end();
   }
