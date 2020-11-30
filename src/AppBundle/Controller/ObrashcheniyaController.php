@@ -1,0 +1,44 @@
+<?php
+
+namespace AppBundle\Controller;
+
+
+use AppBundle\Entity\Obrashcheniya\ObrashcheniyaFile;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
+
+class ObrashcheniyaController extends Controller
+{
+  /**
+   * @Route("/obrashcheniya/report-download", name="obrashcheniya-report-download")
+   */
+  public function reportDownloadAction(Request $request)
+  {
+    $em = $this->getDoctrine()->getManager();
+    $obrashcheniyaFile = $em->getRepository(ObrashcheniyaFile::class)
+      ->getFileQuery($this->getUser(), $request->get('file'))
+      ->setMaxResults(1)
+      ->getQuery()
+      ->getOneOrNullResult();
+    if (!$obrashcheniyaFile)
+    {
+      throw $this->createNotFoundException(sprintf('Obrashcheniya File model not found'));
+    }
+
+    try
+    {
+      $response = new BinaryFileResponse($obrashcheniyaFile->getFile());
+      $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_INLINE, $request->get('file'));
+    }
+    catch (FileNotFoundException $e)
+    {
+      throw $this->createNotFoundException(sprintf('Obrashcheniya file not found'));
+    }
+
+    return $response;
+  }
+}

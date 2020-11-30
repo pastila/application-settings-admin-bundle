@@ -1,5 +1,17 @@
 <?php
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
+
+require_once dirname(__FILE__).'/../vendor/autoload.php';
+require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/rabbitmq.php");
+require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/config_obrashcheniya.php");
+require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/obrashcheniya_helper.php");
+
+if ($USER->IsAuthorized())
+{
+  $rsUser = $USER->GetByLogin($USER->GetLogin());
+  $arUser = $rsUser->Fetch();
+}
+
 if (CModule::IncludeModule("iblock")) {
     $arSelect = array(
         "IBLOCK_ID",
@@ -350,32 +362,39 @@ if (CModule::IncludeModule("iblock")) {
 
                             }
 
-                            CEvent::Send(
-                                'SEND_MESSAGE_CHILD',
-                                's1',
-                                array(
-                                    'MESSAGE' => $message,
-                                    'NAME_COMPANY' => $name_rerion,
-                                    'BOSS_COMPANY' => $arFields_comp['PROPERTY_NAME_BOSS_VALUE'],
-                                    'EMAIL' => $email_child_smo,
-                                    'USER_MAIL' => $user_email,
-                                    'FULLNAME' => $arFields['PROPERTY_FULL_NAME_VALUE'],
-                                    'FULLNAME_CHILD' => $full_name_child,
-                                    "BIRTHDAY" => $BIRTHDAY,
-                                    'POLICY' => $arFields['PROPERTY_POLICY_VALUE'],
-                                    'POLICY_CHILD' => $polic,
-                                    'PHONE' => $mobail_number,
-                                    'HOSPITAL' => htmlspecialchars_decode($arFields['PROPERTY_HOSPITAL_VALUE']),
-                                    'DATE_SEND' => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time()),
-                                    'DATE_PAY' => $arFields['PROPERTY_VISIT_DATE_VALUE'],
-                                    'PERSONAL_BIRTHDAT' => $PERSONAL_BIRTHDAT,
-                                    'MAIL_CMO' => $mail_cmo,
-                                    'FULL_NAME_HOSPITAL' => $FULL_NAME_HOSPITAL,
-                                    'MEDICAL_CODE' => $MEDICAL_CODE,
-                                    'HOSPITAL_ADRESS' => $hospital_adress,
-                                    'SRC_LOGO' => $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["SERVER_NAME"] . "/pdf/logo_oms.png",
-                                )
-                            );
+                            rabbitmqSend(queue_obrashcheniya_emails, json_encode([
+                              'login' => $arUser['LOGIN'],
+                              'SEND_MESSAGE_CHILD',
+                              's1',
+                              array(
+                                'PROPERTY_IMG_1_VALUE' => CFile::GetPath($arFields['PROPERTY_IMG_1_VALUE']),
+                                'PROPERTY_IMG_2_VALUE' => CFile::GetPath($arFields['PROPERTY_IMG_2_VALUE']),
+                                'PROPERTY_IMG_3_VALUE' => CFile::GetPath($arFields['PROPERTY_IMG_3_VALUE']),
+                                'PROPERTY_IMG_4_VALUE' => CFile::GetPath($arFields['PROPERTY_IMG_4_VALUE']),
+                                'PROPERTY_IMG_5_VALUE' => CFile::GetPath($arFields['PROPERTY_IMG_5_VALUE']),
+                                'PDF' => parsingPdfPath($arFile['SRC']),
+                                'MESSAGE' => $message,
+                                'NAME_COMPANY' => $name_rerion,
+                                'BOSS_COMPANY' => $arFields_comp['PROPERTY_NAME_BOSS_VALUE'],
+                                'EMAIL' => $email_child_smo,
+                                'USER_MAIL' => $user_email,
+                                'FULLNAME' => $arFields['PROPERTY_FULL_NAME_VALUE'],
+                                'FULLNAME_CHILD' => $full_name_child,
+                                "BIRTHDAY" => $BIRTHDAY,
+                                'POLICY' => $arFields['PROPERTY_POLICY_VALUE'],
+                                'POLICY_CHILD' => $polic,
+                                'PHONE' => $mobail_number,
+                                'HOSPITAL' => htmlspecialchars_decode($arFields['PROPERTY_HOSPITAL_VALUE']),
+                                'DATE_SEND' => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time()),
+                                'DATE_PAY' => $arFields['PROPERTY_VISIT_DATE_VALUE'],
+                                'PERSONAL_BIRTHDAT' => $PERSONAL_BIRTHDAT,
+                                'MAIL_CMO' => $mail_cmo,
+                                'FULL_NAME_HOSPITAL' => $FULL_NAME_HOSPITAL,
+                                'MEDICAL_CODE' => $MEDICAL_CODE,
+                                'HOSPITAL_ADRESS' => $hospital_adress,
+                                'SRC_LOGO' => $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["SERVER_NAME"] . "/pdf/logo_oms.png",
+                              )
+                            ]));
                             CIBlockElement::SetPropertyValuesEx(
                                 $_POST['ID'],
                                 11,
@@ -386,38 +405,47 @@ if (CModule::IncludeModule("iblock")) {
                             );
                             $result['success'] = 'Обращение успешно отправлено в страховую компанию.
                          Ваше обращение находится в личном кабинете «Отправленные»';
-                            CEvent::Send(
+
+                          rabbitmqSend(queue_obrashcheniya_emails, json_encode([
+                                'login' => $arUser['LOGIN'],
                                 'SEND_MASSEGE_AFTER_SEND_APPEAL',
                                 's1',
                                 array(
                                     'EMAIL' => $person["EMAIL"],
-
                                 )
-                            );
+                            ]));
                         } else {
-                            CEvent::Send(
-                                'SEND_MESSAGE',
-                                's1',
-                                array(
-                                    'MESSAGE' => $message,
-                                    'NAME_COMPANY' => $name_company,
-                                    'BOSS_COMPANY' => $boss_company,
-                                    'MAIL_COMPANY' => $mail_company,
-                                    'EMAIL' => $email,
-                                    'BIRTHDAY' => $BIRTHDAY_person,
-                                    'USER_MAIL' => $user_email,
-                                    'FULLNAME' => $arFields['PROPERTY_FULL_NAME_VALUE'],
-                                    'POLICY' => $arFields['PROPERTY_POLICY_VALUE'],
-                                    'PHONE' => $mobail_number,
-                                    'HOSPITAL' => htmlspecialchars_decode($arFields['PROPERTY_HOSPITAL_VALUE']),
-                                    'DATE_SEND' => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time()),
-                                    'DATE_PAY' => $arFields['PROPERTY_VISIT_DATE_VALUE'],
-                                    'FULL_NAME_HOSPITAL' => $FULL_NAME_HOSPITAL,
-                                    'MEDICAL_CODE' => $MEDICAL_CODE,
-                                    'HOSPITAL_ADRESS' => $hospital_adress,
-                                    'SRC_LOGO' => $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["SERVER_NAME"] . "/pdf/logo_oms.png",
-                                )
-                            );
+                          rabbitmqSend(queue_obrashcheniya_emails, json_encode([
+                            'login' => $arUser['LOGIN'],
+                            'SEND_MESSAGE',
+                            's1',
+                            array(
+                              'PROPERTY_IMG_1_VALUE' => CFile::GetPath($arFields['PROPERTY_IMG_1_VALUE']),
+                              'PROPERTY_IMG_2_VALUE' => CFile::GetPath($arFields['PROPERTY_IMG_2_VALUE']),
+                              'PROPERTY_IMG_3_VALUE' => CFile::GetPath($arFields['PROPERTY_IMG_3_VALUE']),
+                              'PROPERTY_IMG_4_VALUE' => CFile::GetPath($arFields['PROPERTY_IMG_4_VALUE']),
+                              'PROPERTY_IMG_5_VALUE' => CFile::GetPath($arFields['PROPERTY_IMG_5_VALUE']),
+                              'PDF' => parsingPdfPath($arFile['SRC']),
+                              'MESSAGE' => $message,
+                              'NAME_COMPANY' => $name_company,
+                              'BOSS_COMPANY' => $boss_company,
+                              'MAIL_COMPANY' => $mail_company,
+                              'EMAIL' => $email,
+                              'BIRTHDAY' => $BIRTHDAY_person,
+                              'USER_MAIL' => $user_email,
+                              'FULLNAME' => $arFields['PROPERTY_FULL_NAME_VALUE'],
+                              'POLICY' => $arFields['PROPERTY_POLICY_VALUE'],
+                              'PHONE' => $mobail_number,
+                              'HOSPITAL' => htmlspecialchars_decode($arFields['PROPERTY_HOSPITAL_VALUE']),
+                              'DATE_SEND' => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time()),
+                              'DATE_PAY' => $arFields['PROPERTY_VISIT_DATE_VALUE'],
+                              'FULL_NAME_HOSPITAL' => $FULL_NAME_HOSPITAL,
+                              'MEDICAL_CODE' => $MEDICAL_CODE,
+                              'HOSPITAL_ADRESS' => $hospital_adress,
+                              'SRC_LOGO' => $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["SERVER_NAME"] . "/pdf/logo_oms.png",
+                            )
+                          ]));
+
                             CIBlockElement::SetPropertyValuesEx(
                                 $_POST['ID'],
                                 11,
@@ -429,14 +457,14 @@ if (CModule::IncludeModule("iblock")) {
                             $result['success'] = 'Обращение успешно отправлено в страховую компанию.
                          Ваше обращение находится в личном кабинете «Отправленные»';
 
-                            CEvent::Send(
+                          rabbitmqSend(queue_obrashcheniya_emails, json_encode([
+                                'login' => $arUser['LOGIN'],
                                 'SEND_MASSEGE_AFTER_SEND_APPEAL',
                                 's1',
                                 array(
                                     'EMAIL' => $person["EMAIL"],
-
                                 )
-                            );
+                          ]));
 
                         }
                     } else {

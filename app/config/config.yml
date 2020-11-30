@@ -150,20 +150,30 @@ accurateweb_application_settings_admin:
 old_sound_rabbit_mq:
   connections:
     default:
-      port:  5672
-      host: '%rabbitmq_host%'
-      user: '%rabbitmq_user%'
-      password: '%rabbitmq_password%'
-      vhost: '%rabbitmq_project_vhost%'
+      host:     rabbitmq
+      port:     5672
+      user:     'guest'
+      password: 'guest'
+      vhost:    '/'
   producers:
-    emailing:
+    obrashcheniya_emails:
       connection: default
       exchange_options:
-        name: emails
+        name: obrashcheniya_emails
+        type: direct
+    obrashcheniya_files:
+      connection: default
+      exchange_options:
+        name: obrashcheniya_files
         type: direct
   consumers:
-    emailing:
+    obrashcheniya_emails:
       connection:       default
-      exchange_options: {name: 'emails', type: direct}
-      queue_options:    {name: 'emails'}
-      callback:         email_service
+      exchange_options: {name: 'obrashcheniya_emails', type: direct}
+      queue_options:    {name: 'obrashcheniya_emails'}
+      callback:         obrashcheniya_emails_service
+    obrashcheniya_files:
+      connection:       default
+      exchange_options: {name: 'obrashcheniya_files', type: direct}
+      queue_options:    {name: 'obrashcheniya_files'}
+      callback:         obrashcheniya_files_service
