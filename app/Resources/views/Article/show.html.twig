@@ -1,0 +1,50 @@
+{% extends "base.html.twig" %}
+
+{% set title = article.title %}
+
+{% block meta %}
+    {{ parent() }}
+{% endblock %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block stylesheets %}
+    <link href="/local/templates/kdteam/pages/otpravlennyye/otpravlennyye.min.css" type="text/css" rel="stylesheet"/>
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="/local/templates/kdteam/js/main.min.js"></script>
+    {{ parent() }}
+{% endblock %}
+
+{% block main %}
+    <ul class="breadcrumbs" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+        {% if is_mobile() or is_tablet() %}
+            <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a href="{{ path("news_list") }}" class="active-breadcrumbs" itemprop="item">{{ title }}
+                    <meta itemprop="name" content="{{ title }}">
+                </a>
+                <meta itemprop="position" content="1">
+            </li>
+        {% else %}
+            <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a href="/" itemprop="item">Главная
+                    <meta itemprop="name" content="Главная">
+                </a>
+                <meta itemprop="position" content="1">
+            </li>
+            <li class="active-breadcrumbs" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a itemprop="item">{{ title }}
+                    <meta itemprop="name" content="{{ title }}">
+                </a>
+                <meta itemprop="position" content="2">
+            </li>
+        {% endif %}
+    </ul>
+    <div class="container">
+            <div class="white_block">
+                {{ article.text |raw }}
+            </div>
+    </div>
+{% endblock %}

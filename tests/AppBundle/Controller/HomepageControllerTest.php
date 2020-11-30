@@ -5,6 +5,7 @@ namespace Tests\AppBundle\Controller;
 
 
 use Tests\AppBundle\AppWebTestCase;
+use Tests\AppBundle\Fixtures\Article\Article;
 use Tests\AppBundle\Fixtures\Company\Company;
 use Tests\AppBundle\Fixtures\News\News;
 use Tests\AppBundle\Fixtures\Company\Feedback;
@@ -82,7 +83,7 @@ class HomepageControllerTest extends AppWebTestCase
     $feedbacksHtml = $crawler->filter('.b-reviews__item')->each(function (Crawler $node, $i)
     {
       return [
-        'valuation' => $node->filter('.svg-icon--star')->count(),
+        'valuation' => $node->filter('.svg-icon--star.active')->count(),
         'text' => trim($node->filter('.b-reviews__item-text')->text()),
         'author' => trim($node->filter('.b-reviews__item-user .b-reviews__item-name')->text()),
         'date' => trim($node->filter('.b-reviews__item-user .b-reviews__item-date')->text()),
@@ -119,8 +120,6 @@ class HomepageControllerTest extends AppWebTestCase
     $this->assertEquals('Пример вопроса', $questionsHtml[0]['question'], $textPrev . 'Проверка, что Вопрос совпадает');
     $this->assertEquals('Пример ответа', $questionsHtml[0]['answer'], $textPrev . 'Проверка, что Ответ совпадает');
   }
-
-
 
   /*** Проверка "Меню Header":
    * https://jira.accurateweb.ru/browse/BEZBAHIL-92
