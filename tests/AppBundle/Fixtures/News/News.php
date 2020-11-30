@@ -37,6 +37,6 @@ class News extends Fixture
     $manager->flush();
 
     $this->addReference('news-simple1', $news1);
-    $this->addReference('news-simple2', $news1);
+    $this->addReference('news-simple2', $news2);
   }
 }
