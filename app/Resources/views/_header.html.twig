@@ -20,15 +20,10 @@
                 </div>
 
                 <span>Ваш регион: </span>
-                <a href="#loacation" class="js-loacation">Москва и область</a>
+                <a href="#loacation" class="js-loacation">{{ _region }}</a>
             </div>
             <nav class="app-header__list">
-                <ul>
-                    <li><a class="js-scroll" href="#first">Возврат денег за ОМС</a></li>
-                    <li><a class="js-scroll" href="#rating">Рейтинг страховых компаний</a></li>
-                    <li><a class="js-scroll" href="#work">О проекте</a></li>
-                    <li><a class="js-scroll" href="#faq">FAQ</a></li>
-                </ul>
+                {{ knp_menu_render('AppBundle:Builder:headerMenu') }}
             </nav>
             <a href="#" class="app-header__lk btn">
 
@@ -56,21 +51,15 @@
                     </div>
 
                     <span>Ваш регион: </span>
-                    <a href="#loacation" class="js-loacation">Москва и область</a>
+                    <a href="#loacation" class="js-loacation">{{ _region }}</a>
                 </div>
             </div>
-            <ul class="nav-mobile__list">
-                <li class="nav-mobile__list-item"><a class="js-scroll" href="#first">Возврат денег за ОМС</a></li>
-                <li class="nav-mobile__list-item"><a class="js-scroll" href="#rating">Рейтинг страховых компаний</a>
-                </li>
-                <li class="nav-mobile__list-item"><a class="js-scroll" href="#work">О проекте</a></li>
-                <li class="nav-mobile__list-item"><a class="js-scroll" href="#faq">FAQ</a></li>
-            </ul>
+            {{ knp_menu_render('AppBundle:Builder:headerMenuMobile') }}
         </div>
     </div>
 </div>
-<div class="remodal" data-remodal-id="loacation"
-     data-remodal-options="hashTracking: true, closeOnOutsideClick: true">
+
+<div class="remodal" data-remodal-id="loacation" data-remodal-options="hashTracking: true, closeOnOutsideClick: true">
     <div data-remodal-action="close" class="remodal-close">
 
         <div class="svg-icon svg-icon--close" aria-hidden="true">

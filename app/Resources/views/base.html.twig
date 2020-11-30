@@ -6,7 +6,7 @@
     <meta name="HandheldFriendly" content="true"/>
     <meta name="yandex-verification" content="3117711c7cf9d47f"/>
     <meta name="google-site-verification" content="6i-0zWPQEfVk1TaN63icBNxaPtFIwxrzlrG-w4oiTyg"/>
-{#    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />#}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="robots" content="index, follow"/>
     <meta name="keywords" content="bezbahil"/>
@@ -222,11 +222,10 @@
 <!-- Start Wrap -->
 <div class="app__wrapper">
     <!-- Header -->
+    {% set _region = region ? region.nameWithoutCode : 'Вся Россия' %}
     {% include '_header.html.twig' %}
     <!-- Content -->
-    <div class="app__content">
-        {% block main %}{% endblock %}
-    </div>
+    {% block main %}{% endblock %}
     <!-- Footer -->
     {% include '_footer.html.twig' %}
 

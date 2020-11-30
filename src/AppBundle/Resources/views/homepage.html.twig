@@ -19,146 +19,6 @@
 {% endblock %}
 
 {% block main %}
-    <div id="first" class="b-first">
-        <div class="b-first__content site-width">
-            <h1 class="b-first__title">
-                Верните деньги <span>за лечение</span>
-            </h1>
-            <div class="b-first__items">
-                <div class="b-first__item">
-<!--[if lte IE 9]>
-<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-<![endif]-->
-
-<div class="app__wrapper">
-    {% set _region = region ? region.nameWithoutCode : 'Вся Россия' %}
-    <header class="app-header">
-        <div class="app-header__content site-width">
-            <a href="#" class="app-header__menu-button">
-			<span class="menu-icon">
-				<span class="menu-icon__line menu-icon__line-left"></span>
-				<span class="menu-icon__line"></span>
-				<span class="menu-icon__line menu-icon__line-right"></span>
-			</span>
-            </a>
-            <a href="#" class="app-header__logo">
-                <img src="/landing/img/logo.png" width="199" alt="">
-            </a>
-            <div class="app-header__in">
-                <div class="app-header__location">
-
-                    <div class="svg-icon svg-icon--location" aria-hidden="true">
-                        <svg class="svg-icon__link">
-                            <use xlink:href="#location"></use>
-                        </svg>
-                    </div>
-
-                    <span>Ваш регион: </span>
-                    <a href="#loacation" class="js-loacation">{{ _region }}</a>
-                </div>
-                <nav class="app-header__list">
-                    {{ knp_menu_render('AppBundle:Builder:headerMenu') }}
-                </nav>
-                <a href="#" class="app-header__lk btn">
-
-                    <div class="svg-icon svg-icon--lk" aria-hidden="true">
-                        <svg class="svg-icon__link">
-                            <use xlink:href="#lk"></use>
-                        </svg>
-                    </div>
-
-                    Личный кабинет
-                </a>
-            </div>
-        </div>
-    </header><!-- b:app-header -->
-    <div class="nav-mobile">
-        <div class="nav-mobile__content">
-            <div class="nav-mobile__in">
-                <div class="nav-mobile__location-wrapper">
-                    <div class="nav-mobile__location">
-
-                        <div class="svg-icon svg-icon--location" aria-hidden="true">
-                            <svg class="svg-icon__link">
-                                <use xlink:href="#location"></use>
-                            </svg>
-                        </div>
-
-                        <span>Ваш регион: </span>
-                        <a href="#loacation" class="js-loacation">{{ _region }}</a>
-                    </div>
-                </div>
-                {{ knp_menu_render('AppBundle:Builder:headerMenuMobile') }}
-            </div>
-        </div>
-    </div>
-
-    <div class="remodal" data-remodal-id="loacation" data-remodal-options="hashTracking: true, closeOnOutsideClick: true">
-        <div data-remodal-action="close" class="remodal-close">
-
-            <div class="svg-icon svg-icon--close" aria-hidden="true">
-                <svg class="svg-icon__link">
-                    <use xlink:href="#close"></use>
-                </svg>
-            </div>
-
-        </div>
-        <div class="remodal-title">Выбрать регион</div>
-        <div class="remodal-content">
-            <div class="l-list">
-                <div class="l-list__item">
-                    <a href="#">Москва</a>
-                </div>
-                <div class="l-list__item">
-                    <a href="#">Казань</a>
-                </div>
-                <div class="l-list__item">
-                    <a href="#">Воронеж</a>
-                </div>
-                <div class="l-list__item">
-                    <a href="#">Санкт-Петербург</a>
-                </div>
-                <div class="l-list__item">
-                    <a href="#">Краснодар</a>
-                </div>
-                <div class="l-list__item">
-                    <a href="#">Казань</a>
-                </div>
-                <div class="l-list__item">
-                    <a href="#">Воронеж</a>
-                </div>
-                <div class="l-list__item">
-                    <a href="#">Красноярск</a>
-                </div>
-                <div class="l-list__item">
-                    <a href="#">Краснодар</a>
-                </div>
-                <div class="l-list__item">
-                    <a href="#">Екатеринбург</a>
-                </div>
-                <div class="l-list__item">
-                    <a href="#">Нижний Новгород</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <div class="app__content">
 
 
@@ -171,184 +31,150 @@
                 <div class="b-first__items">
                     <div class="b-first__item">
 
-                    <div class="svg-icon svg-icon--ok" aria-hidden="true">
-                        <svg class="svg-icon__link">
-                            <use xlink:href="#ok"></use>
-                        </svg>
+                        <div class="svg-icon svg-icon--ok" aria-hidden="true">
+                            <svg class="svg-icon__link">
+                                <use xlink:href="#ok"></use>
+                            </svg>
+                        </div>
+
+                        Если Вам отказали
+                        в бесплатном лечении
+                        в поликлинике.
                     </div>
+                    <div class="b-first__item">
 
-                    Если Вам отказали
-                    в бесплатном лечении
-                    в поликлинике.
-                </div>
-                <div class="b-first__item">
+                        <div class="svg-icon svg-icon--ok" aria-hidden="true">
+                            <svg class="svg-icon__link">
+                                <use xlink:href="#ok"></use>
+                            </svg>
+                        </div>
 
-                    <div class="svg-icon svg-icon--ok" aria-hidden="true">
-                        <svg class="svg-icon__link">
-                            <use xlink:href="#ok"></use>
-                        </svg>
+                        Если Вам пришлось
+                        заплатить за медицинские
+                        услуги.
                     </div>
-
-                    Если Вам пришлось
-                    заплатить за медицинские
-                    услуги.
                 </div>
+                <div class="b-first__form">
+                    <form action="#" class="b-form">
+                        <div class="b-form__item b-form__item--full">
+                            <div class="b-form__item-title">Ваш регион</div>
+                            <div class="b-form__item-content">
+                                <select>
+                                    <option>Москва и область</option>
+                                    <option>Название региона</option>
+                                    <option>Еще одно название</option>
+                                    <option>Третье название</option>
+                                    <option>Четвертое название Четвертое название</option>
+                                    <option>Пятое название</option>
+                                    <option>Шестое название</option>
+                                    <option>Седьмое название</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="b-form__item">
+                            <div class="b-form__item-title">Год лечения</div>
+                            <div class="b-form__item-content">
+                                <select>
+                                    <option>2019 г.</option>
+                                    <option selected="">2020 г.</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="b-form__item">
+                            <div class="b-form__item-content">
+                                <button class="b-form__button btn2" type="submit">Вернуть деньги</button>
+                            </div>
+                        </div>
+                    </form><!-- b-form -->
+
+
+
+                </div>
+                <div class="b-first__bottom">
+                    <a href="#" class="b-first__button">
+
+                        <div class="svg-icon svg-icon--scroll" aria-hidden="true">
+                            <svg class="svg-icon__link">
+                                <use xlink:href="#scroll"></use>
+                            </svg>
+                        </div>
+
+                        УЗНАТЬ ПОДРОБНЕЕ
+                    </a>
+                </div>
+                <div class="b-first__bg"></div>
             </div>
-            <div class="b-first__form">
-                <form action="#" class="b-form">
-                    <div class="b-form__item b-form__item--full">
-                        <div class="b-form__item-title">Ваш регион</div>
-                        <div class="b-form__item-content">
-                            <select>
-                                <option>Москва и область</option>
-                                <option>Название региона</option>
-                                <option>Еще одно название</option>
-                                <option>Третье название</option>
-                                <option>Четвертое название Четвертое название</option>
-                                <option>Пятое название</option>
-                                <option>Шестое название</option>
-                                <option>Седьмое название</option>
-                            </select>
+        </div><!-- b-first -->
+        <div id="work" class="b-work">
+            <div class="b-work__content site-width">
+                <h3 class="b-work__title">Как это работает</h3>
+                <div class="b-work__text">
+                    Безбахил — первый бесплатный сервис, помогающий вернуть деньги за лечение
+                    в клиниках, работающих  в системе обязательного медицинского страхования.
+                </div>
+                <div class="b-work__block">
+                    <div class="b-work__item">
+                        <div class="b-work__item-image">
+                            <img src="/landing/img/step_1.svg" alt="">
+                        </div>
+                        <div class="b-work__item-text">
+                            Выбираете где, куда и с чем обращались
                         </div>
                     </div>
-                    <div class="b-form__item">
-                        <div class="b-form__item-title">Год лечения</div>
-                        <div class="b-form__item-content">
-                            <select>
-                                <option>2019 г.</option>
-                                <option selected="">2020 г.</option>
-                            </select>
+                    <div class="b-work__separator">
+                        <img src="/landing/img/step_arrow.svg" alt="">
+                    </div>
+                    <div class="b-work__item">
+                        <div class="b-work__item-image">
+                            <img src="/landing/img/step_2.svg" alt="">
+                        </div>
+                        <div class="b-work__item-text">
+                            Загружаете фото документа об оплате
                         </div>
                     </div>
-                    <div class="b-form__item">
-                        <div class="b-form__item-content">
-                            <button class="b-form__button btn2" type="submit">Вернуть деньги</button>
+                    <div class="b-work__separator">
+                        <img src="/landing/img/step_arrow.svg" alt="">
+                    </div>
+                    <div class="b-work__item">
+                        <div class="b-work__item-image">
+                            <img src="/landing/img/step_3.svg" alt="">
+                        </div>
+                        <div class="b-work__item-text">
+                            Сервис автоматически
+                            сформирует обращение
+                            и отправит в страховую
+                            компанию
                         </div>
                     </div>
-                </form><!-- b-form -->
-
-
-            </div>
-            <div class="b-first__bottom">
-                <a href="#" class="b-first__button">
-
-                    <div class="svg-icon svg-icon--scroll" aria-hidden="true">
-                        <svg class="svg-icon__link">
-                            <use xlink:href="#scroll"></use>
-                        </svg>
+                    <div class="b-work__separator">
+                        <img src="/landing/img/step_arrow.svg" alt="">
                     </div>
-
-                    УЗНАТЬ ПОДРОБНЕЕ
-                </a>
-            </div>
-            <div class="b-first__bg"></div>
-        </div>
-    </div><!-- b-first -->
-    <div id="work" class="b-work">
-        <div class="b-work__content site-width">
-            <h3 class="b-work__title">Как это работает</h3>
-            <div class="b-work__text">
-                Безбахил — первый бесплатный сервис, помогающий вернуть деньги за лечение
-                в клиниках, работающих в системе обязательного медицинского страхования.
-            </div>
-            <div class="b-work__block">
-                <div class="b-work__item">
-                    <div class="b-work__item-image">
-                        <img src="/landing/img/step_1.svg" alt="">
-                    </div>
-                    <div class="b-work__item-text">
-                        Выбираете где, куда и с чем обращались
-                    </div>
-                </div>
-                <div class="b-work__separator">
-                    <img src="/landing/img/step_arrow.svg" alt="">
-                </div>
-                <div class="b-work__item">
-                    <div class="b-work__item-image">
-                        <img src="/landing/img/step_2.svg" alt="">
-                    </div>
-                    <div class="b-work__item-text">
-                        Загружаете фото документа об оплате
-                    </div>
-                </div>
-                <div class="b-work__separator">
-                    <img src="/landing/img/step_arrow.svg" alt="">
-                </div>
-                <div class="b-work__item">
-                    <div class="b-work__item-image">
-                        <img src="/landing/img/step_3.svg" alt="">
-                    </div>
-                    <div class="b-work__item-text">
-                        Сервис автоматически
-                        сформирует обращение
-                        и отправит в страховую
-                        компанию
-                    </div>
-                </div>
-                <div class="b-work__separator">
-                    <img src="/landing/img/step_arrow.svg" alt="">
-                </div>
-                <div class="b-work__item">
-                    <div class="b-work__item-image">
-                        <img src="/landing/img/step_4.svg" alt="">
-                    </div>
-                    <div class="b-work__item-text">
-                        Вам возвращают деньги
-                        за лечение
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><!-- b-work -->
-    <div id="rating" class="b-rating">
-        <div class="b-rating__content site-width">
-            <div class="b-rating__in">
-                <div class="b-rating__part b-rating__part--info">
-                    <h4 class="b-rating__title">Ваш голос <span>имеет значение</span></h4>
-                    <div class="b-rating__info">— Недовольны своим полисом ОМС?</div>
-                    <div class="b-rating__info">— Столкнулись с отказом в оказании медицинской помощи?</div>
-                    <div class="b-rating__info">— Не можете попасть к врачу или на исследование?</div>
-                    <div class="b-rating__info">— Не помог ваш страховой представитель?</div>
-                    <div class="b-rating__bottom">
-                        <a href="{{ path('app_insurancecompany_feedback_new') }}" class="b-rating__button btn2">Оставить
-                            отзыв</a>
-                    </div>
-                </div>
-
-                <div class="b-rating__part b-rating__part--block">
-                    <div class="b-rating__block">
-                        <div class="b-rating__part-title">Топ страховых компаний
-                            в {% if region %}"{{ region.nameWithoutCode }}"{% else %}России{% endif %}</div>
-                        <div class="b-rating__items">
-                            {% for i, company in companyRating %}
-                                <div class="b-rating__item">
-                                    <div class="b-rating__item-title">{{ company[0].name }}</div>
-                                    <div class="b-rating__item-star">
-                                        {% if company.actualRating > 0 %}
-                                            {% for i in 1..(company.actualRating | round(2)) %}
-                                                <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                                    <svg class="svg-icon__link">
-                                                        <use xlink:href="#star"></use>
-                                                    </svg>
-                                                </div>
-                                            {% endfor %}
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            {% endfor %}
+                    <div class="b-work__item">
+                        <div class="b-work__item-image">
+                            <img src="/landing/img/step_4.svg" alt="">
                         </div>
-                        <div class="b-rating__more">
-                            <a href="{% if region %}{{ path('app_insurancecompany_feedback_index', { filter: {region: region.id} }) }}{% else %}'#'{% endif %}">Весь
-                                рейтинг
-                                <div class="svg-icon svg-icon--arrow" aria-hidden="true">
-                                    <svg class="svg-icon__link">
-                                        <use xlink:href="#arrow"></use>
-                                    </svg>
-                                </div>
-                            </a>
+                        <div class="b-work__item-text">
+                            Вам возвращают деньги
+                            за лечение
                         </div>
                     </div>
                 </div>
+            </div>
+        </div><!-- b-work -->
+        <div id="rating" class="b-rating">
+            <div class="b-rating__content site-width">
+                <div class="b-rating__in">
+                    <div class="b-rating__part b-rating__part--info">
+                        <h4 class="b-rating__title">Ваш голос <span>имеет значение</span></h4>
+                        <div class="b-rating__info">—  Недовольны своим полисом ОМС?</div>
+                        <div class="b-rating__info">—  Столкнулись с отказом в оказании медицинской помощи?</div>
+                        <div class="b-rating__info">—  Не можете попасть к врачу или на исследование?</div>
+                        <div class="b-rating__info">—  Не помог ваш страховой представитель?</div>
+                        <div class="b-rating__bottom">
+                            <a href="{{ path('app_insurancecompany_feedback_new') }}" class="b-rating__button btn2">Оставить отзыв</a>
+                        </div>
+                    </div>
+
                     <div class="b-rating__part b-rating__part--block">
                         <div class="b-rating__block">
                             <div class="b-rating__part-title">Топ страховых компаний в {{ _region }}</div>
@@ -358,13 +184,25 @@
                                         <div class="b-rating__item-title">{{ company[0].name }}</div>
                                         <div class="b-rating__item-star">
                                             {% if company.actualRating > 0 %}
-                                                {% for i in 1..(company.actualRating | round(2)) %}
+                                                {% set actualRating = (company.actualRating | round)%}
+                                                <div style="display: none"> {{ actualRating }}</div>
+                                                {% for i in 1..actualRating %}
                                                     <div class="svg-icon svg-icon--star active" aria-hidden="true">
                                                         <svg class="svg-icon__link">
                                                             <use xlink:href="#star"></use>
                                                         </svg>
                                                     </div>
                                                 {% endfor %}
+                                                {% if actualRating < 5 %}
+                                                    {% set hiddenRating = (actualRating + 1) %}
+                                                    {% for j in hiddenRating..5 %}
+                                                        <div class="svg-icon svg-icon--star" aria-hidden="true">
+                                                            <svg class="svg-icon__link">
+                                                                <use xlink:href="#star"></use>
+                                                            </svg>
+                                                        </div>
+                                                    {% endfor %}
+                                                {% endif %}
                                             {% endif %}
                                         </div>
                                     </div>
@@ -382,284 +220,149 @@
                         </div>
                     </div>
 
+                </div>
             </div>
-        </div>
-    </div><!-- b-rating -->
-    <div id="reviews" class="b-reviews">
-        <div class="b-reviews__content site-width">
-            <div class="b-reviews__header">
-                <h3 class="b-reviews__title">Отзывы о сервисе</h3>
-                <a href="{{ path("app_insurancecompany_feedback_index") }}" class="b-reviews__button btn">Все
-                    отзывы</a>
-            </div>
-            <div class="b-reviews__inner">
-                <div class="b-reviews__slider">
-                    {% for feedback in feedbacks %}
-                        <div class="b-reviews__item-wrap">
-                            <div class="b-reviews__item">
-                                <div class="b-reviews__star">
-                                    {% if feedback.valuation > 0 %}
-                                        {% for i in 1..feedback.valuation %}
-                                            <div class="svg-icon svg-icon--star active" aria-hidden="true">
-                                                <svg class="svg-icon__link">
-                                                    <use xlink:href="#star"></use>
-                                                </svg>
-                                            </div>
-                                        {% endfor %}
-                                    {% endif %}
-                                </div>
-                                <div class="b-reviews__item-text">
-                                    {{ feedback.text }}
-                                </div>
-                                <div class="b-reviews__item-content">
-                                    <div class="b-reviews__item-user">
-                                        <div class="b-reviews__item-icon">
+        </div><!-- b-rating -->
 
-                                            <div class="svg-icon svg-icon--lk" aria-hidden="true">
-                                                <svg class="svg-icon__link">
-                                                    <use xlink:href="#lk"></use>
-                                                </svg>
-                                            </div>
+        <div id="reviews" class="b-reviews">
+            <div class="b-reviews__content site-width">
+                <div class="b-reviews__header">
+                    <h3 class="b-reviews__title">Отзывы о страховых компаниях</h3>
+                    <a href="{{ path("app_insurancecompany_feedback_index") }}" class="b-reviews__button btn">Все отзывы</a>
+                </div>
+                <div class="b-reviews__inner">
+                    <div class="b-reviews__slider">
+                        {% for feedback in feedbacks %}
+                            <div class="b-reviews__item-wrap">
+                                <div class="b-reviews__item">
+                                    <div class="b-reviews__star">
+                                        {% if feedback.valuation > 0 %}
+                                            {% for i in 1..feedback.valuation %}
+                                                <div class="svg-icon svg-icon--star active" aria-hidden="true">
+                                                    <svg class="svg-icon__link">
+                                                        <use xlink:href="#star"></use>
+                                                    </svg>
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                        {% if feedback.valuation < 5 %}
+                                            {% for i in (feedback.valuation +1)..5 %}
+                                                <div class="svg-icon svg-icon--star" aria-hidden="true">
+                                                    <svg class="svg-icon__link">
+                                                        <use xlink:href="#star"></use>
+                                                    </svg>
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                    <div class="b-reviews__item-text">
+                                        <a class="b-reviews__item-link" href="{{ path('app_insurancecompany_feedback_show', { id: feedback.id }) }}">
+                                            {{ feedback.text }}
+                                        </a>
+                                    </div>
+                                    <div class="b-reviews__item-content">
+                                        <div class="b-reviews__item-user">
+                                            <div class="b-reviews__item-icon">
 
+                                                <div class="svg-icon svg-icon--lk" aria-hidden="true">
+                                                    <svg class="svg-icon__link">
+                                                        <use xlink:href="#lk"></use>
+                                                    </svg>
+                                                </div>
+
+                                            </div>
+                                            <div class="b-reviews__item-in">
+                                                <div class="b-reviews__item-name">{{ feedback.authorName }}</div>
+                                                <div class="b-reviews__item-date"> {{ feedback.createdAt|prepareDate("d F, Y") }}</div>
+                                            </div>
                                         </div>
-                                        <div class="b-reviews__item-in">
-                                            <div class="b-reviews__item-name">{{ feedback.authorName }}</div>
-                                            <div class="b-reviews__item-date"> {{ feedback.createdAt|prepareDate("d F, Y") }}</div>
+                                        <div class="b-reviews__item-logo">
+                                            {{ render(controller('AppBundle:InsuranceCompany/Company:_logoPanel',
+                                                {
+                                                    'logo_id': (feedback.branch ? feedback.branch.logoIdFromBitrix : null),
+                                                    'name': (feedback.branch ? feedback.branch.name : '')
+                                                } )) }}
                                         </div>
                                     </div>
-                                    <div class="b-reviews__item-logo">
-                                        {{ render(controller('AppBundle:InsuranceCompany/Company:_logoPanel',
-                                            {
-                                                'logo_id': (feedback.branch ? feedback.branch.logoIdFromBitrix : null),
-                                                'name': (feedback.branch ? feedback.branch.name : '')
-                                            } )) }}
-                                    </div>
                                 </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div><!-- b-reviews -->
+
+        <div id="faq" class="b-question">
+            <div class="b-question__content site-width">
+                <div class="b-question__block">
+                    <h3 class="b-question__title">Вопрос-ответ</h3>
+                    {% for question in questions %}
+                        <div class="b-question__item">
+                            <div class="b-question__item-title">
+
+                                <div class="svg-icon svg-icon--question" aria-hidden="true">
+                                    <svg class="svg-icon__link">
+                                        <use xlink:href="#question"></use>
+                                    </svg>
+                                </div>
+                                {{ question.question }}
+                            </div>
+                            <div class="b-question__item-text">
+                                {{ question.answer | raw }}
                             </div>
                         </div>
                     {% endfor %}
                 </div>
-            </div>
-        </div>
-    </div><!-- b-reviews -->
-    <div id="faq" class="b-question">
-        <div class="b-question__content site-width">
-            <div class="b-question__block">
-                <h3 class="b-question__title">Вопрос-ответ</h3>
-                {% for question in questions %}
-                    <div class="b-question__item">
-                        <div class="b-question__item-title">
-
-                            <div class="svg-icon svg-icon--question" aria-hidden="true">
-                                <svg class="svg-icon__link">
-                                    <use xlink:href="#question"></use>
-                                </svg>
-                            </div>
-                            {{ question.question }}
-                        </div>
-                        <div class="b-question__item-text">
-                            {{ question.answer | raw }}
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-            <div class="b-question__image">
-                <img src="/landing/img/oic_question.svg" alt="">
-            </div>
-        </div>
-    </div><!-- b-question -->
-    {% include '@App/_numbers.html.twig' with {'numbers': numbers} %}
-    <div class="b-return">
-        <div class="b-return__content site-width">
-            <div class="b-return__image b-return__image--left">
-                <img src="/landing/img/pic_woman.svg" alt="">
-            </div>
-            <div class="b-return__image b-return__image--right">
-                <img src="/landing/img/pic_man.svg" alt="">
-            </div>
-            <h2 class="b-return__title">Верните деньги</h2>
-            <div class="b-return__text">за лечение в клиниках, работающих в системе обязательного медицинского
-                страхования.
-            </div>
-            <div class="b-return__block">
-                <form action="#" class="b-form">
-                    <div class="b-form__item b-form__item--full">
-                        <div class="b-form__item-title">Ваш регион</div>
-                        <div class="b-form__item-content">
-                            <select>
-                                <option>Москва и область</option>
-                                <option>Название региона</option>
-                                <option>Еще ондно название</option>
-                                <option>Третье название</option>
-                                <option>Четвертое название Четвертое название</option>
-                                <option>Пятое название</option>
-                                <option>Шестое название</option>
-                                <option>Седьмое название</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="b-form__item">
-                        <div class="b-form__item-title">Год лечения</div>
-                        <div class="b-form__item-content">
-                            <select>
-                                <option>2019 г.</option>
-                                <option selected="">2020 г.</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="b-form__item">
-                        <div class="b-form__item-content">
-                            <button class="b-form__button btn2" type="submit">Вернуть деньги</button>
-                        </div>
-                    </div>
-                </form><!-- b-form -->
-
-
-            </div>
-            <div class="b-return__link">
-                <a href="#">Рейтинг страховых компаний</a>
-            </div>
-        </div>
-    </div><!-- b-return -->
-    <div id="insider" class="b-insider">
-        <div class="b-insider__content site-width">
-            <div class="b-insider__header">
-                <h3 class="b-insider__title">Медицинский инсайдер</h3>
-                <a href="#" class="b-insider__button btn">Все статьи</a>
-            </div>
-            <div class="b-insider__inner">
-                <div class="b-insider__slider">
-                    <div class="b-insider__item-wrap">
-                        <div class="b-insider__item">
-                            <div style="background-image: url(/landing/img/pic1.png);"
-                                 class="b-insider__item-image">
-                                <img src="img/pic1.png" alt="">
-                            </div>
-                            <div class="b-insider__item-content">
-                                <div class="b-insider__item-title">Куда уходят страховые компании</div>
-                                <div class="b-insider__item-text">
-                                    И что не так с полисами ВТБ МС
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="b-insider__item-wrap">
-                        <div class="b-insider__item">
-                            <div style="background-image: url(/landing/img/pic2.png);"
-                                 class="b-insider__item-image">
-                                <img src="/landing/img/pic2.png" alt="">
-                            </div>
-                            <div class="b-insider__item-content">
-                                <div class="b-insider__item-title">Не пытайтесь повторить</div>
-                                <div class="b-insider__item-text">
-                                    Почему лучше звонить страховому
-                                    представителю и не пытаться отстаивать
-                                    права самостоятельно
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="b-insider__item-wrap">
-                        <div class="b-insider__item">
-                            <div style="background-image: url(/landing/img/pic3.png);"
-                                 class="b-insider__item-image">
-                                <img src="/landing/img/pic3.png" alt="">
-                            </div>
-                            <div class="b-insider__item-content">
-                                <div class="b-insider__item-title">Российский полис против китайского вируса
-                                </div>
-                                <div class="b-insider__item-text">
-                                    Как лечат в России COVID-19
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="b-insider__item-wrap">
-                        <div class="b-insider__item">
-                            <div style="background-image: url(/landing/img/pic4.png);"
-                                 class="b-insider__item-image">
-                                <img src="/landing/img/pic4.png" alt="">
-                            </div>
-                            <div class="b-insider__item-content">
-                                <div class="b-insider__item-title">Не пытайтесь повторить</div>
-                                <div class="b-insider__item-text">
-                                    Почему лучше звонить страховому
-                                    представителю и не пытаться отстаивать
-                                    права самостоятельно
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="b-insider__item-wrap">
-                        <div class="b-insider__item">
-                            <div style="background-image: url(/landing/img/pic1.png);"
-                                 class="b-insider__item-image">
-                                <img src="/landing/img/pic1.png" alt="">
-                            </div>
-                            <div class="b-insider__item-content">
-                                <div class="b-insider__item-title">Куда уходят страховые компании</div>
-                                <div class="b-insider__item-text">
-                                    И что не так с полисами ВТБ МС
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="b-insider__item-wrap">
-                        <div class="b-insider__item">
-                            <div style="background-image: url(/landing/img/pic2.png);"
-                                 class="b-insider__item-image">
-                                <img src="/landing/img/pic2.png" alt="">
-                            </div>
-                            <div class="b-insider__item-content">
-                                <div class="b-insider__item-title">Не пытайтесь повторить</div>
-                                <div class="b-insider__item-text">
-                                    Почему лучше звонить страховому
-                                    представителю и не пытаться отстаивать
-                                    права самостоятельно
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="b-insider__item-wrap">
-                        <div class="b-insider__item">
-                            <div style="background-image: url(/landing/img/pic3.png);"
-                                 class="b-insider__item-image">
-                                <img src="/landing/img/pic3.png" alt="">
-                            </div>
-                            <div class="b-insider__item-content">
-                                <div class="b-insider__item-title">Российский полис против китайского вируса
-                                </div>
-                                <div class="b-insider__item-text">
-                                    Как лечат в России COVID-19
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="b-insider__item-wrap">
-                        <div class="b-insider__item">
-                            <div style="background-image: url(/landing/img/pic4.png);"
-                                 class="b-insider__item-image">
-                                <img src="/landing/img/pic4.png" alt="">
-                            </div>
-                            <div class="b-insider__item-content">
-                                <div class="b-insider__item-title">Не пытайтесь повторить</div>
-                                <div class="b-insider__item-text">
-                                    Почему лучше звонить страховому
-                                    представителю и не пытаться отстаивать
-                                    права самостоятельно
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
+                <div class="b-question__image">
+                    <img src="/landing/img/oic_question.svg" alt="">
                 </div>
             </div>
-        </div>
-    </div><!-- b-insider -->
-{% endblock %}
+        </div><!-- b-question -->
+
+        {% include '@App/_numbers.html.twig' with {'numbers': numbers}%}
+        <div class="b-return">
+            <div class="b-return__content site-width">
+                <div class="b-return__image b-return__image--left">
+                    <img src="/landing/img/pic_woman.svg" alt="">
+                </div>
+                <div class="b-return__image b-return__image--right">
+                    <img src="/landing/img/pic_man.svg" alt="">
+                </div>
+                <h2 class="b-return__title">Верните деньги</h2>
+                <div class="b-return__text">за лечение в клиниках, работающих в системе обязательного медицинского страхования.</div>
+                <div class="b-return__block">
+                    <form action="#" class="b-form">
+                        <div class="b-form__item b-form__item--full">
+                            <div class="b-form__item-title">Ваш регион</div>
+                            <div class="b-form__item-content">
+                                <select>
+                                    <option>Москва и область</option>
+                                    <option>Название региона</option>
+                                    <option>Еще ондно название</option>
+                                    <option>Третье название</option>
+                                    <option>Четвертое название Четвертое название</option>
+                                    <option>Пятое название</option>
+                                    <option>Шестое название</option>
+                                    <option>Седьмое название</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="b-form__item">
+                            <div class="b-form__item-title">Год лечения</div>
+                            <div class="b-form__item-content">
+                                <select>
+                                    <option>2019 г.</option>
+                                    <option selected="">2020 г.</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="b-form__item">
+                            <div class="b-form__item-content">
+                                <button class="b-form__button btn2" type="submit">Вернуть деньги</button>
+                            </div>
+                        </div>
+                    </form><!-- b-form -->
+
 
 
                 </div>
@@ -707,80 +410,4 @@
         </div><!-- b-insider -->
 
     </div><!-- b:m-content -->
-
-    <footer class="app-footer">
-        <div class="app-footer__part app-footer__part--top">
-            <div class="app-footer__content site-width">
-                <div class="app-footer__activity">
-                    Безбахил — первый бесплатный сервис,
-                    помогающий вернуть деньги за лечение в клиниках,
-                    работающих в системе обязательного медицинского
-                    страхования.
-                </div>
-                <nav class="app-footer__list">
-                    {{ knp_menu_render('AppBundle:Builder:footerMenu') }}
-                </nav>
-            </div>
-        </div>
-        <div class="app-footer__part app-footer__part--bottom">
-            <div class="app-footer__content site-width">
-                <div class="app-footer__logo">
-                    <img src="/landing/img/logo.png" alt="" width="94">
-                </div>
-                <div class="app-footer__in">
-                    <div class="app-footer__copyright">
-                        © bezbahil.ru, 2020
-                    </div>
-                    <div class="app-footer__agree">
-                        <a href="{{ setting('agreement') }}">Пользовательское соглашение</a>
-                    </div>
-                    <div class="app-footer__personal">
-                        <a href="{{ setting('personal_data') }}">Политика по обработке персональных данных</a>
-                    </div>
-                </div>
-
-                <div class="app-footer__soc">
-                    <a href="{{ setting('social_telegram') }}" target="_blank">
-                        <div class="svg-icon svg-icon--soc_teleg" aria-hidden="true">
-                            <svg class="svg-icon__link">
-                                <use xlink:href="#soc_teleg"></use>
-                            </svg>
-                        </div>
-                    </a>
-                    <a href="{{ setting('social_instagram') }}" target="_blank">
-                        <div class="svg-icon svg-icon--soc_inst" aria-hidden="true">
-                            <svg class="svg-icon__link">
-                                <use xlink:href="#soc_inst"></use>
-                            </svg>
-                        </div>
-                    </a>
-                </div>
-
-            </div>
-        </div>
-    </footer><!-- b:app-footer -->
-
-
-
-
-
-
-
-
-</div><!-- b:wrapper -->
-
-
-
-<button type="button" class="page-scroller">
-    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20" class="page-scroller__ctrl">
-        <path d="M2.582 13.891c-0.272 0.268-0.709 0.268-0.979 0s-0.271-0.701 0-0.969l7.908-7.83c0.27-0.268 0.707-0.268 0.979 0l7.908 7.83c0.27 0.268 0.27 0.701 0 0.969s-0.709 0.268-0.978 0l-7.42-7.141-7.418 7.141z"></path>
-    </svg>
-</button><!-- b:m-page-scroller -->
-
-
-<script src="/landing/js/vendors/jquery-3.4.1.min.js"></script>
-<script src="/landing/js/plugins.min.js"></script>
-<script src="/landing/js/app.js"></script>
-
-</body><!-- b:w-page -->
-</html>
+{% endblock %}
