@@ -86,7 +86,7 @@ swiftmailer:
   password: '%mailer_password%'
   port: '%mailer_port%'
   encryption: '%mailer_encryption%'
-  spool: { type: memory }
+#  spool: { type: memory } todo
 
 sensio_framework_extra:
   router:
@@ -150,11 +150,11 @@ accurateweb_application_settings_admin:
 old_sound_rabbit_mq:
   connections:
     default:
-      host:     rabbitmq
-      port:     5672
-      user:     'guest'
-      password: 'guest'
-      vhost:    '/'
+      host:     '%rabbitmq_host%'
+      port:     '%rabbitmq_port%'
+      user:     '%rabbitmq_user%'
+      password: '%rabbitmq_password%'
+      vhost:    '%rabbitmq_project_vhost%'
   producers:
     obrashcheniya_emails:
       connection: default

@@ -16,13 +16,24 @@ class ObrashcheniyaFileRepository extends ServiceEntityRepository
     parent::__construct($registry, ObrashcheniyaFile::class);
   }
 
-  public function getFileQuery($user, $file)
+  /**
+   * @param $file
+   * @param null $user
+   * @return \Doctrine\ORM\QueryBuilder
+   */
+  public function getFileQuery($file, $user = null)
   {
-    return $this
+    $query = $this
       ->createQueryBuilder('o_f')
       ->andWhere('o_f.file LIKE :file')
-      ->andWhere('o_f.author = :author')
-      ->setParameter('author', $user)
       ->setParameter('file', '%' . $file );
+    if (!$user)
+    {
+      return $query;
+    }
+
+    return $query
+      ->andWhere('o_f.author = :author')
+      ->setParameter('author', $user);
   }
 }

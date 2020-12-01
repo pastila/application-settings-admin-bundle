@@ -18,9 +18,10 @@ class ObrashcheniyaController extends Controller
    */
   public function reportDownloadAction(Request $request)
   {
+    $user = $this->getUser();
     $em = $this->getDoctrine()->getManager();
     $obrashcheniyaFile = $em->getRepository(ObrashcheniyaFile::class)
-      ->getFileQuery($this->getUser(), $request->get('file'))
+      ->getFileQuery($request->get('file'), ($user->getIsAdmin() ? null : $user))
       ->setMaxResults(1)
       ->getQuery()
       ->getOneOrNullResult();
