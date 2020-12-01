@@ -5,6 +5,7 @@ namespace AppBundle\Model\Obrashchenia;
 
 
 use AppBundle\Entity\Obrashcheniya\ObrashcheniyaEmail;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ObrashcheniaBranch
 {
@@ -50,6 +51,7 @@ class ObrashcheniaBranch
       empty($this->data[2]['PDF'])
     )
     {
+      throw new NotFoundHttpException('Empty data in ObrashcheniaBranch');
     }
 
     $this->pdf = self::BASE_PATH_FILE . $this->data[2]['PDF'];

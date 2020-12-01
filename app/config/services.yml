@@ -45,10 +45,6 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-#    AppBundle\Service\:
-#        resource: '../../src/AppBundle/Service'
-#        public: true
-
 #    twig.extension.EndingFormatter:
 #        class: AppBundle\Twig\EndingFormatTwigExtension
 #        tags:
