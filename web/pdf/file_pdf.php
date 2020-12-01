@@ -255,6 +255,9 @@ if ($_POST['id'] != "") {
                 ]);
 //создаем PDF файл, задаем формат, отступы и.т.д.
 
+                if (!file_exists(obrashcheniya_report_path)) {
+                  mkdir(obrashcheniya_report_path, 0777, true);
+                }
                 $name_dir = obrashcheniya_report_path;
                 $data = date('Y-m-d-h:i:s');
                 $name_file = 'PDF_';
