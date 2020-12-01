@@ -53,13 +53,6 @@ class HomepageController extends Controller
    */
   public function indexAction(Request $request)
   {
-    $message = ["Type" => "VerificationEmail", "Firstname" => $request->get('firstname')];
-    $rabbitMessage = json_encode($message);
-
-    $this->get('old_sound_rabbit_mq.emailing_producer')->setContentType('application/json');
-    $this->get('old_sound_rabbit_mq.emailing_producer')->publish($rabbitMessage);
-    dump('sended');
-    die;
     $em = $this->getDoctrine()->getManager();
 
     $numbers = $em->getRepository(Number::class)

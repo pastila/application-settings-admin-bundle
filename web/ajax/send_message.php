@@ -406,14 +406,13 @@ if (CModule::IncludeModule("iblock")) {
                             $result['success'] = 'Обращение успешно отправлено в страховую компанию.
                          Ваше обращение находится в личном кабинете «Отправленные»';
 
-                          rabbitmqSend(queue_obrashcheniya_emails, json_encode([
-                                'login' => $arUser['LOGIN'],
+                          CEvent::Send(
                                 'SEND_MASSEGE_AFTER_SEND_APPEAL',
                                 's1',
                                 array(
                                     'EMAIL' => $person["EMAIL"],
                                 )
-                            ]));
+                            );
                         } else {
                           rabbitmqSend(queue_obrashcheniya_emails, json_encode([
                             'login' => $arUser['LOGIN'],
@@ -457,14 +456,13 @@ if (CModule::IncludeModule("iblock")) {
                             $result['success'] = 'Обращение успешно отправлено в страховую компанию.
                          Ваше обращение находится в личном кабинете «Отправленные»';
 
-                          rabbitmqSend(queue_obrashcheniya_emails, json_encode([
-                                'login' => $arUser['LOGIN'],
+                          CEvent::Send(
                                 'SEND_MASSEGE_AFTER_SEND_APPEAL',
                                 's1',
                                 array(
                                     'EMAIL' => $person["EMAIL"],
                                 )
-                          ]));
+                          );
 
                         }
                     } else {
