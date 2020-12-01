@@ -45,9 +45,9 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
-    AppBundle\Service\:
-        resource: '../../src/AppBundle/Service'
-        public: true
+#    AppBundle\Service\:
+#        resource: '../../src/AppBundle/Service'
+#        public: true
 
 #    twig.extension.EndingFormatter:
 #        class: AppBundle\Twig\EndingFormatTwigExtension
@@ -93,6 +93,15 @@ services:
         - '@AppBundle\Repository\Geo\RegionRepository'
       tags:
         - { name: aw.location.resolver, priority: -1 }
+
+    AppBundle\Service\ContactUs\ContactUsMailer:
+        public: true
+
+    AppBundle\Service\Feedback\FeedbackMailer:
+        public: true
+
+    AppBundle\Service\Obrashcheniya\ObrashcheniaBranchMailer:
+        public: true
 
     Accurateweb\EmailTemplateBundle\Email\Factory\EmailFactory:
       alias: aw_email_templating.template.factory

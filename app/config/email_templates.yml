@@ -25,3 +25,11 @@ aw_email_templating:
         body: |
           О вашей компании оставили отзыв  %%date%% <br>
           Ссылка на страницу с  <a href ="%%url%%">отзывом</a>
+
+    email_obrashcheniya_branch:
+      description: 'Отправка почты на почту страховой службы о формировании обращения'
+      variables:
+      defaults:
+        subject: "Обращение о взимании денежных средств"
+        body: |
+          На сайте bezbahil.ru было новое сформировано обращение.

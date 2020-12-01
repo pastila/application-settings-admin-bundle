@@ -4,8 +4,9 @@
 namespace AppBundle\Service\Rabbit;
 
 use AppBundle\Entity\Obrashcheniya\ObrashcheniyaEmail;
-use AppBundle\Entity\Obrashcheniya\ObrashcheniyaFile;
 use AppBundle\Entity\User\User;
+use AppBundle\Model\Obrashchenia\ObrashcheniaBranch;
+use AppBundle\Service\Obrashcheniya\ObrashcheniaBranchMailer;
 use Doctrine\ORM\EntityManagerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -24,17 +25,25 @@ class ObrashcheniyaEmailsService implements ConsumerInterface
   protected $logger;
 
   /**
+   * @var ObrashcheniaBranchMailer
+   */
+  protected $mailerBranch;
+
+  /**
    * ObrashcheniyaEmailsService constructor.
    * @param EntityManagerInterface $entityManager
    * @param LoggerInterface $logger
+   * @param ObrashcheniaBranchMailer $mailer
    */
   public function __construct(
     EntityManagerInterface $entityManager,
-    LoggerInterface $logger
+    LoggerInterface $logger,
+    ObrashcheniaBranchMailer $mailer
   )
   {
     $this->entityManager = $entityManager;
     $this->logger = $logger;
+    $this->mailerBranch = $mailer;
   }
 
   public function execute(AMQPMessage $msg)
@@ -48,18 +57,27 @@ class ObrashcheniyaEmailsService implements ConsumerInterface
     $author = $this->entityManager->getRepository(User::class)
       ->findOneBy(['login' => key_exists('login', $data) ? $data['login'] : null]);
 
-    $model = new ObrashcheniyaEmail();
-    $model->setAuthor($author);
-    $model->setData($msg->body);
-    $this->entityManager->persist($model);
+    $obrashcheniyaEmail = new ObrashcheniyaEmail();
+    $obrashcheniyaEmail->setAuthor($author);
+    $obrashcheniyaEmail->setData($msg->body);
+    $this->entityManager->persist($obrashcheniyaEmail);
     $this->entityManager->flush();
-  }
 
-  private function sendVerificationEmail($response)
-  {
-//    $data = json_decode($response, true);
-    $fp = fopen('obrashcheniya_emails' . bin2hex(random_bytes(5)) . '.txt', "w");
-    fwrite($fp, $response);
-    fclose($fp);
+    try
+    {
+      $modelObrashcheniaBranch = new ObrashcheniaBranch($data);
+    } catch (\Exception $e)
+    {
+      $this->logger->error('Failed parsing obrashcheniya to branch: ' . $e->getMessage());
+      throw $e;
+    }
+    try
+    {
+      $this->mailerBranch->send($modelObrashcheniaBranch);
+    } catch (\Exception $e)
+    {
+      $this->logger->error('Failed send obrashcheniya to branch: ' . $e->getMessage());
+      throw $e;
+    }
   }
 }
