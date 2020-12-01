@@ -16,7 +16,6 @@ class Article extends Fixture
   {
     $article1 = new \AppBundle\Entity\Common\Article();
     $article1->setTitle('head1');
-    $article1->setSlug('head1');
     $article1->setAnnounce('Анонс статьи1');
     $article1->setText('Основное содержание1');
     $article1->setIsPublished(true);
@@ -27,7 +26,6 @@ class Article extends Fixture
 
     $article2 = new \AppBundle\Entity\Common\Article();
     $article2->setTitle('head2');
-    $article1->setSlug('head2');
     $article2->setAnnounce('Анонс статьи2');
     $article2->setText('Основное содержание2');
     $article2->setIsPublished(true);
