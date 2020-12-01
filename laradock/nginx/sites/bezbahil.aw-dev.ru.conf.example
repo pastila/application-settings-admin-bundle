@@ -9,6 +9,10 @@ server {
 
     root /var/www/web;
 
+    # Страницы исключение, которые будут открыты в symfony
+    location ~ ^/(obrashcheniya/report-download) {
+        try_files $uri /app.php$is_args$args;
+    }
     # Страницы Bitrix
     location ~ ^/(otpravlennyye|obrashcheniya|forma-obrashenija|personal-cabinet) {
         try_files $uri $uri/ @bitrix;
