@@ -1,0 +1,119 @@
+server {
+	listen 80;
+
+   server_name bezbahil.aw-dev.ru nginx;
+#    index index.php index.html index.htm;
+
+#   auth_basic "Welcome to Accurateweb staging server";
+#   auth_basic_user_file /var/www/.htpasswd; 
+
+    root /var/www/web;
+
+    # Страницы Bitrix
+    location ~ ^/(otpravlennyye|obrashcheniya|forma-obrashenija|personal-cabinet) {
+        try_files $uri $uri/ @bitrix;
+        fastcgi_pass php-fpm-bitrix:9000;
+        fastcgi_index index.php;
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fixes timeouts
+        fastcgi_connect_timeout 600s;
+        fastcgi_send_timeout 600s;
+        fastcgi_read_timeout 600s;
+        include fastcgi_params;
+        fastcgi_param  SERVER_NAME $host;
+    }
+    # Все ajax запросы в Bitrix
+    location ~ ^/ajax/.+\.php$ {
+        auth_basic off;
+
+        try_files $uri /index.php =404;
+        fastcgi_pass php-fpm-bitrix:9000;
+        fastcgi_index index.php;
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fixes timeouts
+        fastcgi_connect_timeout 600s;
+        fastcgi_send_timeout 600s;
+        fastcgi_read_timeout 600s;
+        include fastcgi_params;
+
+        fastcgi_param  SERVER_NAME $host;
+    }
+    # Symfony
+    location / {
+        try_files $uri /app.php$is_args$args;
+    }
+    location ~ ^/app\.php(/|$) {
+        fastcgi_pass php-fpm-symfony:9000;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        fastcgi_param DOCUMENT_ROOT $realpath_root;
+
+        #fixes timeouts
+        fastcgi_connect_timeout 600s;
+		fastcgi_send_timeout 600s;
+		fastcgi_read_timeout 600s;
+
+        internal;
+    }
+#    location ~ ^/(app_dev|config)\.php(/|$) {
+#        fastcgi_pass php-fpm-symfony:9000;
+#        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+#        include fastcgi_params;
+#        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+#        fastcgi_param DOCUMENT_ROOT $realpath_root;
+
+        #fixes timeouts
+#        fastcgi_connect_timeout 600s;
+#        fastcgi_send_timeout 600s;
+#        fastcgi_read_timeout 600s;
+#    }
+
+    #Access admin panel
+	location ~* ^/bitrix/admin/.* {
+        index index.php index.html index.htm;
+
+		# Обрабатываем PHP-скрипты, доступные только после успешной аутентификации
+		location ~* \.php$ {
+		  try_files     $uri @bitrix;
+		  include fastcgi_params;
+		  fastcgi_pass php-fpm-bitrix:9000;
+		  fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+		  fastcgi_param  SERVER_NAME $host;
+		}
+
+		# Необработанные запросы передаём разборщику ошибок Bitrix
+		try_files $uri $uri/ @bitrix;
+    }
+    # Страницы Bitrix, которые имеют полный url, напр. до index.php
+    location ~ \.php$ {
+        try_files $uri /index.php =404;
+        fastcgi_pass php-fpm-bitrix:9000;
+        fastcgi_index index.php;
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fixes timeouts
+        fastcgi_connect_timeout 600s;
+        fastcgi_send_timeout 600s;
+        fastcgi_read_timeout 600s;
+        include fastcgi_params;
+        fastcgi_param  SERVER_NAME $host;
+    }
+    location @bitrix {
+        index index.php index.html index.htm;
+        fastcgi_pass php-fpm-bitrix:9000;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root/bitrix/urlrewrite.php;
+    }
+
+	location  ~* \.(css|js|gif|png|jpg|jpeg|ico|ogg|ttf|woff|eot|otf|woff2|pdf|webp|svg)$ {
+		access_log off;
+		error_page 404 /404.html;
+        #expires 30d;
+    }
+}
