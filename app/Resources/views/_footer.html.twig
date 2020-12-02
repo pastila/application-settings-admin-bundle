@@ -1,0 +1,51 @@
+<footer class="app-footer">
+    <div class="app-footer__part app-footer__part--top">
+        <div class="app-footer__content site-width">
+            <div class="app-footer__activity">
+                Безбахил — первый бесплатный сервис,
+                помогающий вернуть деньги за лечение в клиниках,
+                работающих в системе обязательного медицинского
+                страхования.
+            </div>
+            <nav class="app-footer__list">
+                {{ knp_menu_render('AppBundle:Builder:footerMenu') }}
+            </nav>
+        </div>
+    </div>
+    <div class="app-footer__part app-footer__part--bottom">
+        <div class="app-footer__content site-width">
+            <div class="app-footer__logo">
+                <img src="/landing/img/logo.png" alt="" width="94">
+            </div>
+            <div class="app-footer__in">
+                <div class="app-footer__copyright">
+                    © bezbahil.ru, 2020
+                </div>
+                <div class="app-footer__agree">
+                    <a href="{{ setting('agreement') }}">Пользовательское соглашение</a>
+                </div>
+                <div class="app-footer__personal">
+                    <a href="{{ setting('personal_data') }}">Политика по обработке персональных данных</a>
+                </div>
+            </div>
+
+            <div class="app-footer__soc">
+                <a href="{{ setting('social_telegram') }}" target="_blank">
+                    <div class="svg-icon svg-icon--soc_teleg" aria-hidden="true">
+                        <svg class="svg-icon__link">
+                            <use xlink:href="#soc_teleg"></use>
+                        </svg>
+                    </div>
+                </a>
+                <a href="{{ setting('social_instagram') }}" target="_blank">
+                    <div class="svg-icon svg-icon--soc_inst" aria-hidden="true">
+                        <svg class="svg-icon__link">
+                            <use xlink:href="#soc_inst"></use>
+                        </svg>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</footer><!-- b:app-footer -->

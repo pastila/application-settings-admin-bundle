@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block meta %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="yandex-verification" content="3117711c7cf9d47f" />
+        <meta name="google-site-verification" content="6i-0zWPQEfVk1TaN63icBNxaPtFIwxrzlrG-w4oiTyg" />
+    {% endblock %}
+
+    <title>{% block title %}Сервис «Без Бахил» сохраняет здоровье и деньги{% endblock %}</title>
+
+    <link rel="shortcut icon" href="/local/templates/kdteam/images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+{#    <?php $APPLICATION->ShowHead(); ?>#}
+    <meta property = "og:image" content="https://bezbahil.ru/local/templates/kdteam/images/png/header/logo-oms-white.jpg"/>
+    <link rel="image_src" href="https://bezbahil.ru/local/templates/kdteam/images/png/header/logo-oms-white.jpg" />
+
+    {% block stylesheets %}
+        <link href="/local/templates/kdteam/styles/main.min.css" type="text/css"  data-template-style="true"  rel="stylesheet" />
+    {% endblock %}
+
+{#    <?php if ($_SERVER[REQUEST_URI] === '/') { ?>#}
+{#    <script type="application/ld+json">#}
+{#        {#}
+{#            "@context": "http://schema.org/",#}
+{#            "@type": "WebSite",#}
+{#            "name": "Без Бахил",#}
+{#            "url": "https://bezbahil.ru/"#}
+{#        }#}
+{#    </script>#}
+{#    <?php }?>#}
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" >
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)
+
+                [0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        ym(57673804, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:true
+        });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/57673804" style="position:absolute;
+
+left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
+
+    <!-- Google Tag Manager -->
+    <script data-skip-moving="true">
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-N3VBFGG');
+    </script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Адмитад -->
+    <meta name="verify-admitad" content="d368515aeb" />
+    <!-- /Адмитад -->
+    <!--  JivoSite -->
+    <script src="//code-ya.jivosite.com/widget/u0hymF3kCA" async></script>
+    <!-- / JivoSite -->
+</head>
+
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N3VBFGG"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
+{#<?php $APPLICATION->ShowPanel();#}
+{#?>#}
+
+<!-- Start Wrap -->
+<div class="wrap">
+    <!-- Header -->
+    {% include 'legacy/_header.html.twig' %}
+    <!-- Content -->
+    <main class="main">
+        {% block main %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    {% include 'legacy/_footer.html.twig' %}
+
+</div><!-- END Wrap -->
+</body>
+{% block javascripts %}
+    <script src="/local/templates/kdteam/js/validator.min.js"></script>
+{% endblock %}
+</html>
