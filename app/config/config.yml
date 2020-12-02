@@ -15,6 +15,9 @@ parameters:
   aw.news.admin.group: text
   aw.news.admin.label: "Новости"
   aw.news.entity_class: AppBundle\Entity\Common\News
+  aw.article.admin.group: text
+  aw.article.admin.label: "Статьи"
+  aw.article.entity_class: AppBundle\Entity\Common\Article
   aw_email_template_admin.class: AppBundle\Entity\Messaging\EmailTemplate
   aw_email_template_admin.email_template_group: settings
   aw_email_template_admin.email_template_label: Шаблоны писем

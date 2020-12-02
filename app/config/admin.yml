@@ -23,6 +23,12 @@ services:
     tags:
       -  { name: sonata.admin, group: %aw.news.admin.group%, manager_type: orm, label: %aw.news.admin.label% }
 
+  main.admin.article:
+    class: AppBundle\Admin\Common\ArticleAdmin
+    arguments: [~, %aw.article.entity_class%,~]
+    tags:
+      -  { name: sonata.admin, group: %aw.article.admin.group%, manager_type: orm, label: %aw.article.admin.label% }
+
   app.admin.menu_header:
     class: AppBundle\Admin\Menu\MenuHeaderAdmin
     arguments:
