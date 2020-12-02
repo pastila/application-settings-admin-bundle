@@ -1227,12 +1227,8 @@ function getSVGSpriteIcon(name, opts) {
 $(function () {
 
   //Логика для новой шапки
+    var scrollPos;
 
-  $.exists = function (selector) {
-    return $(selector).length > 0;
-  };
-
-  var scrollPos;
   $('.app-header__menu-button').on('click', function (event) {
     event.preventDefault();
 
@@ -1253,7 +1249,9 @@ $(function () {
       $('.app-header').removeClass("is-fixed");
     }
 
-    $('.b-first, .app-header').addClass('is-visible');
+    if ($('.app-header')) {
+      $('.app-header').addClass('is-visible');
+    }
 
   }).trigger('scroll');
 

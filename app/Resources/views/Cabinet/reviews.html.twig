@@ -176,10 +176,9 @@
     </svg>
 {% endblock %}
 
-{#{% block header %}#}
-{#    {% set _region = region ? region.nameWithoutCode : 'Вся Россия' %}#}
-{#    {% include '_header.html.twig' %}#}
-{#{% endblock %}#}
+{% block header %}
+    {% include '_header.html.twig' %}
+{% endblock %}
 
 
 {% block main %}

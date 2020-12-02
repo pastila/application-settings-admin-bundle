@@ -492,6 +492,10 @@
     padding-top: 150px;
 }
 
+.nav-mobile {
+    display: none;
+}
+
 .app-header {
     -ms-flex: none;
     flex: none;
@@ -692,6 +696,7 @@
     width: 100%;
     height: 45px;
 }
+
 @media screen and (max-width: 1024px) {
     .app-header__lk.btn {
         height: 45px;
@@ -715,6 +720,11 @@
 }
 
 @media screen and (max-width: 640px) {
+
+    .l-list__item {
+        width: 100%;
+        margin-bottom: 7px;
+    }
 
     .app-header ~ .main {
         padding-top: 80px;
@@ -1064,6 +1074,40 @@
     body.nav-active .nav-mobile__content {
         visibility: visible;
     }
+
+    body.nav-active .menu-icon__line {
+        background-color: #000;
+        -webkit-transform: translate(0px, 0px) rotate(-45deg);
+        transform: translate(0px, 0px) rotate(-45deg);
+    }
+
+    body.nav-active .menu-icon__line-left {
+        width: 15px;
+        -webkit-transform: translate(2px, 4px) rotate(45deg);
+        transform: translate(2px, 4px) rotate(45deg);
+    }
+
+    body.nav-active .menu-icon__line-right {
+        width: 15px;
+        float: right;
+        -webkit-transform: translate(-3px, -3.5px) rotate(45deg);
+        transform: translate(-3px, -3.5px) rotate(45deg);
+    }
+
+    .remodal {
+        padding: 40px 20px;
+    }
+
+    .remodal-title {
+        font-size: 22px;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+    }
+
+    .btn {
+        min-width: 180px;
+        height: 45px;
+    }
 }
 
 body.nav-active .app-header {
@@ -1074,12 +1118,6 @@ body.nav-active .app-header {
 body.nav-active .app-header:before {
     opacity: 1;
 }
-
-.nav-mobile {
-    display: none;
-}
-
-
 
 .menu-icon {
     display: block;
@@ -1111,27 +1149,6 @@ body.nav-active .app-header:before {
     width: 30px;
     float: right;
     transition: all 200ms linear;
-}
-
-@media screen and (max-width: 640px) {
-    body.nav-active .menu-icon__line {
-        background-color: #000;
-        -webkit-transform: translate(0px, 0px) rotate(-45deg);
-        transform: translate(0px, 0px) rotate(-45deg);
-    }
-
-    body.nav-active .menu-icon__line-left {
-        width: 15px;
-        -webkit-transform: translate(2px, 4px) rotate(45deg);
-        transform: translate(2px, 4px) rotate(45deg);
-    }
-
-    body.nav-active .menu-icon__line-right {
-        width: 15px;
-        float: right;
-        -webkit-transform: translate(-3px, -3.5px) rotate(45deg);
-        transform: translate(-3px, -3.5px) rotate(45deg);
-    }
 }
 
 .remodal {
@@ -1178,14 +1195,61 @@ body.nav-active .app-header:before {
     color: #000;
 }
 
-@media screen and (max-width: 640px) {
-    .remodal {
-        padding: 40px 20px;
-    }
+.btn {
+    outline: none;
+    text-decoration: none;
+    transition: 0.4s ease all;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: 700;
+    line-height: 1;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+}
 
-    .remodal-title {
-        font-size: 22px;
-        padding-bottom: 20px;
-        margin-bottom: 30px;
-    }
+.btn {
+    color: #00abd8;
+    font-size: 14px;
+    min-width: 200px;
+    height: 55px;
+    border: 1px solid #00abd8;
+    box-shadow: -4.5px 5.4px 18px rgba(17,17,17,0.09);
+    background: rgba(255,255,255,0.5);
+}
+
+.btn:hover {
+    background-color: #00abd8;
+    border-color: #00abd8;
+    box-shadow: -4.5px 5.4px 18px rgba(17,17,17,0.09);
+    color: #fff;
+}
+
+.l-list {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.l-list__item {
+    width: 33.33%;
+    margin-bottom: 15px;
+}
+
+.l-list__item a {
+    color: #515151;
+    font-size: 14px;
+    font-weight: 500;
+    transition: 0.4s ease all;
+}
+
+.l-list__item a:hover {
+    color: #00abd8;
+    text-decoration: underline;
 }
