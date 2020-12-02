@@ -1,6 +1,5 @@
 class PopupContactUs {
-
-  constructor(popupElement) {
+    constructor(popupElement) {
     this.popupElement = popupElement
   }
 
@@ -15,7 +14,7 @@ class PopupContactUs {
           },
           success: (result) => {
             this.popupElement.insertAdjacentHTML(`beforeend`, result);
-            this.submitForm();
+            this.submitForm(changePopupEventsState);
           },
           error: () => {
             if (!this.popupElement.querySelector(`.feedback_form`)){
@@ -26,6 +25,14 @@ class PopupContactUs {
         }).done(function (msg) {
         });
       };
+
+      const changePopupEventsState = (type) => {
+        const method = type ? `addEventListener` : `removeEventListener`;
+        this.popupElement[method](`click`, onCloseBtnClick);
+        this.popupElement[method](`click`, onPopupElementClick);
+        document[method](`keydown`, onEscPress);
+      };
+
       this.popupElement.style.display = "flex";
       renderPopupMarkup(this.popupElement);
       const onCloseBtnClick = (evt) => {
@@ -34,7 +41,7 @@ class PopupContactUs {
         const closeBtnImg = this.popupElement.querySelector(`.close-modal img`);
         if (target === closeBtn || target === closeBtnImg) {
           this.close();
-          this.popupElement.removeEventListener(`click`, onCloseBtnClick);
+          changePopupEventsState(false);
         }
       };
 
@@ -42,7 +49,7 @@ class PopupContactUs {
         if (evt.target === this.popupElement) {
           evt.preventDefault();
           this.close();
-          this.popupElement.removeEventListener(`click`, onPopupElementClick);
+          changePopupEventsState(false);
         }
       }
 
@@ -50,12 +57,11 @@ class PopupContactUs {
         if (evt.key === `Escape`) {
           evt.preventDefault();
           this.close();
+          changePopupEventsState(false);
         }
       }
 
-      document.addEventListener(`keydown`, onEscPress);
-      this.popupElement.addEventListener(`click`, onPopupElementClick);
-      this.popupElement.addEventListener(`click`, onCloseBtnClick);
+      changePopupEventsState(true);
     }
   };
 
@@ -66,7 +72,7 @@ class PopupContactUs {
     }
   };
 
-  submitForm() {
+  submitForm(removeEventListeners) {
     if(this.popupElement.querySelector(`form`)){
       this.popupElement.querySelector(`form`).addEventListener(`submit`, (evt) => {
         evt.preventDefault();
@@ -78,6 +84,7 @@ class PopupContactUs {
           data: $(this.popupElement.querySelector(`form`)).serialize(),
           success: () => {
             this.close();
+            removeEventListeners(false);
           },
           error: () => {
             if (!this.popupElement.querySelector(`.popup-write-us__error-message`)){
