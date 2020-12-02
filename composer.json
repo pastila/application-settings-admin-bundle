@@ -87,9 +87,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
-            "php ./bin/console rabbitmq:setup-fabric",
-            "php ./bin/console rabbitmq:consumer obrashcheniya_files &",
-            "php ./bin/console rabbitmq:consumer obrashcheniya_emails &"
+            "php ./bin/console rabbitmq:setup-fabric"
         ],
         "post-install-cmd": [
             "@symfony-scripts"
