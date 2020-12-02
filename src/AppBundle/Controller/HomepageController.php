@@ -31,18 +31,21 @@ class HomepageController extends Controller
   private $settingManager;
   private $regionRepository;
   private $locationService;
+  private $contactUsMailer;
 
   public function __construct(
     BranchRatingHelper $branchRatingHelper,
     SettingManagerInterface $settingManager,
     RegionRepository $regionRepository,
-    Location $locationService
+    Location $locationService,
+    ContactUsMailer $contactUsMailer
   )
   {
     $this->branchRatingHelper = $branchRatingHelper;
     $this->settingManager = $settingManager;
     $this->regionRepository = $regionRepository;
     $this->locationService = $locationService;
+    $this->contactUsMailer = $contactUsMailer;
   }
 
   /**
@@ -156,8 +159,7 @@ class HomepageController extends Controller
       try
       {
         $this->contactUsMailer->sendContactUs($contactUs);
-      }
-      catch (\Exception $e)
+      } catch (\Exception $e)
       {
         $this->get('logger')->error('Failed to send contact us: ' . $e->getMessage());
       }
