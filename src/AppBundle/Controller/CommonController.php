@@ -22,21 +22,17 @@ class CommonController extends AbstractController
 {
   protected $logger;
   private $locationService;
-  private $regionRepository;
 
   /**
    * CommonController constructor.
-   * @param RegionRepository $regionRepository
    * @param LoggerInterface $logger
    * @param Location $locationService
    */
   public function __construct(
-    RegionRepository $regionRepository,
     LoggerInterface $logger,
     Location $locationService
   )
   {
-    $this->regionRepository = $regionRepository;
     $this->logger = $logger;
     $this->locationService = $locationService;
   }
@@ -59,12 +55,9 @@ class CommonController extends AbstractController
       $this->get('logger')->err('Unable to determine user region.');
       throw $e;
     }
-    $regions = $this->regionRepository
-      ->findAll();
 
     return $this->render('Common/_location.html.twig', [
-      $region,
-      $regions
+      'region' => $region,
     ]);
   }
 }

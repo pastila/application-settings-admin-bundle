@@ -20,7 +20,7 @@
                 </div>
 
                 <span>Ваш регион: </span>
-                <a href="#loacation" class="js-loacation">{{ _region }}</a>
+                {{ render(controller('AppBundle:Common:_location')) }}
             </div>
             <nav class="app-header__list">
                 {{ knp_menu_render('AppBundle:Builder:headerMenu') }}
@@ -51,7 +51,7 @@
                     </div>
 
                     <span>Ваш регион: </span>
-                    <a href="#loacation" class="js-loacation">{{ _region }}</a>
+                    {{ render(controller('AppBundle:Common:_location')) }}
                 </div>
             </div>
             {{ knp_menu_render('AppBundle:Builder:headerMenuMobile') }}
