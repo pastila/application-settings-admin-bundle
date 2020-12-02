@@ -178,6 +178,8 @@ services:
       - backend
     links:
       - docker-in-docker
+    depends_on:
+      - rabbitmq
     volumes:
       - ./php-fpm-symfony/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
       - ./php-fpm-symfony/laravel.ini:/usr/local/etc/php/conf.d/laravel.ini
@@ -240,6 +242,8 @@ services:
       - backend
     links:
       - docker-in-docker
+    depends_on:
+      - rabbitmq
     volumes:
       - ./php-fpm-bitrix/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
       - ./php-fpm-bitrix/laravel.ini:/usr/local/etc/php/conf.d/laravel.ini
@@ -388,12 +392,11 @@ services:
       - "${RABBITMQ_MANAGEMENT_HTTP_HOST_PORT}:15672"
       - "${RABBITMQ_MANAGEMENT_HTTPS_HOST_PORT}:15671"
     privileged: true
+    depends_on:
+      - workspace
     environment:
       - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
       - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
-    depends_on:
-      - php-fpm-symfony
-      - php-fpm-bitrix
     networks:
       - backend
 
