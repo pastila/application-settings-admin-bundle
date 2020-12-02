@@ -3,6 +3,8 @@
   services:
     - name: $CI_REGISTRY_IMAGE/percona:latest
       alias: mysql
+    - name: $CI_REGISTRY_IMAGE/rabbitmq:latest
+      alias: rabbitmq
 
 .tests-image: &tests-image
   <<: *build-image
@@ -108,6 +110,22 @@ build-node:
       ./laradock/nodejs
 
     - 'docker push $CI_REGISTRY_IMAGE/node:latest'
+
+
+build-rabbitmq:
+  <<: *build-before
+  script:
+    - source ./laradock/.env.test
+    # fetches the latest image (not failing if image is not found)
+    - 'docker pull $CI_REGISTRY_IMAGE/rabbitmq:latest || true'
+    - >
+      docker build
+      --pull
+      --cache-from $CI_REGISTRY_IMAGE/rabbitmq:latest
+      --tag $CI_REGISTRY_IMAGE/rabbitmq:latest
+      ./laradock/rabbitmq
+
+    - 'docker push $CI_REGISTRY_IMAGE/rabbitmq:latest'
 
 build-deployer:
   <<: *build-before
