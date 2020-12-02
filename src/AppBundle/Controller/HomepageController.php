@@ -69,7 +69,7 @@ class HomepageController extends Controller
       ->getResult();
 
     $news = $em->getRepository(News::class)
-      ->findNewsOrderByPublishedAt();
+      ->findNewsOrderByPublishedAt(6);
 
     /**
      * Получение региона по IP клиента
