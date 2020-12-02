@@ -1172,3 +1172,99 @@ function setCookie(name, value, options = {}) {
 
   document.cookie = updatedCookie;
 }
+
+
+"use strict";
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+/* ^^^
+ * Глобальные-вспомогательные функции
+ * ========================================================================== */
+
+/**
+ * Возвращает HTML-код иконки из SVG-спрайта
+ *
+ * @param {String} name Название иконки из спрайта
+ * @param {Object} opts Объект настроек для SVG-иконки
+ *
+ * @example SVG-иконка
+ * getSVGSpriteIcon('some-icon', {
+ *   tag: 'div',
+ *   type: 'icons', // colored для подключения иконки из цветного спрайта
+ *   class: '', // дополнительные классы для иконки
+ *   mode: 'inline', // external для подключаемых спрайтов
+ *   url: '', // путь до файла спрайта, необходим только для подключаемых спрайтов
+ * });
+ */
+function getSVGSpriteIcon(name, opts) {
+  opts = _extends({
+    tag: 'div',
+    type: 'icons',
+    "class": '',
+    mode: 'inline',
+    url: ''
+  }, opts);
+  var external = '';
+  var typeClass = '';
+
+  if (opts.mode === 'external') {
+    external = "".concat(opts.url, "/sprite.").concat(opts.type, ".svg");
+  }
+
+  if (opts.type !== 'icons') {
+    typeClass = " svg-icon--".concat(opts.type);
+  }
+
+  opts["class"] = opts["class"] ? " ".concat(opts["class"]) : '';
+  return "\n    <".concat(opts.tag, " class=\"svg-icon svg-icon--").concat(name).concat(typeClass).concat(opts["class"], "\" aria-hidden=\"true\" focusable=\"false\">\n      <svg class=\"svg-icon__link\">\n        <use xlink:href=\"").concat(external, "#").concat(name, "\"></use>\n      </svg>\n    </").concat(opts.tag, ">\n  ");
+}
+/* ^^^
+ * JQUERY Actions
+ * ========================================================================== */
+
+
+$(function () {
+
+  //Логика для новой шапки
+
+  $.exists = function (selector) {
+    return $(selector).length > 0;
+  };
+
+  var scrollPos;
+  $('.app-header__menu-button').on('click', function (event) {
+    event.preventDefault();
+
+    if ($(this).hasClass('is-opened')) {
+      scrollPos = $(window).scrollTop();
+      $(this).removeClass('is-opened');
+      $('body').removeClass('nav-active');
+    } else {
+      $(this).addClass('is-opened');
+      $('body').addClass('nav-active');
+    }
+  });
+
+  $(window).on('scroll', function (event) {
+    if ($(window).scrollTop() > 0) {
+      $('.app-header').addClass("is-fixed");
+    } else {
+      $('.app-header').removeClass("is-fixed");
+    }
+
+    $('.b-first, .app-header').addClass('is-visible');
+
+  }).trigger('scroll');
+
+  var locationWindow = $('[data-remodal-id=loacation]').remodal();
+  $('.js-loacation').on('click', function (event) {
+    event.preventDefault();
+    locationWindow.open();
+  });
+  $('.l-list__item a').on('click', function (event) {
+    event.preventDefault();
+    locationWindow.close();
+    $('.js-loacation').html($(this).html());
+  });
+});
