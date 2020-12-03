@@ -49,6 +49,7 @@
             webvisor:true
         });
     </script>
+    <script type="text/javascript">urlPrefix = '{{ app.request.getBaseURL() }}'</script>
     <noscript><div><img src="https://mc.yandex.ru/watch/57673804" style="position:absolute;
 
 left:-9999px;" alt="" /></div></noscript>
@@ -99,5 +100,7 @@ left:-9999px;" alt="" /></div></noscript>
 </body>
 {% block javascripts %}
     <script src="/local/templates/kdteam/js/validator.min.js"></script>
+    <script src="/landing/js/plugins.min.js"></script>
+    <script src="/dist/bundle.js"></script>
 {% endblock %}
 </html>

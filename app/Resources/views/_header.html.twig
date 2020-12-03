@@ -72,39 +72,12 @@
     <div class="remodal-title">Выбрать регион</div>
     <div class="remodal-content">
         <div class="l-list">
-            <div class="l-list__item">
-                <a href="#">Москва</a>
-            </div>
-            <div class="l-list__item">
-                <a href="#">Казань</a>
-            </div>
-            <div class="l-list__item">
-                <a href="#">Воронеж</a>
-            </div>
-            <div class="l-list__item">
-                <a href="#">Санкт-Петербург</a>
-            </div>
-            <div class="l-list__item">
-                <a href="#">Краснодар</a>
-            </div>
-            <div class="l-list__item">
-                <a href="#">Казань</a>
-            </div>
-            <div class="l-list__item">
-                <a href="#">Воронеж</a>
-            </div>
-            <div class="l-list__item">
-                <a href="#">Красноярск</a>
-            </div>
-            <div class="l-list__item">
-                <a href="#">Краснодар</a>
-            </div>
-            <div class="l-list__item">
-                <a href="#">Екатеринбург</a>
-            </div>
-            <div class="l-list__item">
-                <a href="#">Нижний Новгород</a>
-            </div>
+            {% for region in regions %}
+                <div class="l-list__item">
+                    <a href="#" data-region="{{ region.id }}">{{ region.nameWithoutCode }}</a>
+                </div>
+            {% endfor %}
         </div>
     </div>
 </div>
+{% include './Modal/error_modal.html.twig' %}

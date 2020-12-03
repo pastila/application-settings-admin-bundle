@@ -9,20 +9,25 @@ use Doctrine\Persistence\ObjectManager;
 
 class Region extends Fixture
 {
-    /**
-     * @param ObjectManager $manager
-     * @return mixed
-     */
-    public function load(ObjectManager $manager)
-    {
-        $region = new \AppBundle\Entity\Geo\Region();
-        $region->setCode(66);
-        $region->setName('Свердловская область');
+  /**
+   * @param ObjectManager $manager
+   * @return mixed
+   */
+  public function load(ObjectManager $manager)
+  {
+    $region02 = new \AppBundle\Entity\Geo\Region();
+    $region02->setCode(02);
+    $region02->setName('02 Республика Башкортостан');
+    $manager->persist($region02);
 
-        $manager->persist($region);
-        $manager->flush();
+    $region66 = new \AppBundle\Entity\Geo\Region();
+    $region66->setCode(66);
+    $region66->setName('66 Свердловская область');
+    $manager->persist($region66);
 
-        $this->addReference('region-66', $region);
-    }
+    $manager->flush();
 
+    $this->addReference('region-02', $region02);
+    $this->addReference('region-66', $region66);
+  }
 }

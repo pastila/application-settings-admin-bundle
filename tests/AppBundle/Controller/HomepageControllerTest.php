@@ -15,6 +15,8 @@ use Tests\AppBundle\Fixtures\Menu\MenuHeader;
 use Symfony\Component\DomCrawler\Crawler;
 use Tests\AppBundle\Fixtures\Question\Question;
 use Tests\AppBundle\Fixtures\Setting\Setting;
+use Tests\AppBundle\Fixtures\Geo\Region;
+use Tests\AppBundle\Fixtures\Company\CompanyBranchRating;
 
 class HomepageControllerTest extends AppWebTestCase
 {
@@ -307,5 +309,30 @@ class HomepageControllerTest extends AppWebTestCase
       ->getQuery()
       ->getResult();
     $this->assertTrue(!empty($contactUs));
+  }
+
+  /*** Проверка "Список регионов в модалке":
+   * https://jira.accurateweb.ru/browse/BEZBAHIL-84
+   **/
+  public function testRegionsListModal()
+  {
+    $client = static::createClient();
+    $crawler = $client->request('GET', '/');
+
+    // Извлечение данных со страницы
+    $regionsHtml = $crawler->filter('.remodal-content .l-list .l-list__item a')->each(function (Crawler $node, $i)
+    {
+      return [
+        'text' => $node->text(),
+        'id' => $node->attr('data-region'),
+      ];
+    });
+    $textPrev = 'Список регионов в мод.окне: ';
+
+    $this->assertTrue(count($regionsHtml) > 1, $textPrev. 'Проверка, что данные вообще нашлись');
+    $this->assertEquals('Республика Башкортостан', $regionsHtml[0]['text'], 'Проверка, что Название совпадает');
+    $this->assertEquals(1, $regionsHtml[0]['id'], 'Проверка, что ID совпадает');
+    $this->assertEquals('Свердловская область', $regionsHtml[1]['text'], 'Проверка, что Название совпадает');
+    $this->assertEquals(2, $regionsHtml[1]['id'], 'Проверка, что ID совпадает');
   }
 }

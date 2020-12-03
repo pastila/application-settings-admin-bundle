@@ -73,9 +73,12 @@ class Region implements UserLocationInterface
     return $this->name;
   }
 
+  /*
+   * Полуение название без цифрового кода
+   */
   public function getNameWithoutCode()
   {
-    return trim(preg_replace('/\d/', '',  $this->name));
+    return trim(preg_replace('/\d/', '', $this->name));
   }
 
   /**
