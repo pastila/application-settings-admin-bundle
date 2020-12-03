@@ -127,12 +127,14 @@ build-assets:
     - cd web
     - npm install
     - gulp
+    - webpack
   artifacts:
     when: always
     paths:
       - web/local/templates/kdteam/js
       - web/local/templates/kdteam/styles
       - web/local/templates/kdteam/pages
+      - web/dist
 
 phpunit:
   <<: *tests-image

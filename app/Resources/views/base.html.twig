@@ -62,6 +62,7 @@
     <link rel="image_src" href="https://bezbahil.ru/local/templates/kdteam/images/png/header/logo-oms-white.jpg"/>
 
     {% block stylesheets %}{% endblock %}
+    <script type="text/javascript">urlPrefix = '{{ app.request.getBaseURL() }}'</script>
 </head>
 
 <body class="app">
@@ -241,7 +242,7 @@
 {% block javascripts %}
     <script src="/landing/js/vendors/jquery-3.4.1.min.js"></script>
     <script src="/landing/js/plugins.min.js"></script>
-    <script src="/landing/js/app.js"></script>
+    <script src="/dist/bundle-landing.js"></script>
 {% endblock %}
 
 </body>
