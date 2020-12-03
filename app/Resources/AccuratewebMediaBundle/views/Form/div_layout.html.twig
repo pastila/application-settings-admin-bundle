@@ -1,11 +1,12 @@
 {% block aw_media_image_widget %}
   {% spaceless %}
     {% if url is not null %}
-      <img style="max-width: 40%; min-width: 250px;  height: auto; margin-top: 20px;" src="{{ url }}"/>
+      <img class="form__image" src="{{ url }}"/>
     {% endif %}
 
     <input type="file" {{ block('widget_attributes') }} value="{{ value }}" style="margin-top: 20px;" />
   {% endspaceless %}
+  <link href="/local/templates/kdteam/styles/admin.min.css" type="text/css"  data-template-style="true"  rel="stylesheet" />
 {% endblock %}
 
 {% block aw_media_gallery_widget %}
