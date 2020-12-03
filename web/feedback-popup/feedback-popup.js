@@ -1,5 +1,5 @@
 class PopupContactUs {
-    constructor(popupElement) {
+  constructor(popupElement) {
     this.popupElement = popupElement
   }
 
@@ -97,4 +97,33 @@ class PopupContactUs {
       });
     }
   }
-};
+}
+
+export function initContactUsBtn() {
+  const contactUsBtn = document.querySelector(`.app-footer__contact-us-btn`);
+  const popupElement = document.querySelector(`.popup-write-us`);
+
+  if (contactUsBtn && popupElement) {
+    function onContactUsBtnClick () {
+      const popupContuctUs = new PopupContactUs(popupElement);
+      popupContuctUs.open();
+      popupContuctUs.submitForm();
+    }
+
+    contactUsBtn.addEventListener(`click`, onContactUsBtnClick)
+  }
+}
+
+export function initShowPopup() {
+  const popupElement = document.querySelector(`.popup-write-us`);
+
+  if (popupElement) {
+    setTimeout(() => {
+      const popupContuctUs = new PopupContactUs(popupElement);
+      popupContuctUs.open();
+      popupContuctUs.submitForm();
+    }, 2000);
+  }
+}
+
+

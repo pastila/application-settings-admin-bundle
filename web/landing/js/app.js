@@ -1,5 +1,7 @@
 "use strict";
 import initRegionSelectionModal from '../../regionSelectionModal/regionSelectionModal';
+import { initContactUsBtn } from '../../feedback-popup/feedback-popup';
+
 
 function _extends() {
   _extends = Object.assign || function (target) {
@@ -244,19 +246,6 @@ $(function () {
       }
     });
   }
-
-  function initContactUsBtn() {
-    const contactUsBtn = document.querySelector(`.app-footer__contact-us-btn`);
-    const popupElement = document.querySelector(`.popup-write-us`);
-
-    function onContactUsBtnClick () {
-      const popupContuctUs = new PopupContactUs(popupElement);
-      popupContuctUs.open();
-      popupContuctUs.submitForm();
-    }
-
-    contactUsBtn.addEventListener(`click`, onContactUsBtnClick)
-  };
 
   initContactUsBtn();
 
