@@ -215,15 +215,26 @@ set('rsync_dest', '{{release_path}}');
 
 set('rsync', array_merge(get('rsync'), [
     'include' => [
+      'web/',
+      'web/local/',
+      'web/local/templates/',
+      'web/local/templates/kdteam/',
       'web/local/templates/kdteam/js',
+      'web/local/templates/kdteam/js/***',
       'web/local/templates/kdteam/styles',
+      'web/local/templates/kdteam/styles/***',
       'web/local/templates/kdteam/pages',
-      'web/dist'
+      'web/local/templates/kdteam/pages/***',
+      'web/dist/',
+      'web/dist/***'
     ],
     'exclude' => [
       '*'
     ],
-    'options' => [] //No delete
+    'flags' => 'rzv',
+    'options' => [
+      //No delete
+    ]
 ]));
 
 task('deploy', [
