@@ -210,16 +210,31 @@ after('deploy:failed', 'deploy:unlock');
 //  'deploy:unlock'
 //]);
 
+set('rsync_src', __DIR__);
+set('rsync_dest', '{{release_path}}');
+
 set('rsync', array_merge(get('rsync'), [
     'include' => [
-        'vendor',
-        'web/vendor',
-        'web/local/templates/kdteam/js',
-        'web/local/templates/kdteam/styles',
-        'web/local/templates/kdteam/pages',
-        'web/dist'
+      'web/',
+      'web/local/',
+      'web/local/templates/',
+      'web/local/templates/kdteam/',
+      'web/local/templates/kdteam/js',
+      'web/local/templates/kdteam/js/***',
+      'web/local/templates/kdteam/styles',
+      'web/local/templates/kdteam/styles/***',
+      'web/local/templates/kdteam/pages',
+      'web/local/templates/kdteam/pages/***',
+      'web/dist/',
+      'web/dist/***'
     ],
-    'options' => [] //No delete
+    'exclude' => [
+      '*'
+    ],
+    'flags' => 'rzv',
+    'options' => [
+      //No delete
+    ]
 ]));
 
 task('deploy', [
