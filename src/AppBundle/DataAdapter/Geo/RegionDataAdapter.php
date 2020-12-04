@@ -10,32 +10,32 @@ use AppBundle\Entity\Geo\Region;
  */
 class RegionDataAdapter implements ClientApplicationModelAdapterInterface
 {
-    /**
-     * @param Region $subject
-     * @param array $options
-     *
-     * @return array
-     */
-    public function transform($subject, $options = [])
-    {
-        return [
-            'id' => $subject->getId(),
-            'name' => $subject->getName(),
-        ];
-    }
+  /**
+   * @param Region $subject
+   * @param array $options
+   *
+   * @return array
+   */
+  public function transform($subject, $options = [])
+  {
+    return [
+      'id' => $subject->getId(),
+      'name' => $subject->getName(),
+    ];
+  }
 
-    public function getModelName()
-    {
-        return 'Region';
-    }
+  public function getModelName()
+  {
+    return 'Region';
+  }
 
-    public function supports($subject)
-    {
-        return $subject instanceof Region;
-    }
+  public function supports($subject)
+  {
+    return $subject instanceof Region;
+  }
 
-    public function getName()
-    {
-        return 'region';
-    }
+  public function getName()
+  {
+    return 'region';
+  }
 }

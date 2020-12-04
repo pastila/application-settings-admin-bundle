@@ -18,3 +18,7 @@
 /.idea
 /web/uploads
 /upload/original
+/web/local/templates/kdteam/js
+/web/local/templates/kdteam/pages
+/web/local/templates/kdteam/styles
+/web/dist

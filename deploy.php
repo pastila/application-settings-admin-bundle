@@ -217,6 +217,7 @@ set('rsync', array_merge(get('rsync'), [
         'web/local/templates/kdteam/js',
         'web/local/templates/kdteam/styles',
         'web/local/templates/kdteam/pages',
+        'web/dist'
     ],
     'options' => [] //No delete
 ]));

@@ -29,7 +29,7 @@ class ContactUsType extends AbstractType
           new Email(),
         ],
       ])
-      ->add('message', null, [
+      ->add('message', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
         'required' => true,
         'constraints' => [
           new NotBlank(),

@@ -83,6 +83,9 @@ class HomepageController extends Controller
       throw $e;
     }
 
+    $regions = $this->regionRepository
+      ->findAll();
+
     // replace this example code with whatever you need
     return $this->render('@App/homepage.html.twig', [
       'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
@@ -92,6 +95,7 @@ class HomepageController extends Controller
       'feedbacks' => $feedbacks,
       'news' => $news,
       'region' => $region,
+      'regions' => $regions
     ]);
   }
 
