@@ -249,4 +249,11 @@ $(function () {
 
   initContactUsBtn();
 
+  $('body').on('click', '.js-homepage-region', function () {
+    let id_company = this.getAttribute('data-region');
+    if (id_company !== null){
+      $('#homepage_region').attr('value', id_company);
+    }
+  });
+
 });

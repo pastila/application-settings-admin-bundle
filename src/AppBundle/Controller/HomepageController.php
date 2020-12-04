@@ -11,11 +11,15 @@ use AppBundle\Entity\Number\Number;
 use AppBundle\Entity\Question\Question;
 use AppBundle\Model\InsuranceCompany\Branch\BranchRatingHelper;
 use AppBundle\Repository\Geo\RegionRepository;
+use AppBundle\Form\Obrashcheniya\ObrashcheniyaType;
+use AppBundle\Helper\Year\Year;
+use AppBundle\Model\Obrashcheniya\Obrashcheniya;
 use AppBundle\Form\ContactUs\ContactUsType;
 use AppBundle\Service\ContactUs\ContactUsMailer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Accurateweb\ApplicationSettingsAdminBundle\Model\Manager\SettingManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,8 +37,8 @@ class HomepageController extends Controller
     BranchRatingHelper $branchRatingHelper,
     SettingManagerInterface $settingManager,
     RegionRepository $regionRepository,
-    ContactUsMailer $contactUsMailer,
-    Location $locationService
+    Location $locationService,
+    ContactUsMailer $contactUsMailer
   )
   {
     $this->branchRatingHelper = $branchRatingHelper;
@@ -71,6 +75,11 @@ class HomepageController extends Controller
     $news = $em->getRepository(News::class)
       ->findNewsOrderByPublishedAt(6);
 
+    $obrashcheniya = new Obrashcheniya();
+    $form = $this->createForm(ObrashcheniyaType::class, $obrashcheniya, [
+      'csrf_protection' => false,
+    ]);
+
     /**
      * Получение региона по IP клиента
      */
@@ -95,6 +104,7 @@ class HomepageController extends Controller
       'feedbacks' => $feedbacks,
       'news' => $news,
       'region' => $region,
+      'form' => $form->createView(),
       'regions' => $regions
     ]);
   }
@@ -149,8 +159,7 @@ class HomepageController extends Controller
       try
       {
         $this->contactUsMailer->sendContactUs($contactUs);
-      }
-      catch (\Exception $e)
+      } catch (\Exception $e)
       {
         $this->get('logger')->error('Failed to send contact us: ' . $e->getMessage());
       }
@@ -181,5 +190,25 @@ class HomepageController extends Controller
     return $this->render('@App/contact_us.html.twig', [
       'form' => $form->createView()
     ]);
+  }
+
+  /**
+   * @Route("/homepage-obrashcheniya", name="homepage_obrashcheniya")
+   */
+  public function obrashcheniyaAction(Request $request)
+  {
+    $obrashcheniya = $request->request->get('obrashcheniya');
+    if (empty($obrashcheniya) || !key_exists('year', $obrashcheniya) || !key_exists('region', $obrashcheniya))
+    {
+      throw new NotFoundHttpException(sprintf('Year in obrashcheniya not found'));
+    }
+    $em = $this->getDoctrine()->getManager();
+    $region = $em->getRepository(Region::class)
+      ->find($obrashcheniya['region']);
+
+    return $this->redirectToRoute('forma_obrashenija', [
+      'year' => Year::getYear($obrashcheniya['year']),
+      'region' => !empty($region) ? $region->getBitrixCityHospitalId() : null,
+    ], 302);
   }
 }

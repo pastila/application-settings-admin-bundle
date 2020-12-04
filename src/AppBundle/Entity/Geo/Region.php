@@ -22,6 +22,22 @@ class Region implements UserLocationInterface
   protected $id;
 
   /**
+   * ID из bitrix "Филиалы cтраховых компаний", секция 16 в b_iblock
+   *
+   * @var null|string
+   * @ORM\Column(type="string", length=256, nullable=true)
+   */
+  protected $bitrixId;
+
+  /**
+   * ID из bitrix "Города и больницы", секция 9 в b_iblock
+   *
+   * @var null|string
+   * @ORM\Column(type="string", length=256, nullable=true)
+   */
+  protected $bitrixCityHospitalId;
+
+  /**
    * Название региона
    *
    * @var null|string
@@ -43,6 +59,46 @@ class Region implements UserLocationInterface
   public function getId()
   {
     return $this->id;
+  }
+
+  /**
+   * @return string
+   */
+  public function getBitrixId()
+  {
+    return $this->bitrixId;
+  }
+
+  /**
+   * @param string $bitrixId
+   *
+   * @return string
+   */
+  public function setBitrixId($bitrixId)
+  {
+    $this->bitrixId = $bitrixId;
+
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getBitrixCityHospitalId()
+  {
+    return $this->bitrixCityHospitalId;
+  }
+
+  /**
+   * @param string $bitrixCityHospitalId
+   *
+   * @return string
+   */
+  public function setBitrixCityHospitalId($bitrixCityHospitalId)
+  {
+    $this->bitrixCityHospitalId = $bitrixCityHospitalId;
+
+    return $this;
   }
 
   /**
