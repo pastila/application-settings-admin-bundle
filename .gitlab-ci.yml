@@ -8,6 +8,8 @@
   <<: *build-image
   dependencies:
     - build-sf-app
+  before_script:
+    - composer install -o
 
 .build-before: &build-before
   stage: build-containers
@@ -20,6 +22,7 @@ cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
     - vendor/
+    - web/vendor/
 
 variables:
   MYSQL_DATABASE: dbbezbahil
@@ -145,11 +148,6 @@ build-sf-app:
   script:
     - composer install -o
     - cd web && composer install -o
-  artifacts:
-    when: always
-    paths:
-      - vendor
-      - web/vendor
 
 phpunit:
   <<: *tests-image
