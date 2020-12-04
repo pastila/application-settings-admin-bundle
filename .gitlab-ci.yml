@@ -3,8 +3,9 @@
   services:
     - name: $CI_REGISTRY_IMAGE/percona:latest
       alias: mysql
-  before_script:
-    - composer install -o
+  dependencies:
+    - build-sf-app
+
 
 .build-before: &build-before
   stage: build-containers
@@ -127,12 +128,26 @@ build-assets:
     - cd web
     - npm install
     - gulp
+    - webpack
   artifacts:
     when: always
     paths:
       - web/local/templates/kdteam/js
       - web/local/templates/kdteam/styles
       - web/local/templates/kdteam/pages
+      - web/dist
+
+build-sf-app:
+  image: $CI_REGISTRY_IMAGE/php-fpm:latest
+  stage: build-app
+  script:
+    - composer install -o
+    - cd web && composer install -o
+  artifacts:
+    when: always
+    paths:
+      - vendor
+      - web/vendor
 
 phpunit:
   <<: *tests-image
@@ -156,11 +171,20 @@ phpstan:
     - source ./laradock/.env.test
     - sh ci/phpstan.sh
 
+#node-eslint:
+#  stage: test
+#  script:
+#    # Configure ESLint (will read your .eslintrc file)
+#    - eslint --init
+#    # Run ESLint
+#    - eslint <your_js_file>
+
 deploy_staging:
   stage: deploy
   image: $CI_REGISTRY_IMAGE/deployer
   dependencies:
     - build-deployer
+    - build-sf-app
     - build-assets
   before_script:
     # https://docs.gitlab.com/ee/ci/ssh_keys/
@@ -177,6 +201,7 @@ deploy_staging:
 
     - echo "Host staging.aw-dev.ru\n\tPort 2222\n" > ~/.ssh/config
   script:
+    - ls -la web/dist
     - dep deploy staging --tag=$CI_COMMIT_REF_NAME -vvv
   only:
     - develop

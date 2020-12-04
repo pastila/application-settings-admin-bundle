@@ -212,6 +212,8 @@ after('deploy:failed', 'deploy:unlock');
 
 set('rsync', array_merge(get('rsync'), [
     'include' => [
+        'vendor',
+        'web/vendor',
         'web/local/templates/kdteam/js',
         'web/local/templates/kdteam/styles',
         'web/local/templates/kdteam/pages',
