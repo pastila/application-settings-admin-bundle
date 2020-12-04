@@ -1,11 +1,13 @@
-.tests-image: &tests-image
+.build-image: &build-image
   image: $CI_REGISTRY_IMAGE/php-fpm:latest
   services:
     - name: $CI_REGISTRY_IMAGE/percona:latest
       alias: mysql
+
+.tests-image: &tests-image
+  <<: *build-image
   dependencies:
     - build-sf-app
-
 
 .build-before: &build-before
   stage: build-containers
@@ -138,7 +140,7 @@ build-assets:
       - web/dist
 
 build-sf-app:
-  image: $CI_REGISTRY_IMAGE/php-fpm:latest
+  <<: *build-image
   stage: build-app
   script:
     - composer install -o
