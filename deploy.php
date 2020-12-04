@@ -210,6 +210,9 @@ after('deploy:failed', 'deploy:unlock');
 //  'deploy:unlock'
 //]);
 
+set('rsync_src', __DIR__);
+set('rsync_dest', '{{release_path}}');
+
 set('rsync', array_merge(get('rsync'), [
     'include' => [
         'vendor',
