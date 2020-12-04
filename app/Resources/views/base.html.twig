@@ -223,8 +223,7 @@
 <!-- Start Wrap -->
 <div class="app__wrapper">
     <!-- Header -->
-    {% set _region = region ? region.nameWithoutCode : 'Вся Россия' %}
-    {% include '_header.html.twig' %}
+    {{ render(controller('AppBundle:Common:_header')) }}
     <!-- Content -->
     {% block main %}{% endblock %}
     <!-- Footer -->

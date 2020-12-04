@@ -1,0 +1,83 @@
+<header class="app-header">
+    <div class="app-header__content site-width">
+        <a href="#" class="app-header__menu-button">
+			<span class="menu-icon">
+				<span class="menu-icon__line menu-icon__line-left"></span>
+				<span class="menu-icon__line"></span>
+				<span class="menu-icon__line menu-icon__line-right"></span>
+			</span>
+        </a>
+        <a href="#" class="app-header__logo">
+            <img src="/landing/img/logo.png" width="199" alt="">
+        </a>
+        <div class="app-header__in">
+            <div class="app-header__location">
+
+                <div class="svg-icon svg-icon--location" aria-hidden="true">
+                    <svg class="svg-icon__link">
+                        <use xlink:href="#location"></use>
+                    </svg>
+                </div>
+
+                <span>Ваш регион: </span>
+                <a href="#loacation" class="js-loacation">{{ region }}</a>
+            </div>
+            <nav class="app-header__list">
+                {{ knp_menu_render('AppBundle:Builder:headerMenu') }}
+            </nav>
+            <a href="#" class="app-header__lk btn">
+
+                <div class="svg-icon svg-icon--lk" aria-hidden="true">
+                    <svg class="svg-icon__link">
+                        <use xlink:href="#lk"></use>
+                    </svg>
+                </div>
+
+                Личный кабинет
+            </a>
+        </div>
+    </div>
+</header><!-- b:app-header -->
+<div class="nav-mobile">
+    <div class="nav-mobile__content">
+        <div class="nav-mobile__in">
+            <div class="nav-mobile__location-wrapper">
+                <div class="nav-mobile__location">
+
+                    <div class="svg-icon svg-icon--location" aria-hidden="true">
+                        <svg class="svg-icon__link">
+                            <use xlink:href="#location"></use>
+                        </svg>
+                    </div>
+
+                    <span>Ваш регион: </span>
+                    <a href="#loacation" class="js-loacation">{{ region }}</a>
+                </div>
+            </div>
+            {{ knp_menu_render('AppBundle:Builder:headerMenuMobile') }}
+        </div>
+    </div>
+</div>
+
+<div class="remodal" data-remodal-id="loacation" data-remodal-options="hashTracking: true, closeOnOutsideClick: true">
+    <div data-remodal-action="close" class="remodal-close">
+
+        <div class="svg-icon svg-icon--close" aria-hidden="true">
+            <svg class="svg-icon__link">
+                <use xlink:href="#close"></use>
+            </svg>
+        </div>
+
+    </div>
+    <div class="remodal-title">Выбрать регион</div>
+    <div class="remodal-content">
+        <div class="l-list">
+            {% for region in regions %}
+                <div class="l-list__item">
+                    <a href="#" data-region="{{ region.id }}">{{ region.nameWithoutCode }}</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% include './Modal/error_modal.html.twig' %}

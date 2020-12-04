@@ -22,6 +22,7 @@ class CommonController extends AbstractController
 {
   protected $logger;
   private $locationService;
+  private $regionRepository;
 
   /**
    * CommonController constructor.
@@ -30,11 +31,13 @@ class CommonController extends AbstractController
    */
   public function __construct(
     LoggerInterface $logger,
+    RegionRepository $regionRepository,
     Location $locationService
   )
   {
     $this->logger = $logger;
     $this->locationService = $locationService;
+    $this->regionRepository = $regionRepository;
   }
 
   /**
@@ -42,7 +45,7 @@ class CommonController extends AbstractController
    * @return \Symfony\Component\HttpFoundation\Response
    * @throws LocationServiceException
    */
-  public function _locationAction(Request $request)
+  public function _headerAction(Request $request)
   {
     /**
      * Получение региона по IP клиента
@@ -56,8 +59,12 @@ class CommonController extends AbstractController
       throw $e;
     }
 
-    return $this->render('Common/_location.html.twig', [
+    $regions = $this->regionRepository
+      ->findAll();
+
+    return $this->render('Common/_header.html.twig', [
       'region' => $region,
+      'regions' => $regions
     ]);
   }
 }
