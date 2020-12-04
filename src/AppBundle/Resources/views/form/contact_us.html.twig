@@ -1,40 +1,32 @@
 {{ form_start(form, {'action': path('contact_us'), 'method': 'POST', 'attr': {
-    id: 'feedback_modal',
+    id: 'feedback_modal_new',
     class: 'feedback_form',
 }}) }}
 
-    <div class="close-modal">
-        <img src="/local/templates/kdteam/images/svg/close_modal.svg" alt="">
+<div class="close-modal">
+    <img src="/local/templates/kdteam/images/svg/close_modal.svg" alt="">
+</div>
+
+<div class="popup__container">
+    <h3 class="popup__title">Напишите нам</h3>
+
+    <div class="popup__input-container">
+        <label class="input__label visuallyhidden">Имя</label>
+        {{ form_row(form.author_name, { attr: { placeholder: "Имя" } }) }}
     </div>
 
-    <div class="popup__wrap">
-        <div class="popup__wrap_tabs">
-            <h3 class="popup__wrap_tabs_title">
-                Напишите нам
-            </h3>
-        </div>
-        <div class="popup__wrap_middle">
-            <!-- Input -->
-            <div class="input__wrap">
-                <label class="input__wrap_label visuallyhidden">Имя</label>
-                {{ form_row(form.author_name, { attr: { placeholder: "Имя" } }) }}
-            </div>
-            <!-- Input -->
-            <div class="input__wrap">
-                <label class="input__wrap_label visuallyhidden">Электронная почта</label>
-                {{ form_row(form.email, { attr: { placeholder: "Email" } }) }}
-            </div>
-        </div>
-        <div class="block_padd-modal">
-            <div class="input__wrap">
-                <label class="input__wrap_label visuallyhidden">Сообщение</label>
-                {{ form_row(form.message, { attr: { rows: 5, placeholder: "Введите сообщение" }}) }}
-            </div>
-        </div>
-        <div class="block_padd-modal">
-            <button type="submit" class="mainBtn btn" id="ask">Отправить</button>
-        </div>
+    <div class="popup__input-container">
+        <label class="input__container_label visuallyhidden">Электронная почта</label>
+        {{ form_row(form.email, { attr: { placeholder: "Email" } }) }}
     </div>
+
+    <div class="popup__input-container">
+        <label class="input__container_label visuallyhidden">Сообщение</label>
+        {{ form_row(form.message, { attr: { rows: 5, placeholder: "Введите сообщение" }}) }}
+    </div>
+
+    <button type="submit" class="mainBtn btn" id="ask">Отправить</button>
+</div>
 
 {{ form_rest(form) }}
 {{ form_end(form) }}

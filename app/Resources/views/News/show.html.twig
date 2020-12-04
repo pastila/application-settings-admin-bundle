@@ -174,7 +174,7 @@
 {% endblock %}
 
 {% block header %}
-    {% include '_header.html.twig' %}
+    {{ render(controller('AppBundle:Common:_header')) }}
 {% endblock %}
 
 {% block main %}
