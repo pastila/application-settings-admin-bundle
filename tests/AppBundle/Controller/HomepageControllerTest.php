@@ -326,7 +326,7 @@ class HomepageControllerTest extends AppWebTestCase
     $textPrev = 'Форма обращения: ';
 
     $this->assertTrue(count($regionsHtml) > 0, $textPrev . 'Проверка, что данные по регионам вообще нашлись');
-    $this->assertEquals('Свердловская область', $regionsHtml[0], $textPrev . 'Проверка, что Название региона совпадает');
+    $this->assertEquals('02 Республика Башкортостан', $regionsHtml[0], $textPrev . 'Проверка, что Название региона совпадает');
 
     // Извлечение данных со страницы
     $yearsHtml = $crawler->filter('.b-first__form .b-form__item-year .b-form__item-content option')->each(function (Crawler $node, $i)
