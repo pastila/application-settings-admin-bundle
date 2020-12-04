@@ -8,7 +8,7 @@ class PopupContactUs {
       const renderPopupMarkup = () => {
         $.ajax({
           dataType: 'html',
-          url: 'contact_us',
+          url: `${urlPrefix}/contact_us`,
           type: 'GET',
           beforeSend: function () {
           },
@@ -77,7 +77,7 @@ class PopupContactUs {
       this.popupElement.querySelector(`form`).addEventListener(`submit`, (evt) => {
         evt.preventDefault();
         $.ajax({
-          url: 'contact_us',
+          url: `${urlPrefix}/contact_us`,
           type: 'POST',
           beforeSend: function () {
           },
