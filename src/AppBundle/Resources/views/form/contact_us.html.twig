@@ -1,28 +1,35 @@
 {{ form_start(form, {'action': path('contact_us'), 'method': 'POST', 'attr': {
     id: 'feedback_modal_new',
-    class: 'feedback_form',
+    class: 'feedback_form remodal',
 }}) }}
 
-<div class="close-modal">
-    <img src="/local/templates/kdteam/images/svg/close_modal.svg" alt="">
+<div data-remodal-action="close" class="remodal-close">
+    <div class="svg-icon svg-icon--close" aria-hidden="true">
+        <svg class="svg-icon__link">
+            <use xlink:href="#close"></use>
+        </svg>
+    </div>
 </div>
 
 <div class="popup__container">
-    <h3 class="popup__title">Напишите нам</h3>
+    <div class="remodal-title">Напишите нам</div>
 
     <div class="popup__input-container">
         <label class="input__label visuallyhidden">Имя</label>
         {{ form_row(form.author_name, { attr: { placeholder: "Имя" } }) }}
+        <span class="input__error-message">Поле не должно быть пустым</span>
     </div>
 
     <div class="popup__input-container">
         <label class="input__container_label visuallyhidden">Электронная почта</label>
         {{ form_row(form.email, { attr: { placeholder: "Email" } }) }}
+        <span class="input__error-message">Поле не должно быть пустым</span>
     </div>
 
     <div class="popup__input-container">
         <label class="input__container_label visuallyhidden">Сообщение</label>
         {{ form_row(form.message, { attr: { rows: 5, placeholder: "Введите сообщение" }}) }}
+        <span class="input__error-message">Поле не должно быть пустым</span>
     </div>
 
     <button type="submit" class="mainBtn btn" id="ask">Отправить</button>
