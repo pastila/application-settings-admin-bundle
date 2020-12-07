@@ -5,7 +5,6 @@ namespace AppBundle\Model\Obrashchenia;
 
 
 use AppBundle\Repository\Obrashcheniya\ObrashcheniyaFileRepository;
-use Bitrix\Main\ArgumentException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AppealDataParse
@@ -39,7 +38,7 @@ class AppealDataParse
   /**
    * @param $data
    * @return AppealDataToCompany
-   * @throws ArgumentException
+   * @throws \Exception
    */
   public function parse($data)
   {
@@ -48,7 +47,7 @@ class AppealDataParse
       empty($data[2]['PDF'])
     )
     {
-      throw new ArgumentException('Empty EMAIL or PDF in data in AppealDataParse');
+      throw new \Exception('Empty EMAIL or PDF in data in AppealDataParse');
     }
     $model = new AppealDataToCompany();
     $model->setPdf($this->appealPathPdf . $data[2]['PDF']);
