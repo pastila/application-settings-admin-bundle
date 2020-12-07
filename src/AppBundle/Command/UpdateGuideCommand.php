@@ -44,22 +44,18 @@ class UpdateGuideCommand extends ContainerAwareCommand
     $io = new SymfonyStyle($input, $output);
     $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
 
-    $common = new CommonHelper();
-    $common->clearTable($entityManager, [Region::class]);
     $regionHelper = $this->getContainer()->get('AppBundle\Helper\Feedback\RegionHelper');
     $regionHelper->load($io);
     $regionHelper->check();
 
-    $common = new CommonHelper();
-    $common->clearTable($entityManager, [Company::class]);
     $companyHelper = $this->getContainer()->get('AppBundle\Helper\Feedback\CompanyHelper');
     $companyHelper->load($io);
     $companyHelper->check();
 
-    $common = new CommonHelper();
-    $common->clearTable($entityManager, [CompanyBranch::class]);
     $companyBranchHelper = $this->getContainer()->get('AppBundle\Helper\Feedback\CompanyBranchHelper');
     $companyBranchHelper->load($io);
     $companyBranchHelper->check();
+
+
   }
 }

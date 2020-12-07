@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Company.
  *
- * @ORM\Table(name="s_company_branches")
+ * @ORM\Table(name="s_company_branches", indexes={@ORM\Index(name="bitrix_id_idx", columns={"bitrix_id"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Company\CompanyBranchRepository")
  */
 class CompanyBranch
@@ -23,6 +23,13 @@ class CompanyBranch
    * @ORM\Column(type="integer")
    */
   protected $id;
+
+  /**
+   * @var integer|null
+   *
+   * @ORM\Column(type="integer", nullable=true)
+   */
+  private $bitrixId;
 
   /**
    * Название компании
@@ -252,18 +259,6 @@ class CompanyBranch
   }
 
   /**
-   * @param string companyId
-   *
-   * @return $this
-   */
-  public function setCompanyId($companyId)
-  {
-    $this->company = $companyId;
-
-    return $this;
-  }
-
-  /**
    * @return null|Region
    */
   public function getRegion()
@@ -412,6 +407,29 @@ class CompanyBranch
 
     return $this;
   }
+
+  /**
+   * @return int|null
+   */
+  public function getBitrixId(): ?int
+  {
+    return $this->bitrixId;
+  }
+
+  /**
+   * @param int|null $bitrixId
+   * @return CompanyBranch
+   */
+  public function setBitrixId(?int $bitrixId): CompanyBranch
+  {
+    $this->bitrixId = $bitrixId;
+    return $this;
+  }
+
+
+
+
+
 
   /**
    * @return string

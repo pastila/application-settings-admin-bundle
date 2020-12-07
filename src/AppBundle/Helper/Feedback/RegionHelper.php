@@ -2,6 +2,7 @@
 
 namespace AppBundle\Helper\Feedback;
 
+use AppBundle\Entity\Geo\Region;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Throwable;
@@ -56,24 +57,49 @@ class RegionHelper
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
-    $result = $stmt->fetchAll();
-    $nbImported = 0;
-    foreach ($result as $key => $item) {
+    $nbImported = 0; $nbTotal = 0; $nbUpdated = 0;
+    while ($item = $stmt->fetch()) {
       $bitrixId = !empty($item['ID']) ? $item['ID'] : null;
       $bitrixCityHospitalId = !empty($item['ID_9']) ? $item['ID_9'] : null;
       $name = !empty($item['SEARCHABLE_CONTENT']) ? $item['SEARCHABLE_CONTENT'] : null;
       $code = !empty($item['CODE']) ? (trim(mb_substr($item['CODE'], 0, 3))) : null;
 
-      $region = new \AppBundle\Entity\Geo\Region();
-      $region->setBitrixId($bitrixId);
+      $region = $this->entityManager->getRepository(Region::class)->findOneBy(['bitrixId' => $item['ID']]);
+      if (!$region)
+      {
+        $region = $this->entityManager->getRepository(Region::class)->findOneBy(['code' => $code]);
+        if (!$region)
+        {
+          if (!empty($item['CODE']))
+          {
+            $region = $this->entityManager->getRepository(Region::class)->findOneBy(['code' => $item['CODE']]);
+          }
+
+          if (!$region)
+          {
+            $region = new \AppBundle\Entity\Geo\Region();
+          }
+
+          $nbImported++;
+        }
+
+        $region->setBitrixId($bitrixId);
+      }
+      else
+      {
+        $nbUpdated++;
+      }
+
       $region->setBitrixCityHospitalId($bitrixCityHospitalId);
       $region->setName($name);
       $region->setCode($code);
+
       $this->entityManager->persist($region);
-      $nbImported++;
+
+      $nbTotal++;
     }
     $this->entityManager->flush();
-    $io->success(sprintf('Fill Region: %s out of %s', $nbImported, count($result)));
+    $io->success(sprintf('Region import: %s found, %s added, %s updated', $nbTotal, $nbImported, $nbUpdated));
 
     return $nbImported;
   }
