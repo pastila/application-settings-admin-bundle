@@ -34,7 +34,7 @@ class ObrashcheniyaController extends Controller
     try
     {
       $response = new BinaryFileResponse($obrashcheniyaFile->getFile());
-      $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_INLINE, $request->get('file'));
+      $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_INLINE, $request->get('id'));
     }
     catch (FileNotFoundException $e)
     {
