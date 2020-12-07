@@ -15,6 +15,7 @@ server {
     }
     # Страницы Bitrix
     location ~ ^/(otpravlennyye|obrashcheniya|forma-obrashenija|personal-cabinet) {
+        index index.php;
         try_files $uri $uri/ @bitrix;
         fastcgi_pass php-fpm-bitrix:9000;
         fastcgi_index index.php;
@@ -27,6 +28,22 @@ server {
         fastcgi_read_timeout 600s;
         include fastcgi_params;
         fastcgi_param  SERVER_NAME $host;
+    }
+    #Access admin panel
+	location ~* ^/bitrix/admin/.* {
+        index index.php index.html index.htm;
+
+		# Обрабатываем PHP-скрипты, доступные только после успешной аутентификации
+		location ~* \.php$ {
+		  try_files     $uri @bitrix;
+		  include fastcgi_params;
+		  fastcgi_pass php-fpm-bitrix:9000;
+		  fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+		  fastcgi_param  SERVER_NAME $host;
+		}
+
+		# Необработанные запросы передаём разборщику ошибок Bitrix
+		try_files $uri $uri/ @bitrix;
     }
     # Все ajax запросы в Bitrix
     location ~ ^/ajax/.+\.php$ {
@@ -76,23 +93,6 @@ server {
 #        fastcgi_send_timeout 600s;
 #        fastcgi_read_timeout 600s;
 #    }
-
-    #Access admin panel
-	location ~* ^/bitrix/admin/.* {
-        index index.php index.html index.htm;
-
-		# Обрабатываем PHP-скрипты, доступные только после успешной аутентификации
-		location ~* \.php$ {
-		  try_files     $uri @bitrix;
-		  include fastcgi_params;
-		  fastcgi_pass php-fpm-bitrix:9000;
-		  fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-		  fastcgi_param  SERVER_NAME $host;
-		}
-
-		# Необработанные запросы передаём разборщику ошибок Bitrix
-		try_files $uri $uri/ @bitrix;
-    }
     # Страницы Bitrix, которые имеют полный url, напр. до index.php
     location ~ \.php$ {
         try_files $uri /index.php =404;
