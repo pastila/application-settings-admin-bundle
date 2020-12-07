@@ -849,23 +849,6 @@ $(document).ready(function () {
     keyup_group(id_class);
     let id_group = $('#group_input').attr('data-id_group');
     keyup_subgroup(id_group);
-    $(document).on('click', '.subgroup-js', function () {
-      let id_subgroup = $(this).attr('value');
-      let component = $('#grid');
-      $.post('/ajax/main_form_oms.php', { id: id_subgroup }, function (result) {
-        $(component).html(result);
-        search_diagnoz()
-        $('#search_diagnoz_input').val('');
-        $('#search_diagnoz_input').attr('data-value', '');
-        $('#search_diagnoz_global').empty();
-      }, 'html');
-    });
-    keyup_class();
-    let id_class = $('#class_input').attr('data-id_class');
-    keyup_group(id_class);
-    let id_group = $('#group_input').attr('data-id_group');
-    keyup_subgroup(id_group);
-
   }
 
   function search_diagnoz() {
