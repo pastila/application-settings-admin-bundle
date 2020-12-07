@@ -21,7 +21,7 @@ if (PHP_VERSION_ID < 70000) {
 
 Request::setTrustedProxies(
 // the IP address (or range) of your proxy
-  ['192.168.123.180/29', '192.168.123.190/29', '192.168.123.200/28'],
+  ['192.168.123.30/29', '192.168.123.30/29', '192.168.123.50/28'],
 // trust *all* "X-Forwarded-*" headers
   Request::HEADER_X_FORWARDED_ALL
 );
