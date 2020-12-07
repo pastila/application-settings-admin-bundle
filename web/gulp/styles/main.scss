@@ -25,6 +25,8 @@
 // Popup
 @import '../../node_modules/magnific-popup/dist/magnific-popup.css';
 
+$wrap-padding: 1.5rem;
+
 * {
     box-sizing: border-box;
 }
@@ -90,8 +92,8 @@ section {
 .wrap {
     display: flex;
     flex-direction: column;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding-left: $wrap-padding;
+    padding-right: $wrap-padding;
     min-height: 100vh;
     background-position: center top;
     background-size: cover;
@@ -543,4 +545,13 @@ a{
     }
 }
 
+.wrap {
+    .app-footer {
+        margin-left: -$wrap-padding;
+        width: calc(100% + #{$wrap-padding * 2});
+    }
+    .app-header {
+        background-color: #fff;
+    }
+}
 @import "../pages/landing/v2";

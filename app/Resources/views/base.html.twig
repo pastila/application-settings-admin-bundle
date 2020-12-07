@@ -223,7 +223,9 @@
 <!-- Start Wrap -->
 <div class="app__wrapper">
     <!-- Header -->
-    {{ render(controller('AppBundle:Common:_header')) }}
+    {% block header %}
+        {{ render(controller('AppBundle:Common:_header')) }}
+    {% endblock %}
     <!-- Content -->
     {% block main %}{% endblock %}
     <!-- Footer -->

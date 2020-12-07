@@ -18,9 +18,9 @@
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     <script type="text/javascript" src="/local/templates/kdteam/js/main.min.js"></script>
     <script type="text/javascript" src="/local/templates/kdteam/pages/news/news.min.js"></script>
-    {{ parent() }}
 {% endblock %}
 
 {% block svgSprites %}
@@ -174,7 +174,9 @@
 {% endblock %}
 
 {% block header %}
-    {{ render(controller('AppBundle:Common:_header')) }}
+    <div class="app-header v2">
+        {{ render(controller('AppBundle:Common:_header')) }}
+    </div>
 {% endblock %}
 
 {% block main %}
@@ -249,5 +251,7 @@
 {% endblock %}
 
 {% block footer %}
-    {% include '_footer.html.twig' %}
+    <div class="app-footer v2">
+        {% include '_footer.html.twig' %}
+    </div>
 {% endblock %}

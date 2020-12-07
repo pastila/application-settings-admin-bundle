@@ -527,6 +527,14 @@
     font-size: 12px;
     line-height: 18px;
     padding-right: 8.47%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .app-footer__contact-us-btn {
+    margin-top: 10px;
+    margin-left: 0;
   }
 
   .app-footer__list {
@@ -644,6 +652,7 @@
     right: 0;
     z-index: 100;
     padding-top: 43px;
+    padding-bottom: 25px;
     transition: 0.4s ease all;
   }
 
@@ -1123,6 +1132,12 @@
     .app-footer__activity {
       width: 100%;
       padding: 0 0 40px;
+      flex-direction: row;
+    }
+
+    .app-footer__contact-us-btn {
+      margin-top: 0;
+      margin-left: 10px;
     }
 
     .app-footer__list ul li {
@@ -1157,6 +1172,7 @@
 
     .app-header {
       padding-top: 30px;
+      padding-bottom: 5px;
     }
 
     .app-header__logo {
@@ -1237,6 +1253,11 @@
   }
 
   @media screen and (max-width: 1024px) {
+
+    .app-header {
+      padding-bottom: 60px;
+    }
+
     .app-header__lk.btn {
       height: 45px;
       min-width: 46%;
@@ -1263,6 +1284,15 @@
       max-width: 375px;
     }
 
+    .app-footer__activity {
+      flex-direction: column;
+    }
+
+    .app-footer__contact-us-btn {
+      margin-top: 10px;
+      margin-left: 0;
+    }
+
     .app-header {
       padding: 12px 0;
       position: fixed;
@@ -1271,7 +1301,7 @@
 
     .app-header.is-fixed {
       background-color: #fff;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     }
 
     .app-header.is-fixed:before {
@@ -1341,7 +1371,7 @@
       position: fixed;
       width: 100vw;
       height: 100vh;
-      background: rgba(242,251,255,0.6);
+      background: rgba(242, 251, 255, 0.6);
       border-bottom-right-radius: 200%;
       z-index: -1;
       transition: border-radius linear 0.8s, -webkit-transform cubic-bezier(0.77, 0, 0.175, 1) 0.6s;
@@ -1537,17 +1567,6 @@
       font-size: 12px;
     }
   }
-  .app-footer__contact-us-btn {
-    margin-top: 20px;
-  }
-
-
-  @media screen and (max-width: 1280px) {
-    .app-footer__contact-us-btn {
-      margin: 20px auto 0;
-      display: block;
-    }
-  }
 
   .popup-write-us {
     position: fixed;
@@ -1556,7 +1575,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0,0,0, 0.7);
+    background: rgba(0, 0, 0, 0.7);
     display: none;
     align-items: center;
     justify-content: center;
@@ -1590,9 +1609,11 @@
       label {
         display: none;
       }
-      textarea{
+
+      textarea {
         resize: none;
       }
+
       input, textarea {
         flex-grow: 1;
         border: none;
@@ -1629,11 +1650,12 @@
       }
 
       &:hover {
-        background: rgba(0,0,0, 0.3);
+        background: rgba(0, 0, 0, 0.3);
         transform: rotate(90deg);
         transition: 1s;
       }
-      img{
+
+      img {
         width: 16px;
         height: 16px;
       }
@@ -1717,7 +1739,7 @@ body.nav-active {
 
 body.nav-active .app-header {
   background-color: #fff;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
 body.nav-active .app-header:before {

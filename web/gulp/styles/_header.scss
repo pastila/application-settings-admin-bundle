@@ -486,7 +486,26 @@
     }
 }
 
+
 .app-header ~ .main {
-    padding-top: 150px;
+    padding-top: 200px;
+}
+
+@media screen and (max-width: 1280px) {
+    .app-header ~ .main {
+        padding-top: 156px;;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .app-header ~ .main {
+        padding-top: 195px;;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .app-header ~ .main {
+        padding-top: 90px;
+    }
 }
 

@@ -7,9 +7,15 @@
 				<span class="menu-icon__line menu-icon__line-right"></span>
 			</span>
         </a>
-        <a href="#" class="app-header__logo">
-            <img src="/landing/img/logo.png" width="199" alt="">
-        </a>
+        {% if isHomepage %}
+            <span class="app-header__logo">
+                <img src="/landing/img/logo.png" width="199" alt="">
+            </span>
+        {% else %}
+            <a class="app-header__logo" href="{{ path('homepage') }}">
+                <img src="/landing/img/logo.png" width="199" alt="">
+            </a>
+        {% endif %}
         <div class="app-header__in">
             <div class="app-header__location">
 
@@ -25,7 +31,7 @@
             <nav class="app-header__list">
                 {{ knp_menu_render('AppBundle:Builder:headerMenu') }}
             </nav>
-            <a href="#" class="app-header__lk btn">
+            <a href="/personal-cabinet/" class="app-header__lk btn">
 
                 <div class="svg-icon svg-icon--lk" aria-hidden="true">
                     <svg class="svg-icon__link">
