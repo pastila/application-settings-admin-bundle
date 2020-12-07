@@ -59,28 +59,7 @@
                     </div>
                 </div>
                 <div class="b-first__form">
-                    {{ form_start(form, {'action': path('homepage_obrashcheniya'), 'method': 'POST', 'attr': {
-                        class: 'b-form'
-                    }}) }}
-                    <div class="b-form__item b-form__item--full">
-                        <div class="b-form__item-title">Ваш регион</div>
-                        <div class="b-form__item-content">
-                            {{ form_row(form.region) }}
-                        </div>
-                    </div>
-                    <div class="b-form__item b-form__item-year">
-                        <div class="b-form__item-title">Год лечения</div>
-                        <div class="b-form__item-content">
-                            {{ form_row(form.year) }}
-                        </div>
-                    </div>
-                    <div class="b-form__item">
-                        <div class="b-form__item-content">
-                            <button class="b-form__button btn2" type="submit">Вернуть деньги</button>
-                        </div>
-                    </div>
-                    {{ form_rest(form) }}
-                    {{ form_end(form) }}
+                    {% include '@App/_obrashcheniya.html.twig' with {'formid': 'form-0', 'form': forms[0]}%}
                 </div>
                 <div class="b-first__bottom">
                     <a href="#" class="b-first__button">
@@ -322,41 +301,9 @@
                 </div>
                 <h2 class="b-return__title">Верните деньги</h2>
                 <div class="b-return__text">за лечение в клиниках, работающих в системе обязательного медицинского страхования.</div>
+
                 <div class="b-return__block">
-                    <form action="#" class="b-form">
-                        <div class="b-form__item b-form__item--full">
-                            <div class="b-form__item-title">Ваш регион</div>
-                            <div class="b-form__item-content">
-                                <select>
-                                    <option>Москва и область</option>
-                                    <option>Название региона</option>
-                                    <option>Еще ондно название</option>
-                                    <option>Третье название</option>
-                                    <option>Четвертое название Четвертое название</option>
-                                    <option>Пятое название</option>
-                                    <option>Шестое название</option>
-                                    <option>Седьмое название</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="b-form__item">
-                            <div class="b-form__item-title">Год лечения</div>
-                            <div class="b-form__item-content">
-                                <select>
-                                    <option>2019 г.</option>
-                                    <option selected="">2020 г.</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="b-form__item">
-                            <div class="b-form__item-content">
-                                <button class="b-form__button btn2" type="submit">Вернуть деньги</button>
-                            </div>
-                        </div>
-                    </form><!-- b-form -->
-
-
-
+                    {% include '@App/_obrashcheniya.html.twig' with {'formid': 'form-1', 'form': forms[1]}%}
                 </div>
                 <div class="b-return__link">
                     <a href="#">Рейтинг страховых компаний</a>

@@ -92,12 +92,22 @@ class HomepageController extends Controller
 
     $obrashcheniya = new Obrashcheniya();
     $obrashcheniya->setRegion($region);
-    $form = $this->createForm(ObrashcheniyaType::class, $obrashcheniya, [
-      'csrf_protection' => false,
-      'data' => $obrashcheniya
-    ]);
+    $forms = [
+      $this->createForm(ObrashcheniyaType::class, $obrashcheniya, [
+        'csrf_protection' => false,
+        'data' => $obrashcheniya
+      ]),
+      $this->createForm(ObrashcheniyaType::class, $obrashcheniya, [
+        'csrf_protection' => false,
+        'data' => $obrashcheniya
+      ]),
+    ];
+    $formViews = [];
+    foreach ($forms as $form)
+    {
+      $formViews[] = $form->createView();
+    }
 
-    // replace this example code with whatever you need
     return $this->render('@App/homepage.html.twig', [
       'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
       'numbers' => $numbers,
@@ -106,7 +116,7 @@ class HomepageController extends Controller
       'feedbacks' => $feedbacks,
       'news' => $news,
       'region' => $region,
-      'form' => $form->createView(),
+      'forms' => $formViews,
       'regions' => $regions
     ]);
   }
