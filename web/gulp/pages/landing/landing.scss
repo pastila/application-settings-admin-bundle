@@ -1,4 +1,5 @@
 @import './v2';
+@import './gulp/styles/components/breadcrumbs';
 
 .app.v2 {
 
@@ -2416,6 +2417,27 @@
         margin: 20px auto 0;
         display: block;
       }
+    }
+  }
+
+  .breadcrumbs {
+    max-width: 1350px;
+    margin: 0 auto 1rem;
+    padding-top: 190px;
+    padding-left: 25px;
+  }
+
+  .breadcrumbs .active-breadcrumbs a{
+    color: #00abd8;
+    cursor: default;
+  }
+
+  .breadcrumbs a {
+    font-family: inherit;
+    color: #212529;
+
+    &:hover {
+      color: #00abd8;
     }
   }
 }
