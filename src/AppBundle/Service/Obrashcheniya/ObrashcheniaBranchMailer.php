@@ -50,7 +50,7 @@ class ObrashcheniaBranchMailer
       $this->logger->warn('Unable to attached pdf file: ' . $exception);
     }
 
-    foreach ($modelObrashcheniaBranch->getFilesAttach() as $filesAttach)
+    foreach ($modelObrashcheniaBranch->getAttachedFiles() as $filesAttach)
     {
       try
       {

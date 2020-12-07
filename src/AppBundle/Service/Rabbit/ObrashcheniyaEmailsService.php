@@ -59,7 +59,7 @@ class ObrashcheniyaEmailsService implements ConsumerInterface
       $this->logger->error('Empty body from Obrashcheniya Emails in RabbitMq');
       return;
     }
-    $this->logger->info(sprintf('Get data from bitrix by RabbitMq in appeal: $s', $msg->body));
+    $this->logger->info(sprintf('Get data from bitrix by RabbitMq in appeal: %s', $msg->body));
 
     try
     {
