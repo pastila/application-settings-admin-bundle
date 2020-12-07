@@ -3,8 +3,10 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Common\News;
+use AppBundle\Model\Pagination;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class NewsController extends Controller
@@ -14,12 +16,27 @@ class NewsController extends Controller
    */
   public function indexAction(Request $request)
   {
-    $em = $this->getDoctrine()->getManager();
-    $news = $em->getRepository(News::class)
-      ->findNewsOrderByPublishedAt(6);
+    $page = $request->query->get('page', 1);
+    if ($page < 1)
+    {
+      throw $this->createNotFoundException(sprintf('Requested page %s not exist', $page));
+    }
+
+    $qb = $this->getDoctrine()->getRepository(News::class)
+      ->getNewsListQb();
+
+    $maxPerPage = 10;
+    $pagination = new Pagination($qb, $page, $maxPerPage);
+    $news = $pagination->getIterator();
+
+    if ($pagination->getPageCount() < $page)
+    {
+      throw $this->createNotFoundException(sprintf('Requested page %s is out of range (1..%d)', $page, $pagination->getPageCount()));
+    }
 
     return $this->render('News/list.html.twig', [
-      'news' => $news
+      'news' => $news,
+      'pagination' => $pagination,
     ]);
   }
 

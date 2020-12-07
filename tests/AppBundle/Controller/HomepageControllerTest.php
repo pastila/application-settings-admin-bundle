@@ -16,8 +16,6 @@ use Tests\AppBundle\Fixtures\Menu\MenuHeader;
 use Symfony\Component\DomCrawler\Crawler;
 use Tests\AppBundle\Fixtures\Question\Question;
 use Tests\AppBundle\Fixtures\Setting\Setting;
-use Tests\AppBundle\Fixtures\Geo\Region;
-use Tests\AppBundle\Fixtures\Company\CompanyBranchRating;
 
 class HomepageControllerTest extends AppWebTestCase
 {
@@ -276,10 +274,10 @@ class HomepageControllerTest extends AppWebTestCase
 
     $textPrev = 'Блог: ';
     $this->assertTrue(count($newsHtml) > 1, $textPrev . 'Проверка, что данные вообще нашлись');
-    $this->assertEquals('Заголовок1', $newsHtml[0]['title'], $textPrev . 'Проверка, что Заголовок совпадает');
-    $this->assertEquals('Анонс статьи1', $newsHtml[0]['announce'], $textPrev . 'Проверка, что Анонс совпадает');
-    $this->assertEquals('Заголовок2', $newsHtml[1]['title'], $textPrev . 'Проверка, что Заголовок совпадает');
-    $this->assertEquals('Анонс статьи2', $newsHtml[1]['announce'], $textPrev . 'Проверка, что Анонс совпадает');
+    $this->assertEquals('Заголовок', $newsHtml[0]['title'], $textPrev . 'Проверка, что Заголовок совпадает');
+    $this->assertEquals('Анонс статьи', $newsHtml[0]['announce'], $textPrev . 'Проверка, что Анонс совпадает');
+    $this->assertEquals('Заголовок0', $newsHtml[1]['title'], $textPrev . 'Проверка, что Заголовок совпадает');
+    $this->assertEquals('Анонс статьи0', $newsHtml[1]['announce'], $textPrev . 'Проверка, что Анонс совпадает');
   }
 
   /*** Проверка страницы "Форма Написать нам:

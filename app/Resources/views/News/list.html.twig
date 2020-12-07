@@ -224,6 +224,36 @@
                         </div>
                     </div>
                 {% endfor %}
+
+                <div class="col-1" style="display: block">
+                    {% if pagination.lastPage > 1 %}
+                        <font class="text title_count_page">
+                            Показано: {{ pagination.offset + 1 }}
+                            - {{ min(pagination.offset + pagination.maxPerPage, pagination.lastResult) }}
+                            из {{ pagination.nbResults }}
+                        </font>
+                        <font class="text block_pagen">
+                            {% if pagination.page > 1 %}
+                                <a href="{{ path('news_list', {page: 1}) }}">Начало</a>
+                                <a href="{{ path('news_list', {page: pagination.page-1}) }}">Пред.</a>
+                            {% endif %}
+
+                            {% for i in range(low=max(1, pagination.page - 3), high=min(max(1, pagination.page - 3) + 4, pagination.lastPage), step=1) %}
+                                {% if i != pagination.page %}
+                                    <a title="{{ i }}"
+                                       href="{{ path('news_list', {page: i}) }}">{{ i }}</a>
+                                {% else %}
+                                    <b>{{ i }}</b>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if pagination.page < pagination.lastPage %}
+                                <a href="{{ path('news_list', {page: pagination.page + 1}) }}">След.</a>
+                                <a href="{{ path('news_list', {page: pagination.lastPage}) }}">Конец</a>
+                            {% endif %}
+                        </font>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
