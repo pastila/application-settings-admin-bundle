@@ -940,6 +940,10 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+
+  &:hover {
+    color: #00abd8;
+  }
 }
 
   .b-rating__item-star {

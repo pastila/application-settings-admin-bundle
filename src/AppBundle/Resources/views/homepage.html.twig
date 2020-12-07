@@ -155,7 +155,7 @@
                             <div class="b-rating__items">
                                 {% for i, company in companyRating %}
                                     <div class="b-rating__item">
-                                        <div class="b-rating__item-title">{{ company[0].name }}</div>
+                                        <a class="b-rating__item-title" href="{{ path('company_review_list', { slug: company[0].slug }) }}">{{ company[0].name }}</a>
                                         <div class="b-rating__item-star">
                                             {% if company.actualRating > 0 %}
                                                 {% set actualRating = (company.actualRating | round)%}
