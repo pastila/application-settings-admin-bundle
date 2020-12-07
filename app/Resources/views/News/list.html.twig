@@ -67,33 +67,35 @@
                     </div>
                 {% endfor %}
 
-                {% if pagination.lastPage > 1 %}
-                    <div class="pagination">
-                        {% if pagination.page > 1 %}
-                            <a class="pagination__prev" href="{{ path('news_list', {page: pagination.page-1}) }}">Назад</a>
-                        {% else %}
-                            <span class="pagination__prev disabled">Назад</span>
-                        {% endif %}
+                <div class="col-1" style="display: block">
+                    {% if pagination.lastPage > 1 %}
+                        <font class="text title_count_page">
+                            Показано: {{ pagination.offset + 1 }}
+                            - {{ min(pagination.offset + pagination.maxPerPage, pagination.lastResult) }}
+                            из {{ pagination.nbResults }}
+                        </font>
+                        <font class="text block_pagen">
+                            {% if pagination.page > 1 %}
+                                <a href="{{ path('news_list', {page: 1}) }}">Начало</a>
+                                <a href="{{ path('news_list', {page: pagination.page-1}) }}">Пред.</a>
+                            {% endif %}
 
-                        <div class="pagination__wrap-item">
                             {% for i in range(low=max(1, pagination.page - 3), high=min(max(1, pagination.page - 3) + 4, pagination.lastPage), step=1) %}
                                 {% if i != pagination.page %}
                                     <a title="{{ i }}"
-                                       href="{{ path('news_list', {page: i}) }}"
-                                       class="pagination__item">{{ i }}</a>
+                                       href="{{ path('news_list', {page: i}) }}">{{ i }}</a>
                                 {% else %}
-                                    <span class="pagination__item current">{{ i }}</span>
+                                    <b>{{ i }}</b>
                                 {% endif %}
                             {% endfor %}
-                        </div>
 
-                        {% if pagination.page < pagination.lastPage %}
-                            <a class="pagination__next" href="{{ path('news_list', {page: pagination.page+1}) }}">Вперед</a>
-                        {% else %}
-                            <span class="pagination__next disabled">Вперед</span>
-                        {% endif %}
-                    </div>
-                {% endif %}
+                            {% if pagination.page < pagination.lastPage %}
+                                <a href="{{ path('news_list', {page: pagination.page + 1}) }}">След.</a>
+                                <a href="{{ path('news_list', {page: pagination.lastPage}) }}">Конец</a>
+                            {% endif %}
+                        </font>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
