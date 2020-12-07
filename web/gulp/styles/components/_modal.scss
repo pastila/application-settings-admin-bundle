@@ -38,21 +38,36 @@
 }
 
 #auth-form-reg{
-    max-width: 60vw;
+    max-width: 40vw;
     width: 100%;
-    height: 80vh;
-    overflow-y: auto;
-    overflow-x: hidden;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    //overflow-y: hidden;
+    //overflow-x: auto;
     @media (min-width: 992px) and (max-width: 1199px){
-        max-width: 85vw;
+        max-width: 60vw;
+        .input__wrap_label {
+            font-size: 1.6rem;
+        }
+    }
+    @media (min-width: 576px) and (max-width: 992px){
+        max-width: 80vw;
+        .input__wrap_label {
+            font-size: 1.4rem;
+        }
     }
     @media screen and (max-width: 576px){
         max-width: 100%;
     }
 
-    .popup__wrap {
-        position: absolute;
-        top: 0;
+    .input__wrap {
+        padding: 0.5rem;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .input__wrap_label {
+        font-size: 2rem;
     }
 
     .check-label{
