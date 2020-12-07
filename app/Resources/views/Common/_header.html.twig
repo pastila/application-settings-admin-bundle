@@ -20,7 +20,7 @@
                 </div>
 
                 <span>Ваш регион: </span>
-                {{ render(controller('AppBundle:Common:_location')) }}
+                <a href="#loacation" class="js-loacation">{{ region }}</a>
             </div>
             <nav class="app-header__list">
                 {{ knp_menu_render('AppBundle:Builder:headerMenu') }}
@@ -51,7 +51,7 @@
                     </div>
 
                     <span>Ваш регион: </span>
-                    {{ render(controller('AppBundle:Common:_location')) }}
+                    <a href="#loacation" class="js-loacation">{{ region }}</a>
                 </div>
             </div>
             {{ knp_menu_render('AppBundle:Builder:headerMenuMobile') }}
@@ -59,8 +59,7 @@
     </div>
 </div>
 
-<div class="remodal" data-remodal-id="loacation"
-     data-remodal-options="hashTracking: true, closeOnOutsideClick: true">
+<div class="remodal" data-remodal-id="loacation" data-remodal-options="hashTracking: true, closeOnOutsideClick: true">
     <div data-remodal-action="close" class="remodal-close">
 
         <div class="svg-icon svg-icon--close" aria-hidden="true">

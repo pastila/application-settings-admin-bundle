@@ -88,7 +88,7 @@
 @media screen and (min-width: 992px) {
     .footer {
         padding: 4rem 1.5rem 4rem 1.5rem;
-    
+
         &__container {
             flex-direction: row;
         }
@@ -96,7 +96,7 @@
         &__logo {
             width: 10%;
         }
-    
+
         &__menu {
             width: 80%;
             display: flex;
@@ -104,7 +104,7 @@
             justify-content: center;
             flex-wrap: wrap;
             margin-bottom: 0;
-            
+
             li {
                 text-align: left;
                 margin-right: 2rem;
@@ -123,7 +123,7 @@
 
 @media screen and (min-width: 1400px) {
     .footer {
-    
+
         &__menu {
             li {
                 &:last-child {
@@ -133,3 +133,8 @@
         }
     }
 }
+
+// Стили для нового футера
+
+
+

@@ -20,7 +20,9 @@
     <link rel="image_src" href="https://bezbahil.ru/local/templates/kdteam/images/png/header/logo-oms-white.jpg" />
 
     {% block stylesheets %}
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
         <link href="/local/templates/kdteam/styles/main.min.css" type="text/css"  data-template-style="true"  rel="stylesheet" />
+        <link rel="stylesheet" href="/landing/css/plugins.min.css">
     {% endblock %}
 
 {#    <?php if ($_SERVER[REQUEST_URI] === '/') { ?>#}
@@ -87,15 +89,18 @@ left:-9999px;" alt="" /></div></noscript>
 <!-- Start Wrap -->
 <div class="wrap">
     <!-- Header -->
-    {% include 'legacy/_header.html.twig' %}
+    {% block svgSprites %}{% endblock %}
+    {% block header %}
+        {% include 'legacy/_header.html.twig' %}
+    {% endblock %}
     <!-- Content -->
     <main class="main">
         {% block main %}{% endblock %}
     </main>
-
     <!-- Footer -->
-    {% include 'legacy/_footer.html.twig' %}
-
+    {% block footer %}
+        {% include 'legacy/_footer.html.twig' %}
+    {% endblock %}
 </div><!-- END Wrap -->
 </body>
 {% block javascripts %}
