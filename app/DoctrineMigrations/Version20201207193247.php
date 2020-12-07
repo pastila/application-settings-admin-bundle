@@ -8,7 +8,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20201207190849 extends AbstractMigration
+final class Version20201207193247 extends AbstractMigration
 {
     public function up(Schema $schema) : void
     {
@@ -19,7 +19,7 @@ final class Version20201207190849 extends AbstractMigration
         $this->addSql('CREATE INDEX bitrix_id_idx ON s_companies (bitrix_id)');
         $this->addSql('ALTER TABLE s_company_branches ADD bitrix_id INT DEFAULT NULL');
         $this->addSql('CREATE INDEX bitrix_id_idx ON s_company_branches (bitrix_id)');
-        $this->addSql('ALTER TABLE s_regions ADD bitrix_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE s_regions CHANGE bitrix_id bitrix_id INT DEFAULT NULL');
         $this->addSql('CREATE INDEX bitrix_id_idx ON s_regions (bitrix_id)');
     }
 
@@ -33,6 +33,6 @@ final class Version20201207190849 extends AbstractMigration
         $this->addSql('DROP INDEX bitrix_id_idx ON s_company_branches');
         $this->addSql('ALTER TABLE s_company_branches DROP bitrix_id');
         $this->addSql('DROP INDEX bitrix_id_idx ON s_regions');
-        $this->addSql('ALTER TABLE s_regions DROP bitrix_id');
+        $this->addSql('ALTER TABLE s_regions CHANGE bitrix_id bitrix_id VARCHAR(256) CHARACTER SET utf8 DEFAULT NULL COLLATE `utf8_unicode_ci`');
     }
 }

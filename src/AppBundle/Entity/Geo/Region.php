@@ -66,26 +66,6 @@ class Region implements UserLocationInterface
   /**
    * @return string
    */
-  public function getBitrixId()
-  {
-    return $this->bitrixId;
-  }
-
-  /**
-   * @param string $bitrixId
-   *
-   * @return string
-   */
-  public function setBitrixId($bitrixId)
-  {
-    $this->bitrixId = $bitrixId;
-
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
   public function getBitrixCityHospitalId()
   {
     return $this->bitrixCityHospitalId;

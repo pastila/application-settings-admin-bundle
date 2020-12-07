@@ -70,7 +70,15 @@ class RegionHelper
         $region = $this->entityManager->getRepository(Region::class)->findOneBy(['code' => $code]);
         if (!$region)
         {
-          $region = new \AppBundle\Entity\Geo\Region();
+          if (!empty($item['CODE']))
+          {
+            $region = $this->entityManager->getRepository(Region::class)->findOneBy(['code' => $item['CODE']]);
+          }
+
+          if (!$region)
+          {
+            $region = new \AppBundle\Entity\Geo\Region();
+          }
 
           $nbImported++;
         }

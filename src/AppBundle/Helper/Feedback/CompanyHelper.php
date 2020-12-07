@@ -62,6 +62,8 @@ class CompanyHelper
     $nbImported = 0; $nbTotal = 0; $nbUpdated = 0;
     while ($item = $stmt->fetch())
     {
+      $nbTotal++;
+
       $name = !empty($item['NAME']) ? str_replace('"', '', $item['NAME']) : null;
       $kpp = !empty($item['KPP']) ? $item['KPP'] : null;
       $image = !empty($item['IMAGE']) ? $item['IMAGE'] : null;
