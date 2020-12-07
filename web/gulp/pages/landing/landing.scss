@@ -1833,77 +1833,7 @@
   }
 }
 
-@media screen and (max-width: 1280px) and (max-width: 640px) {
-  .app-footer__logo,
-  .app-footer__list {
-    display: none;
-  }
-
-  .app-footer__part--top {
-    padding: 28px 0 24px;
-  }
-
-  .app-footer__part--bottom {
-    padding: 24px 0 17px;
-  }
-
-  .app-footer__activity {
-    padding-bottom: 0;
-  }
-
-  .app-footer__in {
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    font-size: 10px;
-  }
-
-  .app-footer__soc {
-    position: absolute;
-    bottom: 0;
-    right: 25px;
-    padding: 0;
-  }
-
-  .app-footer__agree {
-    text-align: right;
-  }
-
-  .app-footer__copyright {
-    margin-right: 0;
-  }
-
-  .app-footer__personal {
-    margin: 0;
-    width: 100%;
-    padding: 20px 0 8px;
-    padding-right: 110px;
-    max-width: 240px;
-    text-align: left;
-    line-height: 1.2;
-  }
-}
-
 @media screen and (max-width: 1024px) {
-  .app-header__lk.btn {
-    height: 45px;
-    min-width: 46%;
-  }
-
-  .app-header__list {
-    position: absolute;
-    left: 25px;
-    right: 25px;
-    top: 100%;
-    margin-top: 10px;
-    width: auto;
-  }
-
-  .app-header__content {
-    -ms-flex-align: center;
-    align-items: center;
-    position: relative;
-  }
-
   .b-first__content {
     padding-top: 255px;
   }

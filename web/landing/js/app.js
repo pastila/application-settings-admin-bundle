@@ -74,26 +74,8 @@ $(function () {
     return $(selector).length > 0;
   };
 
-  var scrollPos;
-  $('.app-header__menu-button').on('click', function (event) {
-    event.preventDefault();
 
-    if ($(this).hasClass('is-opened')) {
-      scrollPos = $(window).scrollTop();
-      $(this).removeClass('is-opened');
-      $('body').removeClass('nav-active');
-    } else {
-      $(this).addClass('is-opened');
-      $('body').addClass('nav-active');
-    }
-  });
   $(window).on('scroll', function (event) {
-    if ($(window).scrollTop() > 0) {
-      $('.app-header').addClass("is-fixed");
-    } else {
-      $('.app-header').removeClass("is-fixed");
-    } // animation
-
 
     if ($(window).scrollTop() >= $('.b-return').offset().top - $('.b-return').outerHeight()) {
       $('.b-return').addClass('is-visible');
