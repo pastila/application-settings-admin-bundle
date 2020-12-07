@@ -147,44 +147,41 @@ class HomepageController extends Controller
     $form = $this->createForm(ContactUsType::class, $contactUs, [
       'csrf_protection' => false,
     ]);
-    $data = $request->request->all();
 
     $form->handleRequest($request);
-    if ($form->isSubmitted() && $form->isValid())
+    if ($form->isSubmitted())
     {
-      $em = $this->getDoctrine()->getManager();
-      $em->persist($contactUs);
-      $em->flush();
+      if ($form->isValid())
+      {
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($contactUs);
+        $em->flush();
 
-      try
+        try
+        {
+          $this->contactUsMailer->sendContactUs($contactUs);
+        } catch (\Exception $e)
+        {
+          $this->get('logger')->error('Failed to send contact us: ' . $e->getMessage());
+        }
+
+        if ($request->isXmlHttpRequest())
+        {
+          return new JsonResponse(1);
+        }
+        $this->get('session')->getFlashBag()->set('success', 'Спасибо, сообщение было отправлено');
+        return $this->redirectToRoute('homepage');
+      } else
       {
-        $this->contactUsMailer->sendContactUs($contactUs);
-      } catch (\Exception $e)
-      {
-        $this->get('logger')->error('Failed to send contact us: ' . $e->getMessage());
+        if ($request->isXmlHttpRequest())
+        {
+          $response = $this->render('@App/modal/contact_us.html.twig', [
+            'form' => $form->createView()
+          ]);
+          $response->setStatusCode(400);
+          return $response;
+        }
       }
-      if ($request->isXmlHttpRequest())
-      {
-        return new JsonResponse(1);
-      }
-    }
-
-    /**
-     * Если пришел ajax запрос на создание формы
-     */
-    if ($request->isXmlHttpRequest() && empty($data))
-    {
-      $content = $this->render('@App/modal/contact_us.html.twig', [
-        'form' => $form->createView()
-      ]);
-
-      $response = new Response();
-      $response->setContent($content->getContent());
-      $response->setStatusCode(Response::HTTP_OK);
-      $response->headers->set('Content-Type', 'text/html');
-      $response->headers->set('X-Requested-With', 'XMLHttpRequest');
-      $response->send();
-      die;
     }
 
     return $this->render('@App/contact_us.html.twig', [
