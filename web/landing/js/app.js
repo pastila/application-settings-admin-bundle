@@ -2,6 +2,7 @@
 import initRegionSelectionModal from '../../frontend/js/regionSelectionModal/regionSelectionModal';
 import { initContactUsBtn } from '../../frontend/js/feedback-popup/feedback-popup';
 import headerInit from '../../frontend/js/header-init/header-init';
+import initQuestionAnswer from '../../frontend/js/initQuestionAnswer/initQuestionAnswer';
 
 
 function _extends() {
@@ -77,7 +78,6 @@ $(function () {
 
 
   $(window).on('scroll', function (event) {
-
     if ($(window).scrollTop() >= $('.b-return').offset().top - $('.b-return').outerHeight()) {
       $('.b-return').addClass('is-visible');
     } // animation
@@ -152,12 +152,7 @@ $(function () {
     });
   }
 
-  $('.b-question__item-title').on('click', function (event) {
-    event.preventDefault();
-    var itemTab = $(this).closest('.b-question__item');
-    itemTab.toggleClass('is-opened');
-    itemTab.find('.b-question__item-text').slideToggle();
-  });
+  initQuestionAnswer();
 
   if ($('.b-reviews__slider').length) {
     var sliderReviews = tns({

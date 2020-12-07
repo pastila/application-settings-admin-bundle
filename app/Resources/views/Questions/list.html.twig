@@ -1,58 +1,75 @@
-{% extends "legacy/base.html.twig" %}
-
+{% extends "base.html.twig" %}
 {% set title = 'Вопрос-ответ' %}
-
 {% block meta %}
     {{ parent() }}
 {% endblock %}
-
-{% block title %}{{ title }}{% endblock %}
-
+{% block title %}<title>{{ title }}</title>{% endblock %}
 {% block stylesheets %}
     <link href="/local/templates/kdteam/pages/news/news.min.css" type="text/css" rel="stylesheet"/>
     {{ parent() }}
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="/landing/css/plugins.min.css">
+    <link rel="stylesheet" href="/local/templates/kdteam/pages/landing/landing.min.css">
 {% endblock %}
-
 {% block javascripts %}
-    <script type="text/javascript" src="/local/templates/kdteam/js/main.min.js"></script>
+    <script src="/landing/js/vendors/jquery-3.4.1.min.js"></script>
+    <script src="/landing/js/plugins.min.js"></script>
     <script type="text/javascript" src="/local/templates/kdteam/pages/news/news.min.js"></script>
-    {{ parent() }}
+    <script src="/dist/bundle.js"></script>
 {% endblock %}
-
+{% block header %}
+    {{ render(controller('AppBundle:Common:_header')) }}
+{% endblock %}
 {% block main %}
-    <ul class="breadcrumbs" itemscope="" itemtype="http://schema.org/BreadcrumbList">
-        {% if is_mobile() or is_tablet() %}
-            <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
-                <a href="{{ path("news_list") }}" class="active-breadcrumbs" itemprop="item">{{ title }}
-                    <meta itemprop="name" content="{{ title }}">
-                </a>
-                <meta itemprop="position" content="1">
-            </li>
-        {% else %}
-            <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
-                <a href="/" itemprop="item">Главная
-                    <meta itemprop="name" content="Главная">
-                </a>
-                <meta itemprop="position" content="1">
-            </li>
-            <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
-                <a itemprop="item">Вопрос-ответ
-                    <meta itemprop="name" content="Вопрос-ответ">
-                </a>
-                <meta itemprop="position" content="2">
-            </li>
-        {% endif %}
-    </ul>
-    <div class="white_block">
-        <style>
-            p {
-                text-indent: 30px; /* Отступ первой строки в пикселах */
-            }
-        </style>
-        <h1 class="page-title">Вопрос-ответ</h1>
-        {% for question in questions %}
-            <h3>{{ question.question }}</h3>
-            <p>{{ question.answer | raw }}</p>
-        {% endfor %}
+    <div class="app__content">
+        <ul class="breadcrumbs" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+            {% if is_mobile() or is_tablet() %}
+                <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                    <a href="{{ path("homepage") }}" class="active-breadcrumbs" itemprop="item">{{ title }}
+                        <meta itemprop="name" content="{{ title }}">
+                    </a>
+                    <meta itemprop="position" content="1">
+                </li>
+            {% else %}
+                <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                    <a href="{{ path('homepage') }}" itemprop="item">Главная
+                        <meta itemprop="name" content="Главная">
+                    </a>
+                    <meta itemprop="position" content="1">
+                </li>
+                <li class="active-breadcrumbs" itemscope="" itemtype="http://schema.org/ListItem">
+                    <a itemprop="item">Вопрос-ответ
+                        <meta itemprop="name" content="Вопрос-ответ">
+                    </a>
+                    <meta itemprop="position" content="2">
+                </li>
+            {% endif %}
+        </ul>
+        <div id="faq" class="b-question is-visible">
+            <div class="b-question__content site-width">
+                <div class="b-question__block">
+                    <h3 class="b-question__title">Вопрос-ответ</h3>
+                    {% for question in questions %}
+                        <div class="b-question__item">
+                            <div class="b-question__item-title">
+                                <div class="svg-icon svg-icon--question" aria-hidden="true">
+                                    <svg class="svg-icon__link">
+                                        <use xlink:href="#question"></use>
+                                    </svg>
+                                </div>
+                                {{ question.question }}
+                            </div>
+                            <div class="b-question__item-text">
+                                {{ question.answer | raw }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="b-question__image">
+                    <img src="/landing/img/oic_question.svg" alt="">
+                </div>
+            </div>
+        </div><!-- b-question -->
     </div>
 {% endblock %}
