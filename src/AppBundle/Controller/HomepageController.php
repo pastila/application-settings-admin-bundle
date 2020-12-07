@@ -206,9 +206,11 @@ class HomepageController extends Controller
     $region = $em->getRepository(Region::class)
       ->find($obrashcheniya['region']);
 
-    return $this->redirectToRoute('forma_obrashenija', [
-      'year' => Year::getYear($obrashcheniya['year']),
-      'region' => !empty($region) ? $region->getBitrixCityHospitalId() : null,
-    ], 302);
+    $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
+    $url = sprintf($baseurl . '/forma-obrashenija/index.php?year=%s&region=%s',
+      Year::getYear($obrashcheniya['year']),
+      !empty($region) ? $region->getBitrixCityHospitalId() : null);
+
+    return $this->redirect($url, 301);
   }
 }

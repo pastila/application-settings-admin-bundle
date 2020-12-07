@@ -14,9 +14,6 @@ _sonata_admin:
     type: sonata_admin
     prefix: /admin
 
-forma_obrashenija:
-  path: /forma-obrashenija
-
 article_show:
     path:      /{slug}
     defaults:  { _controller: AppBundle:Article:show }
