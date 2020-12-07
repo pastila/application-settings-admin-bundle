@@ -1,20 +1,28 @@
-{# ... #}
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+{% extends "base.html.twig" %}
 
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+{% block metaDescription %}
+    <meta name="description"
+          content="Мы помогаем вернуть деньги за лечение по полису обязательного медицинского страхования: профессионально и бесплатно. Оформите заявку прямо сейчас!"/>
+{% endblock %}
+
+{% block title %}
+    <title>
+        Безбахил — сервис для возврата денег за ОМС, рейтинг страховых компаний
+    </title>
+{% endblock %}
+
+{% block stylesheets %}
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@700&display=swap"
+          rel="stylesheet">
     <link rel="stylesheet" href="/landing/css/plugins.min.css">
+    {#    <link rel="stylesheet" href="/landing/css/app.css">#}
+    {#    стили которые собираются дефолтной задачей gulp#}
     <link rel="stylesheet" href="/local/templates/kdteam/pages/landing/landing.min.css">
-    <link rel="stylesheet" href="/local/templates/kdteam/pages/contact_us/contact_us.min.css">
-    <script type="text/javascript">urlPrefix = '{{ app.request.getBaseURL() }}'</script>
-</head>
-<body class="app">
-    <div class="popup-write-us">
+{% endblock %}
 
-    </div>
-    <script src="/landing/js/vendors/jquery-3.4.1.min.js"></script>
-    <script src="/landing/js/plugins.min.js"></script>
-    <script src="/dist/bundle.js"></script>
-</body>
 
-{# ... #}
+{% block main %}
+    <div class="app__content">
+        <div class="popup-write-us"></div>
+    </div><!-- b:m-content -->
+{% endblock %}
