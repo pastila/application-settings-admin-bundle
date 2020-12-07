@@ -60,7 +60,6 @@ class HomepageController extends Controller
       ->getQuery()
       ->getResult();
 
-
     $questions = $em->getRepository(Question::class)
       ->getQueryAllSortByPosition()
       ->setMaxResults(3)
@@ -102,11 +101,7 @@ class HomepageController extends Controller
       'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
       'numbers' => $numbers,
       'questions' => $questions,
-      'questions_count' => $em->getRepository(Question::class)
-        ->getQueryAllSortByPosition()
-        ->select('count(q)')
-        ->getQuery()
-        ->getSingleScalarResult(),
+      'questions_count' => $em->getRepository(Question::class)->getCount(),
       'companyRating' => array_slice($this->branchRatingHelper->buildRating($region), 0, 5),
       'feedbacks' => $feedbacks,
       'news' => $news,
