@@ -22,7 +22,7 @@ abstract class ObrashcheniyaFileType
   public static function getAvailableNames()
   {
     return [
-      self::REPORT => 'Сгенерированный отчет',
+      self::REPORT => 'Сгенерированный pdf с обращением',
       self::ATTACH => 'Прикрепленные файлы',
     ];
   }

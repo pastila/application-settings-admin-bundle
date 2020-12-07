@@ -4,7 +4,7 @@ namespace AppBundle\Service\Obrashcheniya;
 
 use Accurateweb\EmailTemplateBundle\Email\Factory\EmailFactory;
 use AppBundle\Model\Obrashchenia\AppealDataToCompany;
-use Symfony\Component\Routing\RouterInterface;
+use Psr\Log\LoggerInterface;
 
 class ObrashcheniaBranchMailer
 {
@@ -12,18 +12,21 @@ class ObrashcheniaBranchMailer
   protected $emailFactory;
   protected $mailerFrom;
   protected $mailerSenderName;
+  protected $logger;
 
   public function __construct(
     \Swift_Mailer $mailer,
     EmailFactory $emailFactory,
     $mailerFrom,
-    $mailerSenderName
+    $mailerSenderName,
+    LoggerInterface $logger
   )
   {
     $this->mailer = $mailer;
     $this->emailFactory = $emailFactory;
     $this->mailerFrom = $mailerFrom;
     $this->mailerSenderName = $mailerSenderName;
+    $this->logger = $logger;
   }
 
   /**
@@ -37,16 +40,29 @@ class ObrashcheniaBranchMailer
       $modelObrashcheniaBranch->getEmailsTo(),
       []
     );
-    $attch = \Swift_Attachment::fromPath($modelObrashcheniaBranch->getPdf());
-    $attch->setFilename('Обращение.pdf');
-    $message->attach($attch);
+    try
+    {
+      $attachedPdf = \Swift_Attachment::fromPath($modelObrashcheniaBranch->getPdf());
+      $attachedPdf->setFilename('Обращение.pdf');
+      $message->attach($attachedPdf);
+    } catch (\Exception $exception)
+    {
+      $this->logger->warn('Unable to attached pdf file: ' . $exception);
+    }
+
     foreach ($modelObrashcheniaBranch->getFilesAttach() as $filesAttach)
     {
-      $attch = \Swift_Attachment::fromPath($filesAttach);
-      $names = explode('/', $filesAttach);
-      $name = end($names);
-      $attch->setFilename($name);
-      $message->attach($attch);
+      try
+      {
+        $attachedFile = \Swift_Attachment::fromPath($filesAttach);
+        $names = explode('/', $filesAttach);
+        $name = end($names);
+        $attachedFile->setFilename($name);
+        $message->attach($attachedFile);
+      } catch (\Exception $exception)
+      {
+        $this->logger->warn('Unable to attached user file: ' . $exception);
+      }
     }
 
     $this->mailer->send($message);
