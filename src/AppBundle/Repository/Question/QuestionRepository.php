@@ -21,4 +21,17 @@ class QuestionRepository extends SortableRepository
 
     return $qb;
   }
+
+  /**
+   * @return mixed
+   * @throws \Doctrine\ORM\NoResultException
+   * @throws \Doctrine\ORM\NonUniqueResultException
+   */
+  public function getCount()
+  {
+    return $this->createQueryBuilder('q')
+      ->select('count(q)')
+      ->getQuery()
+      ->getSingleScalarResult();
+  }
 }

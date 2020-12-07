@@ -15,12 +15,26 @@ class Question extends Fixture
    */
   public function load(ObjectManager $manager)
   {
-    $number = new \AppBundle\Entity\Question\Question();
-    $number->setQuestion('Пример вопроса');
-    $number->setAnswer('Пример ответа');
-    $manager->persist($number);
-    $manager->flush();
+    $question1 = new \AppBundle\Entity\Question\Question();
+    $question1->setQuestion('Пример вопроса1');
+    $question1->setAnswer('Пример ответа1');
+    $manager->persist($question1);
 
-    $this->addReference('question-simple', $number);
+    $question2 = new \AppBundle\Entity\Question\Question();
+    $question2->setQuestion('Пример вопроса2');
+    $question2->setAnswer('Пример ответа2');
+    $manager->persist($question2);
+
+    $question3 = new \AppBundle\Entity\Question\Question();
+    $question3->setQuestion('Пример вопроса3');
+    $question3->setAnswer('Пример ответа3');
+    $manager->persist($question3);
+
+    $question4 = new \AppBundle\Entity\Question\Question();
+    $question4->setQuestion('Пример вопроса4');
+    $question4->setAnswer('Пример ответа4');
+    $manager->persist($question4);
+
+    $manager->flush();
   }
 }

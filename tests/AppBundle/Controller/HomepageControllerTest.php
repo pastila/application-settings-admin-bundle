@@ -119,9 +119,12 @@ class HomepageControllerTest extends AppWebTestCase
       ];
     });
     $textPrev = 'Вопрос-ответ: ';
-    $this->assertTrue(count($questionsHtml) > 0, $textPrev . 'Проверка, что данные вообще нашлись');
-    $this->assertEquals('Пример вопроса', $questionsHtml[0]['question'], $textPrev . 'Проверка, что Вопрос совпадает');
-    $this->assertEquals('Пример ответа', $questionsHtml[0]['answer'], $textPrev . 'Проверка, что Ответ совпадает');
+    $this->assertTrue(count($questionsHtml) === 3, $textPrev . 'Проверка, что данные вообще нашлись');
+    $this->assertEquals('Пример вопроса1', $questionsHtml[0]['question'], $textPrev . 'Проверка, что Вопрос совпадает');
+    $this->assertEquals('Пример ответа1', $questionsHtml[0]['answer'], $textPrev . 'Проверка, что Ответ совпадает');
+
+    $button = $crawler->filter('.b-question__block .b-reviews__button')->first();
+    $this->assertTrue(!empty($button), $textPrev . 'Проверка, что кнопка "Все вопросы и ответы" показана');
   }
 
   /*** Проверка "Меню Header":
