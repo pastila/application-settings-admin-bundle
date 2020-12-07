@@ -5,7 +5,7 @@ class PopupContactUs {
 
   open() {
     if (!this.popupElement.querySelector(`.feedback_form`)) {
-      const renderPopupMarkup = () => {
+      const renderPopupMarkup = (cb) => {
         $.ajax({
           dataType: 'html',
           url: `${urlPrefix}/contact_us`,
@@ -13,6 +13,7 @@ class PopupContactUs {
           beforeSend: function () {
           },
           success: (result) => {
+            cb()
             this.popupElement.insertAdjacentHTML(`beforeend`, result);
             this.submitForm(changePopupEventsState);
           },
@@ -26,20 +27,26 @@ class PopupContactUs {
         });
       };
 
+      const removeChildrens = () => {
+        while(this.popupElement.firstChild) {
+          this.popupElement.firstChild.remove();
+        }
+      }
+
       const changePopupEventsState = (type) => {
         const method = type ? `addEventListener` : `removeEventListener`;
         this.popupElement[method](`click`, onCloseBtnClick);
-        this.popupElement[method](`click`, onPopupElementClick);
+        this.popupElement[method](`mousedown`, onPopupElementClick);
         document[method](`keydown`, onEscPress);
       };
 
       this.popupElement.style.display = "flex";
-      renderPopupMarkup(this.popupElement);
+      this.popupElement.insertAdjacentHTML(`beforeend`, `<p class="load-message">Форма загружается</p>`)
+      renderPopupMarkup(removeChildrens);
       const onCloseBtnClick = (evt) => {
         const target = evt.target;
-        const closeBtn = this.popupElement.querySelector(`.close-modal`);
-        const closeBtnImg = this.popupElement.querySelector(`.close-modal img`);
-        if (target === closeBtn || target === closeBtnImg) {
+        const closeBtn = this.popupElement.querySelector(`.remodal-close`);
+        if (target === closeBtn) {
           this.close();
           changePopupEventsState(false);
         }
@@ -53,15 +60,29 @@ class PopupContactUs {
         }
       }
 
-      const onEscPress = (evt) => {
-        if (evt.key === `Escape`) {
-          evt.preventDefault();
-          this.close();
-          changePopupEventsState(false);
-        }
+      const isSomeFieldInFocus = () => {
+        let focusField = false;
+        const formFieldElements = this.popupElement.querySelector(`form`).querySelectorAll(`[name]`);
+        formFieldElements.forEach((element) => {
+          if(element === document.activeElement) {
+            focusField = true
+          }
+        })
+        return focusField;
       }
 
-      changePopupEventsState(true);
+      const onEscPress = (evt) => {
+        if (evt.key === `Escape` && this.popupElement.querySelector(`form`)) {
+          if(!isSomeFieldInFocus()) {
+            evt.preventDefault();
+            this.close();
+            changePopupEventsState(false);
+          }
+        }
+      }
+      if (!this.popupElement.classList.contains(`onpage`)) {
+        changePopupEventsState(true);
+      }
     }
   };
 
@@ -74,26 +95,49 @@ class PopupContactUs {
 
   submitForm(removeEventListeners) {
     if(this.popupElement.querySelector(`form`)){
-      this.popupElement.querySelector(`form`).addEventListener(`submit`, (evt) => {
+      const formElement = this.popupElement.querySelector(`form`);
+      const formFieldElements = formElement.querySelectorAll(`[name]`);
+      formElement.addEventListener(`submit`, (evt) => {
+        let emptyField = false;
         evt.preventDefault();
-        $.ajax({
-          url: `${urlPrefix}/contact_us`,
-          type: 'POST',
-          beforeSend: function () {
-          },
-          data: $(this.popupElement.querySelector(`form`)).serialize(),
-          success: () => {
-            this.close();
-            removeEventListeners(false);
-          },
-          error: () => {
-            if (!this.popupElement.querySelector(`.popup-write-us__error-message`)){
-              this.popupElement.querySelector(`.popup__wrap`).remove();
-              this.popupElement.querySelector(`form`).insertAdjacentHTML(`beforeend`, `<p class="popup-write-us__error-message">Произошла ошибка попробуйте повторить позже</p>`);
-            }
-          },
-        }).done(function (msg) {
-        });
+        formFieldElements.forEach((element) => {
+          if (!element.value) {
+            element.style.outline = `1px solid red`;
+            element.parentElement.classList.add(`error`)
+            emptyField = true;
+          } else {
+            element.style.outline = `none`;
+            element.parentElement.classList.remove(`error`)
+          }
+        })
+        if (!emptyField) {
+          $.ajax({
+            url: `${urlPrefix}/contact_us`,
+            type: 'POST',
+            beforeSend: function () {
+            },
+            data: $(this.popupElement.querySelector(`form`)).serialize(),
+            success: () => {
+              while (this.popupElement.querySelector(`form`).firstChild) {
+                this.popupElement.querySelector(`form`).firstChild.remove();
+              }
+              this.popupElement.querySelector(`form`).insertAdjacentHTML(`beforeend`, `<p class="success-message">Спасибо за обращенение!</p>`);
+              let delay;
+              delay  = setInterval(() => {
+                this.close();
+                removeEventListeners(false);
+                delay = clearTimeout(delay)
+              }, 2000)
+            },
+            error: () => {
+              if (!this.popupElement.querySelector(`.popup-write-us__error-message`)){
+                this.popupElement.querySelector(`.popup__container`).remove();
+                this.popupElement.querySelector(`form`).insertAdjacentHTML(`beforeend`, `<p class="popup-write-us__error-message">Произошла ошибка попробуйте повторить позже</p>`);
+              }
+            },
+          }).done(function (msg) {
+          });
+        }
       });
     }
   }
@@ -116,14 +160,7 @@ export function initContactUsBtn() {
 
 export function initShowPopup() {
   const popupElement = document.querySelector(`.popup-write-us`);
-
-  if (popupElement) {
-    setTimeout(() => {
-      const popupContuctUs = new PopupContactUs(popupElement);
-      popupContuctUs.open();
-      popupContuctUs.submitForm();
-    }, 2000);
-  }
+  const popupContuctUs = new PopupContactUs(popupElement);
+  popupContuctUs.open();
+  popupContuctUs.submitForm();
 }
-
-
