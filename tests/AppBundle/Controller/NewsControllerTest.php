@@ -51,7 +51,7 @@ class NewsControllerTest extends AppWebTestCase
     $textPrev = 'Блог, список новостей: ';
     $this->assertTrue(count($newsHtml) > 1, $textPrev . 'Проверка, что данные вообще нашлись');
     $this->assertFalse(count($newsHtml) > 10, $textPrev . 'Проверка, что на одной странице должно быть ограниченное кол-во новостей');
-    $this->assertEquals('1', $crawler->filter('.pagination__item.current')->text(), $textPrev . 'Проверка, что открыта 1-ая страница');
+    $this->assertEquals('1', $crawler->filter('.text.block_pagen b')->text(), $textPrev . 'Проверка, что открыта 1-ая страница');
     $this->assertEquals('Заголовок', $newsHtml[0]['title'], $textPrev . 'Проверка, что Заголовок совпадает');
     $this->assertEquals('Анонс статьи', $newsHtml[0]['announce'], $textPrev . 'Проверка, что Анонс совпадает');
     $this->assertEquals('/news/zagolovok', $newsHtml[0]['url'], $textPrev . 'Проверка, что url совпадает');
