@@ -47,7 +47,7 @@ class ObrashcheniaBranchMailer
       $message->attach($attachedPdf);
     } catch (\Exception $exception)
     {
-      $this->logger->warn('Unable to attached pdf file: ' . $exception);
+      $this->logger->warn('Unable to attached pdf file in send email with appeal: ' . $exception);
     }
 
     foreach ($modelObrashcheniaBranch->getAttachedFiles() as $filesAttach)
@@ -61,10 +61,16 @@ class ObrashcheniaBranchMailer
         $message->attach($attachedFile);
       } catch (\Exception $exception)
       {
-        $this->logger->warn('Unable to attached user file: ' . $exception);
+        $this->logger->warn('Unable to attached user file in send email with appeal: ' . $exception);
       }
     }
 
-    $this->mailer->send($message);
+    try
+    {
+      $this->mailer->send($message);
+    } catch (\Exception $exception)
+    {
+      $this->logger->warn('Unable to send notification about new appeal to company branch: ' . $exception);
+    }
   }
 }
