@@ -62,14 +62,7 @@ class ObrashcheniyaEmailsService implements ConsumerInterface
       $this->logger->error('Empty body from Obrashcheniya Emails in RabbitMq');
       return;
     }
-    $author = $this->entityManager->getRepository(User::class)
-      ->findOneBy(['login' => key_exists('login', $data) ? $data['login'] : null]);
-
-    $obrashcheniyaEmail = new ObrashcheniyaEmail();
-    $obrashcheniyaEmail->setAuthor($author);
-    $obrashcheniyaEmail->setData($msg->body);
-    $this->entityManager->persist($obrashcheniyaEmail);
-    $this->entityManager->flush();
+    $this->logger->info(sprintf('Get data from bitrix by RabbitMq in appeal: $s', $msg->body));
 
     try
     {

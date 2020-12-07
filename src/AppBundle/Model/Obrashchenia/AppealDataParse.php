@@ -44,13 +44,13 @@ class AppealDataParse
   {
     if (
       empty($data[2]['EMAIL']) ||
-      empty($data[2]['ID'])
+      empty($data[2]['PDF'])
     )
     {
       throw new NotFoundHttpException('Empty data in AppealDataToCompany');
     }
     $model = new AppealDataToCompany();
-    $model->setPdf($this->appealPathPdf . $data[2]['ID']);
+    $model->setPdf($this->appealPathPdf . $data[2]['PDF']);
     $model->setEmailsTo(array_map(function ($item)
     {
       return trim($item);
