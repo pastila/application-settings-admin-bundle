@@ -61,7 +61,12 @@
 
     <link rel="image_src" href="https://bezbahil.ru/local/templates/kdteam/images/png/header/logo-oms-white.jpg"/>
 
-    {% block stylesheets %}{% endblock %}
+    {% block stylesheets %}
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@700&display=swap"
+              rel="stylesheet">
+        <link rel="stylesheet" href="/landing/css/plugins.min.css">
+    {% endblock %}
+
     <script type="text/javascript">urlPrefix = '{{ app.request.getBaseURL() }}'</script>
 </head>
 
@@ -243,7 +248,6 @@
 {% block javascripts %}
     <script src="/landing/js/vendors/jquery-3.4.1.min.js"></script>
     <script src="/landing/js/plugins.min.js"></script>
-    <script src="/dist/bundle-landing.js"></script>
 {% endblock %}
 
 </body>

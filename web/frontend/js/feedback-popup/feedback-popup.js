@@ -5,7 +5,7 @@ class PopupContactUs {
 
   open() {
     if (!this.popupElement.querySelector(`.feedback_form`)) {
-      const renderPopupMarkup = () => {
+      const renderPopupMarkup = (cb) => {
         $.ajax({
           dataType: 'html',
           url: `${urlPrefix}/contact_us`,
@@ -13,6 +13,7 @@ class PopupContactUs {
           beforeSend: function () {
           },
           success: (result) => {
+            cb()
             this.popupElement.insertAdjacentHTML(`beforeend`, result);
             this.submitForm(changePopupEventsState);
           },
@@ -26,6 +27,12 @@ class PopupContactUs {
         });
       };
 
+      const removeChildrens = () => {
+        while(this.popupElement.firstChild) {
+          this.popupElement.firstChild.remove();
+        }
+      }
+
       const changePopupEventsState = (type) => {
         const method = type ? `addEventListener` : `removeEventListener`;
         this.popupElement[method](`click`, onCloseBtnClick);
@@ -34,7 +41,8 @@ class PopupContactUs {
       };
 
       this.popupElement.style.display = "flex";
-      renderPopupMarkup(this.popupElement);
+      this.popupElement.insertAdjacentHTML(`beforeend`, `<p class="load-message">Форма загружается</p>`)
+      renderPopupMarkup(removeChildrens);
       const onCloseBtnClick = (evt) => {
         const target = evt.target;
         const closeBtn = this.popupElement.querySelector(`.remodal-close`);
@@ -64,7 +72,7 @@ class PopupContactUs {
       }
 
       const onEscPress = (evt) => {
-        if (evt.key === `Escape`) {
+        if (evt.key === `Escape` && this.popupElement.querySelector(`form`)) {
           if(!isSomeFieldInFocus()) {
             evt.preventDefault();
             this.close();
@@ -100,10 +108,8 @@ class PopupContactUs {
             element.style.outline = `none`;
             element.parentElement.classList.remove(`error`)
           }
-          console.log(element, emptyField)
         })
         if (!emptyField) {
-          console.log(!emptyField)
           $.ajax({
             url: `${urlPrefix}/contact_us`,
             type: 'POST',

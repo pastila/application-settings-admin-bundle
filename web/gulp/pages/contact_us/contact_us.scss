@@ -1,5 +1,13 @@
 @import '../../styles/utils/vars';
+@import "../../pages/landing/v2";
 
+.popup-write-us.onpage {
+  background: none;
+  position: static;
+  .remodal-close {
+    display:none;
+  }
+}
 
 .form_contact-us{
   margin: 2rem 0;

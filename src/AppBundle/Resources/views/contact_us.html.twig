@@ -12,17 +12,18 @@
 {% endblock %}
 
 {% block stylesheets %}
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@700&display=swap"
-          rel="stylesheet">
-    <link rel="stylesheet" href="/landing/css/plugins.min.css">
-    {#    <link rel="stylesheet" href="/landing/css/app.css">#}
-    {#    стили которые собираются дефолтной задачей gulp#}
-    <link rel="stylesheet" href="/local/templates/kdteam/pages/landing/landing.min.css">
+    <link href="/local/templates/kdteam/pages/contact_us/contact_us.min.css" type="text/css" rel="stylesheet"/>
+    {{ parent() }}
 {% endblock %}
 
 
 {% block main %}
     <div class="app__content">
-        <div class="popup-write-us"></div>
+        <div class="popup-write-us onpage"></div>
     </div><!-- b:m-content -->
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/dist/bundle.js"></script>
 {% endblock %}

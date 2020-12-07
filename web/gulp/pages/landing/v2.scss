@@ -1581,6 +1581,14 @@
     align-items: center;
     justify-content: center;
 
+    .load-message {
+      padding: 40px;
+      background: #fff;
+      text-align: center;
+      font-size: 16px;
+      margin: 0;
+      border-radius: 10px;
+    }
 
     .feedback_form.remodal {
       display: block;
