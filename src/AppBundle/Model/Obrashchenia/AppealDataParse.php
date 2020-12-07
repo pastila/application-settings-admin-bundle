@@ -4,7 +4,6 @@
 namespace AppBundle\Model\Obrashchenia;
 
 
-use AppBundle\Entity\Obrashcheniya\ObrashcheniyaEmail;
 use AppBundle\Repository\Obrashcheniya\ObrashcheniyaFileRepository;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

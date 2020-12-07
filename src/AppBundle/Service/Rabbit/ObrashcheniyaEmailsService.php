@@ -3,10 +3,7 @@
 
 namespace AppBundle\Service\Rabbit;
 
-use AppBundle\Entity\Obrashcheniya\ObrashcheniyaEmail;
-use AppBundle\Entity\User\User;
 use AppBundle\Model\Obrashchenia\AppealDataParse;
-use AppBundle\Model\Obrashchenia\AppealDataToCompany;
 use AppBundle\Service\Obrashcheniya\ObrashcheniaBranchMailer;
 use Doctrine\ORM\EntityManagerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
