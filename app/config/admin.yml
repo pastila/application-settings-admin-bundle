@@ -46,3 +46,9 @@ services:
       - PixSortableBehaviorBundle:SortableAdmin
     tags:
       - { name: sonata.admin, manager_type: orm, group: 'main_page', label: 'Меню футера' }
+
+  main.admin.contact_us:
+    class: AppBundle\Admin\ContactUs\ContactUsAdmin
+    arguments: [~, 'AppBundle\Entity\ContactUs\ContactUs', ~]
+    tags:
+      -  { name: sonata.admin, manager_type: orm, group: 'messages', label: 'Сообщения "Написать нам"' }

@@ -107,6 +107,8 @@ sonata_admin:
         label: Главная страница
       text:
         label: Текстовые разделы
+      messages:
+        label: Сообщения
       settings:
         label: Настройки
   options:
