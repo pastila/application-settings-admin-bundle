@@ -9,8 +9,16 @@ use AppBundle\Entity\Obrashcheniya\ObrashcheniyaFile;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
+/**
+ * Class ObrashcheniyaFileRepository
+ * @package AppBundle\Repository\Obrashcheniya
+ */
 class ObrashcheniyaFileRepository extends ServiceEntityRepository
 {
+  /**
+   * ObrashcheniyaFileRepository constructor.
+   * @param ManagerRegistry $registry
+   */
   public function __construct(ManagerRegistry $registry)
   {
     parent::__construct($registry, ObrashcheniyaFile::class);
@@ -21,7 +29,7 @@ class ObrashcheniyaFileRepository extends ServiceEntityRepository
    * @param null $user
    * @return \Doctrine\ORM\QueryBuilder
    */
-  public function getFileQuery($bitrixId, $user = null)
+  public function createFileQueryBuilder($bitrixId, $user = null)
   {
     $query = $this
       ->createQueryBuilder('o_f')

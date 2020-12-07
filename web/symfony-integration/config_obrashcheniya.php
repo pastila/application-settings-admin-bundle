@@ -14,6 +14,6 @@ const queue_obrashcheniya_files = 'obrashcheniya_files';
 const queue_obrashcheniya_emails = 'obrashcheniya_emails';
 
 const obrashcheniya_report_path = '/var/www/var/uploads/pdf/';
-const obrashcheniya_report_url_download = '/obrashcheniya/report-download?id=';
+const obrashcheniya_report_url_download = '/obrashcheniya/%s/download';
 const obrashcheniya_file_type_report = 'report';
 const obrashcheniya_file_type_attach = 'attach';

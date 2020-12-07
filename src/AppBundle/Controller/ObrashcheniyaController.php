@@ -14,14 +14,14 @@ use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 class ObrashcheniyaController extends Controller
 {
   /**
-   * @Route("/obrashcheniya/report-download", name="obrashcheniya-report-download")
+   * @Route("/obrashcheniya/{id}/download", name="obrashcheniya-download")
    */
   public function reportDownloadAction(Request $request)
   {
     $user = $this->getUser();
     $em = $this->getDoctrine()->getManager();
     $obrashcheniyaFile = $em->getRepository(ObrashcheniyaFile::class)
-      ->getFileQuery($request->get('id'), ($user->getIsAdmin() ? null : $user))
+      ->createFileQueryBuilder($request->get('id'), ($user->getIsAdmin() ? null : $user))
       ->setMaxResults(1)
       ->getQuery()
       ->getOneOrNullResult();

@@ -459,7 +459,7 @@ if (count($arResult["ITEMS"]) > 0) {
                                 $url_pdf = CFile::GetPath($arItem["PROPERTIES"]["PDF"]["VALUE"]); ?>
                                 <a target="_blank" class=" pdf <?php if ($url_pdf == "") { ?>success<?
                                 } ?>"
-                                    <?php if ($url_pdf != "") { ?> href="<?= obrashcheniya_report_url_download . $arItem["ID"] ?>" <? } ?> >
+                                    <?php if ($url_pdf != "") { ?> href="<?= sprintf(obrashcheniya_report_url_download, $arItem["ID"]) ?>" <? } ?> >
                                     <?php if ($url_pdf != "") { ?> просмотреть
                                     <? } else { ?> 
                                     <?

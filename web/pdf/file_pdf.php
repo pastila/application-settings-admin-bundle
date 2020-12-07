@@ -284,7 +284,7 @@ if ($_POST['id'] != "") {
                   ]));
                 }
 
-                $url_pdf_for_user = obrashcheniya_report_url_download . $_POST['id'];
+                $url_pdf_for_user = sprintf(obrashcheniya_report_url_download, $_POST['id']);
                 $arFile = CFile::MakeFileArray($full_name_file);
                 $arProperty = Array(
                     "PDF" => $arFile,

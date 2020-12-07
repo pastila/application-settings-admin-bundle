@@ -201,7 +201,7 @@ if ($Section = $section->GetNext()) {
                 <div class="obrashcheniya__content_sidebar_blocks_text_title">
                     Заявление на возврат
                 </div>
-                <a target="_blank" class="obrashcheniya__content_sidebar_blocks_text_link " href="<?= obrashcheniya_report_url_download . $arFields["ID"]?>">
+                <a target="_blank" class="obrashcheniya__content_sidebar_blocks_text_link " href="<?= sprintf(obrashcheniya_report_url_download, $arFields["ID"]) ?>">
                     просмотреть
                 </a>
             </div>
