@@ -6,7 +6,6 @@ use AppBundle\Entity\Common\News;
 use AppBundle\Model\Pagination;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class NewsController extends Controller

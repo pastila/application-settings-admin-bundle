@@ -146,3 +146,34 @@ stfalcon_tinymce:
 accurateweb_application_settings_admin:
   configuration:
     class: AppBundle\Entity\Common\Setting
+
+old_sound_rabbit_mq:
+  connections:
+    default:
+      host:     '%rabbitmq_host%'
+      port:     '%rabbitmq_port%'
+      user:     '%rabbitmq_user%'
+      password: '%rabbitmq_password%'
+      vhost:    '%rabbitmq_project_vhost%'
+  producers:
+    obrashcheniya_emails:
+      connection: default
+      exchange_options:
+        name: obrashcheniya_emails
+        type: direct
+    obrashcheniya_files:
+      connection: default
+      exchange_options:
+        name: obrashcheniya_files
+        type: direct
+  consumers:
+    obrashcheniya_emails:
+      connection:       default
+      exchange_options: {name: 'obrashcheniya_emails', type: direct}
+      queue_options:    {name: 'obrashcheniya_emails'}
+      callback:         obrashcheniya_emails_service
+    obrashcheniya_files:
+      connection:       default
+      exchange_options: {name: 'obrashcheniya_files', type: direct}
+      queue_options:    {name: 'obrashcheniya_files'}
+      callback:         obrashcheniya_files_service

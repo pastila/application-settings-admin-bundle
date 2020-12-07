@@ -39,6 +39,7 @@ class AppKernel extends Kernel
             new Accurateweb\NewsBundle\AccuratewebNewsBundle(),
             new Accurateweb\LocationBundle\AccuratewebLocationBundle(),
             new Accurateweb\EmailTemplateBundle\AccuratewebEmailTemplateBundle(),
+            new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

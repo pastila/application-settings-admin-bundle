@@ -1,4 +1,6 @@
 <?php require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
+require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/config_obrashcheniya.php");
+require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/obrashcheniya_helper.php");
 
 use Bitrix\Main\Page\Asset;
 
@@ -199,7 +201,7 @@ if ($Section = $section->GetNext()) {
                 <div class="obrashcheniya__content_sidebar_blocks_text_title">
                     Заявление на возврат
                 </div>
-                <a target="_blank" class="obrashcheniya__content_sidebar_blocks_text_link " href="<?=$PDF?>">
+                <a target="_blank" class="obrashcheniya__content_sidebar_blocks_text_link " href="<?= sprintf(obrashcheniya_report_url_download, $arFields["ID"]) ?>">
                     просмотреть
                 </a>
             </div>

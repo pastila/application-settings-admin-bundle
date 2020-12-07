@@ -13,9 +13,10 @@
 /** @var string $componentPath */
 /** @var CBitrixComponent $component */
 $this->setFrameMode(true);
+require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/config_obrashcheniya.php");
+require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/obrashcheniya_helper.php");
 
 ?>
-
     <!-- Pages Title -->
     <h1 class="page-title">Ваши обращения</h1>
 <?php
@@ -458,7 +459,7 @@ if (count($arResult["ITEMS"]) > 0) {
                                 $url_pdf = CFile::GetPath($arItem["PROPERTIES"]["PDF"]["VALUE"]); ?>
                                 <a target="_blank" class=" pdf <?php if ($url_pdf == "") { ?>success<?
                                 } ?>"
-                                    <?php if ($url_pdf != "") { ?> href="<?= $url_pdf ?>" <? } ?> >
+                                    <?php if ($url_pdf != "") { ?> href="<?= sprintf(obrashcheniya_report_url_download, $arItem["ID"]) ?>" <? } ?> >
                                     <?php if ($url_pdf != "") { ?> просмотреть
                                     <? } else { ?> 
                                     <?

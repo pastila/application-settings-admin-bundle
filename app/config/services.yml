@@ -13,6 +13,8 @@ services:
             $apiToken: '%api_token%'
             $mailerFrom: '%mailer_from%'
             $mailerSenderName: '%mailer_sender_name%'
+            $appealPathPdf: '%appeal_path_pdf%'
+            $appealPathAttached: '%appeal_path_attached%'
 
     _instanceof:
         Accurateweb\ClientApplicationBundle\DataAdapter\ClientApplicationModelAdapterInterface:
@@ -44,10 +46,6 @@ services:
             - '@validator'
         tags:
             - { name: doctrine.event_subscriber, connection: default }
-
-    AppBundle\Service\:
-        resource: '../../src/AppBundle/Service'
-        public: true
 
 #    twig.extension.EndingFormatter:
 #        class: AppBundle\Twig\EndingFormatTwigExtension
@@ -94,5 +92,20 @@ services:
       tags:
         - { name: aw.location.resolver, priority: -1 }
 
+    AppBundle\Service\ContactUs\ContactUsMailer:
+        public: true
+
+    AppBundle\Service\Feedback\FeedbackMailer:
+        public: true
+
+    AppBundle\Service\Obrashcheniya\ObrashcheniaBranchMailer:
+        public: true
+
     Accurateweb\EmailTemplateBundle\Email\Factory\EmailFactory:
       alias: aw_email_templating.template.factory
+
+    obrashcheniya_emails_service:
+      class: AppBundle\Service\Rabbit\ObrashcheniyaEmailsService
+
+    obrashcheniya_files_service:
+      class: AppBundle\Service\Rabbit\ObrashcheniyaFilesService

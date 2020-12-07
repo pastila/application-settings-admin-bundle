@@ -178,6 +178,8 @@ services:
       - backend
     links:
       - docker-in-docker
+    depends_on:
+      - rabbitmq
     volumes:
       - ./php-fpm-symfony/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
       - ./php-fpm-symfony/laravel.ini:/usr/local/etc/php/conf.d/laravel.ini
@@ -240,6 +242,8 @@ services:
       - backend
     links:
       - docker-in-docker
+    depends_on:
+      - rabbitmq
     volumes:
       - ./php-fpm-bitrix/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
       - ./php-fpm-bitrix/laravel.ini:/usr/local/etc/php/conf.d/laravel.ini
@@ -379,3 +383,153 @@ services:
     restart: always
     networks:
       - backend
+      -
+  #### RabbitMQ #############################################
+  rabbitmq:
+    build: ./rabbitmq
+    ports:
+      - "${RABBITMQ_NODE_HOST_PORT}:5672"
+      - "${RABBITMQ_MANAGEMENT_HTTP_HOST_PORT}:15672"
+      - "${RABBITMQ_MANAGEMENT_HTTPS_HOST_PORT}:15671"
+    privileged: true
+    depends_on:
+      - workspace
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+    networks:
+      - backend
+
+  #### Образ для сохранение владельца файла обращения ###########
+  php-rabbimq-consumer-obrashscheniya-files:
+    entrypoint: ["php", "-d", "memory_limit=-1", "bin/console", "rabbitmq:consumer", "obrashcheniya_files"]
+    restart: always
+    depends_on:
+      - rabbitmq
+    extra_hosts:
+      - "dockerhost:${DOCKER_HOST_IP}"
+      - "bezbahil.ru:84.201.185.203"
+      - host.docker.internal:${DOCKER_HOST_IP}
+    environment:
+      #      - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
+      #      - DOCKER_HOST=tcp://docker-in-docker:2375
+      - FAKETIME=${PHP_FPM_FAKETIME}
+      - PHP_EXTENSION_XDEBUG=1
+      - PHP_IDE_CONFIG=serverName=bezbahil.local
+      - XDEBUG_CONFIG="remote_host=${XDEBUG_REMOTE_HOST} remote_port=${XDEBUG_PORT} idekey=${XDEBUG_IDE_KEY} remote_enable=1"
+    networks:
+      - backend
+    links:
+      - docker-in-docker
+    volumes:
+      - ./php-fpm-symfony/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
+      - ./php-fpm-symfony/laravel.ini:/usr/local/etc/php/conf.d/laravel.ini
+      - ./php-fpm-symfony/php${PHP_VERSION}/www.conf/www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
+      - ${APP_CODE_PATH_HOST_SF}:${APP_CODE_PATH_CONTAINER_SF}
+      - ${DATA_PATH_LOGS}/:/var/log
+      - ./php-fpm-symfony/msmtprc:/etc/msmtprc
+      - ./php-worker/supervisord.d:/etc/supervisord.d
+    build:
+      args:
+        - LARADOCK_PHP_VERSION=${PHP_VERSION}
+        - LARADOCK_PHALCON_VERSION=${PHALCON_VERSION}
+        - INSTALL_XDEBUG=${PHP_FPM_INSTALL_XDEBUG}
+        - INSTALL_PHPDBG=${PHP_FPM_INSTALL_PHPDBG}
+        - INSTALL_BLACKFIRE=${INSTALL_BLACKFIRE}
+        - INSTALL_SSH2=${PHP_FPM_INSTALL_SSH2}
+        - INSTALL_SOAP=${PHP_FPM_INSTALL_SOAP}
+        - INSTALL_IMAP=${PHP_FPM_INSTALL_IMAP}
+        - INSTALL_MONGO=${PHP_FPM_INSTALL_MONGO}
+        - INSTALL_AMQP=${PHP_FPM_INSTALL_AMQP}
+        - INSTALL_MSSQL=${PHP_FPM_INSTALL_MSSQL}
+        - INSTALL_ZIP_ARCHIVE=${PHP_FPM_INSTALL_ZIP_ARCHIVE}
+        - INSTALL_BCMATH=${PHP_FPM_INSTALL_BCMATH}
+        - INSTALL_GMP=${PHP_FPM_INSTALL_GMP}
+        - INSTALL_PHPREDIS=${PHP_FPM_INSTALL_PHPREDIS}
+        - INSTALL_MEMCACHED=${PHP_FPM_INSTALL_MEMCACHED}
+        - INSTALL_OPCACHE=${PHP_FPM_INSTALL_OPCACHE}
+        - INSTALL_EXIF=${PHP_FPM_INSTALL_EXIF}
+        - INSTALL_AEROSPIKE=${PHP_FPM_INSTALL_AEROSPIKE}
+        - AEROSPIKE_PHP_REPOSITORY=${AEROSPIKE_PHP_REPOSITORY}
+        - INSTALL_MYSQLI=${PHP_FPM_INSTALL_MYSQLI}
+        - INSTALL_PGSQL=${PHP_FPM_INSTALL_PGSQL}
+        - INSTALL_PG_CLIENT=${PHP_FPM_INSTALL_PG_CLIENT}
+        - INSTALL_TOKENIZER=${PHP_FPM_INSTALL_TOKENIZER}
+        - INSTALL_INTL=${PHP_FPM_INSTALL_INTL}
+        - INSTALL_GHOSTSCRIPT=${PHP_FPM_INSTALL_GHOSTSCRIPT}
+        - INSTALL_LDAP=${PHP_FPM_INSTALL_LDAP}
+        - INSTALL_PHALCON=${PHP_FPM_INSTALL_PHALCON}
+        - INSTALL_SWOOLE=${PHP_FPM_INSTALL_SWOOLE}
+        - INSTALL_IMAGE_OPTIMIZERS=${PHP_FPM_INSTALL_IMAGE_OPTIMIZERS}
+        - INSTALL_IMAGEMAGICK=${PHP_FPM_INSTALL_IMAGEMAGICK}
+        - INSTALL_CALENDAR=${PHP_FPM_INSTALL_CALENDAR}
+        - INSTALL_FAKETIME=${PHP_FPM_INSTALL_FAKETIME}
+        - INSTALL_IONCUBE=${PHP_FPM_INSTALL_IONCUBE}
+      context: ./php-fpm-symfony
+
+  #### Образ для отправки email письма об создании нового обращения ###########
+  php-rabbimq-consumer-obrashscheniya-emails:
+    entrypoint: ["php", "-d", "memory_limit=-1", "bin/console", "rabbitmq:consumer", "obrashcheniya_emails"]
+    restart: always
+    depends_on:
+      - rabbitmq
+    extra_hosts:
+      - "dockerhost:${DOCKER_HOST_IP}"
+      - "bezbahil.ru:84.201.185.203"
+      - host.docker.internal:${DOCKER_HOST_IP}
+    environment:
+      #      - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
+      #      - DOCKER_HOST=tcp://docker-in-docker:2375
+      - FAKETIME=${PHP_FPM_FAKETIME}
+      - PHP_EXTENSION_XDEBUG=1
+      - PHP_IDE_CONFIG=serverName=bezbahil.local
+      - XDEBUG_CONFIG="remote_host=${XDEBUG_REMOTE_HOST} remote_port=${XDEBUG_PORT} idekey=${XDEBUG_IDE_KEY} remote_enable=1"
+    networks:
+      - backend
+    links:
+      - docker-in-docker
+    volumes:
+      - ./php-fpm-symfony/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
+      - ./php-fpm-symfony/laravel.ini:/usr/local/etc/php/conf.d/laravel.ini
+      - ./php-fpm-symfony/php${PHP_VERSION}/www.conf/www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
+      - ${APP_CODE_PATH_HOST_SF}:${APP_CODE_PATH_CONTAINER_SF}
+      - ${DATA_PATH_LOGS}/:/var/log
+      - ./php-fpm-symfony/msmtprc:/etc/msmtprc
+      - ./php-worker/supervisord.d:/etc/supervisord.d
+    build:
+      args:
+        - LARADOCK_PHP_VERSION=${PHP_VERSION}
+        - LARADOCK_PHALCON_VERSION=${PHALCON_VERSION}
+        - INSTALL_XDEBUG=${PHP_FPM_INSTALL_XDEBUG}
+        - INSTALL_PHPDBG=${PHP_FPM_INSTALL_PHPDBG}
+        - INSTALL_BLACKFIRE=${INSTALL_BLACKFIRE}
+        - INSTALL_SSH2=${PHP_FPM_INSTALL_SSH2}
+        - INSTALL_SOAP=${PHP_FPM_INSTALL_SOAP}
+        - INSTALL_IMAP=${PHP_FPM_INSTALL_IMAP}
+        - INSTALL_MONGO=${PHP_FPM_INSTALL_MONGO}
+        - INSTALL_AMQP=${PHP_FPM_INSTALL_AMQP}
+        - INSTALL_MSSQL=${PHP_FPM_INSTALL_MSSQL}
+        - INSTALL_ZIP_ARCHIVE=${PHP_FPM_INSTALL_ZIP_ARCHIVE}
+        - INSTALL_BCMATH=${PHP_FPM_INSTALL_BCMATH}
+        - INSTALL_GMP=${PHP_FPM_INSTALL_GMP}
+        - INSTALL_PHPREDIS=${PHP_FPM_INSTALL_PHPREDIS}
+        - INSTALL_MEMCACHED=${PHP_FPM_INSTALL_MEMCACHED}
+        - INSTALL_OPCACHE=${PHP_FPM_INSTALL_OPCACHE}
+        - INSTALL_EXIF=${PHP_FPM_INSTALL_EXIF}
+        - INSTALL_AEROSPIKE=${PHP_FPM_INSTALL_AEROSPIKE}
+        - AEROSPIKE_PHP_REPOSITORY=${AEROSPIKE_PHP_REPOSITORY}
+        - INSTALL_MYSQLI=${PHP_FPM_INSTALL_MYSQLI}
+        - INSTALL_PGSQL=${PHP_FPM_INSTALL_PGSQL}
+        - INSTALL_PG_CLIENT=${PHP_FPM_INSTALL_PG_CLIENT}
+        - INSTALL_TOKENIZER=${PHP_FPM_INSTALL_TOKENIZER}
+        - INSTALL_INTL=${PHP_FPM_INSTALL_INTL}
+        - INSTALL_GHOSTSCRIPT=${PHP_FPM_INSTALL_GHOSTSCRIPT}
+        - INSTALL_LDAP=${PHP_FPM_INSTALL_LDAP}
+        - INSTALL_PHALCON=${PHP_FPM_INSTALL_PHALCON}
+        - INSTALL_SWOOLE=${PHP_FPM_INSTALL_SWOOLE}
+        - INSTALL_IMAGE_OPTIMIZERS=${PHP_FPM_INSTALL_IMAGE_OPTIMIZERS}
+        - INSTALL_IMAGEMAGICK=${PHP_FPM_INSTALL_IMAGEMAGICK}
+        - INSTALL_CALENDAR=${PHP_FPM_INSTALL_CALENDAR}
+        - INSTALL_FAKETIME=${PHP_FPM_INSTALL_FAKETIME}
+        - INSTALL_IONCUBE=${PHP_FPM_INSTALL_IONCUBE}
+      context: ./php-fpm-symfony

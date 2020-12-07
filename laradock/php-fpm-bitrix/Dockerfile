@@ -588,6 +588,15 @@ RUN if [ ${INSTALL_FAKETIME} = true ]; then \
     echo "/usr/lib/x86_64-linux-gnu/faketime/libfaketime.so.1" > /etc/ld.so.preload \
 ;fi
 
+# Install composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=1.10.17
+RUN apt-get update && apt-get install -y \
+    zip \
+    unzip \
+    git \
+    ssh \
+    openssh-server
+
 WORKDIR /var/www
 
 CMD ["php-fpm"]

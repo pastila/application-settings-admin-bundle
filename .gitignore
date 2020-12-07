@@ -22,3 +22,4 @@
 /web/local/templates/kdteam/pages
 /web/local/templates/kdteam/styles
 /web/dist
+!var/uploads/pdf/.gitkeep
