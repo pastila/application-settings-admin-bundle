@@ -207,7 +207,7 @@ class HomepageController extends Controller
       ->find($obrashcheniya['region']);
 
     $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
-    $url = sprintf($baseurl . '/forma-obrashenija/index.php?year=%s&region=%s',
+    $url = sprintf($baseurl . '/forma-obrashenija/?year=%s&region=%s',
       Year::getYear($obrashcheniya['year']),
       !empty($region) ? $region->getBitrixCityHospitalId() : null);
 
