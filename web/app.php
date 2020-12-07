@@ -19,6 +19,13 @@ if (PHP_VERSION_ID < 70000) {
 }
 //$kernel = new AppCache($kernel);
 
+Request::setTrustedProxies(
+// the IP address (or range) of your proxy
+  ['192.168.123.180/29', '192.168.123.190/29', '192.168.123.200/28'],
+// trust *all* "X-Forwarded-*" headers
+  Request::HEADER_X_FORWARDED_ALL
+);
+
 // When using the HttpCache, you need to call the method in your front controller instead of relying on the configuration parameter
 //Request::enableHttpMethodParameterOverride();
 $request = Request::createFromGlobals();
