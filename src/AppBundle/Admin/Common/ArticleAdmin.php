@@ -48,6 +48,7 @@ class ArticleAdmin extends Base
     $form
       ->tab("Основные")
       ->add("title")
+      ->add("slug")
       ->add("announce", TextareaType::class)
       ->add('text', TinyMceType::class, [
           'attr' => [
