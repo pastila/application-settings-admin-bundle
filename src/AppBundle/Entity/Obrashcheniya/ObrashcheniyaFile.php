@@ -51,6 +51,14 @@ class ObrashcheniyaFile
   private $file;
 
   /**
+   * ID из bitrix, номер обращения
+   *
+   * @var null|string
+   * @ORM\Column(type="string", length=256, nullable=true)
+   */
+  protected $bitrixId;
+
+  /**
    * @return integer
    */
   public function getId()
@@ -124,6 +132,26 @@ class ObrashcheniyaFile
   public function setFile($file)
   {
     $this->file = $file;
+
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getBitrixId()
+  {
+    return $this->bitrixId;
+  }
+
+  /**
+   * @param string $bitrixId
+   *
+   * @return string
+   */
+  public function setBitrixId($bitrixId)
+  {
+    $this->bitrixId = $bitrixId;
 
     return $this;
   }

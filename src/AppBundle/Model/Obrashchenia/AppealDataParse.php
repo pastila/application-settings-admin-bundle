@@ -5,26 +5,35 @@ namespace AppBundle\Model\Obrashchenia;
 
 
 use AppBundle\Entity\Obrashcheniya\ObrashcheniyaEmail;
+use AppBundle\Repository\Obrashcheniya\ObrashcheniyaFileRepository;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AppealDataParse
 {
   /**
    * Директория, где лежат pdf файлы обращения
+   * @var string
    */
   private $appealPathPdf;
   /**
    * Директория, где лежат прикрепленные файлы
+   * @var string
    */
   private $appealPathAttached;
+  /**
+   * @var ObrashcheniyaFileRepository
+   */
+  private $fileRepository;
 
   public function __construct(
     $appealPathPdf,
-    $appealPathAttached
+    $appealPathAttached,
+    ObrashcheniyaFileRepository $fileRepository
   )
   {
     $this->appealPathPdf = $appealPathPdf;
     $this->appealPathAttached = $appealPathAttached;
+    $this->fileRepository = $fileRepository;
   }
 
   /**
@@ -35,13 +44,13 @@ class AppealDataParse
   {
     if (
       empty($data[2]['EMAIL']) ||
-      empty($data[2]['PDF'])
+      empty($data[2]['ID'])
     )
     {
       throw new NotFoundHttpException('Empty data in AppealDataToCompany');
     }
     $model = new AppealDataToCompany();
-    $model->setPdf($this->appealPathPdf . $data[2]['PDF']);
+    $model->setPdf($this->appealPathPdf . $data[2]['ID']);
     $model->setEmailsTo(array_map(function ($item)
     {
       return trim($item);

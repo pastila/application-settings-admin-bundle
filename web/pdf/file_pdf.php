@@ -280,10 +280,11 @@ if ($_POST['id'] != "") {
                     'user_login' => $arUser['LOGIN'],
                     'file_type' => obrashcheniya_file_type_report,
                     'file_name' => $full_name_file,
+                    'obrashcheniya_id' => $_POST['id'],
                   ]));
                 }
 
-                $url_pdf_for_user = obrashcheniya_report_url_download . $name_file;
+                $url_pdf_for_user = obrashcheniya_report_url_download . $_POST['id'];
                 $arFile = CFile::MakeFileArray($full_name_file);
                 $arProperty = Array(
                     "PDF" => $arFile,

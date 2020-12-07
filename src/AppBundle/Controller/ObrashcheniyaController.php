@@ -21,10 +21,11 @@ class ObrashcheniyaController extends Controller
     $user = $this->getUser();
     $em = $this->getDoctrine()->getManager();
     $obrashcheniyaFile = $em->getRepository(ObrashcheniyaFile::class)
-      ->getFileQuery($request->get('file'), ($user->getIsAdmin() ? null : $user))
+      ->getFileQuery($request->get('id'), ($user->getIsAdmin() ? null : $user))
       ->setMaxResults(1)
       ->getQuery()
       ->getOneOrNullResult();
+
     if (!$obrashcheniyaFile)
     {
       throw $this->createNotFoundException(sprintf('Obrashcheniya File model not found'));

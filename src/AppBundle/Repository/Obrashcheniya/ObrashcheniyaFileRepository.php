@@ -17,16 +17,16 @@ class ObrashcheniyaFileRepository extends ServiceEntityRepository
   }
 
   /**
-   * @param $file
+   * @param $bitrixId
    * @param null $user
    * @return \Doctrine\ORM\QueryBuilder
    */
-  public function getFileQuery($file, $user = null)
+  public function getFileQuery($bitrixId, $user = null)
   {
     $query = $this
       ->createQueryBuilder('o_f')
-      ->andWhere('o_f.file LIKE :file')
-      ->setParameter('file', '%' . $file );
+      ->andWhere('o_f.bitrixId = :bitrixId')
+      ->setParameter('bitrixId', $bitrixId );
     if (!$user)
     {
       return $query;

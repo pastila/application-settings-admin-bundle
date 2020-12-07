@@ -51,6 +51,7 @@ class ObrashcheniyaFilesService implements ConsumerInterface
     $model->setAuthor($author);
     $model->setType(key_exists('file_type', $data) ? $data['file_type'] : null);
     $model->setFile(key_exists('file_name', $data) ? $data['file_name'] : null);
+    $model->setBitrixId(key_exists('obrashcheniya_id', $data) ? $data['obrashcheniya_id'] : null);
     $this->entityManager->persist($model);
     $this->entityManager->flush();
   }

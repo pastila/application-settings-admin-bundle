@@ -31,6 +31,11 @@ class ObrashcheniyaEmailsService implements ConsumerInterface
   protected $mailerBranch;
 
   /**
+   * @var AppealDataParse
+   */
+  protected $appealDataParse;
+
+  /**
    * ObrashcheniyaEmailsService constructor.
    * @param EntityManagerInterface $entityManager
    * @param LoggerInterface $logger
@@ -39,12 +44,14 @@ class ObrashcheniyaEmailsService implements ConsumerInterface
   public function __construct(
     EntityManagerInterface $entityManager,
     LoggerInterface $logger,
-    ObrashcheniaBranchMailer $mailer
+    ObrashcheniaBranchMailer $mailer,
+    AppealDataParse $appealDataParse
   )
   {
     $this->entityManager = $entityManager;
     $this->logger = $logger;
     $this->mailerBranch = $mailer;
+    $this->appealDataParse = $appealDataParse;
   }
 
   public function execute(AMQPMessage $msg)
@@ -66,8 +73,7 @@ class ObrashcheniyaEmailsService implements ConsumerInterface
 
     try
     {
-      $parser = new AppealDataParse();
-      $modelAppealData = $parser->parse($data);
+      $modelAppealData = $this->appealDataParse->parse($data);
     } catch (\Exception $e)
     {
       $this->logger->error('Failed parsing obrashcheniya to branch: ' . $e->getMessage());
