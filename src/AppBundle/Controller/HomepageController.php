@@ -62,6 +62,7 @@ class HomepageController extends Controller
 
     $questions = $em->getRepository(Question::class)
       ->getQueryAllSortByPosition()
+      ->setMaxResults(3)
       ->getQuery()
       ->getResult();
 
