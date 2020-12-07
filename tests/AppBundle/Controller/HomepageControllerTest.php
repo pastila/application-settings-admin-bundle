@@ -356,9 +356,9 @@ class HomepageControllerTest extends AppWebTestCase
     $textPrev = 'Список регионов в мод.окне: ';
 
     $this->assertTrue(count($regionsHtml) > 1, $textPrev. 'Проверка, что данные вообще нашлись');
-    $this->assertEquals('Республика Башкортостан', $regionsHtml[0]['text'], 'Проверка, что Название совпадает');
+    $this->assertEquals('02 Республика Башкортостан', $regionsHtml[0]['text'], 'Проверка, что Название совпадает');
     $this->assertEquals(1, $regionsHtml[0]['id'], 'Проверка, что ID совпадает');
-    $this->assertEquals('Свердловская область', $regionsHtml[1]['text'], 'Проверка, что Название совпадает');
+    $this->assertEquals('66 Свердловская область', $regionsHtml[1]['text'], 'Проверка, что Название совпадает');
     $this->assertEquals(2, $regionsHtml[1]['id'], 'Проверка, что ID совпадает');
   }
 }
