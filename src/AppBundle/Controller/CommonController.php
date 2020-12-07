@@ -64,7 +64,8 @@ class CommonController extends AbstractController
 
     return $this->render('Common/_header.html.twig', [
       'region' => $region,
-      'regions' => $regions
+      'regions' => $regions,
+      'isHomepage' => $request->get('isHomepage', false)
     ]);
   }
 }

@@ -21,7 +21,9 @@
     <link rel="stylesheet" href="/local/templates/kdteam/pages/landing/landing.min.css">
 {% endblock %}
 
-
+{% block header %}
+    {{ render(controller('AppBundle:Common:_header', { isHomepage: true })) }}
+{% endblock %}
 
 {% block main %}
     <div class="app__content">
