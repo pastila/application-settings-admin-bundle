@@ -76,11 +76,6 @@ class HomepageController extends Controller
     $news = $em->getRepository(News::class)
       ->findNewsOrderByPublishedAt(6);
 
-    $obrashcheniya = new Obrashcheniya();
-    $form = $this->createForm(ObrashcheniyaType::class, $obrashcheniya, [
-      'csrf_protection' => false,
-    ]);
-
     /**
      * Получение региона по IP клиента
      */
@@ -96,7 +91,24 @@ class HomepageController extends Controller
     $regions = $this->regionRepository
       ->findAll();
 
-    // replace this example code with whatever you need
+    $obrashcheniya = new Obrashcheniya();
+    $obrashcheniya->setRegion($region);
+    $forms = [
+      $this->createForm(ObrashcheniyaType::class, $obrashcheniya, [
+        'csrf_protection' => false,
+        'data' => $obrashcheniya
+      ]),
+      $this->createForm(ObrashcheniyaType::class, $obrashcheniya, [
+        'csrf_protection' => false,
+        'data' => $obrashcheniya
+      ]),
+    ];
+    $formViews = [];
+    foreach ($forms as $form)
+    {
+      $formViews[] = $form->createView();
+    }
+
     return $this->render('@App/homepage.html.twig', [
       'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
       'numbers' => $numbers,
@@ -106,7 +118,7 @@ class HomepageController extends Controller
       'feedbacks' => $feedbacks,
       'news' => $news,
       'region' => $region,
-      'form' => $form->createView(),
+      'forms' => $formViews,
       'regions' => $regions
     ]);
   }
@@ -208,9 +220,11 @@ class HomepageController extends Controller
     $region = $em->getRepository(Region::class)
       ->find($obrashcheniya['region']);
 
-    return $this->redirectToRoute('forma_obrashenija', [
-      'year' => Year::getYear($obrashcheniya['year']),
-      'region' => !empty($region) ? $region->getBitrixCityHospitalId() : null,
-    ], 302);
+    $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
+    $url = sprintf($baseurl . '/forma-obrashenija/?year=%s&region=%s',
+      Year::getYear($obrashcheniya['year']),
+      !empty($region) ? $region->getBitrixCityHospitalId() : null);
+
+    return $this->redirect($url, 301);
   }
 }

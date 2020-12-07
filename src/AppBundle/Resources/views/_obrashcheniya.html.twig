@@ -1,0 +1,23 @@
+{{ form_start(form, {'action': path('homepage_obrashcheniya'), 'method': 'POST', 'attr': {
+    class: 'b-form',
+    id: formid
+}}) }}
+<div class="b-form__item b-form__item--full">
+    <div class="b-form__item-title">Ваш регион</div>
+    <div class="b-form__item-content">
+        {{ form_row(form.region) }}
+    </div>
+</div>
+<div class="b-form__item b-form__item-year">
+    <div class="b-form__item-title">Год лечения</div>
+    <div class="b-form__item-content">
+        {{ form_row(form.year) }}
+    </div>
+</div>
+<div class="b-form__item">
+    <div class="b-form__item-content">
+        <button class="b-form__button btn2" type="submit">Вернуть деньги</button>
+    </div>
+</div>
+{{ form_rest(form) }}
+{{ form_end(form) }}

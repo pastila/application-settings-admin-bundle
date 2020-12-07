@@ -740,521 +740,521 @@ $(document).ready(function () {
     });
   });
 
-function search_class() {
-  // ------ choose_class ------
-  $(document).on('click', '#search_result_class li', function () {
-    $('#class_input').val($(this).text());
-    $('#search_result_class').fadeOut()
-  });
-  $(document).on('click', '#class_input', function () {
-    $('#search_result_class').css('display', 'block');
-  });
-  $(document).mouseup(function (e) {
-    let container = $('#class_input');
-    if (container.has(e.target).length === 0) {
-      $('#search_result_class').fadeOut();
-    }
-  });
-
-  $(document).on('click', '.class-js', function () {
-    let id_class = $(this).attr('value');
-
-    if ($(this).val() !== "") {
-      $("#search_diagnoz_input").css({ "pointer-events": "none" });
-      $("#reload_div").addClass('disabled')
-    }
-    let component = $('#grid');
-    $.post('/ajax/main_form_oms.php', { id: id_class }, function (result) {
-      $(component).html(result);
-      search_group();
-      $('#search_diagnoz_input').val('');
-      $('#search_diagnoz_input').attr('data-value', '');
-      $('#search_diagnoz_global').empty();
-    }, 'html');
-  });
-}
-function search_group() {
-  // ------ choose_group ------
-  $(document).on('click', '#search_result_group li', function () {
-    $('#group_input').val($(this).text());
-    $('#search_result_group').fadeOut()
-  });
-  $(document).on('click', '#group_input', function () {
-    $('#search_result_group').css('display', 'block');
-  });
-  $(document).mouseup(function (e) {
-    let container = $('#group_input');
-    if (container.has(e.target).length === 0) {
-      $('#search_result_group').fadeOut();
-    }
-  });
-  $(document).on('click', '.group-js', function () {
-    let id_group = $(this).attr('value');
-    let component = $('#grid');
-    $.post('/ajax/main_form_oms.php', { id: id_group }, function (result) {
-      $(component).html(result);
-      search_subgroup();
-      $('#search_diagnoz_input').val('');
-      $('#search_diagnoz_input').attr('data-value', '');
-      $('#search_diagnoz_global').empty();
-    }, 'html');
-  });
-
-  keyup_class();
-  let id_class = $('#class_input').attr('data-id_class');
-  keyup_group(id_class);
-
-}
-$(document).on('click', '.diagnoz-js', function () {
-  $(".steps_items_item_button").each(function(index) {
-    if(index == 3)
-      $(this).removeClass("disabled");
-    $(this).attr("id","strax-sluchay");
-  });
-});
-function search_subgroup() {
-  // ------ choose_subgroup ------
-  $(document).on('click', '#search_result_subgroup li', function () {
-    $('#subgroup_input').val($(this).text());
-    $('#search_result_subgroup').fadeOut()
-  });
-  $(document).on('click', '#subgroup_input', function () {
-    $('#search_result_subgroup').css('display', 'block');
-  });
-
-  $(document).mouseup(function (e) {
-    let container = $('#subgroup_input');
-    if (container.has(e.target).length === 0) {
-      $('#search_result_subgroup').fadeOut();
-    }
-  });
-
-  $(document).on('click', '.subgroup-js', function () {
-    let id_subgroup = $(this).attr('value');
-    let component = $('#grid');
-    $.post('/ajax/main_form_oms.php', { id: id_subgroup }, function (result) {
-      $(component).html(result);
-      search_diagnoz()
-      $('#search_diagnoz_input').val('');
-      $('#search_diagnoz_input').attr('data-value', '');
-      $('#search_diagnoz_global').empty();
-    }, 'html');
-  });
-  keyup_class();
-  let id_class = $('#class_input').attr('data-id_class');
-  keyup_group(id_class);
-  let id_group = $('#group_input').attr('data-id_group');
-  keyup_subgroup(id_group);
-
-}
-
-function search_diagnoz() {
-  // ------ choose_diagnoz ------
-  $(document).on('click', '#search_result_diagnoz li', function () {
-    $('#diagnoz_input').val($(this).text());
-    $('#diagnoz_input').attr('data-id_diagnoz', $(this).attr('value'));
-    $('#search_result_diagnoz').fadeOut();
-    $('#search_diagnoz_input').val($(this).text());
-    $('#search_diagnoz_input').attr('data-value', $(this).attr('value'));
-    $('#search_diagnoz_global').empty();
-  });
-  $(document).on('click', '#diagnoz_input', function () {
-    $('#search_result_diagnoz').css('display', 'block');
-  });
-  $(document).mouseup(function (e) {
-    let container = $('#diagnoz_input');
-    if (container.has(e.target).length === 0) {
-      $('#search_result_diagnoz').fadeOut();
-    }
-  });
-
-  keyup_class();
-  let id_class = $('#class_input').attr('data-id_class');
-  keyup_group(id_class);
-  let id_group = $('#group_input').attr('data-id_group');
-  keyup_subgroup(id_group);
-  let id_subgroup = $('#subgroup_input').attr('data-id_subgroup');
-  keyup_diagnoz(id_subgroup);
-
-}
-
-function keyup_class() {
-  $('#class_input').on('keyup', function () {
-    var $this = $(this);
-    if ($this.val() !== "") {
-      $("#search_diagnoz_input").css({ "pointer-events": "none" });
-      $("#reload_div").addClass('disabled')
-    } else {
-      $("#search_diagnoz_input").css({ "pointer-events": "auto" });
-      $("#reload_div").removeClass('disabled')
-    }
-
-    var delay = 500;
-    $('#search_result_class').css({ 'display': 'block' });
-    clearTimeout($this.data('timer'));
-    $this.data('timer', setTimeout(function () {
-      $this.removeData('timer');
-      $.post('/ajax/smart_search_class.php', { name: $this.val() }, function (msg) {
-        if ($('.error_class').length != 0) {
-          $('.error_class').remove();
-        }
-        $('.class-js').each(function () {
-          $(this).remove();
-        });
-        if (msg == 'error_class') {
-          if ($('.error_class').length != 0) {
-            $('.error_class').remove();
-            $('#search_result_class').
-              append('<li class="error_class">Класс не найден</li>');
-          } else {
-            $('#search_result_class').
-              append('<li class="error_class">Класс не найден</li>');
-          }
-        } else {
-          setTimeout(function () {
-            $('#search_result_class').append(msg);
-          }, 100);
-          $(document).on('click', '.class-js', function () {
-            let id = $(this).attr('value');
-
-            if ($(this).val() !== "") {
-              $("#search_diagnoz_input").css({ "pointer-events": "none" });
-              $("#reload_div").addClass('disabled')
-            }
-            let select_region = $(this).text();
-            $('#class_input').val(select_region);
-            $('#class_input').attr('data-id_class', id);
-            let component = $('#grid');
-            $.ajax({
-              dataType: 'html',
-              url: '/ajax/main_form_oms.php',
-              type: 'POST',
-              data: { id: id },
-              beforeSend: function () {
-              },
-              success: function (result) {
-                $(component).html(result);
-                keyup_class();
-                let id_class = $('#class_input').attr('data-id_class');
-                keyup_group(id_class);
-              },
-            }).done(function (msg) {
-
-            });
-          });
-        }
-      });
-    }, delay));
-  });
-}
-function keyup_group(id_class) {
-  $('#group_input').on('keyup', function () {
-    var $this = $(this);
-    var delay = 500;
-    $('#search_result_group').css({ 'display': 'block' });
-    clearTimeout($this.data('timer'));
-    $this.data('timer', setTimeout(function () {
-      $this.removeData('timer');
-      $.post('/ajax/smart_search_group.php', {
-        name: $this.val(), id: id_class
-      }, function (msg) {
-        if ($('.error_group').length != 0) {
-          $('.error_group').remove();
-        }
-        $('.group-js').each(function () {
-          $(this).remove();
-        });
-        if (msg == 'error_group') {
-          if ($('.error_group').length != 0) {
-            $('.error_group').remove();
-            $('#search_result_group').
-              append('<li class="error_group">Группа не найдена</li>');
-          } else {
-            $('#search_result_group').
-              append('<li class="error_group">Группа не найдена</li>');
-          }
-        } else {
-          setTimeout(function () {
-            $('#search_result_group').append(msg);
-          }, 100);
-          $(document).on('click', '.group-js', function () {
-            let id = $(this).attr('value');
-            let select_region = $(this).text();
-            $('#group_input').val(select_region);
-            $('#group_input').attr('data-id_group', id);
-            let component = $('#grid');
-            $.ajax({
-              dataType: 'html',
-              url: '/ajax/main_form_oms.php',
-              type: 'POST',
-              data: { id: id },
-              beforeSend: function () {
-              },
-              success: function (result) {
-                $(component).html(result);
-                keyup_class();
-                let id_class = $('#class_input').attr('data-id_class');
-                keyup_group(id_class);
-                let id_group = $('#group_input').attr('data-id_group');
-                keyup_subgroup(id_group);
-              },
-            }).done(function (msg) {
-            });
-          });
-        }
-      });
-    }, delay));
-  });
-}
-function keyup_subgroup(id_group) {
-  $('#subgroup_input').on('keyup', function () {
-    var $this = $(this);
-    var delay = 500;
-    $('#search_result_subgroup').css({ 'display': 'block' });
-    clearTimeout($this.data('timer'));
-    $this.data('timer', setTimeout(function () {
-      $this.removeData('timer');
-      $.post('/ajax/smart_search_subgroup.php', {
-        name: $this.val(), id: id_group
-      }, function (msg) {
-        if ($('.error_subgroup').length != 0) {
-          $('.error_subgroup').remove();
-        }
-        $('.subgroup-js').each(function () {
-          $(this).remove();
-        });
-        if (msg == 'error_subgroup') {
-          if ($('.error_subgroup').length != 0) {
-            $('.error_subgroup').remove();
-            $('#search_result_subgroup').
-              append('<li class="error_subgroup">Подгруппа не найдена</li>');
-          } else {
-            $('#search_result_subgroup').
-              append('<li class="error_subgroup">Подгруппа не найдена</li>');
-          }
-        } else {
-          setTimeout(function () {
-            $('#search_result_subgroup').append(msg);
-          }, 100);
-          $(document).on('click', '.subgroup-js', function () {
-            let id = $(this).attr('value');
-            let select_region = $(this).text();
-            $('#subgroup_input').val(select_region);
-            $('#subgroup_input').attr('data-id_subgroup', id);
-            let component = $('#grid');
-            $.ajax({
-              dataType: 'html',
-              url: '/ajax/main_form_oms.php',
-              type: 'POST',
-              data: { id: id },
-              beforeSend: function () {
-              },
-              success: function (result) {
-                $(component).html(result);
-                keyup_class();
-                let id_class = $('#class_input').attr('data-id_class');
-                keyup_group(id_class);
-                let id_group = $('#group_input').attr('data-id_group');
-                keyup_subgroup(id_group);
-                let id_subgroup = $('#subgroup_input').attr('data-id_subgroup');
-                keyup_diagnoz(id_subgroup);
-              },
-            }).done(function (msg) {
-            });
-          });
-        }
-      });
-    }, delay));
-  });
-}
-function keyup_diagnoz(id_subgroup) {
-  $('#diagnoz_input').on('keyup', function () {
-    var $this = $(this);
-    var delay = 500;
-    $('#search_result_diagnoz').css({ 'display': 'block' });
-    clearTimeout($this.data('timer'));
-    $this.data('timer', setTimeout(function () {
-      $this.removeData('timer');
-      $.post('/ajax/smart_search_diagnoz.php', {
-        name: $this.val(), id: id_subgroup
-      }, function (msg) {
-        if ($('.error_diagnoz').length != 0) {
-          $('.error_diagnoz').remove();
-        }
-        $('.diagnoz-js').each(function () {
-          $(this).remove();
-        });
-        if (msg == 'error_diagnoz') {
-          if ($('.error_diagnoz').length != 0) {
-            $('.error_diagnoz').remove();
-            $('#search_result_diagnoz').
-              append('<li class="error_diagnoz">Диагноз не найден</li>');
-          } else {
-            $('#search_result_diagnoz').
-              append('<li class="error_diagnoz">Диагноз не найден</li>');
-          }
-        } else {
-          setTimeout(function () {
-            $('#search_result_diagnoz').append(msg);
-          }, 100);
-          $(document).on('click', '.diagnoz-js', function () {
-
-            let id = $(this).attr('value');
-            let select_region = $(this).text();
-            $('#diagnoz_input').val(select_region);
-            $('#diagnoz_input').attr('data-id_diagnoz', id);
-
-          });
-        }
-      });
-    }, delay));
-  });
-}
-function search_diagnoz_global() {
-  // ------ choose_class ------
-  $(document).on('click', '#search_diagnoz_global li', function () {
-    $('#search_diagnoz_input').val($(this).text());
-    $('#search_diagnoz_input').attr('data-value', $(this).attr('value'));
-    $('#search_diagnoz_global').fadeOut();
-    after_global_search(
-      $(this).attr('data-section'),
-      $(this).text(),
-      $(this).attr('value'));
-    $('#diagnoz_input').val($(this).text());
-    $('#diagnoz_input').attr('data-id_diagnoz', $(this).attr('value'));
-  });
-  $(document).on('click', '#search_diagnoz_input', function () {
-    $('#search_diagnoz_global').css('display', 'block');
-  });
-  $(document).mouseup(function (e) {
-    let container = $('#search_diagnoz_input');
-    if (container.has(e.target).length === 0) {
-      $('#search_diagnoz_global').fadeOut();
-    }
-  });
-}
-function keyup_diagnoz_global() {
-  $('#search_diagnoz_input').on('keyup', function () {
-    var $this = $(this);
-    if ($this.val() === "") {
-      $("#grid").removeClass('disabled')
-      let component = $('#grid');
-      $.post('/ajax/main_form_oms.php', { id: "" },
-          function (result) {
-            $(component).html(result);
-            $('#diagnoz_input').val("");
-            $('#diagnoz_input').attr('data-id_diagnoz', "");
-            search_group();
-            search_subgroup();
-            search_diagnoz();
-          }, 'html');
-    }
-    $(".steps_items_item_button").each(function(index) {
-      if(index == 3)
-        $(this).addClass("disabled");
-      $(this).attr("id","");
+  function search_class() {
+    // ------ choose_class ------
+    $(document).on('click', '#search_result_class li', function () {
+      $('#class_input').val($(this).text());
+      $('#search_result_class').fadeOut()
+    });
+    $(document).on('click', '#class_input', function () {
+      $('#search_result_class').css('display', 'block');
+    });
+    $(document).mouseup(function (e) {
+      let container = $('#class_input');
+      if (container.has(e.target).length === 0) {
+        $('#search_result_class').fadeOut();
+      }
     });
 
+    $(document).on('click', '.class-js', function () {
+      let id_class = $(this).attr('value');
 
-    var delay = 500;
-    clearTimeout($this.data('timer'));
-    $this.data('timer', setTimeout(function () {
-      $this.removeData('timer');
-      $('#search_diagnoz_global').css('display', 'block');
-      $.post('/ajax/forma-obrashenija/keyup_diagnoz_global.php', {
-        name: $this.val(),
-      }, function (msg) {
-        if ($('.error_diagnoz').length != 0) {
-          $('.error_diagnoz').remove();
-        }
-        $('.diagnoz_search_js').each(function () {
-          $(this).remove();
+      if ($(this).val() !== "") {
+        $("#search_diagnoz_input").css({ "pointer-events": "none" });
+        $("#reload_div").addClass('disabled')
+      }
+      let component = $('#grid');
+      $.post('/ajax/main_form_oms.php', { id: id_class }, function (result) {
+        $(component).html(result);
+        search_group();
+        $('#search_diagnoz_input').val('');
+        $('#search_diagnoz_input').attr('data-value', '');
+        $('#search_diagnoz_global').empty();
+      }, 'html');
+    });
+  }
+  function search_group() {
+    // ------ choose_group ------
+    $(document).on('click', '#search_result_group li', function () {
+      $('#group_input').val($(this).text());
+      $('#search_result_group').fadeOut()
+    });
+    $(document).on('click', '#group_input', function () {
+      $('#search_result_group').css('display', 'block');
+    });
+    $(document).mouseup(function (e) {
+      let container = $('#group_input');
+      if (container.has(e.target).length === 0) {
+        $('#search_result_group').fadeOut();
+      }
+    });
+    $(document).on('click', '.group-js', function () {
+      let id_group = $(this).attr('value');
+      let component = $('#grid');
+      $.post('/ajax/main_form_oms.php', { id: id_group }, function (result) {
+        $(component).html(result);
+        search_subgroup();
+        $('#search_diagnoz_input').val('');
+        $('#search_diagnoz_input').attr('data-value', '');
+        $('#search_diagnoz_global').empty();
+      }, 'html');
+    });
+
+    keyup_class();
+    let id_class = $('#class_input').attr('data-id_class');
+    keyup_group(id_class);
+
+  }
+  $(document).on('click', '.diagnoz-js', function () {
+    $(".steps_items_item_button").each(function(index) {
+      if(index == 3)
+        $(this).removeClass("disabled");
+      $(this).attr("id","strax-sluchay");
+    });
+  });
+  function search_subgroup() {
+    // ------ choose_subgroup ------
+    $(document).on('click', '#search_result_subgroup li', function () {
+      $('#subgroup_input').val($(this).text());
+      $('#search_result_subgroup').fadeOut()
+    });
+    $(document).on('click', '#subgroup_input', function () {
+      $('#search_result_subgroup').css('display', 'block');
+    });
+
+    $(document).mouseup(function (e) {
+      let container = $('#subgroup_input');
+      if (container.has(e.target).length === 0) {
+        $('#search_result_subgroup').fadeOut();
+      }
+    });
+
+    $(document).on('click', '.subgroup-js', function () {
+      let id_subgroup = $(this).attr('value');
+      let component = $('#grid');
+      $.post('/ajax/main_form_oms.php', { id: id_subgroup }, function (result) {
+        $(component).html(result);
+        search_diagnoz()
+        $('#search_diagnoz_input').val('');
+        $('#search_diagnoz_input').attr('data-value', '');
+        $('#search_diagnoz_global').empty();
+      }, 'html');
+    });
+    keyup_class();
+    let id_class = $('#class_input').attr('data-id_class');
+    keyup_group(id_class);
+    let id_group = $('#group_input').attr('data-id_group');
+    keyup_subgroup(id_group);
+
+  }
+
+  function search_diagnoz() {
+    // ------ choose_diagnoz ------
+    $(document).on('click', '#search_result_diagnoz li', function () {
+      $('#diagnoz_input').val($(this).text());
+      $('#diagnoz_input').attr('data-id_diagnoz', $(this).attr('value'));
+      $('#search_result_diagnoz').fadeOut();
+      $('#search_diagnoz_input').val($(this).text());
+      $('#search_diagnoz_input').attr('data-value', $(this).attr('value'));
+      $('#search_diagnoz_global').empty();
+    });
+    $(document).on('click', '#diagnoz_input', function () {
+      $('#search_result_diagnoz').css('display', 'block');
+    });
+    $(document).mouseup(function (e) {
+      let container = $('#diagnoz_input');
+      if (container.has(e.target).length === 0) {
+        $('#search_result_diagnoz').fadeOut();
+      }
+    });
+
+    keyup_class();
+    let id_class = $('#class_input').attr('data-id_class');
+    keyup_group(id_class);
+    let id_group = $('#group_input').attr('data-id_group');
+    keyup_subgroup(id_group);
+    let id_subgroup = $('#subgroup_input').attr('data-id_subgroup');
+    keyup_diagnoz(id_subgroup);
+
+  }
+
+  function keyup_class() {
+    $('#class_input').on('keyup', function () {
+      var $this = $(this);
+      if ($this.val() !== "") {
+        $("#search_diagnoz_input").css({ "pointer-events": "none" });
+        $("#reload_div").addClass('disabled')
+      } else {
+        $("#search_diagnoz_input").css({ "pointer-events": "auto" });
+        $("#reload_div").removeClass('disabled')
+      }
+
+      var delay = 500;
+      $('#search_result_class').css({ 'display': 'block' });
+      clearTimeout($this.data('timer'));
+      $this.data('timer', setTimeout(function () {
+        $this.removeData('timer');
+        $.post('/ajax/smart_search_class.php', { name: $this.val() }, function (msg) {
+          if ($('.error_class').length != 0) {
+            $('.error_class').remove();
+          }
+          $('.class-js').each(function () {
+            $(this).remove();
+          });
+          if (msg == 'error_class') {
+            if ($('.error_class').length != 0) {
+              $('.error_class').remove();
+              $('#search_result_class').
+                append('<li class="error_class">Класс не найден</li>');
+            } else {
+              $('#search_result_class').
+                append('<li class="error_class">Класс не найден</li>');
+            }
+          } else {
+            setTimeout(function () {
+              $('#search_result_class').append(msg);
+            }, 100);
+            $(document).on('click', '.class-js', function () {
+              let id = $(this).attr('value');
+
+              if ($(this).val() !== "") {
+                $("#search_diagnoz_input").css({ "pointer-events": "none" });
+                $("#reload_div").addClass('disabled')
+              }
+              let select_region = $(this).text();
+              $('#class_input').val(select_region);
+              $('#class_input').attr('data-id_class', id);
+              let component = $('#grid');
+              $.ajax({
+                dataType: 'html',
+                url: '/ajax/main_form_oms.php',
+                type: 'POST',
+                data: { id: id },
+                beforeSend: function () {
+                },
+                success: function (result) {
+                  $(component).html(result);
+                  keyup_class();
+                  let id_class = $('#class_input').attr('data-id_class');
+                  keyup_group(id_class);
+                },
+              }).done(function (msg) {
+
+              });
+            });
+          }
         });
-        if (msg == 'error') {
+      }, delay));
+    });
+  }
+  function keyup_group(id_class) {
+    $('#group_input').on('keyup', function () {
+      var $this = $(this);
+      var delay = 500;
+      $('#search_result_group').css({ 'display': 'block' });
+      clearTimeout($this.data('timer'));
+      $this.data('timer', setTimeout(function () {
+        $this.removeData('timer');
+        $.post('/ajax/smart_search_group.php', {
+          name: $this.val(), id: id_class
+        }, function (msg) {
+          if ($('.error_group').length != 0) {
+            $('.error_group').remove();
+          }
+          $('.group-js').each(function () {
+            $(this).remove();
+          });
+          if (msg == 'error_group') {
+            if ($('.error_group').length != 0) {
+              $('.error_group').remove();
+              $('#search_result_group').
+                append('<li class="error_group">Группа не найдена</li>');
+            } else {
+              $('#search_result_group').
+                append('<li class="error_group">Группа не найдена</li>');
+            }
+          } else {
+            setTimeout(function () {
+              $('#search_result_group').append(msg);
+            }, 100);
+            $(document).on('click', '.group-js', function () {
+              let id = $(this).attr('value');
+              let select_region = $(this).text();
+              $('#group_input').val(select_region);
+              $('#group_input').attr('data-id_group', id);
+              let component = $('#grid');
+              $.ajax({
+                dataType: 'html',
+                url: '/ajax/main_form_oms.php',
+                type: 'POST',
+                data: { id: id },
+                beforeSend: function () {
+                },
+                success: function (result) {
+                  $(component).html(result);
+                  keyup_class();
+                  let id_class = $('#class_input').attr('data-id_class');
+                  keyup_group(id_class);
+                  let id_group = $('#group_input').attr('data-id_group');
+                  keyup_subgroup(id_group);
+                },
+              }).done(function (msg) {
+              });
+            });
+          }
+        });
+      }, delay));
+    });
+  }
+  function keyup_subgroup(id_group) {
+    $('#subgroup_input').on('keyup', function () {
+      var $this = $(this);
+      var delay = 500;
+      $('#search_result_subgroup').css({ 'display': 'block' });
+      clearTimeout($this.data('timer'));
+      $this.data('timer', setTimeout(function () {
+        $this.removeData('timer');
+        $.post('/ajax/smart_search_subgroup.php', {
+          name: $this.val(), id: id_group
+        }, function (msg) {
+          if ($('.error_subgroup').length != 0) {
+            $('.error_subgroup').remove();
+          }
+          $('.subgroup-js').each(function () {
+            $(this).remove();
+          });
+          if (msg == 'error_subgroup') {
+            if ($('.error_subgroup').length != 0) {
+              $('.error_subgroup').remove();
+              $('#search_result_subgroup').
+                append('<li class="error_subgroup">Подгруппа не найдена</li>');
+            } else {
+              $('#search_result_subgroup').
+                append('<li class="error_subgroup">Подгруппа не найдена</li>');
+            }
+          } else {
+            setTimeout(function () {
+              $('#search_result_subgroup').append(msg);
+            }, 100);
+            $(document).on('click', '.subgroup-js', function () {
+              let id = $(this).attr('value');
+              let select_region = $(this).text();
+              $('#subgroup_input').val(select_region);
+              $('#subgroup_input').attr('data-id_subgroup', id);
+              let component = $('#grid');
+              $.ajax({
+                dataType: 'html',
+                url: '/ajax/main_form_oms.php',
+                type: 'POST',
+                data: { id: id },
+                beforeSend: function () {
+                },
+                success: function (result) {
+                  $(component).html(result);
+                  keyup_class();
+                  let id_class = $('#class_input').attr('data-id_class');
+                  keyup_group(id_class);
+                  let id_group = $('#group_input').attr('data-id_group');
+                  keyup_subgroup(id_group);
+                  let id_subgroup = $('#subgroup_input').attr('data-id_subgroup');
+                  keyup_diagnoz(id_subgroup);
+                },
+              }).done(function (msg) {
+              });
+            });
+          }
+        });
+      }, delay));
+    });
+  }
+  function keyup_diagnoz(id_subgroup) {
+    $('#diagnoz_input').on('keyup', function () {
+      var $this = $(this);
+      var delay = 500;
+      $('#search_result_diagnoz').css({ 'display': 'block' });
+      clearTimeout($this.data('timer'));
+      $this.data('timer', setTimeout(function () {
+        $this.removeData('timer');
+        $.post('/ajax/smart_search_diagnoz.php', {
+          name: $this.val(), id: id_subgroup
+        }, function (msg) {
           if ($('.error_diagnoz').length != 0) {
             $('.error_diagnoz').remove();
-            $('#search_diagnoz_global').
-              append('<li class="error_diagnoz">Диагноз не найден</li>');
-          } else {
-            $('#search_diagnoz_global').
-              append('<li class="error_diagnoz">Диагноз не найден</li>');
           }
-        } else {
-          setTimeout(function () {
-            $('#search_diagnoz_global').append(msg);
-          }, 100);
-          $(document).on('click', '.diagnoz_search_js', function () {
-            $('#search_diagnoz_input').val($(this).text());
-            $('#search_diagnoz_input').attr('data-value', $(this).attr('value'));
-            after_global_search(
-              $(this).attr('data-section'),
-              $(this).text(),
-              $(this).attr('value'));
+          $('.diagnoz-js').each(function () {
+            $(this).remove();
           });
-        }
-      });
-    }, delay));
-  });
-}
-
-function after_global_search(SECTION_ID, TEXT, VALUE) {
-
-  let component = $('#grid');
-  $.post('/ajax/main_form_oms.php', { id: SECTION_ID },
-    function (result) {
-      $(component).html(result);
-      $('#diagnoz_input').val(TEXT);
-      $('#diagnoz_input').attr('data-id_diagnoz', VALUE);
-      search_group();
-      search_subgroup();
-      search_diagnoz();
-    }, 'html');
-
-}
-
-function steps() {
-  const radioBtns = document.querySelectorAll('.step-btn');
-
-  radioBtns.forEach(radioBtn => {
-    radioBtn.addEventListener('change', function (e) {
-      radioBtns.forEach(radioBtn => {
-        const parent = radioBtn.parentNode;
-        const label = parent.firstElementChild.dataset.tab;
-        const items = document.querySelectorAll('.steps_items_item');
-        if (radioBtn.checked) {
-          parent.classList.add('checked');
-          parent.parentElement.classList.add(label);
-
-          items.forEach(item => {
-            const tabClass = item.classList.contains(label);
-
-            if (tabClass) {
-              item.classList.add('active');
+          if (msg == 'error_diagnoz') {
+            if ($('.error_diagnoz').length != 0) {
+              $('.error_diagnoz').remove();
+              $('#search_result_diagnoz').
+                append('<li class="error_diagnoz">Диагноз не найден</li>');
+            } else {
+              $('#search_result_diagnoz').
+                append('<li class="error_diagnoz">Диагноз не найден</li>');
             }
-          });
+          } else {
+            setTimeout(function () {
+              $('#search_result_diagnoz').append(msg);
+            }, 100);
+            $(document).on('click', '.diagnoz-js', function () {
 
-        } else {
-          radioBtn.parentNode.classList.remove('checked');
-          radioBtn.classList.remove('active');
-          parent.parentElement.classList.remove(label);
+              let id = $(this).attr('value');
+              let select_region = $(this).text();
+              $('#diagnoz_input').val(select_region);
+              $('#diagnoz_input').attr('data-id_diagnoz', id);
 
-          items.forEach(item => {
-            const tabClass = item.classList.contains(label);
-
-            if (tabClass) {
-              item.classList.remove('active');
-            }
-          });
-        }
+            });
+          }
+        });
+      }, delay));
+    });
+  }
+  function search_diagnoz_global() {
+    // ------ choose_class ------
+    $(document).on('click', '#search_diagnoz_global li', function () {
+      $('#search_diagnoz_input').val($(this).text());
+      $('#search_diagnoz_input').attr('data-value', $(this).attr('value'));
+      $('#search_diagnoz_global').fadeOut();
+      after_global_search(
+        $(this).attr('data-section'),
+        $(this).text(),
+        $(this).attr('value'));
+      $('#diagnoz_input').val($(this).text());
+      $('#diagnoz_input').attr('data-id_diagnoz', $(this).attr('value'));
+    });
+    $(document).on('click', '#search_diagnoz_input', function () {
+      $('#search_diagnoz_global').css('display', 'block');
+    });
+    $(document).mouseup(function (e) {
+      let container = $('#search_diagnoz_input');
+      if (container.has(e.target).length === 0) {
+        $('#search_diagnoz_global').fadeOut();
+      }
+    });
+  }
+  function keyup_diagnoz_global() {
+    $('#search_diagnoz_input').on('keyup', function () {
+      var $this = $(this);
+      if ($this.val() === "") {
+        $("#grid").removeClass('disabled')
+        let component = $('#grid');
+        $.post('/ajax/main_form_oms.php', { id: "" },
+            function (result) {
+              $(component).html(result);
+              $('#diagnoz_input').val("");
+              $('#diagnoz_input').attr('data-id_diagnoz', "");
+              search_group();
+              search_subgroup();
+              search_diagnoz();
+            }, 'html');
+      }
+      $(".steps_items_item_button").each(function(index) {
+        if(index == 3)
+          $(this).addClass("disabled");
+        $(this).attr("id","");
       });
 
-      this.classList.add('active');
-      this.parentNode.classList.add('checked');
-    })
-  });
-}
-steps();
-$(document).ready(function() {
+
+      var delay = 500;
+      clearTimeout($this.data('timer'));
+      $this.data('timer', setTimeout(function () {
+        $this.removeData('timer');
+        $('#search_diagnoz_global').css('display', 'block');
+        $.post('/ajax/forma-obrashenija/keyup_diagnoz_global.php', {
+          name: $this.val(),
+        }, function (msg) {
+          if ($('.error_diagnoz').length != 0) {
+            $('.error_diagnoz').remove();
+          }
+          $('.diagnoz_search_js').each(function () {
+            $(this).remove();
+          });
+          if (msg == 'error') {
+            if ($('.error_diagnoz').length != 0) {
+              $('.error_diagnoz').remove();
+              $('#search_diagnoz_global').
+                append('<li class="error_diagnoz">Диагноз не найден</li>');
+            } else {
+              $('#search_diagnoz_global').
+                append('<li class="error_diagnoz">Диагноз не найден</li>');
+            }
+          } else {
+            setTimeout(function () {
+              $('#search_diagnoz_global').append(msg);
+            }, 100);
+            $(document).on('click', '.diagnoz_search_js', function () {
+              $('#search_diagnoz_input').val($(this).text());
+              $('#search_diagnoz_input').attr('data-value', $(this).attr('value'));
+              after_global_search(
+                $(this).attr('data-section'),
+                $(this).text(),
+                $(this).attr('value'));
+            });
+          }
+        });
+      }, delay));
+    });
+  }
+
+  function after_global_search(SECTION_ID, TEXT, VALUE) {
+
+    let component = $('#grid');
+    $.post('/ajax/main_form_oms.php', { id: SECTION_ID },
+      function (result) {
+        $(component).html(result);
+        $('#diagnoz_input').val(TEXT);
+        $('#diagnoz_input').attr('data-id_diagnoz', VALUE);
+        search_group();
+        search_subgroup();
+        search_diagnoz();
+      }, 'html');
+
+  }
+
+  function steps() {
+    const radioBtns = document.querySelectorAll('.step-btn');
+
+    radioBtns.forEach(radioBtn => {
+      radioBtn.addEventListener('change', function (e) {
+        radioBtns.forEach(radioBtn => {
+          const parent = radioBtn.parentNode;
+          const label = parent.firstElementChild.dataset.tab;
+          const items = document.querySelectorAll('.steps_items_item');
+          if (radioBtn.checked) {
+            parent.classList.add('checked');
+            parent.parentElement.classList.add(label);
+
+            items.forEach(item => {
+              const tabClass = item.classList.contains(label);
+
+              if (tabClass) {
+                item.classList.add('active');
+              }
+            });
+
+          } else {
+            radioBtn.parentNode.classList.remove('checked');
+            radioBtn.classList.remove('active');
+            parent.parentElement.classList.remove(label);
+
+            items.forEach(item => {
+              const tabClass = item.classList.contains(label);
+
+              if (tabClass) {
+                item.classList.remove('active');
+              }
+            });
+          }
+        });
+
+        this.classList.add('active');
+        this.parentNode.classList.add('checked');
+      })
+    });
+  }
+  steps();
+// $(document).ready(function() {
   var arr_step = [];
   var arr_span_further = [];
   $(".steps_navigation_action").each(function(index) {
