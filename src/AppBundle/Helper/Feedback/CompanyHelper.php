@@ -59,9 +59,8 @@ class CompanyHelper
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
-    $result = $stmt->fetchAll();
-    $nbImported = 0;
-    foreach ($result as $item)
+    $nbImported = 0; $nbTotal = 0; $nbUpdated = 0;
+    while ($item = $stmt->fetch())
     {
       $name = !empty($item['NAME']) ? str_replace('"', '', $item['NAME']) : null;
       $kpp = !empty($item['KPP']) ? $item['KPP'] : null;
@@ -70,16 +69,34 @@ class CompanyHelper
         ($item['ACTIVE'] === 'Y' ? CompanyStatus::ACTIVE : CompanyStatus::NOT_ACTIVE) :
         CompanyStatus::NOT_ACTIVE;
 
-      $company = new Company();
+      $company = $this->entityManager->getRepository(Company::class)->findOneBy(['bitrixId' => $item['ID']]);
+      if (!$company)
+      {
+        $company = $this->entityManager->getRepository(Company::class)->findOneBy(['kpp' => $kpp]);
+
+        if (!$company)
+        {
+          $company = new Company();
+        }
+
+        $company->setBitrixId($item['ID']);
+
+        $nbImported++;
+      }
+      else
+      {
+        $nbUpdated++;
+      }
+
       $company->setName($name);
       $company->setKpp($kpp);
       $company->setFile($image);
       $company->setStatus($status);
+
       $this->entityManager->persist($company);
-      $nbImported++;
     }
     $this->entityManager->flush();
-    $io->success(sprintf('Fill Company: %s out of %s', $nbImported, count($result)));
+    $io->success(sprintf('Company import: %s found, %s added, %s updated', $nbTotal, $nbImported, $nbUpdated));
 
     return $nbImported;
   }

@@ -8,7 +8,7 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="s_regions")
+ * @ORM\Table(name="s_regions", indexes={@ORM\Index(name="bitrix_id_idx", columns={"bitrix_id"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Geo\RegionRepository")
  */
 class Region implements UserLocationInterface
@@ -24,10 +24,12 @@ class Region implements UserLocationInterface
   /**
    * ID из bitrix "Филиалы cтраховых компаний", секция 16 в b_iblock
    *
-   * @var null|string
-   * @ORM\Column(type="string", length=256, nullable=true)
+   * @var integer|null
+   *
+   * @ORM\Column(type="integer", nullable=true)
    */
-  protected $bitrixId;
+  private $bitrixId;
+
 
   /**
    * ID из bitrix "Города и больницы", секция 9 в b_iblock
@@ -136,6 +138,28 @@ class Region implements UserLocationInterface
   {
     return trim(preg_replace('/\d/', '', $this->name));
   }
+
+  /**
+   * @return int|null
+   */
+  public function getBitrixId(): ?int
+  {
+    return $this->bitrixId;
+  }
+
+  /**
+   * @param int|null $bitrixId
+   * @return Region
+   */
+  public function setBitrixId(?int $bitrixId): Region
+  {
+    $this->bitrixId = $bitrixId;
+    return $this;
+  }
+
+
+
+
 
   /**
    * @param string $name

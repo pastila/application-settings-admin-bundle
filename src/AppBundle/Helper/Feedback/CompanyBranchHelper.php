@@ -3,7 +3,9 @@
 namespace AppBundle\Helper\Feedback;
 
 use AppBundle\Entity\Company\Company;
+use AppBundle\Entity\Company\CompanyBranch;
 use AppBundle\Entity\Company\CompanyStatus;
+use AppBundle\Entity\Geo\Region;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Throwable;
@@ -77,17 +79,18 @@ class CompanyBranchHelper
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
-    $result = $stmt->fetchAll();
-    $nbImported = 0;
-    foreach ($result as $item)
+    $nbImported = 0; $nbTotal = 0; $nbUpdated = 0;
+    while ($item = $stmt->fetch())
     {
+      $nbTotal++;
+
       $name = !empty($item['NAME']) ? str_replace('"', '', $item['NAME']) : null;
       $kpp = !empty($item['KPP']) ? $item['KPP'] : null;
       $company_id = !empty($item['COMPANY_ID']) ? $item['COMPANY_ID'] : null;
       $region_id = !empty($item['REGION_ID']) ? $item['REGION_ID'] : null;
       $amountStar = !empty($item['AMOUNT_STARS']) ? (float)$item['AMOUNT_STARS'] : 0;
-      $amountAllStar = !empty($item['ALL_AMOUNT_STAR']) ? (float)$item['ALL_AMOUNT_STAR'] : 0;
-      $image_id = !empty($item['IMAGE_ID']) ? (float)$item['IMAGE_ID'] : null;
+
+      // $image_id = !empty($item['IMAGE_ID']) ? (float)$item['IMAGE_ID'] : null;
       $email1 = !empty($item['EMAIL1']) ? $item['EMAIL1'] : null;
       $email2 = !empty($item['EMAIL2']) ? $item['EMAIL2'] : null;
       $email3 = !empty($item['EMAIL3']) ? $item['EMAIL3'] : null;
@@ -109,32 +112,57 @@ class CompanyBranchHelper
         continue;
       }
 
+      $region = $this->entityManager->getRepository(Region::class)->find($region_id);
+      if (!$region)
+      {
+        $io->warning(sprintf('Branch %s for region %s not imported: no region found', $name, $region_id));
+        continue;
+      }
+
+
       if ($company)
       {
-        $company->setValuation($amountAllStar);
-        $this->entityManager->persist($company);
-        $this->entityManager->flush();
+        $branch = $this->entityManager->getRepository(CompanyBranch::class)->findOneBy(['bitrixId' => $item['ID']]);
 
-        $sql = "INSERT INTO s_company_branches(name, kpp, code, company_id, region_id, valuation, logo_id_from_bitrix, email_first, email_second, email_third, status) 
-                    VALUES(:name, :kpp, :code, :company_id, :region_id, :valuation, :image_id, :email1, :email2, :email3, :status)";
+        if (!$branch)
+        {
+          $branch = $this->entityManager->getRepository(CompanyBranch::class)->findOneBy([
+            'region' => $region,
+            'company' => $company
+          ]);
 
-        $stmt = $conn->prepare($sql);
-        $stmt->bindValue(':name', $name);
-        $stmt->bindValue(':kpp', $kpp);
-        $stmt->bindValue(':code', $kpp);
-        $stmt->bindValue(':company_id', $company_id);
-        $stmt->bindValue(':region_id', $region_id);
-        $stmt->bindValue(':valuation', $amountStar);
-        $stmt->bindValue(':image_id', $image_id);
-        $stmt->bindValue(':email1', $email1);
-        $stmt->bindValue(':email2', $email2);
-        $stmt->bindValue(':email3', $email3);
-        $stmt->bindValue(':status', $status);
-        $stmt->execute();
-        $nbImported++;
+          if (!$branch)
+          {
+            $branch = new CompanyBranch();
+            $branch->setValuation($amountStar);
+
+            $nbImported++;
+          }
+
+          $branch->setBitrixId($item['ID']);
+        }
+        else
+        {
+          $nbUpdated++;
+        }
+
+        $branch->setName($name);
+        $branch->setKpp($kpp);
+        $branch->setCode($kpp);
+        $branch->setCompany($company);
+        $branch->setRegion($region);
+        $branch->setEmailFirst($email1);
+        $branch->setEmailSecond($email2);
+        $branch->setEmailThird($email3);
+        $branch->setStatus($status);
+
+        $this->entityManager->persist($branch);
       }
     }
-    $io->success(sprintf('Fill Company Branch: %s out of %s', $nbImported, count($result)));
+
+    $this->entityManager->flush();
+
+    $io->success(sprintf('Company branch import: %s found, %s added, %s updated', $nbTotal, $nbImported, $nbUpdated));
 
     return $nbImported;
   }

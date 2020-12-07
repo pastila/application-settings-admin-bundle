@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Company.
  *
- * @ORM\Table(name="s_companies")
+ * @ORM\Table(name="s_companies", indexes={@ORM\Index(name="bitrix_id_idx", columns={"bitrix_id"})})
  * @UniqueEntity("slug")
  * @ORM\Entity()
  */
@@ -26,6 +26,14 @@ class Company implements ImageAwareInterface, ImageInterface, SluggableInterface
    * @ORM\Column(type="integer")
    */
   protected $id;
+
+  /**
+   * @var integer|null
+   *
+   * @ORM\Column(type="integer", nullable=true)
+   */
+  private $bitrixId;
+
 
   /**
    * @var string
@@ -131,6 +139,28 @@ class Company implements ImageAwareInterface, ImageInterface, SluggableInterface
   {
     return $this->id;
   }
+
+  /**
+   * @return int|null
+   */
+  public function getBitrixId(): ?int
+  {
+    return $this->bitrixId;
+  }
+
+  /**
+   * @param int|null $bitrixId
+   * @return Company
+   */
+  public function setBitrixId(?int $bitrixId): Company
+  {
+    $this->bitrixId = $bitrixId;
+    return $this;
+  }
+
+
+
+
 
   /**
    * @return string
