@@ -89,7 +89,10 @@ class HomepageController extends Controller
     }
 
     $regions = $this->regionRepository
-      ->findAll();
+      ->createQueryBuilder('r')
+      ->orderBy('r.name')
+      ->getQuery()
+      ->getResult();
 
     $obrashcheniya = new Obrashcheniya();
     $obrashcheniya->setRegion($region);

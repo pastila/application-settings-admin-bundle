@@ -60,7 +60,10 @@ class CommonController extends AbstractController
     }
 
     $regions = $this->regionRepository
-      ->findAll();
+      ->createQueryBuilder('r')
+      ->orderBy('r.name')
+      ->getQuery()
+      ->getResult();
 
     return $this->render('Common/_header.html.twig', [
       'region' => $region,
