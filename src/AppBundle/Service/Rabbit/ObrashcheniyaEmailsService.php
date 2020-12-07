@@ -5,7 +5,8 @@ namespace AppBundle\Service\Rabbit;
 
 use AppBundle\Entity\Obrashcheniya\ObrashcheniyaEmail;
 use AppBundle\Entity\User\User;
-use AppBundle\Model\Obrashchenia\ObrashcheniaBranch;
+use AppBundle\Model\Obrashchenia\AppealDataParse;
+use AppBundle\Model\Obrashchenia\AppealDataToCompany;
 use AppBundle\Service\Obrashcheniya\ObrashcheniaBranchMailer;
 use Doctrine\ORM\EntityManagerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
@@ -65,7 +66,8 @@ class ObrashcheniyaEmailsService implements ConsumerInterface
 
     try
     {
-      $modelObrashcheniaBranch = new ObrashcheniaBranch($data);
+      $parser = new AppealDataParse();
+      $modelAppealData = $parser->parse($data);
     } catch (\Exception $e)
     {
       $this->logger->error('Failed parsing obrashcheniya to branch: ' . $e->getMessage());
@@ -73,7 +75,7 @@ class ObrashcheniyaEmailsService implements ConsumerInterface
     }
     try
     {
-      $this->mailerBranch->send($modelObrashcheniaBranch);
+      $this->mailerBranch->send($modelAppealData);
     } catch (\Exception $e)
     {
       $this->logger->error('Failed send obrashcheniya to branch: ' . $e->getMessage());

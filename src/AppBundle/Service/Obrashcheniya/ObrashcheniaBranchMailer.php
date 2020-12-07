@@ -3,7 +3,7 @@
 namespace AppBundle\Service\Obrashcheniya;
 
 use Accurateweb\EmailTemplateBundle\Email\Factory\EmailFactory;
-use AppBundle\Model\Obrashchenia\ObrashcheniaBranch;
+use AppBundle\Model\Obrashchenia\AppealDataToCompany;
 use Symfony\Component\Routing\RouterInterface;
 
 class ObrashcheniaBranchMailer
@@ -27,9 +27,9 @@ class ObrashcheniaBranchMailer
   }
 
   /**
-   * @param ObrashcheniaBranch $modelObrashcheniaBranch
+   * @param AppealDataToCompany $modelObrashcheniaBranch
    */
-  public function send(ObrashcheniaBranch $modelObrashcheniaBranch)
+  public function send(AppealDataToCompany $modelObrashcheniaBranch)
   {
     $message = $this->emailFactory->createMessage('email_obrashcheniya_branch', [
       $this->mailerFrom => $this->mailerSenderName,

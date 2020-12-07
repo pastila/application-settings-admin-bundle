@@ -13,6 +13,8 @@ services:
             $apiToken: '%api_token%'
             $mailerFrom: '%mailer_from%'
             $mailerSenderName: '%mailer_sender_name%'
+            $appealPathPdf: '%appeal_path_pdf%'
+            $appealPathAttached: '%appeal_path_attached%'
 
     _instanceof:
         Accurateweb\ClientApplicationBundle\DataAdapter\ClientApplicationModelAdapterInterface:
