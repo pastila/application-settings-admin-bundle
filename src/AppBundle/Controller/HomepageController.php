@@ -62,7 +62,6 @@ class HomepageController extends Controller
 
     $questions = $em->getRepository(Question::class)
       ->getQueryAllSortByPosition()
-      ->setMaxResults(3)
       ->getQuery()
       ->getResult();
 
@@ -100,7 +99,8 @@ class HomepageController extends Controller
     return $this->render('@App/homepage.html.twig', [
       'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
       'numbers' => $numbers,
-      'questions' => $questions,
+      'questions' => array_slice($questions, 0, 3),
+      'questions_count' => count($questions),
       'companyRating' => array_slice($this->branchRatingHelper->buildRating($region), 0, 5),
       'feedbacks' => $feedbacks,
       'news' => $news,
