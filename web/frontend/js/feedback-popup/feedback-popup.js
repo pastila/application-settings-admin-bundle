@@ -80,8 +80,9 @@ class PopupContactUs {
           }
         }
       }
-
-      changePopupEventsState(true);
+      if (!this.popupElement.classList.contains(`onpage`)) {
+        changePopupEventsState(true);
+      }
     }
   };
 
@@ -130,7 +131,7 @@ class PopupContactUs {
             },
             error: () => {
               if (!this.popupElement.querySelector(`.popup-write-us__error-message`)){
-                this.popupElement.querySelector(`.popup__wrap`).remove();
+                this.popupElement.querySelector(`.popup__container`).remove();
                 this.popupElement.querySelector(`form`).insertAdjacentHTML(`beforeend`, `<p class="popup-write-us__error-message">Произошла ошибка попробуйте повторить позже</p>`);
               }
             },
@@ -159,12 +160,7 @@ export function initContactUsBtn() {
 
 export function initShowPopup() {
   const popupElement = document.querySelector(`.popup-write-us`);
-
-  if (popupElement) {
-    setTimeout(() => {
-      const popupContuctUs = new PopupContactUs(popupElement);
-      popupContuctUs.open();
-      popupContuctUs.submitForm();
-    }, 2000);
-  }
+  const popupContuctUs = new PopupContactUs(popupElement);
+  popupContuctUs.open();
+  popupContuctUs.submitForm();
 }

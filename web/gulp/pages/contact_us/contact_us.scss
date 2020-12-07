@@ -1,11 +1,40 @@
 @import '../../styles/utils/vars';
 @import "../../pages/landing/v2";
 
+.app-header {
+  background: #fff;
+}
+
 .popup-write-us.onpage {
   background: none;
   position: static;
+  padding-top: 200px;
+  background: #f7fafc;
   .remodal-close {
     display:none;
+  }
+  .feedback_form {
+    background: transparent;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .popup-write-us.onpage {
+    padding-top: 156px;;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .popup-write-us.onpage {
+    padding-top: 195px;;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .popup-write-us.onpage {
+    padding-top: 90px;
   }
 }
 
