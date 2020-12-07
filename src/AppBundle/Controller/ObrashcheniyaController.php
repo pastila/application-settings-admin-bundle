@@ -14,9 +14,9 @@ use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 class ObrashcheniyaController extends Controller
 {
   /**
-   * @Route("/obrashcheniya/{id}/download", name="obrashcheniya-download")
+   * @Route("/appeals/{id}/download", name="appeal_download")
    */
-  public function reportDownloadAction(Request $request)
+  public function appealDownloadAction(Request $request)
   {
     $user = $this->getUser();
     $em = $this->getDoctrine()->getManager();
