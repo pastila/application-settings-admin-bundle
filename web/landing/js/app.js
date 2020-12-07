@@ -1,6 +1,7 @@
 "use strict";
 import initRegionSelectionModal from '../../frontend/js/regionSelectionModal/regionSelectionModal';
 import { initContactUsBtn } from '../../frontend/js/feedback-popup/feedback-popup';
+import headerInit from '../../frontend/js/header-init/header-init';
 
 
 function _extends() {
@@ -230,4 +231,5 @@ $(function () {
   }
 
   initContactUsBtn();
+  headerInit();
 });
