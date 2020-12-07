@@ -328,12 +328,14 @@
                         {% for item in news %}
                             <div class="b-insider__item-wrap">
                                 <div class="b-insider__item">
-                                    <div style="background-image: url({{ image_thumbnail_url(item, null, 'main_lg') }});"
-                                         class="b-insider__item-image">
-                                        <a href="{{ path('news_show', { slug: item.slug }) }}" class="b-insider__item-link">
-                                            <img src="{{ image_thumbnail_url(item, null, 'main_lg') }}" alt="">
-                                        </a>
-                                    </div>
+                                    {% if image_exists(item) %}
+                                        <div style="background-image: url({{ image_thumbnail_url(item, null, 'main_lg') }});"
+                                             class="b-insider__item-image">
+                                            <a href="{{ path('news_show', { slug: item.slug }) }}" class="b-insider__item-link">
+                                                <img src="{{ image_thumbnail_url(item, null, 'main_lg') }}" alt="">
+                                            </a>
+                                        </div>
+                                    {% endif %}
                                     <div class="b-insider__item-content">
                                         <div class="b-insider__item-title">
                                             <a href="{{ path('news_show', { slug: item.slug }) }}" class="b-insider__item-link">
