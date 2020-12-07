@@ -1,22 +1,5 @@
 version: '3'
 
-networks:
-  default:
-    driver: ${NETWORKS_DRIVER}
-    ipam:
-      config:
-        - subnet: 192.168.123.30/29
-  frontend:
-    driver: ${NETWORKS_DRIVER}
-    ipam:
-      config:
-        - subnet: 192.168.123.40/29
-  backend:
-    driver: ${NETWORKS_DRIVER}
-    ipam:
-      config:
-        - subnet: 192.168.123.50/28
-
 volumes:
   mysql:
     driver: ${VOLUMES_DRIVER}
