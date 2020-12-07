@@ -1,6 +1,6 @@
 "use strict";
-import initRegionSelectionModal from '../../regionSelectionModal/regionSelectionModal';
-import { initContactUsBtn } from '../../feedback-popup/feedback-popup';
+import initRegionSelectionModal from '../../frontend/js/regionSelectionModal/regionSelectionModal';
+import { initContactUsBtn } from '../../frontend/js/feedback-popup/feedback-popup';
 
 
 function _extends() {
