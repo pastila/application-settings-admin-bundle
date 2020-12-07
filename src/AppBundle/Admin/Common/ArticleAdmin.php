@@ -11,6 +11,8 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\CoreBundle\Form\Type\DatePickerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\Length;
 
 class ArticleAdmin extends Base
 {
@@ -48,6 +50,15 @@ class ArticleAdmin extends Base
     $form
       ->tab("Основные")
       ->add("title")
+      ->add('slug', TextType::class, [
+        'help' => 'Если оставить пустым, то будет сгенерирован автоматически.',
+        'required' => false,
+        'constraints' => [
+          new Length([
+            'max' => 255,
+          ]),
+        ],
+      ])
       ->add("announce", TextareaType::class)
       ->add('text', TinyMceType::class, [
           'attr' => [
