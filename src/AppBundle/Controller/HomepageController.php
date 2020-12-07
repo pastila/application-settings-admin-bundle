@@ -75,11 +75,6 @@ class HomepageController extends Controller
     $news = $em->getRepository(News::class)
       ->findNewsOrderByPublishedAt(6);
 
-    $obrashcheniya = new Obrashcheniya();
-    $form = $this->createForm(ObrashcheniyaType::class, $obrashcheniya, [
-      'csrf_protection' => false,
-    ]);
-
     /**
      * Получение региона по IP клиента
      */
@@ -94,6 +89,13 @@ class HomepageController extends Controller
 
     $regions = $this->regionRepository
       ->findAll();
+
+    $obrashcheniya = new Obrashcheniya();
+    $obrashcheniya->setRegion($region);
+    $form = $this->createForm(ObrashcheniyaType::class, $obrashcheniya, [
+      'csrf_protection' => false,
+      'data' => $obrashcheniya
+    ]);
 
     // replace this example code with whatever you need
     return $this->render('@App/homepage.html.twig', [
