@@ -19,7 +19,7 @@ class NewsController extends Controller
     $page = $request->query->get('page', 1);
     if ($page < 1)
     {
-      throw new NotFoundHttpException();
+      throw $this->createNotFoundException(sprintf('Requested page %s not exist', $page));
     }
 
     $qb = $this->getDoctrine()->getRepository(News::class)
@@ -31,7 +31,7 @@ class NewsController extends Controller
 
     if ($pagination->getPageCount() < $page)
     {
-      throw $this->createNotFoundException('Ничего не найдено');
+      throw $this->createNotFoundException(sprintf('Requested page %s is out of range (1..%d)', $page, $pagination->getPageCount()));
     }
 
     return $this->render('News/list.html.twig', [

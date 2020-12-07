@@ -46,15 +46,19 @@ class NewsControllerTest extends AppWebTestCase
         'date' => trim($node->filter('.news_item_content_date')->text()),
       ];
     });
+
+
     $textPrev = 'Блог, список новостей: ';
     $this->assertTrue(count($newsHtml) > 1, $textPrev . 'Проверка, что данные вообще нашлись');
-    $this->assertEquals('Заголовок1', $newsHtml[0]['title'], $textPrev . 'Проверка, что Заголовок совпадает');
-    $this->assertEquals('Анонс статьи1', $newsHtml[0]['announce'], $textPrev . 'Проверка, что Анонс совпадает');
-    $this->assertEquals('/news/zagolovok1', $newsHtml[0]['url'], $textPrev . 'Проверка, что url совпадает');
+    $this->assertFalse(count($newsHtml) > 10, $textPrev . 'Проверка, что на одной странице должно быть ограниченное кол-во новостей');
+    $this->assertEquals('1', $crawler->filter('.pagination__item.current')->text(), $textPrev . 'Проверка, что открыта 1-ая страница');
+    $this->assertEquals('Заголовок', $newsHtml[0]['title'], $textPrev . 'Проверка, что Заголовок совпадает');
+    $this->assertEquals('Анонс статьи', $newsHtml[0]['announce'], $textPrev . 'Проверка, что Анонс совпадает');
+    $this->assertEquals('/news/zagolovok', $newsHtml[0]['url'], $textPrev . 'Проверка, что url совпадает');
     $this->assertEquals('02 января, 2020', $newsHtml[0]['date'], $textPrev . 'Проверка, что Дата совпадает');
-    $this->assertEquals('Заголовок2', $newsHtml[1]['title'], $textPrev . 'Проверка, что Заголовок совпадает');
-    $this->assertEquals('Анонс статьи2', $newsHtml[1]['announce'], $textPrev . 'Проверка, что Анонс совпадает');
-    $this->assertEquals('/news/zagolovok2', $newsHtml[1]['url'], $textPrev . 'Проверка, что url совпадает');
+    $this->assertEquals('Заголовок0', $newsHtml[1]['title'], $textPrev . 'Проверка, что Заголовок совпадает');
+    $this->assertEquals('Анонс статьи0', $newsHtml[1]['announce'], $textPrev . 'Проверка, что Анонс совпадает');
+    $this->assertEquals('/news/zagolovok0', $newsHtml[1]['url'], $textPrev . 'Проверка, что url совпадает');
     $this->assertEquals('01 января, 2020', $newsHtml[1]['date'], $textPrev . 'Проверка, что Дата совпадает');
   }
 
@@ -64,11 +68,11 @@ class NewsControllerTest extends AppWebTestCase
   public function testNewsShow()
   {
     $client = static::createClient();
-    $crawler = $client->request('GET', '/news/zagolovok1');
+    $crawler = $client->request('GET', '/news/zagolovok');
 
     $textPrev = 'Блог, чтение одной новости: ';
-    $this->assertEquals('Заголовок1', trim($crawler->filter('.page-title')->text()), $textPrev . 'Проверка, что Заголовок совпадает');
-    $this->assertEquals('Основное содержание1', trim($crawler->filter('.content-news p')->text()), $textPrev . 'Проверка, что Содержание совпадает');
+    $this->assertEquals('Заголовок', trim($crawler->filter('.page-title')->text()), $textPrev . 'Проверка, что Заголовок совпадает');
+    $this->assertEquals('Основное содержание', trim($crawler->filter('.content-news p')->text()), $textPrev . 'Проверка, что Содержание совпадает');
     $this->assertEquals('02 января, 2020', trim($crawler->filter('.content-news .news-date-time')->text()), $textPrev . 'Проверка, что Дата совпадает');
   }
 }

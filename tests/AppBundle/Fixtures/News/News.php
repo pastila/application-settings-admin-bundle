@@ -14,29 +14,29 @@ class News extends Fixture
    */
   public function load(ObjectManager $manager)
   {
-    $news1 = new \AppBundle\Entity\Common\News();
-    $news1->setTitle('Заголовок1');
-    $news1->setAnnounce('Анонс статьи1');
-    $news1->setText('Основное содержание1');
-    $news1->setIsPublished(true);
-    $news1->setCreatedAt(new \DateTime('2020-01-02'));
-    $news1->setUpdatedAt(new \DateTime('2020-01-02'));
-    $news1->setPublishedAt(new \DateTime('2020-01-02'));
-    $manager->persist($news1);
+    $news = new \AppBundle\Entity\Common\News();
+    $news->setTitle('Заголовок');
+    $news->setAnnounce('Анонс статьи');
+    $news->setText('Основное содержание');
+    $news->setIsPublished(true);
+    $news->setCreatedAt(new \DateTime('2020-01-02'));
+    $news->setUpdatedAt(new \DateTime('2020-01-02'));
+    $news->setPublishedAt(new \DateTime('2020-01-02'));
+    $manager->persist($news);
 
-    $news2 = new \AppBundle\Entity\Common\News();
-    $news2->setTitle('Заголовок2');
-    $news2->setAnnounce('Анонс статьи2');
-    $news2->setText('Основное содержание2');
-    $news2->setIsPublished(true);
-    $news2->setCreatedAt(new \DateTime('2020-01-01'));
-    $news2->setUpdatedAt(new \DateTime('2020-01-01'));
-    $news2->setPublishedAt(new \DateTime('2020-01-01'));
-    $manager->persist($news2);
+    for ($i = 0; $i < 10; $i++)
+    {
+      $news = new \AppBundle\Entity\Common\News();
+      $news->setTitle('Заголовок' . $i);
+      $news->setAnnounce('Анонс статьи' . $i);
+      $news->setText('Основное содержание' . $i);
+      $news->setIsPublished(true);
+      $news->setCreatedAt(new \DateTime('2020-01-01'));
+      $news->setUpdatedAt(new \DateTime('2020-01-01'));
+      $news->setPublishedAt(new \DateTime('2020-01-01'));
+      $manager->persist($news);
+    }
 
     $manager->flush();
-
-    $this->addReference('news-simple1', $news1);
-    $this->addReference('news-simple2', $news2);
   }
 }
