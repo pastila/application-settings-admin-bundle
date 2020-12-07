@@ -1042,6 +1042,9 @@
   color: #000;
   font-size: 16px;
   line-height: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .b-rating__item-star {
@@ -2483,6 +2486,17 @@
   .b-rating__in {
     padding: 40px 20px 20px;
   }
+
+  .b-rating__item-title,
+  .b-rating__item:before {
+    font-size: 12px;
+  }
+
+  .b-rating__item-star .svg-icon {
+    width: 12px;
+    height: 12px;
+  }
+
 
   .b-reviews__item {
     width: 260px;
