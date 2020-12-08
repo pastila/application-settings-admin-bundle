@@ -12,6 +12,7 @@
         "setasign/fpdi-tfpdf": "^2.2",
         "jurosh/pdf-merge": "^2.0",
         "phpoffice/phpspreadsheet": "^1.10",
-        "php-amqplib/php-amqplib": "~2.7.0"
+        "php-amqplib/php-amqplib": "~2.7.0",
+        "ext-pdo": "*"
     }
 }
