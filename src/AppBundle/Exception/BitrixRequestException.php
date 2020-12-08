@@ -28,7 +28,7 @@ class BitrixRequestException extends \Exception
   }
 
   /**
-   * @return mixed|null
+   * @return int|null
    */
   public function getHttpStatusCode(): ?int
   {
