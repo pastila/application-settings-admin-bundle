@@ -27,7 +27,7 @@ CModule::IncludeModule("iblock");
             <!-- Input -->
             <div class="input__wrap" >
                 <label class="input__wrap_label">Фамилия</label>
-                <input style="width: 98%;" id="famaly-name" type="text" name="famaly-name" pattern="^[А-ЯЁ][а-яё]*([-][А-ЯЁ][а-яё]*)*$"
+                <input id="famaly-name" type="text" name="famaly-name" pattern="^[А-ЯЁ][а-яё]*([-][А-ЯЁ][а-яё]*)*$"
                        placeholder="Фамилия" required>
 
             </div>
@@ -35,14 +35,14 @@ CModule::IncludeModule("iblock");
             <!-- Input -->
             <div class="input__wrap" >
                 <label class="input__wrap_label">Имя</label>
-                <input style="width: 98%;" id="name" type="text" name="name" pattern="^[А-ЯЁ][а-яё]*([-][А-ЯЁ][а-яё]*)*$"
+                <input id="name" type="text" name="name" pattern="^[А-ЯЁ][а-яё]*([-][А-ЯЁ][а-яё]*)*$"
                        placeholder="Имя" required>
             </div>
 
             <!-- Input -->
             <div class="input__wrap" >
                 <label class="input__wrap_label">Отчество</label>
-                <input style="width: 98%;" id="last-name" type="text" name="last-name" pattern="^[А-ЯЁ][а-яё]*([-][А-ЯЁ][а-яё]*)*$"
+                <input id="last-name" type="text" name="last-name" pattern="^[А-ЯЁ][а-яё]*([-][А-ЯЁ][а-яё]*)*$"
                        placeholder="Отчество" required>
             </div>
 
@@ -137,6 +137,14 @@ input[type="date"]::-webkit-calendar-picker-indicator
             <div class="input__wrap hidden_wrap_phone flex_hidden_wrap_phone main_btn-parent">
                 <input type="button" class="accept-phone-js whiteBtn" value="Подтвердить номер телефона">
             </div>
+            <div class="wrap-chrckbox checkbox_registration checkbox_registration_modal ">
+                <label class="check-label relative_block" >
+                    Я ознакомлен и согласен с условиями <a target="_blank" href="/terms-of-use/">пользовательского соглашения</a> и
+                    <a target="_blank" href="/personal-data-processing/">политикой по обработке персональных данных</a>
+                    <input type="checkbox" required value="" />
+                    <span class="check-img check-img_reg"></span>
+                </label>
+            </div>
             <div class="input__wrap" id="sms_confirm" style="display: none">
                 <div class="input__wrap--column">
                 <div class="input_phone-flex">
@@ -151,14 +159,6 @@ input[type="date"]::-webkit-calendar-picker-indicator
             <div class="input__wrap adc" style="margin-top0: 70px;">
               <button type="submit" id="registration" class="mainBtn" disabled style="background-color:grey">Регистрация</button>
             </div>
-        </div>
-
-        <div class="wrap-chrckbox checkbox_registration checkbox_registration_modal ">
-            <label class="check-label relative_block" >
-                Я ознакомлен и согласен с условиями <a target="_blank" href="/terms-of-use/">пользовательского соглашения</a> и
-                <a target="_blank" href="/personal-data-processing/">политикой по обработке персональных данных</a>
-                <input type="checkbox" required value="" />
-                <span class="check-img check-img_reg"></span>
         </div>
         <div class="popup__wrap_bottom center__child">
         

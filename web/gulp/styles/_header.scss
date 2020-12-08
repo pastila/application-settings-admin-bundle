@@ -454,7 +454,7 @@
 
                 &_top, &_middle, &_bottom {
                     display: flex;
-                    flex-wrap: nowrap;
+                    flex-wrap: wrap;
 
                     .input {
                         &__wrap {
