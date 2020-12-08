@@ -42,6 +42,11 @@ class DataFromBitrix
    */
   public function getData($url)
   {
+    if (!isset($_SERVER['REMOTE_ADDR']))
+    {
+      throw new BitrixRequestException('Unable to determine our client remote address.');
+    }
+
     $ch = curl_init(sprintf($url, 'http://nginx'));
 
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
@@ -65,7 +70,8 @@ class DataFromBitrix
     curl_close($ch);
 
     if ($this->getCode() !== 200) {
-      throw new BitrixRequestException(sprintf('Failed request, http_code: %s.', $this->info['http_code']));
+      throw new BitrixRequestException(sprintf('Failed request, http_code: %s.', $this->info['http_code']), 0,
+        $this->info['http_code'], $this->getRes());
     }
 
     return $this->getRes();
