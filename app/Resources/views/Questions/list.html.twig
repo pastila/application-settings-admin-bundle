@@ -25,9 +25,9 @@
     <div class="app__content">
         <ul class="breadcrumbs" itemscope="" itemtype="http://schema.org/BreadcrumbList">
             {% if is_mobile() or is_tablet() %}
-                <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
-                    <a href="{{ path("homepage") }}" class="active-breadcrumbs" itemprop="item">{{ title }}
-                        <meta itemprop="name" content="{{ title }}">
+                <li class="active-breadcrumbs" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                    <a href="{{ path('homepage') }}" itemprop="item">Главная
+                        <meta itemprop="name" content="Главная">
                     </a>
                     <meta itemprop="position" content="1">
                 </li>
