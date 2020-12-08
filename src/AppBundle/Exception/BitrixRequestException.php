@@ -38,7 +38,7 @@ class BitrixRequestException extends \Exception
   /**
    * @return mixed|null
    */
-  public function getResponse(): ?mixed
+  public function getResponse()
   {
     return $this->response;
   }
