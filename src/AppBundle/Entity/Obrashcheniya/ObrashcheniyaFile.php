@@ -59,6 +59,14 @@ class ObrashcheniyaFile
   protected $bitrixId;
 
   /**
+   * Номер изображения из bitrix, для одного обращения может быть от 1 до 5 изображений
+   *
+   * @var null|integer
+   * @ORM\Column(type="integer", nullable=true)
+   */
+  protected $imageNumber;
+
+  /**
    * @return integer
    */
   public function getId()
@@ -126,6 +134,15 @@ class ObrashcheniyaFile
   }
 
   /**
+   * @return string
+   */
+  public function getFileName()
+  {
+    $array = explode("/", $this->file);
+    return end($array);
+  }
+
+  /**
    * @param $file
    * @return $this
    */
@@ -152,6 +169,25 @@ class ObrashcheniyaFile
   public function setBitrixId($bitrixId)
   {
     $this->bitrixId = $bitrixId;
+
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getImageNumber()
+  {
+    return $this->imageNumber;
+  }
+
+  /**
+   * @param $imageNumber
+   * @return $this
+   */
+  public function setImageNumber($imageNumber)
+  {
+    $this->imageNumber = $imageNumber;
 
     return $this;
   }

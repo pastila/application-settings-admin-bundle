@@ -1,6 +1,10 @@
 <?php
 require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
 
+require_once dirname(__FILE__).'/../vendor/autoload.php';
+require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/rabbitmq.php");
+require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/config_obrashcheniya.php");
+
 CModule::IncludeModule("iblock");
 
 if (isset($_FILES['import_file']['tmp_name'])) {
@@ -38,26 +42,58 @@ if (isset($_FILES['import_file']['tmp_name'])) {
             $i = 5;
         }
 
+        $full_name_file = '';
         if ($key) {
             $result[$key] = true;
-            CIBlockElement::SetPropertyValuesEx(
-                $_POST['id_elem'],
-                11,
-                array($key => $_FILES['import_file'])
-            );
 
-            $db_props = CIBlockElement::GetProperty(11, $_POST['id_elem'], array(), array("CODE" => $key));
-            if ($ar_props = $db_props->Fetch()) {
+            if (!file_exists(obrashcheniya_report_attached_path)) {
+              mkdir(obrashcheniya_report_attached_path, 0777, true);
+            }
+            $array = explode(".", $_FILES['import_file']['name']);
+            $name_dir = obrashcheniya_report_attached_path;
+            $name_file =  $key;
+            $name_file .= "_" . $_POST['id_elem'] . "_";
+            $name_file .= 'file.' . end($array) ;
+            $full_name_file = $name_dir . $name_file;
+
+            if (move_uploaded_file($_FILES['import_file']['tmp_name'], $full_name_file)) {
+              $arFile = CFile::MakeFileArray($full_name_file);
+              $arProperty = Array(
+                 $key => $arFile,
+              );
+              CIBlockElement::SetPropertyValuesEx(
+                $_POST["id_elem"],
+                11,
+                $arProperty);
+
+              $db_props = CIBlockElement::GetProperty(11, $_POST['id_elem'], array(), array("CODE" => $key));
+              if ($ar_props = $db_props->Fetch()) {
                 $arFile = CFile::GetFileArray($ar_props['VALUE']);
+              }
+
+              /**
+               * Подготовка и отправка данных о принадлежности файла пользователю
+               */
+              $rsUser = $USER->GetByLogin($USER->GetLogin());
+              if ($arUser = $rsUser->Fetch())
+              {
+                rabbitmqSend(queue_obrashcheniya_files, json_encode([
+                  'user_id' => $arUser['ID'],
+                  'user_login' => $arUser['LOGIN'],
+                  'file_type' => obrashcheniya_file_type_attach,
+                  'file_name' => $full_name_file,
+                  'obrashcheniya_id' => $_POST["id_elem"],
+                  'imageNumber' => $i,
+                ]));
+              }
             }
         }
 
         $result['SRC'] = $arFile["SRC"];
-
         $result['ID'] = $_POST['id_elem'] . '_img_' . $i;
         $result['RES'] = $res;
         $result['SUCCESS'] = "Файл успешно загружен!";
-  $result['FILE_NAME'] = $arFile["FILE_NAME"];
+        $result['FILE_NAME'] = !empty($arFile["FILE_NAME"]) ? $arFile["FILE_NAME"] : '';
 
     } else {
         // выводим сообщение об ошибке
