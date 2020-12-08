@@ -46,7 +46,7 @@ class DataFromBitrix
 
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
       'X-SF-SECRET: 2851f0ae-9dc7-4a22-9283-b86abfa44900',
-      'X-SF-REMOTE-ADDR: ' . $this->request->getClientIp(),
+      'X-SF-REMOTE-ADDR: ' . $_SERVER['REMOTE_ADDR'],
       'X-Requested-With: XmlHttpRequest'
     ));
 
