@@ -4,6 +4,7 @@
 namespace AppBundle\Model\Obrashchenia;
 
 
+use AppBundle\Entity\User\User;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AppealDataToCompany
@@ -23,6 +24,11 @@ class AppealDataToCompany
    * @var array
    */
   private $attachedFiles;
+  /**
+   * Автор отзыва
+   * @var User
+   */
+  private $author;
 
   /**
    * @return mixed
@@ -70,5 +76,21 @@ class AppealDataToCompany
   public function setPdf($pdf): void
   {
     $this->pdf = $pdf;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getAuthor()
+  {
+    return $this->author;
+  }
+
+  /**
+   * @param $author
+   */
+  public function setAuthor($author): void
+  {
+    $this->author = $author;
   }
 }
