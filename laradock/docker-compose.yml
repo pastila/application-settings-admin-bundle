@@ -226,7 +226,7 @@ services:
         - INSTALL_FAKETIME=${PHP_FPM_INSTALL_FAKETIME}
         - INSTALL_IONCUBE=${PHP_FPM_INSTALL_IONCUBE}
         - PUID=${PHP_FPM_PUID}
-        - PGID=${PHP_FPM_PUID}
+        - PGID=${PHP_FPM_PGID}
       context: ./php-fpm-symfony
 
   php-fpm-bitrix:
@@ -290,7 +290,7 @@ services:
         - INSTALL_FAKETIME=${PHP_FPM_INSTALL_FAKETIME}
         - INSTALL_IONCUBE=${PHP_FPM_INSTALL_IONCUBE}
         - PUID=${PHP_FPM_PUID}
-        - PGID=${PHP_FPM_PUID}
+        - PGID=${PHP_FPM_PGID}
       context: ./php-fpm-bitrix
 
 
