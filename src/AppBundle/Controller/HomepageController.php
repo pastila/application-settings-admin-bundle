@@ -188,17 +188,22 @@ class HomepageController extends Controller
         }
         $this->get('session')->getFlashBag()->set('success', 'Спасибо, сообщение было отправлено');
         return $this->redirectToRoute('homepage');
-      } else
+      } else if ($request->isXmlHttpRequest())
       {
-        if ($request->isXmlHttpRequest())
-        {
-          $response = $this->render('@App/modal/contact_us.html.twig', [
-            'form' => $form->createView()
-          ]);
-          $response->setStatusCode(400);
-          return $response;
-        }
+        $response = $this->render('@App/modal/contact_us.html.twig', [
+          'form' => $form->createView()
+        ]);
+        $response->setStatusCode(400);
+        return $response;
       }
+    }
+    if ($request->isXmlHttpRequest())
+    {
+      $response = $this->render('@App/modal/contact_us.html.twig', [
+        'form' => $form->createView()
+      ]);
+      $response->setStatusCode(200);
+      return $response;
     }
 
     return $this->render('@App/contact_us.html.twig', [
