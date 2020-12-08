@@ -79,11 +79,11 @@ if ($Section = $section->GetNext()) {
                 $pdf_5 = true;
             }
         }
-        $img_first = CFile::GetPath($arFields['PROPERTY_IMG_1_VALUE']);
-        $img_second = CFile::GetPath($arFields['PROPERTY_IMG_2_VALUE']);
-        $img_third = CFile::GetPath($arFields['PROPERTY_IMG_3_VALUE']);
-        $img_fourth = CFile::GetPath($arFields['PROPERTY_IMG_4_VALUE']);
-        $img_fifth = CFile::GetPath($arFields['PROPERTY_IMG_5_VALUE']);
+        $img_first = sprintf(obrashcheniya_report_url_download, $arFields["ID"]).'?image_number=1';
+        $img_second = sprintf(obrashcheniya_report_url_download, $arFields["ID"]).'?image_number=2';
+        $img_third = sprintf(obrashcheniya_report_url_download, $arFields["ID"]).'?image_number=3';
+        $img_fourth = sprintf(obrashcheniya_report_url_download, $arFields["ID"]).'?image_number=4';
+        $img_fifth = sprintf(obrashcheniya_report_url_download, $arFields["ID"]).'?image_number=5';
         $newDate = FormatDate("d.m.Y", MakeTimeStamp($arFields["CREATED_DATE"]));
         ?>
 <!-- Обращения item -->

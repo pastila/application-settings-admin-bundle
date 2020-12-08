@@ -13,6 +13,7 @@ const queue_obrashcheniya_files = 'obrashcheniya_files';
  */
 const queue_obrashcheniya_emails = 'obrashcheniya_emails';
 
+const obrashcheniya_report_attached_path = '/var/www/var/uploads/attached/';
 const obrashcheniya_report_path = '/var/www/var/uploads/pdf/';
 const obrashcheniya_report_url_download = '/appeals/%s/download';
 const obrashcheniya_file_type_report = 'report';

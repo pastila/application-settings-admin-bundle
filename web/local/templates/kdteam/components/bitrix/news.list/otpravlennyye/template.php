@@ -282,6 +282,8 @@ if (count($arResult["ITEMS"]) > 0) {
                             <?php if (!empty($arItem["PROPERTIES"]["IMG_1"]['VALUE'])) {
                                 $pdf = false;
                                 $file = CFile::GetFileArray($arItem["PROPERTIES"]["IMG_1"]['VALUE']);
+                                $url_load = sprintf(obrashcheniya_report_url_download, $arItem["ID"]);
+                                $url_load = $url_load . '?image_number=1';
                                 if ($file["CONTENT_TYPE"] == "application/pdf") {
                                     $pdf = true;
                                 }
@@ -292,7 +294,7 @@ if (count($arResult["ITEMS"]) > 0) {
                                         <?php if ($pdf) { ?>
                                             <img src="/local/templates/kdteam/images/svg/pdf_icon.svg" alt="">
                                         <? } else { ?>
-                                            <img src="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_1"]['VALUE'])["SRC"] ?>"
+                                            <img src="<?= $url_load ?>"
                                                  alt="">
                                         <?php } ?>
                                     </div>
@@ -302,7 +304,7 @@ if (count($arResult["ITEMS"]) > 0) {
                                             <?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_1"]['VALUE'])["FILE_NAME"] ?>
                                         </div>
                                         <a id="download_img" download
-                                           href="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_1"]['VALUE'])["SRC"] ?>"
+                                           href="<?= $url_load ?>"
                                            class="obrashcheniya__content_sidebar_blocks_text_link">
                                             скачать
                                         </a>
@@ -316,6 +318,8 @@ if (count($arResult["ITEMS"]) > 0) {
                                 $pdf = false;
 
                                 $file = CFile::GetFileArray($arItem["PROPERTIES"]["IMG_2"]['VALUE']);
+                                $url_load = sprintf(obrashcheniya_report_url_download, $arItem["ID"]);
+                                $url_load = $url_load . '?image_number=2';
                                 if ($file["CONTENT_TYPE"] == "application/pdf") {
                                     $pdf = true;
                                 }?>
@@ -325,7 +329,7 @@ if (count($arResult["ITEMS"]) > 0) {
                                         <?php if ($pdf) { ?>
                                             <img src="/local/templates/kdteam/images/svg/pdf_icon.svg" alt="">
                                         <? } else { ?>
-                                            <img src="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_2"]['VALUE'])["SRC"] ?>"
+                                            <img src="<?= $url_load ?>"
                                                  alt="">
                                         <?php } ?>
                                     </div>
@@ -335,7 +339,7 @@ if (count($arResult["ITEMS"]) > 0) {
                                             <?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_2"]['VALUE'])["FILE_NAME"] ?>
                                         </div>
                                         <a id="download_img" download
-                                           href="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_2"]['VALUE'])["SRC"] ?>"
+                                           href="<?= $url_load ?>"
                                            class="obrashcheniya__content_sidebar_blocks_text_link">
                                             скачать
                                         </a>
@@ -349,6 +353,8 @@ if (count($arResult["ITEMS"]) > 0) {
                                 $pdf = false;
 
                                 $file = CFile::GetFileArray($arItem["PROPERTIES"]["IMG_3"]['VALUE']);
+                                $url_load = sprintf(obrashcheniya_report_url_download, $arItem["ID"]);
+                                $url_load = $url_load . '?image_number=3';
                                 if ($file["CONTENT_TYPE"] == "application/pdf") {
                                     $pdf = true;
                                 }?>
@@ -358,7 +364,7 @@ if (count($arResult["ITEMS"]) > 0) {
                                         <?php if ($pdf) { ?>
                                             <img src="/local/templates/kdteam/images/svg/pdf_icon.svg" alt="">
                                         <? } else { ?>
-                                            <img src="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_3"]['VALUE'])["SRC"] ?>"
+                                            <img src="<?= $url_load ?>"
                                                  alt="">
                                         <?php } ?>
                                     </div>
@@ -368,7 +374,7 @@ if (count($arResult["ITEMS"]) > 0) {
                                             <?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_3"]['VALUE'])["FILE_NAME"] ?>
                                         </div>
                                         <a id="download_img" download
-                                           href="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_3"]['VALUE'])["SRC"] ?>"
+                                           href="<?= $url_load ?>"
                                            class="obrashcheniya__content_sidebar_blocks_text_link">
                                             скачать
                                         </a>
@@ -381,6 +387,8 @@ if (count($arResult["ITEMS"]) > 0) {
                             <?php if (!empty($arItem["PROPERTIES"]["IMG_4"]['VALUE'])) {
                                 $pdf = false;
                                 $file = CFile::GetFileArray($arItem["PROPERTIES"]["IMG_4"]['VALUE']);
+                                $url_load = sprintf(obrashcheniya_report_url_download, $arItem["ID"]);
+                                $url_load = $url_load . '?image_number=4';
                                 if ($file["CONTENT_TYPE"] == "application/pdf") {
                                     $pdf = true;
                                 }?>
@@ -390,7 +398,7 @@ if (count($arResult["ITEMS"]) > 0) {
                                         <?php if ($pdf) { ?>
                                             <img src="/local/templates/kdteam/images/svg/pdf_icon.svg" alt="">
                                         <? } else { ?>
-                                            <img src="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_4"]['VALUE'])["SRC"] ?>"
+                                            <img src="<?= $url_load ?>"
                                                  alt="">
                                         <?php } ?>
                                     </div>
@@ -400,7 +408,7 @@ if (count($arResult["ITEMS"]) > 0) {
                                             <?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_4"]['VALUE'])["FILE_NAME"] ?>
                                         </div>
                                         <a id="download_img" download
-                                           href="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_4"]['VALUE'])["SRC"] ?>"
+                                           href="<?= $url_load ?>"
                                            class="obrashcheniya__content_sidebar_blocks_text_link">
                                             скачать
                                         </a>
@@ -413,6 +421,8 @@ if (count($arResult["ITEMS"]) > 0) {
                             <?php if (!empty($arItem["PROPERTIES"]["IMG_5"]['VALUE'])) {
                                 $pdf = false;
                                 $file = CFile::GetFileArray($arItem["PROPERTIES"]["IMG_5"]['VALUE']);
+                                $url_load = sprintf(obrashcheniya_report_url_download, $arItem["ID"]);
+                                $url_load = $url_load . '?image_number=5';
                                 if ($file["CONTENT_TYPE"] == "application/pdf") {
                                     $pdf = true;
                                 }?>
@@ -422,7 +432,7 @@ if (count($arResult["ITEMS"]) > 0) {
                                         <?php if ($pdf) { ?>
                                             <img src="/local/templates/kdteam/images/svg/pdf_icon.svg" alt="">
                                         <? } else { ?>
-                                            <img src="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_5"]['VALUE'])["SRC"] ?>"
+                                            <img src="<?= $url_load ?>"
                                                  alt="">
                                         <?php } ?>
                                     </div>
@@ -432,7 +442,7 @@ if (count($arResult["ITEMS"]) > 0) {
                                             <?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_5"]['VALUE'])["FILE_NAME"] ?>
                                         </div>
                                         <a id="download_img" download
-                                           href="<?= CFile::GetFileArray($arItem["PROPERTIES"]["IMG_5"]['VALUE'])["SRC"] ?>"
+                                           href="<?= $url_load ?>"
                                            class="obrashcheniya__content_sidebar_blocks_text_link">
                                             скачать
                                         </a>
