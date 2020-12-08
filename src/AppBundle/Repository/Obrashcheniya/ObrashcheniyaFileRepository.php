@@ -36,7 +36,8 @@ class ObrashcheniyaFileRepository extends ServiceEntityRepository
     $query = $this
       ->createQueryBuilder('o_f')
       ->andWhere('o_f.bitrixId = :bitrixId')
-      ->setParameter('bitrixId', $bitrixId );
+      ->setParameter('bitrixId', $bitrixId )
+      ->orderBy('o_f.id', 'DESC');
     if ($imageNumber)
     {
       $query
