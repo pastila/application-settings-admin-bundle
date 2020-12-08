@@ -5,18 +5,12 @@ namespace AppBundle\Service\Rabbit;
 
 use AppBundle\Model\Obrashchenia\AppealDataParse;
 use AppBundle\Service\Obrashcheniya\ObrashcheniaBranchMailer;
-use Doctrine\ORM\EntityManagerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
 use Psr\Log\LoggerInterface;
 
 class ObrashcheniyaEmailsService implements ConsumerInterface
 {
-  /**
-   * @var EntityManagerInterface
-   */
-  private $entityManager;
-
   /**
    * @var LoggerInterface
    */
@@ -34,18 +28,16 @@ class ObrashcheniyaEmailsService implements ConsumerInterface
 
   /**
    * ObrashcheniyaEmailsService constructor.
-   * @param EntityManagerInterface $entityManager
    * @param LoggerInterface $logger
    * @param ObrashcheniaBranchMailer $mailer
+   * @param AppealDataParse $appealDataParse
    */
   public function __construct(
-    EntityManagerInterface $entityManager,
     LoggerInterface $logger,
     ObrashcheniaBranchMailer $mailer,
     AppealDataParse $appealDataParse
   )
   {
-    $this->entityManager = $entityManager;
     $this->logger = $logger;
     $this->mailerBranch = $mailer;
     $this->appealDataParse = $appealDataParse;

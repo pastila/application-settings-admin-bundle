@@ -19,3 +19,20 @@ function parsingPdfPath($name)
   $str = substr_replace($str, ':', 20, 1);
   return $str;
 }
+
+/**
+ * @param $array
+ * @param $j
+ * @return bool
+ */
+function findExistFile($array, $j)
+{
+  foreach ($array as $item)
+  {
+    if ($j == $item['image_number'])
+    {
+      return true;
+    }
+  }
+  return false;
+}

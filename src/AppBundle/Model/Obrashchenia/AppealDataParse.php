@@ -4,11 +4,17 @@
 namespace AppBundle\Model\Obrashchenia;
 
 
+use AppBundle\Entity\User\User;
 use AppBundle\Repository\Obrashcheniya\ObrashcheniyaFileRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AppealDataParse
 {
+  /**
+   * @var EntityManagerInterface
+   */
+  private $entityManager;
   /**
    * Директория, где лежат pdf файлы обращения
    * @var string
@@ -25,11 +31,13 @@ class AppealDataParse
   private $fileRepository;
 
   public function __construct(
+    EntityManagerInterface $entityManager,
     $appealPathPdf,
     $appealPathAttached,
     ObrashcheniyaFileRepository $fileRepository
   )
   {
+    $this->entityManager = $entityManager;
     $this->appealPathPdf = $appealPathPdf;
     $this->appealPathAttached = $appealPathAttached;
     $this->fileRepository = $fileRepository;
@@ -44,12 +52,21 @@ class AppealDataParse
   {
     if (
       empty($data[2]['EMAIL']) ||
-      empty($data[2]['PDF'])
+      empty($data[2]['PDF'] ||
+      empty($data['login']))
     )
     {
       throw new \Exception('Empty EMAIL or PDF in data in AppealDataParse');
     }
+    $author = $this->entityManager->getRepository(User::class)
+      ->findOneBy(['login' => $data['login']]);
+    if (!$author)
+    {
+      throw new \Exception(sprintf('Not found user %s by login in AppealDataParse', $data['login']));
+    }
+
     $model = new AppealDataToCompany();
+    $model->setAuthor($author);
     $model->setPdf($this->appealPathPdf . $data[2]['PDF']);
     $model->setEmailsTo(array_map(function ($item)
     {

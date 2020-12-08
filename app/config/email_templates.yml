@@ -27,9 +27,10 @@ aw_email_templating:
           Ссылка на страницу с  <a href ="%%url%%">отзывом</a>
 
     email_obrashcheniya_branch:
-      description: 'Отправка почты на почту страховой службы о формировании обращения'
+      description: 'Отправка почты страховой службе о формировании обращения'
       variables:
+        author: { description: "Отправитель" }
       defaults:
         subject: "Обращение о взимании денежных средств"
         body: |
-          На сайте bezbahil.ru было новое сформировано обращение.
+          На сайте bezbahil.ru было сформировано новое обращение от пользователя "%%author%%".

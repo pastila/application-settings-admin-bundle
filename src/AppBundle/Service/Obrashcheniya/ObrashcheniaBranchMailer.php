@@ -38,7 +38,9 @@ class ObrashcheniaBranchMailer
       $this->mailerFrom => $this->mailerSenderName,
     ],
       $modelObrashcheniaBranch->getEmailsTo(),
-      []
+      [
+        'author' => $modelObrashcheniaBranch->getAuthor()
+      ]
     );
     try
     {
