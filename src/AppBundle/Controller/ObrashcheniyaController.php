@@ -21,7 +21,7 @@ class ObrashcheniyaController extends Controller
     $user = $this->getUser();
     $em = $this->getDoctrine()->getManager();
     $obrashcheniyaFile = $em->getRepository(ObrashcheniyaFile::class)
-      ->createFileQueryBuilder($request->get('id'), ($user->getIsAdmin() ? null : $user))
+      ->createFileQueryBuilder($request->get('id'), $request->get('image_number'), ($user->getIsAdmin() ? null : $user))
       ->setMaxResults(1)
       ->getQuery()
       ->getOneOrNullResult();
@@ -34,7 +34,7 @@ class ObrashcheniyaController extends Controller
     try
     {
       $response = new BinaryFileResponse($obrashcheniyaFile->getFile());
-      $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_INLINE, $request->get('id'));
+      $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_INLINE, $obrashcheniyaFile->getFileName());
     }
     catch (FileNotFoundException $e)
     {
