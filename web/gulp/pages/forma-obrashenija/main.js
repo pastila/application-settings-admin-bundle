@@ -1253,48 +1253,47 @@ $(document).ready(function () {
   }
 
   steps();
-  $(document).ready(function () {
-    var arr_step = [];
-    var arr_span_further = [];
-    $(".steps_navigation_action").each(function (index) {
-      if (index !== 0) {
-        $(this).attr("for", "");
-        arr_step.push($(this));
-      }
-    });
 
-    $(".steps_items_item_button").each(function () {
-      arr_span_further.push($(this));
-    });
-
-    $("[name=years]").change(function () {
-      arr_step[0].attr("for", "step-2");
-      arr_span_further[0].removeClass("disabled");
-    });
-    arr_span_further[0].click(function () {
-      arr_step[0].trigger("click");
-    });
-
-
-    $("[data-planned]").change(function () {
-      arr_step[1].attr("for", "step-3");
-      arr_span_further[1].removeClass("disabled");
-
-      if (regionURLParameter) {
-        fillRegionInput(regionURLParameter);
-      }
-    });
-
-    arr_span_further[1].click(function () {
-      arr_step[1].trigger("click");
-
-    });
-
-    if (yearURLParameter) {
-      fillYearInput(yearURLParameter);
-      transitionStep1_2();
+  var arr_step = [];
+  var arr_span_further = [];
+  $(".steps_navigation_action").each(function (index) {
+    if (index !== 0) {
+      $(this).attr("for", "");
+      arr_step.push($(this));
     }
-
-    $(".steps-wrap").show();
   });
+
+  $(".steps_items_item_button").each(function () {
+    arr_span_further.push($(this));
+  });
+
+  $("[name=years]").change(function () {
+    arr_step[0].attr("for", "step-2");
+    arr_span_further[0].removeClass("disabled");
+  });
+  arr_span_further[0].click(function () {
+    arr_step[0].trigger("click");
+  });
+
+
+  $("[data-planned]").change(function () {
+    arr_step[1].attr("for", "step-3");
+    arr_span_further[1].removeClass("disabled");
+
+    if (regionURLParameter) {
+      fillRegionInput(regionURLParameter);
+    }
+  });
+
+  arr_span_further[1].click(function () {
+    arr_step[1].trigger("click");
+
+  });
+
+  if (yearURLParameter) {
+    fillYearInput(yearURLParameter);
+    transitionStep1_2();
+  }
+
+  $(".steps-wrap").show();
 });
