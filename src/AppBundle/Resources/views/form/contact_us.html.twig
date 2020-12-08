@@ -3,37 +3,30 @@
     class: 'feedback_form remodal',
 }}) }}
 
-<div data-remodal-action="close" class="remodal-close">
-    <div class="svg-icon svg-icon--close" aria-hidden="true">
-        <svg class="svg-icon__link">
-            <use xlink:href="#close"></use>
-        </svg>
+{{ form_errors(form) }}
+
+<div class="popup__input-container">
+    <label class="input__label visuallyhidden">Имя</label>
+    {{ form_row(form.author_name, { attr: { placeholder: "Имя" } }) }}
+</div>
+
+<div class="popup__input-container">
+    <label class="input__container_label visuallyhidden">Электронная почта</label>
+    {{ form_row(form.email, { attr: { placeholder: "Email" } }) }}
+</div>
+
+<div class="popup__input-container">
+    {{ form_label(form.message, 'Введите сообщение', { 'label_attr': { 'class': 'input__container_label visuallyhidden' }}) }}
+
+    {{ form_widget(form.message, { attr: { rows: 5, placeholder: "Введите сообщение" }}) }}
+
+    <div class="input__error-message">
+        {{ form_errors(form.message) }}
     </div>
 </div>
 
-<div class="popup__container">
-    <div class="remodal-title">Напишите нам</div>
+<button type="submit" class="mainBtn btn" id="ask">Отправить</button>
 
-    <div class="popup__input-container">
-        <label class="input__label visuallyhidden">Имя</label>
-        {{ form_row(form.author_name, { attr: { placeholder: "Имя" } }) }}
-        <span class="input__error-message">Поле не должно быть пустым</span>
-    </div>
-
-    <div class="popup__input-container">
-        <label class="input__container_label visuallyhidden">Электронная почта</label>
-        {{ form_row(form.email, { attr: { placeholder: "Email" } }) }}
-        <span class="input__error-message">Поле не должно быть пустым</span>
-    </div>
-
-    <div class="popup__input-container">
-        <label class="input__container_label visuallyhidden">Сообщение</label>
-        {{ form_row(form.message, { attr: { rows: 5, placeholder: "Введите сообщение" }}) }}
-        <span class="input__error-message">Поле не должно быть пустым</span>
-    </div>
-
-    <button type="submit" class="mainBtn btn" id="ask">Отправить</button>
-</div>
 
 {{ form_rest(form) }}
 {{ form_end(form) }}
