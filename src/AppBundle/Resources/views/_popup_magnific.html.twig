@@ -1,0 +1,16 @@
+{% block javascripts %}
+    {% for label, messages in app.flashes(['magnific']) %}
+        {% for message in messages %}
+            <script type="application/javascript">
+                $(function(){
+                    $.magnificPopup.open({
+                        items: {
+                            src: '<div class="white-popup custom_styles_popup" >{{ message }}</div>',
+                            type: 'inline',
+                        },
+                    });
+                })
+            </script>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}
