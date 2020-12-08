@@ -69,34 +69,36 @@ class FeedbackController extends Controller
     $response = new Response();
     $response->setPublic();
 
-    /** @var FlashBagInterface $flashbag */
-    $flashbag = $request->getSession()->getFlashBag();
-
-    //Не кешируем страницу, если перешли со страницы создания отзыва, чтобы не закешировать диалог об успешной отправке отзыва
-    if (!$this->getUser() && !$flashbag->has('magnific'))
-    {
-      /** @var QueryBuilder $maxQb */
-      $maxQb = $this
-        ->getDoctrine()
-        ->getManager()
-        ->getRepository(Feedback::class)
-        ->createQueryBuilder('rv');
-
-      $maxUpdatedAt = $maxQb
-        ->select('MAX(rv.updatedAt)')
-        ->getQuery()
-        ->getSingleScalarResult();
-
-      $response->setLastModified(new \DateTime($maxUpdatedAt));
-
-      if ($response->isNotModified($request))
-      {
-        $response->headers->addCacheControlDirective('no-cache', true);
-        $response->headers->addCacheControlDirective('must-revalidate', true);
-
-        return $response;
-      }
-    }
+// Кеширование отключено из-за новой шапки с выбором региона
+// https://jira.accurateweb.ru/browse/BEZBAHIL-94?focusedCommentId=30231&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-30231
+//    /** @var FlashBagInterface $flashbag */
+//    $flashbag = $request->getSession()->getFlashBag();
+//
+//    //Не кешируем страницу, если перешли со страницы создания отзыва, чтобы не закешировать диалог об успешной отправке отзыва
+//    if (!$this->getUser() && !$flashbag->has('magnific'))
+//    {
+//      /** @var QueryBuilder $maxQb */
+//      $maxQb = $this
+//        ->getDoctrine()
+//        ->getManager()
+//        ->getRepository(Feedback::class)
+//        ->createQueryBuilder('rv');
+//
+//      $maxUpdatedAt = $maxQb
+//        ->select('MAX(rv.updatedAt)')
+//        ->getQuery()
+//        ->getSingleScalarResult();
+//
+//      $response->setLastModified(new \DateTime($maxUpdatedAt));
+//
+//      if ($response->isNotModified($request))
+//      {
+//        $response->headers->addCacheControlDirective('no-cache', true);
+//        $response->headers->addCacheControlDirective('must-revalidate', true);
+//
+//        return $response;
+//      }
+//    }
 
     $reviewListFilter = new FeedbackListFilter();
     $reviewListFilter->setPage($request->query->get('page', 1));

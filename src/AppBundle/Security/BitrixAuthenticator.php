@@ -71,8 +71,13 @@ class BitrixAuthenticator extends AbstractGuardAuthenticator
           $this->loadedUser = $dataFromBitrix->getData('%s/ajax/authenticated_user.php');
           return true;
       } catch (BitrixRequestException $exception) {
-          if (!($dataFromBitrix->getCode() === 401 && $dataFromBitrix->getParam('is_script'))) {
-              $this->logger->error(sprintf('Error from Bitrix Authenticator: . %s', $exception->getMessage()));
+          $response = $exception->getResponse();
+          if (!($exception->getHttpStatusCode() === 401 && isset($response['is_script']) && $response['is_script'])) {
+              $this->logger->error(sprintf('Error from Bitrix Authenticator: %s', $exception->getMessage()));
+          }
+          else
+          {
+            $this->logger->error(sprintf('BitrixRequestException: %s', $exception->getMessage()));
           }
       }
 

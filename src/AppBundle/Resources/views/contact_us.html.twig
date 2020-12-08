@@ -7,7 +7,7 @@
 
 {% block title %}
     <title>
-        Безбахил — сервис для возврата денег за ОМС, рейтинг страховых компаний
+        Написать нам — Безбахил — сервис для возврата денег за ОМС, рейтинг страховых компаний
     </title>
 {% endblock %}
 
@@ -19,7 +19,33 @@
 
 {% block main %}
     <div class="app__content">
-        <div class="popup-write-us onpage"></div>
+        <ul class="breadcrumbs" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+            {% if is_mobile() or is_tablet() %}
+                <li class="active-breadcrumbs" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                    <a href="{{ path('homepage') }}" itemprop="item">Главная
+                        <meta itemprop="name" content="Главная">
+                    </a>
+                    <meta itemprop="position" content="1">
+                </li>
+            {% else %}
+                <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                    <a href="{{ path('homepage') }}" itemprop="item">Главная
+                        <meta itemprop="name" content="Главная">
+                    </a>
+                    <meta itemprop="position" content="1">
+                </li>
+                <li class="active-breadcrumbs" itemscope="" itemtype="http://schema.org/ListItem">
+                    <a itemprop="item">Написать нам
+                        <meta itemprop="name" content="Вопрос-ответ">
+                    </a>
+                    <meta itemprop="position" content="2">
+                </li>
+            {% endif %}
+        </ul>
+        <h1>Написать нам</h1>
+        <div class="popup-write-us onpage">
+            {% include '@App/form/contact_us.html.twig' %}
+        </div>
     </div><!-- b:m-content -->
 {% endblock %}
 

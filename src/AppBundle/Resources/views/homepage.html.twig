@@ -26,6 +26,7 @@
 
 {% block header %}
     {{ render(controller('AppBundle:Common:_header', { isHomepage: true })) }}
+    {% include '@App/_popup_magnific.html.twig'%}
 {% endblock %}
 
 {% block main %}
