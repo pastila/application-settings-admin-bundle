@@ -39,6 +39,7 @@ class ObrashcheniyaFilesService implements ConsumerInterface
   public function execute(AMQPMessage $msg)
   {
     $data = json_decode($msg->body, true);
+
     if (empty($data))
     {
       $this->logger->error('Empty body from Obrashcheniya Files in RabbitMq');
@@ -52,7 +53,7 @@ class ObrashcheniyaFilesService implements ConsumerInterface
     $model->setType(key_exists('file_type', $data) ? $data['file_type'] : null);
     $model->setFile(key_exists('file_name', $data) ? $data['file_name'] : null);
     $model->setBitrixId(key_exists('obrashcheniya_id', $data) ? $data['obrashcheniya_id'] : null);
-    $model->setImageNumber(key_exists('imageNumber', $data) ? $data['imageNumber'] : null);
+    $model->setImageNumber(key_exists('imageNumber', $data) ? $data['imageNumber'] : 1);
     $this->entityManager->persist($model);
     $this->entityManager->flush();
   }

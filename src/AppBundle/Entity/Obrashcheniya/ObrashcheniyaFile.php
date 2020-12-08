@@ -61,8 +61,8 @@ class ObrashcheniyaFile
   /**
    * Номер изображения из bitrix, для одного обращения может быть от 1 до 5 изображений
    *
-   * @var null|integer
-   * @ORM\Column(type="integer", nullable=true)
+   * @var null|string
+   * @ORM\Column(type="string", nullable=true)
    */
   protected $imageNumber;
 
@@ -174,7 +174,7 @@ class ObrashcheniyaFile
   }
 
   /**
-   * @return string
+   * @return string|null
    */
   public function getImageNumber()
   {

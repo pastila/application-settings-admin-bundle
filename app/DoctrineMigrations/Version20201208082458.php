@@ -15,7 +15,7 @@ final class Version20201208082458 extends AbstractMigration
     // this up() migration is auto-generated, please modify it to your needs
     $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-    $this->addSql('ALTER TABLE s_obrashcheniya_files ADD image_number INT DEFAULT NULL');
+    $this->addSql('ALTER TABLE s_obrashcheniya_files ADD image_number VARCHAR(256) DEFAULT NULL');
   }
 
   public function down(Schema $schema): void
