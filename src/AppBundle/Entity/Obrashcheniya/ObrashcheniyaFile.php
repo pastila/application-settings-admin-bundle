@@ -62,7 +62,7 @@ class ObrashcheniyaFile
    * Номер изображения из bitrix, для одного обращения может быть от 1 до 5 изображений
    *
    * @var null|string
-   * @ORM\Column(type="string", nullable=true)
+   * @ORM\Column(type="string", length=256, nullable=true)
    */
   protected $imageNumber;
 
