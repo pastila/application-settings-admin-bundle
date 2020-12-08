@@ -79,16 +79,16 @@ if ($Section = $section->GetNext()) {
                 $pdf_5 = true;
             }
         }
-      $array = null;
+      $array = [];
       $rsUser = $USER->GetByLogin($USER->GetLogin());
       if ($arUser = $rsUser->Fetch())
       {
         try {
-          $dbh = new \PDO('mysql:host=percona;dbname=dbbezbahil', 'ubezbahil', 'BMnM@SNXiwz8');
+          $dbh = new \PDO('mysql:host=' . PERCONA_HOST. ';dbname='.PERCONA_DATABASE, PERCONA_USER, PERCONA_PASSWORD);
           $sql = 'SELECT 
                     sof.bitrix_id,
                     sof.user_id,
-                    sof.image_number
+                    sof.image_number,
                     su.login
                     FROM s_obrashcheniya_files as sof
                     JOIN s_users su ON su.id = sof.user_id AND su.login = :login
@@ -101,23 +101,21 @@ if ($Section = $section->GetNext()) {
           die();
         }
       }
-      if ($array)
-      {
-        $img_first = sprintf(obrashcheniya_report_url_download, $arFields["ID"]).'?image_number=1';
-        $img_second = sprintf(obrashcheniya_report_url_download, $arFields["ID"]).'?image_number=2';
-        $img_third = sprintf(obrashcheniya_report_url_download, $arFields["ID"]).'?image_number=3';
-        $img_fourth = sprintf(obrashcheniya_report_url_download, $arFields["ID"]).'?image_number=4';
-        $img_fifth = sprintf(obrashcheniya_report_url_download, $arFields["ID"]).'?image_number=5';
-        $newDate = FormatDate("d.m.Y", MakeTimeStamp($arFields["CREATED_DATE"]));
-      } else
-      {
-        $img_first = CFile::GetPath($arFields['PROPERTY_IMG_1_VALUE']);
-        $img_second = CFile::GetPath($arFields['PROPERTY_IMG_2_VALUE']);
-        $img_third = CFile::GetPath($arFields['PROPERTY_IMG_3_VALUE']);
-        $img_fourth = CFile::GetPath($arFields['PROPERTY_IMG_4_VALUE']);
-        $img_fifth = CFile::GetPath($arFields['PROPERTY_IMG_5_VALUE']);
-      }
 
+      $img_first = findExistFile($array, 1) ? sprintf(obrashcheniya_report_url_download, $arFields["ID"]) . '?image_number=1' :
+        CFile::GetPath($arFields['PROPERTY_IMG_1_VALUE']);
+
+      $img_second = findExistFile($array, 2) ? sprintf(obrashcheniya_report_url_download, $arFields["ID"]) . '?image_number=2' :
+        CFile::GetPath($arFields['PROPERTY_IMG_2_VALUE']);
+
+      $img_third = findExistFile($array, 3) ? sprintf(obrashcheniya_report_url_download, $arFields["ID"]) . '?image_number=3' :
+        CFile::GetPath($arFields['PROPERTY_IMG_3_VALUE']);
+
+      $img_fourth = findExistFile($array, 4) ? sprintf(obrashcheniya_report_url_download, $arFields["ID"]) . '?image_number=4' :
+        CFile::GetPath($arFields['PROPERTY_IMG_4_VALUE']);
+
+      $img_fifth = findExistFile($array, 5) ? sprintf(obrashcheniya_report_url_download, $arFields["ID"]) . '?image_number=5' :
+        CFile::GetPath($arFields['PROPERTY_IMG_5_VALUE']);
         ?>
 <!-- Обращения item -->
 <div class="otpravlennyye">
