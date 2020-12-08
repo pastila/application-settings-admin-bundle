@@ -88,8 +88,10 @@ if (isset($_FILES['import_file']['tmp_name'])) {
               }
             }
         }
+        $url_load = sprintf(obrashcheniya_report_url_download, $_POST["id_elem"]);
+        $url_load = $url_load . '?image_number=' . $i;
 
-        $result['SRC'] = $arFile["SRC"];
+        $result['SRC'] = $url_load;
         $result['ID'] = $_POST['id_elem'] . '_img_' . $i;
         $result['RES'] = $res;
         $result['SUCCESS'] = "Файл успешно загружен!";
