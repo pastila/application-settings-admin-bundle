@@ -116,6 +116,9 @@ if ($Section = $section->GetNext()) {
 
       $img_fifth = findExistFile($array, 5) ? sprintf(obrashcheniya_report_url_download, $arFields["ID"]) . '?image_number=5' :
         CFile::GetPath($arFields['PROPERTY_IMG_5_VALUE']);
+
+      $pdf_url = count($array) > 0 ? sprintf(obrashcheniya_report_url_download, $arFields["ID"]) : $PDF;
+
         ?>
 <!-- Обращения item -->
 <div class="otpravlennyye">
@@ -232,7 +235,7 @@ if ($Section = $section->GetNext()) {
                 <div class="obrashcheniya__content_sidebar_blocks_text_title">
                     Заявление на возврат
                 </div>
-                <a target="_blank" class="obrashcheniya__content_sidebar_blocks_text_link " href="<?= sprintf(obrashcheniya_report_url_download, $arFields["ID"]) ?>">
+                <a target="_blank" class="obrashcheniya__content_sidebar_blocks_text_link " href="<?= $pdf_url ?>">
                     просмотреть
                 </a>
             </div>
