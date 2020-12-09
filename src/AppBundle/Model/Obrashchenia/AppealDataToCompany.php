@@ -23,7 +23,7 @@ class AppealDataToCompany
    * Прикрепленные файлы
    * @var array
    */
-  private $attachedFiles;
+  private $attachedFiles = [];
   /**
    * Автор отзыва
    * @var User

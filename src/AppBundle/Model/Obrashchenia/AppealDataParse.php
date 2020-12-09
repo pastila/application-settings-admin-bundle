@@ -66,7 +66,7 @@ class AppealDataParse
     }
 
     $model = new AppealDataToCompany();
-    $model->setAuthor($author);
+    $model->setAuthor($author->getFullName());
     $model->setPdf($this->appealPathPdf . $data[2]['PDF']);
     $model->setEmailsTo(array_map(function ($item)
     {
