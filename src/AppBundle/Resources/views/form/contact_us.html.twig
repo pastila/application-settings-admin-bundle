@@ -1,18 +1,26 @@
 {{ form_start(form, {'action': path('contact_us'), 'method': 'POST', 'attr': {
     id: 'feedback_modal_new',
-    class: 'feedback_form remodal',
+    class: 'feedback_form',
 }}) }}
 
-{{ form_errors(form) }}
-
 <div class="popup__input-container">
-    <label class="input__label visuallyhidden">Имя</label>
-    {{ form_row(form.author_name, { attr: { placeholder: "Имя" } }) }}
+    {{ form_label(form.author_name, 'Имя', { 'label_attr': { 'class': 'input__container_label visuallyhidden' }}) }}
+
+    {{ form_widget(form.author_name, { attr: { placeholder: "Имя" }}) }}
+
+    <div class="input__error-message">
+        {{ form_errors(form.author_name) }}
+    </div>
 </div>
 
 <div class="popup__input-container">
-    <label class="input__container_label visuallyhidden">Электронная почта</label>
-    {{ form_row(form.email, { attr: { placeholder: "Email" } }) }}
+    {{ form_label(form.email, 'Электронная почта', { 'label_attr': { 'class': 'input__container_label visuallyhidden' }}) }}
+
+    {{ form_widget(form.email, { attr: { placeholder: "Электронная почта" }}) }}
+
+    <div class="input__error-message">
+        {{ form_errors(form.email) }}
+    </div>
 </div>
 
 <div class="popup__input-container">

@@ -1581,6 +1581,81 @@
     align-items: center;
     justify-content: center;
 
+      .remodal {
+        display: block;
+
+        &-title {
+          margin-bottom: 0;
+        }
+
+        .feedback_form {
+          display: block;
+          padding: 40px 0;
+
+          .popup__input-container {
+            display: flex;
+            padding: 10px 0;
+            align-items: center;
+            position: relative;
+            flex-flow: column;
+
+            label {
+              display: none;
+            }
+
+            textarea {
+              resize: none;
+            }
+
+            input,
+            textarea {
+              flex-grow: 1;
+              border: none;
+              background: #d9e9ff;
+              border-radius: 5px;
+              padding: 10px;
+              width: 100%;
+
+              &:focus {
+                outline: 0;
+              }
+            }
+
+            .input__error-message {
+              width: 100%;
+            }
+
+            .input__error-message ul {
+              margin-bottom: 0;
+              padding: 10px 0 0;
+              list-style-type: none;
+              color: red;
+            }
+          }
+
+          .svg-icon--close {
+            position: absolute;
+            z-index: -1;
+          }
+
+          .success-message {
+            text-align: center;
+            font-size: 16px;
+            margin: 0;
+            padding: 0;
+          }
+
+          .popup__input-container.error .input__error-message {
+            display: inline-block;
+          }
+
+          .mainBtn {
+            margin: 20px auto 0;
+            display: block;
+          }
+        }
+      }
+
     .load-message {
       padding: 40px;
       background: #fff;
@@ -1590,66 +1665,8 @@
       border-radius: 10px;
     }
 
-    .feedback_form.remodal {
-      display: block;
-
-      .popup__input-container {
-        display: flex;
-        padding: 10px 0;
-        align-items: center;
-        position: relative;
-
-        label {
-          display: none;
-        }
-
-        textarea {
-          resize: none;
-        }
-
-        input, textarea {
-          flex-grow: 1;
-          border: none;
-          background: #d9e9ff;
-          border-radius: 5px;
-          padding: 10px;
-          width: 150px;
-
-          &:focus {
-            outline: 0;
-          }
-        }
-
-        .input__error-message {
-          position: absolute;
-          display: none;
-          left: 0;
-          color: red;
-          z-index: 5;
-          bottom: -11px;
-        }
-      }
-
-      .svg-icon--close {
-        position: absolute;
-        z-index: -1;
-      }
-
-      .success-message {
-        text-align: center;
-        font-size: 16px;
-        margin: 0;
-        padding: 0;
-      }
-
-      .popup__input-container.error .input__error-message {
-        display: inline-block;
-      }
-
-      .mainBtn {
-        margin: 20px auto 0;
-        display: block;
-      }
+    &__error-message {
+      text-align: center;
     }
   }
 
