@@ -4,6 +4,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true)
 {
   die();
 }
+require_once($_SERVER["DOCUMENT_ROOT"] . "/symfony-integration/config.php");
 
 /**
  * Формирование URL для скачивания файла обращения в symfony
@@ -35,4 +36,26 @@ function findExistFile($array, $j)
     }
   }
   return false;
+}
+
+function getAppealFromSymfony($appeal_id, $login)
+{
+  try
+  {
+    $dbh = new \PDO('mysql:host=' . PERCONA_HOST . ';dbname=' . PERCONA_DATABASE, PERCONA_USER, PERCONA_PASSWORD);
+    $sql = 'SELECT 
+                sof.bitrix_id,
+                sof.user_id,
+                sof.image_number,
+                su.login
+                FROM s_obrashcheniya_files as sof
+                JOIN s_users su ON su.id = sof.user_id AND su.login = :login
+                WHERE sof.bitrix_id = :bitrix_id';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array('bitrix_id' => $appeal_id, 'login' => $login));
+    return $sth->fetchAll(PDO::FETCH_ASSOC);
+  } catch (PDOException $e)
+  {
+    return [];
+  }
 }

@@ -10,6 +10,8 @@ use Bitrix\Main\Application;
 Loader::includeModule('iblock');
 
 require_once dirname(__FILE__).'/../vendor/autoload.php';
+require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/rabbitmq.php");
+require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/config_obrashcheniya.php");
 
 global $USER;
 
@@ -303,21 +305,39 @@ $mpdf = new \Mpdf\Mpdf([
 ]);
 //создаем PDF файл, задаем формат, отступы и.т.д.
 
-//
-$data= date('Y-m-d-h:i:s');
-$name_file = "/var/www/web/upload/pdf/PDF_child_";
+if (!file_exists(obrashcheniya_report_path)) {
+  mkdir(obrashcheniya_report_path, 0777, true);
+}
+$name_dir = obrashcheniya_report_path;
+$data = date('Y-m-d-h:i:s');
+$name_file = 'PDF_';
 $name_file .= $data;
-$name_file .= "_". $person_EMAIL. "_";
+$name_file .= "_" . $person_EMAIL . "_";
 $name_file .= "file.pdf";
+$full_name_file = $name_dir . $name_file;
 
 $mpdf->WriteHTML($html);
-$mpdf->Output($name_file,'F');
+$mpdf->Output($full_name_file, 'F');
 
-$url_pdf_for_user = "/upload/pdf/PDF_child_".$data."_". $person_EMAIL. "_file.pdf";
-$arFile = CFile::MakeFileArray($url_pdf_for_user);
+/**
+ * Подготовка и отправка данных о принадлежности файла пользователю
+ */
+$rsUser = $USER->GetByLogin($USER->GetLogin());
+if ($arUser = $rsUser->Fetch())
+{
+  rabbitmqSend(queue_obrashcheniya_files, json_encode([
+    'user_id' => $arUser['ID'],
+    'user_login' => $arUser['LOGIN'],
+    'file_type' => obrashcheniya_file_type_report,
+    'file_name' => $full_name_file,
+    'obrashcheniya_id' => $_POST['id_obr'],
+  ]));
+}
 
+$url_pdf_for_user = sprintf(obrashcheniya_report_url_download, $_POST['id_obr']);
+$arFile = CFile::MakeFileArray($full_name_file);
 $arProperty = Array(
-    "PDF" => $arFile,
+  "PDF" => $arFile,
 );
 
 $ID_appeal = $_POST["id_obr"];
