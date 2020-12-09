@@ -14,14 +14,23 @@ class PopupContactUs {
           },
           success: (result) => {
             cb()
-            this.popupElement.insertAdjacentHTML(`beforeend`, result);
+            if (result) {
+              this.popupElement.innerHTML = result;
+            }
+
             this.submitForm(changePopupEventsState);
           },
           error: () => {
-            if (!this.popupElement.querySelector(`.feedback_form`)){
-              this.popupElement.insertAdjacentHTML(`beforeend`, `<form class="feedback_form"></form>`);
-              this.popupElement.querySelector(`form`).insertAdjacentHTML(`beforeend`, `<p class="popup-write-us__error-message">Произошла ошибка попробуйте повторить позже</p>`);
-            }
+            this.popupElement.innerHTML = '<div class="remodal">\n' +
+                '    <div class="remodal-close">\n' +
+                '        <div data-action="close-modal" class="svg-icon svg-icon--close" aria-hidden="true">\n' +
+                '            <svg data-action="close-modal" class="svg-icon__link">\n' +
+                '                <use data-action="close-modal" xlink:href="#close"></use>\n' +
+                '            </svg>\n' +
+                '        </div>\n' +
+                '    </div>\n' +
+                '<p class="popup-write-us__error-message">Произошла ошибка попробуйте повторить позже</p>\n' +
+                '</div>';
           },
         }).done(function (msg) {
         });
@@ -41,12 +50,12 @@ class PopupContactUs {
       };
 
       this.popupElement.style.display = "flex";
-      this.popupElement.insertAdjacentHTML(`beforeend`, `<p class="load-message">Форма загружается</p>`)
+      this.popupElement.innerHTML = `<p class="load-message">Форма загружается</>`;
       renderPopupMarkup(removeChildrens);
       const onCloseBtnClick = (evt) => {
-        const target = evt.target;
-        const closeBtn = this.popupElement.querySelector(`.remodal-close`);
-        if (target === closeBtn) {
+        const target = evt.target.dataset.action;
+
+        if (target === 'close-modal') {
           this.close();
           changePopupEventsState(false);
         }
@@ -87,9 +96,12 @@ class PopupContactUs {
   };
 
   close() {
-    if(this.popupElement.querySelector(`.feedback_form`)) {
+    if(this.popupElement && this.popupElement.querySelector('.remodal')) {
       this.popupElement.style.display = "none";
-      this.popupElement.querySelector(`.feedback_form`).remove();
+      this.popupElement.querySelector('.remodal').style.display = 'none';
+      if (this.popupElement.querySelector(`.feedback_form`)) {
+        this.popupElement.querySelector(`.feedback_form`).remove();
+      }
     }
   };
 
@@ -121,18 +133,30 @@ class PopupContactUs {
               while (this.popupElement.querySelector(`form`).firstChild) {
                 this.popupElement.querySelector(`form`).firstChild.remove();
               }
-              this.popupElement.querySelector(`form`).insertAdjacentHTML(`beforeend`, `<p class="success-message">Спасибо за обращенение!</p>`);
+              this.popupElement.innerHTML = '<div class="remodal">\n' +
+                  '    <div class="remodal-close">\n' +
+                  '        <div data-action="close-modal" class="svg-icon svg-icon--close" aria-hidden="true">\n' +
+                  '            <svg data-action="close-modal" class="svg-icon__link">\n' +
+                  '                <use data-action="close-modal" xlink:href="#close"></use>\n' +
+                  '            </svg>\n' +
+                  '        </div>\n' +
+                  '    </div>\n' +
+                  '<p class="popup-write-us__error-message">Спасибо за обращение!</p>\n' +
+                  '</div>';
               let delay;
               delay  = setInterval(() => {
                 this.close();
-                removeEventListeners(false);
+                if (removeEventListeners) {
+                  removeEventListeners(false);
+                }
+
                 delay = clearTimeout(delay)
               }, 2000)
             },
-            error: () => {
-              if (!this.popupElement.querySelector(`.popup-write-us__error-message`)){
-                this.popupElement.querySelector(`.popup__container`).remove();
-                this.popupElement.querySelector(`form`).insertAdjacentHTML(`beforeend`, `<p class="popup-write-us__error-message">Произошла ошибка попробуйте повторить позже</p>`);
+            error: (err) => {
+              if (err && err.status === 400 && err.responseText) {
+                this.popupElement.innerHTML = err.responseText;
+                this.submitForm();
               }
             },
           }).done(function (msg) {
@@ -156,11 +180,4 @@ export function initContactUsBtn() {
 
     contactUsBtn.addEventListener(`click`, onContactUsBtnClick)
   }
-}
-
-export function initShowPopup() {
-  const popupElement = document.querySelector(`.popup-write-us`);
-  const popupContuctUs = new PopupContactUs(popupElement);
-  popupContuctUs.open();
-  popupContuctUs.submitForm();
 }
