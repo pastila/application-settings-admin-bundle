@@ -152,7 +152,6 @@ class PopupContactUs {
             },
             error: (err) => {
               if (err && err.responseText) {
-                console.log(err);
                 document.dispatchEvent(new CustomEvent('button-refresh'));
                 this.popupElement.innerHTML = err.responseText;
               }
