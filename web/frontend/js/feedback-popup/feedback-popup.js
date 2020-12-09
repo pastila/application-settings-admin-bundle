@@ -146,14 +146,17 @@ class PopupContactUs {
               let delay;
               delay  = setInterval(() => {
                 this.close();
-                removeEventListeners(false);
+                if (removeEventListeners) {
+                  removeEventListeners(false);
+                }
+
                 delay = clearTimeout(delay)
               }, 2000)
             },
             error: (err) => {
               if (err && err.responseText) {
-                document.dispatchEvent(new CustomEvent('button-refresh'));
                 this.popupElement.innerHTML = err.responseText;
+                this.submitForm();
               }
             },
           }).done(function (msg) {
