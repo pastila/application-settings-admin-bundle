@@ -83,23 +83,7 @@ if ($Section = $section->GetNext()) {
       $rsUser = $USER->GetByLogin($USER->GetLogin());
       if ($arUser = $rsUser->Fetch())
       {
-        try {
-          $dbh = new \PDO('mysql:host=' . PERCONA_HOST. ';dbname='.PERCONA_DATABASE, PERCONA_USER, PERCONA_PASSWORD);
-          $sql = 'SELECT 
-                    sof.bitrix_id,
-                    sof.user_id,
-                    sof.image_number,
-                    su.login
-                    FROM s_obrashcheniya_files as sof
-                    JOIN s_users su ON su.id = sof.user_id AND su.login = :login
-                    WHERE sof.bitrix_id = :bitrix_id';
-          $sth = $dbh->prepare($sql);
-          $sth->execute(array('bitrix_id' => $arFields["ID"], 'login' => $arUser['LOGIN']));
-          $array = $sth->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-          print "Error!: " . $e->getMessage() . "<br/>";
-          die();
-        }
+        $array = getAppealFromSymfony($arFields["ID"], $arUser['LOGIN']);
       }
 
       $img_first = findExistFile($array, 1) ? sprintf(obrashcheniya_report_url_download, $arFields["ID"]) . '?image_number=1' :

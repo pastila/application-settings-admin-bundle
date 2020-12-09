@@ -35,10 +35,15 @@ while ($ob = $res->GetNextElement()) {
 <?php
 if (count($arResult["ITEMS"]) > 0) {
     foreach ($arResult["ITEMS"] as $arItem) {
+          $date = explode(" ", $arItem['TIMESTAMP_X']);
+          $hospital = htmlspecialchars_decode($arItem["PROPERTIES"]["HOSPITAL"]["VALUE"]);
 
-        $date = explode(" ", $arItem['TIMESTAMP_X']);
-        $hospital = htmlspecialchars_decode($arItem["PROPERTIES"]["HOSPITAL"]["VALUE"]);
-
+          $array = [];
+          $rsUser = $USER->GetByLogin($USER->GetLogin());
+          if ($arUser = $rsUser->Fetch())
+          {
+            $array = getAppealFromSymfony($arItem["ID"], $arUser['LOGIN']);
+          }
         ?>
 
         <!-- Обращение -->
@@ -282,8 +287,9 @@ if (count($arResult["ITEMS"]) > 0) {
                             <?php if (!empty($arItem["PROPERTIES"]["IMG_1"]['VALUE'])) {
                                 $pdf = false;
                                 $file = CFile::GetFileArray($arItem["PROPERTIES"]["IMG_1"]['VALUE']);
-                                $url_load = sprintf(obrashcheniya_report_url_download, $arItem["ID"]);
-                                $url_load = $url_load . '?image_number=1';
+                                $url_load = findExistFile($array, 1) ?
+                                  sprintf(obrashcheniya_report_url_download, $arItem["ID"]) . '?image_number=1' :
+                                  $file['SRC'];
                                 if ($file["CONTENT_TYPE"] == "application/pdf") {
                                     $pdf = true;
                                 }
@@ -318,8 +324,9 @@ if (count($arResult["ITEMS"]) > 0) {
                                 $pdf = false;
 
                                 $file = CFile::GetFileArray($arItem["PROPERTIES"]["IMG_2"]['VALUE']);
-                                $url_load = sprintf(obrashcheniya_report_url_download, $arItem["ID"]);
-                                $url_load = $url_load . '?image_number=2';
+                                $url_load = findExistFile($array, 2) ?
+                                    sprintf(obrashcheniya_report_url_download, $arItem["ID"]) . '?image_number=2' :
+                                    $file['SRC'];
                                 if ($file["CONTENT_TYPE"] == "application/pdf") {
                                     $pdf = true;
                                 }?>
@@ -353,8 +360,9 @@ if (count($arResult["ITEMS"]) > 0) {
                                 $pdf = false;
 
                                 $file = CFile::GetFileArray($arItem["PROPERTIES"]["IMG_3"]['VALUE']);
-                                $url_load = sprintf(obrashcheniya_report_url_download, $arItem["ID"]);
-                                $url_load = $url_load . '?image_number=3';
+                                $url_load = findExistFile($array, 3) ?
+                                    sprintf(obrashcheniya_report_url_download, $arItem["ID"]) . '?image_number=3' :
+                                    $file['SRC'];
                                 if ($file["CONTENT_TYPE"] == "application/pdf") {
                                     $pdf = true;
                                 }?>
@@ -387,8 +395,9 @@ if (count($arResult["ITEMS"]) > 0) {
                             <?php if (!empty($arItem["PROPERTIES"]["IMG_4"]['VALUE'])) {
                                 $pdf = false;
                                 $file = CFile::GetFileArray($arItem["PROPERTIES"]["IMG_4"]['VALUE']);
-                                $url_load = sprintf(obrashcheniya_report_url_download, $arItem["ID"]);
-                                $url_load = $url_load . '?image_number=4';
+                                $url_load = findExistFile($array, 4) ?
+                                    sprintf(obrashcheniya_report_url_download, $arItem["ID"]) . '?image_number=4' :
+                                    $file['SRC'];
                                 if ($file["CONTENT_TYPE"] == "application/pdf") {
                                     $pdf = true;
                                 }?>
@@ -421,8 +430,9 @@ if (count($arResult["ITEMS"]) > 0) {
                             <?php if (!empty($arItem["PROPERTIES"]["IMG_5"]['VALUE'])) {
                                 $pdf = false;
                                 $file = CFile::GetFileArray($arItem["PROPERTIES"]["IMG_5"]['VALUE']);
-                                $url_load = sprintf(obrashcheniya_report_url_download, $arItem["ID"]);
-                                $url_load = $url_load . '?image_number=5';
+                                $url_load = findExistFile($array, 5) ?
+                                    sprintf(obrashcheniya_report_url_download, $arItem["ID"]) . '?image_number=5' :
+                                    $file['SRC'];
                                 if ($file["CONTENT_TYPE"] == "application/pdf") {
                                     $pdf = true;
                                 }?>
@@ -466,10 +476,13 @@ if (count($arResult["ITEMS"]) > 0) {
                                 </div>
 
                                 <?php
-                                $url_pdf = CFile::GetPath($arItem["PROPERTIES"]["PDF"]["VALUE"]); ?>
+                                $url_pdf = CFile::GetPath($arItem["PROPERTIES"]["PDF"]["VALUE"]);
+                                $url_pdf = count($array) > 0 && $url_pdf != "" ?
+                                  sprintf(obrashcheniya_report_url_download, $arItem["ID"]) :
+                                  $url_pdf; ?>
                                 <a target="_blank" class=" pdf <?php if ($url_pdf == "") { ?>success<?
                                 } ?>"
-                                    <?php if ($url_pdf != "") { ?> href="<?= sprintf(obrashcheniya_report_url_download, $arItem["ID"]) ?>" <? } ?> >
+                                    <?php if ($url_pdf != "") { ?> href="<?= $url_pdf ?>" <? } ?> >
                                     <?php if ($url_pdf != "") { ?> просмотреть
                                     <? } else { ?> 
                                     <?
