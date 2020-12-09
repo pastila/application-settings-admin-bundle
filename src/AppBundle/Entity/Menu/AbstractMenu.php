@@ -37,7 +37,6 @@ abstract class AbstractMenu
 
   /**
    * Ссылка/путь в меню
-   * @Assert\Url
    * @var string
    * @ORM\Column(type="string", length=255, nullable=true)
    */

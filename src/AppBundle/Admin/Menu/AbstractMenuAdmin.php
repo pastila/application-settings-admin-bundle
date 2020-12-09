@@ -8,6 +8,8 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\Form\Validator\ErrorElement;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 abstract class AbstractMenuAdmin extends AbstractAdmin
 {
@@ -61,10 +63,20 @@ abstract class AbstractMenuAdmin extends AbstractAdmin
   {
     $form
       ->add('text', null, [
-        'label' => 'Текст'
+        'label' => 'Текст',
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+          new Length(['min' => 1, 'max' => 255]),
+        ],
       ])
       ->add('url', null, [
-        'label' => 'Url адрес страницы'
+        'label' => 'Url адрес страницы',
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+          new Length(['min' => 1, 'max' => 255]),
+        ],
       ]);
   }
 }
