@@ -154,7 +154,7 @@ class PopupContactUs {
               }, 2000)
             },
             error: (err) => {
-              if (err && err.responseText) {
+              if (err && err.status === 400 && err.responseText) {
                 this.popupElement.innerHTML = err.responseText;
                 this.submitForm();
               }
