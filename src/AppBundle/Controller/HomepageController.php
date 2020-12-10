@@ -190,7 +190,7 @@ class HomepageController extends Controller
         return $this->redirectToRoute('homepage');
       } else if ($request->isXmlHttpRequest())
       {
-        $response = $this->render('@App/modal/contact_us.html.twig', [
+        $response = $this->render('@App/form/contact_us.html.twig', [
           'form' => $form->createView()
         ]);
         $response->setStatusCode(400);
@@ -199,7 +199,7 @@ class HomepageController extends Controller
     }
     if ($request->isXmlHttpRequest())
     {
-      $response = $this->render('@App/modal/contact_us.html.twig', [
+      $response = $this->render('@App/form/contact_us.html.twig', [
         'form' => $form->createView()
       ]);
       $response->setStatusCode(200);

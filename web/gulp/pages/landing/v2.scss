@@ -1568,93 +1568,88 @@
     }
   }
 
-  .popup-write-us {
-    position: fixed;
-    padding: 10px 10px 0;
-    z-index: 100;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
-    display: none;
-    align-items: center;
-    justify-content: center;
+  .remodal[data-remodal-id="contact-us-modal"] {
+    //position: fixed;
+    //padding: 10px 10px 0;
+    //z-index: 100;
+    //top: 0;
+    //left: 0;
+    //right: 0;
+    //bottom: 0;
+    //background: rgba(0, 0, 0, 0.7);
+    //align-items: center;
+    //justify-content: center;
 
-      .remodal {
-        display: block;
+    .remodal-title {
+      margin-bottom: 0;
+    }
 
-        &-title {
-          margin-bottom: 0;
+    .feedback_form {
+      display: block;
+      padding: 40px 0;
+
+      .popup__input-container {
+        display: flex;
+        padding: 10px 0;
+        align-items: center;
+        position: relative;
+        flex-flow: column;
+
+        label {
+          display: none;
         }
 
-        .feedback_form {
-          display: block;
-          padding: 40px 0;
+        textarea {
+          resize: none;
+        }
 
-          .popup__input-container {
-            display: flex;
-            padding: 10px 0;
-            align-items: center;
-            position: relative;
-            flex-flow: column;
+        input,
+        textarea {
+          flex-grow: 1;
+          border: none;
+          background: #d9e9ff;
+          border-radius: 5px;
+          padding: 10px;
+          width: 100%;
 
-            label {
-              display: none;
-            }
-
-            textarea {
-              resize: none;
-            }
-
-            input,
-            textarea {
-              flex-grow: 1;
-              border: none;
-              background: #d9e9ff;
-              border-radius: 5px;
-              padding: 10px;
-              width: 100%;
-
-              &:focus {
-                outline: 0;
-              }
-            }
-
-            .input__error-message {
-              width: 100%;
-            }
-
-            .input__error-message ul {
-              margin-bottom: 0;
-              padding: 10px 0 0;
-              list-style-type: none;
-              color: red;
-            }
+          &:focus {
+            outline: 0;
           }
+        }
 
-          .svg-icon--close {
-            position: absolute;
-            z-index: -1;
-          }
+        .input__error-message {
+          width: 100%;
+        }
 
-          .success-message {
-            text-align: center;
-            font-size: 16px;
-            margin: 0;
-            padding: 0;
-          }
-
-          .popup__input-container.error .input__error-message {
-            display: inline-block;
-          }
-
-          .mainBtn {
-            margin: 20px auto 0;
-            display: block;
-          }
+        .input__error-message ul {
+          margin-bottom: 0;
+          padding: 10px 0 0;
+          list-style-type: none;
+          color: red;
         }
       }
+
+      .svg-icon--close {
+        position: absolute;
+        z-index: -1;
+      }
+
+      .popup__input-container.error .input__error-message {
+        display: inline-block;
+      }
+
+      .mainBtn {
+        margin: 20px auto 0;
+        display: block;
+      }
+    }
+
+    .success-message {
+      text-align: center;
+      font-size: 16px;
+      margin: 0;
+      padding: 0;
+    }
 
     .load-message {
       padding: 40px;
@@ -1680,6 +1675,7 @@
     @media (max-width: 640px) {
       padding: 20px;
       margin: 0 10px;
+      min-width: auto;
     }
 
     .popup__input-container {
