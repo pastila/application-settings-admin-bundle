@@ -168,6 +168,12 @@ services:
     networks:
       - traefik
 
+  php-rabbimq-consumer-obrashscheniya-files:
+    entrypoint: ["php", "-d", "memory_limit=-1", "bin/console", "rabbitmq:consumer", "obrashcheniya_files", "--env=prod"]
+
+  php-rabbimq-consumer-obrashscheniya-emails:
+    entrypoint: ["php", "-d", "memory_limit=-1", "bin/console", "rabbitmq:consumer", "obrashcheniya_emails", "--env=prod"]
+
   ### MailDev ##############################################
   maildev:
     build: ./maildev

@@ -24,16 +24,19 @@ parameters:
 
     api_token: 31409EDCC223DB7DAA72C54EE0107B9F
 
+    appeal_path_pdf: '/var/www/var/uploads/pdf/'
+    appeal_path_attached: '/var/www/web'
+
+    rabbitmq_host: rabbitmq
+    rabbitmq_port: 5672
+    rabbitmq_user: '%env(RABBITMQ_DEFAULT_USER)%'
+    rabbitmq_password: '%env(RABBITMQ_DEFAULT_PASS)%'
+    rabbitmq_project_vhost: /
+
 # Environment variable defaults
     env(MYSQL_USER): root
     env(MYSQL_PASSWORD): ~
     env(MYSQL_DATABASE): dbbezbahil
 
-    rabbitmq_host: rabbitmq
-    rabbitmq_port: 5672
-    rabbitmq_user: guest
-    rabbitmq_password: guest
-    rabbitmq_project_vhost: '/'
-
-    appeal_path_pdf: '/var/www/var/uploads/pdf/'
-    appeal_path_attached: '/var/www/web'
+    env(RABBITMQ_DEFAULT_USER): guest
+    env(RABBITMQ_DEFAULT_PASS): d1cda7935c7a917e6ced3080e890242e

@@ -25,9 +25,15 @@ class Region extends Fixture
     $region66->setName('66 Свердловская область');
     $manager->persist($region66);
 
+    $region47 = new \AppBundle\Entity\Geo\Region();
+    $region47->setCode(47);
+    $region47->setName('47  Ленинградская область');
+    $manager->persist($region47);
+
     $manager->flush();
 
     $this->addReference('region-02', $region02);
     $this->addReference('region-66', $region66);
+    $this->addReference('region-47', $region47);
   }
 }

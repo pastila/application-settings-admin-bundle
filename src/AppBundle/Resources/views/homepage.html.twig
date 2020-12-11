@@ -22,6 +22,32 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="/dist/bundle-landing.js"></script>
+    {% for label, messages in app.flashes(['magnific']) %}
+        {% for message in messages %}
+            <div class="remodal" data-remodal-id="magnific"
+                 data-remodal-options="hashTracking: true, closeOnOutsideClick: true">
+                <div data-remodal-action="close" class="remodal-close">
+
+                    <div class="svg-icon svg-icon--close" aria-hidden="true">
+                        <svg class="svg-icon__link">
+                            <use xlink:href="#close"></use>
+                        </svg>
+                    </div>
+
+                </div>
+                <div class="remodal-content">
+                    {{ message }}
+                </div>
+            </div>
+            <script type="application/javascript">
+                $(function(){
+                    var inst = $('[data-remodal-id=magnific]').remodal();
+
+                    inst.open();
+                })
+            </script>
+        {% endfor %}
+    {% endfor %}
 {% endblock %}
 
 {% block header %}
@@ -358,6 +384,5 @@
                 </div>
             </div>
         </div><!-- b-insider -->
-
     </div><!-- b:m-content -->
 {% endblock %}

@@ -1668,6 +1668,35 @@
     }
   }
 
+  .title-page {
+    max-width: 1350px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .contact-us-form {
+    max-width: 1350px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .contact-us-form .popup__input-container {
+    flex-flow: column;
+  }
+
+  .contact-us-form .popup__input-container input,
+  .contact-us-form .popup__input-container textarea,
+  .contact-us-form .popup__input-container .input__error-message {
+    width: 50%;
+  }
+
+  .contact-us-form .input__error-message ul {
+    margin-bottom: 0;
+    padding: 10px 0 0;
+    list-style-type: none;
+    color: red;
+  }
+
 @media screen and (max-width: 1280px) {
 
     .b-insider {

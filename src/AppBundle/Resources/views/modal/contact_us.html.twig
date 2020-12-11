@@ -1,5 +1,11 @@
-{# ... #}
-
-{% include '@App/form/contact_us.html.twig' %}
-
-{# ... #}
+<div class="remodal">
+    <div class="remodal-close">
+        <div data-action="close-modal" class="svg-icon svg-icon--close" aria-hidden="true">
+            <svg data-action="close-modal" class="svg-icon__link">
+                <use data-action="close-modal" xlink:href="#close"></use>
+            </svg>
+        </div>
+    </div>
+    <div class="remodal-title">Напишите нам</div>
+    {% include '@App/form/contact_us.html.twig' %}
+</div>

@@ -1,39 +1,40 @@
 {{ form_start(form, {'action': path('contact_us'), 'method': 'POST', 'attr': {
     id: 'feedback_modal_new',
-    class: 'feedback_form remodal',
+    class: 'feedback_form',
 }}) }}
 
-<div data-remodal-action="close" class="remodal-close">
-    <div class="svg-icon svg-icon--close" aria-hidden="true">
-        <svg class="svg-icon__link">
-            <use xlink:href="#close"></use>
-        </svg>
+<div class="popup__input-container">
+    {{ form_label(form.author_name, 'Имя', { 'label_attr': { 'class': 'input__container_label visuallyhidden' }}) }}
+
+    {{ form_widget(form.author_name, { attr: { placeholder: "Имя" }}) }}
+
+    <div class="input__error-message">
+        {{ form_errors(form.author_name) }}
     </div>
 </div>
 
-<div class="popup__container">
-    <div class="remodal-title">Напишите нам</div>
+<div class="popup__input-container">
+    {{ form_label(form.email, 'Электронная почта', { 'label_attr': { 'class': 'input__container_label visuallyhidden' }}) }}
 
-    <div class="popup__input-container">
-        <label class="input__label visuallyhidden">Имя</label>
-        {{ form_row(form.author_name, { attr: { placeholder: "Имя" } }) }}
-        <span class="input__error-message">Поле не должно быть пустым</span>
+    {{ form_widget(form.email, { attr: { placeholder: "Электронная почта" }}) }}
+
+    <div class="input__error-message">
+        {{ form_errors(form.email) }}
     </div>
-
-    <div class="popup__input-container">
-        <label class="input__container_label visuallyhidden">Электронная почта</label>
-        {{ form_row(form.email, { attr: { placeholder: "Email" } }) }}
-        <span class="input__error-message">Поле не должно быть пустым</span>
-    </div>
-
-    <div class="popup__input-container">
-        <label class="input__container_label visuallyhidden">Сообщение</label>
-        {{ form_row(form.message, { attr: { rows: 5, placeholder: "Введите сообщение" }}) }}
-        <span class="input__error-message">Поле не должно быть пустым</span>
-    </div>
-
-    <button type="submit" class="mainBtn btn" id="ask">Отправить</button>
 </div>
+
+<div class="popup__input-container">
+    {{ form_label(form.message, 'Введите сообщение', { 'label_attr': { 'class': 'input__container_label visuallyhidden' }}) }}
+
+    {{ form_widget(form.message, { attr: { rows: 5, placeholder: "Введите сообщение" }}) }}
+
+    <div class="input__error-message">
+        {{ form_errors(form.message) }}
+    </div>
+</div>
+
+<button type="submit" class="mainBtn btn" id="ask">Отправить</button>
+
 
 {{ form_rest(form) }}
 {{ form_end(form) }}

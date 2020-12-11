@@ -249,10 +249,10 @@ class HomepageControllerTest extends AppWebTestCase
     $this->assertTrue(count($companyTopsHtml) > 0, $textPrev . 'Проверка, что данные вообще нашлись');
     $this->assertEquals('ИНГОССТРАХ-М', $companyTopsHtml[0]['name'], $textPrev . 'Проверка, что Компания совпадает');
     $this->assertEquals(5, $companyTopsHtml[0]['rating'], $textPrev . 'Проверка, что Рейтинг совпадает');
-    $this->assertEquals('СОГАЗ-МЕД', $companyTopsHtml[1]['name'], $textPrev . 'Проверка, что Компания совпадает');
-    $this->assertEquals(4, $companyTopsHtml[1]['rating'], $textPrev . 'Проверка, что Рейтинг совпадает');
-    $this->assertEquals('АКБАРС-МЕД', $companyTopsHtml[2]['name'], $textPrev . 'Проверка, что Компания совпадает');
-    $this->assertEquals(3, $companyTopsHtml[2]['rating'], $textPrev . 'Проверка, что Рейтинг совпадает');
+    $this->assertEquals('МАКС-М', $companyTopsHtml[1]['name'], $textPrev . 'Проверка, что Компания совпадает');
+    $this->assertEquals(5, $companyTopsHtml[1]['rating'], $textPrev . 'Проверка, что Рейтинг совпадает');
+    $this->assertEquals('СОГАЗ-МЕД', $companyTopsHtml[2]['name'], $textPrev . 'Проверка, что Компания совпадает');
+    $this->assertEquals(4, $companyTopsHtml[2]['rating'], $textPrev . 'Проверка, что Рейтинг совпадает');
   }
 
   /*** Проверка "Блог, медицинский инсайдер":
@@ -359,7 +359,7 @@ class HomepageControllerTest extends AppWebTestCase
     $this->assertTrue(count($regionsHtml) > 1, $textPrev. 'Проверка, что данные вообще нашлись');
     $this->assertEquals('02 Республика Башкортостан', $regionsHtml[0]['text'], 'Проверка, что Название совпадает');
     $this->assertEquals(1, $regionsHtml[0]['id'], 'Проверка, что ID совпадает');
-    $this->assertEquals('66 Свердловская область', $regionsHtml[1]['text'], 'Проверка, что Название совпадает');
-    $this->assertEquals(2, $regionsHtml[1]['id'], 'Проверка, что ID совпадает');
+    $this->assertEquals('47  Ленинградская область', $regionsHtml[1]['text'], 'Проверка, что Название совпадает');
+    $this->assertEquals(3, $regionsHtml[1]['id'], 'Проверка, что ID совпадает');
   }
 }

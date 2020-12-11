@@ -165,15 +165,18 @@ set('bin/console', '{{docker_deploy_path}}/bin/console');
 
 host('staging')
   ->hostname('staging.aw-dev.ru')
-  ->port(2222)
+//  ->port(2222)
   ->stage('staging')
   ->user('deployer')
   ->set('docker_start_services', [
     'percona',
+    'rabbitmq',
+    'php-rabbimq-consumer-obrashscheniya-emails',
+    'php-rabbimq-consumer-obrashscheniya-files',
     'php-fpm-symfony',
     'php-fpm-bitrix',
     'nginx',
-    'maildev'
+    'maildev',
   ])
   ->set('keep_releases', 2)
   ->set('deploy_path', '/var/www/sites/bezbahil');
