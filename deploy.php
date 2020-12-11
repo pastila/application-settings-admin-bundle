@@ -312,9 +312,9 @@ task('deploy:docker:cache:warmup', function () {
  */
 task('deploy:docker:database:migrate', function () {
   $options = '{{console_options}} --allow-no-migration';
-  if (get('migrations_config') !== '') {
-    $options = sprintf('%s --configuration={{release_path}}/{{migrations_config}}', $options);
-  }
+//  if (get('migrations_config') !== '') {
+//    $options = sprintf('%s --configuration={{release_path}}/{{migrations_config}}', $options);
+//  }
 
   runInDocker(get('workspace_service'), sprintf('{{bin/php}} {{bin/console}} doctrine:migrations:migrate %s', $options));
 })->desc('Migrate database');
