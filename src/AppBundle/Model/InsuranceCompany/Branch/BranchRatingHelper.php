@@ -67,7 +67,8 @@ class BranchRatingHelper
       ->select(['c', 'SUM(cb.valuation) AS actualRating'])
       ->andWhere('cb.region = :region AND cb.valuation > 0')
       ->setParameter('region', $region)
-      ->orderBy('actualRating', 'DESC')
+      ->addOrderBy('actualRating', 'DESC')
+      ->addOrderBy('c.name', 'ASC')
       ->groupBy('c.id')
       ->getQuery()
       ->getResult();
@@ -80,7 +81,8 @@ class BranchRatingHelper
       ->getWithBranchActive()
       ->select(['c, c.valuation AS actualRating'])
       ->andWhere('c.valuation > 0')
-      ->orderBy('c.valuation', 'DESC')
+      ->addOrderBy('actualRating', 'DESC')
+      ->addOrderBy('c.name', 'ASC')
       ->getQuery()
       ->getResult();
   }
