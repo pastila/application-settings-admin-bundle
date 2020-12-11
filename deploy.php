@@ -259,10 +259,11 @@ task('deploy', [
   'deploy:docker:cache:clear',
   'deploy:docker:cache:warmup',
   'deploy:writable',
+  'deploy:docker:database:migrate',
+  'deploy:docker:rabbitmq:setup_fabric',
   'deploy:symlink',
   'deploy:unlock',
   'start_services',
-//  'deploy:docker:database:migrate',
   'cleanup',
 ])->desc('Deploy your project');
 
@@ -317,6 +318,15 @@ task('deploy:docker:database:migrate', function () {
 
   runInDocker(get('workspace_service'), sprintf('{{bin/php}} {{bin/console}} doctrine:migrations:migrate %s', $options));
 })->desc('Migrate database');
+
+/**
+ * Install assets from public dir of bundles
+ */
+task('deploy:docker:rabbitmq:setup_fabric', function () {
+  runInDocker(get('workspace_service'), '{{bin/php}} {{bin/console}} rabbitmq:setup-fabric {{console_options}}', [
+    'user' => 'laradock'
+  ]);
+})->desc('Setup RabbitMQ fabric');
 
 desc('Installing vendors');
 task('deploy:docker:vendors', function () {
