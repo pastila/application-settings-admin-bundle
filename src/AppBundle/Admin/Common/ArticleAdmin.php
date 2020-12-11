@@ -13,6 +13,7 @@ use Sonata\CoreBundle\Form\Type\DatePickerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class ArticleAdmin extends Base
 {
@@ -49,13 +50,22 @@ class ArticleAdmin extends Base
   {
     $form
       ->tab("Основные")
-      ->add("title")
+      ->add("title", TextType::class, [
+        'constraints' => [
+          new Length([
+            'max' => 256,
+          ]),
+        ],
+      ])
       ->add('slug', TextType::class, [
         'help' => 'Если оставить пустым, то будет сгенерирован автоматически.',
         'required' => false,
         'constraints' => [
+          new Regex([
+            'pattern' => "/^[a-zA-Z0-9\-\_]+$/"
+          ]),
           new Length([
-            'max' => 255,
+            'max' => 256,
           ]),
         ],
       ])
