@@ -53,7 +53,7 @@ class ArticleAdmin extends Base
       ->add("title", TextType::class, [
         'constraints' => [
           new Length([
-            'max' => 256,
+            'max' => 255,
           ]),
         ],
       ])
@@ -65,7 +65,7 @@ class ArticleAdmin extends Base
             'pattern' => "/^[a-zA-Z0-9\-\_]+$/"
           ]),
           new Length([
-            'max' => 256,
+            'max' => 255,
           ]),
         ],
       ])
