@@ -161,9 +161,7 @@ class HomepageController extends Controller
   {
     $contactUs = new ContactUs();
     $contactUs->setAuthor($this->getUser());
-    $form = $this->createForm(ContactUsType::class, $contactUs, [
-      'csrf_protection' => false,
-    ]);
+    $form = $this->createForm(ContactUsType::class, $contactUs, []);
 
     $form->handleRequest($request);
     if ($form->isSubmitted())
