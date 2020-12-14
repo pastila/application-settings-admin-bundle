@@ -2094,6 +2094,13 @@
       margin-bottom: 25px;
     }
 
+    .b-question__button {
+      position: relative;
+      left: 50%;
+      -webkit-transform: translateX(-50%);
+      transform: translateX(-50%);
+    }
+
     .b-rating {
       margin: 0 0 55px;
     }
