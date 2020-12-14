@@ -52,18 +52,39 @@ class ObrashcheniaBranchMailer
       $this->logger->warn('Unable to attached pdf file in send email with appeal: ' . $exception);
     }
 
+    $fileSize = 0;
     foreach ($modelObrashcheniaBranch->getAttachedFiles() as $filesAttach)
     {
       try
       {
-        $attachedFile = \Swift_Attachment::fromPath($filesAttach);
-        $names = explode('/', $filesAttach);
-        $name = end($names);
-        $attachedFile->setFilename($name);
-        $message->attach($attachedFile);
+        if (file_exists($filesAttach))
+        {
+          $fileSize += filesize($filesAttach);
+        }
       } catch (\Exception $exception)
       {
-        $this->logger->warn('Unable to attached user file in send email with appeal: ' . $exception);
+        $this->logger->warn('Unable get attached file size in send email appeal: ' . $exception);
+      }
+    }
+
+    if ($fileSize < 20971520) // 20 * 1024 * 1024 = 20МБайт
+    {
+      foreach ($modelObrashcheniaBranch->getAttachedFiles() as $filesAttach)
+      {
+        try
+        {
+          if (file_exists($filesAttach))
+          {
+            $attachedFile = \Swift_Attachment::fromPath($filesAttach);
+            $names = explode('/', $filesAttach);
+            $name = end($names);
+            $attachedFile->setFilename($name);
+            $message->attach($attachedFile);
+          }
+        } catch (\Exception $exception)
+        {
+          $this->logger->warn('Unable to attached user file in send email with appeal: ' . $exception);
+        }
       }
     }
 
