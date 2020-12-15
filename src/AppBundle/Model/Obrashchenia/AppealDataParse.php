@@ -56,13 +56,13 @@ class AppealDataParse
       empty($data['login']))
     )
     {
-      throw new \Exception('Empty EMAIL or PDF in data in AppealDataParse');
+      throw new \InvalidArgumentException('Empty EMAIL or PDF in data in AppealDataParse');
     }
     $author = $this->entityManager->getRepository(User::class)
       ->findOneBy(['login' => $data['login']]);
     if (!$author)
     {
-      throw new \Exception(sprintf('Not found user %s by login in AppealDataParse', $data['login']));
+      throw new \InvalidArgumentException(sprintf('Not found user %s by login in AppealDataParse', $data['login']));
     }
 
     $model = new AppealDataToCompany();
