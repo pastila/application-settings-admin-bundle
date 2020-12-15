@@ -1,3 +1,5 @@
+import initButtonSubmit from '../buttonSubmitFeedbackForm/buttonSubmitFeedbackForm';
+
 class PopupContactUs {
   constructor(popupElement) {
     this.popupElement = popupElement;
@@ -23,6 +25,7 @@ class PopupContactUs {
     }).done((result) => {
       if (result && this.popupContent[0]) {
         this.popupContent[0].innerHTML = `<div class="remodal-title">Напишите нам</div>${result}`;
+        this.popupContent.find('form').append('<button type="submit" class="mainBtn btn" id="ask">Отправить</button>')
       }
 
       this.submitForm();
@@ -64,6 +67,11 @@ class PopupContactUs {
       if (formElement) {
         formElement.addEventListener(`submit`, (evt) => {
           evt.preventDefault();
+
+          const buttonSubmitForm = this.popupContent.find('form[name="contact_us"] button[type="submit"]');
+
+          initButtonSubmit(buttonSubmitForm);
+
           $.ajax({
             url: `${urlPrefix}/contact_us`,
             type: 'POST',
@@ -78,8 +86,9 @@ class PopupContactUs {
           }).fail((err) => {
             if (err && err.status === 400 && err.responseText) {
               this.popupContent.find('form')[0].innerHTML = err.responseText;
+              this.popupContent.find('form').append('<button type="submit" class="mainBtn btn" id="ask">Отправить</button>')
             }
-          });
+          })
         });
       }
   }
@@ -96,9 +105,5 @@ export function initContactUsBtn() {
     }
 
     contactUsBtn.addEventListener(`click`, openContactUsModal);
-
-    if (window.location.hash === '#contact-us-modal') {
-      openContactUsModal();
-    }
   }
 }

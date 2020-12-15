@@ -1708,6 +1708,19 @@
     .mainBtn {
       margin: 20px auto 0;
       display: block;
+
+      &.btn_with-loader {
+        padding: 0;
+        background-color: #ffffff;
+
+        &:hover {
+          background-color: #ffffff;
+        }
+      }
+    }
+
+    .button-loader {
+      max-height: 100%;
     }
 
     .close-modal {

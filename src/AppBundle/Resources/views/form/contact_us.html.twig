@@ -1,4 +1,4 @@
-{{ form_start(form, {'action': path('contact_us'), 'method': 'POST', 'attr': {
+{{ form_start(form, {'attr': {
     id: 'feedback_modal_new',
     class: 'feedback_form',
 }}) }}
@@ -32,9 +32,6 @@
         {{ form_errors(form.message) }}
     </div>
 </div>
-
-<button type="submit" class="mainBtn btn" id="ask">Отправить</button>
-
 
 {{ form_rest(form) }}
 {{ form_end(form) }}
