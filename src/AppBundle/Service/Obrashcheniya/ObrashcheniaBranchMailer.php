@@ -3,6 +3,7 @@
 namespace AppBundle\Service\Obrashcheniya;
 
 use Accurateweb\EmailTemplateBundle\Email\Factory\EmailFactory;
+use AppBundle\Exception\FileNotWritebleException;
 use AppBundle\Model\Obrashchenia\AppealDataToCompany;
 use Psr\Log\LoggerInterface;
 
@@ -47,26 +48,26 @@ class ObrashcheniaBranchMailer
       $attachedPdf = \Swift_Attachment::fromPath($modelObrashcheniaBranch->getPdf());
       $attachedPdf->setFilename('Обращение.pdf');
       $message->attach($attachedPdf);
-    } catch (\Exception $exception)
+    } catch (FileNotWritebleException $exception)
     {
       $this->logger->warn('Unable to attached pdf file in send email with appeal: ' . $exception);
     }
 
     foreach ($modelObrashcheniaBranch->getAttachedFiles() as $filesAttach)
     {
-      try
+      if (file_exists($filesAttach))
       {
-        if (file_exists($filesAttach))
+        try
         {
           $attachedFile = \Swift_Attachment::fromPath($filesAttach);
           $names = explode('/', $filesAttach);
           $name = end($names);
           $attachedFile->setFilename($name);
           $message->attach($attachedFile);
+        } catch (FileNotWritebleException $exception)
+        {
+          $this->logger->warn('Unable to attached user file in send email with appeal: ' . $exception);
         }
-      } catch (\Exception $exception)
-      {
-        $this->logger->warn('Unable to attached user file in send email with appeal: ' . $exception);
       }
     }
 
