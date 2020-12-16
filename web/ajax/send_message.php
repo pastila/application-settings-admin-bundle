@@ -409,10 +409,9 @@ if (CModule::IncludeModule("iblock")) {
                             $result['success'] = 'Ваше обращение ожидает отправки в страховую компанию. За состоянием отправки сообщения Вы 
                             можете наблюдать в личном кабинете «Отправленные» ';
 
-                          } catch (AMQPChannelException $channelException)
+                          } catch (ErrorException $channelException)
                           {
                             $result['error'] = 'Не удалось отправить обращение. Пожалуйста, обратитесь в службу поддержки.';
-                            //Произошла ошибка!
                           }
                         } else {
                           try
@@ -455,13 +454,12 @@ if (CModule::IncludeModule("iblock")) {
                                 "SEND_REVIEW" => 8, //ID статуса ожидает отправки
                               )
                             );
-                            $result['success'] = 'Ваше обращение ожидает отправки в страховую компанию. За состоянием отправки сообщения Вы 
+                            $result['success'] = 'Ваше обращение ожидает отправки в страховую компанию. За состоянием отправки сообщения Вы
                             можете наблюдать в личном кабинете «Отправленные» ';
 
-                          } catch (AMQPChannelException $channelException)
+                          } catch (ErrorException $channelException)
                           {
                             $result['error'] = 'Не удалось отправить обращение. Пожалуйста, обратитесь в службу поддержки.';
-                            //Произошла ошибка!
                           }
                         }
                     } else {

@@ -63,13 +63,34 @@ class ObrashcheniyaEmailsService implements ConsumerInterface
 
     $this->logger->info(sprintf('Get data from bitrix by RabbitMq in appeal: %s', $msg->body));
 
-    $modelAppealData = $this->appealDataParse->parse($data);
+    try
+    {
+      $modelAppealData = $this->appealDataParse->parse($data);
+    }
+    catch (\Exception $e)
+    {
+      return ConsumerInterface::MSG_REJECT;
+    }
 
-    $this->mailerBranch->send($modelAppealData);
-    $this->userMailer->send($modelAppealData);
+    try
+    {
+      $this->mailerBranch->send($modelAppealData);
+    }
+    catch (\Swift_SwiftException $e)
+    {
+      return ConsumerInterface::MSG_REJECT_REQUEUE;
+    }
+    catch (\Exception $e)
+    {
+      return ConsumerInterface::MSG_REJECT;
+    }
 
     # Обновляем статус обращения
     $this->bitrixHelper->updatePropertyElementValue(11, $data[2]['ID'], 'SEND_REVIEW', 3, 3, null);
     $this->bitrixHelper->updatePropertyElementValue(11, $data[2]['ID'], 'SEND_MESSAGE', date('y-m-d'), date('y'), date('y') . '.0000');
+
+    $this->userMailer->send($modelAppealData);
+
+    return ConsumerInterface::MSG_ACK;
   }
 }
