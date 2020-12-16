@@ -19,6 +19,6 @@
 <script>
 
   $(document).on("click",".close-js",function() {
-    location.reload();
+    window.location.href = `${window.location.origin}${window.location.pathname}`
   })
 </script>
