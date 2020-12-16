@@ -33,6 +33,9 @@ parameters:
     rabbitmq_password: '%env(RABBITMQ_DEFAULT_PASS)%'
     rabbitmq_project_vhost: /
 
+    router.request_context.host: '%env(REQUEST_DEFAULT_HOST)%'
+    router.request_context.scheme: '%env(REQUEST_DEFAULT_SCHEME)%'
+
 # Environment variable defaults
     env(MYSQL_USER): root
     env(MYSQL_PASSWORD): ~
@@ -40,3 +43,6 @@ parameters:
 
     env(RABBITMQ_DEFAULT_USER): guest
     env(RABBITMQ_DEFAULT_PASS): d1cda7935c7a917e6ced3080e890242e
+
+    env(REQUEST_DEFAULT_HOST): 'bezbahil.ru'
+    env(REQUEST_DEFAULT_SCHEME): 'https'
