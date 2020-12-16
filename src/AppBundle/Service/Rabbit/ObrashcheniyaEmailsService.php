@@ -59,33 +59,17 @@ class ObrashcheniyaEmailsService implements ConsumerInterface
 
   public function execute(AMQPMessage $msg)
   {
-    $appealHasBeenSent = false;
+    $data = json_decode($msg->body, true);
 
-    try
-    {
-      $data = json_decode($msg->body, true);
+    $this->logger->info(sprintf('Get data from bitrix by RabbitMq in appeal: %s', $msg->body));
 
-      $this->logger->info(sprintf('Get data from bitrix by RabbitMq in appeal: %s', $msg->body));
+    $modelAppealData = $this->appealDataParse->parse($data);
 
-      $modelAppealData = $this->appealDataParse->parse($data);
+    $this->mailerBranch->send($modelAppealData);
+    $this->userMailer->send($modelAppealData);
 
-      $this->mailerBranch->send($modelAppealData);
-
-      $appealHasBeenSent = true;
-
-      # Обновляем статус обращения
-      $this->bitrixHelper->updatePropertyElementValue(11, $data[2]['ID'], 'SEND_REVIEW', 3, 3, null);
-      $this->bitrixHelper->updatePropertyElementValue(11, $data[2]['ID'], 'SEND_MESSAGE', date('y-m-d'), date('y'), date('y').'.0000');
-
-      # Отправляем письмо юзеру
-      $this->userMailer->send($modelAppealData);
-    }
-    catch (\Exception $e)
-    {
-      if ($appealHasBeenSent)
-      {
-
-      }
-    }
+    # Обновляем статус обращения
+    $this->bitrixHelper->updatePropertyElementValue(11, $data[2]['ID'], 'SEND_REVIEW', 3, 3, null);
+    $this->bitrixHelper->updatePropertyElementValue(11, $data[2]['ID'], 'SEND_MESSAGE', date('y-m-d'), date('y'), date('y') . '.0000');
   }
 }
