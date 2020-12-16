@@ -3,7 +3,6 @@
 namespace AppBundle\Service\Obrashcheniya;
 
 use Accurateweb\EmailTemplateBundle\Email\Factory\EmailFactory;
-use AppBundle\Exception\FileNotWritebleException;
 use AppBundle\Model\Obrashchenia\AppealDataToCompany;
 use Psr\Log\LoggerInterface;
 
@@ -43,40 +42,19 @@ class ObrashcheniaBranchMailer
         'author' => $modelObrashcheniaBranch->getAuthor()
       ]
     );
-    try
-    {
-      $attachedPdf = \Swift_Attachment::fromPath($modelObrashcheniaBranch->getPdf());
-      $attachedPdf->setFilename('Обращение.pdf');
-      $message->attach($attachedPdf);
-    } catch (FileNotWritebleException $exception)
-    {
-      $this->logger->warn('Unable to attached pdf file in send email with appeal: ' . $exception);
-    }
+    $attachedPdf = \Swift_Attachment::fromPath($modelObrashcheniaBranch->getPdf());
+    $attachedPdf->setFilename('Обращение.pdf');
+    $message->attach($attachedPdf);
 
     foreach ($modelObrashcheniaBranch->getAttachedFiles() as $filesAttach)
     {
-      if (file_exists($filesAttach))
-      {
-        try
-        {
-          $attachedFile = \Swift_Attachment::fromPath($filesAttach);
-          $names = explode('/', $filesAttach);
-          $name = end($names);
-          $attachedFile->setFilename($name);
-          $message->attach($attachedFile);
-        } catch (FileNotWritebleException $exception)
-        {
-          $this->logger->warn('Unable to attached user file in send email with appeal: ' . $exception);
-        }
-      }
+      $attachedFile = \Swift_Attachment::fromPath($filesAttach);
+      $names = explode('/', $filesAttach);
+      $name = end($names);
+      $attachedFile->setFilename($name);
+      $message->attach($attachedFile);
     }
 
-    try
-    {
-      $this->mailer->send($message);
-    } catch (\Exception $exception)
-    {
-      $this->logger->warn('Unable to send notification about new appeal to company branch: ' . $exception);
-    }
+    $this->mailer->send($message);
   }
 }
