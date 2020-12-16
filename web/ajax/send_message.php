@@ -362,7 +362,8 @@ if (CModule::IncludeModule("iblock")) {
 
 
                             }
-
+                          try
+                          {
                             rabbitmqSend(queue_obrashcheniya_emails, json_encode([
                               'login' => $arUser['LOGIN'],
                               'SEND_MESSAGE_CHILD',
@@ -397,24 +398,22 @@ if (CModule::IncludeModule("iblock")) {
                                 'SRC_LOGO' => $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["SERVER_NAME"] . "/pdf/logo_oms.png",
                               )
                             ]));
-                            CIBlockElement::SetPropertyValuesEx(
-                                $_POST['ID'],
-                                11,
-                                array(
-                                    "SEND_REVIEW" => 3,
-                                    "SEND_MESSAGE" => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time())
-                                )
-                            );
-                            $result['success'] = 'Обращение успешно отправлено в страховую компанию.
-                         Ваше обращение находится в личном кабинете «Отправленные»';
 
-                          CEvent::Send(
-                                'SEND_MASSEGE_AFTER_SEND_APPEAL',
-                                's1',
-                                array(
-                                    'EMAIL' => $person["EMAIL"],
-                                )
+                            CIBlockElement::SetPropertyValuesEx(
+                              $_POST['ID'],
+                              11,
+                              array(
+                                "SEND_REVIEW" => 8, //ID статуса ожидает отправки
+                              )
                             );
+                            $result['success'] = 'Ваше обращение ожидает отправки в страховую компанию. После успешной отправки Вы 
+                            сможете найти его в личном кабинете «Отправленные» ';
+
+                          } catch (AMQPChannelException $channelException)
+                          {
+                            $result['error'] = 'Не удалось отправить обращение. Пожалуйста, обратитесь в службу поддержки.';
+                            //Произошла ошибка!
+                          }
                         } else {
                           try
                           {
