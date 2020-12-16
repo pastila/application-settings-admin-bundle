@@ -59,7 +59,7 @@ WHERE  IBLOCK_PROPERTY_ID = :iblock_property_id AND IBLOCK_ELEMENT_ID = :iblock_
       # Если есть, то
       $stmt = $this->con->prepare('
 UPDATE b_iblock_element_property
-SET `VALUE` = :value, `VALUE_ENUM` = :value
+SET `VALUE` = :value, `VALUE_ENUM` = :value_enum, `VALUE_NUM` = :value_num
 WHERE IBLOCK_PROPERTY_ID = :iblock_property_id AND IBLOCK_ELEMENT_ID = :iblock_element_id');
     }
     else
