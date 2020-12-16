@@ -1670,7 +1670,7 @@
 
   .title-page {
     max-width: 1350px;
-    margin: 0 auto;
+    margin: 40px auto 0;
     text-align: center;
   }
 
@@ -1898,6 +1898,12 @@
 
     .b-return__image--right {
       right: 25px;
+    }
+
+    .contact-us-form .popup__input-container input,
+    .contact-us-form .popup__input-container textarea,
+    .contact-us-form .popup__input-container .input__error-message {
+      width: 70%;
     }
   }
 
@@ -2352,6 +2358,12 @@
       &:after {
         width: 2.6rem;
       }
+    }
+
+    .contact-us-form .popup__input-container input,
+    .contact-us-form .popup__input-container textarea,
+    .contact-us-form .popup__input-container .input__error-message {
+      width: 100%;
     }
   }
 
