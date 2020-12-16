@@ -35,7 +35,7 @@ $section = CIBlockSection::GetList(Array(), $arFilter, false, $arSelect, false);
 if ($Section = $section->GetNext()) {
     $arSelect = Array("ID", "IBLOCK_ID", "NAME", "CREATED_DATE", "PROPERTY_IMG_1", "PROPERTY_SEND_MESSAGE",
         "PROPERTY_PDF", "PROPERTY_IMG_2", "PROPERTY_IMG_3", "PROPERTY_IMG_4", "PROPERTY_IMG_5");
-    $arFilter = Array("IBLOCK_ID" => 11, "SECTION_ID" => $Section["ID"], "PROPERTY_SEND_REVIEW_VALUE"=> [1,0]);
+    $arFilter = Array("IBLOCK_ID" => 11, "SECTION_ID" => $Section["ID"], "PROPERTY_SEND_REVIEW_VALUE"=> [1,0,-1]);
     $Element = CIBlockElement::GetList(Array("created" => "desc"), $arFilter, false, false, $arSelect); //получили обращения юзера
     while ($obElement = $Element->GetNextElement()) {
         $arFields = $obElement->GetFields();
@@ -127,8 +127,11 @@ if ($Section = $section->GetNext()) {
                     продлении срока рассмотрения обращения, если для решения поставленных вопросов нужно
                     проведение экспертизы
                 </p>
-            <?php else: ?>
+            <?php elseif ($SEND_REVIEW_VALUE == 0): ?>
                 <h4 class="process">Ваше обращение отправляется в страховую компанию</h4>
+            <?php else: ?>
+                <h4 class="error">Ваше обращение не удалось отправить в страховую компанию, пожалуйста,
+                    обратитесь к администратору сайта</h4>
             <?php endif;?>
         </div>
     </div>
