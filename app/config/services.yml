@@ -101,6 +101,9 @@ services:
     AppBundle\Service\Obrashcheniya\ObrashcheniaBranchMailer:
         public: true
 
+    AppBundle\Service\Obrashcheniya\ObrashcheniaUserMailer:
+        public: true
+
     Accurateweb\EmailTemplateBundle\Email\Factory\EmailFactory:
       alias: aw_email_templating.template.factory
 

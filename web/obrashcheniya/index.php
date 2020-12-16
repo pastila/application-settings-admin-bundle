@@ -29,7 +29,7 @@ if ($USER->IsAuthorized()) { ?>
     }
     if ($arSection = $rsSections->GetNext()) {
         global $arrFilter;
-        $arrFilter = array("!PROPERTY_SEND_REVIEW" => 3);
+        $arrFilter = array("!PROPERTY_SEND_REVIEW" => 3, "!PROPERTY_SEND_REVIEW_VALUE"=> 0);
 
         $APPLICATION->IncludeComponent(
             "bitrix:news.list",

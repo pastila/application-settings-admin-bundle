@@ -596,7 +596,7 @@ if(time_p.text().search("2") != -1) {
             $('#appeal_' + element[1]).addClass("sended");
             $.magnificPopup.open({
               items: {
-                src: '<div class="white-popup custom_styles_popup">Ваше обращение успешно отправлено!</div>',
+                src: '<div class="white-popup custom_styles_popup">' + result2.success + '</div>',
                 type: 'inline',
               },
               callbacks: {
@@ -654,7 +654,7 @@ if(time_p.text().search("2") != -1) {
                   $('#appeal_' + element[1]).addClass(" sended");
                   $.magnificPopup.open({
                     items: {
-                      src: '<div class="white-popup custom_styles_popup">Ваше обращение успешно отправлено!</div>',
+                      src: '<div class="white-popup custom_styles_popup">' + result2.success + '</div>',
                       type: 'inline',
                     },
                     callbacks: {

@@ -43,20 +43,9 @@ if (CModule::IncludeModule("iblock")) {
         false,
         $arSelect
     );
-    $found = false;
-    while ($ob = $res->GetNextElement()) {
-        $arFields = $ob->GetFields();
-        $arProps = $ob->GetProperties();
-        if ($arFields['PROPERTY_SEND_REVIEW_VALUE'] === 0)
-        {
-          $found = true;
-          break;
-        }
-    }
-
-    if (!$found)
-    {
-      $result['error'] = 'Обращение уже ожидает отправки';
+    if ($ob = $res->GetNextElement()) {
+      $arFields = $ob->GetFields();
+      $arProps = $ob->GetProperties();
     }
 
     //Проверка на дублировние
@@ -441,7 +430,6 @@ if (CModule::IncludeModule("iblock")) {
                                 'PROPERTY_IMG_5_VALUE' => CFile::GetPath($arFields['PROPERTY_IMG_5_VALUE']),
                                 'PDF' => parsingPdfPath($arFile['SRC']),
                                 'ID' => $arFields['ID'],
-                                'MESSAGE' => $message,
                                 'NAME_COMPANY' => $name_company,
                                 'BOSS_COMPANY' => $boss_company,
                                 'MAIL_COMPANY' => $mail_company,
@@ -465,7 +453,7 @@ if (CModule::IncludeModule("iblock")) {
                               $_POST['ID'],
                               11,
                               array(
-                                "SEND_REVIEW" => 4, //ID статуса ожидает отправки
+                                "SEND_REVIEW" => 8, //ID статуса ожидает отправки
                               )
                             );
                             $result['success'] = 'Ваше обращение ожидает отправки в страховую компанию. После успешной отправки Вы 
@@ -476,9 +464,6 @@ if (CModule::IncludeModule("iblock")) {
                             $result['error'] = 'Не удалось отправить обращение. Пожалуйста, обратитесь в службу поддержки.';
                             //Произошла ошибка!
                           }
-
-
-
                         }
                     } else {
                         $result['error'] = 'Нет почтового адреса';

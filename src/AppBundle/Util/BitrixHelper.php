@@ -9,12 +9,13 @@ namespace AppBundle\Util;
 use AppBundle\Exception\BitrixHelperException;
 use Doctrine\DBAL\Driver\PDOConnection;
 use http\Exception\InvalidArgumentException;
+use Doctrine\DBAL\Driver\Connection;
 
 class BitrixHelper
 {
   private $con;
 
-  public function __construct(PDOConnection $connection)
+  public function __construct(Connection $connection)
   {
     $this->con = $connection;
   }

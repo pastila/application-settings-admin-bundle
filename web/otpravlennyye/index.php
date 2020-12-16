@@ -35,7 +35,7 @@ $section = CIBlockSection::GetList(Array(), $arFilter, false, $arSelect, false);
 if ($Section = $section->GetNext()) {
     $arSelect = Array("ID", "IBLOCK_ID", "NAME", "CREATED_DATE", "PROPERTY_IMG_1", "PROPERTY_SEND_MESSAGE",
         "PROPERTY_PDF", "PROPERTY_IMG_2", "PROPERTY_IMG_3", "PROPERTY_IMG_4", "PROPERTY_IMG_5");
-    $arFilter = Array("IBLOCK_ID" => 11, "SECTION_ID" => $Section["ID"], "PROPERTY_SEND_REVIEW_VALUE"=> 1);
+    $arFilter = Array("IBLOCK_ID" => 11, "SECTION_ID" => $Section["ID"], "PROPERTY_SEND_REVIEW_VALUE"=> [1,0]);
     $Element = CIBlockElement::GetList(Array("created" => "desc"), $arFilter, false, false, $arSelect); //получили обращения юзера
     while ($obElement = $Element->GetNextElement()) {
         $arFields = $obElement->GetFields();
@@ -43,6 +43,9 @@ if ($Section = $section->GetNext()) {
 
 
 
+        $props = $obElement->GetProperties();
+        $SEND_REVIEW = $props['SEND_REVIEW'];
+        $SEND_REVIEW_VALUE = $SEND_REVIEW['VALUE'];
 
         if (!empty($arFields['PROPERTY_IMG_1_VALUE'])) {
             $pdf_1 = false;
@@ -102,7 +105,6 @@ if ($Section = $section->GetNext()) {
         CFile::GetPath($arFields['PROPERTY_IMG_5_VALUE']);
 
       $pdf_url = count($array) > 0 ? sprintf(obrashcheniya_report_url_download, $arFields["ID"]) : $PDF;
-
         ?>
 <!-- Обращения item -->
 <div class="otpravlennyye">
@@ -112,18 +114,22 @@ if ($Section = $section->GetNext()) {
                 <?= $arFields["NAME"] . ' № ' . $arFields["ID"]?>
             </h3>
 
-            <h4 class="success">Направлено в страховую компанию</h4>
+            <?php if ($SEND_REVIEW_VALUE == 1): ?>
+                <h4 class="success">Направлено в страховую компанию</h4>
 
-            <div class="otpravlennyye__item_data">
-                дата: <?= $arFields['PROPERTY_SEND_MESSAGE_VALUE'] ?>
-            </div>
+                <div class="otpravlennyye__item_data">
+                    дата: <?= $arFields['PROPERTY_SEND_MESSAGE_VALUE'] ?>
+                </div>
 
-            <p class="otpravlennyye__item_text">
-                В соответствии с действующим законодательством
-                в течение 30 дней вам должны предоставить ответ на обращение либо проинформировать о
-                продлении срока рассмотрения обращения, если для решения поставленных вопросов нужно
-                проведение экспертизы
-            </p>
+                <p class="otpravlennyye__item_text">
+                    В соответствии с действующим законодательством
+                    в течение 30 дней вам должны предоставить ответ на обращение либо проинформировать о
+                    продлении срока рассмотрения обращения, если для решения поставленных вопросов нужно
+                    проведение экспертизы
+                </p>
+            <?php else: ?>
+                <h4 class="process">Ваше обращение отправляется в страховую компанию</h4>
+            <?php endif;?>
         </div>
     </div>
     <div class="obrashcheniya__content_sidebar">
