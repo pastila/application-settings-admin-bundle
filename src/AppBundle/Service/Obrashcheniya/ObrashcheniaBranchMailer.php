@@ -5,6 +5,7 @@ namespace AppBundle\Service\Obrashcheniya;
 use Accurateweb\EmailTemplateBundle\Email\Factory\EmailFactory;
 use AppBundle\Model\Obrashchenia\AppealDataToCompany;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 class ObrashcheniaBranchMailer
 {
@@ -50,7 +51,7 @@ class ObrashcheniaBranchMailer
     }
     else
     {
-      throw new \InvalidArgumentException(sprintf('Not found pdf appeal %s in sending email appeal', $modelObrashcheniaBranch->getPdf()));
+      throw new FileNotFoundException(sprintf('Not found pdf appeal %s in sending email appeal', $modelObrashcheniaBranch->getPdf()));
     }
 
     foreach ($modelObrashcheniaBranch->getAttachedFiles() as $filesAttach)
@@ -65,7 +66,7 @@ class ObrashcheniaBranchMailer
       }
       else
       {
-        throw new \InvalidArgumentException(sprintf('Not found attached file %s in sending email appeal', $filesAttach));
+        throw new FileNotFoundException(sprintf('Not found attached file %s in sending email appeal', $filesAttach));
       }
     }
 

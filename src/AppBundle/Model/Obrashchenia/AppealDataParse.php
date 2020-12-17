@@ -8,6 +8,7 @@ use AppBundle\Entity\Obrashcheniya\ObrashcheniyaFile;
 use AppBundle\Entity\User\User;
 use AppBundle\Repository\Obrashcheniya\ObrashcheniyaFileRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AppealDataParse
@@ -82,6 +83,10 @@ class AppealDataParse
     $attached = [];
     foreach ($files as $file)
     {
+      if (!file_exists($file->getFile()))
+      {
+        throw new FileNotFoundException(sprintf('Not found file %s in parsing appeal', $file->getFile()));
+      }
       /**
        * @var ObrashcheniyaFile $file
        */
