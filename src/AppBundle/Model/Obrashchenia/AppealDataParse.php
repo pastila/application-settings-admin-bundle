@@ -4,9 +4,11 @@
 namespace AppBundle\Model\Obrashchenia;
 
 
+use AppBundle\Entity\Obrashcheniya\ObrashcheniyaFile;
 use AppBundle\Entity\User\User;
 use AppBundle\Repository\Obrashcheniya\ObrashcheniyaFileRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AppealDataParse
@@ -64,25 +66,39 @@ class AppealDataParse
     {
       throw new \InvalidArgumentException(sprintf('Not found user %s by login in AppealDataParse', $data['login']));
     }
+    $files = $this->entityManager->getRepository(ObrashcheniyaFile::class)
+      ->findBy(['bitrixId' => $data[2]['ID']]);
+    if (!$files)
+    {
+      throw new \Exception(sprintf('Not found files %s by ID in AppealDataParse', $data[2]['ID']));
+    }
 
     $model = new AppealDataToCompany();
     $model->setAuthor($author->getFullName());
-    $model->setPdf($this->appealPathPdf . $data[2]['PDF']);
     $model->setEmailsTo(array_map(function ($item)
     {
       return trim($item);
     }, explode(',', $data[2]['EMAIL'])));
 
-    $filesAttach = [];
-    for ($i = 1; $i <= 5; $i++)
+    $attached = [];
+    foreach ($files as $file)
     {
-      $file = $data[2]['PROPERTY_IMG_' . $i . '_VALUE'];
-      if (!empty($file))
+      if (!file_exists($file->getFile()))
       {
-        $filesAttach[] = $this->appealPathAttached . $file;
+        throw new FileNotFoundException(sprintf('Not found file %s in parsing appeal', $file->getFile()));
+      }
+      /**
+       * @var ObrashcheniyaFile $file
+       */
+      if ($file->getImageNumber() === null)
+      {
+        $model->setPdf($file->getFile());
+      } else
+      {
+        $attached[] = $file->getFile();
       }
     }
-    $model->setAttachedFiles($filesAttach);
+    $model->setAttachedFiles($attached);
 
     return $model;
   }

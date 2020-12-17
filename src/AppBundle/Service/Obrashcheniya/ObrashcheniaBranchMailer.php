@@ -5,6 +5,7 @@ namespace AppBundle\Service\Obrashcheniya;
 use Accurateweb\EmailTemplateBundle\Email\Factory\EmailFactory;
 use AppBundle\Model\Obrashchenia\AppealDataToCompany;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 class ObrashcheniaBranchMailer
 {
@@ -42,17 +43,31 @@ class ObrashcheniaBranchMailer
         'author' => $modelObrashcheniaBranch->getAuthor()
       ]
     );
-    $attachedPdf = \Swift_Attachment::fromPath($modelObrashcheniaBranch->getPdf());
-    $attachedPdf->setFilename('Обращение.pdf');
-    $message->attach($attachedPdf);
+    if (file_exists($modelObrashcheniaBranch->getPdf()))
+    {
+      $attachedPdf = \Swift_Attachment::fromPath($modelObrashcheniaBranch->getPdf());
+      $attachedPdf->setFilename('obrashcheniya.pdf');
+      $message->attach($attachedPdf);
+    }
+    else
+    {
+      throw new FileNotFoundException(sprintf('Not found pdf appeal %s in sending email appeal', $modelObrashcheniaBranch->getPdf()));
+    }
 
     foreach ($modelObrashcheniaBranch->getAttachedFiles() as $filesAttach)
     {
-      $attachedFile = \Swift_Attachment::fromPath($filesAttach);
-      $names = explode('/', $filesAttach);
-      $name = end($names);
-      $attachedFile->setFilename($name);
-      $message->attach($attachedFile);
+      if (file_exists($filesAttach))
+      {
+        $attachedFile = \Swift_Attachment::fromPath($filesAttach);
+        $names = explode('/', $filesAttach);
+        $name = end($names);
+        $attachedFile->setFilename($name);
+        $message->attach($attachedFile);
+      }
+      else
+      {
+        throw new FileNotFoundException(sprintf('Not found attached file %s in sending email appeal', $filesAttach));
+      }
     }
 
     $this->mailer->send($message);
