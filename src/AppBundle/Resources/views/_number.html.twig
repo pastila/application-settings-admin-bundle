@@ -1,12 +1,12 @@
 <div class="b-info__item">
-    <div class="b-info__item-image">
+    <a href="{{ number.url }}" class="b-info__item-image">
         {% if number.isImageSvg %}
             <img src="{{ image_url(number) }}" alt="">
         {% else %}
             <img src="{{ image_thumbnail_url(number, null, 'small') }}" alt="">
         {% endif %}
-    </div>
-    <div class="b-info__item-number">{{ number.title }}</div>
+    </a>
+    <a href="{{ number.url }}" class="b-info__item-number">{{ number.title }}</a>
     <div class="b-info__item-text">{{ number.description }}</div>
     <div class="b-info__item-more">
         <a href="{{ number.url }}">{{ number.urlText }}
