@@ -254,6 +254,8 @@ services:
       - ${APP_CODE_PATH_HOST_BX}:${APP_CODE_PATH_CONTAINER_BX}
       - ${DATA_PATH_LOGS}/:/var/log
       - ./php-fpm-bitrix/msmtprc:/etc/msmtprc
+      - ${APP_CODE_PATH_HOST_SF}/var/uploads:/var/www/var/uploads
+      - ${APP_CODE_PATH_HOST_SF}/web/vendor/mpdf/mpdf/tmp:/var/www/web/vendor/mpdf/mpdf/tmp
     build:
       args:
         - LARADOCK_PHP_VERSION=${PHP_VERSION}

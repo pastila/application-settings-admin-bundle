@@ -44,9 +44,10 @@ if (CModule::IncludeModule("iblock")) {
         $arSelect
     );
     if ($ob = $res->GetNextElement()) {
-        $arFields = $ob->GetFields();
-        $arProps = $ob->GetProperties();
+      $arFields = $ob->GetFields();
+      $arProps = $ob->GetProperties();
     }
+
     //Проверка на дублировние
     $hospital_name = str_replace('&amp;', '', str_replace('quot;', '"', $arFields['PROPERTY_HOSPITAL_VALUE']));
     $hospital_adress = $arFields['PROPERTY_ADDRESS_VALUE'];
@@ -361,7 +362,8 @@ if (CModule::IncludeModule("iblock")) {
 
 
                             }
-
+                          try
+                          {
                             rabbitmqSend(queue_obrashcheniya_emails, json_encode([
                               'login' => $arUser['LOGIN'],
                               'SEND_MESSAGE_CHILD',
@@ -396,76 +398,69 @@ if (CModule::IncludeModule("iblock")) {
                                 'SRC_LOGO' => $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["SERVER_NAME"] . "/pdf/logo_oms.png",
                               )
                             ]));
-                            CIBlockElement::SetPropertyValuesEx(
-                                $_POST['ID'],
-                                11,
-                                array(
-                                    "SEND_REVIEW" => 3,
-                                    "SEND_MESSAGE" => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time())
-                                )
-                            );
-                            $result['success'] = 'Обращение успешно отправлено в страховую компанию.
-                         Ваше обращение находится в личном кабинете «Отправленные»';
 
-                          CEvent::Send(
-                                'SEND_MASSEGE_AFTER_SEND_APPEAL',
-                                's1',
-                                array(
-                                    'EMAIL' => $person["EMAIL"],
-                                )
+                            CIBlockElement::SetPropertyValuesEx(
+                              $_POST['ID'],
+                              11,
+                              array(
+                                "SEND_REVIEW" => 8, //ID статуса ожидает отправки
+                              )
                             );
+                            $result['success'] = 'Ваше обращение ожидает отправки в страховую компанию. За состоянием отправки сообщения Вы 
+                            можете наблюдать в личном кабинете «Отправленные» ';
+
+                          } catch (ErrorException $channelException)
+                          {
+                            $result['error'] = 'Не удалось отправить обращение. Пожалуйста, обратитесь в службу поддержки.';
+                          }
                         } else {
-                          rabbitmqSend(queue_obrashcheniya_emails, json_encode([
-                            'login' => $arUser['LOGIN'],
-                            'SEND_MESSAGE',
-                            's1',
-                            array(
-                              'PROPERTY_IMG_1_VALUE' => CFile::GetPath($arFields['PROPERTY_IMG_1_VALUE']),
-                              'PROPERTY_IMG_2_VALUE' => CFile::GetPath($arFields['PROPERTY_IMG_2_VALUE']),
-                              'PROPERTY_IMG_3_VALUE' => CFile::GetPath($arFields['PROPERTY_IMG_3_VALUE']),
-                              'PROPERTY_IMG_4_VALUE' => CFile::GetPath($arFields['PROPERTY_IMG_4_VALUE']),
-                              'PROPERTY_IMG_5_VALUE' => CFile::GetPath($arFields['PROPERTY_IMG_5_VALUE']),
-                              'PDF' => parsingPdfPath($arFile['SRC']),
-                              'ID' => $arFields['ID'],
-                              'MESSAGE' => $message,
-                              'NAME_COMPANY' => $name_company,
-                              'BOSS_COMPANY' => $boss_company,
-                              'MAIL_COMPANY' => $mail_company,
-                              'EMAIL' => $email,
-                              'BIRTHDAY' => $BIRTHDAY_person,
-                              'USER_MAIL' => $user_email,
-                              'FULLNAME' => $arFields['PROPERTY_FULL_NAME_VALUE'],
-                              'POLICY' => $arFields['PROPERTY_POLICY_VALUE'],
-                              'PHONE' => $mobail_number,
-                              'HOSPITAL' => htmlspecialchars_decode($arFields['PROPERTY_HOSPITAL_VALUE']),
-                              'DATE_SEND' => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time()),
-                              'DATE_PAY' => $arFields['PROPERTY_VISIT_DATE_VALUE'],
-                              'FULL_NAME_HOSPITAL' => $FULL_NAME_HOSPITAL,
-                              'MEDICAL_CODE' => $MEDICAL_CODE,
-                              'HOSPITAL_ADRESS' => $hospital_adress,
-                              'SRC_LOGO' => $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["SERVER_NAME"] . "/pdf/logo_oms.png",
-                            )
-                          ]));
+                          try
+                          {
+                            rabbitmqSend(queue_obrashcheniya_emails, json_encode([
+                              'login' => $arUser['LOGIN'],
+                              'SEND_MESSAGE',
+                              's1',
+                              array(
+                                'PROPERTY_IMG_1_VALUE' => CFile::GetPath($arFields['PROPERTY_IMG_1_VALUE']),
+                                'PROPERTY_IMG_2_VALUE' => CFile::GetPath($arFields['PROPERTY_IMG_2_VALUE']),
+                                'PROPERTY_IMG_3_VALUE' => CFile::GetPath($arFields['PROPERTY_IMG_3_VALUE']),
+                                'PROPERTY_IMG_4_VALUE' => CFile::GetPath($arFields['PROPERTY_IMG_4_VALUE']),
+                                'PROPERTY_IMG_5_VALUE' => CFile::GetPath($arFields['PROPERTY_IMG_5_VALUE']),
+                                'PDF' => parsingPdfPath($arFile['SRC']),
+                                'ID' => $arFields['ID'],
+                                'NAME_COMPANY' => $name_company,
+                                'BOSS_COMPANY' => $boss_company,
+                                'MAIL_COMPANY' => $mail_company,
+                                'EMAIL' => $email,
+                                'BIRTHDAY' => $BIRTHDAY_person,
+                                'USER_MAIL' => $user_email,
+                                'FULLNAME' => $arFields['PROPERTY_FULL_NAME_VALUE'],
+                                'POLICY' => $arFields['PROPERTY_POLICY_VALUE'],
+                                'PHONE' => $mobail_number,
+                                'HOSPITAL' => htmlspecialchars_decode($arFields['PROPERTY_HOSPITAL_VALUE']),
+                                'DATE_SEND' => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time()),
+                                'DATE_PAY' => $arFields['PROPERTY_VISIT_DATE_VALUE'],
+                                'FULL_NAME_HOSPITAL' => $FULL_NAME_HOSPITAL,
+                                'MEDICAL_CODE' => $MEDICAL_CODE,
+                                'HOSPITAL_ADRESS' => $hospital_adress,
+                                'SRC_LOGO' => $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["SERVER_NAME"] . "/pdf/logo_oms.png",
+                              )
+                            ]));
 
                             CIBlockElement::SetPropertyValuesEx(
-                                $_POST['ID'],
-                                11,
-                                array(
-                                    "SEND_REVIEW" => 3,
-                                    "SEND_MESSAGE" => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time())
-                                )
+                              $_POST['ID'],
+                              11,
+                              array(
+                                "SEND_REVIEW" => 8, //ID статуса ожидает отправки
+                              )
                             );
-                            $result['success'] = 'Обращение успешно отправлено в страховую компанию.
-                         Ваше обращение находится в личном кабинете «Отправленные»';
+                            $result['success'] = 'Ваше обращение ожидает отправки в страховую компанию. За состоянием отправки сообщения Вы
+                            можете наблюдать в личном кабинете «Отправленные» ';
 
-                          CEvent::Send(
-                                'SEND_MASSEGE_AFTER_SEND_APPEAL',
-                                's1',
-                                array(
-                                    'EMAIL' => $person["EMAIL"],
-                                )
-                          );
-
+                          } catch (ErrorException $channelException)
+                          {
+                            $result['error'] = 'Не удалось отправить обращение. Пожалуйста, обратитесь в службу поддержки.';
+                          }
                         }
                     } else {
                         $result['error'] = 'Нет почтового адреса';

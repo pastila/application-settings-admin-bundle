@@ -100,12 +100,24 @@ services:
 
     AppBundle\Service\Obrashcheniya\ObrashcheniaBranchMailer:
         public: true
+        lazy: true
+
+    AppBundle\Service\Obrashcheniya\ObrashcheniaUserMailer:
+        public: true
+        lazy: true
+
+    AppBundle\Util\BitrixHelper:
+        public: true
+        lazy: true
 
     Accurateweb\EmailTemplateBundle\Email\Factory\EmailFactory:
       alias: aw_email_templating.template.factory
+      lazy: true
 
     obrashcheniya_emails_service:
       class: AppBundle\Service\Rabbit\ObrashcheniyaEmailsService
+      lazy: true
 
     obrashcheniya_files_service:
       class: AppBundle\Service\Rabbit\ObrashcheniyaFilesService
+      lazy: true
