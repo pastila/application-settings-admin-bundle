@@ -84,7 +84,10 @@ class ObrashcheniyaEmailsService implements ConsumerInterface
 
     try
     {
-      $this->mailerBranch->send($modelAppealData);
+      foreach ($modelAppealData->getEmailsTo() as $email)
+      {
+        $this->mailerBranch->send($modelAppealData, $email);
+      }
     }
     catch (\Swift_TransportException $e)
     {
