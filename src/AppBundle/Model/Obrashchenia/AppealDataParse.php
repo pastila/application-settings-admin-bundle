@@ -55,10 +55,11 @@ class AppealDataParse
   {
     if (
       empty($data[2]['EMAIL']) ||
+      empty($data[2]['ID']) ||
       empty($data['login'])
     )
     {
-      throw new \InvalidArgumentException('Empty EMAIL or PDF in data in AppealDataParse');
+      throw new \InvalidArgumentException('Empty EMAIL or login or ID in data in AppealDataParse');
     }
     $author = $this->entityManager->getRepository(User::class)
       ->findOneBy(['login' => $data['login']]);

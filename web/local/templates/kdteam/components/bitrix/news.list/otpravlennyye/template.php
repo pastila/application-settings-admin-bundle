@@ -483,7 +483,7 @@ if (count($arResult["ITEMS"]) > 0) {
                                 ?>
                                 <a target="_blank" class=" pdf
                                     <?php if ($url_pdf == "") { ?>success<?} ?>"
-                                    <?php if ($url_pdf != "") { ?> href="<?= $url_pdf ?>" <? } ?> >
+                                    href="<?= sprintf(obrashcheniya_report_url_download, $arItem["ID"])?>">
                                     <?php if ($url_pdf != "") { ?> просмотреть
                                     <? } else { ?>
                                         После формирования обращения, Ваш файл будет доступен для скачивания по этой ссылке
