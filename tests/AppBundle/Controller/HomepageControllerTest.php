@@ -231,6 +231,7 @@ class HomepageControllerTest extends AppWebTestCase
 
   /*** Проверка "Топ страховых компаний":
    * https://jira.accurateweb.ru/browse/BEZBAHIL-87
+   * https://jira.accurateweb.ru/browse/BEZBAHIL-137
    **/
   public function testCompanyRating()
   {
@@ -253,6 +254,9 @@ class HomepageControllerTest extends AppWebTestCase
     $this->assertEquals(5, $companyTopsHtml[1]['rating'], $textPrev . 'Проверка, что Рейтинг совпадает');
     $this->assertEquals('СОГАЗ-МЕД', $companyTopsHtml[2]['name'], $textPrev . 'Проверка, что Компания совпадает');
     $this->assertEquals(4, $companyTopsHtml[2]['rating'], $textPrev . 'Проверка, что Рейтинг совпадает');
+
+    $company = $crawler->filter('.b-rating__part-title')->text();
+    $this->assertTrue(!strpos($company, 'Республике Башкортостан'), $textPrev . 'Проверка, что название компании в родительном падеже');
   }
 
   /*** Проверка "Блог, медицинский инсайдер":
