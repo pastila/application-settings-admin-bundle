@@ -2,11 +2,13 @@
 
 namespace AppBundle\Controller\InsuranceCompany;
 
+use AppBundle\Entity\Company\CompanyBranch;
 use AppBundle\Exception\BitrixRequestException;
 use AppBundle\Helper\DataFromBitrix;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class CompanyController
@@ -31,20 +33,22 @@ class CompanyController extends AbstractController
   }
 
   /**
+   * Рендер логотипа филиала
+   *
    * @param Request $request
-   * @param $logo_id
-   * @param $name
+   * @param CompanyBranch $branch
    * @return \Symfony\Component\HttpFoundation\Response
    */
-  public function _logoPanelAction(Request $request, $logo_id, $name)
+  public function _logoPanelAction(Request $request, CompanyBranch $branch)
   {
-    $payload = '?logo_id=' . $logo_id;
+    $payload = '?logo_id=' . $branch->getLogoIdFromBitrix();
     $dataFromBitrix = new DataFromBitrix($request);
     $src = null;
 
     try
     {
       $dataFromBitrix->getData('%s/ajax/get_resize_image.php' . $payload);
+
       $src = $dataFromBitrix->getParam('src');
     }
     catch (BitrixRequestException $exception)
@@ -54,7 +58,8 @@ class CompanyController extends AbstractController
 
     return $this->render('Company/_logo.html.twig', [
       'src' => $src,
-      'name' => $name
+      'name' => $branch->getName(),
+      'slug' => $branch->getCompany()->getSlug()
     ]);
   }
 }
