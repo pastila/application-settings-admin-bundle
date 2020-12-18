@@ -77,12 +77,7 @@ class PopupContactUs {
             type: 'POST',
             data: $(this.popupContent.find('form')[0]).serialize(),
           }).done(() => {
-            this.popupContent[0].innerHTML = '<p class="success-message">Спасибо за обращение!</p>'
-            setTimeout(() => {
-              if (this.popupAction.getState() === 'opened') {
-                this.popupAction.close();
-              }
-            }, 2000)
+            this.popupContent[0].innerHTML = '<p class="success-message">Ваше сообщение было успешно отправлено.</p>'
           }).fail((err) => {
             if (err && err.status === 400 && err.responseText) {
               this.popupContent.find('form')[0].innerHTML = err.responseText;
