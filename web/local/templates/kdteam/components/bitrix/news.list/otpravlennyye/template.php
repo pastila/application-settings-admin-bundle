@@ -477,15 +477,17 @@ if (count($arResult["ITEMS"]) > 0) {
 
                                 <?php
                                 $url_pdf = CFile::GetPath($arItem["PROPERTIES"]["PDF"]["VALUE"]);
-                                $url_pdf = count($array) > 0 ?
+                                $url_pdf = existAppeal($array) > 0 ?
                                   sprintf(obrashcheniya_report_url_download, $arItem["ID"]) :
-                                  $url_pdf; ?>
-                                <a target="_blank" class=" pdf <?php if ($url_pdf == "") { ?>success<?
-                                } ?>"
+                                  "";
+                                ?>
+                                <a target="_blank" class=" pdf
+                                    <?php if ($url_pdf == "") { ?>success<?} ?>"
                                     <?php if ($url_pdf != "") { ?> href="<?= $url_pdf ?>" <? } ?> >
                                     <?php if ($url_pdf != "") { ?> просмотреть
-                                    <? } else { ?> 
-                                    <?
+                                    <? } else { ?>
+                                        После формирования обращения, Ваш файл будет доступен для скачивания по этой ссылке
+                                      <?
                                     } ?>
                                 </a>
                                 <div class="hidden ready_pdf success"> Файл пдф сформирован</div>

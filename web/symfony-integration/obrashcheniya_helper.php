@@ -131,6 +131,23 @@ function countExistFile($array)
 }
 
 /**
+ * @param $array
+ * @return int
+ */
+function existAppeal($array)
+{
+  foreach ($array as $item)
+  {
+    if ($item['image_number'] === null)
+    {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+/**
  * @param $name
  * @return mixed
  */
