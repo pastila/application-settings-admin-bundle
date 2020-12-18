@@ -48,6 +48,14 @@ if (CModule::IncludeModule("iblock")) {
       $arProps = $ob->GetProperties();
     }
 
+    $array = [];
+    $rsUser = $USER->GetByLogin($USER->GetLogin());
+    if ($arUser = $rsUser->Fetch())
+    {
+      $array = getAppealFromSymfony($_POST['ID'], $arUser['LOGIN']);
+    }
+    $exist = (findExistFile($array, 1) || findExistFile($array, 2) || findExistFile($array, 3) || findExistFile($array, 4) || findExistFile($array, 5));
+
     //Проверка на дублировние
     $hospital_name = str_replace('&amp;', '', str_replace('quot;', '"', $arFields['PROPERTY_HOSPITAL_VALUE']));
     $hospital_adress = $arFields['PROPERTY_ADDRESS_VALUE'];
@@ -75,7 +83,7 @@ if (CModule::IncludeModule("iblock")) {
         if (!empty($arFields['PROPERTY_POLICY_VALUE'])) {
             if (!empty($arFields['PROPERTY_VISIT_DATE_VALUE'])) {
                 if (!empty($arFields['PROPERTY_IMG_1_VALUE']) || !empty($arFields['PROPERTY_IMG_2_VALUE']) || !empty($arFields['PROPERTY_IMG_3_VALUE']) ||
-                    !empty($arFields['PROPERTY_IMG_4_VALUE']) || !empty($arFields['PROPERTY_IMG_5_VALUE'])) {
+                    !empty($arFields['PROPERTY_IMG_4_VALUE']) || !empty($arFields['PROPERTY_IMG_5_VALUE']) || $exist) {
                     $count = count($arProps['YEARS']['VALUE']);
                     $i = 1;
                     $nameYear = '';

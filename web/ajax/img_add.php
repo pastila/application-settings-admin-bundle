@@ -4,6 +4,7 @@ require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_be
 require_once dirname(__FILE__).'/../vendor/autoload.php';
 require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/rabbitmq.php");
 require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/config_obrashcheniya.php");
+require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/obrashcheniya_helper.php");
 
 CModule::IncludeModule("iblock");
 
@@ -20,24 +21,30 @@ if (isset($_FILES['import_file']['tmp_name'])) {
             $arFields = $ob->GetFields();
         }
 
+        $array = [];
+        $rsUser = $USER->GetByLogin($USER->GetLogin());
+        if ($arUser = $rsUser->Fetch())
+        {
+          $array = getAppealFromSymfony($_POST['id_elem'], $arUser['LOGIN']);
+        }
 
         // загружаем изображение на сервер
 
         $el = new CIBlockElement;
 
-        if (empty($arFields['PROPERTY_IMG_1_VALUE'])) {
+        if (empty($arFields['PROPERTY_IMG_1_VALUE']) && !findExistFile($array, 1)) {
             $key = 'IMG_1';
             $i = 1;
-        } elseif (empty($arFields['PROPERTY_IMG_2_VALUE'])) {
+        } elseif (empty($arFields['PROPERTY_IMG_2_VALUE']) && !findExistFile($array, 2)) {
             $key = 'IMG_2';
             $i = 2;
-        } elseif (empty($arFields['PROPERTY_IMG_3_VALUE'])) {
+        } elseif (empty($arFields['PROPERTY_IMG_3_VALUE']) && !findExistFile($array, 3)) {
             $key = 'IMG_3';
             $i = 3;
-        } elseif (empty($arFields['PROPERTY_IMG_4_VALUE'])) {
+        } elseif (empty($arFields['PROPERTY_IMG_4_VALUE']) && !findExistFile($array, 4)) {
             $key = 'IMG_4';
             $i = 4;
-        } elseif (empty($arFields['PROPERTY_IMG_5_VALUE'])) {
+        } elseif (empty($arFields['PROPERTY_IMG_5_VALUE']) && !findExistFile($array, 5)) {
             $key = 'IMG_5';
             $i = 5;
         }
@@ -61,15 +68,6 @@ if (isset($_FILES['import_file']['tmp_name'])) {
               $arProperty = Array(
                  $key => $arFile,
               );
-              CIBlockElement::SetPropertyValuesEx(
-                $_POST["id_elem"],
-                11,
-                $arProperty);
-
-              $db_props = CIBlockElement::GetProperty(11, $_POST['id_elem'], array(), array("CODE" => $key));
-              if ($ar_props = $db_props->Fetch()) {
-                $arFile = CFile::GetFileArray($ar_props['VALUE']);
-              }
 
               /**
                * Подготовка и отправка данных о принадлежности файла пользователю

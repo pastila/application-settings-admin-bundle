@@ -38,6 +38,28 @@ function findExistFile($array, $j)
   return false;
 }
 
+/**
+ * @param $array
+ * @param $j
+ * @return bool
+ */
+function fileIsPdf($array, $j)
+{
+  foreach ($array as $item)
+  {
+    if ($j == $item['image_number'])
+    {
+      return getTypeByExt($item['file']) === 'pdf';
+    }
+  }
+  return false;
+}
+
+/**
+ * @param $appeal_id
+ * @param $login
+ * @return array
+ */
 function getAppealFromSymfony($appeal_id, $login)
 {
   try
@@ -47,6 +69,7 @@ function getAppealFromSymfony($appeal_id, $login)
                 sof.bitrix_id,
                 sof.user_id,
                 sof.image_number,
+                sof.file,
                 su.login
                 FROM s_obrashcheniya_files as sof
                 JOIN s_users su ON su.id = sof.user_id AND su.login = :login
@@ -58,4 +81,61 @@ function getAppealFromSymfony($appeal_id, $login)
   {
     return [];
   }
+}
+
+/**
+ * @param $appeal_id
+ * @param $image_number
+ * @param $login
+ * @return bool
+ */
+function deleteAppealFileFromSymfony($appeal_id, $image_number)
+{
+  try
+  {
+    $dbh = new \PDO('mysql:host=' . PERCONA_HOST . ';dbname=' . PERCONA_DATABASE, PERCONA_USER, PERCONA_PASSWORD);
+    $sql = 'DELETE FROM s_obrashcheniya_files
+            WHERE bitrix_id = :bitrix_id AND image_number = :image_number';
+    $sth = $dbh->prepare($sql);
+    $sth->bindValue(':bitrix_id', $appeal_id);
+    $sth->bindValue(':image_number', $image_number);
+    $sth->execute();
+    if (!$sth->rowCount())
+    {
+      return false;
+    }
+
+    return true;
+  } catch (PDOException $e)
+  {
+    return false;
+  }
+}
+
+/**
+ * @param $array
+ * @return int
+ */
+function countExistFile($array)
+{
+  $count = 0;
+  foreach ($array as $item)
+  {
+    if ($item['image_number'] !== null)
+    {
+      $count++;
+    }
+  }
+
+  return $count;
+}
+
+/**
+ * @param $name
+ * @return mixed
+ */
+function getTypeByExt($name)
+{
+  $array = explode(".", $name);
+  return end($array);
 }

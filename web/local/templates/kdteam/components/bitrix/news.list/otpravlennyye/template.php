@@ -60,7 +60,7 @@ if (count($arResult["ITEMS"]) > 0) {
 
                 <?php $photo_sum = (int)$arItem["PROPERTIES"]['IMG_1']["VALUE"] + (int)$arItem["PROPERTIES"]['IMG_2']["VALUE"] + (int)$arItem["PROPERTIES"]['IMG_3']["VALUE"] + (int)$arItem["PROPERTIES"]['IMG_4']["VALUE"] + (int)$arItem["PROPERTIES"]['IMG_5']["VALUE"]; ?>
 
-                <?php if ($photo_sum == 0) { ?>
+                <?php if ($photo_sum == 0 && countExistFile($array) === 0) { ?>
                     <p class="semi-bold error mb-2 photo_empty_all_<?= $arItem["ID"] ?>">Нужно добавить скан
                         документа/изображения для отправки обращения страховой компании</p>
                 <?php } ?>
@@ -284,13 +284,13 @@ if (count($arResult["ITEMS"]) > 0) {
 
                         <!-- Item Sidebar -->
                         <div class="js-img-add block__items_flex" data-block_img="<?= $arItem["ID"] ?>">
-                            <?php if (!empty($arItem["PROPERTIES"]["IMG_1"]['VALUE'])) {
+                            <?php if (!empty($arItem["PROPERTIES"]["IMG_1"]['VALUE']) || findExistFile($array, 1)) {
                                 $pdf = false;
                                 $file = CFile::GetFileArray($arItem["PROPERTIES"]["IMG_1"]['VALUE']);
                                 $url_load = findExistFile($array, 1) ?
                                   sprintf(obrashcheniya_report_url_download, $arItem["ID"]) . '?image_number=1' :
                                   $file['SRC'];
-                                if ($file["CONTENT_TYPE"] == "application/pdf") {
+                                if ($file["CONTENT_TYPE"] == "application/pdf" || fileIsPdf($array, 1)) {
                                     $pdf = true;
                                 }
                                 ?>
@@ -320,14 +320,14 @@ if (count($arResult["ITEMS"]) > 0) {
                                     </div>
                                 </div>
                             <?php } ?>
-                            <?php if (!empty($arItem["PROPERTIES"]["IMG_2"]['VALUE'])) {
+                            <?php if (!empty($arItem["PROPERTIES"]["IMG_2"]['VALUE']) || findExistFile($array, 2)) {
                                 $pdf = false;
 
                                 $file = CFile::GetFileArray($arItem["PROPERTIES"]["IMG_2"]['VALUE']);
                                 $url_load = findExistFile($array, 2) ?
                                     sprintf(obrashcheniya_report_url_download, $arItem["ID"]) . '?image_number=2' :
                                     $file['SRC'];
-                                if ($file["CONTENT_TYPE"] == "application/pdf") {
+                                if ($file["CONTENT_TYPE"] == "application/pdf" || fileIsPdf($array, 2)) {
                                     $pdf = true;
                                 }?>
                                 <div id="img_block_<?= $arItem['ID'] ?>_img_2"
@@ -356,14 +356,14 @@ if (count($arResult["ITEMS"]) > 0) {
                                     </div>
                                 </div>
                             <?php } ?>
-                            <?php if (!empty($arItem["PROPERTIES"]["IMG_3"]['VALUE'])) {
+                            <?php if (!empty($arItem["PROPERTIES"]["IMG_3"]['VALUE']) || findExistFile($array, 3)) {
                                 $pdf = false;
 
                                 $file = CFile::GetFileArray($arItem["PROPERTIES"]["IMG_3"]['VALUE']);
                                 $url_load = findExistFile($array, 3) ?
                                     sprintf(obrashcheniya_report_url_download, $arItem["ID"]) . '?image_number=3' :
                                     $file['SRC'];
-                                if ($file["CONTENT_TYPE"] == "application/pdf") {
+                                if ($file["CONTENT_TYPE"] == "application/pdf" || fileIsPdf($array, 3)) {
                                     $pdf = true;
                                 }?>
                                 <div id="img_block_<?= $arItem['ID'] ?>_img_3"
@@ -392,13 +392,13 @@ if (count($arResult["ITEMS"]) > 0) {
                                     </div>
                                 </div>
                             <?php } ?>
-                            <?php if (!empty($arItem["PROPERTIES"]["IMG_4"]['VALUE'])) {
+                            <?php if (!empty($arItem["PROPERTIES"]["IMG_4"]['VALUE']) || fileIsPdf($array, 4)) {
                                 $pdf = false;
                                 $file = CFile::GetFileArray($arItem["PROPERTIES"]["IMG_4"]['VALUE']);
                                 $url_load = findExistFile($array, 4) ?
                                     sprintf(obrashcheniya_report_url_download, $arItem["ID"]) . '?image_number=4' :
                                     $file['SRC'];
-                                if ($file["CONTENT_TYPE"] == "application/pdf") {
+                                if ($file["CONTENT_TYPE"] == "application/pdf" || (findExistFile($array, 4) && getTypeByExt($array[3]['file']) === 'pdf')) {
                                     $pdf = true;
                                 }?>
                                 <div id="img_block_<?= $arItem['ID'] ?>_img_4"
@@ -427,13 +427,13 @@ if (count($arResult["ITEMS"]) > 0) {
                                     </div>
                                 </div>
                             <?php } ?>
-                            <?php if (!empty($arItem["PROPERTIES"]["IMG_5"]['VALUE'])) {
+                            <?php if (!empty($arItem["PROPERTIES"]["IMG_5"]['VALUE']) || findExistFile($array, 5)) {
                                 $pdf = false;
                                 $file = CFile::GetFileArray($arItem["PROPERTIES"]["IMG_5"]['VALUE']);
                                 $url_load = findExistFile($array, 5) ?
                                     sprintf(obrashcheniya_report_url_download, $arItem["ID"]) . '?image_number=5' :
                                     $file['SRC'];
-                                if ($file["CONTENT_TYPE"] == "application/pdf") {
+                                if ($file["CONTENT_TYPE"] == "application/pdf" || fileIsPdf($array, 5)) {
                                     $pdf = true;
                                 }?>
                                 <div id="img_block_<?= $arItem['ID'] ?>_img_5"
@@ -477,7 +477,7 @@ if (count($arResult["ITEMS"]) > 0) {
 
                                 <?php
                                 $url_pdf = CFile::GetPath($arItem["PROPERTIES"]["PDF"]["VALUE"]);
-                                $url_pdf = count($array) > 0 && $url_pdf != "" ?
+                                $url_pdf = count($array) > 0 ?
                                   sprintf(obrashcheniya_report_url_download, $arItem["ID"]) :
                                   $url_pdf; ?>
                                 <a target="_blank" class=" pdf <?php if ($url_pdf == "") { ?>success<?
