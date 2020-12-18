@@ -90,7 +90,7 @@ class CompanyBranchHelper
       $region_id = !empty($item['REGION_ID']) ? $item['REGION_ID'] : null;
       $amountStar = !empty($item['AMOUNT_STARS']) ? (float)$item['AMOUNT_STARS'] : 0;
 
-      // $image_id = !empty($item['IMAGE_ID']) ? (float)$item['IMAGE_ID'] : null;
+      $image_id = !empty($item['IMAGE_ID']) ? $item['IMAGE_ID'] : null;
       $email1 = !empty($item['EMAIL1']) ? $item['EMAIL1'] : null;
       $email2 = !empty($item['EMAIL2']) ? $item['EMAIL2'] : null;
       $email3 = !empty($item['EMAIL3']) ? $item['EMAIL3'] : null;
@@ -151,6 +151,7 @@ class CompanyBranchHelper
         $branch->setCode($kpp);
         $branch->setCompany($company);
         $branch->setRegion($region);
+        $branch->setLogoIdFromBitrix($image_id);
         $branch->setEmailFirst($email1);
         $branch->setEmailSecond($email2);
         $branch->setEmailThird($email3);
