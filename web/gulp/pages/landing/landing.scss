@@ -2537,10 +2537,17 @@
 
 .jq-selectbox__trigger {
   position: absolute;
-  width: 65px;
+  width: auto;
   top: 0;
   bottom: 0;
-  right: 0;
+  right: 30px;
+  transition: all .3s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.jq-selectbox.dropdown.opened .jq-selectbox__trigger {
+  transform: rotate(180deg);
+  transition: all .3s cubic-bezier(0.215, 0.61, 0.355, 1);
+  right: 22px;
 }
 
 .jq-selectbox__trigger:before,
