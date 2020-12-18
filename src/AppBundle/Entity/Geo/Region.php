@@ -48,6 +48,14 @@ class Region implements UserLocationInterface
   protected $name;
 
   /**
+   * Название региона в родительном падеже
+   *
+   * @var null|string
+   * @ORM\Column(type="string", length=512, nullable=true)
+   */
+  protected $nameGenitive;
+
+  /**
    * Название региона(транслит)
    *
    * @var null|string
@@ -137,9 +145,29 @@ class Region implements UserLocationInterface
     return $this;
   }
 
+  /**
+   * @return string|null
+   */
+  public function getNameGenitive(): ?string
+  {
+    return $this->nameGenitive;
+  }
 
+  /**
+   * @param string|null $nameGenitive
+   */
+  public function setNameGenitive(?string $nameGenitive): void
+  {
+    $this->nameGenitive = $nameGenitive;
+  }
 
-
+  /**
+   * @return string|null
+   */
+  public function getRegionGenitive()
+  {
+    return empty($this->nameGenitive) ? $this->name : $this->nameGenitive;
+  }
 
   /**
    * @param string $name

@@ -42,7 +42,6 @@ class UpdateGuideCommand extends ContainerAwareCommand
   protected function execute(InputInterface $input, OutputInterface $output)
   {
     $io = new SymfonyStyle($input, $output);
-    $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
 
     $regionHelper = $this->getContainer()->get('AppBundle\Helper\Feedback\RegionHelper');
     $regionHelper->load($io);
@@ -55,7 +54,5 @@ class UpdateGuideCommand extends ContainerAwareCommand
     $companyBranchHelper = $this->getContainer()->get('AppBundle\Helper\Feedback\CompanyBranchHelper');
     $companyBranchHelper->load($io);
     $companyBranchHelper->check();
-
-
   }
 }

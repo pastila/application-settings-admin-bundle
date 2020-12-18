@@ -52,3 +52,9 @@ services:
     arguments: [~, 'AppBundle\Entity\ContactUs\ContactUs', ~]
     tags:
       -  { name: sonata.admin, manager_type: orm, group: 'messages', label: 'Сообщения "Написать нам"' }
+
+  main.admin.region:
+    class: AppBundle\Admin\Geo\RegionAdmin
+    arguments: [~, 'AppBundle\Entity\Geo\Region', ~]
+    tags:
+      -  { name: sonata.admin, manager_type: orm, group: 'settings', label: 'Регионы' }
