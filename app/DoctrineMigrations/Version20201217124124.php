@@ -15,7 +15,7 @@ final class Version20201217124124 extends AbstractMigration
     // this up() migration is auto-generated, please modify it to your needs
     $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-    $this->addSql('ALTER TABLE s_regions ADD name_genitive VARCHAR(512) NOT NULL');
+    $this->addSql('ALTER TABLE s_regions ADD name_genitive VARCHAR(512) DEFAULT NULL');
   }
 
   public function down(Schema $schema): void

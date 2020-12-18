@@ -43,6 +43,10 @@ class UpdateGuideCommand extends ContainerAwareCommand
   {
     $io = new SymfonyStyle($input, $output);
 
+    $regionHelper = $this->getContainer()->get('AppBundle\Helper\Feedback\RegionHelper');
+    $regionHelper->load($io);
+    $regionHelper->check();
+
     $companyHelper = $this->getContainer()->get('AppBundle\Helper\Feedback\CompanyHelper');
     $companyHelper->load($io);
     $companyHelper->check();
