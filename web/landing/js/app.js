@@ -134,10 +134,17 @@ $(function () {
     }, 700);
   });
   $('select').styler();
-  var Scrollbar = window.Scrollbar;
-  Scrollbar.init(document.querySelector('.jq-selectbox__dropdown ul'), {
-    alwaysShowTracks: true
-  });
+
+  const Scrollbar = window.Scrollbar;
+  const itemScrollbar = document.querySelectorAll('.b-form__item--full .jq-selectbox__dropdown ul');
+
+  if (itemScrollbar.length) {
+    itemScrollbar.forEach((item) => {
+      Scrollbar.init(item, {
+        alwaysShowTracks: true
+      });
+    })
+  }
 
   if ($('.b-insider__slider').length) {
     var sliderInsider = tns({
