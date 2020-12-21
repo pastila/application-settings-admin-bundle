@@ -153,7 +153,7 @@ input[type="date"]::-webkit-calendar-picker-indicator
                 </div>
                 </div>
                 <div class="input_phone-flex main_btn-parent">
-                <input type="button" class="sms-again-button whiteBtn" value="Не получили SMS? Отправить повторно.">
+                <input type="button" class="sms-again-button whiteBtn" value="Не получили SMS? Отправить повторно возможно через 30 секунд.">
                 </div>
             </div>
             <div class="input__wrap adc" style="margin-top0: 70px;">
