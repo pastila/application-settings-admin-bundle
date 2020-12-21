@@ -1697,6 +1697,11 @@
     color: red;
   }
 
+  .remodal[data-remodal-id="magnific"] {
+    text-align: center;
+    font-size: 16px;
+  }
+
 @media screen and (max-width: 1280px) {
 
     .b-insider {
@@ -2364,6 +2369,13 @@
     .contact-us-form .popup__input-container textarea,
     .contact-us-form .popup__input-container .input__error-message {
       width: 100%;
+    }
+
+    .remodal[data-remodal-id="magnific"] {
+
+      .remodal-content {
+        padding: 30px 0;
+      }
     }
   }
 

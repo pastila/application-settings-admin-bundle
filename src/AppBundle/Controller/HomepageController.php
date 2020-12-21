@@ -186,7 +186,7 @@ class HomepageController extends Controller
         {
           return new JsonResponse(1);
         }
-        $this->addFlash('magnific', 'Спасибо, сообщение было отправлено');
+        $this->addFlash('magnific', 'Ваше сообщение было успешно отправлено.');
         return $this->redirectToRoute('homepage');
       } else if ($request->isXmlHttpRequest())
       {

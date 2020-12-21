@@ -1523,11 +1523,11 @@
       width: 100%;
     }
 
-    .remodal {
+    &.remodal {
       padding: 40px 20px;
     }
 
-    .remodal-title {
+    &.remodal-title {
       font-size: 22px;
       padding-bottom: 20px;
       margin-bottom: 30px;
@@ -1568,17 +1568,7 @@
     }
   }
 
-  .remodal[data-remodal-id="contact-us-modal"] {
-    //position: fixed;
-    //padding: 10px 10px 0;
-    //z-index: 100;
-    //top: 0;
-    //left: 0;
-    //right: 0;
-    //bottom: 0;
-    //background: rgba(0, 0, 0, 0.7);
-    //align-items: center;
-    //justify-content: center;
+  &.remodal[data-remodal-id="contact-us-modal"] {
 
     .remodal-title {
       margin-bottom: 0;
@@ -1639,7 +1629,8 @@
       }
 
       .mainBtn {
-        margin: 20px auto 0;
+        margin: 20px auto 0!important;
+        width: auto;
         display: block;
       }
     }
@@ -1648,11 +1639,9 @@
       text-align: center;
       font-size: 16px;
       margin: 0;
-      padding: 0;
     }
 
     .load-message {
-      padding: 40px;
       background: #fff;
       text-align: center;
       font-size: 16px;
@@ -1662,6 +1651,13 @@
 
     &__error-message {
       text-align: center;
+    }
+
+    @media (max-width: 640px) {
+      .success-message,
+      .remodal__error-message {
+        padding: 30px 0;
+      }
     }
   }
 
@@ -1775,7 +1771,8 @@
 .remodal-close {
   position: absolute;
   right: 0;
-  top: 10px;
+  top: 0;
+  border-top-right-radius: 16px;
   width: 60px;
   height: 60px;
   display: -ms-flexbox;
