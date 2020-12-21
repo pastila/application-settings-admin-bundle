@@ -1523,11 +1523,11 @@
       width: 100%;
     }
 
-    .remodal {
+    &.remodal {
       padding: 40px 20px;
     }
 
-    .remodal-title {
+    &.remodal-title {
       font-size: 22px;
       padding-bottom: 20px;
       margin-bottom: 30px;
@@ -1568,7 +1568,7 @@
     }
   }
 
-  .remodal[data-remodal-id="contact-us-modal"] {
+  &.remodal[data-remodal-id="contact-us-modal"] {
 
     .remodal-title {
       margin-bottom: 0;
@@ -1629,7 +1629,8 @@
       }
 
       .mainBtn {
-        margin: 20px auto 0;
+        margin: 20px auto 0!important;
+        width: auto;
         display: block;
       }
     }
