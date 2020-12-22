@@ -2544,10 +2544,13 @@
   transition: all .3s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
-.jq-selectbox.dropdown.opened .jq-selectbox__trigger {
-  transform: rotate(180deg);
-  transition: all .3s cubic-bezier(0.215, 0.61, 0.355, 1);
-  right: 22px;
+.jq-selectbox.dropdown.opened,
+.jq-selectbox.dropup.opened {
+  .jq-selectbox__trigger {
+    transform: rotate(180deg);
+    transition: all .3s cubic-bezier(0.215, 0.61, 0.355, 1);
+    right: 22px;
+  }
 }
 
 .jq-selectbox__trigger:before,
