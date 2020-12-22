@@ -283,7 +283,8 @@
                                             <div class="b-reviews__item-logo">
                                                 {{ render(controller('AppBundle:InsuranceCompany/Company:_logoPanel',
                                                     {
-                                                        'branch': feedback.branch
+                                                        'branch': feedback.branch,
+                                                        'route': app.request.get('_route'),
                                                     } )) }}
                                             </div>
                                         {% endif %}

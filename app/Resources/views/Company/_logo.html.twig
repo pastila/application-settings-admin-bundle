@@ -1,5 +1,9 @@
 {% if src %}
-    <a href="{{ path('company_review_list', { 'slug': slug }) }}" title="Отзывы о страховой медицинской организации {{ name }}">
+    {% if route == 'company_review_list' %}
         <img src="{{ src }}" alt="Логотип страховой медицинской организации {{ name }}"/>
-    </a>
+    {% else %}
+        <a href="{{ path('company_review_list', { 'slug': slug }) }}" title="Отзывы о страховой медицинской организации {{ name }}">
+            <img src="{{ src }}" alt="Логотип страховой медицинской организации {{ name }}"/>
+        </a>
+    {% endif %}
 {% endif %}

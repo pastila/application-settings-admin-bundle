@@ -59,7 +59,8 @@ class CompanyController extends AbstractController
     return $this->render('Company/_logo.html.twig', [
       'src' => $src,
       'name' => $branch->getName(),
-      'slug' => $branch->getCompany()->getSlug()
+      'slug' => $branch->getCompany()->getSlug(),
+      'route' => $request->get('route')
     ]);
   }
 }
