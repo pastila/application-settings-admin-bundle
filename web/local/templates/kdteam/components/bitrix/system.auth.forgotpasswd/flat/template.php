@@ -22,19 +22,22 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/recovery-pass/recovery-pass.min.js");
         <li>Восстановление пароля</li>
     </ul>
     <h1 class="page-title">Восстановление пароля</h1>
-    <div class="white_block block-recovery_pass">
 
-        <?
-        if (!empty($APPLICATION->arAuthResult)) {
-            $text = "Данные для востановления пароля высланы вам на почту.";
-            ?>
+    <?
+    if (!empty($APPLICATION->arAuthResult)) {
+        $text = "Данные для востановления пароля высланы вам на почту.";
+        ?>
+        <div class="white_block block-recovery_pass block-recovery_pass__message">
             <div class="alert  <?= ($APPLICATION->arAuthResult["TYPE"] == "OK" ? "alert-success" : "alert-danger") ?>"><?= nl2br(htmlspecialcharsbx($text)) ?></div>
-        <? } else {
-            ?>
+            <p class="block-recovery_pass__text">Вернуться на <a class="block-recovery_pass__link" href="/">главную страницу.</a></p>
+        </div>
+    <? } else {
+        ?>
 
 
-            <!--        <p class="bx-authform-note-container">--><? //=GetMessage("AUTH_FORGOT_PASSWORD_2")
-            ?><!--</p>-->
+        <!--        <p class="bx-authform-note-container">--><? //=GetMessage("AUTH_FORGOT_PASSWORD_2")
+        ?><!--</p>-->
+        <div class="white_block block-recovery_pass block-recovery_form">
 
             <form name="bform" method="post" target="_top" action="<?= $arResult["AUTH_URL"] ?>">
                 <? if ($arResult["BACKURL"] <> ''): ?>
@@ -87,9 +90,8 @@ $asset->addJs(SITE_TEMPLATE_PATH . "/pages/recovery-pass/recovery-pass.min.js");
                 </div>
 
             </form>
-        <?php } ?>
-
-    </div>
+        </div>
+    <?php } ?>
 </section>
 
 <script type="text/javascript">
