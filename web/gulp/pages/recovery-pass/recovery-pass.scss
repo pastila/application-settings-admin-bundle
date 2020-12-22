@@ -1,29 +1,36 @@
 .block-recovery_pass{
   max-width: 50rem;
   margin: 0 auto;
+
+  &__message {
+    margin: 0;
+
+    .alert{
+      font-weight: normal;
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+    }
+  }
+
+  &__text {
+    font-size: 1.4rem;
+  }
+
+  &__link {
+    text-decoration: underline;
+  }
+
   .main-btn_fullwidth{
     max-width: 100%;
     width: 100%;
   }
-  .alert{
-    margin-bottom: .5rem;
-    padding: .5rem;
-    font-weight: bold;
-    font-size: 1.2rem;
-    box-shadow: 0 1rem 3rem rgba(0,0,0,.2);
-    color: #fff;
-    &.alert-success{
-      background: #03cc25;
-    }
-    &.alert-danger{
-      background: red;
-    }
-  }
 }
+
 .bx-authform-note-container{
   font-weight: bold;
   margin-bottom: 2rem;
 }
+
 .form-recovery_main{
   margin-top: 2rem;
 }
