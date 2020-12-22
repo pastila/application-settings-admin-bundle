@@ -58,27 +58,3 @@
         </div>
     </div>
 </div>
-
-<div class="remodal" data-remodal-id="loacation"
-     data-remodal-options="hashTracking: true, closeOnOutsideClick: true">
-    <div data-remodal-action="close" class="remodal-close">
-
-        <div class="svg-icon svg-icon--close" aria-hidden="true">
-            <svg class="svg-icon__link">
-                <use xlink:href="#close"></use>
-            </svg>
-        </div>
-
-    </div>
-    <div class="remodal-title">Выбрать регион</div>
-    <div class="remodal-content">
-        <div class="l-list">
-            {% for region in regions %}
-                <div class="l-list__item">
-                    <a href="#" data-region="{{ region.id }}">{{ region.nameWithoutCode }}</a>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-</div>
-{% include './Modal/error_modal.html.twig' %}

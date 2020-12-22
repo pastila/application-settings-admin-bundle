@@ -1,5 +1,11 @@
 export default function initRegionSelectionModal() {
     const locationWindow = $('[data-remodal-id=loacation]').remodal();
+
+    locationWindow.settings = {
+        hashTracking: false,
+        closeOnOutsideClick: false,
+    };
+
     $('.js-loacation').on('click', function (event) {
         event.preventDefault();
         if (locationWindow) {

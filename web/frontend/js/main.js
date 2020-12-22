@@ -3,11 +3,13 @@ import headerInit from './header-init/header-init';
 import { initContactUsBtn } from './feedback-popup/feedback-popup';
 import initQuestionAnswer from './initQuestionAnswer/initQuestionAnswer';
 import initButtonSubmit from './buttonSubmitFeedbackForm/buttonSubmitFeedbackForm';
+import closeRemodal from './helper/closeRemodal';
 
 initRegionSelectionModal();
 headerInit();
 initContactUsBtn();
 initQuestionAnswer();
+closeRemodal();
 
 if (window.location.pathname === `${urlPrefix}/contact_us`) {
   const formContactUs = $('.contact-us-form form[name="contact_us"]');

@@ -3,6 +3,7 @@ import initRegionSelectionModal from '../../frontend/js/regionSelectionModal/reg
 import { initContactUsBtn } from '../../frontend/js/feedback-popup/feedback-popup';
 import headerInit from '../../frontend/js/header-init/header-init';
 import initQuestionAnswer from '../../frontend/js/initQuestionAnswer/initQuestionAnswer';
+import closeRemodal from '../../frontend/js/helper/closeRemodal';
 
 
 function _extends() {
@@ -234,4 +235,5 @@ $(function () {
 
   initContactUsBtn();
   headerInit();
+  closeRemodal();
 });
