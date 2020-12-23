@@ -59,8 +59,18 @@ class RegionController extends AbstractController
    */
   public function getRegionsAction(Request $request)
   {
-    $regions = $this->regionRepository
-      ->findAll();
+    $name = $request->get('name');
+
+    $q = $this->regionRepository
+      ->createQueryBuilder('r');
+    if ($name)
+    {
+      $q->andWhere('r.name LIKE :name')
+        ->setParameter('name', '%' . $name . '%');
+    }
+    $regions = $q
+      ->getQuery()
+      ->getResult();
 
     $data = [];
     foreach ($regions as $region)
