@@ -37,7 +37,9 @@ class UpdateRatingCommand extends ContainerAwareCommand
     $conn = $em->getConnection();
 
     $io->text('start update rating branches');
-    $sql = 'UPDATE s_company_branches cb
+    try
+    {
+      $sql = 'UPDATE s_company_branches cb
             JOIN
             (
                 SELECT branch_id, AVG (valuation) as valuation_avg
@@ -46,12 +48,20 @@ class UpdateRatingCommand extends ContainerAwareCommand
                 GROUP BY f.branch_id
             ) f ON f.branch_id = cb.id
             SET cb.valuation = f.valuation_avg';
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
+      $stmt = $conn->prepare($sql);
+      $stmt->execute();
+    }
+    catch (\Exception $exception)
+    {
+      $io->error($exception);
+      return;
+    }
     $io->success('finish update rating branches');
 
     $io->text('start update rating companies');
-    $sql = 'UPDATE s_companies sc
+    try
+    {
+      $sql = 'UPDATE s_companies sc
             JOIN
             (
                 SELECT company_id, AVG (valuation) as valuation_avg
@@ -60,8 +70,14 @@ class UpdateRatingCommand extends ContainerAwareCommand
                 GROUP BY scb.company_id
             ) scb ON scb.company_id = sc.id
             SET sc.valuation = scb.valuation_avg';
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
+      $stmt = $conn->prepare($sql);
+      $stmt->execute();
+    }
+    catch (\Exception $exception)
+    {
+      $io->error($exception);
+      return;
+    }
     $io->success('finish update rating companies');
   }
 }
