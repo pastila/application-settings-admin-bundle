@@ -24,11 +24,11 @@ $(document).ready(function() {
     }
   };
 
-  $('#write-us_modal').click(function() {
-    setTimeout(function() {
-      form_us();
-    }, 1500);
-  });
+  // $('#write-us_modal').click(function() {
+  //   setTimeout(function() {
+  //     form_us();
+  //   }, 1500);
+  // });
 
   var url = window.location.pathname;
 
@@ -758,21 +758,21 @@ console.log("1");
   });
 
   //feedback modal
-  $('#write-us_modal').magnificPopup({
-    type: 'ajax',
-    modal: true,
-    focus: '#name',
-
-    callbacks: {
-      beforeOpen: function() {
-        if ($(window).width() < 700) {
-          this.st.focus = false;
-        } else {
-          this.st.focus = '#name';
-        }
-      },
-    },
-  });
+  // $('#write-us_modal').magnificPopup({
+  //   type: 'ajax',
+  //   modal: true,
+  //   focus: '#name',
+  //
+  //   callbacks: {
+  //     beforeOpen: function() {
+  //       if ($(window).width() < 700) {
+  //         this.st.focus = false;
+  //       } else {
+  //         this.st.focus = '#name';
+  //       }
+  //     },
+  //   },
+  // });
 
 });
 

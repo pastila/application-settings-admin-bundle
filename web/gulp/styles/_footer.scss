@@ -6,6 +6,7 @@
     margin-left: -1.5rem;
     padding: 1.5rem 1.5rem 1.5rem 1.5rem;
     background-color: $footer-bg;
+    font-family: sans-serif;
 
     &__container {
         display: flex;
@@ -76,7 +77,9 @@
             a {
                 font-size: 1.6rem;
                 display: block;
-                color: white;
+                color: #515151;
+                transition: .4s ease all;
+
                 &:hover {
                     color: lighten(white, 10%);
                 }
