@@ -1661,6 +1661,35 @@
     }
   }
 
+  &.remodal[data-remodal-id="loacation"] {
+
+    .l-list {
+      margin-top: 50px;
+    }
+
+    .input-regions {
+      width: 350px;
+      height: 40px;
+      padding: 0 10px;
+      border: 1px solid #d7d7d7;
+      border-radius: 10px;
+      transition: .4s ease all;
+
+      &:hover {
+        border-color: #00abd8;
+      }
+
+      &:focus {
+        outline: none;
+        border-color: #00abd8;
+      }
+
+      @media (max-width: 450px) {
+        width: 100%;
+      }
+    }
+  }
+
   .feedback_form {
     background: #fff;
     border-radius: 16px;

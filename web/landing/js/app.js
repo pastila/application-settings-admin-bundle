@@ -232,6 +232,51 @@ $(function () {
     });
   }
 
+  let xhr = null;
+  let timerId = null;
+
+  $('.input-regions').on('input', (e) => {
+    const value = e.target.value;
+    const listRegions = document.querySelector('.l-list');
+
+    if (xhr) {
+      xhr.abort();
+    }
+
+    if (timerId) {
+      clearTimeout(timerId);
+    }
+
+    timerId = setTimeout(() => {
+      xhr = $.ajax({
+        dataType: 'html',
+        url: value.length ? `${urlPrefix}/api/v1/regions?name=${value}` : `${urlPrefix}/api/v1/regions`,
+        type: 'GET',
+      })
+          .done((result) => {
+            if (result && listRegions) {
+              const data = JSON.parse(result);
+              if (data && data.regions && data.regions.length) {
+                $(listRegions).empty();
+                data.regions.forEach((item) => {
+                  let listItem = document.createElement('div')
+                  listItem.className = 'l-list__item';
+                  listItem.innerHTML = `<a href="#" data-region="${item.id}">${item.name}</a>`
+                  listRegions.appendChild(listItem);
+                })
+              } else {
+                listRegions.innerHTML = '<p class="l-list__message">Ничего не найдено</p>'
+              }
+            }
+          })
+          .fail((err) => {
+            if (listRegions && err.statusText !== 'abort') {
+              listRegions.innerHTML = '<p class="l-list__message">Произошла ошибка. Попробуйте повторить позже.</p>'
+            }
+          })
+    }, 150);
+  })
+
   initContactUsBtn();
   headerInit();
 });
