@@ -66,15 +66,14 @@ class ObrashcheniyaEmailsService implements ConsumerInterface
     try
     {
       $modelAppealData = $this->appealDataParse->parse($data);
-    }
-    catch (\Exception $e)
+    } catch (\Exception $e)
     {
       $this->logger->error(sprintf('Exception in parsing appeal: %s', $e));
 
       /**
        * Установить для обращения статус, что оно не было отправлено
        */
-      $this->bitrixHelper->updatePropertyElementValue(11, $data[2]['ID'], 'SEND_REVIEW', 9, 9, null);
+      $this->bitrixHelper->updatePropertyElementValue(11, $data['id'], 'SEND_REVIEW', 9, 9, null);
 
       /**
        * Вернуть флаг, что отклонено и удаляем сообщение из очереди
@@ -88,21 +87,19 @@ class ObrashcheniyaEmailsService implements ConsumerInterface
       {
         $this->mailerBranch->send($modelAppealData, $email);
       }
-    }
-    catch (\Swift_TransportException $e)
+    } catch (\Swift_TransportException $e)
     {
-      $this->logger->error(sprintf('Transport Exception in sending appeal to branch company: %s',  $e));
+      $this->logger->error(sprintf('Transport Exception in sending appeal to branch company: %s', $e));
 
       return ConsumerInterface::MSG_REJECT_REQUEUE;
-    }
-    catch (\Exception $e2)
+    } catch (\Exception $e2)
     {
       $this->logger->error(sprintf('Exception in sending appeal to branch company: %s', $e2));
 
       /**
        * Установить для обращения статус, что оно не было отправлено
        */
-      $this->bitrixHelper->updatePropertyElementValue(11, $data[2]['ID'], 'SEND_REVIEW', 9, 9, null);
+      $this->bitrixHelper->updatePropertyElementValue(11, $modelAppealData->getBitrixId(), 'SEND_REVIEW', 9, 9, null);
 
       /**
        * Вернуть флаг, что отклонено и удаляем сообщение из очереди
@@ -111,15 +108,10 @@ class ObrashcheniyaEmailsService implements ConsumerInterface
     }
 
     # Обновляем статус обращения
-    $this->bitrixHelper->updatePropertyElementValue(11, $data[2]['ID'], 'SEND_REVIEW', 3, 3, null);
-    $this->bitrixHelper->updatePropertyElementValue(11, $data[2]['ID'], 'SEND_MESSAGE', date('y-m-d'), date('y'), date('y') . '.0000');
+    $this->bitrixHelper->updatePropertyElementValue(11, $modelAppealData->getBitrixId(), 'SEND_REVIEW', 3, 3, null);
+    $this->bitrixHelper->updatePropertyElementValue(11, $modelAppealData->getBitrixId(), 'SEND_MESSAGE', date('y-m-d'), date('y'), date('y') . '.0000');
 
     # Отправка сообщения пользователю, что обращение отправлено
     $this->userMailer->send($modelAppealData);
-
-    /**
-     * Ок
-     */
-    return ConsumerInterface::MSG_ACK;
   }
 }

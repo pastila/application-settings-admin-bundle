@@ -373,6 +373,11 @@ if (CModule::IncludeModule("iblock")) {
                           try
                           {
                             rabbitmqSend(queue_obrashcheniya_emails, json_encode([
+                              'child' => true,
+                              'login' => $arUser['LOGIN'],
+                              'id' => $arFields['ID'],
+                              'email' => $email,
+                              /*
                               'login' => $arUser['LOGIN'],
                               'SEND_MESSAGE_CHILD',
                               's1',
@@ -404,7 +409,8 @@ if (CModule::IncludeModule("iblock")) {
                                 'MEDICAL_CODE' => $MEDICAL_CODE,
                                 'HOSPITAL_ADRESS' => $hospital_adress,
                                 'SRC_LOGO' => $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["SERVER_NAME"] . "/pdf/logo_oms.png",
-                              )
+
+                               * */
                             ]));
 
                             CIBlockElement::SetPropertyValuesEx(
@@ -425,6 +431,11 @@ if (CModule::IncludeModule("iblock")) {
                           try
                           {
                             rabbitmqSend(queue_obrashcheniya_emails, json_encode([
+                              'child' => false,
+                              'login' => $arUser['LOGIN'],
+                              'id' => $arFields['ID'],
+                              'email' => $email,
+                              /*
                               'login' => $arUser['LOGIN'],
                               'SEND_MESSAGE',
                               's1',
@@ -452,7 +463,8 @@ if (CModule::IncludeModule("iblock")) {
                                 'MEDICAL_CODE' => $MEDICAL_CODE,
                                 'HOSPITAL_ADRESS' => $hospital_adress,
                                 'SRC_LOGO' => $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["SERVER_NAME"] . "/pdf/logo_oms.png",
-                              )
+
+                               * */
                             ]));
 
                             CIBlockElement::SetPropertyValuesEx(

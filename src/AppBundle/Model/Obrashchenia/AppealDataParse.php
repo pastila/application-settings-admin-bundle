@@ -54,8 +54,8 @@ class AppealDataParse
   public function parse($data)
   {
     if (
-      empty($data[2]['EMAIL']) ||
-      empty($data[2]['ID']) ||
+      empty($data['email']) ||
+      empty($data['id']) ||
       empty($data['login'])
     )
     {
@@ -67,36 +67,37 @@ class AppealDataParse
     {
       throw new \InvalidArgumentException(sprintf('Not found user %s by login in AppealDataParse', $data['login']));
     }
-    $filesPdf = $this->entityManager
+    $pdfFile = $this->entityManager
       ->getRepository(ObrashcheniyaFile::class)
-      ->createFileQueryBuilder($data[2]['ID'])
+      ->createFileQueryBuilder($data['id'])
       ->setMaxResults(1)
       ->getQuery()
       ->getOneOrNullResult();
-    if (!$filesPdf)
+    if (!$pdfFile)
     {
-      throw new \Exception(sprintf('Not found file appeal %s by ID in AppealDataParse', $data[2]['ID']));
+      throw new \Exception(sprintf('Not found file appeal %s by ID in AppealDataParse', $data['id']));
     }
-    $filesAttached = $this->entityManager
+    $attachedFiles = $this->entityManager
       ->getRepository(ObrashcheniyaFile::class)
-      ->createFileQueryBuilder($data[2]['ID'], null, null, ObrashcheniyaFileType::ATTACH)
+      ->createFileQueryBuilder($data['id'], null, null, ObrashcheniyaFileType::ATTACH)
       ->getQuery()
       ->getResult();
-    if (!$filesAttached)
+    if (!$attachedFiles)
     {
-      throw new \Exception(sprintf('Not found files %s by ID in AppealDataParse', $data[2]['ID']));
+      throw new \Exception(sprintf('Not found files %s by ID in AppealDataParse',$data['id']));
     }
 
     $model = new AppealDataToCompany();
+    $model->setBitrixId($data['id']);
     $model->setAuthor($author->getFullName());
-    $model->setPdf($filesPdf->getFile());
+    $model->setPdf($pdfFile->getFile());
     $model->setEmailsTo(array_map(function ($item)
     {
       return trim($item);
-    }, explode(',', $data[2]['EMAIL'])));
+    }, explode(',', $data['email'])));
 
     $attached = [];
-    foreach ($filesAttached as $file)
+    foreach ($attachedFiles as $file)
     {
       /**
        * @var ObrashcheniyaFile $file

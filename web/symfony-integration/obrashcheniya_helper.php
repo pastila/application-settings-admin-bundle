@@ -1,5 +1,7 @@
 <?php
 
+use Bitrix\Main\Application;
+
 if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true)
 {
   die();
@@ -39,23 +41,6 @@ function findExistFile($array, $j)
 }
 
 /**
- * @param $array
- * @param $j
- * @return bool
- */
-function fileIsPdf($array, $j)
-{
-  foreach ($array as $item)
-  {
-    if ($j == $item['image_number'])
-    {
-      return getTypeByExt($item['file']) === 'pdf';
-    }
-  }
-  return false;
-}
-
-/**
  * @param $appeal_id
  * @param $login
  * @return array
@@ -84,6 +69,7 @@ function getAppealFromSymfony($appeal_id, $login)
 }
 
 /**
+ * Удаление записи о файле из таблицы файлов обращений
  * @param $appeal_id
  * @param $image_number
  * @param $login
@@ -93,17 +79,9 @@ function deleteAppealFileFromSymfony($appeal_id, $image_number)
 {
   try
   {
-    $dbh = new \PDO('mysql:host=' . PERCONA_HOST . ';dbname=' . PERCONA_DATABASE, PERCONA_USER, PERCONA_PASSWORD);
-    $sql = 'DELETE FROM s_obrashcheniya_files
-            WHERE bitrix_id = :bitrix_id AND image_number = :image_number';
-    $sth = $dbh->prepare($sql);
-    $sth->bindValue(':bitrix_id', $appeal_id);
-    $sth->bindValue(':image_number', $image_number);
-    $sth->execute();
-    if (!$sth->rowCount())
-    {
-      return false;
-    }
+    $con = Application::getConnection();
+    $con->queryExecute('DELETE FROM s_obrashcheniya_files
+            WHERE bitrix_id = ' . $appeal_id . ' AND image_number = ' . $image_number);
 
     return true;
   } catch (PDOException $e)
@@ -113,6 +91,7 @@ function deleteAppealFileFromSymfony($appeal_id, $image_number)
 }
 
 /**
+ * Получение кол-ва изображений в обращении на основе массива, полученнного из базы
  * @param $array
  * @return int
  */
@@ -131,6 +110,7 @@ function countExistFile($array)
 }
 
 /**
+ * Поиск в массиве, полученного из базы записи о сформированном изображении
  * @param $array
  * @return int
  */
@@ -138,6 +118,9 @@ function existAppeal($array)
 {
   foreach ($array as $item)
   {
+    /**
+     * image_number === null для обращений, иначе это прикреп.изображение
+     */
     if ($item['image_number'] === null)
     {
       return true;
@@ -148,11 +131,29 @@ function existAppeal($array)
 }
 
 /**
+ * Проверка, что файл pdf
+ * @param $array
+ * @param $j
+ * @return bool
+ */
+function fileIsPdf($array, $j)
+{
+  foreach ($array as $item)
+  {
+    if ($j == $item['image_number'])
+    {
+      return getTypeByExt($item['file']) === 'pdf';
+    }
+  }
+  return false;
+}
+
+/**
  * @param $name
- * @return mixed
+ * @return mixed|null
  */
 function getTypeByExt($name)
 {
   $array = explode(".", $name);
-  return end($array);
+  return (is_array($array) && count($array) > 1) ? end($array) : null;
 }

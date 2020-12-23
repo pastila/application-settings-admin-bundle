@@ -29,6 +29,26 @@ class AppealDataToCompany
    * @var User
    */
   private $author;
+  /**
+   * @var string
+   */
+  private $bitrixId;
+
+  /**
+   * @return string
+   */
+  public function getBitrixId(): string
+  {
+    return $this->bitrixId;
+  }
+
+  /**
+   * @param string $bitrixId
+   */
+  public function setBitrixId(string $bitrixId): void
+  {
+    $this->bitrixId = $bitrixId;
+  }
 
   /**
    * @return mixed
