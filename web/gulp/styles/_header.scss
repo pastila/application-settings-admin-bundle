@@ -8,6 +8,7 @@
     margin-bottom: 3rem;
     background-color: $header-bg;
     border-bottom: solid 0.1rem $border;
+    font-family: sans-serif;
     
     &__container {
         display: flex;
@@ -55,6 +56,11 @@
                 display: flex;
                 align-items: center;
                 cursor: pointer;
+                color: $text-color-black;
+
+                svg {
+                    fill: $text-color-black;
+                }
                 
                 &_img {
                     width: 2rem;
@@ -67,7 +73,16 @@
         
                 &_text {
                     display: none;
-                    color: $text-color-white;
+                }
+
+                &:hover {
+                    color: $text-color-blue;
+                    transition: .4s ease all;
+
+                    svg {
+                        color: $text-color-blue;
+                        transition: .4s ease all;
+                    }
                 }
             }
 
@@ -80,7 +95,8 @@
                 align-self: center;
                 padding-right: 2rem;
                 position: relative;
-                color: white;
+                color: $text-color-black;
+                transition: .4s ease all;
 
                 &::after {
                     content: '';
@@ -93,7 +109,7 @@
                     border: .5rem solid transparent;
                     -webkit-transform: translateY(-50%);
                     transform: translateY(-50%);
-                    border-color: white transparent transparent transparent;
+                    border-color: $text-color-black transparent transparent transparent;
                     transition: all .2s;
                 }
 
@@ -102,7 +118,7 @@
                         top: 50%;
                         -webkit-transform: translateY(-50%);
                         transform: translateY(-50%);
-                        border-color: transparent transparent white transparent;
+                        border-color: transparent transparent $text-color-black transparent;
                     }
                 }
 
@@ -113,7 +129,8 @@
                 &_name {
                     margin-left: 1rem;
                     font-size: 1.8rem;
-                    font-family: $main-font-semibold;
+                    font-family: sans-serif;
+                    font-weight: bold;
                 }
             }
 
@@ -138,17 +155,29 @@
         }
     
         &_mainBtn {
+            background-color: #ffffff;
+            color: $text-color-blue;
+            font-family: sans-serif;
+            font-weight: bold;
+            transition: .4s ease all;
+
             .hidden-desk--image{
                 display: none;
                 @media(max-width: 575px){
                     display: flex;
+                    width: 2rem;
                 }
             }
             @media(max-width: 575px){
                 margin: auto 0 auto 3rem;
+
                 .hidden-text-mob{
                     display: none;
                 }
+            }
+
+            &:hover {
+                background-color: #00abd8;
             }
         }
 
