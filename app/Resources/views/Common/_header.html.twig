@@ -17,17 +17,18 @@
             </a>
         {% endif %}
         <div class="app-header__in">
-            <div class="app-header__location">
+            {% if isHomepage %}
+                <div class="app-header__location">
+                    <div class="svg-icon svg-icon--location" aria-hidden="true">
+                        <svg class="svg-icon__link">
+                            <use xlink:href="#location"></use>
+                        </svg>
+                    </div>
 
-                <div class="svg-icon svg-icon--location" aria-hidden="true">
-                    <svg class="svg-icon__link">
-                        <use xlink:href="#location"></use>
-                    </svg>
+                    <span>Ваш регион: </span>
+                    <a href="#loacation" class="js-loacation">{{ region }}</a>
                 </div>
-
-                <span>Ваш регион: </span>
-                <a href="#loacation" class="js-loacation">{{ region }}</a>
-            </div>
+            {% endif %}
             <nav class="app-header__list">
                 {{ knp_menu_render('AppBundle:Builder:headerMenu') }}
             </nav>
