@@ -37,20 +37,4 @@ class RegionRepository extends ServiceEntityRepository implements UserLocationRe
       ->setMaxResults(1)
       ->getOneOrNullResult();
   }
-
-  /**
-   * @param $name
-   * @return \Doctrine\ORM\QueryBuilder
-   */
-  public function findByNameQueryBuilder($name)
-  {
-    $q = $this->createQueryBuilder('r');
-    if ($name)
-    {
-      return $q
-        ->andWhere('r.name LIKE :name')
-        ->setParameter('name', '%' . $name . '%');
-    }
-    return $q;
-  }
 }
