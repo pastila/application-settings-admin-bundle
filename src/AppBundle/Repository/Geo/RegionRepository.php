@@ -44,9 +44,13 @@ class RegionRepository extends ServiceEntityRepository implements UserLocationRe
    */
   public function findByNameQueryBuilder($name)
   {
-    return $this
-      ->createQueryBuilder('r')
-      ->andWhere('r.name LIKE :name')
-      ->setParameter('name', '%' . $name . '%');
+    $q = $this->createQueryBuilder('r');
+    if ($name)
+    {
+      return $q
+        ->andWhere('r.name LIKE :name')
+        ->setParameter('name', '%' . $name . '%');
+    }
+    return $q;
   }
 }

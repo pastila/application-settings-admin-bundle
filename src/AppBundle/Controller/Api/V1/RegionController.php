@@ -59,8 +59,16 @@ class RegionController extends AbstractController
    */
   public function getRegionsAction(Request $request)
   {
+    $query = $request->get('name');
+    if (!$query || strlen($query) < 2)
+    {
+      return new JsonResponse([
+        'Search string name is empty: ' . $query
+      ], 400);
+    }
+
     $regions = $this->regionRepository
-      ->findByNameQueryBuilder($request->get('name'))
+      ->findByNameQueryBuilder($query)
       ->getQuery()
       ->getResult();
 
