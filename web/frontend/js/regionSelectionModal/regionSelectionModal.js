@@ -4,10 +4,11 @@ export default function initRegionSelectionModal() {
         event.preventDefault();
         if (locationWindow) {
             locationWindow.open();
+            $('[data-remodal-id=loacation] .input-regions').focus();
         }
     });
     const regionModalError = $('[data-remodal-id=error-modal]').remodal();
-    $('.l-list__item a').on('click', function (event) {
+    $('.l-list').on('click', '.l-list__item a', function (event) {
         event.preventDefault();
         if (locationWindow) {
             locationWindow.close();
