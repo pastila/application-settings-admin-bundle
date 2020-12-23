@@ -290,8 +290,6 @@ if ($_POST['id'] != "") {
                     "PDF" => $arFile,
                 );
 
-                CIBlockElement::SetPropertyValuesEx($_POST["id"], 11, $arProperty);
-
                 echo $url_pdf_for_user;
             } else {
                 echo "data_user_oplata_POST пустое";

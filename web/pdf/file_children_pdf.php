@@ -340,9 +340,5 @@ $arProperty = Array(
   "PDF" => $arFile,
 );
 
-$ID_appeal = $_POST["id_obr"];
-CIBlockElement::SetPropertyValuesEx($ID_appeal, 11, $arProperty);
-CIBlockElement::SetPropertyValuesEx($ID_child, 11, $arProperty);
-
 echo $url_pdf_for_user;
 

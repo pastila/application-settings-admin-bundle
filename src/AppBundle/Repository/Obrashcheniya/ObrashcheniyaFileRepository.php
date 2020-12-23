@@ -29,9 +29,10 @@ class ObrashcheniyaFileRepository extends ServiceEntityRepository
    * @param $bitrixId
    * @param null $imageNumber
    * @param null $user
+   * @param string $type
    * @return \Doctrine\ORM\QueryBuilder
    */
-  public function createFileQueryBuilder($bitrixId, $imageNumber = null, $user = null)
+  public function createFileQueryBuilder($bitrixId, $imageNumber = null, $user = null, $type = ObrashcheniyaFileType::REPORT)
   {
     $query = $this
       ->createQueryBuilder('o_f')
@@ -48,7 +49,7 @@ class ObrashcheniyaFileRepository extends ServiceEntityRepository
     } else {
       $query
         ->andWhere('o_f.type = :type')
-        ->setParameter('type', ObrashcheniyaFileType::REPORT);
+        ->setParameter('type', $type);
     }
     if (!$user)
     {

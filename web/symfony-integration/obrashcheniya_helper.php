@@ -1,5 +1,7 @@
 <?php
 
+use Bitrix\Main\Application;
+
 if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true)
 {
   die();
@@ -38,6 +40,11 @@ function findExistFile($array, $j)
   return false;
 }
 
+/**
+ * @param $appeal_id
+ * @param $login
+ * @return array
+ */
 function getAppealFromSymfony($appeal_id, $login)
 {
   try
@@ -47,6 +54,7 @@ function getAppealFromSymfony($appeal_id, $login)
                 sof.bitrix_id,
                 sof.user_id,
                 sof.image_number,
+                sof.file,
                 su.login
                 FROM s_obrashcheniya_files as sof
                 JOIN s_users su ON su.id = sof.user_id AND su.login = :login
@@ -58,4 +66,94 @@ function getAppealFromSymfony($appeal_id, $login)
   {
     return [];
   }
+}
+
+/**
+ * Удаление записи о файле из таблицы файлов обращений
+ * @param $appeal_id
+ * @param $image_number
+ * @param $login
+ * @return bool
+ */
+function deleteAppealFileFromSymfony($appeal_id, $image_number)
+{
+  try
+  {
+    $con = Application::getConnection();
+    $con->queryExecute('DELETE FROM s_obrashcheniya_files
+            WHERE bitrix_id = ' . $appeal_id . ' AND image_number = ' . $image_number);
+
+    return true;
+  } catch (PDOException $e)
+  {
+    return false;
+  }
+}
+
+/**
+ * Получение кол-ва изображений в обращении на основе массива, полученнного из базы
+ * @param $array
+ * @return int
+ */
+function countExistFile($array)
+{
+  $count = 0;
+  foreach ($array as $item)
+  {
+    if ($item['image_number'] !== null)
+    {
+      $count++;
+    }
+  }
+
+  return $count;
+}
+
+/**
+ * Поиск в массиве, полученного из базы записи о сформированном изображении
+ * @param $array
+ * @return int
+ */
+function existAppeal($array)
+{
+  foreach ($array as $item)
+  {
+    /**
+     * image_number === null для обращений, иначе это прикреп.изображение
+     */
+    if ($item['image_number'] === null)
+    {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+/**
+ * Проверка, что файл pdf
+ * @param $array
+ * @param $j
+ * @return bool
+ */
+function fileIsPdf($array, $j)
+{
+  foreach ($array as $item)
+  {
+    if ($j == $item['image_number'])
+    {
+      return getTypeByExt($item['file']) === 'pdf';
+    }
+  }
+  return false;
+}
+
+/**
+ * @param $name
+ * @return mixed|null
+ */
+function getTypeByExt($name)
+{
+  $array = explode(".", $name);
+  return (is_array($array) && count($array) > 1) ? end($array) : null;
 }

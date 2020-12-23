@@ -5,6 +5,7 @@ namespace AppBundle\Model\Obrashchenia;
 
 
 use AppBundle\Entity\Obrashcheniya\ObrashcheniyaFile;
+use AppBundle\Entity\Obrashcheniya\ObrashcheniyaFileType;
 use AppBundle\Entity\User\User;
 use AppBundle\Repository\Obrashcheniya\ObrashcheniyaFileRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -53,12 +54,12 @@ class AppealDataParse
   public function parse($data)
   {
     if (
-      empty($data[2]['EMAIL']) ||
-      empty($data[2]['PDF'] ||
-      empty($data['login']))
+      empty($data['email']) ||
+      empty($data['id']) ||
+      empty($data['login'])
     )
     {
-      throw new \InvalidArgumentException('Empty EMAIL or PDF in data in AppealDataParse');
+      throw new \InvalidArgumentException('Empty EMAIL or login or ID in data in AppealDataParse');
     }
     $author = $this->entityManager->getRepository(User::class)
       ->findOneBy(['login' => $data['login']]);
@@ -66,37 +67,46 @@ class AppealDataParse
     {
       throw new \InvalidArgumentException(sprintf('Not found user %s by login in AppealDataParse', $data['login']));
     }
-    $files = $this->entityManager->getRepository(ObrashcheniyaFile::class)
-      ->findBy(['bitrixId' => $data[2]['ID']]);
-    if (!$files)
+    $pdfFile = $this->entityManager
+      ->getRepository(ObrashcheniyaFile::class)
+      ->createFileQueryBuilder($data['id'])
+      ->setMaxResults(1)
+      ->getQuery()
+      ->getOneOrNullResult();
+    if (!$pdfFile)
     {
-      throw new \Exception(sprintf('Not found files %s by ID in AppealDataParse', $data[2]['ID']));
+      throw new \Exception(sprintf('Not found file appeal %s by ID in AppealDataParse', $data['id']));
+    }
+    $attachedFiles = $this->entityManager
+      ->getRepository(ObrashcheniyaFile::class)
+      ->createFileQueryBuilder($data['id'], null, null, ObrashcheniyaFileType::ATTACH)
+      ->getQuery()
+      ->getResult();
+    if (!$attachedFiles)
+    {
+      throw new \Exception(sprintf('Not found files %s by ID in AppealDataParse',$data['id']));
     }
 
     $model = new AppealDataToCompany();
+    $model->setBitrixId($data['id']);
     $model->setAuthor($author->getFullName());
+    $model->setPdf($pdfFile->getFile());
     $model->setEmailsTo(array_map(function ($item)
     {
       return trim($item);
-    }, explode(',', $data[2]['EMAIL'])));
+    }, explode(',', $data['email'])));
 
     $attached = [];
-    foreach ($files as $file)
+    foreach ($attachedFiles as $file)
     {
-      if (!file_exists($file->getFile()))
-      {
-        throw new FileNotFoundException(sprintf('Not found file %s in parsing appeal', $file->getFile()));
-      }
       /**
        * @var ObrashcheniyaFile $file
        */
-      if ($file->getImageNumber() === null)
+      if (!file_exists($file->getFile()))
       {
-        $model->setPdf($file->getFile());
-      } else
-      {
-        $attached[] = $file->getFile();
+        throw new FileNotFoundException(sprintf('Not found attached file %s in parsing appeal', $file->getFile()));
       }
+      $attached[] = $file->getFile();
     }
     $model->setAttachedFiles($attached);
 

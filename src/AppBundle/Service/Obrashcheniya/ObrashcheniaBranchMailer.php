@@ -32,13 +32,14 @@ class ObrashcheniaBranchMailer
 
   /**
    * @param AppealDataToCompany $modelObrashcheniaBranch
+   * @param $email
    */
-  public function send(AppealDataToCompany $modelObrashcheniaBranch)
+  public function send(AppealDataToCompany $modelObrashcheniaBranch, $email)
   {
     $message = $this->emailFactory->createMessage('email_obrashcheniya_branch', [
       $this->mailerFrom => $this->mailerSenderName,
     ],
-      $modelObrashcheniaBranch->getEmailsTo(),
+      $email,
       [
         'author' => $modelObrashcheniaBranch->getAuthor()
       ]
