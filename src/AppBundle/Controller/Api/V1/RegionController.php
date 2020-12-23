@@ -60,10 +60,10 @@ class RegionController extends AbstractController
   public function getRegionsAction(Request $request)
   {
     $query = $request->get('name');
-    if (!$query || strlen($query) < 2)
+    if (!$query && strlen($query) > 255)
     {
       return new JsonResponse([
-        'Search string name is empty: ' . $query
+        'Search name is max length limit: ' . $query
       ], 400);
     }
 
