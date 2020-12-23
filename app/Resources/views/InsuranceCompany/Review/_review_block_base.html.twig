@@ -43,7 +43,8 @@
                 {{ render(controller('AppBundle:InsuranceCompany/Company:_logoPanel',
                     {
                         'logo_id': (review.branch ? review.branch.logoIdFromBitrix : null),
-                        'name': (review.branch ? review.branch.name : '')
+                        'name': (review.branch ? review.branch.name : ''),
+                        'disableLink': (filter is defined) ? filter.company != null : false,
                     } )) }}
                 <meta itemprop="name" content="{{ review.branch ? review.branch.name : '' }}">
 {#                <meta itemprop="email" content="{{ review.branch ? review.branch.emailFirst : '' }}">#}

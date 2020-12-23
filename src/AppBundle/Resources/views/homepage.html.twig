@@ -279,13 +279,15 @@
                                                 <div class="b-reviews__item-date"> {{ feedback.createdAt|prepareDate("d F, Y") }}</div>
                                             </div>
                                         </div>
-                                        <div class="b-reviews__item-logo">
-                                            {{ render(controller('AppBundle:InsuranceCompany/Company:_logoPanel',
-                                                {
-                                                    'logo_id': (feedback.branch ? feedback.branch.logoIdFromBitrix : null),
-                                                    'name': (feedback.branch ? feedback.branch.name : '')
-                                                } )) }}
-                                        </div>
+                                        {% if feedback.branch %}
+                                            <div class="b-reviews__item-logo">
+                                                {{ render(controller('AppBundle:InsuranceCompany/Company:_logoPanel',
+                                                    {
+                                                        'branch': feedback.branch,
+                                                        'disableLink': false,
+                                                    } )) }}
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>

@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CommonController extends AbstractController
 {
-  protected $logger;
+  private $logger;
   private $locationService;
   private $regionRepository;
 
@@ -55,7 +55,7 @@ class CommonController extends AbstractController
       $region = $this->locationService->getLocation();
     } catch (LocationServiceException $e)
     {
-      $this->get('logger')->err('Unable to determine user region.');
+      $this->logger->err('Unable to determine user region.');
       throw $e;
     }
 
