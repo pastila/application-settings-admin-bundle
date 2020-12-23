@@ -1704,7 +1704,7 @@
 
   .b-question__button {
     opacity: 0;
-    transition: 2s all cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    transition: 2s all cubic-bezier(0.55, 0.055, 0.675, 0.19), background-color .4s ease, color .4s ease;
     transform: translateX(-100px);
   }
 
