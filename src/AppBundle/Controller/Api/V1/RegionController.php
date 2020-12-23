@@ -59,16 +59,16 @@ class RegionController extends AbstractController
    */
   public function getRegionsAction(Request $request)
   {
-    $query = $request->get('name');
-    if (!$query && strlen($query) > 255)
-    {
-      return new JsonResponse([
-        'Search name is max length limit: ' . $query
-      ], 400);
-    }
+    $name = $request->get('name');
 
-    $regions = $this->regionRepository
-      ->findByNameQueryBuilder($query)
+    $q = $this->regionRepository
+      ->createQueryBuilder('r');
+    if ($name)
+    {
+      $q->andWhere('r.name LIKE :name')
+        ->setParameter('name', '%' . $name . '%');
+    }
+    $regions = $q
       ->getQuery()
       ->getResult();
 
