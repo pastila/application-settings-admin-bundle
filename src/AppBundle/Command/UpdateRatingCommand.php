@@ -32,11 +32,11 @@ class UpdateRatingCommand extends ContainerAwareCommand
   protected function execute(InputInterface $input, OutputInterface $output)
   {
     $io = new SymfonyStyle($input, $output);
-    $io->text('Start update rating');
 
     $em = $this->getContainer()->get('doctrine.orm.entity_manager');
     $conn = $em->getConnection();
 
+    $io->text('start update rating branches');
     $sql = 'UPDATE s_company_branches cb
             JOIN
             (
@@ -48,7 +48,9 @@ class UpdateRatingCommand extends ContainerAwareCommand
             SET cb.valuation = f.valuation_avg';
     $stmt = $conn->prepare($sql);
     $stmt->execute();
+    $io->success('finish update rating branches');
 
+    $io->text('start update rating companies');
     $sql = 'UPDATE s_companies sc
             JOIN
             (
@@ -60,7 +62,6 @@ class UpdateRatingCommand extends ContainerAwareCommand
             SET sc.valuation = scb.valuation_avg';
     $stmt = $conn->prepare($sql);
     $stmt->execute();
-
-    $io->success('Finish update rating');
+    $io->success('finish update rating companies');
   }
 }
