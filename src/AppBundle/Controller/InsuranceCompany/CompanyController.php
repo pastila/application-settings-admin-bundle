@@ -39,7 +39,7 @@ class CompanyController extends AbstractController
    * @param CompanyBranch $branch
    * @return \Symfony\Component\HttpFoundation\Response
    */
-  public function _logoPanelAction(Request $request, CompanyBranch $branch)
+  public function _logoPanelAction(Request $request, CompanyBranch $branch, $disableLink=false)
   {
     $payload = '?logo_id=' . $branch->getLogoIdFromBitrix();
     $dataFromBitrix = new DataFromBitrix($request);
@@ -60,7 +60,7 @@ class CompanyController extends AbstractController
       'src' => $src,
       'name' => $branch->getName(),
       'slug' => $branch->getCompany()->getSlug(),
-      'route' => $request->get('route')
+      'disableLink' => $disableLink
     ]);
   }
 }

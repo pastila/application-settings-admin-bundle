@@ -44,7 +44,7 @@
                     {
                         'logo_id': (review.branch ? review.branch.logoIdFromBitrix : null),
                         'name': (review.branch ? review.branch.name : ''),
-                        'route': app.request.get('_route'),
+                        'disableLink': filter.company != null,
                     } )) }}
                 <meta itemprop="name" content="{{ review.branch ? review.branch.name : '' }}">
 {#                <meta itemprop="email" content="{{ review.branch ? review.branch.emailFirst : '' }}">#}
