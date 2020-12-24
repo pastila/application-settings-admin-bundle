@@ -85,7 +85,7 @@ class ObrashcheniaBranchMailer
         $this->mailer->send($message);
       }
       else {
-        throw new \Swift_TransportException ('Swift_TransportException:', $e->getCode(), $e);
+        throw $e;
       }
     }
   }
