@@ -4,6 +4,7 @@ import { initContactUsBtn } from '../../frontend/js/feedback-popup/feedback-popu
 import headerInit from '../../frontend/js/header-init/header-init';
 import initQuestionAnswer from '../../frontend/js/initQuestionAnswer/initQuestionAnswer';
 import closeRemodal from '../../frontend/js/helper/closeRemodal';
+import hideErrorImg from '../../frontend/js/helper/hideErrorImg';
 
 
 function _extends() {
@@ -281,4 +282,5 @@ $(function () {
   initContactUsBtn();
   headerInit();
   closeRemodal();
+  hideErrorImg('.logo-company');
 });
