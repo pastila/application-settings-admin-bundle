@@ -77,10 +77,16 @@ class ObrashcheniaBranchMailer
     } catch (\Swift_TransportException $e)
     {
       // fix Timeout waiting for data from client
-      // Повторная попытка отправки
-      $this->mailer->getTransport()->stop();
-      $this->mailer->getTransport()->start();
-      $this->mailer->send($message);
+      if ($e->getCode() === 421)
+      {
+        // Повторная попытка отправки
+        $this->mailer->getTransport()->stop();
+        $this->mailer->getTransport()->start();
+        $this->mailer->send($message);
+      }
+      else {
+        throw new \Swift_TransportException ($e);
+      }
     }
   }
 }
