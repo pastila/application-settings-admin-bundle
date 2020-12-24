@@ -8,7 +8,6 @@
 */
 
 function onEventMouseDown(event) {
-  console.log('false');
   if (event.target.classList.contains('remodal-wrapper')) {
     $(event.target).find('.remodal').remodal().close();
   }
