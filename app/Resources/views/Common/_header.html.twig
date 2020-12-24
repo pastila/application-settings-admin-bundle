@@ -48,19 +48,21 @@
 <div class="nav-mobile">
     <div class="nav-mobile__content">
         <div class="nav-mobile__in">
-            <div class="nav-mobile__location-wrapper">
-                <div class="nav-mobile__location">
+            {% if isHomepage %}
+                <div class="nav-mobile__location-wrapper">
+                    <div class="nav-mobile__location">
 
-                    <div class="svg-icon svg-icon--location" aria-hidden="true">
-                        <svg class="svg-icon__link">
-                            <use xlink:href="#location"></use>
-                        </svg>
+                        <div class="svg-icon svg-icon--location" aria-hidden="true">
+                            <svg class="svg-icon__link">
+                                <use xlink:href="#location"></use>
+                            </svg>
+                        </div>
+
+                        <span>Ваш регион: </span>
+                        <a href="#loacation" class="js-loacation">{{ region }}</a>
                     </div>
-
-                    <span>Ваш регион: </span>
-                    <a href="#loacation" class="js-loacation">{{ region }}</a>
                 </div>
-            </div>
+            {% endif %}
             {{ knp_menu_render('AppBundle:Builder:headerMenuMobile') }}
         </div>
     </div>
