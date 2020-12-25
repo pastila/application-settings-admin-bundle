@@ -1,6 +1,23 @@
 @import './v2';
 @import './gulp/styles/components/breadcrumbs';
 @import '../../styles/utils/typografy';
+@import '../../styles/utils/mixins';
+
+@import '../../styles/components/btns/btns';
+@import '../../styles/components/inputs/input';
+@import '../../styles/components/inputs/checkbox';
+@import '../../styles/components/inputs/select';
+@import '../../styles/components/inputs/search';
+
+@import '../../styles/components/modal';
+
+@import '../../../node_modules/magnific-popup/dist/magnific-popup.css';
+
+@import '../../styles/header.scss';
+
+.mfp-content {
+  vertical-align: middle!important;
+}
 
 .app.v2 {
 
@@ -2525,26 +2542,7 @@
     }
   }
 
-  .mfp-ready {
-    @import '../../styles/utils/mixins';
-
-    @import '../../styles/components/btns/btns';
-    @import '../../styles/components/inputs/input';
-    @import '../../styles/components/inputs/checkbox';
-    @import '../../styles/components/inputs/select';
-    @import '../../styles/components/inputs/search';
-
-    @import '../../styles/components/modal';
-
-    @import '../../../node_modules/magnific-popup/dist/magnific-popup.css';
-
-    @import '../../styles/header.scss';
-
-    $wrap-padding: 1.5rem;
-
-    .mfp-content {
-      vertical-align: middle!important;
-    }
+  .popup__wrap {
 
     .hidden {
       display:none;
@@ -2554,25 +2552,32 @@
       margin: 0;
     }
 
-    .popup__wrap {
-      .popup__wrap_tabs_title {
-        margin-bottom: 1rem;
-      }
+    .popup__wrap_tabs_title {
+      margin-bottom: 1rem;
+    }
 
-      .center__child {
-        display: flex;
-        justify-content: center;
-        margin-top: 3rem;
-      }
+    .center__child {
+      display: flex;
+      justify-content: center;
+      margin-top: 3rem;
+    }
 
-      .popup-login-content__links__item {
-        cursor: pointer;
+    .popup-login-content__links__item {
+      cursor: pointer;
+      color: #00abd8;
+
+      &:hover {
         color: #00abd8;
       }
+    }
 
-      .input__wrap_label {
-        cursor: default;
-      }
+    .input__wrap_label {
+      cursor: default;
+    }
+
+    .mainBtn {
+      border-radius: 20rem;
+      font-size: 1.6rem;
     }
   }
 }

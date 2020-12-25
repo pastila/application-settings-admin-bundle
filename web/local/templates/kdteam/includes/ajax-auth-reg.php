@@ -130,7 +130,7 @@ input[type="date"]::-webkit-calendar-picker-indicator
                            placeholder="+7 (___) ___ __ __"  required>
                     <p id="sms_confirm_error" style="display: none" class="error sms-error">Введите номер телефона</p>
                     <p id="tel_confirm_error" style="display: none" class="error sms-error">
-                        Пользовватель с таким телефоном уже сущесвует
+                        Пользователь с таким телефоном уже существует
                     </p>
                 </div>
             </div>
