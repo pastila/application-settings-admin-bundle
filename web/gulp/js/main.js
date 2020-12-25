@@ -1,4 +1,3 @@
-//= ../../node_modules/jquery/dist/jquery.min.js
 //= ../../node_modules/magnific-popup/dist/jquery.magnific-popup.min.js
 //= ../../node_modules/jquery-mask-plugin/dist/jquery.mask.js
 //= ../../node_modules/air-datepicker/dist/js/datepicker.min.js
@@ -681,6 +680,9 @@ console.log("1");
         dataType: 'json',
         success: function(result) {
           if (result.status) {
+            if ($('.app-header__lk')) {
+              window.location.href = '/personal-cabinet/';
+            }
             $('#auth-form-login').find($('.close-modal')).trigger('click');
 
             $('.header__r_auth_reg').attr('data-rigstration', '1');
