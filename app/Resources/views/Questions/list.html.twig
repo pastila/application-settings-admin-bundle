@@ -13,9 +13,7 @@
     <link rel="stylesheet" href="/local/templates/kdteam/pages/landing/landing.min.css">
 {% endblock %}
 {% block javascripts %}
-    <script src="/landing/js/vendors/jquery-3.4.1.min.js"></script>
-    <script src="/landing/js/plugins.min.js"></script>
-    <script type="text/javascript" src="/local/templates/kdteam/pages/news/news.min.js"></script>
+    {{ parent() }}
     <script src="/dist/bundle.js"></script>
 {% endblock %}
 {% block header %}
