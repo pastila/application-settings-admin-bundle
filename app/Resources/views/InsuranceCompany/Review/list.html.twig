@@ -20,10 +20,10 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script type="text/javascript" src="/local/templates/kdteam/js/main.min.js?1593497507172695"></script>
+    {{ parent() }}
+{#    <script type="text/javascript" src="/local/templates/kdteam/js/main.min.js?1593497507172695"></script>#}
     <script type="text/javascript" src="/local/templates/kdteam/pages/feedback/main.min.js?15862684754547"></script>
     <script type="text/javascript" src="/local/templates/kdteam/js/readmore.min.js?1586268475879"></script>
-    {{ parent() }}
 
     {% for label, messages in app.flashes(['magnific']) %}
         {% for message in messages %}

@@ -57,10 +57,6 @@
                 align-items: center;
                 cursor: pointer;
                 color: $text-color-black;
-
-                svg {
-                    fill: $text-color-black;
-                }
                 
                 &_img {
                     width: 2rem;
@@ -73,16 +69,6 @@
         
                 &_text {
                     display: none;
-                }
-
-                &:hover {
-                    color: $text-color-blue;
-                    transition: .4s ease all;
-
-                    svg {
-                        color: $text-color-blue;
-                        transition: .4s ease all;
-                    }
                 }
             }
 
@@ -143,7 +129,22 @@
                 margin-left: 2rem;
             }
 
-            
+            &.header__r_auth_login {
+
+                &:hover {
+                    color: $text-color-blue;
+                    transition: .4s ease all;
+
+                    svg {
+                        color: $text-color-blue;
+                        transition: .4s ease all;
+                    }
+                }
+
+                svg {
+                    fill: $text-color-black;
+                }
+            }
         }
 
         #menu {

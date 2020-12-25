@@ -1,4 +1,4 @@
-//= ../../node_modules/jquery/dist/jquery.min.js
+//= ../../landing/js/vendors/jquery-3.4.1.min.js
 //= ../../node_modules/magnific-popup/dist/jquery.magnific-popup.min.js
 //= ../../node_modules/jquery-mask-plugin/dist/jquery.mask.js
 //= ../../node_modules/air-datepicker/dist/js/datepicker.min.js
@@ -667,6 +667,7 @@ console.log("1");
   }
 
   function FormAuth() {
+    const buttonAuthNewHeader = !!$('.v2').length;
 
     $('#auth-form-login').validator().on('submit', function(e) {
       e.preventDefault();
@@ -681,6 +682,9 @@ console.log("1");
         dataType: 'json',
         success: function(result) {
           if (result.status) {
+            if (buttonAuthNewHeader) {
+              window.location.href = '/personal-cabinet/';
+            }
             $('#auth-form-login').find($('.close-modal')).trigger('click');
 
             $('.header__r_auth_reg').attr('data-rigstration', '1');
@@ -714,10 +718,15 @@ console.log("1");
 
       return false;
     });
-    $('#trigger-reg-form').click(function() {
+      $('#trigger-reg-form').click(function() {
       $('#auth-form-login').find($('.close-modal')).trigger('click');
       setTimeout(function() {
         $('#reg-link').trigger('click');
+        if($('.v2').length) {
+          setTimeout(() => {
+            FormReg();
+          }, 1000);
+        }
       }, 1000);
     });
 
