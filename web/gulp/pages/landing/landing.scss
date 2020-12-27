@@ -1721,6 +1721,7 @@
   }
 
   .b-question__button {
+    margin-top: 40px;
     opacity: 0;
     transition: 2s all cubic-bezier(0.55, 0.055, 0.675, 0.19), background-color .4s ease, color .4s ease;
     transform: translateX(-100px);
@@ -2102,8 +2103,9 @@
     }
 
     .b-question {
+
       margin-bottom: 50px;
-      padding-bottom: 55px;
+      padding-bottom: 70px;
     }
 
     .b-question__item-title {
@@ -2135,6 +2137,7 @@
     }
 
     .b-question.is-visible .b-question__button {
+      margin-top: 0;
       position: absolute;
       left: 50%;
       bottom: 0;
