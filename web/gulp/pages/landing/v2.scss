@@ -770,6 +770,7 @@
 
   .app-header__lk.btn {
     margin-left: 80px;
+    margin-right: 0;
     min-width: 220px;
     font-size: 12px;
   }
@@ -1180,7 +1181,7 @@
     }
 
     .app-header__lk.btn {
-      margin-left: 0;
+      margin-left: auto;
       -ms-flex-order: -1;
       order: -1;
     }
