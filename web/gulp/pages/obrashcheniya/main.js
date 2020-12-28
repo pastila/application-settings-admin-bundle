@@ -140,38 +140,39 @@ $( "input[type='file']" ).click(function() {
                 error.text('Не удается прочитать файл');
                 success.text('');
               } else {
-                error.text('');
-                success.text(result2.SUCCESS);
-                let r = result2.SRC;
-                let fileName = result2.FILE_NAME;
+                setTimeout(function(){
+                  error.text('');
+                  success.text(result2.SUCCESS);
+                  let r = result2.SRC;
+                  let fileName = result2.FILE_NAME;
 
-                if (r.search(".pdf") != "-1") {
-                  src = "/local/templates/kdteam/images/svg/pdf_icon.svg";
-                } else {
-                  src = r;
-                }
-                n.find($(".js-img-add")).append(
-                    '<div id="img_block_' + result2.ID +
-                    '" class="obrashcheniya__content_sidebar_blocks">\n' +
-                    '    <div class="obrashcheniya__content_sidebar_blocks_img">\n' +
-                    '        <img src="' + src + '" alt="">\n' +
-                    '    </div>\n' +
-                    '    <div class="obrashcheniya__content_sidebar_blocks_text">\n' +
-                    '        <div class="obrashcheniya__content_sidebar_blocks_text_title">' + fileName + '</div>\n' +
-                    '        <a id="download_img" download href="' + r + '"\n' +
-                    '           class="obrashcheniya__content_sidebar_blocks_text_link">скачать</a>\n' +
-                    '        <a href="#" rel="nofollow" onclick="del(this)" id="delete_' +
-                    result2.ID + '" class="delete_img_js">удалить</a>\n' +
-                    '    </div>\n' +
-                    '</div>'
-                );
-                $(".photo_empty_all_" + element).html("");
-                if ($("[data-block_img=" + element + "]").
-                        find("[id=img_block_" + element).length !== "0" &&
-                    $("#time_" + element).text().search("2") != "-1") {
-                  $("#send_" + element).attr("onclick", "send_ms(this)");
-                  $("#send_" + element).removeClass("disabled");
-                }
+                  if (r.search(".pdf") != "-1") {
+                    src = "/local/templates/kdteam/images/svg/pdf_icon.svg";
+                  } else {
+                    src = r;
+                  }
+                  n.find($(".js-img-add")).append(
+                      '<div id="img_block_' + result2.ID +
+                      '" class="obrashcheniya__content_sidebar_blocks">\n' +
+                      '    <div class="obrashcheniya__content_sidebar_blocks_img">\n' +
+                      '        <img src="' + src + '" alt="">\n' +
+                      '    </div>\n' +
+                      '    <div class="obrashcheniya__content_sidebar_blocks_text">\n' +
+                      '        <div class="obrashcheniya__content_sidebar_blocks_text_title">' + fileName + '</div>\n' +
+                      '        <a id="download_img" download href="' + r + '"\n' +
+                      '           class="obrashcheniya__content_sidebar_blocks_text_link">скачать</a>\n' +
+                      '        <a href="#" rel="nofollow" onclick="del(this)" id="delete_' +
+                      result2.ID + '" class="delete_img_js">удалить</a>\n' +
+                      '    </div>\n' +
+                      '</div>'
+                  );
+                  $(".photo_empty_all_" + element).html("");
+                  if ($("[data-block_img=" + element + "]").find("[id=img_block_" + element).length !== "0" &&
+                      $("#time_" + element).text().search("2") != "-1") {
+                    $("#send_" + element).attr("onclick", "send_ms(this)");
+                    $("#send_" + element).removeClass("disabled");
+                  }
+                }, 2000);
               }
             }
           }
