@@ -385,6 +385,6 @@ class Feedback
    */
   public function __toString()
   {
-    return $this->id ? $this->text : '';
+    return $this->id ? $this->title : '';
   }
 }
