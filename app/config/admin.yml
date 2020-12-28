@@ -58,3 +58,9 @@ services:
     arguments: [~, 'AppBundle\Entity\Geo\Region', ~]
     tags:
       -  { name: sonata.admin, manager_type: orm, group: 'settings', label: 'Регионы' }
+
+  main.admin.feedback:
+    class: AppBundle\Admin\Feedback\FeedbackAdmin
+    arguments: [~, 'AppBundle\Entity\Company\Feedback', ~]
+    tags:
+      -  { name: sonata.admin, manager_type: orm, group: 'feedback', label: 'Отзывы' }

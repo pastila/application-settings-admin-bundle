@@ -426,10 +426,13 @@ class CompanyBranch
     return $this;
   }
 
-
-
-
-
+  /**
+   * @return string
+   */
+  public function getRegionName()
+  {
+    return $this->region . ' ' . $this->name ;
+  }
 
   /**
    * @return string
