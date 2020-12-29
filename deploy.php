@@ -148,6 +148,8 @@ set('bin/php', 'php');
 
 set('bin/console', '{{docker_deploy_path}}/bin/console');
 
+set('http_user', 'deployer');
+
 // Hosts
 
 //host('staging_host')
