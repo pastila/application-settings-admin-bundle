@@ -1777,6 +1777,12 @@
       }
     }
   }
+
+  .popup__wrap {
+    .check-img:after {
+      background-image: url(/local/templates/kdteam/images/svg/tick.svg);
+    }
+  }
 }
 
 .remodal {
