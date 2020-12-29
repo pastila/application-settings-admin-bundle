@@ -4,10 +4,39 @@ version: '3'
 services:
   workspace:
     volumes:
-      - ${APP_DEPLOY_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
+      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
       - ./workspace/crontab/:/etc/cron.d
       - ${APP_SHARED_PATH_HOST}/laradock/workspace/.ssh/authorized_keys:/root/.ssh/authorized_keys
       - ${APP_SHARED_PATH_HOST}/laradock/workspace/.ssh/config:/root/.ssh/config
+      # App shares
+      - ${APP_SHARED_PATH_HOST}/.env:/var/www/.env,
+      - ${APP_SHARED_PATH_HOST}/web/.htaccess:/var/www/web/.htaccess
+      - ${APP_SHARED_PATH_HOST}/web/ajax/for_admin/import/log_cmo.txt:/var/www/web/ajax/for_admin/import/log_cmo.txt
+      - ${APP_SHARED_PATH_HOST}/web/ajax/for_admin/import/log_mo.txt:/var/www/web/ajax/for_admin/import/log_mo.txt
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/modules/updater.log:/var/www/web/bitrix/modules/updater.log
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/modules/updater_partner.log:/var/www/web/bitrix/modules/updater_partner.log
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/php_interface/dbconn.php:/var/www/web/bitrix/php_interface/dbconn.php
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/.settings.php:/var/www/web/bitrix/.settings.php
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/site_checker_797f0a4ef69e8b269ee562becb5b10e5.log:/var/www/web/bitrix/site_checker_797f0a4ef69e8b269ee562becb5b10e5.log
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/site_checker_afb111f71ba090216f391e97d08677c8.log:/var/www/web/bitrix/site_checker_afb111f71ba090216f391e97d08677c8.log
+      - ${APP_SHARED_PATH_HOST}/web/cert1.pem:/var/www/web/cert1.pem
+      - ${APP_SHARED_PATH_HOST}/web/export_2.csv:/var/www/web/export_2.csv
+      - ${APP_SHARED_PATH_HOST}/web/export_f1111.csv:/var/www/web/export_f1111.csv
+      - ${APP_SHARED_PATH_HOST}/laradock/.env:/var/www/laradock/.env
+      - ${APP_SHARED_PATH_HOST}/web/robots.txt:/var/www/web/robots.txt
+      - ${APP_SHARED_PATH_HOST}/web/sitemap.xml:/var/www/web/sitemap.xml
+      - ${APP_SHARED_PATH_HOST}/web/ssh/send_mail_after_30_day.txt:/var/www/web/ssh/send_mail_after_30_day.txt
+      - ${APP_SHARED_PATH_HOST}/laradock/certbot/certs:/var/www/laradock/certbot/certs
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/backup:/var/www/web/bitrix/backup
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/cache:/var/www/web/bitrix/cache
+      - ${APP_SHARED_PATH_HOST}/web/bitrix/managed_cache:/var/www/web/bitrix/managed_cache
+      - ${APP_SHARED_PATH_HOST}/web/bitrix_logs:/var/www/web/bitrix_logs
+      - ${APP_SHARED_PATH_HOST}/web/images:/var/www/web/images
+      - ${APP_SHARED_PATH_HOST}/web/upload:/var/www/web/upload
+      - ${APP_SHARED_PATH_HOST}/app/config/parameters.yml:/var/www/app/config/parameters.yml
+      - ${APP_SHARED_PATH_HOST}/var/logs:/var/www/var/logs
+      - ${APP_SHARED_PATH_HOST}/var/sessions:/var/www/var/sessions
+      # sf app uploads
       - ${APP_SHARED_PATH_HOST}/var/uploads:/var/www/var/uploads
       - ${APP_SHARED_PATH_HOST}/web/uploads:/var/www/web/uploads
 
@@ -132,8 +161,6 @@ services:
       - "${NGINX_HOST_HTTPS_PORT}:443"
 
   php-rabbimq-consumer-obrashscheniya-files:
-    labels:
-      - "traefik.enable=false"
     entrypoint: [ "php", "-d", "memory_limit=-1", "bin/console", "rabbitmq:consumer", "obrashcheniya_files", "--env=prod" ]
     volumes:
       - ./php-fpm-symfony/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
@@ -153,8 +180,6 @@ services:
       - ${APP_SHARED_PATH_HOST}/var/uploads:/var/www/var/uploads
 
   php-rabbimq-consumer-obrashscheniya-emails:
-    labels:
-      - "traefik.enable=false"
     entrypoint: [ "php", "-d", "memory_limit=-1", "bin/console", "rabbitmq:consumer", "obrashcheniya_emails", "--env=prod" ]
     volumes:
       - ./php-fpm-symfony/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
