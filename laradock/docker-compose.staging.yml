@@ -169,6 +169,8 @@ services:
       - traefik
 
   php-rabbimq-consumer-obrashscheniya-files:
+    labels:
+      - "traefik.enable=false"
     entrypoint: ["php", "-d", "memory_limit=-1", "bin/console", "rabbitmq:consumer", "obrashcheniya_files", "--env=prod"]
     volumes:
       - ./php-fpm-symfony/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
@@ -188,6 +190,8 @@ services:
       - ${APP_SHARED_PATH_HOST}/var/uploads:/var/www/var/uploads
 
   php-rabbimq-consumer-obrashscheniya-emails:
+    labels:
+      - "traefik.enable=false"
     entrypoint: ["php", "-d", "memory_limit=-1", "bin/console", "rabbitmq:consumer", "obrashcheniya_emails", "--env=prod"]
     volumes:
       - ./php-fpm-symfony/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini

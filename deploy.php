@@ -134,7 +134,10 @@ set('docker_start_services', [
   'percona',
   'php-fpm-symfony',
   'php-fpm-bitrix',
-  'nginx'
+  'nginx',
+  'rabbitmq',
+  'php-rabbimq-consumer-obrashscheniya-files',
+  'php-rabbimq-consumer-obrashscheniya-emails'
 ]);
 
 // Composer уже установлен в контейнере проекта
