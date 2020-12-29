@@ -1777,6 +1777,47 @@
       }
     }
   }
+
+  .popup__wrap {
+    .check-img:after {
+      background-image: url(/local/templates/kdteam/images/svg/tick.svg);
+    }
+  }
+
+  .custom_styles_popup{
+    max-width: 60rem;
+    background: #fff;
+    margin: 0 auto;
+    position: relative;
+    font-size: 1.6rem;
+    padding: 4rem;
+    border-radius: 20px;
+    @media (min-width: 992px) {
+      padding: 6rem;
+      width: 100%;
+    }
+    .mfp-close{
+      background: url('/local/templates/kdteam/images/svg/close_modal.svg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      top: 2rem;
+      right: 2rem;
+      cursor: pointer;
+      opacity: 1;
+      text-indent: 999999px;
+      width: 4rem;
+      @media(max-width: 991px){
+        width: 2rem;
+      }
+    }
+    a{
+      text-decoration: underline;
+    }
+  }
+
+  .header__r_auth_reg {
+    display: none;
+  }
 }
 
 .remodal {

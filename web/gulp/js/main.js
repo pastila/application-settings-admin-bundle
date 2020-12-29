@@ -575,7 +575,7 @@ console.log("1");
 
               if (suc.user_success === 'success') {
 
-                if ($('.header__r_auth_reg').attr('data-rigstration') == '0') {
+                if ($('.header__r_auth_reg').attr('data-rigstration') == '0' || $('.v2 .app-header__lk').length) {
 
                   $('#auth-form-reg').find($('.close-modal')).trigger('click');
 
@@ -603,11 +603,16 @@ console.log("1");
                         },
                       });
                       $('body').css({'overflow': 'initial'});
+
+                      if ($('.v2 .app-header__lk').length) {
+                        setTimeout(() => {
+                          location.reload();
+                        }, 2000);
+                      }
                     }, 1000);
                   });
 
                 } else {
-
                   location.reload();
                 }
               }
