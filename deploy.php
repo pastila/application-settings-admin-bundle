@@ -263,7 +263,7 @@ task('deploy', [
   'deploy:docker:assets:install',
   'deploy:docker:cache:clear',
   'deploy:docker:cache:warmup',
-  'deploy:writable',
+//  'deploy:writable',
   'deploy:docker:database:migrate',
   'deploy:docker:rabbitmq:setup_fabric',
   'deploy:symlink',
