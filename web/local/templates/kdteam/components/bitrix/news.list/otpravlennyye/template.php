@@ -481,10 +481,9 @@ if (count($arResult["ITEMS"]) > 0) {
                                   sprintf(obrashcheniya_report_url_download, $arItem["ID"]) :
                                   "";
                                 ?>
-                                <a target="_blank" class=" pdf
-                                    <?php if ($url_pdf == "") { ?>success<?} ?>"
-                                    href="<?= sprintf(obrashcheniya_report_url_download, $arItem["ID"])?>">
-                                    <?php if ($url_pdf != "") { ?> просмотреть
+                                <a target="_blank" class=" pdf"
+                                    <?php if ($url_pdf != "") { ?> href="<?= sprintf(obrashcheniya_report_url_download, $arItem["ID"])?>" <? } ?> >
+                                    <?php if ($url_pdf != "") { ?> Просмотреть
                                     <? } else { ?>
                                         После формирования обращения Ваш файл будет доступен для скачивания по этой ссылке
                                       <?

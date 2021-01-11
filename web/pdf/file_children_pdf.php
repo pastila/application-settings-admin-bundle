@@ -12,6 +12,7 @@ Loader::includeModule('iblock');
 require_once dirname(__FILE__).'/../vendor/autoload.php';
 require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/rabbitmq.php");
 require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/config_obrashcheniya.php");
+require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/obrashcheniya_helper.php");
 
 global $USER;
 
@@ -325,7 +326,7 @@ $mpdf->Output($full_name_file, 'F');
 $rsUser = $USER->GetByLogin($USER->GetLogin());
 if ($arUser = $rsUser->Fetch())
 {
-  rabbitmqSend(queue_obrashcheniya_files, json_encode([
+  sendAppealToSymfony(obrashcheniya_appeal_files_api, API_TOKEN, json_encode([
     'user_id' => $arUser['ID'],
     'user_login' => $arUser['LOGIN'],
     'file_type' => obrashcheniya_file_type_report,

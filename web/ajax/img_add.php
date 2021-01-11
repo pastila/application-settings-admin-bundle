@@ -75,7 +75,7 @@ if (isset($_FILES['import_file']['tmp_name'])) {
               $rsUser = $USER->GetByLogin($USER->GetLogin());
               if ($arUser = $rsUser->Fetch())
               {
-                rabbitmqSend(queue_obrashcheniya_files, json_encode([
+                sendAppealToSymfony(obrashcheniya_appeal_files_api, API_TOKEN, json_encode([
                   'user_id' => $arUser['ID'],
                   'user_login' => $arUser['LOGIN'],
                   'file_type' => obrashcheniya_file_type_attach,

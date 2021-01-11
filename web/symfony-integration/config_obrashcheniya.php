@@ -18,3 +18,6 @@ const obrashcheniya_report_path = '/var/www/var/uploads/pdf/';
 const obrashcheniya_report_url_download = '/appeals/%s/download';
 const obrashcheniya_file_type_report = 'report';
 const obrashcheniya_file_type_attach = 'attach';
+
+const obrashcheniya_appeal_files_api = 'http://nginx/api/v1/appeal-files?api_token=%s&data=%s';
+const obrashcheniya_appeal_emails_api = 'http://nginx/api/v1/appeal-email?api_token=%s&data=%s';

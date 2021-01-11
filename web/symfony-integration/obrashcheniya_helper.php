@@ -157,3 +157,29 @@ function getTypeByExt($name)
   $array = explode(".", $name);
   return (is_array($array) && count($array) > 1) ? end($array) : null;
 }
+
+/**
+ * Отправка обращения в symfony
+ *
+ * @param $login
+ * @param $token
+ * @return int
+ */
+function sendAppealToSymfony($url, $token, $data)
+{
+  $url = sprintf($url, $token, $data);
+  $ch = curl_init($url);
+
+  curl_setopt($ch, CURLOPT_VERBOSE, true);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+  $res = curl_exec($ch);
+  $info = curl_getinfo($ch);
+  $code = key_exists('http_code', $info) ? $info['http_code'] : null;
+  if ($code === 200)
+  {
+    return true;
+  }
+
+  return false;
+}
