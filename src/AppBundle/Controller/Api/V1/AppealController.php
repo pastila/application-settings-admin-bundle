@@ -9,8 +9,8 @@ use AppBundle\Service\Obrashcheniya\ObrashcheniaBranchMailer;
 use AppBundle\Service\Obrashcheniya\ObrashcheniaUserMailer;
 use AppBundle\Util\BitrixHelper;
 use Doctrine\ORM\EntityManagerInterface;
-use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,7 +21,7 @@ use Psr\Log\LoggerInterface;
  * Class AppealController
  * @package AppBundle\Controller\Api\V1
  */
-class AppealController extends AbstractController
+class AppealController extends Controller
 {
   /**
    * @var EntityManagerInterface
@@ -162,6 +162,12 @@ class AppealController extends AbstractController
 
       return new Response(null, 400);
     }
+
+    $router = $this->get('router');
+
+    $context = $router->getContext();
+    $context->setHost($this->getParameter('router.request_context.host'));
+    $context->setScheme($this->getParameter('router.request_context.scheme'));
 
     # Отправка сообщения пользователю, что обращение отправлено
     $this->userMailer->send($modelAppealData);
