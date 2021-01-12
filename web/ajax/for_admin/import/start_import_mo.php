@@ -118,6 +118,7 @@ foreach ($sheetData as $k => $p) {
                 "MEDICAL_CODE" => $p["B"]
             );
             $Array = array(
+                "ACTIVE" => "Y",
                 "NAME" => $p["D"],
                 "PROPERTY_VALUES" => $arProp,
             );

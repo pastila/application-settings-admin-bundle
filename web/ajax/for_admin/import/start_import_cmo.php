@@ -239,7 +239,11 @@ foreach ($sheetData as $region => $company) {
                     "GOROD" => $company["B"],
                 );
                 $el = new \CIBlockElement;
-                if ($el->Update($arProps["ID"], ["NAME" => $company['C'], "CODE" => $trans])) {
+                if ($el->Update($arProps["ID"], [
+                  "ACTIVE" => "Y",
+                  "NAME" => $company['C'],
+                  "CODE" => $trans,
+                ])) {
                     echo "update ID: " . $arProps["ID"] . PHP_EOL;
                 }
 
