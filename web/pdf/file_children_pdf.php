@@ -323,10 +323,11 @@ $mpdf->Output($full_name_file, 'F');
 /**
  * Подготовка и отправка данных о принадлежности файла пользователю
  */
+$is_send = false;
 $rsUser = $USER->GetByLogin($USER->GetLogin());
 if ($arUser = $rsUser->Fetch())
 {
-  sendAppealToSymfony(obrashcheniya_appeal_files_api, API_TOKEN, json_encode([
+  $is_send = sendAppealToSymfony(obrashcheniya_appeal_files_api, API_TOKEN, json_encode([
     'user_id' => $arUser['ID'],
     'user_login' => $arUser['LOGIN'],
     'file_type' => obrashcheniya_file_type_report,
@@ -334,12 +335,17 @@ if ($arUser = $rsUser->Fetch())
     'obrashcheniya_id' => $_POST['id_obr'],
   ]));
 }
+if ($is_send)
+{
+  $url_pdf_for_user = sprintf(obrashcheniya_report_url_download, $_POST['id_obr']);
+  $arFile = CFile::MakeFileArray($full_name_file);
+  $arProperty = Array(
+    "PDF" => $arFile,
+  );
 
-$url_pdf_for_user = sprintf(obrashcheniya_report_url_download, $_POST['id_obr']);
-$arFile = CFile::MakeFileArray($full_name_file);
-$arProperty = Array(
-  "PDF" => $arFile,
-);
-
-echo $url_pdf_for_user;
+  echo $url_pdf_for_user;
+} else {
+  http_response_code(400);
+  echo "Ошибка при формировании обращения";
+}
 

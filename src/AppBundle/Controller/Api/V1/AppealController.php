@@ -109,7 +109,7 @@ class AppealController extends Controller
     $this->entityManager->persist($model);
     $this->entityManager->flush();
 
-    return new JsonResponse(null, 200, [], true);
+    return new Response(null, 200);
   }
 
   /**
@@ -157,6 +157,6 @@ class AppealController extends Controller
     # Отправка сообщения пользователю, что обращение отправлено
     $this->userMailer->send($modelAppealData);
 
-    return new JsonResponse(null, 200, [], true);
+    return new Response(null, 200);
   }
 }

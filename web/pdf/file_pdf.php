@@ -274,9 +274,11 @@ if ($_POST['id'] != "") {
                  * Подготовка и отправка данных о принадлежности файла пользователю
                  */
                 $rsUser = $USER->GetByLogin($USER->GetLogin());
+
+                $is_send = false;
                 if ($arUser = $rsUser->Fetch())
                 {
-                  sendAppealToSymfony(obrashcheniya_appeal_files_api, API_TOKEN, json_encode([
+                  $is_send = sendAppealToSymfony(obrashcheniya_appeal_files_api, API_TOKEN, json_encode([
                     'user_id' => $arUser['ID'],
                     'user_login' => $arUser['LOGIN'],
                     'file_type' => obrashcheniya_file_type_report,
@@ -284,14 +286,18 @@ if ($_POST['id'] != "") {
                     'obrashcheniya_id' => $_POST['id'],
                   ]));
                 }
-
-                $url_pdf_for_user = sprintf(obrashcheniya_report_url_download, $_POST['id']);
-                $arFile = CFile::MakeFileArray($full_name_file);
-                $arProperty = Array(
+                if ($is_send) {
+                  $url_pdf_for_user = sprintf(obrashcheniya_report_url_download, $_POST['id']);
+                  $arFile = CFile::MakeFileArray($full_name_file);
+                  $arProperty = Array(
                     "PDF" => $arFile,
-                );
+                  );
 
-                echo $url_pdf_for_user;
+                  echo $url_pdf_for_user;
+                } else {
+                  http_response_code(400);
+                  echo "Ошибка при формировании обращения";
+                }
             } else {
                 echo "data_user_oplata_POST пустое";
             }
