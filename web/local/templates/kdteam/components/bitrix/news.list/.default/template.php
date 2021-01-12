@@ -11,6 +11,15 @@
 /** @var string $componentPath */
 /** @var CBitrixComponent $component */
 $this->setFrameMode(true);
+
+/**
+ * Сортировка ассоциативного массива $arResult по полю NAME, которое является годами
+ */
+$arResultSort = array();
+foreach ($arResult["ITEMS"] as $key => $row) {
+  $arResultSort[$key] = $row['NAME'];
+}
+array_multisort($arResultSort, SORT_ASC, $arResult["ITEMS"]);
 ?>
 <div id="years" class="wrap-chrckbox">
     <?php foreach ($arResult["ITEMS"] as $arItem) { ?>
