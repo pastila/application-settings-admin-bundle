@@ -604,7 +604,7 @@ class FeedbackController extends Controller
         {
           try
           {
-            $this->feedbackMailer->sendFeedback($feedback, $email);
+            $this->feedbackMailer->sendFeedback($feedback, trim($email));
           }
           catch (\Exception $e)
           {
