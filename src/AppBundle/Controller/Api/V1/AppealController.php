@@ -9,7 +9,6 @@ use AppBundle\Service\Obrashcheniya\ObrashcheniaBranchMailer;
 use AppBundle\Service\Obrashcheniya\ObrashcheniaUserMailer;
 use AppBundle\Util\BitrixHelper;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -123,7 +122,7 @@ class AppealController extends Controller
       return new Response(null, 403);
     }
     $data = json_decode($request->get('data'), true);
-    $this->logger->info(sprintf('Get data from bitrix by RabbitMq in appeal: %s', $data));
+    $this->logger->info(sprintf('Get data from bitrix by curl in appeal: %s', $data));
 
     try
     {
@@ -131,12 +130,6 @@ class AppealController extends Controller
     } catch (\Exception $e)
     {
       $this->logger->error(sprintf('Exception in parsing appeal: %s', $e));
-
-      /**
-       * Установить для обращения статус, что оно не было отправлено
-       */
-      $this->bitrixHelper->updatePropertyElementValue(11, $data['id'], 'SEND_REVIEW', 9, 9, null);
-
       return new Response(null, 400);
     }
 
@@ -149,22 +142,14 @@ class AppealController extends Controller
     } catch (\Swift_TransportException $e)
     {
       $this->logger->error(sprintf('Transport Exception in sending appeal to branch company: %s', $e));
-
       return new Response(null, 400);
     } catch (\Exception $e2)
     {
       $this->logger->error(sprintf('Exception in sending appeal to branch company: %s', $e2));
-
-      /**
-       * Установить для обращения статус, что оно не было отправлено
-       */
-      $this->bitrixHelper->updatePropertyElementValue(11, $modelAppealData->getBitrixId(), 'SEND_REVIEW', 9, 9, null);
-
       return new Response(null, 400);
     }
 
     $router = $this->get('router');
-
     $context = $router->getContext();
     $context->setHost($this->getParameter('router.request_context.host'));
     $context->setScheme($this->getParameter('router.request_context.scheme'));
