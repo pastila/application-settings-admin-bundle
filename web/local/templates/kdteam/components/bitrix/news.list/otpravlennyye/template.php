@@ -78,6 +78,7 @@ if (count($arResult["ITEMS"]) > 0) {
                             <p class="tumbler_users-tab__item add-user__js current" data_el="<?= $arItem["ID"] ?>"
                                id="remove_child-button">Медицинская помощь оказана мне</p>
                             <p class="tumbler_users-tab__item add-child__js" data_el="<?= $arItem["ID"] ?>"
+                               data_child="<?= (count($arFields)) ?>"
                                id="add_child-button">Медицинская помощь оказана другому лицу</p>
                             <input value="my" id="selected_sender_<?= $arItem["ID"] ?>" type="hidden">
                         </div>
