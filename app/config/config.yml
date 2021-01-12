@@ -132,10 +132,15 @@ sonata_core:
 stfalcon_tinymce:
   selector: ".tinymce"
   language: "ru"
+  external_plugins:
+    filemanager:
+      url: "asset[fm/plugin.min.js]"
   theme:
     simple:
       theme: "modern"
       height: '260px'
+      relative_urls: false
+      external_filemanager_path: '/fm'
       plugins:
         - "advlist autolink lists link image charmap print preview hr anchor pagebreak"
         - "searchreplace wordcount visualblocks visualchars code fullscreen"
