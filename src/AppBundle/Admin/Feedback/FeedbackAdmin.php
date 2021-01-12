@@ -17,6 +17,7 @@ use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Templating\TemplateRegistry;
+use Sonata\CoreBundle\Form\Type\DatePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -109,6 +110,11 @@ class FeedbackAdmin extends AbstractAdmin
         'label' => 'Оценка',
         'required' => false,
         'expanded' => false,
+      ])
+      ->add("createdAt", DatePickerType::class, [
+        'format' => 'd MMMM yyyy',
+        'view_timezone' => 'UTC',
+        'model_timezone' => 'UTC',
       ])
       ->add('moderationStatus', 'AppBundle\Form\Feedback\FeedbackStatusChoiceType', [
         'required' => true,
