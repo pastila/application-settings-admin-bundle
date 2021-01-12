@@ -1,6 +1,4 @@
 <?php
-var_dump('111');
-die;
 $time = time();
 
 $config = include 'config/config.php';
