@@ -49,7 +49,6 @@ if (isset($_FILES['import_file']['tmp_name'])) {
             $i = 5;
         }
 
-        $is_send = false;
         $full_name_file = '';
         if ($key) {
             $result[$key] = true;
@@ -76,7 +75,7 @@ if (isset($_FILES['import_file']['tmp_name'])) {
               $rsUser = $USER->GetByLogin($USER->GetLogin());
               if ($arUser = $rsUser->Fetch())
               {
-                $is_send = sendAppealToSymfony(obrashcheniya_appeal_files_api, API_TOKEN, json_encode([
+                $send_code = sendAppealToSymfony(obrashcheniya_appeal_files_api, API_TOKEN, json_encode([
                   'user_id' => $arUser['ID'],
                   'user_login' => $arUser['LOGIN'],
                   'file_type' => obrashcheniya_file_type_attach,
@@ -84,21 +83,24 @@ if (isset($_FILES['import_file']['tmp_name'])) {
                   'obrashcheniya_id' => $_POST["id_elem"],
                   'imageNumber' => $i,
                 ]));
+                if ($send_code === 200) {
+                  $url_load = sprintf(obrashcheniya_report_url_download, $_POST["id_elem"]);
+                  $url_load = $url_load . '?image_number=' . $i;
+
+                  $result['SRC'] = $url_load;
+                  $result['ID'] = $_POST['id_elem'] . '_img_' . $i;
+                  $result['RES'] = $res;
+                  $result['SUCCESS'] = "Файл успешно загружен!";
+                  $result['FILE_NAME'] = !empty($arFile["FILE_NAME"]) ? $arFile["FILE_NAME"] : '';
+                } else {
+                  $result['ID'] = $_POST['id_elem'];
+                  $result['ERROR'] = 'Ошибка загрузки файла';
+                }
+              } else {
+                $result['ID'] = $_POST['id_elem'];
+                $result['ERROR'] = 'Ошибка загрузки файла: пользователь не авторизован';
               }
             }
-        }
-        if ($is_send) {
-          $url_load = sprintf(obrashcheniya_report_url_download, $_POST["id_elem"]);
-          $url_load = $url_load . '?image_number=' . $i;
-
-          $result['SRC'] = $url_load;
-          $result['ID'] = $_POST['id_elem'] . '_img_' . $i;
-          $result['RES'] = $res;
-          $result['SUCCESS'] = "Файл успешно загружен!";
-          $result['FILE_NAME'] = !empty($arFile["FILE_NAME"]) ? $arFile["FILE_NAME"] : '';
-        } else {
-          $result['ID'] = $_POST['id_elem'];
-          $result['ERROR'] = 'Ошибка загрузки файла';
         }
     } else {
         // выводим сообщение об ошибке

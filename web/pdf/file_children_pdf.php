@@ -323,29 +323,32 @@ $mpdf->Output($full_name_file, 'F');
 /**
  * Подготовка и отправка данных о принадлежности файла пользователю
  */
-$is_send = false;
 $rsUser = $USER->GetByLogin($USER->GetLogin());
 if ($arUser = $rsUser->Fetch())
 {
-  $is_send = sendAppealToSymfony(obrashcheniya_appeal_files_api, API_TOKEN, json_encode([
+  $send_code = sendAppealToSymfony(obrashcheniya_appeal_files_api, API_TOKEN, json_encode([
     'user_id' => $arUser['ID'],
     'user_login' => $arUser['LOGIN'],
     'file_type' => obrashcheniya_file_type_report,
     'file_name' => $full_name_file,
     'obrashcheniya_id' => $_POST['id_obr'],
   ]));
-}
-if ($is_send)
-{
-  $url_pdf_for_user = sprintf(obrashcheniya_report_url_download, $_POST['id_obr']);
-  $arFile = CFile::MakeFileArray($full_name_file);
-  $arProperty = Array(
-    "PDF" => $arFile,
-  );
 
-  echo $url_pdf_for_user;
+  if ($send_code === 200)
+  {
+    $url_pdf_for_user = sprintf(obrashcheniya_report_url_download, $_POST['id_obr']);
+    $arFile = CFile::MakeFileArray($full_name_file);
+    $arProperty = Array(
+      "PDF" => $arFile,
+    );
+
+    echo $url_pdf_for_user;
+  } else {
+    http_response_code($send_code);
+    echo "Ошибка при формировании обращения";
+  }
 } else {
-  http_response_code(400);
-  echo "Ошибка при формировании обращения";
+  http_response_code(401);
+  echo "Пользователь не авторизован";
 }
 

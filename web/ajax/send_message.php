@@ -6,7 +6,6 @@ require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/rabbitmq.php");
 require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/config_obrashcheniya.php");
 require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/obrashcheniya_helper.php");
 
-$is_send = false;
 if ($USER->IsAuthorized())
 {
   $rsUser = $USER->GetByLogin($USER->GetLogin());
@@ -373,7 +372,7 @@ if (CModule::IncludeModule("iblock")) {
                             }
                           try
                           {
-                            $is_send = sendAppealToSymfony(obrashcheniya_appeal_emails_api, API_TOKEN, json_encode([
+                            $send_code = sendAppealToSymfony(obrashcheniya_appeal_emails_api, API_TOKEN, json_encode([
                               'child' => true,
                               'login' => $arUser['LOGIN'],
                               'id' => $arFields['ID'],
@@ -413,7 +412,7 @@ if (CModule::IncludeModule("iblock")) {
 
                                * */
                             ]));
-                            if ($is_send) {
+                            if ($send_code === 200) {
                               CIBlockElement::SetPropertyValuesEx(
                                 $_POST['ID'],
                                 11,
@@ -425,7 +424,7 @@ if (CModule::IncludeModule("iblock")) {
                               $result['success'] = 'Ваше обращение ожидает отправки в страховую компанию. За состоянием отправки сообщения Вы 
                             можете наблюдать в личном кабинете «Отправленные» ';
                             } else {
-                              throw new ErrorException('it is impossible to send an appeal with child');
+                              throw new ErrorException('it is impossible to send an appeal with child, code: ' . $send_code);
                             }
                           } catch (ErrorException $channelException)
                           {
@@ -434,7 +433,7 @@ if (CModule::IncludeModule("iblock")) {
                         } else {
                           try
                           {
-                            $is_send = sendAppealToSymfony(obrashcheniya_appeal_emails_api, API_TOKEN, json_encode([
+                            $send_code = sendAppealToSymfony(obrashcheniya_appeal_emails_api, API_TOKEN, json_encode([
                               'child' => false,
                               'login' => $arUser['LOGIN'],
                               'id' => $arFields['ID'],
@@ -470,7 +469,7 @@ if (CModule::IncludeModule("iblock")) {
 
                                * */
                             ]));
-                            if ($is_send) {
+                            if ($send_code === 200) {
                               CIBlockElement::SetPropertyValuesEx(
                                 $_POST['ID'],
                                 11,
@@ -482,7 +481,7 @@ if (CModule::IncludeModule("iblock")) {
                               $result['success'] = 'Ваше обращение ожидает отправки в страховую компанию. За состоянием отправки сообщения Вы
                             можете наблюдать в личном кабинете «Отправленные» ';
                             } else {
-                              throw new ErrorException('it is impossible to send an appeal');
+                              throw new ErrorException('it is impossible to send an appeal, code: '. $send_code);
                             }
                           } catch (ErrorException $channelException)
                           {

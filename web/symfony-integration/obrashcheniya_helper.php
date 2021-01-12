@@ -176,10 +176,6 @@ function sendAppealToSymfony($url, $token, $data)
   $res = curl_exec($ch);
   $info = curl_getinfo($ch);
   $code = key_exists('http_code', $info) ? $info['http_code'] : null;
-  if ($code === 200)
-  {
-    return true;
-  }
 
-  return false;
+  return $code;
 }
