@@ -150,6 +150,7 @@ stfalcon_tinymce:
       toolbar2: "styleselect  | formatselect | fontselect fontsizeselect | ltr rtl | bold italic underline strikethrough  removeformat subscript superscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent"
       toolbar3: "media image | link unlink | blockquote hr openlink charmap anchor | emoticons | nonbreaking | insertdatetime |pagebreak | spellchecker | code |  table | quote document "
       image_advtab: true
+      filemanager_access_key: "83a2de51cdff498a8c68c04a44d49045"
 
 accurateweb_application_settings_admin:
   configuration:
