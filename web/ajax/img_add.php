@@ -75,15 +75,16 @@ if (isset($_FILES['import_file']['tmp_name'])) {
               $rsUser = $USER->GetByLogin($USER->GetLogin());
               if ($arUser = $rsUser->Fetch())
               {
-                $send_code = sendAppealToSymfony(obrashcheniya_appeal_files_api, API_TOKEN, json_encode([
-                  'user_id' => $arUser['ID'],
-                  'user_login' => $arUser['LOGIN'],
-                  'file_type' => obrashcheniya_file_type_attach,
-                  'file_name' => $full_name_file,
-                  'obrashcheniya_id' => $_POST["id_elem"],
-                  'imageNumber' => $i,
-                ]));
-                if ($send_code === 200) {
+                try {
+                  sendAppealToSymfony(obrashcheniya_appeal_files_api, API_TOKEN, json_encode([
+                    'user_id' => $arUser['ID'],
+                    'user_login' => $arUser['LOGIN'],
+                    'file_type' => obrashcheniya_file_type_attach,
+                    'file_name' => $full_name_file,
+                    'obrashcheniya_id' => $_POST["id_elem"],
+                    'imageNumber' => $i,
+                  ]));
+
                   $url_load = sprintf(obrashcheniya_report_url_download, $_POST["id_elem"]);
                   $url_load = $url_load . '?image_number=' . $i;
 
@@ -92,7 +93,8 @@ if (isset($_FILES['import_file']['tmp_name'])) {
                   $result['RES'] = $res;
                   $result['SUCCESS'] = "Файл успешно загружен!";
                   $result['FILE_NAME'] = !empty($arFile["FILE_NAME"]) ? $arFile["FILE_NAME"] : '';
-                } else {
+                } catch (ErrorException $exception)
+                {
                   $result['ID'] = $_POST['id_elem'];
                   $result['ERROR'] = 'Ошибка загрузки файла';
                 }

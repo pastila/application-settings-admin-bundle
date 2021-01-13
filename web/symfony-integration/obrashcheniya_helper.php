@@ -160,10 +160,10 @@ function getTypeByExt($name)
 
 /**
  * Отправка обращения в symfony
- *
- * @param $login
+ * @param $url
  * @param $token
- * @return int
+ * @param $data
+ * @throws ErrorException
  */
 function sendAppealToSymfony($url, $token, $data)
 {
@@ -177,5 +177,7 @@ function sendAppealToSymfony($url, $token, $data)
   $info = curl_getinfo($ch);
   $code = key_exists('http_code', $info) ? $info['http_code'] : null;
 
-  return $code;
+  if ($code !== 200) {
+    throw new ErrorException('it is impossible to send curl an appeal to symfony, code: '. $code);
+  }
 }
