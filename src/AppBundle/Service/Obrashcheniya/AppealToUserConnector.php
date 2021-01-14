@@ -35,6 +35,7 @@ class AppealToUserConnector
 
     $resolver = new OptionsResolver();
     $resolver->setRequired([
+      'user_id',
       'user_login',
       'file_name',
       'obrashcheniya_id',
