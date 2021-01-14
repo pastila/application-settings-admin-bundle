@@ -5,6 +5,7 @@ namespace AppBundle\Controller\Api\V1;
 use AppBundle\Entity\Obrashcheniya\ObrashcheniyaFile;
 use AppBundle\Entity\User\User;
 use AppBundle\Model\Obrashchenia\AppealDataParse;
+use AppBundle\Service\Obrashcheniya\AppealToUserConnector;
 use AppBundle\Service\Obrashcheniya\ObrashcheniaBranchMailer;
 use AppBundle\Service\Obrashcheniya\ObrashcheniaUserMailer;
 use AppBundle\Util\BitrixHelper;
@@ -58,8 +59,20 @@ class AppealController extends Controller
   private $bitrixHelper;
 
   /**
+   * @var AppealToUserConnector
+   */
+  private $connector;
+
+  /**
    * AppealController constructor.
    * @param $apiToken
+   * @param EntityManagerInterface $entityManager
+   * @param LoggerInterface $logger
+   * @param ObrashcheniaBranchMailer $mailerBranch
+   * @param ObrashcheniaUserMailer $userMailer
+   * @param AppealDataParse $appealDataParse
+   * @param BitrixHelper $bitrixHelper
+   * @param AppealToUserConnector $connector
    */
   public function __construct(
     $apiToken,
@@ -68,7 +81,8 @@ class AppealController extends Controller
     ObrashcheniaBranchMailer $mailerBranch,
     ObrashcheniaUserMailer $userMailer,
     AppealDataParse $appealDataParse,
-    BitrixHelper $bitrixHelper
+    BitrixHelper $bitrixHelper,
+    AppealToUserConnector $connector
   )
   {
     $this->apiToken = $apiToken;
@@ -78,6 +92,7 @@ class AppealController extends Controller
     $this->userMailer = $userMailer;
     $this->appealDataParse = $appealDataParse;
     $this->bitrixHelper = $bitrixHelper;
+    $this->connector = $connector;
   }
 
   /**
@@ -89,25 +104,17 @@ class AppealController extends Controller
     {
       return new Response(null, 403);
     }
-    $data = json_decode($request->get('data'), true);
 
-    if (empty($data))
+    try
     {
-      $this->logger->error('Empty body from Obrashcheniya Files in RabbitMq');
+      $this->connector->saveAppealToUserConnection(json_decode($request->get('data'), true));
+    }
+    catch (\InvalidArgumentException $e)
+    {
+      $this->logger->error($e);
+
       return new Response(null, 400);
     }
-
-    $author = $this->entityManager->getRepository(User::class)
-      ->findOneBy(['login' => key_exists('user_login', $data) ? $data['user_login'] : null]);
-
-    $model = new ObrashcheniyaFile();
-    $model->setAuthor($author);
-    $model->setType(key_exists('file_type', $data) ? $data['file_type'] : null);
-    $model->setFile(key_exists('file_name', $data) ? $data['file_name'] : null);
-    $model->setBitrixId(key_exists('obrashcheniya_id', $data) ? $data['obrashcheniya_id'] : null);
-    $model->setImageNumber(key_exists('imageNumber', $data) ? $data['imageNumber'] : null);
-    $this->entityManager->persist($model);
-    $this->entityManager->flush();
 
     return new Response(null, 200);
   }
