@@ -262,10 +262,10 @@ if ($_POST['id'] != "") {
                 $data = date('Y-m-d-h:i:s');
                 $name_file = 'PDF_';
                 $name_file .= $data;
-                $name_file .= "_" . $email . "_";
-                $name_file .= "file.pdf";
+                $name_file .= "_" . "file.pdf";
                 $full_name_file = $name_dir . $name_file;
 
+                $mpdf->SetTitle($name_file);
                 $mpdf->WriteHTML($html);
                 $mpdf->Output($full_name_file, 'F');
 
