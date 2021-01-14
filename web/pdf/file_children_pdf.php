@@ -315,7 +315,7 @@ $name_file .= $data;
 $name_file .= "_" . "file.pdf";
 $full_name_file = $name_dir . $name_file;
 
-$mpdf->SetTitle($name_file);
+$mpdf->SetTitle('Жалоба на взимание денежных средств за медицинскую помощь, предусмотренную программой ОМС - Безбахил');
 $mpdf->WriteHTML($html);
 $mpdf->Output($full_name_file, 'F');
 
