@@ -22,9 +22,9 @@ class AppealControllerTest extends AppWebTestCase
     $client = static::createClient();
 
     /**
-     * Проверка, что при открытии страницы нет 500 ошибки
+     * Проверка, что при открытии страницы у не авторизованного пользователя происходит редирект
      */
     $client->request('GET', '/appeals/61805/download');
-    $this->assertTrue($client->getResponse()->getStatusCode() != 500);
+    $this->assertEquals(302, $client->getResponse()->getStatusCode(), 'Не авторизованный пользователь не был перенаправлен с 302 статусом');
   }
 }
