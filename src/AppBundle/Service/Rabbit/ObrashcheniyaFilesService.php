@@ -5,6 +5,8 @@ namespace AppBundle\Service\Rabbit;
 
 use AppBundle\Entity\Obrashcheniya\ObrashcheniyaFile;
 use AppBundle\Entity\User\User;
+use AppBundle\Service\Obrashcheniya\AppealToUserConnector;
+use Doctrine\DBAL\Exception\InvalidArgumentException;
 use Doctrine\ORM\EntityManagerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -13,9 +15,9 @@ use Psr\Log\LoggerInterface;
 class ObrashcheniyaFilesService implements ConsumerInterface
 {
   /**
-   * @var EntityManagerInterface
+   * @var AppealToUserConnector
    */
-  private $entityManager;
+  private $connector;
 
   /**
    * @var LoggerInterface
@@ -28,33 +30,31 @@ class ObrashcheniyaFilesService implements ConsumerInterface
    * @param LoggerInterface $logger
    */
   public function __construct(
-    EntityManagerInterface $entityManager,
+    AppealToUserConnector $connector,
     LoggerInterface $logger
   )
   {
-    $this->entityManager = $entityManager;
+    $this->connector = $connector;
     $this->logger = $logger;
   }
 
   public function execute(AMQPMessage $msg)
   {
-    $data = json_decode($msg->body, true);
-
-    if (empty($data))
+    try
     {
-      $this->logger->error('Empty body from Obrashcheniya Files in RabbitMq');
-      return;
+      $this->connector->saveAppealToUserConnection(json_decode($msg->body, true));
     }
-    $author = $this->entityManager->getRepository(User::class)
-      ->findOneBy(['login' => key_exists('user_login', $data) ? $data['user_login'] : null]);
+    catch (\InvalidArgumentException $e)
+    {
+      $this->logger->error($e);
 
-    $model = new ObrashcheniyaFile();
-    $model->setAuthor($author);
-    $model->setType(key_exists('file_type', $data) ? $data['file_type'] : null);
-    $model->setFile(key_exists('file_name', $data) ? $data['file_name'] : null);
-    $model->setBitrixId(key_exists('obrashcheniya_id', $data) ? $data['obrashcheniya_id'] : null);
-    $model->setImageNumber(key_exists('imageNumber', $data) ? $data['imageNumber'] : null);
-    $this->entityManager->persist($model);
-    $this->entityManager->flush();
+      return ConsumerInterface::MSG_REJECT;
+    }
+    catch (\Exception $e)
+    {
+      $this->logger->error($e);
+
+      return ConsumerInterface::MSG_REJECT_REQUEUE;
+    }
   }
 }
