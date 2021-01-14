@@ -18,6 +18,8 @@ class ObrashcheniyaController extends Controller
    */
   public function appealDownloadAction(Request $request)
   {
+    $this->denyAccessUnlessGranted(['ROLE_ADMIN', 'ROLE_USER']);
+    
     $user = $this->getUser();
     $em = $this->getDoctrine()->getManager();
     $obrashcheniyaFile = $em->getRepository(ObrashcheniyaFile::class)
