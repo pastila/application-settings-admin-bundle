@@ -104,8 +104,8 @@ sonata_admin:
     groups:
       feedback:
         label: Отзывы
-      company:
-        label: Компании
+      mo_cmo:
+        label: МО и СМО
       main_page:
         label: Главная страница
       text:
