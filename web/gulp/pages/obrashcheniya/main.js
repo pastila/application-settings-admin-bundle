@@ -149,7 +149,7 @@ $( "input[type='file']" ).click(function() {
                   let r = result2.SRC;
                   let fileName = result2.FILE_NAME;
 
-                  if (r.search(".pdf") != "-1") {
+                  if (result2.EXTENSION === 'pdf') {
                     src = "/local/templates/kdteam/images/svg/pdf_icon.svg";
                   } else {
                     src = r;
