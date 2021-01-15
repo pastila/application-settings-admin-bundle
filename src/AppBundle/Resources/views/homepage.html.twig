@@ -280,11 +280,11 @@
                                         </div>
                                         {% if feedback.branch %}
                                             <div class="b-reviews__item-logo">
-                                                {{ render(controller('AppBundle:InsuranceCompany/Company:_logoPanel',
-                                                    {
-                                                        'branch': feedback.branch,
-                                                        'disableLink': false,
-                                                    } )) }}
+                                                {% include "Company/_logo.html.twig" with  {
+                                                    'company': feedback.branch.company,
+                                                    'name': feedback.branch.name,
+                                                    'disableLink': false,
+                                                } %}
                                             </div>
                                         {% endif %}
                                     </div>
