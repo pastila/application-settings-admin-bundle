@@ -29,8 +29,10 @@ class UpdateLogoCompanyCommand extends ContainerAwareCommand
   /**
    * @param InputInterface $input
    * @param OutputInterface $output
-   * @return int|void
+   * @return int|void|null
    * @throws \Doctrine\DBAL\DBALException
+   * @throws \Doctrine\ORM\ORMException
+   * @throws \Doctrine\ORM\OptimisticLockException
    */
   protected function execute(InputInterface $input, OutputInterface $output)
   {
@@ -38,11 +40,11 @@ class UpdateLogoCompanyCommand extends ContainerAwareCommand
     $io->success('start update logo companies and branch');
 
     $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
-    $doctrine = $this->getContainer()->get('doctrine');
     $conn = $entityManager->getConnection();
 
-    $companies = $entityManager->getRepository(Company::class)
-      ->findBy(['status' => CompanyStatus::ACTIVE]);
+    $companies = $entityManager
+      ->getRepository(Company::class)
+      ->findAll();
 
     foreach ($companies as $company)
     {
@@ -62,6 +64,7 @@ class UpdateLogoCompanyCommand extends ContainerAwareCommand
       if (empty($model))
       {
         $io->error(sprintf('Not found file in database for company %s:', $company->getName()));
+        continue;
       }
 
       try
@@ -75,9 +78,6 @@ class UpdateLogoCompanyCommand extends ContainerAwareCommand
         {
           throw new FileNotFoundException(sprintf('Not found file "%s" in folder for company %s:', $filePathFull, $company->getName()));
         }
-        if (!file_exists($folder)) {
-          @mkdir($folder, 0777, true);
-        }
       } catch (FileNotFoundException $exception)
       {
         $io->error($exception->getMessage());
@@ -87,17 +87,25 @@ class UpdateLogoCompanyCommand extends ContainerAwareCommand
         $io->error(sprintf('Exception create path for file for company %s: %s', $company->getName(), $exception));
         continue;
       }
+      $dirSection = 'companies';
       $getMime = explode('.', $fileName);
       $mime = strtolower(end($getMime));
-      $newFilePathFull = $baseDir . '/web/uploads/companies/' . md5(uniqid()) . $mime;
+      $newFileName = md5(uniqid()) . '.' . $mime;
+      $newFilePathFull = $baseDir . '/web/uploads/' . $dirSection . '/' . $newFileName;
 
+      if (!file_exists($baseDir . '/web/uploads/' . $dirSection))
+      {
+        @mkdir($folder, 0777, true);
+      }
       if (!copy($filePathFull, $newFilePathFull))
       {
         $io->error(sprintf('Not copy file "%s" for company %s', $filePathFull, $company->getName()));
         continue;
       }
-      die;
+      $company->setFile($dirSection . '/' . $newFileName);
+      $entityManager->persist($company);
     }
+    $entityManager->flush();
 
     $io->success('finish update logo companies and branch');
   }

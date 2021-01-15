@@ -2,8 +2,8 @@
     {% if disableLink %}
         <img src="{{ image_url(company) }}" class="logo-company" alt="Логотип страховой медицинской организации {{ name }}"/>
     {% else %}
-        <a href="{{ path('company_review_list', { 'slug': slug }) }}" title="Отзывы о страховой медицинской организации {{ name }}">
-            <img src="{{ src }}" class="logo-company" alt="Логотип страховой медицинской организации {{ name }}"/>
+        <a href="{{ path('company_review_list', { 'slug': company.slug }) }}" title="Отзывы о страховой медицинской организации {{ name }}">
+            <img src="{{ image_url(company) }}" class="logo-company" alt="Логотип страховой медицинской организации {{ name }}"/>
         </a>
     {% endif %}
 {% endif %}
