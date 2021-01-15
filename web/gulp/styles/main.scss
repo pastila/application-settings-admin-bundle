@@ -123,6 +123,16 @@ main.main {
     position: relative;
     border-radius: 1rem;
     border: solid 0.2rem $border;
+
+    &_article,
+    &_news {
+        em {
+            font-style: italic;
+        }
+        strong {
+            font-weight: bold;
+        }
+    }
 }
 
 .blue_block {
