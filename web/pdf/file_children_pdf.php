@@ -16,112 +16,115 @@ require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/obrashcheniya_helpe
 
 global $USER;
 
-if (empty($_POST["id"])) {
+$ID_child = $_POST["id"];
+if (empty($ID_child))
+{
   http_response_code(401);
   echo "У пользователя не обнаружены дети для создания обращения";
-}
-
-$ID_child = $_POST["id"];
+} else
+{
 //$ID_child = "58480";
-$data_user_oplata_POST = $_POST["oplata"];
-$data_user_oformlenie_POST = date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time());
+  $data_user_oplata_POST = $_POST["oplata"];
+  $data_user_oformlenie_POST = date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time());
 
-$rsUser = CUser::GetByID($USER->GetID());
-$person = $rsUser->Fetch();
+  $rsUser = CUser::GetByID($USER->GetID());
+  $person = $rsUser->Fetch();
 
-$person_LAST_NAME = $person["LAST_NAME"];
-$person_NAME = $person["NAME"];
-$person_SECOND_NAME = $person["SECOND_NAME"];
-$person_INSURANCE_POLICY = $person["UF_INSURANCE_POLICY"];
-$person_EMAIL = $person["EMAIL"];
-$person_PERSONAL_PHONE = $person["PERSONAL_PHONE"];
-$person_LAST_NAME = $person["LAST_NAME"];
-$PERSONAL_BIRTHDAT = $person["PERSONAL_BIRTHDAY"];
+  $person_LAST_NAME = $person["LAST_NAME"];
+  $person_NAME = $person["NAME"];
+  $person_SECOND_NAME = $person["SECOND_NAME"];
+  $person_INSURANCE_POLICY = $person["UF_INSURANCE_POLICY"];
+  $person_EMAIL = $person["EMAIL"];
+  $person_PERSONAL_PHONE = $person["PERSONAL_PHONE"];
+  $person_LAST_NAME = $person["LAST_NAME"];
+  $PERSONAL_BIRTHDAT = $person["PERSONAL_BIRTHDAY"];
 
-if ($_POST['id_obr']) {
+  if ($_POST['id_obr'])
+  {
     $arSel = array("ID", "IBLOCK_ID", "NAME", "PROPERTY_FULL_NAME", "PROPERTY_HOSPITAL", "PROPERTY_ADDRESS");
-    $arFil = array("IBLOCK_ID" => 11,"ID" => $_POST['id_obr']);
+    $arFil = array("IBLOCK_ID" => 11, "ID" => $_POST['id_obr']);
     $res = CIBlockElement::GetList(Array(), $arFil, false, false, $arSel);
     $ob = $res->GetNextElement();
     $arFields = $ob->GetFields();
     $full_name_user = $arFields['PROPERTY_FULL_NAME_VALUE'];
     $hospital = $arFields['PROPERTY_HOSPITAL_VALUE'];
     $hospital_adress = $arFields['PROPERTY_ADDRESS_VALUE'];
-} else {
-    $full_name_user = $person_SECOND_NAME.' '. $person_NAME .' '. $person_LAST_NAME;
-}
+  } else
+  {
+    $full_name_user = $person_SECOND_NAME . ' ' . $person_NAME . ' ' . $person_LAST_NAME;
+  }
 
 //Проверка на дублировние
-$hospital_name = str_replace('&amp;', '', str_replace('quot;', '"', $hospital));
+  $hospital_name = str_replace('&amp;', '', str_replace('quot;', '"', $hospital));
 
-$res_hospital = CIBlockElement::GetList(
+  $res_hospital = CIBlockElement::GetList(
     array(),
     array('NAME' => $hospital_name, 'IBLOCK_ID' => 9),
     false,
     false,
     array("ID", "IBLOCK_ID", "NAME", "PROPERTY_FULL_NAME", "PROPERTY_MEDICAL_CODE", "IBLOCK_SECTION_ID")
-);
-while ($ob_hospital = $res_hospital->GetNextElement()) {
+  );
+  while ($ob_hospital = $res_hospital->GetNextElement())
+  {
     $arFields = $ob_hospital->GetFields();
     $res = CIBlockSection::GetByID($arFields['IBLOCK_SECTION_ID']);
-    if ($ar_res = $res->GetNext()) {
-        if ($ar_res['NAME'] == $hospital_adress) {
-            $FULL_NAME_HOSPITAL = $arFields['PROPERTY_FULL_NAME_VALUE'];
-            $MEDICAL_CODE = $arFields['PROPERTY_MEDICAL_CODE_VALUE'];
-        }
+    if ($ar_res = $res->GetNext())
+    {
+      if ($ar_res['NAME'] == $hospital_adress)
+      {
+        $FULL_NAME_HOSPITAL = $arFields['PROPERTY_FULL_NAME_VALUE'];
+        $MEDICAL_CODE = $arFields['PROPERTY_MEDICAL_CODE_VALUE'];
+      }
     }
 
-}
+  }
 //Проверка на дублировние
 
 
+  $arSelect_child = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM", "PROPERTY_SURNAME", "PROPERTY_PARTONYMIC", "PROPERTY_POLICY", "PROPERTY_COMPANY", "PROPERTY_BIRTHDAY");
+  $arFilter_child = Array("IBLOCK_ID" => 21, "ID" => $ID_child);
+  $res_child = CIBlockElement::GetList(Array(), $arFilter_child, false, false, $arSelect_child);
 
-$arSelect_child = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_SURNAME","PROPERTY_PARTONYMIC","PROPERTY_POLICY","PROPERTY_COMPANY","PROPERTY_BIRTHDAY");
-$arFilter_child = Array("IBLOCK_ID"=>21,"ID"=> $ID_child);
-$res_child = CIBlockElement::GetList(Array(), $arFilter_child, false, false, $arSelect_child);
+  $ob_child = $res_child->GetNextElement();
 
-$ob_child = $res_child->GetNextElement();
-
-$arFields_child = $ob_child->GetFields();
-
-
-$SURNAME = $arFields_child["PROPERTY_SURNAME_VALUE"];
-$NAME = $arFields_child["NAME"];
-
-$PARTONYMIC = $arFields_child["PROPERTY_PARTONYMIC_VALUE"];
-$id_company= $arFields_child["PROPERTY_COMPANY_VALUE"];
-$polic = $arFields_child["PROPERTY_POLICY_VALUE"];
-$BIRTHDAY= $arFields_child["PROPERTY_BIRTHDAY_VALUE"];
+  $arFields_child = $ob_child->GetFields();
 
 
-$arSelect = Array("ID", "IBLOCK_ID", "NAME", "IBLOCK_SECTION_ID","PROPERTY_*");
-$arFilter = Array("IBLOCK_ID"=>16,"ID"=> $id_company);
-$res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
-$ob = $res->GetNextElement();
-$arProps = $ob->GetProperties();
-$arFields = $ob->GetFields();
+  $SURNAME = $arFields_child["PROPERTY_SURNAME_VALUE"];
+  $NAME = $arFields_child["NAME"];
+
+  $PARTONYMIC = $arFields_child["PROPERTY_PARTONYMIC_VALUE"];
+  $id_company = $arFields_child["PROPERTY_COMPANY_VALUE"];
+  $polic = $arFields_child["PROPERTY_POLICY_VALUE"];
+  $BIRTHDAY = $arFields_child["PROPERTY_BIRTHDAY_VALUE"];
 
 
+  $arSelect = Array("ID", "IBLOCK_ID", "NAME", "IBLOCK_SECTION_ID", "PROPERTY_*");
+  $arFilter = Array("IBLOCK_ID" => 16, "ID" => $id_company);
+  $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+  $ob = $res->GetNextElement();
+  $arProps = $ob->GetProperties();
+  $arFields = $ob->GetFields();
 
 
+  $name_hospital = $arFields["NAME"];// название компании
 
-$name_hospital = $arFields["NAME"];// название компании
+  $NAME_BOSS = $arProps["NAME_BOSS"]["VALUE"];// руководитель компании
+  $email_CMO = $arProps["EMAIL_FIRST"]["VALUE"];// электронный адрес СМО
+  $email_CMO2 = $arProps["EMAIL_SECOND"]["VALUE"];// электронный адрес СМО
+  $email_CMO3 = $arProps["EMAIL_THIRD"]["VALUE"];// электронный адрес СМО
 
-$NAME_BOSS = $arProps["NAME_BOSS"]["VALUE"];// руководитель компании
-$email_CMO = $arProps["EMAIL_FIRST"]["VALUE"];// электронный адрес СМО
-$email_CMO2 = $arProps["EMAIL_SECOND"]["VALUE"];// электронный адрес СМО
-$email_CMO3 = $arProps["EMAIL_THIRD"]["VALUE"];// электронный адрес СМО
+  $res = CIBlockSection::GetByID($arFields['IBLOCK_SECTION_ID']);
+  $name_rerion = "";
+  if ($ar_res = $res->GetNext())
+  {
 
-$res = CIBlockSection::GetByID($arFields['IBLOCK_SECTION_ID']);
-$name_rerion = "";
-if ($ar_res = $res->GetNext()) {
-
-    $name_rerion = "(" .$ar_res["NAME"] . ")";
+    $name_rerion = "(" . $ar_res["NAME"] . ")";
 
 
-}
+  }
 
-$html = '
+  $html = '
 
 <page>
  <div class="header">
@@ -149,7 +152,7 @@ $html = '
                       <br>
                     <div class="header__items_item--text">
                         <div class="blue-text cursive" style="font-style: italic; font-weight: normal;">
-                            ' . $name_hospital  . $name_rerion . '<br>
+                            ' . $name_hospital . $name_rerion . '<br>
                             ' . $NAME_BOSS . '<br>
                             ' . $email_CMO . '<br>
                             ' . $email_CMO2 . '<br>
@@ -183,7 +186,7 @@ $html = '
                         <span style="font-weight: bold;">Адрес электронной почты:</span>
                     </div>
                     <div class="header__items_item--text blue-text cursive" style=" font-style: italic; font-weight: normal;">
-                        '. $person_EMAIL .'
+                        ' . $person_EMAIL . '
                     </div>
                 </div>
                   <br>
@@ -243,7 +246,7 @@ $html = '
          <p style="text-align: center;  font-size: 15px; ">предусмотренную программой ОМС</p>
          
         <span class="red-text cursive" style="font-style: italic;">' . $data_user_oplata_POST . '</span> г. в медицинской организации 
-        <span class="blue-text cursive" style="font-style: italic;">'.$FULL_NAME_HOSPITAL.'</span>
+        <span class="blue-text cursive" style="font-style: italic;">' . $FULL_NAME_HOSPITAL . '</span>
          (код в реестре медицинских организаций, осуществляющих деятельность в сфере ОМС 
          ' . $MEDICAL_CODE . ', ' . $hospital_adress . '),
          мною была совершена оплата медицинских
@@ -262,7 +265,7 @@ $html = '
         организацию, выбранную для получения первичной медико-санитарной помощи.
     </p>
     <p>
-При обращении в <span class="blue-text cursive" style="font-style: italic;">'.$hospital_name.'</span> мне не сообщили о возможности
+При обращении в <span class="blue-text cursive" style="font-style: italic;">' . $hospital_name . '</span> мне не сообщили о возможности
         получения
         медицинской помощи бесплатно в
         сроки, установленные Территориальной программой государственных гарантий оказания гражданам бесплатной
@@ -292,14 +295,14 @@ $html = '
     <p>
 Приложение: документы, подтверждающие факт оплаты медицинских услуг – в электронном виде.
     </p>
-    <span class="blue-text cursive" style="font-style: italic; margin-top: 5px;"> Дата формирования заявления ' . $data_user_oformlenie_POST.'</span>
+    <span class="blue-text cursive" style="font-style: italic; margin-top: 5px;"> Дата формирования заявления ' . $data_user_oformlenie_POST . '</span>
     </div>
   </div>
 </page>
 
 ';
 
-$mpdf = new \Mpdf\Mpdf([
+  $mpdf = new \Mpdf\Mpdf([
     'mode' => 'utf-8',
     'format' => 'A4',
     'orientation' => 'P',
@@ -308,52 +311,55 @@ $mpdf = new \Mpdf\Mpdf([
     'margin_left' => 9,
     'margin_right' => 9,
     'default_font_size' => 9,
-]);
+  ]);
 //создаем PDF файл, задаем формат, отступы и.т.д.
 
-if (!file_exists(obrashcheniya_report_path)) {
-  mkdir(obrashcheniya_report_path, 0777, true);
-}
-$name_dir = obrashcheniya_report_path;
-$data = date('Y-m-d-h:i:s');
-$name_file = 'PDF_';
-$name_file .= $data;
-$name_file .= "_" . "file.pdf";
-$full_name_file = $name_dir . $name_file;
-
-$mpdf->SetTitle('Жалоба на взимание денежных средств за медицинскую помощь, предусмотренную программой ОМС - Безбахил');
-$mpdf->WriteHTML($html);
-$mpdf->Output($full_name_file, 'F');
-
-/**
- * Подготовка и отправка данных о принадлежности файла пользователю
- */
-$rsUser = $USER->GetByLogin($USER->GetLogin());
-if ($arUser = $rsUser->Fetch())
-{
-  try {
-    sendAppealToSymfony(obrashcheniya_appeal_files_api, API_TOKEN, json_encode([
-      'user_id' => $arUser['ID'],
-      'user_login' => $arUser['LOGIN'],
-      'file_type' => obrashcheniya_file_type_report,
-      'file_name' => $full_name_file,
-      'obrashcheniya_id' => $_POST['id_obr'],
-    ]));
-
-    $url_pdf_for_user = sprintf(obrashcheniya_report_url_download, $_POST['id_obr']);
-    $arFile = CFile::MakeFileArray($full_name_file);
-    $arProperty = Array(
-      "PDF" => $arFile,
-    );
-
-    echo $url_pdf_for_user;
-  } catch (ErrorException $exception)
+  if (!file_exists(obrashcheniya_report_path))
   {
-    http_response_code(400);
-    echo "Ошибка при формировании обращения";
+    mkdir(obrashcheniya_report_path, 0777, true);
   }
-} else {
-  http_response_code(401);
-  echo "Пользователь не авторизован";
-}
+  $name_dir = obrashcheniya_report_path;
+  $data = date('Y-m-d-h:i:s');
+  $name_file = 'PDF_';
+  $name_file .= $data;
+  $name_file .= "_" . "file.pdf";
+  $full_name_file = $name_dir . $name_file;
 
+  $mpdf->SetTitle('Жалоба на взимание денежных средств за медицинскую помощь, предусмотренную программой ОМС - Безбахил');
+  $mpdf->WriteHTML($html);
+  $mpdf->Output($full_name_file, 'F');
+
+  /**
+   * Подготовка и отправка данных о принадлежности файла пользователю
+   */
+  $rsUser = $USER->GetByLogin($USER->GetLogin());
+  if ($arUser = $rsUser->Fetch())
+  {
+    try
+    {
+      sendAppealToSymfony(obrashcheniya_appeal_files_api, API_TOKEN, json_encode([
+        'user_id' => $arUser['ID'],
+        'user_login' => $arUser['LOGIN'],
+        'file_type' => obrashcheniya_file_type_report,
+        'file_name' => $full_name_file,
+        'obrashcheniya_id' => $_POST['id_obr'],
+      ]));
+
+      $url_pdf_for_user = sprintf(obrashcheniya_report_url_download, $_POST['id_obr']);
+      $arFile = CFile::MakeFileArray($full_name_file);
+      $arProperty = Array(
+        "PDF" => $arFile,
+      );
+
+      echo $url_pdf_for_user;
+    } catch (ErrorException $exception)
+    {
+      http_response_code(400);
+      echo "Ошибка при формировании обращения";
+    }
+  } else
+  {
+    http_response_code(401);
+    echo "Пользователь не авторизован";
+  }
+}
