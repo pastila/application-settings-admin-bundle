@@ -91,9 +91,10 @@ class UpdateLogoCompanyCommand extends ContainerAwareCommand
       $getMime = explode('.', $fileName);
       $mime = strtolower(end($getMime));
       $newFileName = md5(uniqid()) . '.' . $mime;
-      $newFilePathFull = $baseDir . '/web/uploads/' . $dirSection . '/' . $newFileName;
+      $folder = $baseDir . '/web/uploads/' . $dirSection;
+      $newFilePathFull = $folder . '/' . $newFileName;
 
-      if (!file_exists($baseDir . '/web/uploads/' . $dirSection))
+      if (!file_exists($folder))
       {
         @mkdir($folder, 0777, true);
       }
