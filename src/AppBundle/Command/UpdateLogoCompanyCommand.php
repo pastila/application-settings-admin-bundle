@@ -67,16 +67,16 @@ class UpdateLogoCompanyCommand extends ContainerAwareCommand
       try
       {
         $fileSubDir = $model['SUBDIR'];
-        $fileNameFull = $model['FILE_NAME'];
+        $fileName = $model['FILE_NAME'];
         $baseDir = $this->getContainer()->get('kernel')->getRootDir() . '/..';
         $folder = $baseDir . '/web/upload/' . $fileSubDir . '/';
-        $filePathFull = $folder . $fileNameFull;
+        $filePathFull = $folder . $fileName;
         if (!file_exists($filePathFull))
         {
           throw new FileNotFoundException(sprintf('Not found file "%s" in folder for company %s:', $filePathFull, $company->getName()));
         }
         if (!file_exists($folder)) {
-          mkdir($folder, 0777, true);
+          @mkdir($folder, 0777, true);
         }
       } catch (FileNotFoundException $exception)
       {
@@ -87,9 +87,9 @@ class UpdateLogoCompanyCommand extends ContainerAwareCommand
         $io->error(sprintf('Exception create path for file for company %s: %s', $company->getName(), $exception));
         continue;
       }
-
-      $newFilePathFull = $baseDir . '/web/uploads/companies/' . $fileNameFull;
-      echo $newFilePathFull;
+      $getMime = explode('.', $fileName);
+      $mime = strtolower(end($getMime));
+      $newFilePathFull = $baseDir . '/web/uploads/companies/' . md5(uniqid()) . $mime;
 
       if (!copy($filePathFull, $newFilePathFull))
       {

@@ -2,13 +2,16 @@
 
 namespace AppBundle\Entity\Company;
 
+use Accurateweb\MediaBundle\Exception\OperationNotSupportedException;
 use Accurateweb\MediaBundle\Model\Image\ImageAwareInterface;
 use Accurateweb\MediaBundle\Model\Media\ImageInterface;
 use Accurateweb\MediaBundle\Model\Thumbnail\ImageThumbnail;
+use AppBundle\Model\Media\CompanyImage;
 use AppBundle\Sluggable\SluggableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Accurateweb\MediaBundle\Annotation as Media;
 
 /**
  * Company.
@@ -17,7 +20,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity("slug")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Company\CompanyRepository")
  */
-class Company implements ImageAwareInterface, ImageInterface, SluggableInterface
+class Company implements ImageAwareInterface, SluggableInterface
 {
   /**
    * @var integer
@@ -79,8 +82,8 @@ class Company implements ImageAwareInterface, ImageInterface, SluggableInterface
    * Логотип компании
    *
    * @var string
-   *
    * @ORM\Column(name="image", type="string", length=255, nullable=true)
+   * @Media\Image(id="companies")
    */
   protected $file;
 
@@ -278,7 +281,7 @@ class Company implements ImageAwareInterface, ImageInterface, SluggableInterface
    */
   public function getImage($id = null)
   {
-    return $this;
+    return new CompanyImage('companies', $this->file);
   }
 
   /**
@@ -287,86 +290,47 @@ class Company implements ImageAwareInterface, ImageInterface, SluggableInterface
    */
   public function setImage(ImageInterface $image)
   {
-    $this->setResourceId($image->getResourceId());
+    $this->setFile($image->getResourceId());
 
     return $this;
   }
 
+  public function setFileImage ($image)
+  {
+    return $this->setImage($image);
+  }
+
+  public function getFileImage ()
+  {
+    return $this->getImage();
+  }
+
   /**
    * @param $id
-   * @return mixed|null
+   * @return mixed
    */
   public function getImageOptions($id)
   {
     return null;
   }
 
-  /**
-   * @param $id
-   * @return $this
-   */
   public function setImageOptions($id)
   {
-    return $this;
+    throw new OperationNotSupportedException();
   }
 
-  /**
-   * @return array
-   */
-  public function getThumbnailDefinitions()
-  {
-    return array();
-  }
 
-  /**
-   * @param string $id
-   * @return ImageThumbnail
-   * @throws \Exception
-   */
-  public function getThumbnail($id)
-  {
-    $definitions = $this->getThumbnailDefinitions();
 
-    $found = false;
 
-    foreach ($definitions as $definition) {
-      if ($definition->getId() == $id) {
-        $found = true;
-        break;
-      }
-    }
 
-    if (!$found) {
-      throw new \Exception('Image thumbnail definition not found');
-    }
 
-    return new ImageThumbnail($id, $this);
-  }
 
-  /**
-   * @return string
-   */
-  public function getResourceId()
-  {
-    return $this->getFile();
-  }
 
-  /**
-   * @param $id
-   */
-  public function setResourceId($id)
-  {
-    $this->setFile($id);
-  }
+
 
   public function getRating()
   {
     return $this->getValuation();
-  }
-
-  public function getLogo()
-  {
-    return 849;
   }
 
   public function getSlugSource()
