@@ -16,6 +16,11 @@ require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/obrashcheniya_helpe
 
 global $USER;
 
+if (empty($_POST["id"])) {
+  http_response_code(401);
+  echo "У пользователя не обнаружены дети для создания обращения";
+}
+
 $ID_child = $_POST["id"];
 //$ID_child = "58480";
 $data_user_oplata_POST = $_POST["oplata"];
