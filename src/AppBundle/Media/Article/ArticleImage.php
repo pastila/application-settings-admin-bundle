@@ -26,7 +26,7 @@ class ArticleImage extends Image
       'main_lg' => new ThumbnailDefinition('main_lg', new FilterChain([
         [
           'id' => 'resize',
-          'options' => ['size' => 'x400']
+          'options' => ['size' => 'x600']
         ]
       ]))
     ];
