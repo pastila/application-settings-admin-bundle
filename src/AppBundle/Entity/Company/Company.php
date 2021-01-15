@@ -158,10 +158,6 @@ class Company implements ImageAwareInterface, ImageInterface, SluggableInterface
     return $this;
   }
 
-
-
-
-
   /**
    * @return string
    */
