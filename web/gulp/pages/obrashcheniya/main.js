@@ -146,10 +146,10 @@ $( "input[type='file']" ).click(function() {
                 setTimeout(function(){
                   error.text('');
                   success.text(result2.SUCCESS);
-                  let r = result2.SRC;
+                  let r = result2.EXTENSION;
                   let fileName = result2.FILE_NAME;
 
-                  if (r.search(".pdf") != "-1") {
+                  if (r === 'pdf' || r === 'PDF') {
                     src = "/local/templates/kdteam/images/svg/pdf_icon.svg";
                   } else {
                     src = r;
