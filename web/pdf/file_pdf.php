@@ -11,6 +11,7 @@ Loader::includeModule('iblock');
 require_once dirname(__FILE__).'/../vendor/autoload.php';
 require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/rabbitmq.php");
 require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/config_obrashcheniya.php");
+require_once($_SERVER["DOCUMENT_ROOT"]."/symfony-integration/obrashcheniya_helper.php");
 
 global $USER;
 if ($_POST['id'] != "") {
@@ -262,10 +263,10 @@ if ($_POST['id'] != "") {
                 $data = date('Y-m-d-h:i:s');
                 $name_file = 'PDF_';
                 $name_file .= $data;
-                $name_file .= "_" . $email . "_";
-                $name_file .= "file.pdf";
+                $name_file .= "_" . "file.pdf";
                 $full_name_file = $name_dir . $name_file;
 
+                $mpdf->SetTitle('Жалоба на взимание денежных средств за медицинскую помощь, предусмотренную программой ОМС - Безбахил');
                 $mpdf->WriteHTML($html);
                 $mpdf->Output($full_name_file, 'F');
 
@@ -273,24 +274,34 @@ if ($_POST['id'] != "") {
                  * Подготовка и отправка данных о принадлежности файла пользователю
                  */
                 $rsUser = $USER->GetByLogin($USER->GetLogin());
+
                 if ($arUser = $rsUser->Fetch())
                 {
-                  rabbitmqSend(queue_obrashcheniya_files, json_encode([
-                    'user_id' => $arUser['ID'],
-                    'user_login' => $arUser['LOGIN'],
-                    'file_type' => obrashcheniya_file_type_report,
-                    'file_name' => $full_name_file,
-                    'obrashcheniya_id' => $_POST['id'],
-                  ]));
+                  try {
+                    sendAppealToSymfony(obrashcheniya_appeal_files_api, API_TOKEN, json_encode([
+                      'user_id' => $arUser['ID'],
+                      'user_login' => $arUser['LOGIN'],
+                      'file_type' => obrashcheniya_file_type_report,
+                      'file_name' => $full_name_file,
+                      'obrashcheniya_id' => $_POST['id'],
+                    ]));
+
+                    $url_pdf_for_user = sprintf(obrashcheniya_report_url_download, $_POST['id']);
+                    $arFile = CFile::MakeFileArray($full_name_file);
+                    $arProperty = Array(
+                      "PDF" => $arFile,
+                    );
+
+                    echo $url_pdf_for_user;
+                  } catch (ErrorException $exception)
+                  {
+                    http_response_code(400);
+                    echo "Ошибка при формировании обращения";
+                  }
+                } else {
+                  http_response_code(401);
+                  echo "Пользователь не авторизован";
                 }
-
-                $url_pdf_for_user = sprintf(obrashcheniya_report_url_download, $_POST['id']);
-                $arFile = CFile::MakeFileArray($full_name_file);
-                $arProperty = Array(
-                    "PDF" => $arFile,
-                );
-
-                echo $url_pdf_for_user;
             } else {
                 echo "data_user_oplata_POST пустое";
             }

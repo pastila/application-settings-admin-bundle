@@ -602,6 +602,12 @@ class FeedbackController extends Controller
 
         foreach ($emails as $email)
         {
+          $email = trim($email);
+          if (empty($email))
+          {
+            // Если $email пустой, то пропускаем, так как в битриксе $email мог быть сохранен в таком виде
+            continue;
+          }
           try
           {
             $this->feedbackMailer->sendFeedback($feedback, $email);

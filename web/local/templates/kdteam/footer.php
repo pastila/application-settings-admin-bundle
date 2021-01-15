@@ -14,10 +14,10 @@ if (defined("B_PROLOG_INCLUDED") && B_PROLOG_INCLUDED === true) {
 
         <ul class="footer__menu">
             <li>
-                <a href="/for_SMO">Страховым организациям</a>
+                <a href="/strahovym-kompaniyam">Страховым организациям</a>
             </li>
             <li>
-                <a href="/o-nas">О нас</a>
+                <a href="/missiya-bezbahilru">О нас</a>
             </li>
             <li>
                 <a href="/contact_us">Контакты</a>

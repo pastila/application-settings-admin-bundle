@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form\ContactUs;
 
+use AppBundle\Util\EndingFormatter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -11,6 +12,9 @@ use Symfony\Component\Validator\Constraints\Email;
 
 class ContactUsType extends AbstractType
 {
+  const MESSAGE_LENGTH_MIN = 10;
+  const MESSAGE_LENGTH_MAX = 512;
+
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
@@ -33,7 +37,16 @@ class ContactUsType extends AbstractType
         'required' => true,
         'constraints' => [
           new NotBlank(),
-          new Length(['min' => 10, 'max' => 512]),
+          new Length([
+            'max' => self::MESSAGE_LENGTH_MAX,
+            'maxMessage' => 'Письмо слишком длинное. Пожалуйста, введите более {{ limit }} ' .
+              EndingFormatter::format(self::MESSAGE_LENGTH_MAX, ['символа', 'символов', 'символов']) .
+              'или меньше.',
+            'min' => self::MESSAGE_LENGTH_MIN,
+            'minMessage' => 'Письмо слишком короткое. Пожалуйста, введите не более {{ limit }} ' .
+              EndingFormatter::format(self::MESSAGE_LENGTH_MIN, ['символа', 'символов', 'символов']) .
+              ' или больше.',
+          ]),
         ]
       ]);
   }
