@@ -75,13 +75,28 @@ class CompanyAdmin extends AbstractAdmin
         ],
       ])
       ->add("valuation", NumberType::class, [
-        'required' => true,
+        'required' => false,
+        'attr' => [
+          'readonly' => true
+        ]
       ])
       ->add('status', 'AppBundle\Form\Company\CompanyStatusChoiceType', [
         'required' => true,
         'constraints' => [
           new NotBlank(),
         ],
+      ]);
+  }
+
+  /**
+   * @param DatagridMapper $filter
+   */
+  protected function configureDatagridFilters(DatagridMapper $filter)
+  {
+    $filter
+      ->add('name')
+      ->add('status', null, [], 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        'choices' => array_flip(CompanyStatus::getAvailableName()),
       ]);
   }
 }
