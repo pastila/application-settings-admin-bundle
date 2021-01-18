@@ -25,19 +25,19 @@ class AppealDataToCompany
    */
   private $attachedFiles = [];
   /**
-   * Автор отзыва
-   * @var User
-   */
-  private $author;
-  /**
    * @var string
    */
   private $bitrixId;
   /**
-   * Email адреас пользователя
+   * ФИО автора обращения
+   * @var User
+   */
+  private $authorFullName;
+  /**
+   * Email адрес автора обращения
    * @var string
    */
-  private $emailUser;
+  private $authorEmail;
 
   /**
    * @return string
@@ -125,32 +125,32 @@ class AppealDataToCompany
   /**
    * @return mixed
    */
-  public function getAuthor()
+  public function getAuthorFullName()
   {
-    return $this->author;
+    return $this->authorFullName;
   }
 
   /**
-   * @param $author
+   * @param $authorFullName
    */
-  public function setAuthor($author): void
+  public function setAuthorFullName($authorFullName): void
   {
-    $this->author = $author;
+    $this->authorFullName = $authorFullName;
   }
 
   /**
    * @return string
    */
-  public function getEmailUser(): string
+  public function getAuthorEmail(): string
   {
-    return $this->emailUser;
+    return $this->authorEmail;
   }
 
   /**
-   * @param string $emailUser
+   * @param string $authorEmail
    */
-  public function setEmailUser(string $emailUser): void
+  public function setAuthorEmail(string $authorEmail): void
   {
-    $this->emailUser = $emailUser;
+    $this->authorEmail = $authorEmail;
   }
 }

@@ -83,7 +83,7 @@ class ObrashcheniyaEmailsService implements ConsumerInterface
 
     try
     {
-      $this->mailerBranch->send($modelAppealData, $modelAppealData->getEmailSend());
+      $this->mailerBranch->send($modelAppealData);
     } catch (\Swift_TransportException $e)
     {
       $this->logger->error(sprintf('Transport Exception in sending appeal to branch company: %s', $e));

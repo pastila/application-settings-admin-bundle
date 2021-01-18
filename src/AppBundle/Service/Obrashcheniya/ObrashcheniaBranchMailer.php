@@ -32,16 +32,16 @@ class ObrashcheniaBranchMailer
 
   /**
    * @param AppealDataToCompany $modelObrashcheniaBranch
-   * @param $email
+   * @throws \Swift_TransportException
    */
-  public function send(AppealDataToCompany $modelObrashcheniaBranch, $email)
+  public function send(AppealDataToCompany $modelObrashcheniaBranch)
   {
     $message = $this->emailFactory->createMessage('email_obrashcheniya_branch', [
       $this->mailerFrom => $this->mailerSenderName,
     ],
-      $email,
+      $modelObrashcheniaBranch->getEmailSend(),
       [
-        'author' => $modelObrashcheniaBranch->getAuthor()
+        'author' => $modelObrashcheniaBranch->getAuthorFullName()
       ]
     );
     if (file_exists($modelObrashcheniaBranch->getPdf()))
