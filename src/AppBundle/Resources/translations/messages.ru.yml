@@ -75,7 +75,7 @@ Quote Quote List: Список текстовых цитат
 Author: Автор
 City: Город
 Department: Подразделение
-Company: ДО
+Company: СМО
 Phone Number: Тел.
 Fio: ФИО
 Patronymic: Отчество
@@ -116,8 +116,8 @@ Show Name In Filter: Показывть название в фильтре и к
 Department List: Список ДО
 Block: Блок
 Gpn User List: Список пользователей
-Company List: Список ДО
-Company Create: Создать ДО
+Company List: Список СМО
+Company Create: Новая СМО
 Gpn User Create: Создать пользователя
 Video List: Видео
 Video Create: Добавить видео
@@ -181,3 +181,9 @@ Status: Статус
 Valuation: Оценка
 Feedback Create: Новый отзыв
 Kpp: КПП
+Region: Регион
+Company Branch List: Список филиалов
+Id: ID
+Email First: EMAIL1
+Email Second: EMAIL2
+Email Third: EMAIL3
