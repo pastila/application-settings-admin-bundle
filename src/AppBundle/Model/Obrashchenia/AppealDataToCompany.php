@@ -33,6 +33,11 @@ class AppealDataToCompany
    * @var string
    */
   private $bitrixId;
+  /**
+   * Email адреас пользователя
+   * @var string
+   */
+  private $emailUser;
 
   /**
    * @return string
@@ -112,5 +117,21 @@ class AppealDataToCompany
   public function setAuthor($author): void
   {
     $this->author = $author;
+  }
+
+  /**
+   * @return string
+   */
+  public function getEmailUser(): string
+  {
+    return $this->emailUser;
+  }
+
+  /**
+   * @param string $emailUser
+   */
+  public function setEmailUser(string $emailUser): void
+  {
+    $this->emailUser = $emailUser;
   }
 }

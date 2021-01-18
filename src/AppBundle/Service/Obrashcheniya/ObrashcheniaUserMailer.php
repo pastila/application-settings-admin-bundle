@@ -44,7 +44,7 @@ class ObrashcheniaUserMailer
     $message = $this->emailFactory->createMessage('appeal_sent_user', [
       $this->mailerFrom => $this->mailerSenderName,
     ],
-      $modelObrashcheniaBranch->getEmailsTo(),
+      $modelObrashcheniaBranch->getEmailUser(),
       [
         'author' => $modelObrashcheniaBranch->getAuthor(),
         'logo' => $baseUrl . '/local/templates/kdteam/images/png/header/logo-oms.png',
