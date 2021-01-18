@@ -118,49 +118,4 @@ class AppealController extends Controller
 
     return new Response(null, 200);
   }
-
-  /**
-   * @Route("/api/v1/appeal-email", name="api_appeal_email", methods={"GET"}, requirements={ "api_token": "\d+" }))
-   */
-  public function getAppealEmailAction(Request $request)
-  {
-    if ($this->apiToken !== $request->get('api_token'))
-    {
-      return new Response(null, 403);
-    }
-    $data = json_decode($request->get('data'), true);
-    $this->logger->info(sprintf('Get data from bitrix by curl in appeal: %s', $data));
-
-    try
-    {
-      $modelAppealData = $this->appealDataParse->parse($data);
-    } catch (\Exception $e)
-    {
-      $this->logger->error(sprintf('Exception in parsing appeal: %s', $e));
-      return new Response(null, 400);
-    }
-
-    try
-    {
-      $this->mailerBranch->send($modelAppealData, $modelAppealData->getEmailSend());
-    } catch (\Swift_TransportException $e)
-    {
-      $this->logger->error(sprintf('Transport Exception in sending appeal to branch company: %s', $e));
-      return new Response(null, 400);
-    } catch (\Exception $e2)
-    {
-      $this->logger->error(sprintf('Exception in sending appeal to branch company: %s', $e2));
-      return new Response(null, 400);
-    }
-
-    $router = $this->get('router');
-    $context = $router->getContext();
-    $context->setHost($this->getParameter('router.request_context.host'));
-    $context->setScheme($this->getParameter('router.request_context.scheme'));
-
-    # Отправка сообщения пользователю, что обращение отправлено
-    $this->userMailer->send($modelAppealData);
-
-    return new Response(null, 200);
-  }
 }
