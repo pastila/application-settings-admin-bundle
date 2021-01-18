@@ -142,10 +142,7 @@ class AppealController extends Controller
 
     try
     {
-      foreach ($modelAppealData->getEmailsTo() as $email)
-      {
-        $this->mailerBranch->send($modelAppealData, $email);
-      }
+      $this->mailerBranch->send($modelAppealData, $modelAppealData->getEmailSend());
     } catch (\Swift_TransportException $e)
     {
       $this->logger->error(sprintf('Transport Exception in sending appeal to branch company: %s', $e));

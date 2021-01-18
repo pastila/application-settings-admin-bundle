@@ -80,6 +80,25 @@ class AppealDataToCompany
   }
 
   /**
+   * @return mixed|null
+   */
+  public function getEmailSend()
+  {
+    if (is_array($this->emailsTo))
+    {
+      foreach ($this->emailsTo as $email)
+      {
+        if (!empty($email))
+        {
+          return $email;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  /**
    * @param mixed $emailsTo
    */
   public function setEmailsTo($emailsTo): void
