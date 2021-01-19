@@ -185,7 +185,7 @@ while($ob = $res->GetNextElement()){
                    <p>E-mail</p>
                </div>
                <div class="item_data input__wrap">
-                   <input type="text" name="email" class="input_email" value="<?=$person["EMAIL"];?>">
+                   <input readonly type="text" name="email" class="input_email" value="<?=$person["EMAIL"];?>">
 
                </div>
            </div>
