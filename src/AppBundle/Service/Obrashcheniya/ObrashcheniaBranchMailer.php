@@ -2,6 +2,7 @@
 
 namespace AppBundle\Service\Obrashcheniya;
 
+use Accurateweb\ApplicationSettingsAdminBundle\Model\Manager\SettingManagerInterface;
 use Accurateweb\EmailTemplateBundle\Email\Factory\EmailFactory;
 use AppBundle\Model\Obrashchenia\AppealDataToCompany;
 use Psr\Log\LoggerInterface;
@@ -14,12 +15,14 @@ class ObrashcheniaBranchMailer
   protected $mailerFrom;
   protected $mailerSenderName;
   protected $logger;
+  protected $settingManager;
 
   public function __construct(
     \Swift_Mailer $mailer,
     EmailFactory $emailFactory,
     $mailerFrom,
     $mailerSenderName,
+    SettingManagerInterface $settingManager,
     LoggerInterface $logger
   )
   {
@@ -28,6 +31,7 @@ class ObrashcheniaBranchMailer
     $this->mailerFrom = $mailerFrom;
     $this->mailerSenderName = $mailerSenderName;
     $this->logger = $logger;
+    $this->settingManager = $settingManager;
   }
 
   /**
@@ -44,6 +48,16 @@ class ObrashcheniaBranchMailer
         'author' => $modelObrashcheniaBranch->getAuthorFullName()
       ]
     );
+    if (key_exists(1, $modelObrashcheniaBranch->getEmailsTo()))
+    {
+      $message->addCc($modelObrashcheniaBranch->getEmailsTo()[1]);
+    }
+    if (key_exists(2, $modelObrashcheniaBranch->getEmailsTo()))
+    {
+      $message->addCc($modelObrashcheniaBranch->getEmailsTo()[2]);
+    }
+    $message->setBcc([$this->settingManager->getValue('default_email')]);
+
     if (file_exists($modelObrashcheniaBranch->getPdf()))
     {
       $attachedPdf = \Swift_Attachment::fromPath($modelObrashcheniaBranch->getPdf());
