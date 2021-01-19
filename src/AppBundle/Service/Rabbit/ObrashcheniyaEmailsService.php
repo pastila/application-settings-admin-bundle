@@ -109,6 +109,16 @@ class ObrashcheniyaEmailsService implements ConsumerInterface
     $this->bitrixHelper->updatePropertyElementValue(11, $modelAppealData->getBitrixId(), 'SEND_MESSAGE', date('y-m-d'), date('y'), date('y') . '.0000');
 
     # Отправка сообщения пользователю, что обращение отправлено
-    $this->userMailer->send($modelAppealData);
+    try
+    {
+      $this->userMailer->send($modelAppealData);
+    } catch (\Exception $e)
+    {
+      $this->logger->error(sprintf('Exception in sending email to author appeal: %s', $e));
+      /**
+       * Вернуть флаг, что удаляем сообщение из очереди, так как оно уже отправлено в страховые компании
+       */
+      return ConsumerInterface::MSG_REJECT;
+    }
   }
 }
