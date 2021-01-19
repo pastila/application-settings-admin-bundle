@@ -49,15 +49,15 @@ services:
     arguments:
       - 'default_email'
       - 'Email адрес по умолчанию'
-      - 'noreply@bezbahil.ru'
+      - 'no-reply@bezbahil.ru'
     tags:
       - { name: aw.setting.configuration }
 
-  app.settings.main_email:
+  app.settings.info_email:
     class: Accurateweb\ApplicationSettingsAdminBundle\Model\SettingConfiguration\StringSettingConfiguration
     arguments:
-      - 'main_email'
-      - 'Главный Email адрес'
+      - 'info_email'
+      - 'Email адрес указанный как "Контактные данные"'
       - 'info@bezbahil.ru'
     tags:
       - { name: aw.setting.configuration }
