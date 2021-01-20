@@ -108,7 +108,12 @@ class OrganizationAdmin extends AbstractAdmin
           ]),
         ],
       ])
-      ->add('region')
+      ->add('region', [
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+        ],
+      ])
       ->add('status', 'AppBundle\Form\Organization\OrganizationStatusChoiceType', [
         'required' => true,
         'constraints' => [

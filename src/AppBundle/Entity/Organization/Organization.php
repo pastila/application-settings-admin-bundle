@@ -158,7 +158,7 @@ class Organization implements SluggableInterface
   /**
    * @return int|null
    */
-  public function getBitrixId(): ?int
+  public function getBitrixId()
   {
     return $this->bitrixId;
   }
@@ -196,7 +196,7 @@ class Organization implements SluggableInterface
   /**
    * @return string
    */
-  public function getNameFull(): string
+  public function getNameFull()
   {
     return $this->nameFull;
   }
@@ -212,7 +212,7 @@ class Organization implements SluggableInterface
   /**
    * @return string
    */
-  public function getCode(): string
+  public function getCode()
   {
     return $this->code;
   }
@@ -228,7 +228,7 @@ class Organization implements SluggableInterface
   /**
    * @return string
    */
-  public function getAddress(): string
+  public function getAddress()
   {
     return $this->address;
   }
@@ -244,7 +244,7 @@ class Organization implements SluggableInterface
   /**
    * @return string
    */
-  public function getLastName(): string
+  public function getLastName()
   {
     return $this->lastName;
   }
@@ -260,7 +260,7 @@ class Organization implements SluggableInterface
   /**
    * @return string
    */
-  public function getFirstName(): string
+  public function getFirstName()
   {
     return $this->firstName;
   }
@@ -276,7 +276,7 @@ class Organization implements SluggableInterface
   /**
    * @return string
    */
-  public function getMiddleName(): string
+  public function getMiddleName()
   {
     return $this->middleName;
   }
