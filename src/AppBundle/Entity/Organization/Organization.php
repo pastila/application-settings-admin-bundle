@@ -3,19 +3,15 @@
 namespace AppBundle\Entity\Organization;
 
 use AppBundle\Entity\Geo\Region;
-use AppBundle\Sluggable\SluggableInterface;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Organization.
  *
  * @ORM\Table(name="s_organisations")
- * @UniqueEntity("slug")
  * @ORM\Entity()
  */
-class Organization implements SluggableInterface
+class Organization
 {
   /**
    * @var integer
@@ -31,20 +27,6 @@ class Organization implements SluggableInterface
    * @ORM\Column(type="integer", nullable=true)
    */
   private $bitrixId;
-
-  /**
-   * @var string
-   *
-   * @ORM\Column(length=255, nullable=true)
-   */
-  protected $slugRoot;
-
-  /**
-   * @var string
-   *
-   * @ORM\Column(length=255, unique=true)
-   */
-  private $slug;
 
   /**
    * Название МО
@@ -318,48 +300,6 @@ class Organization implements SluggableInterface
 
     $this->status = $status;
 
-    return $this;
-  }
-
-  public function getSlugSource()
-  {
-    return $this->getName();
-  }
-
-  /**
-   * @return string
-   */
-  public function getSlug()
-  {
-    return $this->slug;
-  }
-
-  /**
-   * @param string $slug
-   * @return $this
-   */
-  public function setSlug($slug)
-  {
-    $this->slug = $slug;
-
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getSlugRoot()
-  {
-    return $this->slugRoot;
-  }
-
-  /**
-   * @param string $slugRoot
-   * @return $this
-   */
-  public function setSlugRoot($slugRoot)
-  {
-    $this->slugRoot = $slugRoot;
     return $this;
   }
 

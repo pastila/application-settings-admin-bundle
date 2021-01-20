@@ -25,6 +25,7 @@ class OrganizationAdmin extends AbstractAdmin
     $list
       ->add('id')
       ->add('name')
+      ->add('region')
       ->add('status', 'choice', [
         'label' => 'Статус модерации',
         'editable' => true,
@@ -64,6 +65,7 @@ class OrganizationAdmin extends AbstractAdmin
         ],
       ])
       ->add("code", TextType::class, [
+        'label' => 'Код медицинской организации',
         'required' => true,
         'constraints' => [
           new Length([
@@ -108,12 +110,7 @@ class OrganizationAdmin extends AbstractAdmin
           ]),
         ],
       ])
-      ->add('region', [
-        'required' => true,
-        'constraints' => [
-          new NotBlank(),
-        ],
-      ])
+      ->add('region')
       ->add('status', 'AppBundle\Form\Organization\OrganizationStatusChoiceType', [
         'required' => true,
         'constraints' => [

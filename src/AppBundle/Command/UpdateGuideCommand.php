@@ -57,6 +57,5 @@ class UpdateGuideCommand extends ContainerAwareCommand
 
     $regionHelper = $this->getContainer()->get('AppBundle\Helper\Organization\OrganizationHelper');
     $regionHelper->load($io);
-    $regionHelper->check();
   }
 }
