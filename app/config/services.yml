@@ -61,6 +61,9 @@ services:
     AppBundle\Helper\Feedback\CompanyBranchHelper:
         public: true
 
+    AppBundle\Helper\Organization\OrganizationHelper:
+        public: true
+
     AppBundle\Helper\GetMessFromBitrix:
         public: true
 

@@ -204,7 +204,7 @@ class Organization implements SluggableInterface
   /**
    * @param string $nameFull
    */
-  public function setNameFull(string $nameFull): void
+  public function setNameFull($nameFull): void
   {
     $this->nameFull = $nameFull;
   }
@@ -236,7 +236,7 @@ class Organization implements SluggableInterface
   /**
    * @param string $address
    */
-  public function setAddress(string $address): void
+  public function setAddress($address): void
   {
     $this->address = $address;
   }
@@ -252,7 +252,7 @@ class Organization implements SluggableInterface
   /**
    * @param string $lastName
    */
-  public function setLastName(string $lastName): void
+  public function setLastName($lastName): void
   {
     $this->lastName = $lastName;
   }
@@ -268,7 +268,7 @@ class Organization implements SluggableInterface
   /**
    * @param string $firstName
    */
-  public function setFirstName(string $firstName): void
+  public function setFirstName($firstName): void
   {
     $this->firstName = $firstName;
   }
@@ -284,7 +284,7 @@ class Organization implements SluggableInterface
   /**
    * @param string $middleName
    */
-  public function setMiddleName(string $middleName): void
+  public function setMiddleName($middleName): void
   {
     $this->middleName = $middleName;
   }
