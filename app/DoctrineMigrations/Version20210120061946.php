@@ -25,6 +25,5 @@ final class Version20210120061946 extends AbstractMigration
     $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
     $this->addSql('DROP TABLE s_organisations');
-    $this->addSql('ALTER TABLE s_obrashcheniya_files CHANGE image_number image_number VARCHAR(255) CHARACTER SET utf8 DEFAULT NULL COLLATE `utf8_unicode_ci`');
   }
 }
