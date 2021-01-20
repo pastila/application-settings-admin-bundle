@@ -2,9 +2,7 @@
 
 namespace AppBundle\Entity\Organization;
 
-use Accurateweb\MediaBundle\Model\Image\ImageAwareInterface;
-use Accurateweb\MediaBundle\Model\Media\ImageInterface;
-use Accurateweb\MediaBundle\Model\Thumbnail\ImageThumbnail;
+use AppBundle\Entity\Geo\Region;
 use AppBundle\Sluggable\SluggableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -33,7 +31,6 @@ class Organization implements SluggableInterface
    * @ORM\Column(type="integer", nullable=true)
    */
   private $bitrixId;
-
 
   /**
    * @var string
@@ -72,7 +69,7 @@ class Organization implements SluggableInterface
    *
    * @var string
    *
-   * @ORM\Column(name="code", type="string", length=255, nullable=true)
+   * @ORM\Column(name="code", type="string", length=255, nullable=false)
    */
   private $code;
 
@@ -90,7 +87,7 @@ class Organization implements SluggableInterface
    *
    * @var string
    *
-   * @ORM\Column(name="address", type="string", length=255, nullable=true)
+   * @ORM\Column(name="last_name", type="string", length=255, nullable=true)
    */
   private $lastName;
 
@@ -99,7 +96,7 @@ class Organization implements SluggableInterface
    *
    * @var string
    *
-   * @ORM\Column(name="address", type="string", length=255, nullable=true)
+   * @ORM\Column(name="first_name", type="string", length=255, nullable=true)
    */
   private $firstName;
 
@@ -108,7 +105,7 @@ class Organization implements SluggableInterface
    *
    * @var string
    *
-   * @ORM\Column(name="address", type="string", length=255, nullable=true)
+   * @ORM\Column(name="middle_name", type="string", length=255, nullable=true)
    */
   private $middleName;
 
@@ -119,10 +116,35 @@ class Organization implements SluggableInterface
   private $status;
 
   /**
-   * Company constructor.
+   * Регион
+   *
+   * @var null|Region
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Geo\Region")
+   * @ORM\JoinColumn(name="region_id", nullable=true, onDelete="RESTRICT")
+   */
+  private $region;
+
+  /**
+   * Organization constructor.
    */
   public function __construct()
   {
+  }
+
+  /**
+   * @return Region|null
+   */
+  public function getRegion(): ?Region
+  {
+    return $this->region;
+  }
+
+  /**
+   * @param Region|null $region
+   */
+  public function setRegion(?Region $region): void
+  {
+    $this->region = $region;
   }
 
   /**
@@ -169,6 +191,102 @@ class Organization implements SluggableInterface
     $this->name = $name;
 
     return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getNameFull(): string
+  {
+    return $this->nameFull;
+  }
+
+  /**
+   * @param string $nameFull
+   */
+  public function setNameFull(string $nameFull): void
+  {
+    $this->nameFull = $nameFull;
+  }
+
+  /**
+   * @return string
+   */
+  public function getCode(): string
+  {
+    return $this->code;
+  }
+
+  /**
+   * @param string $code
+   */
+  public function setCode(string $code): void
+  {
+    $this->code = $code;
+  }
+
+  /**
+   * @return string
+   */
+  public function getAddress(): string
+  {
+    return $this->address;
+  }
+
+  /**
+   * @param string $address
+   */
+  public function setAddress(string $address): void
+  {
+    $this->address = $address;
+  }
+
+  /**
+   * @return string
+   */
+  public function getLastName(): string
+  {
+    return $this->lastName;
+  }
+
+  /**
+   * @param string $lastName
+   */
+  public function setLastName(string $lastName): void
+  {
+    $this->lastName = $lastName;
+  }
+
+  /**
+   * @return string
+   */
+  public function getFirstName(): string
+  {
+    return $this->firstName;
+  }
+
+  /**
+   * @param string $firstName
+   */
+  public function setFirstName(string $firstName): void
+  {
+    $this->firstName = $firstName;
+  }
+
+  /**
+   * @return string
+   */
+  public function getMiddleName(): string
+  {
+    return $this->middleName;
+  }
+
+  /**
+   * @param string $middleName
+   */
+  public function setMiddleName(string $middleName): void
+  {
+    $this->middleName = $middleName;
   }
 
   /**

@@ -82,3 +82,9 @@ services:
       - [setModelManager, ['@aw_email_template_admin.model_manager'] ]
       - [setTemplate, [edit, AccuratewebEmailTemplateBundle:EmailTemplateAdmin:edit.html.twig]]
     public: true
+
+  main.admin.organization:
+    class: AppBundle\Admin\Organization\OrganizationAdmin
+    arguments: [~, 'AppBundle\Entity\Organization\Organization', ~]
+    tags:
+      -  { name: sonata.admin, manager_type: orm, group: 'mo_cmo', label: 'Больницы' }
