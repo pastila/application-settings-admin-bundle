@@ -103,7 +103,7 @@ class OrganizationHelper
         'MIDDLE_NAME' => null,
         'YEARS' => null,
       ]);
-
+      $resolver->setAllowedTypes('REGION_ID', ['string', 'int']);
       try
       {
         $data = $resolver->resolve($data);
