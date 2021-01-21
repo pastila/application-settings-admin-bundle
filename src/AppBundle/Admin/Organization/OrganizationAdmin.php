@@ -23,7 +23,7 @@ class OrganizationAdmin extends AbstractAdmin
   protected function configureListFields(ListMapper $list)
   {
     $list
-      ->add('id')
+      ->add('code')
       ->add('name')
       ->add('region')
       ->add('status', 'choice', [
@@ -111,6 +111,7 @@ class OrganizationAdmin extends AbstractAdmin
         ],
       ])
       ->add('region')
+      ->add('years')
       ->add('status', 'AppBundle\Form\Organization\OrganizationStatusChoiceType', [
         'required' => true,
         'constraints' => [
@@ -127,6 +128,7 @@ class OrganizationAdmin extends AbstractAdmin
     $filter
       ->add('name')
       ->add('region')
+      ->add('years')
       ->add('status', null, [], 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
         'choices' => array_flip(OrganizationStatus::getAvailableName()),
       ]);

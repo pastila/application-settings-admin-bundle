@@ -3,7 +3,11 @@
 namespace AppBundle\Entity\Organization;
 
 use AppBundle\Entity\Geo\Region;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
 
 /**
  * Organization.
@@ -51,7 +55,7 @@ class Organization
    *
    * @var string
    *
-   * @ORM\Column(name="code", type="string", length=255, nullable=false)
+   * @ORM\Column(name="code", type="string", length=255, nullable=false, unique=true)
    */
   private $code;
 
@@ -107,10 +111,34 @@ class Organization
   private $region;
 
   /**
+   * @var OrganizationYear[]|ArrayCollection
+   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Organization\OrganizationYear", mappedBy="organization")
+   */
+
+  /**
+   * Года
+   * @ManyToMany(targetEntity="OrganizationYear", inversedBy="organization")
+   * @JoinTable(name="s_organizations_to_years",
+   *      joinColumns={@JoinColumn(name="organization_id", referencedColumnName="id")},
+   *      inverseJoinColumns={@JoinColumn(name="year_id", referencedColumnName="id")}
+   *      )
+   */
+  protected $years;
+
+  /**
    * Organization constructor.
    */
   public function __construct()
   {
+    $this->years = new ArrayCollection();
+  }
+
+  /**
+   * @return OrganizationYear[]|ArrayCollection
+   */
+  public function getYears()
+  {
+    return $this->years;
   }
 
   /**
