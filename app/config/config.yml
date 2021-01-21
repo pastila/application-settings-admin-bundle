@@ -102,8 +102,6 @@ sonata_admin:
   title: Раздел администрирования
   dashboard:
     groups:
-      feedback:
-        label: Отзывы
       main_page:
         label: Главная страница
       text:

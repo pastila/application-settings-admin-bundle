@@ -11,17 +11,20 @@ use AppBundle\Entity\Company\CompanyBranch;
 use AppBundle\Entity\Company\Feedback;
 use AppBundle\Repository\Company\CompanyBranchRepository;
 use AppBundle\Repository\Company\FeedbackRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\Events;
 use Psr\Log\LoggerInterface;
 
 class CompanyRatingAggregatorSubscriber implements EventSubscriber
 {
   private $logger;
-
   private $em;
+  private $feedbacks;
+  private $companyBranch;
 
   public function __construct(
     EntityManagerInterface $entityManager,
@@ -34,6 +37,9 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
     $this->logger = $logger;
 //    $this->feedbackRepository = $feedbackRepository;
 //    $this->companyBranchRepository = $companyBranchRepository;
+
+    $this->feedbacks = new ArrayCollection();
+    $this->companyBranch = new ArrayCollection();
   }
 
   /**
@@ -44,58 +50,114 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
     return [
       Events::postPersist,
       Events::postUpdate,
-      Events::postRemove
+      Events::postRemove,
+      Events::postFlush
     ];
   }
 
-  public function postUpdate(LifecycleEventArgs $args)
-  {
-    $this->updateCompanyRating($args);
-  }
-
   public function postPersist(LifecycleEventArgs $args)
-  {
-    $this->updateCompanyRating($args);
-  }
-
-  public function postRemove(LifecycleEventArgs $args)
-  {
-    $this->updateCompanyRating($args);
-  }
-
-  protected function updateCompanyRating(LifecycleEventArgs $args)
   {
     $entity = $args->getObject();
 
     if ($entity instanceof Feedback)
     {
-      $branch = $entity->getBranch();
-      if ($branch)
+      $this->updateBranchRating($entity);
+    }
+
+    if ($entity instanceof CompanyBranch)
+    {
+      $this->updateCompanyRating($entity);
+    }
+  }
+
+  public function postUpdate(LifecycleEventArgs $args)
+  {
+    $this->callbackUpdateRating($args);
+  }
+
+  public function postRemove(LifecycleEventArgs $args)
+  {
+    $this->callbackUpdateRating($args);
+  }
+
+  public function postFlush(PostFlushEventArgs $args)
+  {
+    if (!$this->feedbacks->isEmpty())
+    {
+      foreach ($this->feedbacks->getValues() as $feedback)
       {
-        $this->logger->info(sprintf('Updating branch rating: %s', $branch->getCode()));
-        $branch->setValuation($this->computeValuationForBranch($branch));
+        $this->feedbacks->removeElement($feedback);
+        $this->updateBranchRating($feedback);
+      }
+    }
+    if (!$this->companyBranch->isEmpty())
+    {
+      foreach ($this->companyBranch->getValues() as $companyBranch)
+      {
+        $this->companyBranch->removeElement($companyBranch);
+        $this->updateCompanyRating($companyBranch);
+      }
+    }
+  }
 
-        $this->logger->info(sprintf('Calculated rating is: %s', $branch->getValuation()));
+  protected function callbackUpdateRating(LifecycleEventArgs $args)
+  {
+    $entity = $args->getObject();
 
-        $this->em->persist($branch);
-        $this->em->flush();
+    if ($entity instanceof Feedback)
+    {
+      if (!$this->feedbacks->contains($entity))
+      {
+        $this->feedbacks->add($entity);
       }
     }
 
     if ($entity instanceof CompanyBranch)
     {
-      $company = $entity->getCompany();
-      if ($company)
+      if (!$this->companyBranch->contains($entity))
       {
-
-       $this->logger->info(sprintf('Updating company rating: %s', $company->getKpp()));
-       $company->setValuation($this->computeValuationForCompany($company));
-
-       $this->logger->info(sprintf('Calculated rating is: %s', $company->getValuation()));
-
-        $this->em->persist($company);
-        $this->em->flush();
+        $this->companyBranch->add($entity);
       }
+    }
+  }
+
+  /**
+   * @param Feedback $feedback
+   */
+  protected function updateBranchRating($feedback)
+  {
+    $branch = $feedback->getBranch();
+    if ($branch)
+    {
+      $this->logger->info(sprintf('Updating branch rating: %s', $branch->getCode()));
+
+      $v = $this->computeValuationForBranch($branch);
+      $branch->setValuation($v);
+
+      $this->logger->info(sprintf('Calculated rating is: %s', $branch->getValuation()));
+
+      $this->em->persist($branch);
+      $this->em->flush();
+    }
+  }
+
+  /**
+   * @param CompanyBranch $companyBranch
+   */
+  protected function updateCompanyRating($companyBranch)
+  {
+    $company = $companyBranch->getCompany();
+    if ($company)
+    {
+      $this->logger->info(sprintf('Updating company rating: %s', $company->getKpp()));
+
+      $v = $this->computeValuationForCompany($company);
+      $company->setValuation($v);
+
+      $this->logger->info(sprintf('Calculated rating is: %s', $company->getValuation()));
+
+      $this->em->persist($company);
+      $this->em->flush();
     }
   }
 
@@ -117,7 +179,7 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
       ->em->getRepository(CompanyBranch::class)
       ->createQueryBuilder('cb')
       ->select('avg(cb.valuation)')
-      ->where('cb.company = :company AND cb.valuation > 0')
+      ->where('cb.company = :company AND cb.status > 0 AND cb.valuation > 0')
       ->setParameter(':company', $company)
       ->getQuery()
       ->getSingleScalarResult();
