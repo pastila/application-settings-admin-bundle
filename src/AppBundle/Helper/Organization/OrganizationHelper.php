@@ -7,6 +7,7 @@ use AppBundle\Entity\Company\CompanyStatus;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Entity\Organization\Organization;
 use AppBundle\Entity\Organization\OrganizationStatus;
+use AppBundle\Entity\Organization\OrganizationYear;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use splitbrain\phpcli\Exception;
@@ -142,10 +143,20 @@ class OrganizationHelper
         $io->warning(sprintf('Organization %s for region %s not imported: no region found', $data['NAME'], $data['REGION_ID']));
         continue;
       }
+      $yearsArray = explode(',', $data['YEARS']);
+      $years = $this->entityManager
+        ->getRepository(OrganizationYear::class)
+        ->createQueryBuilder('y')
+        ->andWhere('y.year IN (:years)')
+        ->setParameter('years', $yearsArray)
+        ->getQuery()
+        ->getResult();
+
       $status = !empty($data['ACTIVE']) ?
         ($data['ACTIVE'] === 'Y' ? OrganizationStatus::ACTIVE : OrganizationStatus::NOT_ACTIVE) :
         OrganizationStatus::NOT_ACTIVE;
 
+      $organization->setYears($years);
       $organization->setRegion($region);
       $organization->setCode($data['CODE']);
       $organization->setName($data['NAME']);

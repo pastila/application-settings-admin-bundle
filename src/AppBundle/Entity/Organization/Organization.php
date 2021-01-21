@@ -338,4 +338,17 @@ class Organization
   {
     return $this->id ? $this->name : '';
   }
+
+  /**
+   * @param $years
+   */
+  public function setYears($years): void
+  {
+    foreach ($years as $year) {
+      if (!$this->years->contains($year))
+      {
+        $this->years->add($year);
+      }
+    }
+  }
 }
