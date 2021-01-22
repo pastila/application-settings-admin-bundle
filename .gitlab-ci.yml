@@ -177,6 +177,7 @@ phpunit:
   artifacts:
     when: always
     paths:
+      - var/logs/test.log
       - var/logs/phpunit-unit.xml
     reports:
       junit:
