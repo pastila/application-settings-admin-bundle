@@ -12,6 +12,7 @@
     - build-sf-app
   before_script:
     - composer install -o
+    - sleep 30
 
 .build-before: &build-before
   stage: build-containers
