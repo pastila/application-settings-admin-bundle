@@ -66,7 +66,8 @@ class ObrashcheniyaEmailsService implements ConsumerInterface
     try
     {
       $modelAppealData = $this->appealDataParse->parse($data);
-    } catch (\Exception $e)
+    }
+    catch (\Exception $e)
     {
       $this->logger->error(sprintf('Exception in parsing appeal: %s', $e));
 
@@ -76,7 +77,7 @@ class ObrashcheniyaEmailsService implements ConsumerInterface
       $this->bitrixHelper->updatePropertyElementValue(11, $data['id'], 'SEND_REVIEW', 9, 9, null);
 
       /**
-       * Вернуть флаг, что отклонено и удаляем сообщение из очереди
+       * Вернуть флаг, что парсинг сообщения не был успешный, удаляем сообщение из очереди
        */
       return ConsumerInterface::MSG_REJECT;
     }
@@ -84,12 +85,14 @@ class ObrashcheniyaEmailsService implements ConsumerInterface
     try
     {
       $this->mailerBranch->send($modelAppealData);
-    } catch (\Swift_TransportException $e)
+    }
+    catch (\Swift_TransportException $e)
     {
       $this->logger->error(sprintf('Transport Exception in sending appeal to branch company: %s', $e));
 
       return ConsumerInterface::MSG_REJECT_REQUEUE;
-    } catch (\Exception $e2)
+    }
+    catch (\Exception $e2)
     {
       $this->logger->error(sprintf('Exception in sending appeal to branch company: %s', $e2));
 
@@ -108,17 +111,18 @@ class ObrashcheniyaEmailsService implements ConsumerInterface
     $this->bitrixHelper->updatePropertyElementValue(11, $modelAppealData->getBitrixId(), 'SEND_REVIEW', 3, 3, null);
     $this->bitrixHelper->updatePropertyElementValue(11, $modelAppealData->getBitrixId(), 'SEND_MESSAGE', date('y-m-d'), date('y'), date('y') . '.0000');
 
-    # Отправка сообщения пользователю, что обращение отправлено
     try
     {
+      # Отправка сообщения пользователю, что обращение отправлено
       $this->userMailer->send($modelAppealData);
-    } catch (\Exception $e)
+    }
+    catch (\Exception $e)
     {
-      $this->logger->error(sprintf('Exception in sending email to author appeal: %s', $e));
       /**
-       * Вернуть флаг, что удаляем сообщение из очереди, так как оно уже отправлено в страховые компании
+       * Письма уже отправлены в страховые компании (строчки выше mailerBranch->send),
+       * поэтому этот Exception не является основанием для MSG_REJECT или MSG_REJECT_REQUEUE
        */
-      return ConsumerInterface::MSG_REJECT;
+      $this->logger->error(sprintf('Exception in sending email to author appeal: %s', $e));
     }
   }
 }

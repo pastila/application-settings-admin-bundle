@@ -30,7 +30,7 @@ class AppealDataToCompany
   private $bitrixId;
   /**
    * ФИО автора обращения
-   * @var User
+   * @var string
    */
   private $authorFullName;
   /**
@@ -123,7 +123,7 @@ class AppealDataToCompany
   }
 
   /**
-   * @return mixed
+   * @return string
    */
   public function getAuthorFullName()
   {
