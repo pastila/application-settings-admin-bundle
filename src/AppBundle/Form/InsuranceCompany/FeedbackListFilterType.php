@@ -41,10 +41,8 @@ class FeedbackListFilterType extends AbstractType
     $builder
       ->add('company', BezbahilFilterEntityType::class, [
         'class' => Company::class,
-        'query_builder' => function (EntityRepository $er) {
-          return $er->createQueryBuilder('c')
-            ->andWhere('c.status = :status')
-            ->setParameter('status', CompanyStatus::ACTIVE);
+        'query_builder' => function () {
+          return $this->companyRepository->createChoiceListQueryBuilder();
         },
         'url_builder' => $options['url_builder'],
         'label' => 'Страховая компания <span>('.$this->companyRepository->countActiveAll().')</span>',
