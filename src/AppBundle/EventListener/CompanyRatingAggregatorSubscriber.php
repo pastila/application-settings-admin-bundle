@@ -23,8 +23,8 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
 {
   private $logger;
   private $em;
-  private $feedbacks;
-  private $companyBranches;
+  private $removedFeedbacks;
+  private $removedCompanyBranches;
 
   public function __construct(
     EntityManagerInterface $entityManager,
@@ -38,8 +38,8 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
 //    $this->feedbackRepository = $feedbackRepository;
 //    $this->companyBranchRepository = $companyBranchRepository;
 
-    $this->feedbacks = new ArrayCollection();
-    $this->companyBranches = new ArrayCollection();
+    $this->removedFeedbacks = new ArrayCollection();
+    $this->removedCompanyBranches = new ArrayCollection();
   }
 
   /**
@@ -80,7 +80,7 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
    */
   public function postRemove(LifecycleEventArgs $args)
   {
-    $this->addObjectToUpdateRating($args);
+    $this->deferredRatingUpdate($args);
   }
 
   /**
@@ -88,19 +88,19 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
    */
   public function postFlush(PostFlushEventArgs $args)
   {
-    if (!$this->feedbacks->isEmpty())
+    if (!$this->removedFeedbacks->isEmpty())
     {
-      foreach ($this->feedbacks->getValues() as $feedback)
+      foreach ($this->removedFeedbacks->getValues() as $feedback)
       {
-        $this->feedbacks->removeElement($feedback);
+        $this->removedFeedbacks->removeElement($feedback);
         $this->updateBranchRating($feedback);
       }
     }
-    if (!$this->companyBranches->isEmpty())
+    if (!$this->removedCompanyBranches->isEmpty())
     {
-      foreach ($this->companyBranches->getValues() as $companyBranches)
+      foreach ($this->removedCompanyBranches->getValues() as $companyBranches)
       {
-        $this->companyBranches->removeElement($companyBranches);
+        $this->removedCompanyBranches->removeElement($companyBranches);
         $this->updateCompanyRating($companyBranches);
       }
     }
@@ -128,23 +128,23 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
    * Добавление сущности в коллекцию для обновление рейтинга Компании и Филиала
    * @param LifecycleEventArgs $args
    */
-  protected function addObjectToUpdateRating(LifecycleEventArgs $args)
+  protected function deferredRatingUpdate(LifecycleEventArgs $args)
   {
     $entity = $args->getObject();
 
     if ($entity instanceof Feedback)
     {
-      if (!$this->feedbacks->contains($entity))
+      if (!$this->removedFeedbacks->contains($entity))
       {
-        $this->feedbacks->add($entity);
+        $this->removedFeedbacks->add($entity);
       }
     }
 
     if ($entity instanceof CompanyBranch)
     {
-      if (!$this->companyBranches->contains($entity))
+      if (!$this->removedCompanyBranches->contains($entity))
       {
-        $this->companyBranches->add($entity);
+        $this->removedCompanyBranches->add($entity);
       }
     }
   }
