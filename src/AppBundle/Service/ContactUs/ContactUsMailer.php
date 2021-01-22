@@ -41,7 +41,7 @@ class ContactUsMailer
     $message = $this->emailFactory->createMessage('email_contact_us', [
       $this->mailerFrom => $this->mailerSenderName,
     ],
-      $this->settingManager->getValue('administrator_email'),
+      $this->settingManager->getValue('contact_email'),
       [
         'name' => $contactUs->getAuthorName(),
         'email' => $contactUs->getEmail(),
