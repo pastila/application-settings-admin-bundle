@@ -298,11 +298,11 @@ class FeedbackController extends Controller
       $em->persist($feedback);
       $em->flush();
 
-      if (!empty($this->settingManager->getValue('info_email')))
+      if (!empty($this->settingManager->getValue('contact_email')))
       {
         try
         {
-          $this->feedbackMailer->sendFeedback($feedback, $this->settingManager->getValue('info_email'));
+          $this->feedbackMailer->sendFeedback($feedback, $this->settingManager->getValue('contact_email'));
         }
         catch (\Exception $e)
         {
