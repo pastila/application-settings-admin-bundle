@@ -11,8 +11,8 @@
   dependencies:
     - build-sf-app
   before_script:
-    - composer install -o
     - sleep 30
+    - composer install -o
 
 .build-before: &build-before
   stage: build-containers
