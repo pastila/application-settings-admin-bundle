@@ -240,7 +240,7 @@ class FeedbackController extends Controller
     $reviewRepository = $em->getRepository(Feedback::class);
 
     /** @var Feedback $review */
-    if (null !== $user && $user->getIsAdmin())
+    if (null !== $user && $this->isGranted('ROLE_ADMIN'))
     {
       $reviewQb = $reviewRepository->createQueryBuilder('rv');
     } else
