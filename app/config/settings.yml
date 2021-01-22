@@ -44,20 +44,20 @@ services:
     tags:
       - { name: aw.setting.configuration }
 
-  app.settings.default_email:
+  app.settings.administrator_email:
     class: Accurateweb\ApplicationSettingsAdminBundle\Model\SettingConfiguration\StringSettingConfiguration
     arguments:
-      - 'default_email'
-      - 'Email адрес по умолчанию'
-      - 'noreply@bezbahil.ru'
+      - 'administrator_email'
+      - 'На этот адрес e-mail будут отправляться копии писем, отправляемых в СМО и пользователям сайта'
+      - 'no-reply@bezbahil.ru'
     tags:
       - { name: aw.setting.configuration }
 
-  app.settings.main_email:
+  app.settings.contact_email:
     class: Accurateweb\ApplicationSettingsAdminBundle\Model\SettingConfiguration\StringSettingConfiguration
     arguments:
-      - 'main_email'
-      - 'Главный Email адрес'
+      - 'contact_email'
+      - 'На этот адрес e-mail будут приходить письма с вопросами пользователей. Он также будет использоваться, как контактный e-mail при отправке обращений в СМО'
       - 'info@bezbahil.ru'
     tags:
       - { name: aw.setting.configuration }
