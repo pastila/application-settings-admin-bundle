@@ -55,31 +55,37 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
     ];
   }
 
+  /**
+   * @param LifecycleEventArgs $args
+   */
   public function postPersist(LifecycleEventArgs $args)
   {
-    $entity = $args->getObject();
-
-    if ($entity instanceof Feedback)
-    {
-      $this->updateBranchRating($entity);
-    }
-
-    if ($entity instanceof CompanyBranch)
-    {
-      $this->updateCompanyRating($entity);
-    }
+    $this->updateRating($args);
   }
 
+  /**
+   * @param LifecycleEventArgs $args
+   */
   public function postUpdate(LifecycleEventArgs $args)
   {
-    $this->callbackUpdateRating($args);
+    $this->updateRating($args);
   }
 
+  /**
+   * https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/reference/events.html#lifecycle-events
+   * Вызов flush в postRemove может приводить к uninitializable index
+   * Поэтому согласно документации требуется сохранении коллекции над которой требуется работа
+   * И вызов уже вне Lifecycle, чем является postFlush
+   * @param LifecycleEventArgs $args
+   */
   public function postRemove(LifecycleEventArgs $args)
   {
-    $this->callbackUpdateRating($args);
+    $this->addObjectToUpdateRating($args);
   }
 
+  /**
+   * @param PostFlushEventArgs $args
+   */
   public function postFlush(PostFlushEventArgs $args)
   {
     if (!$this->feedbacks->isEmpty())
@@ -100,7 +106,29 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
     }
   }
 
-  protected function callbackUpdateRating(LifecycleEventArgs $args)
+  /**
+   * @param LifecycleEventArgs $args
+   */
+  protected function updateRating(LifecycleEventArgs $args)
+  {
+    $entity = $args->getObject();
+
+    if ($entity instanceof Feedback)
+    {
+      $this->updateBranchRating($entity);
+    }
+
+    if ($entity instanceof CompanyBranch)
+    {
+      $this->updateCompanyRating($entity);
+    }
+  }
+
+  /**
+   * Добавление сущности в коллекцию для обновление рейтинга Компании и Филиала
+   * @param LifecycleEventArgs $args
+   */
+  protected function addObjectToUpdateRating(LifecycleEventArgs $args)
   {
     $entity = $args->getObject();
 
