@@ -48,7 +48,10 @@ class ObrashcheniaBranchMailer
         'author' => $modelObrashcheniaBranch->getAuthorFullName()
       ]
     );
-    $message->setBcc([$this->settingManager->getValue('administrator_email')]);
+    if (!empty($this->settingManager->getValue('administrator_email')))
+    {
+      $message->setBcc([$this->settingManager->getValue('administrator_email')]);
+    }
 
     if (file_exists($modelObrashcheniaBranch->getPdf()))
     {
