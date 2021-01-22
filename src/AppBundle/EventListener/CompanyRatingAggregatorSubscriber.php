@@ -24,7 +24,7 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
   private $logger;
   private $em;
   private $feedbacks;
-  private $companyBranch;
+  private $companyBranches;
 
   public function __construct(
     EntityManagerInterface $entityManager,
@@ -39,7 +39,7 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
 //    $this->companyBranchRepository = $companyBranchRepository;
 
     $this->feedbacks = new ArrayCollection();
-    $this->companyBranch = new ArrayCollection();
+    $this->companyBranches = new ArrayCollection();
   }
 
   /**
@@ -96,12 +96,12 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
         $this->updateBranchRating($feedback);
       }
     }
-    if (!$this->companyBranch->isEmpty())
+    if (!$this->companyBranches->isEmpty())
     {
-      foreach ($this->companyBranch->getValues() as $companyBranch)
+      foreach ($this->companyBranches->getValues() as $companyBranches)
       {
-        $this->companyBranch->removeElement($companyBranch);
-        $this->updateCompanyRating($companyBranch);
+        $this->companyBranches->removeElement($companyBranches);
+        $this->updateCompanyRating($companyBranches);
       }
     }
   }
@@ -142,9 +142,9 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
 
     if ($entity instanceof CompanyBranch)
     {
-      if (!$this->companyBranch->contains($entity))
+      if (!$this->companyBranches->contains($entity))
       {
-        $this->companyBranch->add($entity);
+        $this->companyBranches->add($entity);
       }
     }
   }
@@ -170,11 +170,11 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
   }
 
   /**
-   * @param CompanyBranch $companyBranch
+   * @param CompanyBranch $companyBranches
    */
-  protected function updateCompanyRating($companyBranch)
+  protected function updateCompanyRating($companyBranches)
   {
-    $company = $companyBranch->getCompany();
+    $company = $companyBranches->getCompany();
     if ($company)
     {
       $this->logger->info(sprintf('Updating company rating: %s', $company->getKpp()));
