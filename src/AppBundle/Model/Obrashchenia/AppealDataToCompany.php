@@ -25,14 +25,19 @@ class AppealDataToCompany
    */
   private $attachedFiles = [];
   /**
-   * Автор отзыва
-   * @var User
-   */
-  private $author;
-  /**
    * @var string
    */
   private $bitrixId;
+  /**
+   * ФИО автора обращения
+   * @var string
+   */
+  private $authorFullName;
+  /**
+   * Email адрес автора обращения
+   * @var string
+   */
+  private $authorEmail;
 
   /**
    * @return string
@@ -75,6 +80,25 @@ class AppealDataToCompany
   }
 
   /**
+   * @return mixed|null
+   */
+  public function getEmailSend()
+  {
+    if (is_array($this->emailsTo))
+    {
+      foreach ($this->emailsTo as $email)
+      {
+        if (!empty($email))
+        {
+          return $email;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  /**
    * @param mixed $emailsTo
    */
   public function setEmailsTo($emailsTo): void
@@ -99,18 +123,34 @@ class AppealDataToCompany
   }
 
   /**
-   * @return mixed
+   * @return string
    */
-  public function getAuthor()
+  public function getAuthorFullName()
   {
-    return $this->author;
+    return $this->authorFullName;
   }
 
   /**
-   * @param $author
+   * @param $authorFullName
    */
-  public function setAuthor($author): void
+  public function setAuthorFullName($authorFullName): void
   {
-    $this->author = $author;
+    $this->authorFullName = $authorFullName;
+  }
+
+  /**
+   * @return string
+   */
+  public function getAuthorEmail(): string
+  {
+    return $this->authorEmail;
+  }
+
+  /**
+   * @param string $authorEmail
+   */
+  public function setAuthorEmail(string $authorEmail): void
+  {
+    $this->authorEmail = $authorEmail;
   }
 }
