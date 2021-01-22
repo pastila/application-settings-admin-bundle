@@ -56,7 +56,7 @@ class ObrashcheniaBranchMailer
     {
       $message->addCc($modelObrashcheniaBranch->getEmailsTo()[2]);
     }
-    $message->setBcc([$this->settingManager->getValue('default_email')]);
+    $message->setBcc([$this->settingManager->getValue('administrator_email')]);
 
     if (file_exists($modelObrashcheniaBranch->getPdf()))
     {
