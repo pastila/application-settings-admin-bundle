@@ -112,6 +112,7 @@ class FeedbackAdmin extends AbstractAdmin
         'expanded' => false,
       ])
       ->add("createdAt", DatePickerType::class, [
+        'required' => true,
         'format' => 'd MMMM yyyy',
         'view_timezone' => 'UTC',
         'model_timezone' => 'UTC',
@@ -123,14 +124,6 @@ class FeedbackAdmin extends AbstractAdmin
           new NotBlank(),
         ],
       ]);
-  }
-
-  /**
-   * @param RouteCollection $collection
-   */
-  protected function configureRoutes(RouteCollection $collection)
-  {
-    $collection->remove('create');
   }
 
   /**

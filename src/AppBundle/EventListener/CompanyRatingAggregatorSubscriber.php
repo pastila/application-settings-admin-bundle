@@ -11,17 +11,20 @@ use AppBundle\Entity\Company\CompanyBranch;
 use AppBundle\Entity\Company\Feedback;
 use AppBundle\Repository\Company\CompanyBranchRepository;
 use AppBundle\Repository\Company\FeedbackRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\Events;
 use Psr\Log\LoggerInterface;
 
 class CompanyRatingAggregatorSubscriber implements EventSubscriber
 {
   private $logger;
-
   private $em;
+  private $removedFeedbacks;
+  private $removedCompanyBranches;
 
   public function __construct(
     EntityManagerInterface $entityManager,
@@ -34,6 +37,9 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
     $this->logger = $logger;
 //    $this->feedbackRepository = $feedbackRepository;
 //    $this->companyBranchRepository = $companyBranchRepository;
+
+    $this->removedFeedbacks = new ArrayCollection();
+    $this->removedCompanyBranches = new ArrayCollection();
   }
 
   /**
@@ -44,58 +50,142 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
     return [
       Events::postPersist,
       Events::postUpdate,
-      Events::postRemove
+      Events::postRemove,
+      Events::postFlush
     ];
   }
 
-  public function postUpdate(LifecycleEventArgs $args)
-  {
-    $this->updateCompanyRating($args);
-  }
-
+  /**
+   * @param LifecycleEventArgs $args
+   */
   public function postPersist(LifecycleEventArgs $args)
   {
-    $this->updateCompanyRating($args);
+    $this->updateRating($args);
   }
 
+  /**
+   * @param LifecycleEventArgs $args
+   */
+  public function postUpdate(LifecycleEventArgs $args)
+  {
+    $this->updateRating($args);
+  }
+
+  /**
+   * https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/reference/events.html#lifecycle-events
+   * Вызов flush в postRemove может приводить к uninitializable index
+   * Поэтому согласно документации требуется сохранении коллекции над которой требуется работа
+   * И вызов уже вне Lifecycle, чем является postFlush
+   * @param LifecycleEventArgs $args
+   */
   public function postRemove(LifecycleEventArgs $args)
   {
-    $this->updateCompanyRating($args);
+    $this->deferredRatingUpdate($args);
   }
 
-  protected function updateCompanyRating(LifecycleEventArgs $args)
+  /**
+   * @param PostFlushEventArgs $args
+   */
+  public function postFlush(PostFlushEventArgs $args)
+  {
+    if (!$this->removedFeedbacks->isEmpty())
+    {
+      foreach ($this->removedFeedbacks->getValues() as $feedback)
+      {
+        $this->removedFeedbacks->removeElement($feedback);
+        $this->updateBranchRating($feedback);
+      }
+    }
+    if (!$this->removedCompanyBranches->isEmpty())
+    {
+      foreach ($this->removedCompanyBranches->getValues() as $companyBranches)
+      {
+        $this->removedCompanyBranches->removeElement($companyBranches);
+        $this->updateCompanyRating($companyBranches);
+      }
+    }
+  }
+
+  /**
+   * @param LifecycleEventArgs $args
+   */
+  protected function updateRating(LifecycleEventArgs $args)
   {
     $entity = $args->getObject();
 
     if ($entity instanceof Feedback)
     {
-      $branch = $entity->getBranch();
-      if ($branch)
+      $this->updateBranchRating($entity);
+    }
+
+    if ($entity instanceof CompanyBranch)
+    {
+      $this->updateCompanyRating($entity);
+    }
+  }
+
+  /**
+   * Добавление сущности в коллекцию для обновление рейтинга Компании и Филиала
+   * @param LifecycleEventArgs $args
+   */
+  protected function deferredRatingUpdate(LifecycleEventArgs $args)
+  {
+    $entity = $args->getObject();
+
+    if ($entity instanceof Feedback)
+    {
+      if (!$this->removedFeedbacks->contains($entity))
       {
-        $this->logger->info(sprintf('Updating branch rating: %s', $branch->getCode()));
-        $branch->setValuation($this->computeValuationForBranch($branch));
-
-        $this->logger->info(sprintf('Calculated rating is: %s', $branch->getValuation()));
-
-        $this->em->persist($branch);
-        $this->em->flush();
+        $this->removedFeedbacks->add($entity);
       }
     }
 
     if ($entity instanceof CompanyBranch)
     {
-      $company = $entity->getCompany();
-      if ($company)
+      if (!$this->removedCompanyBranches->contains($entity))
       {
-
-       $this->logger->info(sprintf('Updating company rating: %s', $company->getKpp()));
-       $company->setValuation($this->computeValuationForCompany($company));
-
-       $this->logger->info(sprintf('Calculated rating is: %s', $company->getValuation()));
-
-        $this->em->persist($company);
-        $this->em->flush();
+        $this->removedCompanyBranches->add($entity);
       }
+    }
+  }
+
+  /**
+   * @param Feedback $feedback
+   */
+  protected function updateBranchRating($feedback)
+  {
+    $branch = $feedback->getBranch();
+    if ($branch)
+    {
+      $this->logger->info(sprintf('Updating branch rating: %s', $branch->getCode()));
+
+      $v = $this->computeValuationForBranch($branch);
+      $branch->setValuation($v);
+
+      $this->logger->info(sprintf('Calculated rating is: %s', $branch->getValuation()));
+
+      $this->em->persist($branch);
+      $this->em->flush();
+    }
+  }
+
+  /**
+   * @param CompanyBranch $companyBranches
+   */
+  protected function updateCompanyRating($companyBranches)
+  {
+    $company = $companyBranches->getCompany();
+    if ($company)
+    {
+      $this->logger->info(sprintf('Updating company rating: %s', $company->getKpp()));
+
+      $v = $this->computeValuationForCompany($company);
+      $company->setValuation($v);
+
+      $this->logger->info(sprintf('Calculated rating is: %s', $company->getValuation()));
+
+      $this->em->persist($company);
+      $this->em->flush();
     }
   }
 
@@ -117,7 +207,7 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
       ->em->getRepository(CompanyBranch::class)
       ->createQueryBuilder('cb')
       ->select('avg(cb.valuation)')
-      ->where('cb.company = :company AND cb.valuation > 0')
+      ->where('cb.company = :company AND cb.status > 0 AND cb.valuation > 0')
       ->setParameter(':company', $company)
       ->getQuery()
       ->getSingleScalarResult();
