@@ -43,19 +43,11 @@ class ObrashcheniaBranchMailer
     $message = $this->emailFactory->createMessage('email_obrashcheniya_branch', [
       $this->mailerFrom => $this->mailerSenderName,
     ],
-      $modelObrashcheniaBranch->getEmailSend(),
+      $modelObrashcheniaBranch->getEmailsTo(),
       [
         'author' => $modelObrashcheniaBranch->getAuthorFullName()
       ]
     );
-    if (key_exists(1, $modelObrashcheniaBranch->getEmailsTo()))
-    {
-      $message->addCc($modelObrashcheniaBranch->getEmailsTo()[1]);
-    }
-    if (key_exists(2, $modelObrashcheniaBranch->getEmailsTo()))
-    {
-      $message->addCc($modelObrashcheniaBranch->getEmailsTo()[2]);
-    }
     $message->setBcc([$this->settingManager->getValue('administrator_email')]);
 
     if (file_exists($modelObrashcheniaBranch->getPdf()))
