@@ -76,7 +76,7 @@ class OrganizationHelper
             LEFT JOIN b_iblock_element_property epFirstName ON epFirstName.IBLOCK_ELEMENT_ID = e.ID AND epFirstName.IBLOCK_PROPERTY_ID = 120       
             LEFT JOIN b_iblock_element_property epMiddleName ON epMiddleName.IBLOCK_ELEMENT_ID = e.ID AND epMiddleName.IBLOCK_PROPERTY_ID = 121  
             LEFT JOIN b_iblock_element_property epYEAR ON epYEAR.IBLOCK_ELEMENT_ID = e.ID AND epYEAR.IBLOCK_PROPERTY_ID = 132                                   
-            WHERE e.IBLOCK_ID = 9
+            WHERE e.IBLOCK_ID = 9 AND e.ACTIVE = "Y"
             group by e.ID;';
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -143,7 +143,7 @@ class OrganizationHelper
         $io->warning(sprintf('Organization %s for region %s not imported: no region found', $data['NAME'], $data['REGION_ID']));
         continue;
       }
-      $yearsArray = explode(',', $data['YEARS']);
+      $yearsArray = array_unique(explode(',', $data['YEARS']));
       $years = $this->entityManager
         ->getRepository(OrganizationYear::class)
         ->createQueryBuilder('y')

@@ -52,7 +52,7 @@ class RegionHelper
                 B_IS.CODE, 
                 B_IS9.ID AS ID_9
             FROM b_iblock_section B_IS 
-            LEFT JOIN b_iblock_section B_IS9 ON B_IS9.SEARCHABLE_CONTENT = B_IS.SEARCHABLE_CONTENT AND B_IS9.IBLOCK_ID = 9
+            LEFT JOIN b_iblock_section B_IS9 ON SUBSTRING(B_IS9.SEARCHABLE_CONTENT, 1, 3) = SUBSTRING(B_IS.SEARCHABLE_CONTENT, 1, 3) AND B_IS9.IBLOCK_ID = 9
             WHERE B_IS.IBLOCK_ID = 16';
     $stmt = $conn->prepare($sql);
     $stmt->execute();
