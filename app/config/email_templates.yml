@@ -2,6 +2,7 @@ aw_email_templating:
   templating:
     loader: aw_email_templating.template.loader.doctrine
     entity: AppBundle\Entity\Messaging\EmailTemplate
+    images_as_attachment: true
   email_templates:
     email_contact_us:
       description: 'Обратная связь'
@@ -12,8 +13,135 @@ aw_email_templating:
       defaults:
         subject: "Обратная связь"
         body: |
-          Пользователь по имени  %%name%% (с почтой %%email%%) решил связаться с администрацией . <br>
-          Вопрос : %%text%% <br>
+          <head>
+            <style>
+              @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+            </style>
+          </head>
+          <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;border-spacing: 0;width: 100%%;margin: 0;padding: 0;">
+            <tr>
+              <td align="center" valign="top" style="border-collapse: collapse;border-spacing: 0;width: 800px;margin: 0;padding: 0;padding-top: 21px" bgcolor="#eef5f8">
+                <table border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#FFFFFF" width="600" style="border-collapse: collapse;border-spacing: 0;padding: 0;width: 600px;border-radius: 10px;" class="container">
+                  <tr>
+                    <td align="center" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;" bgcolor="#ffffff">
+                      <table border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#eef5f8" width="600" style="border-collapse: collapse;border-spacing: 0;padding: 0;width: 600px;">
+                        <tr>
+                          <td style="width: 135px;height: 48px"></td>
+                          <td rowspan="2" style="width: 330px;" bgcolor="#ffffff">
+                            <img src="/frontend/img/image-email/logo.png" alt="logo.png" />
+                          </td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td style="width: 135px;border-top-left-radius: 10px;" bgcolor="#ffffff"></td>
+                          <td style="height: 32px;border-top-right-radius: 10px;" bgcolor="#ffffff"></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <table border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#FFFFFF" style="border-collapse: collapse;border-spacing: 0;padding: 0;">
+                        <tr>
+                          <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0; padding: 0;padding-left: 40px;padding-right: 34px;width: 298px;padding-top: 68px;padding-bottom: 20px;line-height: 15px;font-family: 'Roboto', sans-serif;">
+                            <b style="font-size: 22px;line-height: 24px;font-weight: 500">Здравствуйте, %%author_name%%.</b>
+                          </td>
+                          <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-left: 0;padding-right: 49px;width: 161px;padding-top: 27px;padding-bottom: 36px;">
+                            <img src="/frontend/img/image-email/notebook.png" alt="notebook.png" />
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="left" valign="top" width="520" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-left: 0;padding-right: 0;width: 520px;max-width: 520px;">
+                      <table border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#eef5f8" width="520" style="border-collapse: collapse;border-spacing: 0;padding: 0;width: 520px;max-width: 520px;font-family: 'Roboto', sans-serif; border-radius: 10px;">
+                        <tr>
+                          <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-top: 45px;padding-left: 29px;padding-right: 29px;padding-bottom: 42px;font-size: 14px;">
+                            <p>Пользователь по имени  %%name%% (с почтой %%email%%) решил связаться с администрацией.</p>
+                            <p>Вопрос : %%text%%.</p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <table border="0" cellpadding="0" cellspacing="0" align="left" style="border-collapse: collapse;border-spacing: 0;padding: 0;">
+                        <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;width: 351px;padding-left: 40px;padding-right: 0;font-size: 14px;font-weight: 400;line-height: 18px;padding-top: 35px;padding-bottom: 38px;color: #000000;font-family: 'Roboto', sans-serif;">
+                          <b>С уважением</b>,
+                          <br>команда Безбахил
+                        </td>
+                        <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-left: 40px;padding-right: 90px;padding-top: 35px;">
+                          <img src="/frontend/img/image-email/flowers.png" alt="flowers.png" />
+                        </td>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <table border="0" cellpadding="0" cellspacing="0" align="center" width="600" style="border-collapse: collapse;border-spacing: 0;padding: 0;width: 600px;" class="wrapper">
+                  <tr>
+                    <td>
+                      <table border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse: collapse;border-spacing: 0;padding: 0;border-radius: 10px;">
+                        <tr>
+                          <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;font-size: 12px;font-weight: 400;padding-left: 40px;padding-top: 35px;padding-bottom: 38px;color: #000000;font-family: 'Roboto', sans-serif;">
+                            <table border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse: collapse;border-spacing: 0;padding: 0;">
+                              <tr>
+                                <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;">
+                                  <p style=" width: 246px;font-size: 12px;line-height: 14px;color: #515151;">Безбахил — первый бесплатный сервис, помогающий вернуть деньги за лечение в клиниках, работающих в системе обязательного медицинского страхования.</p>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-top: 15px">
+                                  <b style="font-size: 12px;color: #515151;">Служба поддержки:</b>
+                                  <a href="mailto:support@bezbahil.ru" target="_blank" style="color: #134469;font-family: sans-serif;font-size: 12px;font-weight: 400;line-height: 160%;">support@bezbahil.ru</a>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-top: 25px;" class="social-icons">
+                                  <table border="0" cellpadding="0" cellspacing="0" align="left" style="border-collapse: collapse;border-spacing: 0;padding: 0;">
+                                    <tr>
+                                      <td align="center" valign="middle" style="margin: 0;padding: 0;padding-right: 10px;border-collapse: collapse;border-spacing: 0;">
+                                        <a target="_blank" href="https://www.instagram.com/bezbahil.ru/" style="text-decoration: none;">
+                                          <img src="/frontend/img/image-email/icon-instagram.png" alt="icon-instagram.png" border="0" vspace="0" hspace="0" style="padding: 0;margin: 0;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;border: none;display: inline-block;" title="instagram" />
+                                        </a>
+                                      </td>
+                                      <td align="center" valign="middle" style="margin: 0;padding: 0;border-collapse: collapse;border-spacing: 0;">
+                                        <a target="_blank" href="https://t.me/bezbahil" style="text-decoration: none;">
+                                          <img src="/frontend/img/image-email/icon-telegram.png" alt="icon-telegram.png" border="0" vspace="0" hspace="0" style="padding: 0;margin: 0;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;border: none;display: inline-block;width: 35px;height: 35px;border-radius: 35px;" title="telegram"/>
+                                        </a>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                          <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;font-size: 12px;font-weight: 400;padding-left: 12px;padding-top: 35px;padding-bottom: 38px;color: #000000;font-family: 'Roboto',sans-serif;width: 400px">
+                            <ul>
+                              <li style="text-decoration: underline;list-style-type: none;padding-bottom: 30px">
+                                <a href="http://bezbahil.ru/forma-obrashenija/" target="_blank" style="color: #515151">Верните деньги за лечение</a>
+                              </li>
+                              <li style="text-decoration: underline;list-style-type: none;padding-bottom: 30px">
+                                <a href="http://bezbahil.ru/news" target="_blank" style="color: #515151">Медицинский инсайдер</a>
+                              </li>
+                              <li style="text-decoration: underline;list-style-type: none;padding-bottom: 30px">
+                                <a href="http://bezbahil.ru/feedback" target="_blank" style="color: #515151">Народный рейтинг страховых компаний</a>
+                              </li>
+                              <li style="text-decoration: underline;list-style-type: none;">
+                                <a href="http://bezbahil.ru/vopros-otvet" target="_blank" style="color: #515151">FAQ</a>
+                              </li>
+                            </ul>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+
 
     email_feedback:
       description: 'Отзыв'
@@ -22,9 +150,137 @@ aw_email_templating:
         url: { description: "Url на отзыв" }
       defaults:
         subject: "Отзыв"
+        head: |
+          <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
         body: |
-          О вашей компании оставили отзыв  %%date%% <br>
-          Ссылка на страницу с  <a href ="%%url%%">отзывом</a>
+          <head>
+            <style>
+              @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+            </style>
+          </head>
+          <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;border-spacing: 0;width: 100%%;margin: 0;padding: 0;">
+            <tr>
+              <td align="center" valign="top" style="border-collapse: collapse;border-spacing: 0;width: 800px;margin: 0;padding: 0;padding-top: 21px" bgcolor="#eef5f8">
+                <table border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#FFFFFF" width="600" style="border-collapse: collapse;border-spacing: 0;padding: 0;width: 600px;border-radius: 10px;" class="container">
+                  <tr>
+                    <td align="center" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;" bgcolor="#ffffff">
+                      <table border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#eef5f8" width="600" style="border-collapse: collapse;border-spacing: 0;padding: 0;width: 600px;">
+                        <tr>
+                          <td style="width: 135px;height: 48px"></td>
+                          <td rowspan="2" style="width: 330px;" bgcolor="#ffffff">
+                            <img src="/frontend/img/image-email/logo.png" alt="logo.png" />
+                          </td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td style="width: 135px;border-top-left-radius: 10px;" bgcolor="#ffffff"></td>
+                          <td style="height: 32px;border-top-right-radius: 10px;" bgcolor="#ffffff"></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <table border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#FFFFFF" style="border-collapse: collapse;border-spacing: 0;padding: 0;">
+                        <tr>
+                          <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0; padding: 0;padding-left: 40px;padding-right: 34px;width: 298px;padding-top: 68px;padding-bottom: 20px;line-height: 15px;font-family: 'Roboto', sans-serif;">
+                            <b style="font-size: 22px;line-height: 24px;font-weight: 500">Здравствуйте, %%author_name%%.</b>
+                          </td>
+                          <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-left: 0;padding-right: 49px;width: 161px;padding-top: 27px;padding-bottom: 36px;">
+                            <img src="/frontend/img/image-email/notebook.png" alt="notebook.png" />
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="left" valign="top" width="520" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-left: 0;padding-right: 0;width: 520px;max-width: 520px;">
+                      <table border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#eef5f8" width="520" style="border-collapse: collapse;border-spacing: 0;padding: 0;width: 520px;max-width: 520px;font-family: 'Roboto', sans-serif; border-radius: 10px;">
+                        <tr>
+                          <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-top: 45px;padding-left: 29px;padding-right: 29px;padding-bottom: 42px;font-size: 14px;">
+                            <p>О вашей компании оставили отзыв  %%date%% </p>
+                            <p>Ссылка на страницу с  <a href ="%%url%%">отзывом</a></p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <table border="0" cellpadding="0" cellspacing="0" align="left" style="border-collapse: collapse;border-spacing: 0;padding: 0;">
+                        <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;width: 351px;padding-left: 40px;padding-right: 0;font-size: 14px;font-weight: 400;line-height: 18px;padding-top: 35px;padding-bottom: 38px;color: #000000;font-family: 'Roboto', sans-serif;">
+                          <b>С уважением</b>,
+                          <br>команда Безбахил
+                        </td>
+                        <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-left: 40px;padding-right: 90px;padding-top: 35px;">
+                          <img src="/frontend/img/image-email/flowers.png" alt="flowers.png" />
+                        </td>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <table border="0" cellpadding="0" cellspacing="0" align="center" width="600" style="border-collapse: collapse;border-spacing: 0;padding: 0;width: 600px;" class="wrapper">
+                  <tr>
+                    <td>
+                      <table border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse: collapse;border-spacing: 0;padding: 0;border-radius: 10px;">
+                        <tr>
+                          <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;font-size: 12px;font-weight: 400;padding-left: 40px;padding-top: 35px;padding-bottom: 38px;color: #000000;font-family: 'Roboto', sans-serif;">
+                            <table border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse: collapse;border-spacing: 0;padding: 0;">
+                              <tr>
+                                <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;">
+                                  <p style=" width: 246px;font-size: 12px;line-height: 14px;color: #515151;">Безбахил — первый бесплатный сервис, помогающий вернуть деньги за лечение в клиниках, работающих в системе обязательного медицинского страхования.</p>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-top: 15px">
+                                  <b style="font-size: 12px;color: #515151;">Служба поддержки:</b>
+                                  <a href="mailto:support@bezbahil.ru" target="_blank" style="color: #134469;font-family: sans-serif;font-size: 12px;font-weight: 400;line-height: 160%;">support@bezbahil.ru</a>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-top: 25px;" class="social-icons">
+                                  <table border="0" cellpadding="0" cellspacing="0" align="left" style="border-collapse: collapse;border-spacing: 0;padding: 0;">
+                                    <tr>
+                                      <td align="center" valign="middle" style="margin: 0;padding: 0;padding-right: 10px;border-collapse: collapse;border-spacing: 0;">
+                                        <a target="_blank" href="https://www.instagram.com/bezbahil.ru/" style="text-decoration: none;">
+                                          <img src="/frontend/img/image-email/icon-instagram.png" alt="icon-instagram.png" border="0" vspace="0" hspace="0" style="padding: 0;margin: 0;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;border: none;display: inline-block;" title="instagram" />
+                                        </a>
+                                      </td>
+                                      <td align="center" valign="middle" style="margin: 0;padding: 0;border-collapse: collapse;border-spacing: 0;">
+                                        <a target="_blank" href="https://t.me/bezbahil" style="text-decoration: none;">
+                                          <img src="/frontend/img/image-email/icon-telegram.png" alt="icon-telegram.png" border="0" vspace="0" hspace="0" style="padding: 0;margin: 0;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;border: none;display: inline-block;width: 35px;height: 35px;border-radius: 35px;" title="telegram"/>
+                                        </a>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                          <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;font-size: 12px;font-weight: 400;padding-left: 12px;padding-top: 35px;padding-bottom: 38px;color: #000000;font-family: 'Roboto',sans-serif;width: 400px">
+                            <ul>
+                              <li style="text-decoration: underline;list-style-type: none;padding-bottom: 30px">
+                                <a href="http://bezbahil.ru/forma-obrashenija/" target="_blank" style="color: #515151">Верните деньги за лечение</a>
+                              </li>
+                              <li style="text-decoration: underline;list-style-type: none;padding-bottom: 30px">
+                                <a href="http://bezbahil.ru/news" target="_blank" style="color: #515151">Медицинский инсайдер</a>
+                              </li>
+                              <li style="text-decoration: underline;list-style-type: none;padding-bottom: 30px">
+                                <a href="http://bezbahil.ru/feedback" target="_blank" style="color: #515151">Народный рейтинг страховых компаний</a>
+                              </li>
+                              <li style="text-decoration: underline;list-style-type: none;">
+                                <a href="http://bezbahil.ru/vopros-otvet" target="_blank" style="color: #515151">FAQ</a>
+                              </li>
+                            </ul>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
 
     email_obrashcheniya_branch:
       description: 'Письмо с обращением в СМО'
@@ -33,30 +289,276 @@ aw_email_templating:
       defaults:
         subject: "Обращение о взимании денежных средств"
         body: |
-          На сайте bezbahil.ru было сформировано новое обращение от пользователя "%%author%%".
+          <head>
+            <style>
+              @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+            </style>
+          </head>
+          <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;border-spacing: 0;width: 100%%;margin: 0;padding: 0;">
+            <tr>
+              <td align="center" valign="top" style="border-collapse: collapse;border-spacing: 0;width: 800px;margin: 0;padding: 0;padding-top: 21px" bgcolor="#eef5f8">
+                <table border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#FFFFFF" width="600" style="border-collapse: collapse;border-spacing: 0;padding: 0;width: 600px;border-radius: 10px;" class="container">
+                  <tr>
+                    <td align="center" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;" bgcolor="#ffffff">
+                      <table border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#eef5f8" width="600" style="border-collapse: collapse;border-spacing: 0;padding: 0;width: 600px;">
+                        <tr>
+                          <td style="width: 135px;height: 48px"></td>
+                          <td rowspan="2" style="width: 330px;" bgcolor="#ffffff">
+                            <img src="/frontend/img/image-email/logo.png" alt="logo.png" />
+                          </td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td style="width: 135px;border-top-left-radius: 10px;" bgcolor="#ffffff"></td>
+                          <td style="height: 32px;border-top-right-radius: 10px;" bgcolor="#ffffff"></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <table border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#FFFFFF" style="border-collapse: collapse;border-spacing: 0;padding: 0;">
+                        <tr>
+                          <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0; padding: 0;padding-left: 40px;padding-right: 34px;width: 298px;padding-top: 68px;padding-bottom: 20px;line-height: 15px;font-family: 'Roboto', sans-serif;">
+                            <b style="font-size: 22px;line-height: 24px;font-weight: 500">Здравствуйте, %%author_name%%.</b>
+                          </td>
+                          <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-left: 0;padding-right: 49px;width: 161px;padding-top: 27px;padding-bottom: 36px;">
+                            <img src="/frontend/img/image-email/notebook.png" alt="notebook.png" />
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="left" valign="top" width="520" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-left: 0;padding-right: 0;width: 520px;max-width: 520px;">
+                      <table border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#eef5f8" width="520" style="border-collapse: collapse;border-spacing: 0;padding: 0;width: 520px;max-width: 520px;font-family: 'Roboto', sans-serif; border-radius: 10px;">
+                        <tr>
+                          <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-top: 45px;padding-left: 29px;padding-right: 29px;padding-bottom: 42px;font-size: 14px;">
+                            На сайте bezbahil.ru было сформировано новое обращение от пользователя "%%author%%".
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <table border="0" cellpadding="0" cellspacing="0" align="left" style="border-collapse: collapse;border-spacing: 0;padding: 0;">
+                        <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;width: 351px;padding-left: 40px;padding-right: 0;font-size: 14px;font-weight: 400;line-height: 18px;padding-top: 35px;padding-bottom: 38px;color: #000000;font-family: 'Roboto', sans-serif;">
+                          <b>С уважением</b>,
+                          <br>команда Безбахил
+                        </td>
+                        <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-left: 40px;padding-right: 90px;padding-top: 35px;">
+                          <img src="/frontend/img/image-email/flowers.png" alt="flowers.png" />
+                        </td>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <table border="0" cellpadding="0" cellspacing="0" align="center" width="600" style="border-collapse: collapse;border-spacing: 0;padding: 0;width: 600px;" class="wrapper">
+                  <tr>
+                    <td>
+                      <table border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse: collapse;border-spacing: 0;padding: 0;border-radius: 10px;">
+                        <tr>
+                          <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;font-size: 12px;font-weight: 400;padding-left: 40px;padding-top: 35px;padding-bottom: 38px;color: #000000;font-family: 'Roboto', sans-serif;">
+                            <table border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse: collapse;border-spacing: 0;padding: 0;">
+                              <tr>
+                                <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;">
+                                  <p style=" width: 246px;font-size: 12px;line-height: 14px;color: #515151;">Безбахил — первый бесплатный сервис, помогающий вернуть деньги за лечение в клиниках, работающих в системе обязательного медицинского страхования.</p>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-top: 15px">
+                                  <b style="font-size: 12px;color: #515151;">Служба поддержки:</b>
+                                  <a href="mailto:support@bezbahil.ru" target="_blank" style="color: #134469;font-family: sans-serif;font-size: 12px;font-weight: 400;line-height: 160%;">support@bezbahil.ru</a>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-top: 25px;" class="social-icons">
+                                  <table border="0" cellpadding="0" cellspacing="0" align="left" style="border-collapse: collapse;border-spacing: 0;padding: 0;">
+                                    <tr>
+                                      <td align="center" valign="middle" style="margin: 0;padding: 0;padding-right: 10px;border-collapse: collapse;border-spacing: 0;">
+                                        <a target="_blank" href="https://www.instagram.com/bezbahil.ru/" style="text-decoration: none;">
+                                          <img src="/frontend/img/image-email/icon-instagram.png" alt="icon-instagram.png" border="0" vspace="0" hspace="0" style="padding: 0;margin: 0;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;border: none;display: inline-block;" title="instagram" />
+                                        </a>
+                                      </td>
+                                      <td align="center" valign="middle" style="margin: 0;padding: 0;border-collapse: collapse;border-spacing: 0;">
+                                        <a target="_blank" href="https://t.me/bezbahil" style="text-decoration: none;">
+                                          <img src="/frontend/img/image-email/icon-telegram.png" alt="icon-telegram.png" border="0" vspace="0" hspace="0" style="padding: 0;margin: 0;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;border: none;display: inline-block;width: 35px;height: 35px;border-radius: 35px;" title="telegram"/>
+                                        </a>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                          <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;font-size: 12px;font-weight: 400;padding-left: 12px;padding-top: 35px;padding-bottom: 38px;color: #000000;font-family: 'Roboto',sans-serif;width: 400px">
+                            <ul>
+                              <li style="text-decoration: underline;list-style-type: none;padding-bottom: 30px">
+                                <a href="http://bezbahil.ru/forma-obrashenija/" target="_blank" style="color: #515151">Верните деньги за лечение</a>
+                              </li>
+                              <li style="text-decoration: underline;list-style-type: none;padding-bottom: 30px">
+                                <a href="http://bezbahil.ru/news" target="_blank" style="color: #515151">Медицинский инсайдер</a>
+                              </li>
+                              <li style="text-decoration: underline;list-style-type: none;padding-bottom: 30px">
+                                <a href="http://bezbahil.ru/feedback" target="_blank" style="color: #515151">Народный рейтинг страховых компаний</a>
+                              </li>
+                              <li style="text-decoration: underline;list-style-type: none;">
+                                <a href="http://bezbahil.ru/vopros-otvet" target="_blank" style="color: #515151">FAQ</a>
+                              </li>
+                            </ul>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
 
     appeal_sent_user:
       description: 'Уведомление пользователю о том, что его обращение отправлено в СМО'
       variables:
         author: { description: "Отправитель" }
+        author_name: { description: "Имя отправителя" }
         logo: { description: "URL логотипа" }
         illustration: { description: "URL иллюстрации" }
       defaults:
           subject: "Ваше обращение о возврате денежных средств направлено в адрес страховой компании"
           body: |
-            <div class="mail-bg" style="width: 100%%;background-color: #f7fafc;text-align: center;">
-            	<div style="padding: 20px; background-color: #fff;border-bottom: solid 1px #e0ebf2;">
-            		<div class="logo">
-             <img alt="OMS" src="%%logo%%" class="header__logo_img">
-            		</div>
-            	</div>
-            	<div class="mail-contetn" style="padding: 70px 20px;max-width: 80%%;margin: 0 auto;">
-             <img src="%%illustration%%" style="height: 500px;" alt="">
-            		<h1 class="mail-contetn-title" style="font-size: 56px;text-align: center;margin-bottom: 50px;color: #186b9c;">
-            		Здравствуйте! </h1>
-            		<p class="mail-contetn-text" style="font-size: 21px;color: #202020;line-height: 36px;">
-            			 Ваше обращение о возврате денежных средств направлено в адрес страховой компании для рассмотрения. В соответствии с действующим законодательством в течение <b>30 дней</b> вам должны предоставить информацию о рассмотрении обращения. Это может быть окончательный ответ по результатам рассмотрения обращения, либо уведомление о продлении срока рассмотрения обращения или о его переадресации (направлении на рассмотрение в иную организацию).
-            		</p>
-            	</div>
-            </div>
-            <br>
+            <head>
+              <style>
+                @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+              </style>
+            </head>
+            <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;border-spacing: 0;width: 100%%;margin: 0;padding: 0;">
+              <tr>
+                <td align="center" valign="top" style="border-collapse: collapse;border-spacing: 0;width: 800px;margin: 0;padding: 0;padding-top: 21px" bgcolor="#eef5f8">
+                  <table border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#FFFFFF" width="600" style="border-collapse: collapse;border-spacing: 0;padding: 0;width: 600px;border-radius: 10px;" class="container">
+                    <tr>
+                      <td align="center" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;" bgcolor="#ffffff">
+                        <table border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#eef5f8" width="600" style="border-collapse: collapse;border-spacing: 0;padding: 0;width: 600px;">
+                          <tr>
+                            <td style="width: 135px;height: 48px"></td>
+                            <td rowspan="2" style="width: 330px;" bgcolor="#ffffff">
+                              <img src="/frontend/img/image-email/logo.png" alt="logo.png" />
+                            </td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td style="width: 135px;border-top-left-radius: 10px;" bgcolor="#ffffff"></td>
+                            <td style="height: 32px;border-top-right-radius: 10px;" bgcolor="#ffffff"></td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <table border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#FFFFFF" style="border-collapse: collapse;border-spacing: 0;padding: 0;">
+                          <tr>
+                            <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0; padding: 0;padding-left: 40px;padding-right: 34px;width: 298px;padding-top: 68px;padding-bottom: 20px;line-height: 15px;font-family: 'Roboto', sans-serif;">
+                              <b style="font-size: 22px;line-height: 24px;font-weight: 500">Здравствуйте, %%author_name%%.</b>
+                              <p style="font-size: 14px;line-height: 18px;font-weight: 400">Ваше обращение о возврате денежных средств направлено в страховую компанию.</p>
+                            </td>
+                            <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-left: 0;padding-right: 49px;width: 161px;padding-top: 27px;padding-bottom: 36px;">
+                              <img src="/frontend/img/image-email/notebook.png" alt="notebook.png" />
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="left" valign="top" width="520" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-left: 0;padding-right: 0;width: 520px;max-width: 520px;">
+                        <table border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#eef5f8" width="520" style="border-collapse: collapse;border-spacing: 0;padding: 0;width: 520px;max-width: 520px;font-family: 'Roboto', sans-serif; border-radius: 10px;">
+                          <tr>
+                            <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-top: 45px;padding-left: 29px;padding-right: 29px;padding-bottom: 42px;font-size: 14px;">
+                              <p style="font-size: 16px;color: #00addb;font-weight: 700;text-transform: uppercase;">Что дальше</p>
+                              <p style="max-width: 395px;margin: 0;margin-top: 16px;font-weight: 400;line-height: 18px;">В течении 30 дней Вам должны предоставить информацию о рассмотрении обращения.</p>
+                              <p style="margin-top: 27px;margin-bottom: 27px;font-weight: 700;">Это может быть:</p>
+                              <ul style="max-width: 347px;padding-left: 21px;line-height: 18px;list-style-type: '—   '">
+                                <li style="padding-bottom: 25px">Окончательный ответ;</li>
+                                <li style="padding-bottom: 25px">Уведомление о продлении срока рассмотрения;</li>
+                                <li>Уведомление о переадресации в иную организацию для рассмотрения.</li>
+                              </ul>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <table border="0" cellpadding="0" cellspacing="0" align="left" style="border-collapse: collapse;border-spacing: 0;padding: 0;">
+                          <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;width: 351px;padding-left: 40px;padding-right: 0;font-size: 14px;font-weight: 400;line-height: 18px;padding-top: 35px;padding-bottom: 38px;color: #000000;font-family: 'Roboto', sans-serif;">
+                            <b>С уважением</b>,
+                            <br>команда Безбахил
+                          </td>
+                          <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-left: 40px;padding-right: 90px;padding-top: 35px;">
+                            <img src="/frontend/img/image-email/flowers.png" alt="flowers.png" />
+                          </td>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                  <table border="0" cellpadding="0" cellspacing="0" align="center" width="600" style="border-collapse: collapse;border-spacing: 0;padding: 0;width: 600px;" class="wrapper">
+                    <tr>
+                      <td>
+                        <table border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse: collapse;border-spacing: 0;padding: 0;border-radius: 10px;">
+                          <tr>
+                            <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;font-size: 12px;font-weight: 400;padding-left: 40px;padding-top: 35px;padding-bottom: 38px;color: #000000;font-family: 'Roboto', sans-serif;">
+                              <table border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse: collapse;border-spacing: 0;padding: 0;">
+                                <tr>
+                                  <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;">
+                                    <p style=" width: 246px;font-size: 12px;line-height: 14px;color: #515151;">Безбахил — первый бесплатный сервис, помогающий вернуть деньги за лечение в клиниках, работающих в системе обязательного медицинского страхования.</p>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-top: 15px">
+                                    <b style="font-size: 12px;color: #515151;">Служба поддержки:</b>
+                                    <a href="mailto:support@bezbahil.ru" target="_blank" style="color: #134469;font-family: sans-serif;font-size: 12px;font-weight: 400;line-height: 160%;">support@bezbahil.ru</a>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-top: 25px;" class="social-icons">
+                                    <table border="0" cellpadding="0" cellspacing="0" align="left" style="border-collapse: collapse;border-spacing: 0;padding: 0;">
+                                      <tr>
+                                        <td align="center" valign="middle" style="margin: 0;padding: 0;padding-right: 10px;border-collapse: collapse;border-spacing: 0;">
+                                          <a target="_blank" href="https://www.instagram.com/bezbahil.ru/" style="text-decoration: none;">
+                                            <img src="/frontend/img/image-email/icon-instagram.png" alt="icon-instagram.png" border="0" vspace="0" hspace="0" style="padding: 0;margin: 0;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;border: none;display: inline-block;" title="instagram" />
+                                          </a>
+                                        </td>
+                                        <td align="center" valign="middle" style="margin: 0;padding: 0;border-collapse: collapse;border-spacing: 0;">
+                                          <a target="_blank" href="https://t.me/bezbahil" style="text-decoration: none;">
+                                            <img src="/frontend/img/image-email/icon-telegram.png" alt="icon-telegram.png" border="0" vspace="0" hspace="0" style="padding: 0;margin: 0;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;border: none;display: inline-block;width: 35px;height: 35px;border-radius: 35px;" title="telegram"/>
+                                          </a>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                            <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;font-size: 12px;font-weight: 400;padding-left: 12px;padding-top: 35px;padding-bottom: 38px;color: #000000;font-family: 'Roboto',sans-serif;width: 400px">
+                              <ul>
+                                <li style="text-decoration: underline;list-style-type: none;padding-bottom: 30px">
+                                  <a href="http://bezbahil.ru/forma-obrashenija/" target="_blank" style="color: #515151">Верните деньги за лечение</a>
+                                </li>
+                                <li style="text-decoration: underline;list-style-type: none;padding-bottom: 30px">
+                                  <a href="http://bezbahil.ru/news" target="_blank" style="color: #515151">Медицинский инсайдер</a>
+                                </li>
+                                <li style="text-decoration: underline;list-style-type: none;padding-bottom: 30px">
+                                  <a href="http://bezbahil.ru/feedback" target="_blank" style="color: #515151">Народный рейтинг страховых компаний</a>
+                                </li>
+                                <li style="text-decoration: underline;list-style-type: none;">
+                                  <a href="http://bezbahil.ru/vopros-otvet" target="_blank" style="color: #515151">FAQ</a>
+                                </li>
+                              </ul>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
