@@ -286,6 +286,7 @@ aw_email_templating:
       description: 'Письмо с обращением в СМО'
       variables:
         author: { description: "Отправитель" }
+        author_name: { description: "Имя отправителя" }
       defaults:
         subject: "Обращение о взимании денежных средств"
         body: |
@@ -334,7 +335,7 @@ aw_email_templating:
                       <table border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#eef5f8" width="520" style="border-collapse: collapse;border-spacing: 0;padding: 0;width: 520px;max-width: 520px;font-family: 'Roboto', sans-serif; border-radius: 10px;">
                         <tr>
                           <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-top: 45px;padding-left: 29px;padding-right: 29px;padding-bottom: 42px;font-size: 14px;">
-                            На сайте bezbahil.ru было сформировано новое обращение от пользователя "%%author%%".
+                            На сайте bezbahil.ru было сформировано новое обращение от пользователя "%%author_name%%".
                           </td>
                         </tr>
                       </table>
