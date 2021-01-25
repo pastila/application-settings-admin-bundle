@@ -121,3 +121,9 @@ services:
     obrashcheniya_files_service:
       class: AppBundle\Service\Rabbit\ObrashcheniyaFilesService
       lazy: true
+
+    AppBundle\Entity\Company\Feedback:
+        constraints:
+            - Sonata\Form\Validator\Constraints\InlineConstraint:
+                  service: sonata.page.cms.page
+                  method: validateBlock

@@ -381,6 +381,19 @@ class Feedback
   }
 
   /**
+   * Sets createdAt.
+   *
+   * @param  \DateTime $createdAt
+   * @return $this
+   */
+  public function setCreatedAt(\DateTime $createdAt = null)
+  {
+    $this->createdAt = $createdAt;
+
+    return $this;
+  }
+
+  /**
    * @return string
    */
   public function __toString()

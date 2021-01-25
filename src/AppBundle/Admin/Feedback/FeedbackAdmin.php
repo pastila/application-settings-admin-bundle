@@ -4,27 +4,22 @@ namespace AppBundle\Admin\Feedback;
 
 use AppBundle\Entity\Company\CompanyBranch;
 use AppBundle\Entity\Company\FeedbackModerationStatus;
-use AppBundle\Form\Widget\BezbahilAutocompleteCompanyType;
-use AppBundle\Model\Esim\EsimStatus;
-use AppBundle\Repository\Company\CompanyBranchRepository;
+use AppBundle\Validator\Feedback\FeedbackAuthor;
+use AppBundle\Validator\Feedback\FeedbackValidator;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
-use Sonata\AdminBundle\Form\Type\ModelListType;
-use Sonata\AdminBundle\Form\Type\ModelType;
-use Sonata\AdminBundle\Route\RouteCollection;
-use Sonata\AdminBundle\Show\ShowMapper;
-use Sonata\AdminBundle\Templating\TemplateRegistry;
-use Sonata\CoreBundle\Form\Type\DatePickerType;
+use Sonata\BlockBundle\Model\BlockInterface;
+use Sonata\CoreBundle\Form\Type\DateTimePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\NotNull;
-use Symfony\Component\Validator\Constraints\Range;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\ConstraintValidator;
+use Sonata\CoreBundle\Validator\ErrorElement;
 
 /**
  * Class FeedbackAdmin
@@ -33,14 +28,20 @@ use Symfony\Component\Validator\Constraints\Range;
 class FeedbackAdmin extends AbstractAdmin
 {
   /**
+   * @var array
+   */
+  protected $datagridValues = array(
+    '_page' => 1,
+    '_sort_order' => 'ASC',
+    '_sort_by' => 'createdAt',
+  );
+
+  /**
    * @param ListMapper $list
    */
   protected function configureListFields(ListMapper $list)
   {
     $list
-      ->add('id', null, [
-        'label' => 'ID',
-      ])
       ->add('branch', null, [
         'label' => 'СМО',
       ])
@@ -52,6 +53,10 @@ class FeedbackAdmin extends AbstractAdmin
       ])
       ->add('author', null, [
         'label' => 'Пользователь',
+      ])
+      ->add('createdAt', 'date', [
+        'label' => 'Дата публикации',
+        'format' => 'Y-m-d H:i:s'
       ])
       ->add('moderationStatus', 'choice', [
         'label' => 'Статус модерации',
@@ -83,12 +88,14 @@ class FeedbackAdmin extends AbstractAdmin
         'help' => 'Можно оставить пустым, если пользватель не авторизованный',
       ])
       ->add('authorName', null, [
+        'required' => true,
         'label' => 'Имя пользователя',
         'help' => 'Подставляется автоматически после сохранения, если пользователь выбран как авторизованный',
       ])
       ->add("title", TextType::class, [
         'required' => true,
         'constraints' => [
+          new NotBlank(),
           new Length([
             'min' => 3,
             'max' => 255,
@@ -101,6 +108,7 @@ class FeedbackAdmin extends AbstractAdmin
           'rows' => 5
         ],
         'constraints' => [
+          new NotBlank(),
           new Length([
             'min' => 10,
           ]),
@@ -109,10 +117,10 @@ class FeedbackAdmin extends AbstractAdmin
       ->add('valuation', 'AppBundle\Form\Feedback\FeedbackValuationChoiceType', [
         'label' => 'Оценка',
         'required' => false,
-        'expanded' => false,
       ])
-      ->add("createdAt", DatePickerType::class, [
+      ->add("createdAt", DateTimePickerType::class, [
         'required' => true,
+        'by_reference' => true,
         'format' => 'd MMMM yyyy',
         'view_timezone' => 'UTC',
         'model_timezone' => 'UTC',
@@ -140,5 +148,16 @@ class FeedbackAdmin extends AbstractAdmin
       ->add('moderationStatus', null, [], 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
         'choices' => array_flip(FeedbackModerationStatus::getAvailableNames()),
       ]);
+  }
+
+  /**
+   * 
+   */
+  protected function attachInlineValidator ()
+  {
+    $metadata = $this->validator->getMetadataFor($this->getClass());
+    $metadata->addConstraint(new FeedbackAuthor());
+
+    return parent::attachInlineValidator();
   }
 }
