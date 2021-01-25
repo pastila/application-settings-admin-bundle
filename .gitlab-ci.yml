@@ -165,6 +165,7 @@ build-sf-app:
   <<: *build-image
   stage: build-app
   script:
+    - sleep 30
     - composer install -o
     - cd web && composer install -o
 
