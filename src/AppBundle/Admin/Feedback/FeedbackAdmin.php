@@ -117,6 +117,7 @@ class FeedbackAdmin extends AbstractAdmin
       ->add('valuation', 'AppBundle\Form\Feedback\FeedbackValuationChoiceType', [
         'label' => 'Оценка',
         'required' => false,
+        "expanded" => false
       ])
       ->add("createdAt", DateTimePickerType::class, [
         'required' => true,
