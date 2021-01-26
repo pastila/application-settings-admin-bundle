@@ -2,24 +2,25 @@
 
 namespace AppBundle\Admin\Feedback;
 
+use AppBundle\Entity\Company\Company;
 use AppBundle\Entity\Company\CompanyBranch;
+use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\Company\FeedbackModerationStatus;
+use AppBundle\Entity\Geo\Region;
+use AppBundle\Repository\Company\CompanyRepository;
+use AppBundle\Repository\Geo\RegionRepository;
 use AppBundle\Validator\Feedback\FeedbackAuthor;
-use AppBundle\Validator\Feedback\FeedbackValidator;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\BlockBundle\Model\BlockInterface;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\CoreBundle\Form\Type\DateTimePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\ConstraintValidator;
-use Sonata\CoreBundle\Validator\ErrorElement;
 
 /**
  * Class FeedbackAdmin
@@ -55,7 +56,11 @@ class FeedbackAdmin extends AbstractAdmin
         'label' => 'Пользователь',
       ])
       ->add('createdAt', 'date', [
-        'label' => 'Дата публикации',
+        'label' => 'Дата создания',
+        'format' => 'Y-m-d H:i:s'
+      ])
+      ->add('updatedAt', 'date', [
+        'label' => 'Дата изменения',
         'format' => 'Y-m-d H:i:s'
       ])
       ->add('moderationStatus', 'choice', [
@@ -78,10 +83,39 @@ class FeedbackAdmin extends AbstractAdmin
   protected function configureFormFields(FormMapper $form)
   {
     $form
-      ->add('branch', EntityType::class, [
-        'label' => 'Филиал СМО',
-        'class' => CompanyBranch::class,
-        'choice_label' => 'regionName',
+      ->add('company', EntityType::class, [
+        'label' => 'Компания',
+        'class' => Company::class,
+        'choice_label' => 'name',
+        'placeholder' => '',
+        "expanded" => false,
+        'query_builder' => function (CompanyRepository $repository)
+        {
+          return $repository
+            ->getWithBranchActive()
+            ->orderBy('c.name');
+        },
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+        ],
+      ])
+      ->add('region', EntityType::class, [
+        'label' => 'Регион',
+        'class' => Region::class,
+        'choice_label' => 'name',
+        'placeholder' => '',
+        "expanded" => false,
+        'query_builder' => function (RegionRepository $repository)
+        {
+          return $repository
+            ->createQueryBuilder('r')
+            ->orderBy('r.name');
+        },
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+        ],
       ])
       ->add('author', null, [
         'label' => 'Авторизованный пользователь',
@@ -114,17 +148,25 @@ class FeedbackAdmin extends AbstractAdmin
           ]),
         ],
       ])
-      ->add('valuation', 'AppBundle\Form\Feedback\FeedbackValuationChoiceType', [
-        'label' => 'Оценка',
-        'required' => false,
-        "expanded" => false
-      ])
       ->add("createdAt", DateTimePickerType::class, [
+        'label' => 'Дата создания',
         'required' => true,
         'by_reference' => true,
         'format' => 'd MMMM yyyy',
         'view_timezone' => 'UTC',
         'model_timezone' => 'UTC',
+        'constraints' => [
+          new NotBlank(),
+        ],
+      ])
+      ->add("updatedAt", DateTimePickerType::class, [
+        'required' => false,
+        'label' => 'Дата изменения',
+        'by_reference' => true,
+        'format' => 'd MMMM yyyy',
+        'view_timezone' => 'UTC',
+        'model_timezone' => 'UTC',
+        'help' => 'При обновлении изменяется автоматически',
       ])
       ->add('moderationStatus', 'AppBundle\Form\Feedback\FeedbackStatusChoiceType', [
         'required' => true,
@@ -152,13 +194,83 @@ class FeedbackAdmin extends AbstractAdmin
   }
 
   /**
-   * 
+   * @param Feedback $feedback
    */
-  protected function attachInlineValidator ()
+  public function prePersist($feedback)
+  {
+    $this->setBranch($feedback);
+    $this->setUpdatedAt($feedback);
+  }
+
+  /**
+   * @param Feedback $feedback
+   */
+  public function preUpdate($feedback)
+  {
+    $this->setBranch($feedback);
+    $this->setUpdatedAt($feedback);
+  }
+
+  /**
+   * @param Feedback $feedback
+   */
+  protected function setBranch($feedback)
+  {
+    $container = $this->getConfigurationPool()->getContainer();
+
+    if (!empty($feedback->getRegionRaw()) && !empty($feedback->getCompanyRaw()))
+    {
+      $em = $container->get('doctrine.orm.entity_manager');
+      $branch = $em->getRepository(CompanyBranch::class)
+        ->findOneBy([
+          'region' => $feedback->getRegionRaw(),
+          'company' => $feedback->getCompanyRaw(),
+        ]);
+      $feedback->setBranch($branch);
+    }
+  }
+
+  /**
+   * @param Feedback $feedback
+   */
+  protected function setUpdatedAt($feedback)
+  {
+    $feedback->setUpdatedAt(empty($feedback->getUpdatedAt()) ? $feedback->getCreatedAt() : $feedback->getUpdatedAt());
+  }
+
+  /**
+   *
+   */
+  protected function attachInlineValidator()
   {
     $metadata = $this->validator->getMetadataFor($this->getClass());
     $metadata->addConstraint(new FeedbackAuthor());
 
     return parent::attachInlineValidator();
+  }
+
+  /**
+   * @param RouteCollection $collection
+   */
+  protected function configureRoutes(RouteCollection $collection)
+  {
+    $collection->add('reloadRegions', 'reload-regions');
+  }
+
+  /**
+   * @param string $name
+   * @return string|null
+   */
+  public function getTemplate($name)
+  {
+    switch ($name)
+    {
+      case 'edit':
+        return 'SonataAdminBundle:CRUD:region_edit.html.twig';
+        break;
+      default:
+        return parent::getTemplate($name);
+        break;
+    }
   }
 }
