@@ -7,7 +7,7 @@ aw_email_templating:
     email_contact_us:
       description: 'Обратная связь'
       variables:
-        recipient_name: { description: "Имя отправителя" }
+        recipient_name: { description: "Имя получателя" }
         email: { description: "Email" }
         text: { description: "Сообщение" }
       defaults:
@@ -285,7 +285,7 @@ aw_email_templating:
     email_obrashcheniya_branch:
       description: 'Письмо с обращением в СМО'
       variables:
-        recipient_name: { description: "Имя отправителя" }
+        recipient_name: { description: "Имя получателя" }
       defaults:
         subject: "Обращение о взимании денежных средств"
         body: |
@@ -420,7 +420,7 @@ aw_email_templating:
     appeal_sent_user:
       description: 'Уведомление пользователю о том, что его обращение отправлено в СМО'
       variables:
-        recipient_name: { description: "Имя отправителя" }
+        recipient_name: { description: "Имя получателя" }
         logo: { description: "URL логотипа" }
         illustration: { description: "URL иллюстрации" }
       defaults:
