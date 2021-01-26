@@ -24,13 +24,9 @@ class OrganizationAdmin extends AbstractAdmin
   {
     $list
       ->add('code')
-      ->add('name')
       ->add('region')
-      ->add('status', 'choice', [
-        'label' => 'Статус модерации',
-        'editable' => true,
-        'choices' => OrganizationStatus::getAvailableName(),
-      ])
+      ->add('name')
+      ->add('published')
       ->add('_action', null, array(
         'label' => 'Действия',
         'actions' => array(
@@ -55,7 +51,7 @@ class OrganizationAdmin extends AbstractAdmin
           ]),
         ],
       ])
-      ->add("nameFull", TextType::class, [
+      ->add("fullName", TextType::class, [
         'required' => false,
         'constraints' => [
           new Length([
@@ -112,12 +108,7 @@ class OrganizationAdmin extends AbstractAdmin
       ])
       ->add('region')
       ->add('years')
-      ->add('status', 'AppBundle\Form\Organization\OrganizationStatusChoiceType', [
-        'required' => true,
-        'constraints' => [
-          new NotBlank(),
-        ],
-      ]);
+      ->add('published');
   }
 
   /**
@@ -129,8 +120,6 @@ class OrganizationAdmin extends AbstractAdmin
       ->add('name')
       ->add('region')
       ->add('years')
-      ->add('status', null, [], 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
-        'choices' => array_flip(OrganizationStatus::getAvailableName()),
-      ]);
+      ->add('published');
   }
 }

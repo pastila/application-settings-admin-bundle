@@ -26,13 +26,6 @@ class Organization
   protected $id;
 
   /**
-   * @var integer|null
-   *
-   * @ORM\Column(type="integer", nullable=true)
-   */
-  private $bitrixId;
-
-  /**
    * Название МО
    *
    * @var string
@@ -48,7 +41,7 @@ class Organization
    *
    * @ORM\Column(name="name_full", type="string", length=512, nullable=true)
    */
-  private $nameFull;
+  private $fullName;
 
   /**
    * Код МО
@@ -206,17 +199,17 @@ class Organization
   /**
    * @return string
    */
-  public function getNameFull()
+  public function getFullName()
   {
-    return $this->nameFull;
+    return $this->fullName;
   }
 
   /**
-   * @param string $nameFull
+   * @param string $fullName
    */
-  public function setNameFull($nameFull): void
+  public function setFullName($fullName): void
   {
-    $this->nameFull = $nameFull;
+    $this->fullName = $fullName;
   }
 
   /**

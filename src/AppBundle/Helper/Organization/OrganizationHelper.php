@@ -161,7 +161,7 @@ class OrganizationHelper
       $organization->setCode($data['CODE']);
       $organization->setName($data['NAME']);
       $organization->setStatus($status);
-      $organization->setNameFull($data['NAME']);
+      $organization->setFullName($data['NAME']);
       $organization->setAddress($data['ADDRESS']);
       $organization->setLastName($data['LAST_NAME']);
       $organization->setFirstName($data['FIRST_NAME']);
