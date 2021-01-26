@@ -85,6 +85,7 @@ class InsuranceCompanyAdmin extends AbstractAdmin
   protected function configureDatagridFilters(DatagridMapper $filter)
   {
     $filter
+      ->add('kpp')
       ->add('name')
       ->add('published');
   }
