@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Admin\Company;
+namespace AppBundle\Admin\InsuranceCompany;
 
 
 use AppBundle\Entity\Company\FeedbackModerationStatus;
@@ -18,10 +18,10 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- * Class CompanyAdmin
+ * Class InsuranceCompanyAdmin
  * @package AppBundle\Admin\Company
  */
-class CompanyAdmin extends AbstractAdmin
+class InsuranceCompanyAdmin extends AbstractAdmin
 {
   /**
    * @param ListMapper $list

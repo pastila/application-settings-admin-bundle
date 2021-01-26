@@ -8,8 +8,8 @@ namespace AppBundle\Controller\InsuranceCompany;
 use Accurateweb\ApplicationSettingsAdminBundle\Model\Manager\SettingManagerInterface;
 use AppBundle\Entity\Company\Citation;
 use AppBundle\Entity\Company\Comment;
-use AppBundle\Entity\Company\Company;
-use AppBundle\Entity\Company\CompanyBranch;
+use AppBundle\Entity\Company\InsuranceCompany;
+use AppBundle\Entity\Company\InsuranceCompanyBranch;
 use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\Company\FeedbackModerationStatus;
 use AppBundle\Entity\Geo\Region;
@@ -113,7 +113,7 @@ class FeedbackController extends Controller
 
     if ($request->get('slug'))
     {
-      $company = $this->getDoctrine()->getManager()->getRepository(Company::class)
+      $company = $this->getDoctrine()->getManager()->getRepository(InsuranceCompany::class)
         ->findOneBy(['slug' => $request->get('slug')]);
 
       if (!$company)
@@ -542,7 +542,7 @@ class FeedbackController extends Controller
   public function companySearchAction(Request $request)
   {
     $em = $this->getDoctrine()->getManager();
-    $repository = $em->getRepository(CompanyBranch::class);
+    $repository = $em->getRepository(InsuranceCompanyBranch::class);
     $branches = $repository
       ->getActive()
       ->andWhere('cb.region = :regionId')

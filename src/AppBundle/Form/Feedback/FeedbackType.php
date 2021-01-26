@@ -9,7 +9,7 @@ use AppBundle\Form\Widget\BezbahilAutocompleteCompanyType;
 use AppBundle\Form\Widget\BezbahilAutocompleteRegionType;
 use AppBundle\Form\Widget\BezbahilRatingType;
 use AppBundle\Repository\Company\CompanyBranchRepository;
-use AppBundle\Repository\Company\CompanyRepository;
+use AppBundle\Repository\Company\InsuranceCompanyRepository;
 use AppBundle\Repository\Geo\RegionRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
@@ -27,7 +27,7 @@ class FeedbackType extends AbstractType
   private $companyRepository;
   private $regionRepository;
 
-  public function __construct(CompanyRepository $companyRepository, RegionRepository $regionRepository)
+  public function __construct(InsuranceCompanyRepository $companyRepository, RegionRepository $regionRepository)
   {
     $this->companyRepository = $companyRepository;
     $this->regionRepository = $regionRepository;

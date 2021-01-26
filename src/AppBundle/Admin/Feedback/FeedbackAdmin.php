@@ -2,12 +2,12 @@
 
 namespace AppBundle\Admin\Feedback;
 
-use AppBundle\Entity\Company\Company;
-use AppBundle\Entity\Company\CompanyBranch;
 use AppBundle\Entity\Company\Feedback;
+use AppBundle\Entity\Company\InsuranceCompany;
+use AppBundle\Entity\Company\InsuranceCompanyBranch;
 use AppBundle\Entity\Company\FeedbackModerationStatus;
 use AppBundle\Entity\Geo\Region;
-use AppBundle\Repository\Company\CompanyRepository;
+use AppBundle\Repository\Company\InsuranceCompanyRepository;
 use AppBundle\Repository\Geo\RegionRepository;
 use AppBundle\Validator\Feedback\FeedbackAuthor;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -85,11 +85,11 @@ class FeedbackAdmin extends AbstractAdmin
     $form
       ->add('company', EntityType::class, [
         'label' => 'Компания',
-        'class' => Company::class,
+        'class' => InsuranceCompany::class,
         'choice_label' => 'name',
         'placeholder' => '',
         "expanded" => false,
-        'query_builder' => function (CompanyRepository $repository)
+        'query_builder' => function (InsuranceCompanyRepository $repository)
         {
           return $repository
             ->getWithBranchActive()

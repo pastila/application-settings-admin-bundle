@@ -2,9 +2,8 @@
 
 namespace AppBundle\Entity\User;
 
-use AppBundle\Entity\Company\CompanyBranch;
-use AppBundle\Entity\Company\Feedback;
-use Doctrine\Common\Collections\ArrayCollection;
+
+use AppBundle\Entity\Company\InsuranceCompanyBranch;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -65,8 +64,8 @@ class User implements UserInterface
 
   /**
    * Отделение, в котором пользователь является представителем
-   * @var null|CompanyBranch
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\CompanyBranch")
+   * @var null|InsuranceCompanyBranch
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\InsuranceCompanyBranch")
    * @ORM\JoinColumn(name="branch_id", nullable=true, onDelete="RESTRICT")
    */
   private $branch;
@@ -321,7 +320,7 @@ class User implements UserInterface
   }
 
   /**
-   * @return null|CompanyBranch
+   * @return null|InsuranceCompanyBranch
    */
   public function getBranch()
   {
@@ -329,7 +328,7 @@ class User implements UserInterface
   }
 
   /**
-   * @param CompanyBranch $branch
+   * @param InsuranceCompanyBranch $branch
    *
    * @return $this
    */

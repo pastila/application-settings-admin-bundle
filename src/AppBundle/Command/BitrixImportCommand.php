@@ -4,8 +4,8 @@ namespace AppBundle\Command;
 
 use AppBundle\Entity\Company\Citation;
 use AppBundle\Entity\Company\Comment;
-use AppBundle\Entity\Company\Company;
-use AppBundle\Entity\Company\CompanyBranch;
+use AppBundle\Entity\Company\InsuranceCompany;
+use AppBundle\Entity\Company\InsuranceCompanyBranch;
 use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\Company\FeedbackModerationStatus;
 use AppBundle\Entity\Geo\Region;
@@ -53,12 +53,12 @@ class BitrixImportCommand extends ContainerAwareCommand
     $regionHelper->load($io);
 
     $common = new CommonHelper();
-    $common->clearTable($entityManager, [Company::class]);
+    $common->clearTable($entityManager, [InsuranceCompany::class]);
     $companyHelper = $this->getContainer()->get('AppBundle\Helper\Feedback\CompanyHelper');
     $companyHelper->load($io);
 
     $common = new CommonHelper();
-    $common->clearTable($entityManager, [CompanyBranch::class]);
+    $common->clearTable($entityManager, [InsuranceCompanyBranch::class]);
     $companyBranchHelper = $this->getContainer()->get('AppBundle\Helper\Feedback\CompanyBranchHelper');
     $companyBranchHelper->load($io);
 
@@ -76,8 +76,8 @@ class BitrixImportCommand extends ContainerAwareCommand
     $tables = [
       User::class,
       Region::class,
-      Company::class,
-      CompanyBranch::class,
+      InsuranceCompany::class,
+      InsuranceCompanyBranch::class,
       Feedback::class,
       Comment::class,
       Citation::class

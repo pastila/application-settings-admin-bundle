@@ -15,7 +15,7 @@ class Company extends Fixture
    */
   public function load(ObjectManager $manager)
   {
-    $sogazMed = new \AppBundle\Entity\Company\Company();
+    $sogazMed = new \AppBundle\Entity\Company\InsuranceCompany();
     $sogazMed
       ->setKpp('1027739008440')
       ->setName('СОГАЗ-МЕД')
@@ -23,7 +23,7 @@ class Company extends Fixture
       ->setPublished(true);
     $manager->persist($sogazMed);
 
-    $akbars = new \AppBundle\Entity\Company\Company();
+    $akbars = new \AppBundle\Entity\Company\InsuranceCompany();
     $akbars
       ->setKpp('1041625409033')
       ->setName('АКБАРС-МЕД')
@@ -31,7 +31,7 @@ class Company extends Fixture
       ->setPublished(false);
     $manager->persist($akbars);
 
-    $ingostach_m = new \AppBundle\Entity\Company\Company();
+    $ingostach_m = new \AppBundle\Entity\Company\InsuranceCompany();
     $ingostach_m
       ->setKpp('1045207042528')
       ->setName('ИНГОССТРАХ-М')
@@ -39,7 +39,7 @@ class Company extends Fixture
       ->setPublished(true);
     $manager->persist($ingostach_m);
 
-    $arsenal = new \AppBundle\Entity\Company\Company();
+    $arsenal = new \AppBundle\Entity\Company\InsuranceCompany();
     $arsenal
       ->setKpp('1147746437343')
       ->setName('АРСЕНАЛМС')
@@ -47,7 +47,7 @@ class Company extends Fixture
       ->setPublished(true);
     $manager->persist($arsenal);
 
-    $maksm = new \AppBundle\Entity\Company\Company();
+    $maksm = new \AppBundle\Entity\Company\InsuranceCompany();
     $maksm
       ->setKpp('1027739099772')
       ->setName('МАКС-М')

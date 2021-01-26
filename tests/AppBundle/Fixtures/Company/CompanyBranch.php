@@ -28,7 +28,7 @@ class CompanyBranch extends Fixture implements DependentFixtureInterface
    */
   public function load(ObjectManager $manager)
   {
-    $sogazMed66 = new \AppBundle\Entity\Company\CompanyBranch();
+    $sogazMed66 = new \AppBundle\Entity\Company\InsuranceCompanyBranch();
     $sogazMed66
       ->setCompany($this->getReference('sogaz-med'))
       ->setRegion($this->getReference('region-66'))
@@ -37,7 +37,7 @@ class CompanyBranch extends Fixture implements DependentFixtureInterface
       ->setPublished(true);
     $manager->persist($sogazMed66);
 
-    $akbars66 = new \AppBundle\Entity\Company\CompanyBranch();
+    $akbars66 = new \AppBundle\Entity\Company\InsuranceCompanyBranch();
     $akbars66
       ->setCompany($this->getReference('akbars'))
       ->setRegion($this->getReference('region-66'))
@@ -46,7 +46,7 @@ class CompanyBranch extends Fixture implements DependentFixtureInterface
       ->setPublished(true);
     $manager->persist($akbars66);
 
-    $ingostach_m66 = new \AppBundle\Entity\Company\CompanyBranch();
+    $ingostach_m66 = new \AppBundle\Entity\Company\InsuranceCompanyBranch();
     $ingostach_m66
       ->setCompany($this->getReference('ingostach_m'))
       ->setRegion($this->getReference('region-66'))
@@ -55,7 +55,7 @@ class CompanyBranch extends Fixture implements DependentFixtureInterface
       ->setPublished(true);
     $manager->persist($ingostach_m66);
 
-    $arsenal66 = new \AppBundle\Entity\Company\CompanyBranch();
+    $arsenal66 = new \AppBundle\Entity\Company\InsuranceCompanyBranch();
     $arsenal66
       ->setCompany($this->getReference('arsenal'))
       ->setRegion($this->getReference('region-66'))
@@ -64,7 +64,7 @@ class CompanyBranch extends Fixture implements DependentFixtureInterface
       ->setPublished(false);
     $manager->persist($arsenal66);
 
-    $maksm66 = new \AppBundle\Entity\Company\CompanyBranch();
+    $maksm66 = new \AppBundle\Entity\Company\InsuranceCompanyBranch();
     $maksm66
       ->setCompany($this->getReference('maksm'))
       ->setRegion($this->getReference('region-66'))
@@ -73,7 +73,7 @@ class CompanyBranch extends Fixture implements DependentFixtureInterface
       ->setPublished(true);
     $manager->persist($maksm66);
 
-    $maksm47 = new \AppBundle\Entity\Company\CompanyBranch();
+    $maksm47 = new \AppBundle\Entity\Company\InsuranceCompanyBranch();
     $maksm47
       ->setCompany($this->getReference('maksm'))
       ->setRegion($this->getReference('region-47'))
