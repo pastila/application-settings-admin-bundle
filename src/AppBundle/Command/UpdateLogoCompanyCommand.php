@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Class UpdateLogoCompanyCommand
@@ -50,7 +51,7 @@ class UpdateLogoCompanyCommand extends ContainerAwareCommand
       /**
        * @var Company $company
        */
-      $imageBitrixId = $company->getFile();
+      $imageBitrixId = $company->getLogo();
 
       $sql = 'SELECT *
             FROM b_file bf  
@@ -102,10 +103,18 @@ class UpdateLogoCompanyCommand extends ContainerAwareCommand
         $io->error(sprintf('Not copy file "%s" for company %s', $filePathFull, $company->getName()));
         continue;
       }
-      $company->setFile($dirSection . '/' . $newFileName);
+
+      $uploadedFile = new UploadedFile(
+        $filePathFull,
+        $fileName,
+        null,
+        filesize($filePathFull)
+      );
+
+      $company->setLogo($uploadedFile);
       $entityManager->persist($company);
+      $entityManager->flush();
     }
-    $entityManager->flush();
 
     $io->success('finish update logo companies and branch');
   }

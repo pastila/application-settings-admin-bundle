@@ -6,7 +6,7 @@ use Accurateweb\MediaBundle\Exception\OperationNotSupportedException;
 use Accurateweb\MediaBundle\Model\Image\ImageAwareInterface;
 use Accurateweb\MediaBundle\Model\Media\ImageInterface;
 use Accurateweb\MediaBundle\Model\Thumbnail\ImageThumbnail;
-use AppBundle\Model\Media\CompanyImage;
+use AppBundle\Model\Media\CompanyLogo;
 use AppBundle\Sluggable\SluggableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -36,7 +36,6 @@ class Company implements ImageAwareInterface, SluggableInterface
    * @ORM\Column(type="integer", nullable=true)
    */
   private $bitrixId;
-
 
   /**
    * @var string
@@ -83,21 +82,15 @@ class Company implements ImageAwareInterface, SluggableInterface
    *
    * @var string
    * @ORM\Column(name="image", type="string", length=255, nullable=true)
-   * @Media\Image(id="companies")
+   * @Media\Image(id="company_logos")
    */
-  protected $file;
+  protected $logo;
 
   /**
    * @var boolean
    * @ORM\Column(type="boolean", nullable=false, options={"default"=true})
    */
   private $published;
-
-  /**
-   * @var Feedback[]|ArrayCollection
-   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Company\Feedback", mappedBy="company")
-   */
-  protected $feedbacks;
 
   /**
    * @var CompanyBranch[]|ArrayCollection
@@ -242,23 +235,23 @@ class Company implements ImageAwareInterface, SluggableInterface
   /**
    * @return string
    */
-  public function getFile()
+  public function getLogo()
   {
-    return $this->file;
+    return $this->logo;
   }
 
   /**
-   * @param string $file
+   * @param string $logo
    * @return $this
    */
-  public function setFile($file)
+  public function setLogo($logo)
   {
-    if ($file === null)
+    if ($logo === null)
     {
       return $this;
     }
 
-    $this->file = $file;
+    $this->logo = $logo;
 
     return $this;
   }
@@ -269,7 +262,7 @@ class Company implements ImageAwareInterface, SluggableInterface
    */
   public function getImage($id = null)
   {
-    return new CompanyImage('companies', $this->file);
+    return new CompanyLogo('company_logos', $this->logo);
   }
 
   /**
@@ -278,17 +271,24 @@ class Company implements ImageAwareInterface, SluggableInterface
    */
   public function setImage(ImageInterface $image)
   {
-    $this->setFile($image->getResourceId());
+    $this->setLogo($image->getResourceId());
 
     return $this;
   }
 
-  public function setFileImage($image)
+  /**
+   * @param $image
+   * @return $this
+   */
+  public function setLogoImage($image)
   {
     return $this->setImage($image);
   }
 
-  public function getFileImage()
+  /**
+   * @return ImageInterface
+   */
+  public function getLogoImage()
   {
     return $this->getImage();
   }
