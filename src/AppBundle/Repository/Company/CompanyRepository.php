@@ -3,7 +3,6 @@
 namespace AppBundle\Repository\Company;
 
 use AppBundle\Entity\Company\Company;
-use AppBundle\Entity\Company\CompanyStatus;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -85,8 +84,8 @@ class CompanyRepository extends ServiceEntityRepository
   public function getActive()
   {
     return $this->createQueryBuilder('c')
-      ->andWhere('c.status = :status')
-      ->setParameter('status', CompanyStatus::ACTIVE);
+      ->andWhere('c.published = :published')
+      ->setParameter('published', true);
   }
 
   /**
@@ -95,6 +94,6 @@ class CompanyRepository extends ServiceEntityRepository
   public function getWithBranchActive()
   {
     return $this->getActive()
-      ->innerJoin('c.branches', 'cb', 'WITH', 'cb.status = :status');
+      ->innerJoin('c.branches', 'cb', 'WITH', 'cb.published = :published');
   }
 }

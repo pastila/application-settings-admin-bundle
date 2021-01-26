@@ -4,7 +4,6 @@
 namespace AppBundle\Repository\Obrashcheniya;
 
 
-use AppBundle\Entity\Company\CompanyStatus;
 use AppBundle\Entity\Obrashcheniya\ObrashcheniyaFile;
 use AppBundle\Entity\Obrashcheniya\ObrashcheniyaFileType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

@@ -66,7 +66,7 @@ class UpdateRatingCommand extends ContainerAwareCommand
             (
                 SELECT company_id, AVG (valuation) as valuation_avg
                 FROM s_company_branches scb
-                WHERE scb.status > 0 AND scb.valuation > 0
+                WHERE scb.published = true AND scb.valuation > 0
                 GROUP BY scb.company_id
             ) scb ON scb.company_id = sc.id
             SET sc.valuation = scb.valuation_avg';

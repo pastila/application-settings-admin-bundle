@@ -6,8 +6,6 @@
 namespace AppBundle\Form\InsuranceCompany;
 
 use AppBundle\Entity\Company\Company;
-use AppBundle\Entity\Company\CompanyBranch;
-use AppBundle\Entity\Company\CompanyStatus;
 use AppBundle\Entity\Company\FeedbackModerationStatus;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Form\BezbahilFilterChoiceType;

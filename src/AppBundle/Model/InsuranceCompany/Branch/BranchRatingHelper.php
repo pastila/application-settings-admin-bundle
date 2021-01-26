@@ -7,8 +7,6 @@ namespace AppBundle\Model\InsuranceCompany\Branch;
 
 
 use AppBundle\Entity\Company\Company;
-use AppBundle\Entity\Company\CompanyBranch;
-use AppBundle\Entity\Company\CompanyStatus;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Repository\Company\CompanyBranchRepository;
 use AppBundle\Repository\Company\CompanyRepository;

@@ -8,7 +8,6 @@ namespace AppBundle\Repository\Company;
 
 use AppBundle\Entity\Company\Company;
 use AppBundle\Entity\Company\CompanyBranch;
-use AppBundle\Entity\Company\CompanyStatus;
 use AppBundle\Entity\Geo\Region;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -49,8 +48,8 @@ class CompanyBranchRepository extends ServiceEntityRepository
   {
     return $this->createQueryBuilder('cb')
       ->innerJoin('cb.company', 'c')
-      ->andWhere('c.status = :status')
-      ->andWhere('cb.status = :status')
-      ->setParameter('status', CompanyStatus::ACTIVE);
+      ->andWhere('c.published = :published')
+      ->andWhere('cb.published = :published')
+      ->setParameter('published', true);
   }
 }
