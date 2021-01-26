@@ -54,8 +54,5 @@ class UpdateGuideCommand extends ContainerAwareCommand
     $companyBranchHelper = $this->getContainer()->get('AppBundle\Helper\Feedback\CompanyBranchHelper');
     $companyBranchHelper->load($io);
     $companyBranchHelper->check();
-
-    $regionHelper = $this->getContainer()->get('AppBundle\Helper\Organization\OrganizationHelper');
-    $regionHelper->load($io);
   }
 }

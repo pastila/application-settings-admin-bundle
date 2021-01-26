@@ -42,6 +42,16 @@ class OrganizationAdmin extends AbstractAdmin
   protected function configureFormFields(FormMapper $form)
   {
     $form
+      ->add("code", TextType::class, [
+        'label' => 'Код медицинской организации',
+        'required' => true,
+        'constraints' => [
+          new Length([
+            'min' => 3,
+            'max' => 255,
+          ]),
+        ],
+      ])
       ->add("name", TextType::class, [
         'required' => true,
         'constraints' => [
@@ -57,16 +67,6 @@ class OrganizationAdmin extends AbstractAdmin
           new Length([
             'min' => 3,
             'max' => 512,
-          ]),
-        ],
-      ])
-      ->add("code", TextType::class, [
-        'label' => 'Код медицинской организации',
-        'required' => true,
-        'constraints' => [
-          new Length([
-            'min' => 3,
-            'max' => 255,
           ]),
         ],
       ])
@@ -117,6 +117,7 @@ class OrganizationAdmin extends AbstractAdmin
   protected function configureDatagridFilters(DatagridMapper $filter)
   {
     $filter
+      ->add('code')
       ->add('name')
       ->add('region')
       ->add('years')

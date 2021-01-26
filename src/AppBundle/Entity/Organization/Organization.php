@@ -18,18 +18,19 @@ use Doctrine\ORM\Mapping\ManyToMany;
 class Organization
 {
   /**
+   * Код МО
+   *
    * @var integer
    * @ORM\Id()
    * @ORM\GeneratedValue(strategy="AUTO")
    * @ORM\Column(type="integer")
    */
-  protected $id;
+  private $code;
 
   /**
    * Название МО
    *
    * @var string
-   *
    * @ORM\Column(name="name", type="string", length=255, nullable=false)
    */
   private $name;
@@ -38,61 +39,26 @@ class Organization
    * Полное название МО
    *
    * @var string
-   *
    * @ORM\Column(name="name_full", type="string", length=512, nullable=true)
    */
   private $fullName;
 
   /**
-   * Код МО
-   *
-   * @var string
-   *
-   * @ORM\Column(name="code", type="string", length=255, nullable=false, unique=true)
-   */
-  private $code;
-
-  /**
    * Адрес МО
    *
    * @var string
-   *
    * @ORM\Column(name="address", type="string", length=512, nullable=true)
    */
   private $address;
 
-  /**
-   * Фамилия
-   *
-   * @var string
-   *
-   * @ORM\Column(name="last_name", type="string", length=255, nullable=true)
-   */
-  private $lastName;
 
-  /**
-   * Имя
-   *
-   * @var string
-   *
-   * @ORM\Column(name="first_name", type="string", length=255, nullable=true)
-   */
-  private $firstName;
-
-  /**
-   * Отчество
-   *
-   * @var string
-   *
-   * @ORM\Column(name="middle_name", type="string", length=255, nullable=true)
-   */
-  private $middleName;
+  private $chiefMedicalOfficer;
 
   /**
    * @var int
-   * @ORM\Column(type="integer", nullable=false)
+   * @ORM\Column(type="boolean", nullable=false, options={"default"=true})
    */
-  private $status;
+  private $published;
 
   /**
    * Регион
@@ -104,16 +70,12 @@ class Organization
   private $region;
 
   /**
-   * @var OrganizationYear[]|ArrayCollection
-   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Organization\OrganizationYear", mappedBy="organization")
-   */
-
-  /**
    * Года
+   *
    * @ManyToMany(targetEntity="OrganizationYear", inversedBy="organization")
    * @JoinTable(name="s_organizations_to_years",
    *      joinColumns={@JoinColumn(name="organization_id", referencedColumnName="id")},
-   *      inverseJoinColumns={@JoinColumn(name="year_id", referencedColumnName="id")}
+   *      inverseJoinColumns={@JoinColumn(name="year_id", referencedColumnName="year")}
    *      )
    */
   protected $years;
@@ -148,32 +110,6 @@ class Organization
   public function setRegion(?Region $region): void
   {
     $this->region = $region;
-  }
-
-  /**
-   * @return integer
-   */
-  public function getId()
-  {
-    return $this->id;
-  }
-
-  /**
-   * @return int|null
-   */
-  public function getBitrixId()
-  {
-    return $this->bitrixId;
-  }
-
-  /**
-   * @param int|null $bitrixId
-   * @return $this
-   */
-  public function setBitrixId(?int $bitrixId)
-  {
-    $this->bitrixId = $bitrixId;
-    return $this;
   }
 
   /**
@@ -295,9 +231,9 @@ class Organization
   /**
    * @return int
    */
-  public function getStatus()
+  public function getPublished()
   {
-    return $this->status;
+    return $this->published;
   }
 
   /**
@@ -305,21 +241,21 @@ class Organization
    */
   public function getStatusLabel ()
   {
-    return OrganizationStatus::getName($this->status);
+    return OrganizationStatus::getName($this->published);
   }
 
   /**
-   * @param $status
+   * @param $published
    * @return $this
    */
-  public function setStatus($status)
+  public function setPublished($published)
   {
-    if (null !== $status && !in_array($status, OrganizationStatus::getAvailableValues()))
+    if (null !== $published && !in_array($published, OrganizationStatus::getAvailableValues()))
     {
       throw new \InvalidArgumentException();
     }
 
-    $this->status = $status;
+    $this->published = $published;
 
     return $this;
   }

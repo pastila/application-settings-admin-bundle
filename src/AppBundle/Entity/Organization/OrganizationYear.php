@@ -14,33 +14,28 @@ use Doctrine\ORM\Mapping as ORM;
 class OrganizationYear
 {
   /**
+   * Год
+   *
    * @var integer
    * @ORM\Id()
    * @ORM\GeneratedValue(strategy="AUTO")
    * @ORM\Column(type="integer")
    */
-  protected $id;
+  private $year;
 
   /**
    * МО
    * @var Organization[]|ArrayCollection
    * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Organization\Organization", mappedBy="years")
    */
-  protected $organization;
-
-  /**
-   * Год
-   * @var integer
-   * @ORM\Column(name="year", type="integer", nullable=false)
-   */
-  private $year;
+  protected $organizations;
 
   /**
    * OrganizationYear constructor.
    */
   public function __construct()
   {
-    $this->organization = new ArrayCollection();
+    $this->organizations = new ArrayCollection();
   }
 
   /**
@@ -48,7 +43,7 @@ class OrganizationYear
    */
   public function getOrganization()
   {
-    return $this->organization;
+    return $this->organizations;
   }
 
   /**
@@ -56,7 +51,7 @@ class OrganizationYear
    */
   public function setOrganization($organization): void
   {
-    $this->organization = $organization;
+    $this->organizations = $organization;
   }
 
   /**
@@ -80,6 +75,6 @@ class OrganizationYear
    */
   public function __toString()
   {
-    return $this->id ? (string)$this->year : 'новый год';
+    return $this->year ? (string)$this->year : 'новый год';
   }
 }
