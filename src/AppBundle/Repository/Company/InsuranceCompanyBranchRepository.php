@@ -14,7 +14,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 
-class CompanyBranchRepository extends ServiceEntityRepository
+class InsuranceCompanyBranchRepository extends ServiceEntityRepository
 {
   public function __construct(ManagerRegistry $registry)
   {

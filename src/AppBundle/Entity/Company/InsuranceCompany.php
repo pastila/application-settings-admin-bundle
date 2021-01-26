@@ -15,7 +15,7 @@ use Accurateweb\MediaBundle\Annotation as Media;
 /**
  * Company.
  *
- * @ORM\Table(name="s_companies", indexes={@ORM\Index(name="bitrix_id_idx", columns={"bitrix_id"})})
+ * @ORM\Table(name="s_companies")
  * @UniqueEntity("slug")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Company\CompanyRepository")
  */
@@ -28,13 +28,6 @@ class InsuranceCompany implements ImageAwareInterface, SluggableInterface
    * @ORM\Column(type="integer")
    */
   protected $id;
-
-  /**
-   * @var integer|null
-   *
-   * @ORM\Column(type="integer", nullable=true)
-   */
-  private $bitrixId;
 
   /**
    * @var string
@@ -133,24 +126,6 @@ class InsuranceCompany implements ImageAwareInterface, SluggableInterface
   public function getId()
   {
     return $this->id;
-  }
-
-  /**
-   * @return int|null
-   */
-  public function getBitrixId(): ?int
-  {
-    return $this->bitrixId;
-  }
-
-  /**
-   * @param int|null $bitrixId
-   * @return InsuranceCompany
-   */
-  public function setBitrixId(?int $bitrixId): InsuranceCompany
-  {
-    $this->bitrixId = $bitrixId;
-    return $this;
   }
 
   /**
