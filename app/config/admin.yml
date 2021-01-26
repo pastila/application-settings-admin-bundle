@@ -65,11 +65,11 @@ services:
     tags:
       -  { name: sonata.admin, manager_type: orm, group: 'feedback', label: 'Отзывы' }
 
-  main.admin.company:
+  main.admin.insurance_company:
     class: AppBundle\Admin\Company\CompanyAdmin
     arguments: [~, 'AppBundle\Entity\Company\Company', ~]
     tags:
-      -  { name: sonata.admin, manager_type: orm, group: 'mo_cmo', label: 'Компании' }
+      -  { name: sonata.admin, manager_type: orm, group: 'mo_cmo', label: 'Страховые медицинские организации' }
 
   AppBundle\Admin\Common\EmailTemplateAdmin:
     decorates: aw_email_template_admin.email_template

@@ -10,7 +10,7 @@ use Accurateweb\MediaBundle\Model\Image\Image;
 use Accurateweb\MediaBundle\Model\Thumbnail\ImageThumbnail;
 use Accurateweb\MediaBundle\Model\Thumbnail\ThumbnailDefinition;
 
-class CompanyImage extends Image
+class CompanyLogo extends Image
 {
   private $filterOptions;
 
@@ -29,17 +29,6 @@ class CompanyImage extends Image
   public function getThumbnailDefinitions()
   {
     return [
-//      'preview' => new ThumbnailDefinition('preview', new FilterChain([
-//        [
-//          'id' => 'crop',
-//          'options' => [],
-//          'resolver' => new CropFilterOptionsResolver()
-//        ],
-//        [
-//          'id' => 'resize',
-//          'options' => ['size' => '80x80']
-//        ]
-//      ])),
       'small' => new ThumbnailDefinition('small', new FilterChain([
         [
           'id' => 'resize',

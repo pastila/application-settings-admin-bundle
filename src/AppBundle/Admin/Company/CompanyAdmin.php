@@ -49,9 +49,9 @@ class CompanyAdmin extends AbstractAdmin
   protected function configureFormFields(FormMapper $form)
   {
     $form
-      ->add('file', 'Accurateweb\MediaBundle\Form\ImageType', [
+      ->add('logo', 'Accurateweb\MediaBundle\Form\ImageType', [
         'required' => false,
-        'label' => 'Изображение',
+        'label' => 'Логотип',
       ])
       ->add("name", TextType::class, [
         'required' => true,
@@ -70,12 +70,6 @@ class CompanyAdmin extends AbstractAdmin
             'max' => 255,
           ]),
         ],
-      ])
-      ->add("valuation", NumberType::class, [
-        'required' => false,
-        'attr' => [
-          'readonly' => true
-        ]
       ])
       ->add('published', null, [
         'required' => true,
