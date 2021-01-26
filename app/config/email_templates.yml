@@ -34,7 +34,7 @@ aw_email_templating:
                         </tr>
                         <tr>
                           <td style="width: 135px;border-top-left-radius: 10px;" bgcolor="#ffffff"></td>
-                          <td style="height: 32px;border-top-right-radius: 10px;" bgcolor="#ffffff"></td>
+                          <td style="height: 38px;border-top-right-radius: 10px;" bgcolor="#ffffff"></td>
                         </tr>
                       </table>
                     </td>
@@ -72,8 +72,8 @@ aw_email_templating:
                           <b>С уважением</b>,
                           <br>команда Безбахил
                         </td>
-                        <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-left: 40px;padding-right: 90px;padding-top: 35px;">
-                          <img src="/frontend/img/image-email/flowers.png" alt="flowers.png" />
+                        <td align="left" valign="bottom" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-left: 40px;padding-right: 90px;padding-top: 35px;">
+                          <img valign="bottom" src="/frontend/img/image-email/flowers.png" alt="flowers.png" />
                         </td>
                       </table>
                     </td>
@@ -174,7 +174,7 @@ aw_email_templating:
                         </tr>
                         <tr>
                           <td style="width: 135px;border-top-left-radius: 10px;" bgcolor="#ffffff"></td>
-                          <td style="height: 32px;border-top-right-radius: 10px;" bgcolor="#ffffff"></td>
+                          <td style="height: 38px;border-top-right-radius: 10px;" bgcolor="#ffffff"></td>
                         </tr>
                       </table>
                     </td>
@@ -212,8 +212,8 @@ aw_email_templating:
                           <b>С уважением</b>,
                           <br>команда Безбахил
                         </td>
-                        <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-left: 40px;padding-right: 90px;padding-top: 35px;">
-                          <img src="/frontend/img/image-email/flowers.png" alt="flowers.png" />
+                        <td align="left" valign="bottom" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-left: 40px;padding-right: 90px;padding-top: 35px;">
+                          <img valign="bottom" src="/frontend/img/image-email/flowers.png" alt="flowers.png" />
                         </td>
                       </table>
                     </td>
@@ -311,7 +311,7 @@ aw_email_templating:
                         </tr>
                         <tr>
                           <td style="width: 135px;border-top-left-radius: 10px;" bgcolor="#ffffff"></td>
-                          <td style="height: 32px;border-top-right-radius: 10px;" bgcolor="#ffffff"></td>
+                          <td style="height: 38px;border-top-right-radius: 10px;" bgcolor="#ffffff"></td>
                         </tr>
                       </table>
                     </td>
@@ -348,8 +348,8 @@ aw_email_templating:
                           <b>С уважением</b>,
                           <br>команда Безбахил
                         </td>
-                        <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-left: 40px;padding-right: 90px;padding-top: 35px;">
-                          <img src="/frontend/img/image-email/flowers.png" alt="flowers.png" />
+                        <td align="left" valign="bottom" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-left: 40px;padding-right: 90px;padding-top: 35px;">
+                          <img valign="bottom" src="/frontend/img/image-email/flowers.png" alt="flowers.png" />
                         </td>
                       </table>
                     </td>
@@ -449,7 +449,7 @@ aw_email_templating:
                           </tr>
                           <tr>
                             <td style="width: 135px;border-top-left-radius: 10px;" bgcolor="#ffffff"></td>
-                            <td style="height: 32px;border-top-right-radius: 10px;" bgcolor="#ffffff"></td>
+                            <td style="height: 38px;border-top-right-radius: 10px;" bgcolor="#ffffff"></td>
                           </tr>
                         </table>
                       </td>
@@ -494,8 +494,8 @@ aw_email_templating:
                             <b>С уважением</b>,
                             <br>команда Безбахил
                           </td>
-                          <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-left: 40px;padding-right: 90px;padding-top: 35px;">
-                            <img src="/frontend/img/image-email/flowers.png" alt="flowers.png" />
+                          <td align="left" valign="bottom" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-left: 40px;padding-right: 90px;padding-top: 35px;">
+                            <img valign="bottom" src="/frontend/img/image-email/flowers.png" alt="flowers.png" />
                           </td>
                         </table>
                       </td>
