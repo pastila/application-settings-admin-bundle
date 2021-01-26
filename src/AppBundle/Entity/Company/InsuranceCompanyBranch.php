@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Company.
  *
  * @ORM\Table(name="s_company_branches", indexes={@ORM\Index(name="bitrix_id_idx", columns={"bitrix_id"})})
- * @ORM\Entity(repositoryClass="AppBundle\Repository\Company\CompanyBranchRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\Company\InsuranceCompanyBranchRepository")
  */
 class InsuranceCompanyBranch
 {

@@ -8,7 +8,7 @@ namespace AppBundle\Form\Feedback;
 use AppBundle\Form\Widget\BezbahilAutocompleteCompanyType;
 use AppBundle\Form\Widget\BezbahilAutocompleteRegionType;
 use AppBundle\Form\Widget\BezbahilRatingType;
-use AppBundle\Repository\Company\CompanyBranchRepository;
+use AppBundle\Repository\Company\InsuranceCompanyBranchRepository;
 use AppBundle\Repository\Company\InsuranceCompanyRepository;
 use AppBundle\Repository\Geo\RegionRepository;
 use Doctrine\ORM\EntityRepository;
@@ -50,7 +50,7 @@ class FeedbackType extends AbstractType
         'constraints' => [
           new NotBlank(),
         ],
-        'query_builder' => function(CompanyBranchRepository $repository){
+        'query_builder' => function(InsuranceCompanyBranchRepository $repository){
           return $repository->createQueryBuilder('b')->orderBy('b.name');
         },
       ])

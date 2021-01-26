@@ -8,7 +8,7 @@ namespace AppBundle\Model\InsuranceCompany\Branch;
 
 use AppBundle\Entity\Company\InsuranceCompany;
 use AppBundle\Entity\Geo\Region;
-use AppBundle\Repository\Company\CompanyBranchRepository;
+use AppBundle\Repository\Company\InsuranceCompanyBranchRepository;
 use AppBundle\Repository\Company\InsuranceCompanyRepository;
 use Doctrine\ORM\UnexpectedResultException;
 
@@ -19,7 +19,7 @@ class BranchRatingHelper
   private $companyRepository;
 
   public function __construct(
-    CompanyBranchRepository $branchRepository,
+    InsuranceCompanyBranchRepository $branchRepository,
     InsuranceCompanyRepository $companyRepository)
   {
     $this->branchRepository = $branchRepository;

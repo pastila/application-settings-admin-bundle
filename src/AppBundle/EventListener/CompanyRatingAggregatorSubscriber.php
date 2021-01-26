@@ -9,7 +9,7 @@ namespace AppBundle\EventListener;
 use AppBundle\Entity\Company\InsuranceCompany;
 use AppBundle\Entity\Company\InsuranceCompanyBranch;
 use AppBundle\Entity\Company\Feedback;
-use AppBundle\Repository\Company\CompanyBranchRepository;
+use AppBundle\Repository\Company\InsuranceCompanyBranchRepository;
 use AppBundle\Repository\Company\FeedbackRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\EventSubscriber;
