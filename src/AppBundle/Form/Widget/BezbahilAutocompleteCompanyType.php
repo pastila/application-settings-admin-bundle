@@ -19,7 +19,7 @@ class BezbahilAutocompleteCompanyType extends EntityType
 
   public function configureOptions(OptionsResolver $resolver)
   {
-    $resolver->setDefault('class', 'AppBundle\Entity\Company\CompanyBranch');
+    $resolver->setDefault('class', 'AppBundle\Entity\Company\InsuranceCompanyBranch');
     parent::configureOptions($resolver);
   }
 

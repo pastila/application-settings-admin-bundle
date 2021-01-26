@@ -23,7 +23,7 @@ namespace AppBundle\Sluggable;
 use Accurateweb\SlugifierBundle\Model\SlugifierInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\Common\EventSubscriber;
-use AppBundle\Entity\Company\Company;
+use AppBundle\Entity\Company\InsuranceCompany;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -75,7 +75,7 @@ class SlugSubscriber implements EventSubscriber
     $object->setSlug($slug);
     $violations = $this->validator->validate($object);
 
-    if ($object instanceof Company)
+    if ($object instanceof InsuranceCompany)
     {
       $object->setSlugRoot($slug);
     }

@@ -59,8 +59,8 @@ class Feedback
   /**
    * Филиал компании
    *
-   * @var null|CompanyBranch
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\CompanyBranch")
+   * @var null|InsuranceCompanyBranch
+   * @ORM\ManyToOne(targetEntity="InsuranceCompanyBranch")
    * @ORM\JoinColumn(name="branch_id", nullable=true, onDelete="RESTRICT")
    */
   private $branch;
@@ -311,7 +311,7 @@ class Feedback
   }
 
   /**
-   * @return null|CompanyBranch
+   * @return null|InsuranceCompanyBranch
    */
   public function getBranch()
   {
@@ -319,7 +319,7 @@ class Feedback
   }
 
   /**
-   * @param CompanyBranch $branch
+   * @param InsuranceCompanyBranch $branch
    *
    * @return $this
    */
@@ -451,6 +451,14 @@ class Feedback
     $this->moderationStatus = $moderationStatus;
 
     return $this;
+  }
+
+  /**
+   * @return InsuranceCompany|null
+   */
+  public function getCompany()
+  {
+    return $this->getBranch() ? $this->getBranch()->getCompany() : null;
   }
 
   public function isFromLetter()

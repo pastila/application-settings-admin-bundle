@@ -2,7 +2,7 @@
 
 namespace AppBundle\Helper\Feedback;
 
-use AppBundle\Entity\Company\CompanyBranch;
+use AppBundle\Entity\Company\InsuranceCompanyBranch;
 use AppBundle\Entity\Geo\Region;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -96,7 +96,7 @@ class CompanyBranchHelper
         ($item['ACTIVE'] === 'Y' ? true : false) :
         false;
 
-      $company = !empty($company_id) ? $this->entityManager->getRepository("AppBundle:Company\Company")
+      $company = !empty($company_id) ? $this->entityManager->getRepository("InsuranceCompany")
         ->createQueryBuilder('c')
         ->andWhere('c.id = :id')
         ->setParameter('id', $company_id)
@@ -120,18 +120,18 @@ class CompanyBranchHelper
 
       if ($company)
       {
-        $branch = $this->entityManager->getRepository(CompanyBranch::class)->findOneBy(['bitrixId' => $item['ID']]);
+        $branch = $this->entityManager->getRepository(InsuranceCompanyBranch::class)->findOneBy(['bitrixId' => $item['ID']]);
 
         if (!$branch)
         {
-          $branch = $this->entityManager->getRepository(CompanyBranch::class)->findOneBy([
+          $branch = $this->entityManager->getRepository(InsuranceCompanyBranch::class)->findOneBy([
             'region' => $region,
             'company' => $company
           ]);
 
           if (!$branch)
           {
-            $branch = new CompanyBranch();
+            $branch = new InsuranceCompanyBranch();
             $branch->setValuation($amountStar);
 
             $nbImported++;

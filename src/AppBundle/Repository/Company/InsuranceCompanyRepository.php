@@ -2,7 +2,7 @@
 
 namespace AppBundle\Repository\Company;
 
-use AppBundle\Entity\Company\Company;
+use AppBundle\Entity\Company\InsuranceCompany;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -10,7 +10,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  * Class CompanyRepository
  * @package AppBundle\Repository\Company
  */
-class CompanyRepository extends ServiceEntityRepository
+class InsuranceCompanyRepository extends ServiceEntityRepository
 {
   /**
    * CompanyRepository constructor.
@@ -18,7 +18,7 @@ class CompanyRepository extends ServiceEntityRepository
    */
   public function __construct(ManagerRegistry $registry)
   {
-    parent::__construct($registry, Company::class);
+    parent::__construct($registry, InsuranceCompany::class);
   }
 
   /**

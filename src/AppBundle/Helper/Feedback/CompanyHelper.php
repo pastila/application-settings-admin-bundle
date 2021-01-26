@@ -2,7 +2,7 @@
 
 namespace AppBundle\Helper\Feedback;
 
-use AppBundle\Entity\Company\Company;
+use AppBundle\Entity\Company\InsuranceCompany;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Throwable;
@@ -70,14 +70,14 @@ class CompanyHelper
         ($item['ACTIVE'] === 'Y' ? true : false) :
         false;
 
-      $company = $this->entityManager->getRepository(Company::class)->findOneBy(['bitrixId' => $item['ID']]);
+      $company = $this->entityManager->getRepository(InsuranceCompany::class)->findOneBy(['bitrixId' => $item['ID']]);
       if (!$company)
       {
-        $company = $this->entityManager->getRepository(Company::class)->findOneBy(['kpp' => $kpp]);
+        $company = $this->entityManager->getRepository(InsuranceCompany::class)->findOneBy(['kpp' => $kpp]);
 
         if (!$company)
         {
-          $company = new Company();
+          $company = new InsuranceCompany();
         }
 
         $company->setBitrixId($item['ID']);

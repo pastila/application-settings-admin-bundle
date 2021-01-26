@@ -5,7 +5,6 @@ namespace AppBundle\Entity\Company;
 use Accurateweb\MediaBundle\Exception\OperationNotSupportedException;
 use Accurateweb\MediaBundle\Model\Image\ImageAwareInterface;
 use Accurateweb\MediaBundle\Model\Media\ImageInterface;
-use Accurateweb\MediaBundle\Model\Thumbnail\ImageThumbnail;
 use AppBundle\Model\Media\CompanyLogo;
 use AppBundle\Sluggable\SluggableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -20,7 +19,7 @@ use Accurateweb\MediaBundle\Annotation as Media;
  * @UniqueEntity("slug")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Company\CompanyRepository")
  */
-class Company implements ImageAwareInterface, SluggableInterface
+class InsuranceCompany implements ImageAwareInterface, SluggableInterface
 {
   /**
    * @var integer
@@ -93,8 +92,8 @@ class Company implements ImageAwareInterface, SluggableInterface
   private $published;
 
   /**
-   * @var CompanyBranch[]|ArrayCollection
-   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Company\CompanyBranch", mappedBy="company")
+   * @var InsuranceCompanyBranch[]|ArrayCollection
+   * @ORM\OneToMany(targetEntity="InsuranceCompanyBranch", mappedBy="company")
    */
   protected $branches;
 
@@ -107,7 +106,7 @@ class Company implements ImageAwareInterface, SluggableInterface
   }
 
   /**
-   * @return CompanyBranch[]|ArrayCollection
+   * @return InsuranceCompanyBranch[]|ArrayCollection
    */
   public function getBranches()
   {
@@ -146,9 +145,9 @@ class Company implements ImageAwareInterface, SluggableInterface
 
   /**
    * @param int|null $bitrixId
-   * @return Company
+   * @return InsuranceCompany
    */
-  public function setBitrixId(?int $bitrixId): Company
+  public function setBitrixId(?int $bitrixId): InsuranceCompany
   {
     $this->bitrixId = $bitrixId;
     return $this;

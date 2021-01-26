@@ -5,13 +5,13 @@
 
 namespace AppBundle\Form\InsuranceCompany;
 
-use AppBundle\Entity\Company\Company;
+use AppBundle\Entity\Company\InsuranceCompany;
 use AppBundle\Entity\Company\FeedbackModerationStatus;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Form\BezbahilFilterChoiceType;
 use AppBundle\Form\BezbahilFilterEntityType;
 use AppBundle\Model\InsuranceCompany\FeedbackListFilter;
-use AppBundle\Repository\Company\CompanyRepository;
+use AppBundle\Repository\Company\InsuranceCompanyRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -29,7 +29,7 @@ class FeedbackListFilterType extends AbstractType
 {
   private $companyRepository;
 
-  public function __construct(CompanyRepository $companyRepository)
+  public function __construct(InsuranceCompanyRepository $companyRepository)
   {
     $this->companyRepository = $companyRepository;
   }
@@ -38,7 +38,7 @@ class FeedbackListFilterType extends AbstractType
   {
     $builder
       ->add('company', BezbahilFilterEntityType::class, [
-        'class' => Company::class,
+        'class' => InsuranceCompany::class,
         'query_builder' => function () {
           return $this->companyRepository->createChoiceListQueryBuilder();
         },

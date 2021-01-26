@@ -2,7 +2,7 @@
 
 namespace AppBundle\Command;
 
-use AppBundle\Entity\Company\Company;
+use AppBundle\Entity\Company\InsuranceCompany;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -43,13 +43,13 @@ class UpdateLogoCompanyCommand extends ContainerAwareCommand
     $conn = $entityManager->getConnection();
 
     $companies = $entityManager
-      ->getRepository(Company::class)
+      ->getRepository(InsuranceCompany::class)
       ->findAll();
 
     foreach ($companies as $company)
     {
       /**
-       * @var Company $company
+       * @var InsuranceCompany $company
        */
       $imageBitrixId = $company->getLogo();
 

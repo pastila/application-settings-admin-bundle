@@ -66,8 +66,8 @@ services:
       - { name: sonata.admin, manager_type: orm, group: 'text', label: 'Отзывы' }
 
   main.admin.insurance_company:
-    class: AppBundle\Admin\Company\CompanyAdmin
-    arguments: [~, 'AppBundle\Entity\Company\Company', ~]
+    class: AppBundle\Admin\InsuranceCompany\InsuranceCompanyAdmin
+    arguments: [~, 'AppBundle\Entity\Company\InsuranceCompany', ~]
     tags:
       -  { name: sonata.admin, manager_type: orm, group: 'mo_cmo', label: 'Страховые медицинские организации' }
 
