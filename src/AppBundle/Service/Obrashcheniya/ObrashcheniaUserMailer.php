@@ -46,7 +46,7 @@ class ObrashcheniaUserMailer
     ],
       $modelObrashcheniaBranch->getAuthorEmail(),
       [
-        'author' => $modelObrashcheniaBranch->getAuthorFullName(),
+        'recipient_name' => $modelObrashcheniaBranch->getAuthorFullName(),
         'logo' => $baseUrl . '/local/templates/kdteam/images/png/header/logo-oms.png',
         'illustration' => $baseUrl . '/local/templates/kdteam/images/pages/home/Illustration3.svg',
       ]

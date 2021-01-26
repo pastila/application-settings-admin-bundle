@@ -10,6 +10,7 @@ aw_email_templating:
         name: { description: "Имя" }
         email: { description: "Email" }
         text: { description: "Сообщение" }
+        recipient_name: { description: "Имя получателя" }
       defaults:
         subject: "Обратная связь"
         body: |
@@ -44,7 +45,7 @@ aw_email_templating:
                       <table border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#FFFFFF" style="border-collapse: collapse;border-spacing: 0;padding: 0;">
                         <tr>
                           <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0; padding: 0;padding-left: 40px;padding-right: 34px;width: 298px;padding-top: 68px;padding-bottom: 20px;line-height: 15px;font-family: 'Roboto', sans-serif;">
-                            <b style="font-size: 22px;line-height: 24px;font-weight: 500">Здравствуйте, %%author_name%%.</b>
+                            <b style="font-size: 22px;line-height: 24px;font-weight: 500">Здравствуйте, %%recipient_name%%.</b>
                           </td>
                           <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-left: 0;padding-right: 49px;width: 161px;padding-top: 27px;padding-bottom: 36px;">
                             <img src="/frontend/img/image-email/notebook.png" alt="notebook.png" />
@@ -148,6 +149,7 @@ aw_email_templating:
       variables:
         date: { description: "Дата" }
         url: { description: "Url на отзыв" }
+        recipient_name: { description: "Имя получателя" }
       defaults:
         subject: "Отзыв"
         head: |
@@ -184,7 +186,7 @@ aw_email_templating:
                       <table border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#FFFFFF" style="border-collapse: collapse;border-spacing: 0;padding: 0;">
                         <tr>
                           <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0; padding: 0;padding-left: 40px;padding-right: 34px;width: 298px;padding-top: 68px;padding-bottom: 20px;line-height: 15px;font-family: 'Roboto', sans-serif;">
-                            <b style="font-size: 22px;line-height: 24px;font-weight: 500">Здравствуйте, %%author_name%%.</b>
+                            <b style="font-size: 22px;line-height: 24px;font-weight: 500">Здравствуйте, %%recipient_name%%.</b>
                           </td>
                           <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-left: 0;padding-right: 49px;width: 161px;padding-top: 27px;padding-bottom: 36px;">
                             <img src="/frontend/img/image-email/notebook.png" alt="notebook.png" />
@@ -285,8 +287,7 @@ aw_email_templating:
     email_obrashcheniya_branch:
       description: 'Письмо с обращением в СМО'
       variables:
-        author: { description: "Отправитель" }
-        author_name: { description: "Имя отправителя" }
+        recipient_name: { description: "Имя отправителя" }
       defaults:
         subject: "Обращение о взимании денежных средств"
         body: |
@@ -321,7 +322,7 @@ aw_email_templating:
                       <table border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#FFFFFF" style="border-collapse: collapse;border-spacing: 0;padding: 0;">
                         <tr>
                           <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0; padding: 0;padding-left: 40px;padding-right: 34px;width: 298px;padding-top: 68px;padding-bottom: 20px;line-height: 15px;font-family: 'Roboto', sans-serif;">
-                            <b style="font-size: 22px;line-height: 24px;font-weight: 500">Здравствуйте, %%author_name%%.</b>
+                            <b style="font-size: 22px;line-height: 24px;font-weight: 500">Здравствуйте, %%recipient_name%%.</b>
                           </td>
                           <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-left: 0;padding-right: 49px;width: 161px;padding-top: 27px;padding-bottom: 36px;">
                             <img src="/frontend/img/image-email/notebook.png" alt="notebook.png" />
@@ -335,7 +336,7 @@ aw_email_templating:
                       <table border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#eef5f8" width="520" style="border-collapse: collapse;border-spacing: 0;padding: 0;width: 520px;max-width: 520px;font-family: 'Roboto', sans-serif; border-radius: 10px;">
                         <tr>
                           <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-top: 45px;padding-left: 29px;padding-right: 29px;padding-bottom: 42px;font-size: 14px;">
-                            На сайте bezbahil.ru было сформировано новое обращение от пользователя "%%author_name%%".
+                            На сайте bezbahil.ru было сформировано новое обращение от пользователя "%%recipient_name%%".
                           </td>
                         </tr>
                       </table>
@@ -421,8 +422,7 @@ aw_email_templating:
     appeal_sent_user:
       description: 'Уведомление пользователю о том, что его обращение отправлено в СМО'
       variables:
-        author: { description: "Отправитель" }
-        author_name: { description: "Имя отправителя" }
+        recipient_name: { description: "Имя отправителя" }
         logo: { description: "URL логотипа" }
         illustration: { description: "URL иллюстрации" }
       defaults:
@@ -459,7 +459,7 @@ aw_email_templating:
                         <table border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#FFFFFF" style="border-collapse: collapse;border-spacing: 0;padding: 0;">
                           <tr>
                             <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0; padding: 0;padding-left: 40px;padding-right: 34px;width: 298px;padding-top: 68px;padding-bottom: 20px;line-height: 15px;font-family: 'Roboto', sans-serif;">
-                              <b style="font-size: 22px;line-height: 24px;font-weight: 500">Здравствуйте, %%author_name%%.</b>
+                              <b style="font-size: 22px;line-height: 24px;font-weight: 500">Здравствуйте, %%recipient_name%%.</b>
                               <p style="font-size: 14px;line-height: 18px;font-weight: 400">Ваше обращение о возврате денежных средств направлено в страховую компанию.</p>
                             </td>
                             <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-left: 0;padding-right: 49px;width: 161px;padding-top: 27px;padding-bottom: 36px;">

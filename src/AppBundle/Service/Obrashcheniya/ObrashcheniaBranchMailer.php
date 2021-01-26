@@ -41,7 +41,7 @@ class ObrashcheniaBranchMailer
     ],
       $modelObrashcheniaBranch->getEmailSend(),
       [
-        'author' => $modelObrashcheniaBranch->getAuthorFullName()
+        'recipient_name' => $modelObrashcheniaBranch->getAuthorFullName()
       ]
     );
     if (file_exists($modelObrashcheniaBranch->getPdf()))
