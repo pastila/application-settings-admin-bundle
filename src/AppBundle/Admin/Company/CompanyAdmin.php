@@ -29,7 +29,7 @@ class CompanyAdmin extends AbstractAdmin
   protected function configureListFields(ListMapper $list)
   {
     $list
-      ->add('id')
+      ->add('kpp')
       ->add('name')
       ->add('published', null, [
         'label' => 'Публикация',

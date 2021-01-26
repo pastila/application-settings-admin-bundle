@@ -280,9 +280,8 @@
                                         </div>
                                         {% if feedback.branch %}
                                             <div class="b-reviews__item-logo">
-                                                {% include "Company/_logo.html.twig" with  {
-                                                    'company': feedback.branch.company,
-                                                    'name': feedback.branch.name,
+                                                {% include "Company/_logo_panel.html.twig" with  {
+                                                    'branch': feedback.branch,
                                                     'disableLink': false,
                                                 } %}
                                             </div>
