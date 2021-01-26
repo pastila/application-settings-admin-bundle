@@ -42,7 +42,6 @@ class FeedbackMailer
     ],
       $email,
       [
-        'recipient_name' => $feedback->getAuthorName(),
         'date' => $feedback->getCreatedAt()->format('Y-m-d H:i:s'),
         'url' => $this->router->generate('app_insurancecompany_feedback_show', [
           'id' => $feedback->getId()], UrlGeneratorInterface::ABSOLUTE_URL)
