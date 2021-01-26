@@ -4,7 +4,6 @@
 namespace Tests\AppBundle\Fixtures\Company;
 
 
-use AppBundle\Entity\Company\CompanyStatus;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -35,7 +34,7 @@ class CompanyBranch extends Fixture implements DependentFixtureInterface
       ->setRegion($this->getReference('region-66'))
       ->setName('СОГАЗ-МЕД')
       ->setValuation(4.0)
-      ->setStatus(CompanyStatus::ACTIVE);
+      ->setPublished(true);
     $manager->persist($sogazMed66);
 
     $akbars66 = new \AppBundle\Entity\Company\CompanyBranch();
@@ -44,7 +43,7 @@ class CompanyBranch extends Fixture implements DependentFixtureInterface
       ->setRegion($this->getReference('region-66'))
       ->setName('АКБАРС-МЕД')
       ->setValuation(3.0)
-      ->setStatus(CompanyStatus::ACTIVE);
+      ->setPublished(true);
     $manager->persist($akbars66);
 
     $ingostach_m66 = new \AppBundle\Entity\Company\CompanyBranch();
@@ -53,7 +52,7 @@ class CompanyBranch extends Fixture implements DependentFixtureInterface
       ->setRegion($this->getReference('region-66'))
       ->setName('ИНГОССТРАХ-М')
       ->setValuation(5.0)
-      ->setStatus(CompanyStatus::ACTIVE);
+      ->setPublished(true);
     $manager->persist($ingostach_m66);
 
     $arsenal66 = new \AppBundle\Entity\Company\CompanyBranch();
@@ -62,7 +61,7 @@ class CompanyBranch extends Fixture implements DependentFixtureInterface
       ->setRegion($this->getReference('region-66'))
       ->setName('АРСЕНАЛМС')
       ->setValuation(3.0)
-      ->setStatus(CompanyStatus::NOT_ACTIVE);
+      ->setPublished(false);
     $manager->persist($arsenal66);
 
     $maksm66 = new \AppBundle\Entity\Company\CompanyBranch();
@@ -71,7 +70,7 @@ class CompanyBranch extends Fixture implements DependentFixtureInterface
       ->setRegion($this->getReference('region-66'))
       ->setName('МАКС-М')
       ->setValuation(5.0)
-      ->setStatus(CompanyStatus::ACTIVE);
+      ->setPublished(true);
     $manager->persist($maksm66);
 
     $maksm47 = new \AppBundle\Entity\Company\CompanyBranch();
@@ -80,7 +79,7 @@ class CompanyBranch extends Fixture implements DependentFixtureInterface
       ->setRegion($this->getReference('region-47'))
       ->setName('МАКС-М')
       ->setValuation(4.0)
-      ->setStatus(CompanyStatus::ACTIVE);
+      ->setPublished(true);
     $manager->persist($maksm47);
 
     $manager->flush();

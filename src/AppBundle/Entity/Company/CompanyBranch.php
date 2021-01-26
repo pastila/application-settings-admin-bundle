@@ -142,10 +142,10 @@ class CompanyBranch
   private $emailThird;
 
   /**
-   * @var int
-   * @ORM\Column(type="integer", nullable=false)
+   * @var boolean
+   * @ORM\Column(type="boolean", nullable=false, options={"default"=true})
    */
-  private $status;
+  private $published;
 
   /**
    * @var Feedback[]|ArrayCollection
@@ -379,9 +379,9 @@ class CompanyBranch
   /**
    * @return int
    */
-  public function getStatus()
+  public function getPublished()
   {
-    return $this->status;
+    return $this->published;
   }
 
   /**
@@ -389,21 +389,16 @@ class CompanyBranch
    */
   public function getStatusLabel ()
   {
-    return CompanyStatus::getName($this->status);
+    return $this->published ? 'Опубликован' : 'Не опубликован';
   }
 
   /**
-   * @param $status
+   * @param $published
    * @return $this
    */
-  public function setStatus($status)
+  public function setPublished($published)
   {
-    if (null !== $status && !in_array($status, CompanyStatus::getAvailableValues()))
-    {
-      throw new \InvalidArgumentException();
-    }
-
-    $this->status = $status;
+    $this->published = $published;
 
     return $this;
   }

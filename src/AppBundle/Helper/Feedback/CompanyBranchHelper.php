@@ -2,9 +2,7 @@
 
 namespace AppBundle\Helper\Feedback;
 
-use AppBundle\Entity\Company\Company;
 use AppBundle\Entity\Company\CompanyBranch;
-use AppBundle\Entity\Company\CompanyStatus;
 use AppBundle\Entity\Geo\Region;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -95,8 +93,8 @@ class CompanyBranchHelper
       $email2 = !empty($item['EMAIL2']) ? $item['EMAIL2'] : null;
       $email3 = !empty($item['EMAIL3']) ? $item['EMAIL3'] : null;
       $status = !empty($item['ACTIVE']) ?
-        ($item['ACTIVE'] === 'Y' ? CompanyStatus::ACTIVE : CompanyStatus::NOT_ACTIVE) :
-        CompanyStatus::NOT_ACTIVE;
+        ($item['ACTIVE'] === 'Y' ? true : false) :
+        false;
 
       $company = !empty($company_id) ? $this->entityManager->getRepository("AppBundle:Company\Company")
         ->createQueryBuilder('c')
@@ -155,7 +153,7 @@ class CompanyBranchHelper
         $branch->setEmailFirst($email1);
         $branch->setEmailSecond($email2);
         $branch->setEmailThird($email3);
-        $branch->setStatus($status);
+        $branch->setPublished($status);
 
         $this->entityManager->persist($branch);
       }

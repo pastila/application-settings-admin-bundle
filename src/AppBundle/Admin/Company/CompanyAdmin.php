@@ -2,8 +2,7 @@
 
 namespace AppBundle\Admin\Company;
 
-use AppBundle\Entity\Company\CompanyBranch;
-use AppBundle\Entity\Company\CompanyStatus;
+
 use AppBundle\Entity\Company\FeedbackModerationStatus;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -32,10 +31,8 @@ class CompanyAdmin extends AbstractAdmin
     $list
       ->add('id')
       ->add('name')
-      ->add('status', 'choice', [
-        'label' => 'Статус модерации',
-        'editable' => true,
-        'choices' => CompanyStatus::getAvailableName(),
+      ->add('published', null, [
+        'label' => 'Публикация',
       ])
       ->add('_action', null, array(
         'label' => 'Действия',
@@ -80,7 +77,7 @@ class CompanyAdmin extends AbstractAdmin
           'readonly' => true
         ]
       ])
-      ->add('status', 'AppBundle\Form\Company\CompanyStatusChoiceType', [
+      ->add('published', null, [
         'required' => true,
         'constraints' => [
           new NotBlank(),
@@ -95,8 +92,6 @@ class CompanyAdmin extends AbstractAdmin
   {
     $filter
       ->add('name')
-      ->add('status', null, [], 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
-        'choices' => array_flip(CompanyStatus::getAvailableName()),
-      ]);
+      ->add('published');
   }
 }

@@ -88,10 +88,10 @@ class Company implements ImageAwareInterface, SluggableInterface
   protected $file;
 
   /**
-   * @var int
-   * @ORM\Column(type="integer", nullable=false)
+   * @var boolean
+   * @ORM\Column(type="boolean", nullable=false, options={"default"=true})
    */
-  private $status;
+  private $published;
 
   /**
    * @var Feedback[]|ArrayCollection
@@ -221,33 +221,20 @@ class Company implements ImageAwareInterface, SluggableInterface
   }
 
   /**
-   * @return int
+   * @return bool
    */
-  public function getStatus()
+  public function getPublished()
   {
-    return $this->status;
+    return $this->published;
   }
 
   /**
-   * @return int|string
-   */
-  public function getStatusLabel ()
-  {
-    return CompanyStatus::getName($this->status);
-  }
-
-  /**
-   * @param $status
+   * @param $published
    * @return $this
    */
-  public function setStatus($status)
+  public function setPublished($published)
   {
-    if (null !== $status && !in_array($status, CompanyStatus::getAvailableValues()))
-    {
-      throw new \InvalidArgumentException();
-    }
-
-    $this->status = $status;
+    $this->published = $published;
 
     return $this;
   }
@@ -266,7 +253,8 @@ class Company implements ImageAwareInterface, SluggableInterface
    */
   public function setFile($file)
   {
-    if ($file === null) {
+    if ($file === null)
+    {
       return $this;
     }
 
@@ -295,12 +283,12 @@ class Company implements ImageAwareInterface, SluggableInterface
     return $this;
   }
 
-  public function setFileImage ($image)
+  public function setFileImage($image)
   {
     return $this->setImage($image);
   }
 
-  public function getFileImage ()
+  public function getFileImage()
   {
     return $this->getImage();
   }
@@ -318,14 +306,6 @@ class Company implements ImageAwareInterface, SluggableInterface
   {
     throw new OperationNotSupportedException();
   }
-
-
-
-
-
-
-
-
 
 
   public function getRating()
