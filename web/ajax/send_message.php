@@ -376,7 +376,7 @@ if (CModule::IncludeModule("iblock")) {
                               'child' => true,
                               'login' => $arUser['LOGIN'],
                               'id' => $arFields['ID'],
-                              'email' => $email,
+                              'email' => $email_child_smo,
                               /*
                               'login' => $arUser['LOGIN'],
                               'SEND_MESSAGE_CHILD',
