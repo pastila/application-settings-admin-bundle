@@ -43,7 +43,7 @@ class ContactUsMailer
     ],
       $this->settingManager->getValue('contact_email'),
       [
-        'name' => $contactUs->getAuthorName(),
+        'recipient_name' => $contactUs->getAuthorName(),
         'email' => $contactUs->getEmail(),
         'text' => $contactUs->getMessage(),
       ]

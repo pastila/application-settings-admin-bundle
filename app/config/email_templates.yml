@@ -7,7 +7,7 @@ aw_email_templating:
     email_contact_us:
       description: 'Обратная связь'
       variables:
-        name: { description: "Имя" }
+        recipient_name: { description: "Имя отправителя" }
         email: { description: "Email" }
         text: { description: "Сообщение" }
       defaults:
@@ -58,7 +58,7 @@ aw_email_templating:
                       <table border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#eef5f8" width="520" style="border-collapse: collapse;border-spacing: 0;padding: 0;width: 520px;max-width: 520px;font-family: 'Roboto', sans-serif; border-radius: 10px;">
                         <tr>
                           <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-top: 45px;padding-left: 29px;padding-right: 29px;padding-bottom: 42px;font-size: 14px;">
-                            <p>Пользователь по имени  %%name%% (с почтой %%email%%) решил связаться с администрацией.</p>
+                            <p>Пользователь по имени  %%recipient_name%% (с почтой %%email%%) решил связаться с администрацией.</p>
                             <p>Вопрос : %%text%%.</p>
                           </td>
                         </tr>
