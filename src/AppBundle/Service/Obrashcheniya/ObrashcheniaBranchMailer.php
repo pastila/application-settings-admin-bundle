@@ -45,7 +45,7 @@ class ObrashcheniaBranchMailer
     ],
       $modelObrashcheniaBranch->getEmailsTo(),
       [
-        'author' => $modelObrashcheniaBranch->getAuthorFullName()
+        'recipient_name' => $modelObrashcheniaBranch->getAuthorFullName()
       ]
     );
     if (!empty($this->settingManager->getValue('administrator_email')))
