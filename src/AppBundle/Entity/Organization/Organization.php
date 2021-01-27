@@ -8,11 +8,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\OneToOne;
 
 /**
  * Organization.
  *
- * @ORM\Table(name="s_organisations")
+ * @ORM\Table(name="s_organizations")
  * @ORM\Entity()
  */
 class Organization
@@ -51,7 +52,11 @@ class Organization
    */
   private $address;
 
-
+  /**
+   * Глав.врач
+   *
+   * @OneToOne(targetEntity="OrganizationChiefMedicalOfficer", mappedBy="customer")
+   */
   private $chiefMedicalOfficer;
 
   /**
@@ -63,18 +68,18 @@ class Organization
   /**
    * Регион
    *
-   * @var null|Region
+   * @var Region
    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Geo\Region")
-   * @ORM\JoinColumn(name="region_id", nullable=true, onDelete="RESTRICT")
+   * @ORM\JoinColumn(name="region_id", nullable=false, onDelete="RESTRICT")
    */
   private $region;
 
   /**
    * Года
    *
-   * @ManyToMany(targetEntity="OrganizationYear", inversedBy="organization")
+   * @ManyToMany(targetEntity="OrganizationYear", inversedBy="organizations")
    * @JoinTable(name="s_organizations_to_years",
-   *      joinColumns={@JoinColumn(name="organization_id", referencedColumnName="id")},
+   *      joinColumns={@JoinColumn(name="organization_id", referencedColumnName="code")},
    *      inverseJoinColumns={@JoinColumn(name="year_id", referencedColumnName="year")}
    *      )
    */
@@ -89,11 +94,40 @@ class Organization
   }
 
   /**
+   * @return mixed
+   */
+  public function getChiefMedicalOfficer()
+  {
+    return $this->chiefMedicalOfficer;
+  }
+
+  /**
+   * @param mixed $chiefMedicalOfficer
+   */
+  public function setChiefMedicalOfficer($chiefMedicalOfficer): void
+  {
+    $this->chiefMedicalOfficer = $chiefMedicalOfficer;
+  }
+
+  /**
    * @return OrganizationYear[]|ArrayCollection
    */
   public function getYears()
   {
     return $this->years;
+  }
+
+  /**
+   * @param $years
+   */
+  public function setYears($years): void
+  {
+    foreach ($years as $year) {
+      if (!$this->years->contains($year))
+      {
+        $this->years->add($year);
+      }
+    }
   }
 
   /**
@@ -181,54 +215,6 @@ class Organization
   }
 
   /**
-   * @return string
-   */
-  public function getLastName()
-  {
-    return $this->lastName;
-  }
-
-  /**
-   * @param string $lastName
-   */
-  public function setLastName($lastName): void
-  {
-    $this->lastName = $lastName;
-  }
-
-  /**
-   * @return string
-   */
-  public function getFirstName()
-  {
-    return $this->firstName;
-  }
-
-  /**
-   * @param string $firstName
-   */
-  public function setFirstName($firstName): void
-  {
-    $this->firstName = $firstName;
-  }
-
-  /**
-   * @return string
-   */
-  public function getMiddleName()
-  {
-    return $this->middleName;
-  }
-
-  /**
-   * @param string $middleName
-   */
-  public function setMiddleName($middleName): void
-  {
-    $this->middleName = $middleName;
-  }
-
-  /**
    * @return int
    */
   public function getPublished()
@@ -265,19 +251,6 @@ class Organization
    */
   public function __toString()
   {
-    return $this->id ? $this->name : '';
-  }
-
-  /**
-   * @param $years
-   */
-  public function setYears($years): void
-  {
-    foreach ($years as $year) {
-      if (!$this->years->contains($year))
-      {
-        $this->years->add($year);
-      }
-    }
+    return $this->code ? $this->name : 'Новая МО';
   }
 }

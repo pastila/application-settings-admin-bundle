@@ -4,11 +4,13 @@ namespace AppBundle\Entity\Organization;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  * OrganizationChiefMedicalOfficer.
  *
- * @ORM\Table(name="s_organisation_chief_medical_officers")
+ * @ORM\Table(name="s_organization_chief_medical_officers")
  * @ORM\Entity()
  */
 class OrganizationChiefMedicalOfficer
@@ -20,6 +22,14 @@ class OrganizationChiefMedicalOfficer
    * @ORM\Column(type="integer")
    */
   protected $id;
+
+  /**
+   * МО
+   *
+   * @OneToOne(targetEntity="Organization", inversedBy="chiefMedicalOfficer")
+   * @JoinColumn(name="organization_id", referencedColumnName="code")
+   */
+  private $organization;
 
   /**
    * Фамилия
@@ -53,6 +63,22 @@ class OrganizationChiefMedicalOfficer
    */
   public function __construct()
   {
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getOrganization()
+  {
+    return $this->organization;
+  }
+
+  /**
+   * @param mixed $organization
+   */
+  public function setOrganization($organization): void
+  {
+    $this->organization = $organization;
   }
 
   /**
@@ -140,6 +166,6 @@ class OrganizationChiefMedicalOfficer
    */
   public function __toString()
   {
-    return $this->id ? $this->getFullName() : 'новый глав.врач';
+    return $this->id ? $this->getFullName() : 'Новый глав.врач';
   }
 }

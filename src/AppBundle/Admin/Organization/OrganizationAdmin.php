@@ -7,6 +7,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\AdminType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -79,36 +80,10 @@ class OrganizationAdmin extends AbstractAdmin
           ]),
         ],
       ])
-      ->add("lastName", TextType::class, [
-        'required' => false,
-        'constraints' => [
-          new Length([
-            'min' => 3,
-            'max' => 255,
-          ]),
-        ],
-      ])
-      ->add("firstName", TextType::class, [
-        'required' => false,
-        'constraints' => [
-          new Length([
-            'min' => 3,
-            'max' => 255,
-          ]),
-        ],
-      ])
-      ->add("middleName", TextType::class, [
-        'required' => false,
-        'constraints' => [
-          new Length([
-            'min' => 3,
-            'max' => 255,
-          ]),
-        ],
-      ])
       ->add('region')
       ->add('years')
-      ->add('published');
+      ->add('published')
+      ->add('chiefMedicalOfficer',  AdminType::class);
   }
 
   /**

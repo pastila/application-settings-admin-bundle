@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * OrganizationYear.
  *
- * @ORM\Table(name="s_organisation_years")
+ * @ORM\Table(name="s_organization_years")
  * @ORM\Entity()
  */
 class OrganizationYear
@@ -25,6 +25,7 @@ class OrganizationYear
 
   /**
    * МО
+   *
    * @var Organization[]|ArrayCollection
    * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Organization\Organization", mappedBy="years")
    */
