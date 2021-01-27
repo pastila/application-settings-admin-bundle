@@ -15,7 +15,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="s_companies", indexes={@ORM\Index(name="bitrix_id_idx", columns={"bitrix_id"})})
  * @UniqueEntity("slug")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\Company\CompanyRepository")
  */
 class Company implements ImageAwareInterface, ImageInterface, SluggableInterface
 {
