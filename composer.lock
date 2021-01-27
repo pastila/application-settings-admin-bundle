@@ -103,12 +103,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/accurateweb/image-bundle.git",
-                "reference": "563ed6b9f12d2673f95aede75a72fc2e12ba2a2a"
+                "reference": "3d9d377800ff60adf390bef37c943e4110bd2113"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/accurateweb/image-bundle/zipball/563ed6b9f12d2673f95aede75a72fc2e12ba2a2a",
-                "reference": "563ed6b9f12d2673f95aede75a72fc2e12ba2a2a",
+                "url": "https://api.github.com/repos/accurateweb/image-bundle/zipball/3d9d377800ff60adf390bef37c943e4110bd2113",
+                "reference": "3d9d377800ff60adf390bef37c943e4110bd2113",
                 "shasum": ""
             },
             "type": "library",
@@ -124,7 +124,7 @@
                 "source": "https://github.com/accurateweb/image-bundle/tree/2.x",
                 "issues": "https://github.com/accurateweb/image-bundle/issues"
             },
-            "time": "2020-11-05T08:52:17+00:00"
+            "time": "2021-01-27T09:42:19+00:00"
         },
         {
             "name": "accurateweb/location-bundle",

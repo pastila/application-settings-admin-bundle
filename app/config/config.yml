@@ -154,6 +154,9 @@ accurateweb_application_settings_admin:
   configuration:
     class: AppBundle\Entity\Common\Setting
 
+accurateweb_imaging:
+  library: imagick
+
 old_sound_rabbit_mq:
   connections:
     default:
