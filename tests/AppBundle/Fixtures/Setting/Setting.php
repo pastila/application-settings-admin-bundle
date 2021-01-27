@@ -40,10 +40,15 @@ class Setting extends Fixture
     $social_instagram->setValue('#social_instagram');
     $manager->persist($social_instagram);
 
-    $infoEmail = new \AppBundle\Entity\Common\Setting();
-    $infoEmail->setName('main_email');
-    $infoEmail->setValue('info@bezbahil.ru');
-    $manager->persist($infoEmail);
+    $contactEmail = new \AppBundle\Entity\Common\Setting();
+    $contactEmail->setName('contact_email');
+    $contactEmail->setValue('info@bezbahil.ru');
+    $manager->persist($contactEmail);
+
+    $administratorEmail = new \AppBundle\Entity\Common\Setting();
+    $administratorEmail->setName('administrator_email');
+    $administratorEmail->setValue('no-reply@bezbahil.ru');
+    $manager->persist($administratorEmail);
 
     $manager->flush();
 
@@ -52,6 +57,7 @@ class Setting extends Fixture
     $this->addReference('setting-personal_data', $personal_data);
     $this->addReference('setting-social_telegram', $social_telegram);
     $this->addReference('setting-social_instagram', $social_instagram);
-    $this->addReference('setting-info_email', $infoEmail);
+    $this->addReference('setting-contact_email', $contactEmail);
+    $this->addReference('setting-administrator_email', $administratorEmail);
   }
 }

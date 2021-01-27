@@ -150,6 +150,6 @@ class FeedbackControllerTest extends AppWebTestCase
     /* Проверка письма: */
     $this->assertInstanceOf('Swift_Message', $message, 'Проверка, что объект Swift_Message');
     $this->assertSame('Отзыв', $message->getSubject(), 'Проверка заголовка');
-    $this->assertSame('info@bezbahil.ru', key($message->getTo()), 'Проверка адреса получателя');
+    $this->assertSame('no-reply@bezbahil.ru', key($message->getTo()), 'Проверка адреса получателя');
   }
 }
