@@ -57,7 +57,7 @@ class Setting extends Fixture
     $this->addReference('setting-personal_data', $personal_data);
     $this->addReference('setting-social_telegram', $social_telegram);
     $this->addReference('setting-social_instagram', $social_instagram);
-    $this->addReference('setting-info_email', $contactEmail);
-    $this->addReference('setting-info_email', $administratorEmail);
+    $this->addReference('setting-contact_email', $contactEmail);
+    $this->addReference('setting-administrator_email', $administratorEmail);
   }
 }
