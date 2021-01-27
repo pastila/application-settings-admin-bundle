@@ -8,29 +8,30 @@ $rsUser = CUser::GetByID($USER->GetID());
 $person = $rsUser->Fetch();
 $array_field = Array();
 
-$clear_email = str_replace(" ","",$_POST["email"]);
+// block change email: https://jira.accurateweb.ru/browse/BEZBAHIL-219
+//$clear_email = str_replace(" ","",$_POST["email"]);
 //echo '<pre>';
 //print_r($clear_email);
 //echo '</pre>';
 //echo '<pre>';
 //print_r($person["EMAIL"]);
 //echo '</pre>';
-if ($person["EMAIL"] == $clear_email) {
-        $array_field += ["EMAIL" => $clear_email];
-} else {
-
-    $filter = Array(
-        "EMAIL" => $_POST["email"],
-    );
-    $order = array('sort' => 'asc');
-    $tmp = 'sort';
-    $rsUser = CUser::GetList($order, $tmp, $filter);
-
-    if ($rsUser->SelectedRowsCount() > 0) {
-        $result["user_email_already"] = "Пользователь с таким эмейлом уже есть";
-    }
-
-}
+//if ($person["EMAIL"] == $clear_email) {
+//        $array_field += ["EMAIL" => $clear_email];
+//} else {
+//
+//    $filter = Array(
+//        "EMAIL" => $_POST["email"],
+//    );
+//    $order = array('sort' => 'asc');
+//    $tmp = 'sort';
+//    $rsUser = CUser::GetList($order, $tmp, $filter);
+//
+//    if ($rsUser->SelectedRowsCount() > 0) {
+//        $result["user_email_already"] = "Пользователь с таким эмейлом уже есть";
+//    }
+//
+//}
 //if($person["UF_INSURANCE_POLICY"] == $_POST["uf_insurance_policy"]){
 //
 //}else{
@@ -56,10 +57,10 @@ if(isset($result["user_email_already"]) || isset($result["user_policy_already"])
         $clear_name = str_replace(" ", "", $_POST["name"]);
         $array_field += ["NAME" => $clear_name];
     }
-    if ($_POST["email"] != "") {
-        $clear_email = str_replace(" ", "", $_POST["email"]);
-        $array_field += ["EMAIL" => $clear_email];
-    }
+//    if ($_POST["email"] != "") {
+//        $clear_email = str_replace(" ", "", $_POST["email"]);
+//        $array_field += ["EMAIL" => $clear_email];
+//    }
     if ($_POST["last_name"] != "") {
         $clear_last_name = str_replace(" ", "", $_POST["last_name"]);
         $array_field += ["LAST_NAME" => $clear_last_name];

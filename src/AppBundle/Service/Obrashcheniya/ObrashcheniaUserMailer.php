@@ -2,6 +2,7 @@
 
 namespace AppBundle\Service\Obrashcheniya;
 
+use Accurateweb\ApplicationSettingsAdminBundle\Model\Manager\SettingManagerInterface;
 use Accurateweb\EmailTemplateBundle\Email\Factory\EmailFactory;
 use AppBundle\Model\Obrashchenia\AppealDataToCompany;
 use Psr\Log\LoggerInterface;
@@ -15,6 +16,7 @@ class ObrashcheniaUserMailer
   private $mailerSenderName;
   private $logger;
   private $router;
+  private $settingManager;
 
   public function __construct(
     \Swift_Mailer $mailer,
@@ -22,7 +24,8 @@ class ObrashcheniaUserMailer
     $mailerFrom,
     $mailerSenderName,
     LoggerInterface $logger,
-    RouterInterface $router
+    RouterInterface $router,
+    SettingManagerInterface $settingManager
   )
   {
     $this->mailer = $mailer;
@@ -31,6 +34,7 @@ class ObrashcheniaUserMailer
     $this->mailerSenderName = $mailerSenderName;
     $this->logger = $logger;
     $this->router = $router;
+    $this->settingManager = $settingManager;
   }
 
   /**
@@ -44,9 +48,11 @@ class ObrashcheniaUserMailer
     $message = $this->emailFactory->createMessage('appeal_sent_user', [
       $this->mailerFrom => $this->mailerSenderName,
     ],
-      $modelObrashcheniaBranch->getEmailsTo(),
+      $modelObrashcheniaBranch->getAuthorEmail(),
       [
-        'author' => $modelObrashcheniaBranch->getAuthor(),
+        'social_instagram' => $this->settingManager->getValue('social_instagram'),
+        'contact_email' => $this->settingManager->getValue('contact_email'),
+        'recipient_name' => $modelObrashcheniaBranch->getAuthorFullName(),
         'logo' => $baseUrl . '/local/templates/kdteam/images/png/header/logo-oms.png',
         'illustration' => $baseUrl . '/local/templates/kdteam/images/pages/home/Illustration3.svg',
       ]

@@ -129,6 +129,11 @@ class Feedback
   private $region;
 
   /**
+   * @var
+   */
+  private $company;
+
+  /**
    * Company constructor.
    */
   public function __construct ()
@@ -136,6 +141,9 @@ class Feedback
     $this->comments = new ArrayCollection();
   }
 
+  /**
+   * @return Comment[]|ArrayCollection
+   */
   public function getComments()
   {
     return $this->comments;
@@ -193,6 +201,14 @@ class Feedback
    */
   public function getRegion()
   {
+    return $this->getBranch() ? $this->getBranch()->getRegion() : null;
+  }
+
+  /**
+   * @return null|Region
+   */
+  public function getRegionRaw()
+  {
     return $this->region;
   }
 
@@ -204,6 +220,33 @@ class Feedback
   public function setRegion($region)
   {
     $this->region = $region;
+
+    return $this;
+  }
+
+  /**
+   * @return Company|null
+   */
+  public function getCompany()
+  {
+    return $this->getBranch() ? $this->getBranch()->getCompany() : null;
+  }
+
+  /**
+   * @return null|Region
+   */
+  public function getCompanyRaw()
+  {
+    return $this->company;
+  }
+
+  /**
+   * @param $company
+   * @return $this
+   */
+  public function setCompany($company)
+  {
+    $this->company = $company;
 
     return $this;
   }
@@ -353,14 +396,6 @@ class Feedback
     return $this;
   }
 
-  /**
-   * @return Company|null
-   */
-  public function getCompany()
-  {
-    return $this->getBranch() ? $this->getBranch()->getCompany() : null;
-  }
-
   public function isFromLetter()
   {
     return $this->isFromLetter;
@@ -378,6 +413,32 @@ class Feedback
     $author = $this->getAuthor();
 
     return $author ? $author->getFullName() : $this->authorName;
+  }
+
+  /**
+   * Sets createdAt.
+   *
+   * @param  \DateTime $createdAt
+   * @return $this
+   */
+  public function setCreatedAt(\DateTime $createdAt = null)
+  {
+    $this->createdAt = $createdAt;
+
+    return $this;
+  }
+
+  /**
+   * Sets updatedAt.
+   *
+   * @param  \DateTime $updatedAt
+   * @return $this
+   */
+  public function setUpdatedAt(\DateTime $updatedAt = null)
+  {
+    $this->updatedAt = $updatedAt;
+
+    return $this;
   }
 
   /**

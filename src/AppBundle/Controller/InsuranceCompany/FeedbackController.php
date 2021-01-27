@@ -237,10 +237,17 @@ class FeedbackController extends Controller
   public function showAction($id, Request $request, UserInterface $user = null)
   {
     $em = $this->getDoctrine()->getManager();
-    $repository = $em->getRepository(Feedback::class);
+    $reviewRepository = $em->getRepository(Feedback::class);
 
     /** @var Feedback $review */
-    $review = $repository->getFeedbackActive()
+    if ($this->isGranted('ROLE_ADMIN'))
+    {
+      $reviewQb = $reviewRepository->createQueryBuilder('rv');
+    } else
+    {
+      $reviewQb = $reviewRepository->getFeedbackActive();
+    }
+    $review = $reviewQb
       ->andWhere('rv.id = :feedback_id')
       ->setParameter('feedback_id', $id)
       ->setMaxResults(1)
@@ -298,11 +305,11 @@ class FeedbackController extends Controller
       $em->persist($feedback);
       $em->flush();
 
-      if (!empty($this->settingManager->getValue('main_email')))
+      if (!empty($this->settingManager->getValue('administrator_email')))
       {
         try
         {
-          $this->feedbackMailer->sendFeedback($feedback, $this->settingManager->getValue('main_email'));
+          $this->feedbackMailer->sendFeedback($feedback, $this->settingManager->getValue('administrator_email'));
         }
         catch (\Exception $e)
         {

@@ -102,8 +102,6 @@ sonata_admin:
   title: Раздел администрирования
   dashboard:
     groups:
-      feedback:
-        label: Отзывы
       main_page:
         label: Главная страница
       text:
@@ -138,7 +136,7 @@ stfalcon_tinymce:
   theme:
     simple:
       theme: "modern"
-      height: '260px'
+      height: '400px'
       relative_urls: false
       external_filemanager_path: '/fm/'
       plugins:
@@ -155,6 +153,9 @@ stfalcon_tinymce:
 accurateweb_application_settings_admin:
   configuration:
     class: AppBundle\Entity\Common\Setting
+
+accurateweb_imaging:
+  library: imagick
 
 old_sound_rabbit_mq:
   connections:

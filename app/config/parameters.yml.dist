@@ -10,13 +10,13 @@ parameters:
     # You should uncomment this if you want to use pdo_sqlite
     #database_path: '%kernel.project_dir%/var/data/data.sqlite'
 
-    mailer_transport: smtp
-    mailer_host: ~
-    mailer_user: ~
-    mailer_password: ~
-    mailer_port: ~
-    mailer_from: ~
-    mailer_sender_name: ~
+    mailer_transport: '%env(MAILER_TRANSPORT)%'
+    mailer_host: '%env(MAILER_HOST)%'
+    mailer_user: '%env(MAILER_USER)%'
+    mailer_password: '%env(MAILER_PASSWORD)%'
+    mailer_port: '%env(MAILER_PORT)%'
+    mailer_from: '%env(MAILER_FROM)%'
+    mailer_sender_name: '%env(MAILER_SENDER_NAME)%'
     mailer_encryption: ~
 
     # A secret key that's used to generate certain security-related tokens
@@ -46,3 +46,11 @@ parameters:
 
     env(REQUEST_DEFAULT_HOST): 'bezbahil.ru'
     env(REQUEST_DEFAULT_SCHEME): 'https'
+
+    env(MAILER_TRANSPORT): smtp
+    env(MAILER_HOST): maildev
+    env(MAILER_USER): null
+    env(MAILER_PASSWORD): null
+    env(MAILER_PORT): 25
+    env(MAILER_FROM): admin@example.com
+    env(MAILER_SENDER_NAME): admin

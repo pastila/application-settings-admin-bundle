@@ -7,6 +7,7 @@ use Tests\AppBundle\AppWebTestCase;
 use Tests\AppBundle\Fixtures\Company\Citation;
 use Symfony\Component\DomCrawler\Crawler;
 use Tests\AppBundle\Fixtures\Geo\Region;
+use Tests\AppBundle\Fixtures\Setting\Setting;
 
 class FeedbackControllerTest extends AppWebTestCase
 {
@@ -14,6 +15,7 @@ class FeedbackControllerTest extends AppWebTestCase
   {
     $this->addFixture(new Citation());
     $this->addFixture(new Region());
+    $this->addFixture(new Setting());
   }
 
   /**
@@ -114,5 +116,40 @@ class FeedbackControllerTest extends AppWebTestCase
     $this->assertEquals($citiesHtml[0]['value'], "1", 'Проверка данных в списке по филиалам');
     $this->assertEquals($citiesHtml[1]['name'], "ИНГОССТРАХ-М", 'Проверка данных в списке по филиалам');
     $this->assertEquals($citiesHtml[1]['value'], "3", 'Проверка данных в списке по филиалам');
+  }
+
+  /**
+   * Тест отправки писем при создании отзыва
+   * https://jira.accurateweb.ru/browse/BEZBAHIL-221
+   */
+  public function testNew()
+  {
+    $client = static::createClient();
+    $client->enableProfiler();
+
+    // Создание нового отзыва
+    $client->request('POST', '/feedback/add', [
+      "feedback" => [
+        "region" => "1",
+        "branch" => "1",
+        "author_name" => "ФИО",
+        "title" => "Заголовок",
+        "text" => "текст для проверки email уведомлений",
+      ]
+    ], [],
+      [
+        'HTTP_X-Requested-With' => 'XMLHttpRequest',
+      ]);
+
+    $mailCollector = $client->getProfile()->getCollector('swiftmailer');
+    $this->assertSame(1, $mailCollector->getMessageCount(), 'Проверка, что только одно письмо');
+
+    $collectedMessages = $mailCollector->getMessages();
+    $message = $collectedMessages[0];
+
+    /* Проверка письма: */
+    $this->assertInstanceOf('Swift_Message', $message, 'Проверка, что объект Swift_Message');
+    $this->assertSame('Отзыв', $message->getSubject(), 'Проверка заголовка');
+    $this->assertSame('no-reply@bezbahil.ru', key($message->getTo()), 'Проверка адреса получателя');
   }
 }

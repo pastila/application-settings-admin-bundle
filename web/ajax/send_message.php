@@ -372,11 +372,11 @@ if (CModule::IncludeModule("iblock")) {
                             }
                           try
                           {
-                            sendAppealToSymfony(obrashcheniya_appeal_emails_api, API_TOKEN, json_encode([
+                            rabbitmqSend(queue_obrashcheniya_emails, json_encode([
                               'child' => true,
                               'login' => $arUser['LOGIN'],
                               'id' => $arFields['ID'],
-                              'email' => $email,
+                              'email' => $email_child_smo,
                               /*
                               'login' => $arUser['LOGIN'],
                               'SEND_MESSAGE_CHILD',
@@ -416,8 +416,7 @@ if (CModule::IncludeModule("iblock")) {
                               $_POST['ID'],
                               11,
                               array(
-                                "SEND_REVIEW" => 3,
-                                "SEND_MESSAGE" => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time())
+                                "SEND_REVIEW" => 8, //ID статуса ожидает отправки
                               )
                             );
                             $result['success'] = 'Ваше обращение ожидает отправки в страховую компанию. За состоянием отправки сообщения Вы 
@@ -429,7 +428,7 @@ if (CModule::IncludeModule("iblock")) {
                         } else {
                           try
                           {
-                            sendAppealToSymfony(obrashcheniya_appeal_emails_api, API_TOKEN, json_encode([
+                            rabbitmqSend(queue_obrashcheniya_emails, json_encode([
                               'child' => false,
                               'login' => $arUser['LOGIN'],
                               'id' => $arFields['ID'],
@@ -469,8 +468,7 @@ if (CModule::IncludeModule("iblock")) {
                               $_POST['ID'],
                               11,
                               array(
-                                "SEND_REVIEW" => 3,
-                                "SEND_MESSAGE" => date($DB->DateFormatToPHP(CSite::GetDateFormat("SHORT")), time())
+                                "SEND_REVIEW" => 8, //ID статуса ожидает отправки
                               )
                             );
                             $result['success'] = 'Ваше обращение ожидает отправки в страховую компанию. За состоянием отправки сообщения Вы

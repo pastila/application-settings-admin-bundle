@@ -60,3 +60,12 @@ services:
       - ${DATA_PATH_LOGS}/nginx:/var/log/nginx
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ${NGINX_SITES_PATH}/bezbahil.local.conf:/etc/nginx/sites-available/bezbahil.local.conf
+
+  ### MailDev ##############################################
+  maildev:
+    build: ./maildev
+    ports:
+      - "${MAILDEV_WEB_GUI_PORT}:80"
+    networks:
+      - backend
+      - frontend

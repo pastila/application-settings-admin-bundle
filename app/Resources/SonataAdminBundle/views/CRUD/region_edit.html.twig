@@ -1,0 +1,28 @@
+{% extends 'SonataAdminBundle:CRUD:edit.html.twig' %}
+
+{% block form %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#{{ form.company.vars.id }}").change(function () {
+                $.ajax({
+                    url: "{{ admin.generateUrl('reloadRegions') }}",
+                    data: {
+                        'id': $(this).val(),
+                        'uniquid': '{{ admin.uniqid }}'
+                    },
+                    method: 'POST',
+                    success: function (html) {
+                        $("#{{ form.region.vars.id }}").select2("val", "");
+                        $("#{{ form.region.vars.id }}").html(html);
+                        if ($("#{{ form.region.vars.id }} option").length > 0) {
+                            $("#{{ form.region.vars.id }}").select2("val", $('#{{ form.region.vars.id }} option:eq(0)').val());
+                        }
+                    },
+                    error: function (data) {
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

@@ -88,8 +88,9 @@ class AppealDataParse
     }
 
     $model = new AppealDataToCompany();
+    $model->setAuthorEmail($author->getEmail());
     $model->setBitrixId($data['id']);
-    $model->setAuthor($author->getFullName());
+    $model->setAuthorFullName($author->getFullName());
     $model->setPdf($pdfFile->getFile());
     $model->setEmailsTo(array_map(function ($item)
     {

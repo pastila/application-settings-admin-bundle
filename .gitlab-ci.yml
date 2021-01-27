@@ -11,6 +11,7 @@
   dependencies:
     - build-sf-app
   before_script:
+    - sleep 30
     - composer install -o
 
 .build-before: &build-before
@@ -164,6 +165,7 @@ build-sf-app:
   <<: *build-image
   stage: build-app
   script:
+    - sleep 30
     - composer install -o
     - cd web && composer install -o
 
@@ -177,6 +179,7 @@ phpunit:
   artifacts:
     when: always
     paths:
+      - var/logs/test.log
       - var/logs/phpunit-unit.xml
     reports:
       junit:
