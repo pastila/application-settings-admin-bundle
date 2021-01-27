@@ -43,6 +43,8 @@ class ContactUsMailer
     ],
       $this->settingManager->getValue('contact_email'),
       [
+        'social_instagram' => $this->settingManager->getValue('social_instagram'),
+        'contact_email' => $this->settingManager->getValue('contact_email'),
         'recipient_name' => $contactUs->getAuthorName(),
         'email' => $contactUs->getEmail(),
         'text' => $contactUs->getMessage(),

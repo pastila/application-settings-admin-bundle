@@ -7,6 +7,8 @@ aw_email_templating:
     email_contact_us:
       description: 'Обратная связь'
       variables:
+        contact_email: { description: "Контактный e-mail" }
+        social_instagram: { description: "Адрес страницы Instagram ленты" }
         recipient_name: { description: "Имя получателя" }
         email: { description: "Email" }
         text: { description: "Сообщение" }
@@ -94,7 +96,7 @@ aw_email_templating:
                               <tr>
                                 <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-top: 15px">
                                   <b style="font-size: 12px;color: #515151;">Служба поддержки:</b>
-                                  <a href="mailto:%%contact_email%%" target="_blank" style="color: #134469;font-family: sans-serif;font-size: 12px;font-weight: 400;line-height: 160%;">%%contact_email%%</a>
+                                  <a href="mailto:%%contact_email%%" target="_blank" style="color: #134469;font-family: sans-serif;font-size: 12px;font-weight: 400;line-height: 160%%;">%%contact_email%%</a>
                                 </td>
                               </tr>
                               <tr>
@@ -148,6 +150,8 @@ aw_email_templating:
       variables:
         date: { description: "Дата" }
         url: { description: "Url на отзыв" }
+        recipient_name: { description: "Имя получателя" }
+        social_instagram: { description: "Адрес страницы Instagram ленты" }
       defaults:
         subject: "Отзыв"
         head: |
@@ -234,7 +238,7 @@ aw_email_templating:
                               <tr>
                                 <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-top: 15px">
                                   <b style="font-size: 12px;color: #515151;">Служба поддержки:</b>
-                                  <a href="mailto:%%contact_email%%" target="_blank" style="color: #134469;font-family: sans-serif;font-size: 12px;font-weight: 400;line-height: 160%;">%%contact_email%%</a>
+                                  <a href="mailto:%%contact_email%%" target="_blank" style="color: #134469;font-family: sans-serif;font-size: 12px;font-weight: 400;line-height: 160%%;">%%contact_email%%</a>
                                 </td>
                               </tr>
                               <tr>
@@ -286,6 +290,8 @@ aw_email_templating:
       description: 'Письмо с обращением в СМО'
       variables:
         recipient_name: { description: "Имя получателя" }
+        social_instagram: { description: "Адрес страницы Instagram ленты" }
+        contact_email: { description: "Контактный e-mail" }
       defaults:
         subject: "Обращение о взимании денежных средств"
         body: |
@@ -369,7 +375,7 @@ aw_email_templating:
                               <tr>
                                 <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-top: 15px">
                                   <b style="font-size: 12px;color: #515151;">Служба поддержки:</b>
-                                  <a href="mailto:%%contact_email%%" target="_blank" style="color: #134469;font-family: sans-serif;font-size: 12px;font-weight: 400;line-height: 160%;">%%contact_email%%</a>
+                                  <a href="mailto:%%contact_email%%" target="_blank" style="color: #134469;font-family: sans-serif;font-size: 12px;font-weight: 400;line-height: 160%%;">%%contact_email%%</a>
                                 </td>
                               </tr>
                               <tr>
@@ -516,7 +522,7 @@ aw_email_templating:
                                 <tr>
                                   <td align="left" valign="top" style="border-collapse: collapse;border-spacing: 0;margin: 0;padding: 0;padding-top: 15px">
                                     <b style="font-size: 12px;color: #515151;">Служба поддержки:</b>
-                                    <a href="mailto:%%contact_email%%" target="_blank" style="color: #134469;font-family: sans-serif;font-size: 12px;font-weight: 400;line-height: 160%;">%%contact_email%%</a>
+                                    <a href="mailto:%%contact_email%%" target="_blank" style="color: #134469;font-family: sans-serif;font-size: 12px;font-weight: 400;line-height: 160%%;">%%contact_email%%</a>
                                   </td>
                                 </tr>
                                 <tr>

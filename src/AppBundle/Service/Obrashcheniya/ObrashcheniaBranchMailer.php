@@ -45,7 +45,9 @@ class ObrashcheniaBranchMailer
     ],
       $modelObrashcheniaBranch->getEmailsTo(),
       [
-        'recipient_name' => $modelObrashcheniaBranch->getAuthorFullName()
+        'recipient_name' => $modelObrashcheniaBranch->getAuthorFullName(),
+        'social_instagram' => $this->settingManager->getValue('social_instagram'),
+        'contact_email' => $this->settingManager->getValue('contact_email'),
       ]
     );
     if (!empty($this->settingManager->getValue('administrator_email')))
