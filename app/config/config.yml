@@ -136,7 +136,7 @@ stfalcon_tinymce:
   theme:
     simple:
       theme: "modern"
-      height: '260px'
+      height: '400px'
       relative_urls: false
       external_filemanager_path: '/fm/'
       plugins:

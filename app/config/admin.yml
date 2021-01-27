@@ -64,3 +64,21 @@ services:
     arguments: [~, 'AppBundle\Entity\Company\Feedback', 'AppBundle:Admin/Feedback/FeedbackAdmin']
     tags:
       -  { name: sonata.admin, manager_type: orm, group: 'text', label: 'Отзывы' }
+
+  AppBundle\Admin\Common\EmailTemplateAdmin:
+    decorates: aw_email_template_admin.email_template
+    arguments:
+      - null
+      - %aw_email_template_admin.class%
+      - SonataAdminBundle:CRUD
+    tags:
+      -
+        name: sonata.admin
+        manager_type: orm
+        group: %aw_email_template_admin.email_template_group%
+        label: %aw_email_template_admin.email_template_label%
+        label_catalogue: PropelEmailTemplateAdminBundle
+    calls:
+      - [setModelManager, ['@aw_email_template_admin.model_manager'] ]
+      - [setTemplate, [edit, AccuratewebEmailTemplateBundle:EmailTemplateAdmin:edit.html.twig]]
+    public: true
