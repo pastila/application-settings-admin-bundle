@@ -40,12 +40,18 @@ class Setting extends Fixture
     $social_instagram->setValue('#social_instagram');
     $manager->persist($social_instagram);
 
+    $infoEmail = new \AppBundle\Entity\Common\Setting();
+    $infoEmail->setName('main_email');
+    $infoEmail->setValue('info@bezbahil.ru');
+    $manager->persist($infoEmail);
+
     $manager->flush();
 
     $this->addReference('setting-region_default', $region_default);
     $this->addReference('setting-agreement', $agreement);
-    $this->addReference('setting-personal_data', $agreement);
-    $this->addReference('setting-social_telegram', $agreement);
-    $this->addReference('setting-social_instagram', $agreement);
+    $this->addReference('setting-personal_data', $personal_data);
+    $this->addReference('setting-social_telegram', $social_telegram);
+    $this->addReference('setting-social_instagram', $social_instagram);
+    $this->addReference('setting-info_email', $infoEmail);
   }
 }
