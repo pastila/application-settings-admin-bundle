@@ -4,6 +4,7 @@ namespace AppBundle\Entity\Organization;
 
 use AppBundle\Entity\Company\CompanyBranch;
 use AppBundle\Entity\Geo\Region;
+use AppBundle\Helper\Year\Year;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
@@ -15,7 +16,7 @@ use Doctrine\ORM\Mapping\OneToOne;
  * Organization.
  *
  * @ORM\Table(name="s_organizations")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\Organization\OrganizationRepository")
  */
 class Organization
 {
@@ -40,7 +41,7 @@ class Organization
    * Полное название МО
    *
    * @var string
-   * @ORM\Column(name="name_full", type="string", length=512, nullable=true)
+   * @ORM\Column(name="name_full", type="string", length=512, nullable=false)
    */
   private $fullName;
 
@@ -48,7 +49,7 @@ class Organization
    * Адрес МО
    *
    * @var string
-   * @ORM\Column(name="address", type="string", length=512, nullable=true)
+   * @ORM\Column(name="address", type="string", length=512, nullable=false)
    */
   private $address;
 
@@ -76,30 +77,9 @@ class Organization
 
   /**
    * @var OrganizationYear[]|ArrayCollection
-   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Organization\OrganizationYear", mappedBy="organization")
+   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Organization\OrganizationYear", mappedBy="organization", cascade={"persist"}, orphanRemoval=true)
    */
   protected $years;
-
-  /**
-   * @var ArrayCollection
-   */
-  protected $yearsRaw;
-
-  /**
-   * @return mixed
-   */
-  public function getYearsRaw()
-  {
-    return $this->yearsRaw;
-  }
-
-  /**
-   * @param mixed $yearsRaw
-   */
-  public function setYearsRaw($yearsRaw): void
-  {
-    $this->yearsRaw = $yearsRaw;
-  }
 
   /**
    * Organization constructor.
@@ -126,6 +106,58 @@ class Organization
   }
 
   /**
+   * @return array
+   */
+  public function getYearsChoice()
+  {
+    $years = Year::getYears();
+    $choice = [];
+    foreach ($this->years->getValues() as $organization)
+    {
+      $choice[$years[$organization->getYear()]] = $organization->getYear();
+    }
+
+    return array_flip($choice);
+  }
+
+  /**
+   * @param $choice
+   */
+  public function setYearsChoice($choice)
+  {
+    $years = array_flip(Year::getYears());
+    /**
+     * @var OrganizationYear $year
+     */
+    foreach ($this->years->getValues() as $year)
+    {
+      if (!array_key_exists($year->getYear(), $choice))
+      {
+        $this->years->removeElement($year);
+      }
+    }
+    foreach ($choice as $item)
+    {
+      $find = false;
+      foreach ($this->years->getValues() as $year)
+      {
+        if ($year->getYear() === $years[$item])
+        {
+          $find = true;
+        }
+      }
+      if (!$find)
+      {
+        $year = new OrganizationYear();
+        $year->setOrganization($this);
+        $year->setYear($years[$item]);
+        $year->setYearKey($item);
+        $this->years->add($year);
+      }
+    }
+  }
+
+  /**
    * @return OrganizationYear[]|ArrayCollection
    */
   public function getYears()
@@ -134,15 +166,35 @@ class Organization
   }
 
   /**
+   * @param $year
+   */
+  public function addYear($year)
+  {
+    $this->years->add($year);
+  }
+
+  /**
    * @param $years
    */
   public function setYears($years): void
   {
-    foreach ($years as $year) {
+    foreach ($years as $year)
+    {
       if (!$this->years->contains($year))
       {
         $this->years->add($year);
       }
+    }
+  }
+
+  /**
+   * @param $year
+   */
+  public function removeYear($year)
+  {
+    if ($this->years->contains($year))
+    {
+      $this->years->removeElement($year);
     }
   }
 
@@ -239,24 +291,11 @@ class Organization
   }
 
   /**
-   * @return int|string
-   */
-  public function getStatusLabel ()
-  {
-    return OrganizationStatus::getName($this->published);
-  }
-
-  /**
    * @param $published
    * @return $this
    */
   public function setPublished($published)
   {
-    if (null !== $published && !in_array($published, OrganizationStatus::getAvailableValues()))
-    {
-      throw new \InvalidArgumentException();
-    }
-
     $this->published = $published;
 
     return $this;

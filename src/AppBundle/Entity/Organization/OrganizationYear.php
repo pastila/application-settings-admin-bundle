@@ -31,11 +31,19 @@ class OrganizationYear
   private $year;
 
   /**
+   * (Ключ года)
+   *
+   * @var integer
+   * @ORM\Column(type="integer", nullable=false)
+   */
+  private $yearKey;
+
+  /**
    * МО
    *
    * @var string|Organization
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Organization\Organization")
-   * @ORM\JoinColumn(name="organization_id", referencedColumnName="code", nullable=false, onDelete="RESTRICT")
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Organization\Organization", cascade={"persist"})
+   * @ORM\JoinColumn(name="organization_id", referencedColumnName="code", nullable=false)
    */
   protected $organization;
 
@@ -84,6 +92,22 @@ class OrganizationYear
   public function setYear($year): void
   {
     $this->year = $year;
+  }
+
+  /**
+   * @return int
+   */
+  public function getYearKey()
+  {
+    return $this->yearKey;
+  }
+
+  /**
+   * @param int $yearKey
+   */
+  public function setYearKey($yearKey): void
+  {
+    $this->yearKey = $yearKey;
   }
 
   /**
