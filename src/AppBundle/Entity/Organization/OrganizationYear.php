@@ -2,7 +2,8 @@
 
 namespace AppBundle\Entity\Organization;
 
-use Doctrine\Common\Collections\ArrayCollection;
+
+use AppBundle\Entity\Company\Company;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -14,45 +15,59 @@ use Doctrine\ORM\Mapping as ORM;
 class OrganizationYear
 {
   /**
-   * Год
-   *
    * @var integer
    * @ORM\Id()
    * @ORM\GeneratedValue(strategy="AUTO")
    * @ORM\Column(type="integer")
+   */
+  protected $id;
+
+  /**
+   * Год
+   *
+   * @var integer
+   * @ORM\Column(type="integer", nullable=false)
    */
   private $year;
 
   /**
    * МО
    *
-   * @var Organization[]|ArrayCollection
-   * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Organization\Organization", mappedBy="years")
+   * @var string|Organization
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Organization\Organization")
+   * @ORM\JoinColumn(name="organization_id", referencedColumnName="code", nullable=false, onDelete="RESTRICT")
    */
-  protected $organizations;
+  protected $organization;
 
   /**
    * OrganizationYear constructor.
    */
   public function __construct()
   {
-    $this->organizations = new ArrayCollection();
   }
 
   /**
-   * @return Organization[]|ArrayCollection
+   * @return integer
+   */
+  public function getId()
+  {
+    return $this->id;
+  }
+
+  /**
+   * @return Organization|string
    */
   public function getOrganization()
   {
-    return $this->organizations;
+    return $this->organization;
   }
 
   /**
-   * @param Organization[]|ArrayCollection $organization
+   * @param Organization|string $organization
    */
   public function setOrganization($organization): void
   {
-    $this->organizations = $organization;
+    $this->organization = $organization;
   }
 
   /**
@@ -76,6 +91,6 @@ class OrganizationYear
    */
   public function __toString()
   {
-    return $this->year ? (string)$this->year : 'новый год';
+    return $this->year ? (string)$this->year : 'Новый год';
   }
 }

@@ -26,7 +26,7 @@ class OrganizationChiefMedicalOfficer
   /**
    * МО
    *
-   * @OneToOne(targetEntity="Organization", inversedBy="chiefMedicalOfficer")
+   * @OneToOne(targetEntity="Organization", inversedBy="chiefMedicalOfficer", cascade={"persist", "remove"})
    * @JoinColumn(name="organization_id", referencedColumnName="code")
    */
   private $organization;
@@ -100,7 +100,7 @@ class OrganizationChiefMedicalOfficer
   /**
    * @return string
    */
-  public function getLastName(): string
+  public function getLastName()
   {
     return $this->lastName;
   }
@@ -116,7 +116,7 @@ class OrganizationChiefMedicalOfficer
   /**
    * @return string
    */
-  public function getFirstName(): string
+  public function getFirstName()
   {
     return $this->firstName;
   }
@@ -132,7 +132,7 @@ class OrganizationChiefMedicalOfficer
   /**
    * @return string
    */
-  public function getMiddleName(): string
+  public function getMiddleName()
   {
     return $this->middleName;
   }

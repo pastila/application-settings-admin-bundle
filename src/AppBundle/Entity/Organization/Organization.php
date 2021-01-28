@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity\Organization;
 
+use AppBundle\Entity\Company\CompanyBranch;
 use AppBundle\Entity\Geo\Region;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -23,7 +24,6 @@ class Organization
    *
    * @var integer
    * @ORM\Id()
-   * @ORM\GeneratedValue(strategy="AUTO")
    * @ORM\Column(type="integer")
    */
   private $code;
@@ -55,7 +55,7 @@ class Organization
   /**
    * Глав.врач
    *
-   * @OneToOne(targetEntity="OrganizationChiefMedicalOfficer", mappedBy="customer")
+   * @OneToOne(targetEntity="OrganizationChiefMedicalOfficer", mappedBy="organization", cascade={"persist", "remove"},)
    */
   private $chiefMedicalOfficer;
 
@@ -75,15 +75,31 @@ class Organization
   private $region;
 
   /**
-   * Года
-   *
-   * @ManyToMany(targetEntity="OrganizationYear", inversedBy="organizations")
-   * @JoinTable(name="s_organizations_to_years",
-   *      joinColumns={@JoinColumn(name="organization_id", referencedColumnName="code")},
-   *      inverseJoinColumns={@JoinColumn(name="year_id", referencedColumnName="year")}
-   *      )
+   * @var OrganizationYear[]|ArrayCollection
+   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Organization\OrganizationYear", mappedBy="organization")
    */
   protected $years;
+
+  /**
+   * @var ArrayCollection
+   */
+  protected $yearsRaw;
+
+  /**
+   * @return mixed
+   */
+  public function getYearsRaw()
+  {
+    return $this->yearsRaw;
+  }
+
+  /**
+   * @param mixed $yearsRaw
+   */
+  public function setYearsRaw($yearsRaw): void
+  {
+    $this->yearsRaw = $yearsRaw;
+  }
 
   /**
    * Organization constructor.

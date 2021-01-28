@@ -21,13 +21,13 @@ services:
     class: AppBundle\Admin\Common\NewsAdmin
     arguments: [~, %aw.news.entity_class%,~]
     tags:
-      -  { name: sonata.admin, group: %aw.news.admin.group%, manager_type: orm, label: %aw.news.admin.label% }
+      - { name: sonata.admin, group: %aw.news.admin.group%, manager_type: orm, label: %aw.news.admin.label% }
 
   main.admin.article:
     class: AppBundle\Admin\Common\ArticleAdmin
     arguments: [~, %aw.article.entity_class%,~]
     tags:
-      -  { name: sonata.admin, group: %aw.article.admin.group%, manager_type: orm, label: %aw.article.admin.label% }
+      - { name: sonata.admin, group: %aw.article.admin.group%, manager_type: orm, label: %aw.article.admin.label% }
 
   app.admin.menu_header:
     class: AppBundle\Admin\Menu\MenuHeaderAdmin
@@ -51,19 +51,19 @@ services:
     class: AppBundle\Admin\ContactUs\ContactUsAdmin
     arguments: [~, 'AppBundle\Entity\ContactUs\ContactUs', ~]
     tags:
-      -  { name: sonata.admin, manager_type: orm, group: 'messages', label: 'Сообщения "Написать нам"' }
+      - { name: sonata.admin, manager_type: orm, group: 'messages', label: 'Сообщения "Написать нам"' }
 
   main.admin.region:
     class: AppBundle\Admin\Geo\RegionAdmin
     arguments: [~, 'AppBundle\Entity\Geo\Region', ~]
     tags:
-      -  { name: sonata.admin, manager_type: orm, group: 'settings', label: 'Регионы' }
+      - { name: sonata.admin, manager_type: orm, group: 'settings', label: 'Регионы' }
 
   main.admin.feedback:
     class: AppBundle\Admin\Feedback\FeedbackAdmin
     arguments: [~, 'AppBundle\Entity\Company\Feedback', 'AppBundle:Admin/Feedback/FeedbackAdmin']
     tags:
-      -  { name: sonata.admin, manager_type: orm, group: 'text', label: 'Отзывы' }
+      - { name: sonata.admin, manager_type: orm, group: 'text', label: 'Отзывы' }
 
   AppBundle\Admin\Common\EmailTemplateAdmin:
     decorates: aw_email_template_admin.email_template
@@ -72,8 +72,7 @@ services:
       - %aw_email_template_admin.class%
       - SonataAdminBundle:CRUD
     tags:
-      -
-        name: sonata.admin
+      - name: sonata.admin
         manager_type: orm
         group: %aw_email_template_admin.email_template_group%
         label: %aw_email_template_admin.email_template_label%
@@ -87,10 +86,11 @@ services:
     class: AppBundle\Admin\Organization\OrganizationAdmin
     arguments: [~, 'AppBundle\Entity\Organization\Organization', ~]
     tags:
-      -  { name: sonata.admin, manager_type: orm, group: 'mo_cmo', label: 'Медицинские организации' }
+      - { name: sonata.admin, manager_type: orm, group: 'mo_cmo', label: 'Медицинские организации' }
 
   main.admin.organization_chief_medical_officer:
     class: AppBundle\Admin\Organization\ChiefMedicalOfficerAdmin
-    arguments: [~, 'AppBundle\Entity\Organization\OrganizationChiefMedicalOfficer', ~]
+    arguments: [~, 'AppBundle\Entity\Organization\OrganizationChiefMedicalOfficer', 'SonataAdminBundle:CRUD']
     tags:
-      - { name: sonata.admin, manager_type: orm, group: 'mo_cmo', label: 'Глав.врач' }
+      - { name: sonata.admin, manager_type: orm, group: 'mo_cmo', label: 'Глав.врач',  show_in_dashboard: false}
+    public: true
