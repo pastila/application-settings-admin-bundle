@@ -90,7 +90,7 @@ class Organization
   }
 
   /**
-   * @return mixed
+   * @return OrganizationChiefMedicalOfficer
    */
   public function getChiefMedicalOfficer()
   {
@@ -98,7 +98,7 @@ class Organization
   }
 
   /**
-   * @param mixed $chiefMedicalOfficer
+   * @param $chiefMedicalOfficer
    */
   public function setChiefMedicalOfficer($chiefMedicalOfficer): void
   {
