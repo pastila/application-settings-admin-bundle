@@ -87,7 +87,12 @@ class OrganizationAdmin extends AbstractAdmin
           ]),
         ],
       ])
-      ->add('region')
+      ->add('region', null, [
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+        ],
+      ])
       ->add('yearsChoice', ChoiceType::class, [
         'multiple' => true,
         'choices' => Year::getYears(),
@@ -112,13 +117,13 @@ class OrganizationAdmin extends AbstractAdmin
   protected function configureDatagridFilters(DatagridMapper $filter)
   {
     $filter
-      ->add('years.yearKey', null, ['label' => 'Годы',],
+      ->add('code')
+      ->add('region')
+      ->add('name')
+      ->add('years.year', null, ['label' => 'Год',],
         'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
           'choices' => Year::getYears(),
         ])
-      ->add('code')
-      ->add('name')
-      ->add('region')
       ->add('published');
   }
 

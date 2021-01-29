@@ -22,7 +22,7 @@ class Year
     $years = [];
     for ($i = 2019, $key = 0; $i <= date("Y"); $i++, $key++)
     {
-      $years[$i] = $key;
+      $years[$i] = $i;
     }
     return $years;
   }

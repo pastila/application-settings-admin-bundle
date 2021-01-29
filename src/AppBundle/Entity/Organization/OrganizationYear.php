@@ -31,14 +31,6 @@ class OrganizationYear
   private $year;
 
   /**
-   * (Ключ года)
-   *
-   * @var integer
-   * @ORM\Column(type="integer", nullable=false)
-   */
-  private $yearKey;
-
-  /**
    * МО
    *
    * @var string|Organization
@@ -92,22 +84,6 @@ class OrganizationYear
   public function setYear($year): void
   {
     $this->year = $year;
-  }
-
-  /**
-   * @return int
-   */
-  public function getYearKey()
-  {
-    return $this->yearKey;
-  }
-
-  /**
-   * @param int $yearKey
-   */
-  public function setYearKey($yearKey): void
-  {
-    $this->yearKey = $yearKey;
   }
 
   /**

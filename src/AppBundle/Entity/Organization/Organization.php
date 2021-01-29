@@ -110,14 +110,13 @@ class Organization
    */
   public function getYearsChoice()
   {
-    $years = Year::getYears();
     $choice = [];
     foreach ($this->years->getValues() as $organization)
     {
-      $choice[$years[$organization->getYear()]] = $organization->getYear();
+      $choice[$organization->getYear()] = $organization->getYear();
     }
 
-    return array_flip($choice);
+    return $choice;
   }
 
   /**
@@ -125,7 +124,6 @@ class Organization
    */
   public function setYearsChoice($choice)
   {
-    $years = array_flip(Year::getYears());
     /**
      * @var OrganizationYear $year
      */
@@ -141,7 +139,7 @@ class Organization
       $find = false;
       foreach ($this->years->getValues() as $year)
       {
-        if ($year->getYear() === $years[$item])
+        if ($year->getYear() === $item)
         {
           $find = true;
         }
@@ -150,8 +148,7 @@ class Organization
       {
         $year = new OrganizationYear();
         $year->setOrganization($this);
-        $year->setYear($years[$item]);
-        $year->setYearKey($item);
+        $year->setYear($item);
         $this->years->add($year);
       }
     }
@@ -259,9 +256,9 @@ class Organization
   }
 
   /**
-   * @param string $code
+   * @param $code
    */
-  public function setCode(string $code): void
+  public function setCode($code): void
   {
     $this->code = $code;
   }
