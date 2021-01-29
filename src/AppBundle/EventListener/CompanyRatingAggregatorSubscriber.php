@@ -207,7 +207,7 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
       ->em->getRepository(InsuranceCompanyBranch::class)
       ->createQueryBuilder('cb')
       ->select('avg(cb.valuation)')
-      ->where('cb.company = :company AND cb.status > 0 AND cb.valuation > 0')
+      ->where('cb.company = :company AND cb.published > 0 AND cb.valuation > 0')
       ->setParameter(':company', $company)
       ->getQuery()
       ->getSingleScalarResult();
