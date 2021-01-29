@@ -1,0 +1,340 @@
+server {
+    listen 80 ;
+    
+    server_name bezbahil.ru www.bezbahil.ru;
+    access_log off;
+    
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 http2 ssl;
+
+    server_name www.bezbahil.ru;
+    access_log off;
+    ssl_certificate /var/certs/fullchain1.pem;
+    ssl_certificate_key /var/certs/privkey1.pem;
+    ssl_trusted_certificate /var/certs/chain1.pem;
+    
+    return 301 https://bezbahil.ru$request_uri;
+}
+
+# Bitrix - Symfony interop
+server {
+    listen 80;
+    
+    server_name nginx;
+
+    root /var/www/web;
+    
+    access_log  /var/log/nginx/access.log main;
+    error_log   /var/log/nginx/error.log;
+    
+    #######################
+    # Symfony Application #
+    #######################
+
+    location ~ ^/(feedback|companies|cabinet|api|logout) {
+        try_files $uri /app.php$is_args$args;
+    }
+    
+    location ~ ^/app\.php(/|$) {
+        fastcgi_pass php-fpm-symfony:9000;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        fastcgi_param DOCUMENT_ROOT $realpath_root;
+
+        #fixes timeouts
+        fastcgi_connect_timeout 600s;
+        fastcgi_send_timeout 600s;
+        fastcgi_read_timeout 600s;
+
+        internal;
+    }
+    
+    #######################
+    # Bitrix + static     #
+    #######################
+    
+    location ~* /(bitrix/modules|bitrix/managed_cache|bitrix/local_cache|bitrix/stack_cache|bitrix/backup|bitrix/tmp|upload/support/not_image|bitrix/php_interface|local/php_interface) {
+            deny all;
+            log_not_found off;
+            access_log off;
+    }
+    
+    # laradock internal locations
+    location ~* ^/laradock/ {
+      deny all;
+    }
+    
+    # ht(passwd|access)
+    location ~* /\.ht  { deny all; }
+    
+    # repositories
+    location ~* /\.(svn|hg|git) { deny all; }
+    
+    # upload files
+    location ~* ^/upload/1c_[^/]+/ { deny all; }
+    
+    # use the file system to access files outside the site (cache)
+    location ~* /\.\./ { deny all; }
+    location ~* ^/bitrix/html_pages/\.config\.php { deny all; }
+    location ~* ^/bitrix/html_pages/\.enabled { deny all; }
+    
+    # Intenal locations
+    location ^~ /upload/support/not_image   { internal; }
+    
+    # Disable access for other assets in cache location
+    location ~* ^/bitrix/cache   { deny all; }
+     
+    location / {
+        index index.php index.html index.htm;
+        try_files  $uri $uri/ @bitrix;
+    }
+        
+    location ~ \.php$ {      
+        try_files $uri /index.php =404;
+        fastcgi_pass php-fpm-bitrix:9000;
+        fastcgi_index index.php;
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fixes timeouts
+        fastcgi_connect_timeout 600s;
+                fastcgi_send_timeout 600s;
+                fastcgi_read_timeout 600s;
+        include fastcgi_params;
+    }
+    
+    location @bitrix {
+            fastcgi_pass php-fpm-bitrix:9000;
+            include fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME $document_root/bitrix/urlrewrite.php;
+    
+    }
+}
+
+server {
+    listen 443 http2 ssl;
+    # listen 80 ;
+
+    server_name bezbahil.ru;
+    access_log  /var/log/nginx/access.log main;
+    error_log   /var/log/nginx/error.log;
+    
+    root /var/www/web;
+
+    ssl_certificate /var/certs/fullchain1.pem;
+    ssl_certificate_key /var/certs/privkey1.pem;
+    ssl_trusted_certificate /var/certs/chain1.pem;
+
+    # SSL encryption parameters
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers 'TLS13-CHACHA20-POLY1305-SHA256:TLS13-AES-128-GCM-SHA256:TLS13-AES-256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA';
+    ssl_prefer_server_ciphers on;
+
+    ssl_session_tickets off;
+    ssl_stapling on;
+    ssl_stapling_verify on;
+    resolver 8.8.8.8 77.88.8.8;
+    add_header Strict-Transport-Security "max-age=31536000;";
+
+    # performance
+    ssl_session_cache       shared:SSL:10m;
+    ssl_session_timeout     10m;
+
+    #######################
+    # Symfony Application #
+    #######################
+
+
+    # Страницы исключение, которые будут открыты в symfony
+    location ~ ^/(obrashcheniya/report-download) {
+        auth_basic "Restricted Content";
+        auth_basic_user_file /etc/nginx/sites-available/.htpasswd;
+
+        try_files $uri /app.php$is_args$args;
+    }
+
+    location ~ ^/app\.php(/|$) {
+        fastcgi_pass php-fpm-symfony:9000;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        fastcgi_param DOCUMENT_ROOT $realpath_root;
+
+        #fixes timeouts
+        fastcgi_connect_timeout 600s;
+		fastcgi_send_timeout 600s;
+		fastcgi_read_timeout 600s;
+
+        internal;
+    }
+
+    #######################
+    # Bitrix + static     #
+    #######################
+
+    # bitrix internal locations
+    #location ~* ^/bitrix/(modules|local_cache|stack_cache|managed_cache|php_interface) {
+    #    deny all;
+    #}
+
+    location ~* /(bitrix/modules|bitrix/managed_cache|bitrix/local_cache|bitrix/stack_cache|bitrix/backup|bitrix/tmp|upload/support/not_image|bitrix/php_interface|local/php_interface) {
+            deny all;
+            log_not_found off;
+            access_log off;
+    }
+
+    # laradock internal locations
+    location ~* ^/laradock/ {
+      deny all;
+    }
+
+    # ht(passwd|access)
+    location ~* /\.ht  { deny all; }
+
+    # repositories
+    location ~* /\.(svn|hg|git) { deny all; }
+
+    # upload files
+    location ~* ^/upload/1c_[^/]+/ { deny all; }
+
+    # use the file system to access files outside the site (cache)
+    location ~* /\.\./ { deny all; }
+    location ~* ^/bitrix/html_pages/\.config\.php { deny all; }
+    location ~* ^/bitrix/html_pages/\.enabled { deny all; }
+
+    # Intenal locations
+    location ^~ /upload/support/not_image   { internal; }
+
+    # Disable access for other assets in cache location
+    location ~* ^/bitrix/cache   { deny all; }
+
+    #Access admin panel
+    location ~* ^/bitrix/admin/.* {
+        satisfy any;
+        #allow 144.76.90.154; #esx1
+        #allow 95.217.42.171; #rdp1
+        #allow 95.216.224.157; #rdp2
+        allow 84.201.185.203; #local
+        allow 127.0.0.1; #local
+        deny all;
+        auth_basic "Restricted Content";
+        auth_basic_user_file /etc/nginx/sites-available/.htpasswd;
+
+        # Обрабатываем PHP-скрипты, доступные только после успешной аутентификации
+        location ~* \.php$ {
+          try_files     $uri @bitrix;
+          include fastcgi_params;
+          fastcgi_pass php-fpm-bitrix:9000;
+          fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        }
+
+        # Необработанные запросы передаём разборщику ошибок Bitrix
+        index index.php index.html index.htm;
+        try_files $uri $uri/ @bitrix;
+    }
+
+    # Страницы Bitrix
+    location ~ ^/(otpravlennyye|obrashcheniya|forma-obrashenija|personal-cabinet) {
+        index index.php;
+        try_files $uri $uri/ @bitrix;
+        fastcgi_pass php-fpm-bitrix:9000;
+        fastcgi_index index.php;
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fixes timeouts
+        fastcgi_connect_timeout 600s;
+        fastcgi_send_timeout 600s;
+        fastcgi_read_timeout 600s;
+        include fastcgi_params;
+        fastcgi_param  SERVER_NAME $host;
+
+#        auth_basic "Restricted Content";
+#        auth_basic_user_file /etc/nginx/sites-available/.htpasswd;
+    }
+
+    # Все ajax запросы в Bitrix
+    location ~ ^/ajax/.+\.php$ {
+        auth_basic off;
+
+        try_files $uri /index.php =404;
+        fastcgi_pass php-fpm-bitrix:9000;
+        fastcgi_index index.php;
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fixes timeouts
+        fastcgi_connect_timeout 600s;
+        fastcgi_send_timeout 600s;
+        fastcgi_read_timeout 600s;
+        include fastcgi_params;
+
+        fastcgi_param  SERVER_NAME $host;
+    }
+
+
+    location / {
+#        auth_basic "Restricted Content";
+#        auth_basic_user_file /etc/nginx/sites-available/.htpasswd;
+
+        try_files $uri /app.php$is_args$args;
+    }
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/letsencrypt/;
+        log_not_found off;
+    }
+
+    location = /status {
+        access_log off;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_pass php-fpm-bitrix:9000;
+    }
+
+    location ~ \.php$ {
+        try_files $uri /index.php =404;
+        fastcgi_pass php-fpm-bitrix:9000;
+        fastcgi_index index.php;
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fixes timeouts
+        fastcgi_connect_timeout 600s;
+                fastcgi_send_timeout 600s;
+                fastcgi_read_timeout 600s;
+        include fastcgi_params;
+    }
+
+    location @bitrix {
+            fastcgi_pass php-fpm-bitrix:9000;
+            include fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME $document_root/bitrix/urlrewrite.php;
+
+    }
+
+    # Accept access for merged css and js
+    location ~* ^/bitrix/cache/(css/.+\.css|js/.+\.js)$ {
+        expires 30d;
+        error_page 404 /404.html;
+    }
+
+
+    # Static content
+    location ~* ^/(upload|bitrix/images|bitrix/tmp) {
+      expires 30d;
+    }
+
+    location  ~* \.(css|js|gif|png|jpg|jpeg|ico|ogg|ttf|woff|eot|otf|woff2|pdf|webp|svg)$ {
+        root  /var/www/web;
+                access_log off;
+                error_page 404 /404.html;
+        expires 30d;
+    }
+}
+
