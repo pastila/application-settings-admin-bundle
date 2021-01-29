@@ -29,8 +29,8 @@ class InsuranceCompanyRepository extends ServiceEntityRepository
    */
   public function filterByActive($qb, $alias = 'c')
   {
-    return $qb->andWhere($alias . '.status = :status')
-      ->setParameter('status', CompanyStatus::ACTIVE);
+    return $qb->andWhere($alias . '.published = :published')
+      ->setParameter('published', true);
   }
 
   /**

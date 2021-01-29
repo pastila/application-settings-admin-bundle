@@ -244,7 +244,7 @@ class BitrixImportCommand extends ContainerAwareCommand
         $entityManager->persist($user);
       }
 
-      $branch = !empty($item['KPP']) ? $doctrine->getRepository("AppBundle:Company\CompanyBranch")
+      $branch = !empty($item['KPP']) ? $doctrine->getRepository("AppBundle:Company\InsuranceCompanyBranch")
         ->createQueryBuilder('cb')
         ->andWhere('cb.kpp = :kpp')
         ->andWhere('cb.region = :region_id')

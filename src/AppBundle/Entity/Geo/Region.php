@@ -4,7 +4,7 @@ namespace AppBundle\Entity\Geo;
 
 use Accurateweb\LocationBundle\Model\ResolvedUserLocation;
 use Accurateweb\LocationBundle\Model\UserLocationInterface;
-use AppBundle\Entity\Company\CompanyBranch;
+use AppBundle\Entity\Company\InsuranceCompanyBranch;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -66,8 +66,8 @@ class Region implements UserLocationInterface
   protected $code;
 
   /**
-   * @var CompanyBranch[]|ArrayCollection
-   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Company\CompanyBranch", mappedBy="region")
+   * @var InsuranceCompanyBranch[]|ArrayCollection
+   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Company\InsuranceCompanyBranch", mappedBy="region")
    */
   protected $branches;
 
@@ -80,7 +80,7 @@ class Region implements UserLocationInterface
   }
 
   /**
-   * @return CompanyBranch[]|ArrayCollection
+   * @return InsuranceCompanyBranch[]|ArrayCollection
    */
   public function getBranches()
   {

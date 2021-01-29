@@ -3,8 +3,7 @@
 namespace AppBundle\Controller\Admin\Feedback;
 
 
-use AppBundle\Entity\Company\CompanyBranch;
-use AppBundle\Entity\Company\CompanyStatus;
+use AppBundle\Entity\Company\InsuranceCompanyBranch;
 use AppBundle\Entity\Geo\Region;
 use Doctrine\ORM\EntityManagerInterface;
 use Sonata\AdminBundle\Controller\CRUDController;
@@ -29,10 +28,10 @@ class FeedbackAdminController extends CRUDController
       ->leftJoin('r.branches', 'cb')
       ->leftJoin('cb.company', 'c')
       ->where('cb.company = :company')
-      ->andWhere('cb.status = :status')
-      ->andWhere('c.status = :status')
+      ->andWhere('cb.published = :published')
+      ->andWhere('c.published = :published')
       ->setParameter('company', $request->request->get('id'))
-      ->setParameter('status', CompanyStatus::ACTIVE)
+      ->setParameter('published', true)
       ->orderBy('r.name')
       ->getQuery()
       ->getResult();
