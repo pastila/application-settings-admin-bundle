@@ -107,6 +107,17 @@ class InsuranceCompany implements ImageAwareInterface, SluggableInterface
   }
 
   /**
+   * @param $branches
+   * @return $this
+   */
+  public function setBranches($branches)
+  {
+    $this->branches;
+
+    return $this;
+  }
+
+  /**
    * @return int
    */
   public function getFeedbacksCount()

@@ -71,6 +71,12 @@ services:
     tags:
       -  { name: sonata.admin, manager_type: orm, group: 'mo_cmo', label: 'Страховые медицинские организации' }
 
+  main.admin.insurance_company_branch:
+    class: AppBundle\Admin\InsuranceCompany\InsuranceCompanyBranchAdmin
+    arguments: [~, 'AppBundle\Entity\Company\InsuranceCompanyBranch', ~]
+    tags:
+      -  { name: sonata.admin, manager_type: orm, group: 'mo_cmo', label: 'Филиалы страховых медицинских организаций' }
+
   AppBundle\Admin\Common\EmailTemplateAdmin:
     decorates: aw_email_template_admin.email_template
     arguments:

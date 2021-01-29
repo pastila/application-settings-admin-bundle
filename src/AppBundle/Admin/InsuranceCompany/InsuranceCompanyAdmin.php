@@ -8,6 +8,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\CoreBundle\Form\Type\DatePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -16,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Sonata\Form\Type\CollectionType;
 
 /**
  * Class InsuranceCompanyAdmin
@@ -73,6 +75,21 @@ class InsuranceCompanyAdmin extends AbstractAdmin
           ]),
         ],
       ])
+//      ->add('branches', ModelListType::class)
+      ->add( 'branches', CollectionType::class, array(
+//        'cascade_validation' => false,
+        'type_options'       => array( 'delete' => false ),
+      ), array(
+
+          'edit'            => 'inline',
+          'inline'          => 'table',
+          'sortable'        => 'position',
+          'link_parameters' => array( 'context' => 'define context from which you want to select media or else just add default' ),
+          'admin_code'      => 'main.admin.insurance_company_branch'
+          /*here provide service name for junction admin */
+        )
+      )
+
       ->add('published', null, [
         'required' => true,
         'constraints' => [
