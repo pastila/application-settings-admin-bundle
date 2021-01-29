@@ -102,8 +102,6 @@ sonata_admin:
   title: Раздел администрирования
   dashboard:
     groups:
-      feedback:
-        label: Отзывы
       mo_cmo:
         label: МО и СМО
       main_page:

@@ -63,7 +63,7 @@ services:
     class: AppBundle\Admin\Feedback\FeedbackAdmin
     arguments: [~, 'AppBundle\Entity\Company\Feedback', 'AppBundle:Admin/Feedback/FeedbackAdmin']
     tags:
-      -  { name: sonata.admin, manager_type: orm, group: 'feedback', label: 'Отзывы' }
+      -  { name: sonata.admin, manager_type: orm, group: 'text', label: 'Отзывы' }
 
   main.admin.insurance_company:
     class: AppBundle\Admin\InsuranceCompany\InsuranceCompanyAdmin
