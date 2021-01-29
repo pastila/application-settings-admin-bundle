@@ -99,6 +99,7 @@ add('shared_files', [
   'web/robots.txt',
   'web/sitemap.xml',
   'web/ssh/send_mail_after_30_day.txt',
+  'web/symfony-integration/config_rabbitmq.php',
 ]);
 
 add('shared_dirs', [
