@@ -3,6 +3,7 @@
 namespace AppBundle\Admin\Organization;
 
 use AppBundle\Entity\Organization\Organization;
+use AppBundle\Form\DataTransformer\YearsToCollectionTransformer;
 use AppBundle\Helper\Year\Year;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -44,6 +45,9 @@ class OrganizationAdmin extends AbstractAdmin
    */
   protected function configureFormFields(FormMapper $form)
   {
+    $container = $this->getConfigurationPool()->getContainer();
+    $em = $container->get('doctrine.orm.entity_manager');
+
     $form
       ->with('Медицинская организация')
       ->add("code", TextType::class, [
@@ -93,7 +97,7 @@ class OrganizationAdmin extends AbstractAdmin
           new NotBlank(),
         ],
       ])
-      ->add('yearsChoice', ChoiceType::class, [
+      ->add('years', ChoiceType::class, [
         'multiple' => true,
         'choices' => Year::getYears(),
         'label' => 'Года',
@@ -103,12 +107,15 @@ class OrganizationAdmin extends AbstractAdmin
       ->end()
       ->with('Руководитель')
       ->add('chiefMedicalOfficer', AdminType::class, [
-        'label' => 'Глав.врач:',
+        'label' => 'Главный врач:',
       ], [
           'admin_code' => 'main.admin.organization_chief_medical_officer'
         ]
       )
-      ->end();
+      ->end()
+
+      ->get('years')
+      ->addModelTransformer(new YearsToCollectionTransformer($em, $this->getSubject()));
   }
 
   /**

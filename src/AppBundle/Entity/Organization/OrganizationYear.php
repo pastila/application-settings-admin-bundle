@@ -35,7 +35,7 @@ class OrganizationYear
    *
    * @var string|Organization
    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Organization\Organization", cascade={"persist"})
-   * @ORM\JoinColumn(name="organization_id", referencedColumnName="code", nullable=false)
+   * @ORM\JoinColumn(name="organization_code", referencedColumnName="code", nullable=false)
    */
   protected $organization;
 

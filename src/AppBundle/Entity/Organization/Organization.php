@@ -54,7 +54,7 @@ class Organization
   private $address;
 
   /**
-   * Глав.врач
+   * Главный врач
    *
    * @OneToOne(targetEntity="OrganizationChiefMedicalOfficer", mappedBy="organization", cascade={"persist", "remove"},)
    */
@@ -103,55 +103,6 @@ class Organization
   public function setChiefMedicalOfficer($chiefMedicalOfficer): void
   {
     $this->chiefMedicalOfficer = $chiefMedicalOfficer;
-  }
-
-  /**
-   * @return array
-   */
-  public function getYearsChoice()
-  {
-    $choice = [];
-    foreach ($this->years->getValues() as $organization)
-    {
-      $choice[$organization->getYear()] = $organization->getYear();
-    }
-
-    return $choice;
-  }
-
-  /**
-   * @param $choice
-   */
-  public function setYearsChoice($choice)
-  {
-    /**
-     * @var OrganizationYear $year
-     */
-    foreach ($this->years->getValues() as $year)
-    {
-      if (!array_key_exists($year->getYear(), $choice))
-      {
-        $this->years->removeElement($year);
-      }
-    }
-    foreach ($choice as $item)
-    {
-      $find = false;
-      foreach ($this->years->getValues() as $year)
-      {
-        if ($year->getYear() === $item)
-        {
-          $find = true;
-        }
-      }
-      if (!$find)
-      {
-        $year = new OrganizationYear();
-        $year->setOrganization($this);
-        $year->setYear($item);
-        $this->years->add($year);
-      }
-    }
   }
 
   /**
