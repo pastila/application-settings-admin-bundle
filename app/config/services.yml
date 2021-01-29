@@ -52,15 +52,6 @@ services:
 #        tags:
 #            - { name: twig.extension }
 
-    AppBundle\Helper\Feedback\RegionHelper:
-        public: true
-
-    AppBundle\Helper\Feedback\CompanyHelper:
-        public: true
-
-    AppBundle\Helper\Feedback\CompanyBranchHelper:
-        public: true
-
     AppBundle\Helper\GetMessFromBitrix:
         public: true
 
