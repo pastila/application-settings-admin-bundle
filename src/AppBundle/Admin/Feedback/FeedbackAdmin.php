@@ -224,7 +224,7 @@ class FeedbackAdmin extends AbstractAdmin
     if (!empty($feedback->getRegionRaw()) && !empty($feedback->getCompanyRaw()))
     {
       $em = $container->get('doctrine.orm.entity_manager');
-      $branch = $em->getRepository(CompanyBranch::class)
+      $branch = $em->getRepository(InsuranceCompanyBranch::class)
         ->findOneBy([
           'region' => $feedback->getRegionRaw(),
           'company' => $feedback->getCompanyRaw(),

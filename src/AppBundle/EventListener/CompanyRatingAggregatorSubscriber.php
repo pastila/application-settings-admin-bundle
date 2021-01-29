@@ -118,7 +118,7 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
       $this->updateBranchRating($entity);
     }
 
-    if ($entity instanceof CompanyBranch)
+    if ($entity instanceof InsuranceCompanyBranch)
     {
       $this->updateCompanyRating($entity);
     }
@@ -170,7 +170,7 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
   }
 
   /**
-   * @param CompanyBranch $companyBranches
+   * @param InsuranceCompanyBranch $companyBranches
    */
   protected function updateCompanyRating($companyBranches)
   {

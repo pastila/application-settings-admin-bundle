@@ -284,7 +284,7 @@ class Feedback
   }
 
   /**
-   * @return Company|null
+   * @return InsuranceCompany|null
    */
   public function getCompany()
   {
@@ -451,14 +451,6 @@ class Feedback
     $this->moderationStatus = $moderationStatus;
 
     return $this;
-  }
-
-  /**
-   * @return InsuranceCompany|null
-   */
-  public function getCompany()
-  {
-    return $this->getBranch() ? $this->getBranch()->getCompany() : null;
   }
 
   public function isFromLetter()

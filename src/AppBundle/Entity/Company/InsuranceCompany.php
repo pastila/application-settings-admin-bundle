@@ -17,7 +17,7 @@ use Accurateweb\MediaBundle\Annotation as Media;
  *
  * @ORM\Table(name="s_companies")
  * @UniqueEntity("slug")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\Company\CompanyRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\Company\InsuranceCompanyRepository")
  */
 class InsuranceCompany implements ImageAwareInterface, SluggableInterface
 {
