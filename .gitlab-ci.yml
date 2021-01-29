@@ -11,7 +11,7 @@
   dependencies:
     - build-sf-app
   before_script:
-    - sleep 30
+    - sleep 60
     - composer install -o
 
 .build-before: &build-before
@@ -165,7 +165,7 @@ build-sf-app:
   <<: *build-image
   stage: build-app
   script:
-    - sleep 30
+    - sleep 60
     - composer install -o
     - cd web && composer install -o
 
