@@ -4,6 +4,7 @@ namespace AppBundle\Admin\InsuranceCompany;
 
 
 use AppBundle\Entity\Company\FeedbackModerationStatus;
+use AppBundle\Form\Widget\InsuranceCompanyBranchRegionType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -75,21 +76,9 @@ class InsuranceCompanyAdmin extends AbstractAdmin
           ]),
         ],
       ])
-//      ->add('branches', ModelListType::class)
-      ->add( 'branches', CollectionType::class, array(
-//        'cascade_validation' => false,
-        'type_options'       => array( 'delete' => false ),
-      ), array(
-
-          'edit'            => 'inline',
-          'inline'          => 'table',
-          'sortable'        => 'position',
-          'link_parameters' => array( 'context' => 'define context from which you want to select media or else just add default' ),
-          'admin_code'      => 'main.admin.insurance_company_branch'
-          /*here provide service name for junction admin */
-        )
-      )
-
+      ->add('branches', InsuranceCompanyBranchRegionType::class, [
+        'subject' => $this->getSubject()
+      ])
       ->add('published', null, [
         'required' => true,
         'constraints' => [
