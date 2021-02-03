@@ -33,7 +33,7 @@ class FeedbackAdmin extends AbstractAdmin
    */
   protected $datagridValues = array(
     '_page' => 1,
-    '_sort_order' => 'ASC',
+    '_sort_order' => 'DESC',
     '_sort_by' => 'createdAt',
   );
 
