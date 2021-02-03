@@ -66,8 +66,6 @@
               rel="stylesheet">
         <link rel="stylesheet" href="/landing/css/plugins.min.css">
     {% endblock %}
-
-    <script type="text/javascript">urlPrefix = '{{ app.request.getBaseURL() }}'</script>
 </head>
 
 <body class="app v2">
@@ -105,6 +103,7 @@
     <script src="/landing/js/plugins.min.js"></script>
 {% endblock %}
 
+{% include '_web_counters.html.twig' %}
 </body>
 
 </html>

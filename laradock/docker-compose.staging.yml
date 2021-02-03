@@ -118,6 +118,7 @@ services:
       - ${APP_SHARED_PATH_HOST}/web/images:/var/www/web/images
       - ${APP_SHARED_PATH_HOST}/web/upload:/var/www/web/upload
       - ${APP_SHARED_PATH_HOST}/web/vendor/mpdf/mpdf/tmp:/var/www/web/vendor/mpdf/mpdf/tmp
+      - ${APP_SHARED_PATH_HOST}/web/symfony-integration/config_rabbitmq.php:/var/www/web/symfony-integration/config_rabbitmq.php
       # sf app uploads
       - ${APP_SHARED_PATH_HOST}/var/uploads:/var/www/var/uploads
       - ${APP_SHARED_PATH_HOST}/web/uploads:/var/www/web/uploads
