@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\AdminType;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\CoreBundle\Form\Type\DatePickerType;
@@ -52,39 +53,66 @@ class InsuranceCompanyAdmin extends AbstractAdmin
   protected function configureFormFields(FormMapper $form)
   {
     $form
-      ->add('logo', 'Accurateweb\MediaBundle\Form\ImageType', [
-        'required' => false,
-        'label' => 'Логотип',
-      ])
-      ->add("name", TextType::class, [
-        'required' => true,
-        'constraints' => [
-          new NotBlank(),
-          new Length([
-            'min' => 3,
-            'max' => 255,
-          ]),
-        ],
-      ])
-      ->add("kpp", TextType::class, [
-        'required' => true,
-        'constraints' => [
-          new NotBlank(),
-          new Length([
-            'min' => 3,
-            'max' => 255,
-          ]),
-        ],
-      ])
-      ->add('branches', InsuranceCompanyBranchRegionType::class, [
-        'subject' => $this->getSubject()
-      ])
-      ->add('published', null, [
-        'required' => true,
-        'constraints' => [
-          new NotBlank(),
-        ],
-      ]);
+      ->tab('СМО')
+        ->add('logo', 'Accurateweb\MediaBundle\Form\ImageType', [
+          'required' => false,
+          'label' => 'Логотип',
+        ])
+        ->add("name", TextType::class, [
+          'required' => true,
+          'constraints' => [
+            new Length([
+              'min' => 3,
+              'max' => 255,
+            ]),
+          ],
+        ])
+        ->add("kpp", TextType::class, [
+          'required' => true,
+          'constraints' => [
+            new Length([
+              'min' => 3,
+              'max' => 255,
+            ]),
+          ],
+        ])
+        ->add('published', null, [
+          'required' => true,
+          'constraints' => [
+            new NotBlank(),
+          ],
+        ])
+      ->end()
+      ->end()
+      ->tab('Филиалы')
+        ->add('branches', CollectionType::class, [
+          'by_reference' => false,
+          'label' => 'Филиалы:',
+          'btn_add' => false,
+          'type_options' => [
+            'delete' => false,
+            'delete_options' => [
+              'type_options' => [
+                'mapped'   => false,
+                'required' => false,
+              ]
+            ]
+          ]
+        ], [
+          'edit' => 'inline',
+          'inline' => 'table',
+          'sortable' => 'name',
+          'admin_code' => 'main.admin.insurance_company_branch'
+        ])
+
+//          [
+//          'label' => 'Филиалы:',
+//        ], [
+//            'admin_code' => 'main.admin.insurance_company_branch'
+//          ]
+//        )
+      ->end()
+      ->end();
   }
 
   /**

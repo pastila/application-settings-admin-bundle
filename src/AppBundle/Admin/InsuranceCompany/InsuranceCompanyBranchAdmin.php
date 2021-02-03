@@ -2,8 +2,10 @@
 
 namespace AppBundle\Admin\InsuranceCompany;
 
-
 use AppBundle\Entity\Company\FeedbackModerationStatus;
+use AppBundle\Entity\Geo\Region;
+use AppBundle\Form\DataTransformer\RegionToEntityTransformer;
+use AppBundle\Repository\Geo\RegionRepository;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -25,24 +27,24 @@ use Sonata\Form\Type\CollectionType;
  */
 class InsuranceCompanyBranchAdmin extends AbstractAdmin
 {
-//  /**
-//   * @param ListMapper $list
-//   */
-//  protected function configureListFields(ListMapper $list)
-//  {
-//    $list
-//      ->add('name')
-//      ->add('published', null, [
-//        'label' => 'Публикация',
-//      ])
-//      ->add('_action', null, array(
-//        'label' => 'Действия',
-//        'actions' => array(
-//          'edit' => array(),
-//          'delete' => array(),
-//        )
-//      ));
-//  }
+  /**
+   * @param ListMapper $list
+   */
+  protected function configureListFields(ListMapper $list)
+  {
+    $list
+      ->add('name')
+      ->add('published', null, [
+        'label' => 'Публикация',
+      ])
+      ->add('_action', null, array(
+        'label' => 'Действия',
+        'actions' => array(
+          'edit' => array(),
+          'delete' => array(),
+        )
+      ));
+  }
 
   /**
    * @param FormMapper $form
@@ -50,21 +52,15 @@ class InsuranceCompanyBranchAdmin extends AbstractAdmin
   protected function configureFormFields(FormMapper $form)
   {
     $form
-//      ->add("name", TextType::class, [
-//        'required' => true,
-//        'constraints' => [
-//          new Length([
-//            'min' => 3,
-//            'max' => 255,
-//          ]),
-//        ],
-//      ])
-      ->add("region")
-      ->add('published', null, [
-        'required' => true,
-        'constraints' => [
-          new NotBlank(),
-        ],
-      ]);
+      ->add('region', TextType::class, [
+        'label' => 'Регион',
+        'attr' => array(
+          'readonly' => true,
+        ),
+      ])
+      ->add('published')
+      ->get('region')
+        ->addModelTransformer(new RegionToEntityTransformer($this->getSubject()));
+    ;
   }
 }

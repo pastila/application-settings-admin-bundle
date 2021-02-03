@@ -112,7 +112,7 @@ class InsuranceCompany implements ImageAwareInterface, SluggableInterface
    */
   public function setBranches($branches)
   {
-    $this->branches;
+    $this->branches = $branches;
 
     return $this;
   }
