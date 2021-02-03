@@ -104,13 +104,6 @@ class InsuranceCompanyAdmin extends AbstractAdmin
           'sortable' => 'name',
           'admin_code' => 'main.admin.insurance_company_branch'
         ])
-
-//          [
-//          'label' => 'Филиалы:',
-//        ], [
-//            'admin_code' => 'main.admin.insurance_company_branch'
-//          ]
-//        )
       ->end()
       ->end();
   }

@@ -22,10 +22,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Sonata\Form\Type\CollectionType;
 
 /**
- * Class InsuranceCompanyBranchAdmin
+ * Class InsuranceRepresentativeAdmin
  * @package AppBundle\Admin\InsuranceCompany
  */
-class InsuranceCompanyBranchAdmin extends AbstractAdmin
+class InsuranceRepresentativeAdmin extends AbstractAdmin
 {
   /**
    * @param FormMapper $form
@@ -33,45 +33,7 @@ class InsuranceCompanyBranchAdmin extends AbstractAdmin
   protected function configureFormFields(FormMapper $form)
   {
     $form
-      ->add('region', TextType::class, [
-        'label' => 'Регион',
-        'attr' => array(
-          'readonly' => true,
-        ),
-      ])
-
-      ->add('representatives', CollectionType::class, [
-        'by_reference' => false,
-        'label' => 'Представители СМО:',
-        'btn_add' => true,
-        'type_options' => [
-          'delete' => true,
-//          'delete_options' => [
-//            'type_options' => [
-//              'mapped'   => false,
-//              'required' => false,
-//            ]
-//          ]
-        ]
-      ], [
-        'edit' => 'inline',
-        'inline' => 'table',
-        'allow_delete' => true,
-        'allow_add'=>true,
-//        'sortable' => 'name',
-        'admin_code' => 'main.admin.insurance_representative'
-      ])
-
-
-
-
-
-
-
-
-      ->add('published')
-      ->get('region')
-        ->addModelTransformer(new RegionToEntityTransformer($this->getSubject()));
+      ->add('email')
     ;
   }
 }
