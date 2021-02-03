@@ -61,6 +61,7 @@ class InsuranceCompanyAdmin extends AbstractAdmin
         ->add("name", TextType::class, [
           'required' => true,
           'constraints' => [
+            new NotBlank(),
             new Length([
               'min' => 3,
               'max' => 255,
@@ -70,6 +71,7 @@ class InsuranceCompanyAdmin extends AbstractAdmin
         ->add("kpp", TextType::class, [
           'required' => true,
           'constraints' => [
+            new NotBlank(),
             new Length([
               'min' => 3,
               'max' => 255,
@@ -118,4 +120,25 @@ class InsuranceCompanyAdmin extends AbstractAdmin
       ->add('name')
       ->add('published');
   }
+
+//  /**
+//   * @param $data
+//   */
+//  public function prePersist($data)
+//  {
+//    $this->setBranch($data);
+//  }
+//
+//  /**
+//   * @param $data
+//   */
+//  public function preUpdate($data)
+//  {
+//    $this->setBranch($data);
+//  }
+//
+//  private function setBranch($data)
+//  {
+//    dump($data);die;
+//  }
 }

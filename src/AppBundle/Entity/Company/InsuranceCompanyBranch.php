@@ -67,7 +67,7 @@ class InsuranceCompanyBranch
 
   /**
    * @var InsuranceRepresentative[]|ArrayCollection
-   * @ORM\OneToMany(targetEntity="InsuranceRepresentative", mappedBy="branch")
+   * @ORM\OneToMany(targetEntity="InsuranceRepresentative", mappedBy="branch", cascade={"persist", "remove"})
    */
   private $representatives;
 

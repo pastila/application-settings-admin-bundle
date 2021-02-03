@@ -24,6 +24,6 @@ class RegionToEntityTransformer implements DataTransformerInterface
 
   public function reverseTransform($data)
   {
-    return $this->branch->getRegion();
+    return $this->branch ? $this->branch->getRegion() : null;
   }
 }

@@ -24,8 +24,8 @@ class InsuranceRepresentative
    * Филиал
    *
    * @var null|InsuranceCompanyBranch
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\InsuranceCompanyBranch")
-   * @ORM\JoinColumn(name="branch_id", nullable=false, onDelete="RESTRICT")
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\InsuranceCompanyBranch", inversedBy="representatives", cascade={"persist", "remove"})
+   * @ORM\JoinColumn(name="branch_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
    */
   private $branch;
 
@@ -91,7 +91,7 @@ class InsuranceRepresentative
   /**
    * @return string
    */
-  public function getEmail(): string
+  public function getEmail()
   {
     return $this->email;
   }
@@ -99,7 +99,7 @@ class InsuranceRepresentative
   /**
    * @param string $email
    */
-  public function setEmail(string $email): void
+  public function setEmail($email): void
   {
     $this->email = $email;
   }
