@@ -2,14 +2,12 @@
 
 namespace AppBundle\Entity\Company;
 
-use Accurateweb\MediaBundle\Model\Media\ImageInterface;
-use Accurateweb\MediaBundle\Model\Thumbnail\ImageThumbnail;
 use AppBundle\Entity\Geo\Region;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;use Doctrine\ORM\Mapping\OneToOne;
 
 /**
- * Company.
+ * InsuranceCompanyBranch.
  *
  * @ORM\Table(name="s_company_branches")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Company\InsuranceCompanyBranchRepository")

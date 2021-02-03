@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Accurateweb\MediaBundle\Annotation as Media;
 
 /**
- * Company.
+ * InsuranceCompany.
  *
  * @ORM\Table(name="s_companies")
  * @UniqueEntity("slug")
