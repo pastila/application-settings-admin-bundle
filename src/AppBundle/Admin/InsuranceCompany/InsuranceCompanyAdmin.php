@@ -56,6 +56,7 @@ class InsuranceCompanyAdmin extends AbstractAdmin
       ->add("name", TextType::class, [
         'required' => true,
         'constraints' => [
+          new NotBlank(),
           new Length([
             'min' => 3,
             'max' => 255,
@@ -65,6 +66,7 @@ class InsuranceCompanyAdmin extends AbstractAdmin
       ->add("kpp", TextType::class, [
         'required' => true,
         'constraints' => [
+          new NotBlank(),
           new Length([
             'min' => 3,
             'max' => 255,
