@@ -2,6 +2,10 @@
 
 namespace AppBundle\Admin\InsuranceCompany;
 
+use AppBundle\Entity\Company\InsuranceCompany;
+use AppBundle\Entity\Company\InsuranceCompanyBranch;
+use AppBundle\Entity\Company\InsuranceRepresentative;
+use AppBundle\Entity\Geo\Region;
 use AppBundle\Validator\InsuranceCompany\InsuranceCompanyBranchPublished;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -69,15 +73,14 @@ class InsuranceCompanyAdmin extends AbstractAdmin
             ]),
           ],
         ])
-        ->add('published', null, [
-          'required' => true,
-          'constraints' => [
-            new NotBlank(),
-          ],
-        ])
+        ->add('published')
       ->end()
-      ->end()
-      ->tab('Филиалы')
+      ->end();
+
+    if ($this->getSubject() && $this->getSubject()->getId())
+    {
+      $form
+        ->tab('Филиалы')
         ->add('branches', CollectionType::class, [
           'by_reference' => false,
           'label' => 'Филиалы:',
@@ -97,8 +100,9 @@ class InsuranceCompanyAdmin extends AbstractAdmin
           'sortable' => 'name',
           'admin_code' => 'main.admin.insurance_company_branch'
         ])
-      ->end()
-      ->end();
+        ->end()
+        ->end();
+    }
   }
 
   /**
@@ -123,24 +127,51 @@ class InsuranceCompanyAdmin extends AbstractAdmin
     return parent::attachInlineValidator();
   }
 
-//  /**
-//   * @param $data
-//   */
-//  public function prePersist($data)
-//  {
-//    $this->setBranch($data);
-//  }
-//
-//  /**
-//   * @param $data
-//   */
-//  public function preUpdate($data)
-//  {
-//    $this->setBranch($data);
-//  }
-//
-//  private function setBranch($data)
-//  {
-//    dump($data);die;
-//  }
+  /**
+   * @param $company
+   */
+  public function prePersist($company)
+  {
+    $this->addNewBranch($company);
+  }
+
+  /**
+   * @param $company
+   */
+  public function preUpdate($company)
+  {
+    $this->addNewBranch($company);
+  }
+
+  /**
+   * @param InsuranceCompany $company
+   */
+  private function addNewBranch($company)
+  {
+    $container = $this->getConfigurationPool()->getContainer();
+    $em = $container->get('doctrine.orm.entity_manager');
+
+    $regions = $em->getRepository(Region::class)
+      ->createQueryBuilder('r')
+      ->orderBy('r.name', 'ASC')
+      ->getQuery()
+      ->getResult();
+    foreach ($regions as $region) {
+      $branch = $em->getRepository(InsuranceCompanyBranch::class)
+        ->findOneBy([
+          'region' => $region,
+          'company' => $company
+        ]);
+
+      if (!$branch)
+      {
+        $branch = new InsuranceCompanyBranch();
+        $branch->setRegion($region);
+        $branch->setCompany($company);
+        $branch->setKpp($company->getKpp());
+        $branch->setPublished(false);
+        $company->addBranch($branch);
+      }
+    }
+  }
 }

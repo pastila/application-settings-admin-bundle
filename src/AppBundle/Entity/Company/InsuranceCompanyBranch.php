@@ -43,7 +43,7 @@ class InsuranceCompanyBranch
    * Головная компания
    *
    * @var null|string|InsuranceCompany
-   * @ORM\ManyToOne(targetEntity="InsuranceCompany")
+   * @ORM\ManyToOne(targetEntity="InsuranceCompany", cascade={"persist"})
    * @ORM\JoinColumn(name="company_id", nullable=true, onDelete="RESTRICT")
    */
   private $company;
@@ -65,9 +65,9 @@ class InsuranceCompanyBranch
 
   /**
    * @var InsuranceRepresentative[]|ArrayCollection
-   * @ORM\OneToMany(targetEntity="InsuranceRepresentative", mappedBy="branch", cascade={"persist", "remove"})
+   * @ORM\OneToMany(targetEntity="InsuranceRepresentative", mappedBy="branch", cascade={"persist"})
    */
-  private $representatives;
+  private $representatives; // TODO: orphanremoval=true
 
   /**
    * @var Feedback[]|ArrayCollection

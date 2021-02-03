@@ -43,6 +43,7 @@ class InsuranceCompanyBranchAdmin extends AbstractAdmin
         'inline' => 'table',
         'allow_add' => true,
         'allow_delete' => true,
+        'sortable' => 'region',
         'admin_code' => 'main.admin.insurance_representative'
       ])
       ->add('published');

@@ -86,7 +86,7 @@ class InsuranceCompany implements ImageAwareInterface, SluggableInterface
 
   /**
    * @var InsuranceCompanyBranch[]|ArrayCollection
-   * @ORM\OneToMany(targetEntity="InsuranceCompanyBranch", mappedBy="company")
+   * @ORM\OneToMany(targetEntity="InsuranceCompanyBranch", mappedBy="company", cascade={"persist"})
    */
   protected $branches;
 
@@ -113,6 +113,17 @@ class InsuranceCompany implements ImageAwareInterface, SluggableInterface
   public function setBranches($branches)
   {
     $this->branches = $branches;
+
+    return $this;
+  }
+
+  /**
+   * @param $branch
+   * @return $this
+   */
+  public function addBranch($branch)
+  {
+    $this->branches->add($branch);
 
     return $this;
   }

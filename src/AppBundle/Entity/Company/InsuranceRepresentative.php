@@ -24,7 +24,7 @@ class InsuranceRepresentative
    * Филиал
    *
    * @var null|InsuranceCompanyBranch
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\InsuranceCompanyBranch", inversedBy="representatives", cascade={"persist", "remove"})
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\InsuranceCompanyBranch", inversedBy="representatives", cascade={"persist"})
    * @ORM\JoinColumn(name="branch_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
    */
   private $branch;
