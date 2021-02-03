@@ -40,7 +40,7 @@ class UpdateRatingCommand extends ContainerAwareCommand
     try
     {
       $sql = 'UPDATE s_company_branches cb
-            JOIN
+            LEFT JOIN
             (
                 SELECT branch_id, AVG (valuation) as valuation_avg
                 FROM s_company_feedbacks f
@@ -62,7 +62,7 @@ class UpdateRatingCommand extends ContainerAwareCommand
     try
     {
       $sql = 'UPDATE s_companies sc
-            JOIN
+            LEFT JOIN
             (
                 SELECT company_id, AVG (valuation) as valuation_avg
                 FROM s_company_branches scb
