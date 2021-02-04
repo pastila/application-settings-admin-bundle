@@ -2,7 +2,6 @@
 
 namespace AppBundle\Entity\Organization;
 
-use AppBundle\Entity\Company\CompanyBranch;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Helper\Year\Year;
 use Doctrine\Common\Collections\ArrayCollection;

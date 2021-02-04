@@ -22,6 +22,8 @@ parameters:
   aw_email_template_admin.class: AppBundle\Entity\Messaging\EmailTemplate
   aw_email_template_admin.email_template_group: settings
   aw_email_template_admin.email_template_label: Шаблоны писем
+  aw.task_scheduler.background_job_repository: app.repository.backgorund_job
+  aw.task_scheduler.uid:  bezbahil-background-job
 
 framework:
   #esi: ~
@@ -148,7 +150,7 @@ sonata_doctrine_orm_admin:
 sonata_core:
   form:
     mapping:
-      enabled: false
+      enabled: true
 
 stfalcon_tinymce:
   selector: ".tinymce"

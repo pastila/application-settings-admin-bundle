@@ -1,0 +1,49 @@
+datasources:
+  local:
+    class: Accurateweb\SynchronizationBundle\Model\Datasource\LocalDataSource
+
+scenarios:
+  all:
+    class: \Accurateweb\SynchronizationBundle\Model\SynchronizationScenario
+    subjects:
+      organization_list: ~
+
+subjects:
+  organization_list:
+    parser:
+      class: AppBundle\Synchronization\Parser\XlsxParser
+      options:
+        skip_rows: 1
+        source: row
+        tagName: organization
+        map: &organizationmap
+          A: region
+          B: code
+          C: fullName
+          D: name
+          E: address
+          F: lastName
+          G: firstName
+          H: middleName
+    schema:
+      class: \Accurateweb\SynchronizationBundle\Model\Schema\CommonSchema
+      options:
+        tableName: s_organizations
+        columns:
+          region: { type: VARCHAR, size: 255, mapWith: false }
+          region_id: { type: INTEGER, size: 11, mapWith: region_id }
+          code: { type: INTEGER, size: 11 }
+          fullName: { type: VARCHAR, size: 512, mapWith: name_full }
+          name: { type: VARCHAR, size: 255 }
+          address: { type: VARCHAR, size: 512 }
+          lastName: { type: VARCHAR, size: 255, mapWith: false }
+          firstName: { type: VARCHAR, size: 255, mapWith: false }
+          middleName: { type: VARCHAR, size: 255, mapWith: false }
+    entity:
+      class: \AppBundle\Synchronization\Entity\OrganizationEntityXlsx
+    insert:
+      class: \Accurateweb\SynchronizationBundle\Model\Handler\InsertHandler
+    transfer:
+      class: \AppBundle\Synchronization\Handler\OrganizationTransferHandler
+      options:
+        key: code

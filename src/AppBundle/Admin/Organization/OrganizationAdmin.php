@@ -10,10 +10,13 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\AdminType;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Knp\Menu\ItemInterface as MenuItemInterface;
+use Sonata\AdminBundle\Admin\AdminInterface;
 
 /**
  * Class OrganizationAdmin
@@ -156,5 +159,28 @@ class OrganizationAdmin extends AbstractAdmin
   protected function setRelation($object)
   {
     $object->getChiefMedicalOfficer()->setOrganization($object);
+  }
+
+  /**
+   * @param RouteCollection $collection
+   */
+  protected function configureRoutes (RouteCollection $collection)
+  {
+    $collection->add('import');
+  }
+
+  protected function configureTabMenu (MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
+  {
+    if ($childAdmin === null && in_array($action, ['list']))
+    {
+      $menu->addChild('import', [
+        'uri' => $this->generateUrl('import'),
+        'attributes' => [
+        ],
+        'label' => 'Импорт МО',
+      ]);
+    }
+
+    parent::configureTabMenu($menu, $action, $childAdmin);
   }
 }

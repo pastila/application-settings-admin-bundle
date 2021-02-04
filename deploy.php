@@ -111,7 +111,8 @@ add('shared_dirs', [
   'web/images',
   'web/upload',
   'var/uploads', //sf app uploads private
-  'web/uploads'  //sf app uploads public
+  'web/uploads',  //sf app uploads public
+  'var/synchronization'  //sf app synchronization private
 ]);
 
 // Writable dirs by web server

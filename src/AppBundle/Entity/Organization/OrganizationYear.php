@@ -8,7 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * OrganizationYear.
  *
- * @ORM\Table(name="s_organization_years")
+ * @ORM\Table(name="s_organization_years",
+ *  uniqueConstraints={@ORM\UniqueConstraint(name="unique_map_idx", columns={"year", "organization_code"})}))
  * @ORM\Entity()
  */
 class OrganizationYear

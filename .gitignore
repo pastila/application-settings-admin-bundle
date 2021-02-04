@@ -23,3 +23,8 @@
 /web/local/templates/kdteam/styles
 /web/dist
 !var/uploads/pdf/.gitkeep
+/var/synchronization/*
+!var/synchronization/.gitkeep
+!var/logs/background_job
+var/logs/background_job/*
+!var/logs/background_job/.gitkeep

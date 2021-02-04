@@ -127,6 +127,23 @@ services:
     AppBundle\Service\Sms\SmsAtomPark:
       public: true
 
+    app.organization.uploader:
+      class: AppBundle\Service\Uploader\ImportUploader
+      arguments: ['%kernel.root_dir%/../var/uploads/import/organizations']
+      public: true
+
+    app.organization_import.bg_job:
+      class: AppBundle\Model\BackgroundJob\OrganizationImportBackgroundJob
+      arguments: [~]
+      tags:
+        - { name: aw.schedulable_task }
+      public: true
+
+    app.repository.backgorund_job:
+      class: AppBundle\Repository\Common\BackgroundJobRepository
+      factory: ['@doctrine.orm.entity_manager', 'getRepository']
+      arguments: ['AppBundle\Entity\Common\BackgroundJob']
+
     app.form.registration:
       class: AppBundle\Form\Profile\RegistrationFormType
       tags:

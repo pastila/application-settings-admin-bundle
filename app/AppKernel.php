@@ -40,6 +40,8 @@ class AppKernel extends Kernel
             new Accurateweb\LocationBundle\AccuratewebLocationBundle(),
             new Accurateweb\EmailTemplateBundle\AccuratewebEmailTemplateBundle(),
             new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
+            new Accurateweb\SynchronizationBundle\AccuratewebSynchronizationBundle(),
+            new Accurateweb\TaskSchedulerBundle\AccuratewebTaskSchedulerBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Accurateweb\SmsBundle\AccuratewebSmsBundle(),
             new RedCode\TreeBundle\RedCodeTreeBundle(),

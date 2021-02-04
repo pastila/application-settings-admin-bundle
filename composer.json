@@ -31,6 +31,14 @@
         {
             "type": "vcs",
             "url": "https://github.com/accurateweb/symfony-sms-bundle.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/accurateweb/task-scheduler-bundle.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/accurateweb/synchronization-bundle.git"
         }
     ],
     "autoload": {
@@ -56,6 +64,8 @@
         "accurateweb/image-bundle": "2.x-dev",
         "accurateweb/location-bundle": "dev-master",
         "accurateweb/media-bundle": "2.x-dev",
+        "accurateweb/synchronization-bundle": "dev-master",
+        "accurateweb/task-scheduler-bundle": "dev-master",
         "accurateweb/sms-bundle": "dev-development",
         "deployer/deployer": "^6.8",
         "doctrine/doctrine-bundle": "^1.8.1",
@@ -64,6 +74,7 @@
         "friendsofsymfony/user-bundle": "~2.0",
         "incenteev/composer-parameter-handler": "^2.0",
         "php-amqplib/rabbitmq-bundle": "^1.14",
+        "phpoffice/phpspreadsheet": "^1.16",
         "phpunit/phpunit": "^5.7",
         "pixassociates/sortable-behavior-bundle": "^1.5",
         "redcode/tree-bundle": "^0.1.0@alpha",
