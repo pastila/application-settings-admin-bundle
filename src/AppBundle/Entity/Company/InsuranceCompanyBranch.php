@@ -67,7 +67,7 @@ class InsuranceCompanyBranch
    * @var InsuranceRepresentative[]|ArrayCollection
    * @ORM\OneToMany(targetEntity="InsuranceRepresentative", mappedBy="branch", cascade={"persist"})
    */
-  private $representatives; // TODO: orphanremoval=true
+  private $representatives; // TODO: orphanRemoval=true
 
   /**
    * @var Feedback[]|ArrayCollection
@@ -106,6 +106,11 @@ class InsuranceCompanyBranch
   public function setRepresentatives($representatives): void
   {
     $this->representatives = $representatives;
+
+    foreach ($this->representatives as $representative)
+    {
+      $representative->setBranch($this);
+    }
   }
 
   /**

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Admin\InsuranceCompany;
 
+use AppBundle\Entity\Company\InsuranceCompanyBranch;
 use AppBundle\Form\DataTransformer\RegionToEntityTransformer;
 use Doctrine\ORM\PersistentCollection;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -22,6 +23,7 @@ class InsuranceCompanyBranchAdmin extends AbstractAdmin
    */
   protected function configureFormFields(FormMapper $form)
   {
+    /** @var InsuranceCompanyBranch $subject */
     $subject = $this->getSubject();
 
     $form

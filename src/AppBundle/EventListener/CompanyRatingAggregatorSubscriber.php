@@ -179,13 +179,25 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
     {
       $this->logger->info(sprintf('Updating company rating: %s', $company->getKpp()));
 
+      $currentValuation = $company->getValuation();
+
       $v = $this->computeValuationForCompany($company);
-      $company->setValuation($v);
 
-      $this->logger->info(sprintf('Calculated rating is: %s', $company->getValuation()));
+      $this->logger->info(sprintf('Calculated rating is: %s', $v));
 
-      $this->em->persist($company);
-      $this->em->flush();
+      if ($v !== $currentValuation)
+      {
+        $this->logger->info(sprintf('Updated company %s valuation: %s', $company->getKpp(), $v));
+
+        $company->setValuation($v);
+
+        $this->em->persist($company);
+        $this->em->flush();
+      }
+      else
+      {
+        $this->logger->info(sprintf('Company %s valuation has not changed', $company->getKpp()));
+      }
     }
   }
 

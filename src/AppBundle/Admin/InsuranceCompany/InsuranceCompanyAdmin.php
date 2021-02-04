@@ -148,30 +148,30 @@ class InsuranceCompanyAdmin extends AbstractAdmin
    */
   private function addNewBranch($company)
   {
-    $container = $this->getConfigurationPool()->getContainer();
-    $em = $container->get('doctrine.orm.entity_manager');
-
-    $regions = $em->getRepository(Region::class)
-      ->createQueryBuilder('r')
-      ->orderBy('r.name', 'ASC')
-      ->getQuery()
-      ->getResult();
-    foreach ($regions as $region) {
-      $branch = $em->getRepository(InsuranceCompanyBranch::class)
-        ->findOneBy([
-          'region' => $region,
-          'company' => $company
-        ]);
-
-      if (!$branch)
-      {
-        $branch = new InsuranceCompanyBranch();
-        $branch->setRegion($region);
-        $branch->setCompany($company);
-        $branch->setKpp($company->getKpp());
-        $branch->setPublished(false);
-        $company->addBranch($branch);
-      }
-    }
+//    $container = $this->getConfigurationPool()->getContainer();
+//    $em = $container->get('doctrine.orm.entity_manager');
+//
+//    $regions = $em->getRepository(Region::class)
+//      ->createQueryBuilder('r')
+//      ->orderBy('r.name', 'ASC')
+//      ->getQuery()
+//      ->getResult();
+//    foreach ($regions as $region) {
+//      $branch = $em->getRepository(InsuranceCompanyBranch::class)
+//        ->findOneBy([
+//          'region' => $region,
+//          'company' => $company
+//        ]);
+//
+//      if (!$branch)
+//      {
+//        $branch = new InsuranceCompanyBranch();
+//        $branch->setRegion($region);
+//        $branch->setCompany($company);
+//        $branch->setKpp($company->getKpp());
+//        $branch->setPublished(false);
+//        $company->addBranch($branch);
+//      }
+//    }
   }
 }
