@@ -112,10 +112,10 @@ class FeedbackControllerTest extends AppWebTestCase
       ];
     });
     $this->assertEquals(count($citiesHtml), 3, 'Проверка сопадения кол-ва филиалов');
-    $this->assertEquals($citiesHtml[0]['name'], "СОГАЗ-МЕД", 'Проверка данных в списке по филиалам');
-    $this->assertEquals($citiesHtml[0]['value'], "1", 'Проверка данных в списке по филиалам');
-    $this->assertEquals($citiesHtml[1]['name'], "ИНГОССТРАХ-М", 'Проверка данных в списке по филиалам');
-    $this->assertEquals($citiesHtml[1]['value'], "3", 'Проверка данных в списке по филиалам');
+    $this->assertEquals($citiesHtml[0]['name'], "ИНГОССТРАХ-М", 'Проверка данных в списке по филиалам');
+    $this->assertEquals($citiesHtml[0]['value'], "3", 'Проверка данных в списке по филиалам');
+    $this->assertEquals($citiesHtml[1]['name'], "МАКС-М", 'Проверка данных в списке по филиалам');
+    $this->assertEquals($citiesHtml[1]['value'], "5", 'Проверка данных в списке по филиалам');
   }
 
   /**
