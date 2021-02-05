@@ -52,5 +52,5 @@ parameters:
     env(MAILER_USER): null
     env(MAILER_PASSWORD): null
     env(MAILER_PORT): 25
-    env(MAILER_FROM): admin@example.com
+    env(MAILER_FROM): info@accurateweb.ru
     env(MAILER_SENDER_NAME): admin
