@@ -78,47 +78,66 @@ $(function () {
     return $(selector).length > 0;
   };
 
+  let siteWasOpened;
 
-  $(window).on('scroll', function (event) {
-    if ($(window).scrollTop() >= $('.b-return').offset().top - $('.b-return').outerHeight()) {
-      $('.b-return').addClass('is-visible');
-    } // animation
+  try {
+    siteWasOpened = JSON.parse(localStorage.getItem('timeOfNextAnimationRun'));
+  } catch (e) {
+    console.log(e);
+  }
 
-
-    if ($(window).scrollTop() >= $('.b-question').offset().top - $('.b-question').outerHeight()) {
-      $('.b-question').addClass('is-visible');
-    } // animation
-
-
-    if ($(window).scrollTop() >= $('.b-first').offset().top - $('.b-first').outerHeight()) {
-      $('.b-first, .app-header').addClass('is-visible');
-    } // animation
-
-
-    if ($(window).scrollTop() >= $('.b-work').offset().top - $('.b-work').outerHeight()) {
-      $('.b-work').addClass('is-visible');
-    } // animation
-
-
-    if ($(window).scrollTop() >= $('.b-rating').offset().top - $('.b-rating').outerHeight()) {
-      $('.b-rating').addClass('is-visible');
-    } // animation
-
-
-    if ($(window).scrollTop() >= $('.b-reviews').offset().top - $('.b-reviews').outerHeight()) {
-      $('.b-reviews').addClass('is-visible');
-    } // animation
-
-
-    if ($(window).scrollTop() >= $('.b-insider').offset().top - $('.b-insider').outerHeight()) {
-      $('.b-insider').addClass('is-visible');
-    } // animation
-
-
-    if ($(window).scrollTop() >= $('.b-info').offset().top - $('.b-info').outerHeight()) {
-      $('.b-info').addClass('is-visible');
+  if (siteWasOpened && siteWasOpened > Date.now() ) {
+    $('.b-first, .app-header, .b-return, .b-question, .b-work, .b-rating, .b-reviews, .b-insider, .b-info').addClass('no-animate');
+  } else {
+    try {
+      // 86400000 миллисекунд = 24 часа
+      localStorage.setItem('timeOfNextAnimationRun', JSON.stringify(Date.now() + 86400000));
+    } catch (e) {
+      console.log(e);
     }
-  }).trigger('scroll');
+
+    $(window).on('scroll', function (event) {
+
+      if ($(window).scrollTop() >= $('.b-return').offset().top - $('.b-return').outerHeight()) {
+        $('.b-return').addClass('is-visible');
+      } // animation
+
+
+      if ($(window).scrollTop() >= $('.b-question').offset().top - $('.b-question').outerHeight()) {
+        $('.b-question').addClass('is-visible');
+      } // animation
+
+
+      if ($(window).scrollTop() >= $('.b-first').offset().top - $('.b-first').outerHeight()) {
+        $('.b-first, .app-header').addClass('is-visible');
+      } // animation
+
+
+      if ($(window).scrollTop() >= $('.b-work').offset().top - $('.b-work').outerHeight()) {
+        $('.b-work').addClass('is-visible');
+      } // animation
+
+
+      if ($(window).scrollTop() >= $('.b-rating').offset().top - $('.b-rating').outerHeight()) {
+        $('.b-rating').addClass('is-visible');
+      } // animation
+
+
+      if ($(window).scrollTop() >= $('.b-reviews').offset().top - $('.b-reviews').outerHeight()) {
+        $('.b-reviews').addClass('is-visible');
+      } // animation
+
+
+      if ($(window).scrollTop() >= $('.b-insider').offset().top - $('.b-insider').outerHeight()) {
+        $('.b-insider').addClass('is-visible');
+      } // animation
+
+
+      if ($(window).scrollTop() >= $('.b-info').offset().top - $('.b-info').outerHeight()) {
+        $('.b-info').addClass('is-visible');
+      }
+    }).trigger('scroll');
+  }
 
   initRegionSelectionModal();
 

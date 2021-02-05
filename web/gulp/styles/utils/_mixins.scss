@@ -90,3 +90,11 @@
 @mixin boxShadow {
     box-shadow: 0 0 1rem rgba(25,108,156,.205);
 }
+
+@mixin noAnimate {
+    opacity: 1;
+    transition: none;
+    transition-delay: 0s;
+    -webkit-transform: translate(0);
+    transform: translate(0);
+}
