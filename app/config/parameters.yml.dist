@@ -58,7 +58,7 @@ parameters:
     env(MAILER_PASSWORD): null
     env(MAILER_PORT): 25
     env(MAILER_FROM): info@accurateweb.ru
-    env(MAILER_SENDER_NAME): admin
+    env(MAILER_SENDER_NAME): Безбахил
 
     env(SMS_PRIVATE_KEY): b92986f663c0596737dfcb773f6eca17
     env(SMS_PUBLIC_KEY): 6bd53830b4d07adbb4f2e4df6bd67ccc
