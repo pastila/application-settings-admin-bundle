@@ -154,15 +154,12 @@ class FeedbackAdmin extends AbstractAdmin
         "expanded" => false
       ])
       ->add("createdAt", DateTimePickerType::class, [
+        'required' => false,
         'label' => 'Дата создания',
-        'required' => true,
         'by_reference' => true,
         'format' => 'd MMMM yyyy',
         'view_timezone' => 'UTC',
         'model_timezone' => 'UTC',
-        'constraints' => [
-          new NotBlank(),
-        ],
       ])
       ->add("updatedAt", DateTimePickerType::class, [
         'required' => false,
@@ -204,7 +201,6 @@ class FeedbackAdmin extends AbstractAdmin
   public function prePersist($feedback)
   {
     $this->setBranch($feedback);
-    $this->setUpdatedAt($feedback);
   }
 
   /**
@@ -213,7 +209,6 @@ class FeedbackAdmin extends AbstractAdmin
   public function preUpdate($feedback)
   {
     $this->setBranch($feedback);
-    $this->setUpdatedAt($feedback);
   }
 
   /**
@@ -233,14 +228,6 @@ class FeedbackAdmin extends AbstractAdmin
         ]);
       $feedback->setBranch($branch);
     }
-  }
-
-  /**
-   * @param Feedback $feedback
-   */
-  protected function setUpdatedAt($feedback)
-  {
-    $feedback->setUpdatedAt(empty($feedback->getUpdatedAt()) ? $feedback->getCreatedAt() : $feedback->getUpdatedAt());
   }
 
   /**
