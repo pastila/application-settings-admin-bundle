@@ -170,7 +170,7 @@ Main Image: Главное изображение
 Is External: Внешний источник
 Related News: Связанные новости
 Name Genitive: Название в род.п.
-Code: Код региона
+Code: Код
 Feedback List: Список отзывов
 Branch: Филиал СМО
 Moderation Status: Статус модерации
@@ -178,3 +178,17 @@ Author Email: Email автора
 Branch Region: Регион
 Branch Company: СМО
 Feedback Create: Новый отзыв
+Address: Адрес
+Last Name: Фамилия
+First Name: Имя
+Middle Name: Отчество
+Region: Регион
+Status: Статус
+Organization Create: Новая организация
+Organization List: Список организаций
+Years: Года
+Year: Год
+Organization Years Create: Новый год
+Organization Years List: Года
+Full Name: Полное название
+Chief Medical Officer: Главный врач
