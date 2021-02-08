@@ -157,7 +157,7 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
     $branch = $feedback->getBranch();
     if ($branch)
     {
-      $this->logger->info(sprintf('Updating branch rating: %s', $branch->getCode()));
+      $this->logger->info(sprintf('Updating branch rating: %s', $branch->getKpp()));
 
       $v = $this->computeValuationForBranch($branch);
       $branch->setValuation($v);

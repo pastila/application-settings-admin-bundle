@@ -1,12 +1,12 @@
 {% if image_exists(branch.company) %}
     {% if disableLink %}
         <img src="{{ image_url(branch.company) }}" class="logo-company"
-             alt="Логотип страховой медицинской организации {{ branch.name }}"/>
+             alt="Логотип страховой медицинской организации {{ branch.company.name }}"/>
     {% else %}
         <a href="{{ path('company_review_list', { 'slug': branch.company.slug }) }}"
-           title="Отзывы о страховой медицинской организации {{ branch.name }}">
+           title="Отзывы о страховой медицинской организации {{ branch.company.name }}">
             <img src="{{ image_url(branch.company) }}" class="logo-company"
-                 alt="Логотип страховой медицинской организации {{ branch.name }}"/>
+                 alt="Логотип страховой медицинской организации {{ branch.company.name }}"/>
         </a>
     {% endif %}
 {% endif %}

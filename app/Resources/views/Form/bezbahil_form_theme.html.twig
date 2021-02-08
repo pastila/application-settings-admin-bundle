@@ -83,16 +83,3 @@
         </ul>
     </div>
 {% endblock %}
-
-{% block insurance_company_branch_region_widget %}
-    <table border="1" width="100%">
-        <tr>
-            <th>Название</th>
-            <th>Опубликован</th>
-            <th>Существует</th>
-        </tr>
-        {% for region in regions %}
-            <tr><td>{{ region.name }}</td><td>Да</td><td>Да</td></tr>
-        {% endfor %}
-    </table>
-{% endblock %}

@@ -87,6 +87,7 @@ class InsuranceCompany implements ImageAwareInterface, SluggableInterface
   /**
    * @var InsuranceCompanyBranch[]|ArrayCollection
    * @ORM\OneToMany(targetEntity="InsuranceCompanyBranch", mappedBy="company", cascade={"persist"})
+   * @ORM\OrderBy({"region" = "ASC"})
    */
   protected $branches;
 

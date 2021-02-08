@@ -546,7 +546,7 @@ class FeedbackController extends Controller
     $branches = $repository
       ->getActive()
       ->andWhere('cb.region = :regionId')
-      ->andWhere('cb.name LIKE :nameHospital')
+      ->andWhere('c.name LIKE :nameHospital')
       ->setParameter('nameHospital', '%' . $request->get('name_hospital') . '%')
       ->setParameter('regionId', $request->get('region_id'))
       ->groupBy('cb.id')
