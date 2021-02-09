@@ -59,8 +59,8 @@ class Feedback
   /**
    * Филиал компании
    *
-   * @var null|CompanyBranch
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\CompanyBranch")
+   * @var null|InsuranceCompanyBranch
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\InsuranceCompanyBranch")
    * @ORM\JoinColumn(name="branch_id", nullable=true, onDelete="RESTRICT")
    */
   private $branch;
@@ -284,7 +284,7 @@ class Feedback
   }
 
   /**
-   * @return Company|null
+   * @return InsuranceCompany|null
    */
   public function getCompany()
   {
@@ -311,7 +311,7 @@ class Feedback
   }
 
   /**
-   * @return null|CompanyBranch
+   * @return null|InsuranceCompanyBranch
    */
   public function getBranch()
   {
@@ -319,7 +319,7 @@ class Feedback
   }
 
   /**
-   * @param CompanyBranch $branch
+   * @param InsuranceCompanyBranch $branch
    *
    * @return $this
    */

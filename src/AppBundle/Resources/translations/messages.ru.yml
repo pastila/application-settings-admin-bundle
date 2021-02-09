@@ -75,7 +75,7 @@ Quote Quote List: Список текстовых цитат
 Author: Автор
 City: Город
 Department: Подразделение
-Company: ДО
+Company: СМО
 Phone Number: Тел.
 Fio: ФИО
 Patronymic: Отчество
@@ -116,8 +116,8 @@ Show Name In Filter: Показывть название в фильтре и к
 Department List: Список ДО
 Block: Блок
 Gpn User List: Список пользователей
-Company List: Список ДО
-Company Create: Создать ДО
+Company List: Список СМО
+Company Create: Новая СМО
 Gpn User Create: Создать пользователя
 Video List: Видео
 Video Create: Добавить видео
@@ -177,13 +177,15 @@ Moderation Status: Статус модерации
 Author Email: Email автора
 Branch Region: Регион
 Branch Company: СМО
+Status: Статус
+Valuation: Оценка
 Feedback Create: Новый отзыв
+Kpp: КПП
 Address: Адрес
 Last Name: Фамилия
 First Name: Имя
 Middle Name: Отчество
 Region: Регион
-Status: Статус
 Organization Create: Новая организация
 Organization List: Список организаций
 Years: Года
@@ -192,3 +194,6 @@ Organization Years Create: Новый год
 Organization Years List: Года
 Full Name: Полное название
 Chief Medical Officer: Главный врач
+Company Branch List: Список филиалов
+Insurance Company List: Список МО
+Insurance Company Create: Новое МО

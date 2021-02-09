@@ -6,10 +6,10 @@
 namespace AppBundle\EventListener;
 
 
-use AppBundle\Entity\Company\Company;
-use AppBundle\Entity\Company\CompanyBranch;
+use AppBundle\Entity\Company\InsuranceCompany;
+use AppBundle\Entity\Company\InsuranceCompanyBranch;
 use AppBundle\Entity\Company\Feedback;
-use AppBundle\Repository\Company\CompanyBranchRepository;
+use AppBundle\Repository\Company\InsuranceCompanyBranchRepository;
 use AppBundle\Repository\Company\FeedbackRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\EventSubscriber;
@@ -118,7 +118,7 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
       $this->updateBranchRating($entity);
     }
 
-    if ($entity instanceof CompanyBranch)
+    if ($entity instanceof InsuranceCompanyBranch)
     {
       $this->updateCompanyRating($entity);
     }
@@ -140,7 +140,7 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
       }
     }
 
-    if ($entity instanceof CompanyBranch)
+    if ($entity instanceof InsuranceCompanyBranch)
     {
       if (!$this->removedCompanyBranches->contains($entity))
       {
@@ -170,7 +170,7 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
   }
 
   /**
-   * @param CompanyBranch $companyBranches
+   * @param InsuranceCompanyBranch $companyBranches
    */
   protected function updateCompanyRating($companyBranches)
   {
@@ -189,7 +189,7 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
     }
   }
 
-  protected function computeValuationForBranch(CompanyBranch $branch)
+  protected function computeValuationForBranch(InsuranceCompanyBranch $branch)
   {
     return $this
       ->em->getRepository(Feedback::class)
@@ -201,13 +201,13 @@ class CompanyRatingAggregatorSubscriber implements EventSubscriber
       ->getSingleScalarResult();
   }
 
-  protected function computeValuationForCompany(Company $company)
+  protected function computeValuationForCompany(InsuranceCompany $company)
   {
     return $this
-      ->em->getRepository(CompanyBranch::class)
+      ->em->getRepository(InsuranceCompanyBranch::class)
       ->createQueryBuilder('cb')
       ->select('avg(cb.valuation)')
-      ->where('cb.company = :company AND cb.status > 0 AND cb.valuation > 0')
+      ->where('cb.company = :company AND cb.published > 0 AND cb.valuation > 0')
       ->setParameter(':company', $company)
       ->getQuery()
       ->getSingleScalarResult();

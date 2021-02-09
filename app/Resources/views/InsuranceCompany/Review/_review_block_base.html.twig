@@ -40,12 +40,10 @@
 
             <!-- Company Name -->
             <div class="feedback__block_company-name" itemprop="itemReviewed" itemscope itemtype="https://schema.org/Organization">
-                {{ render(controller('AppBundle:InsuranceCompany/Company:_logoPanel',
-                    {
-                        'logo_id': (review.branch ? review.branch.logoIdFromBitrix : null),
-                        'name': (review.branch ? review.branch.name : ''),
-                        'disableLink': (filter is defined) ? filter.company != null : false,
-                    } )) }}
+                {% include "Company/_logo_panel.html.twig" with  {
+                    'branch': review.branch,
+                    'disableLink': (filter is defined) ? filter.company != null : false,
+                } %}
                 <meta itemprop="name" content="{{ review.branch ? review.branch.name : '' }}">
 {#                <meta itemprop="email" content="{{ review.branch ? review.branch.emailFirst : '' }}">#}
             </div>

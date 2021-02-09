@@ -6,30 +6,29 @@
 namespace AppBundle\Repository\Company;
 
 
-use AppBundle\Entity\Company\Company;
-use AppBundle\Entity\Company\CompanyBranch;
-use AppBundle\Entity\Company\CompanyStatus;
+use AppBundle\Entity\Company\InsuranceCompany;
+use AppBundle\Entity\Company\InsuranceCompanyBranch;
 use AppBundle\Entity\Geo\Region;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 
-class CompanyBranchRepository extends ServiceEntityRepository
+class InsuranceCompanyBranchRepository extends ServiceEntityRepository
 {
   public function __construct(ManagerRegistry $registry)
   {
-    parent::__construct($registry, CompanyBranch::class);
+    parent::__construct($registry, InsuranceCompanyBranch::class);
   }
 
   /**
-   * @param Company $company
+   * @param InsuranceCompany $company
    * @param Region $region
    * @return mixed
    * @throws NoResultException
    * @throws NonUniqueResultException
    */
-  public function findCompanyBranch(Company $company, Region $region)
+  public function findCompanyBranch(InsuranceCompany $company, Region $region)
   {
       return $this
         ->createQueryBuilder('cb')
@@ -49,8 +48,8 @@ class CompanyBranchRepository extends ServiceEntityRepository
   {
     return $this->createQueryBuilder('cb')
       ->innerJoin('cb.company', 'c')
-      ->andWhere('c.status = :status')
-      ->andWhere('cb.status = :status')
-      ->setParameter('status', CompanyStatus::ACTIVE);
+      ->andWhere('c.published = :published')
+      ->andWhere('cb.published = :published')
+      ->setParameter('published', true);
   }
 }

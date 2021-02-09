@@ -12,9 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  * Company.
  *
  * @ORM\Table(name="s_company_branches", indexes={@ORM\Index(name="bitrix_id_idx", columns={"bitrix_id"})})
- * @ORM\Entity(repositoryClass="AppBundle\Repository\Company\CompanyBranchRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\Company\InsuranceCompanyBranchRepository")
  */
-class CompanyBranch
+class InsuranceCompanyBranch
 {
   /**
    * @var integer
@@ -60,8 +60,8 @@ class CompanyBranch
   /**
    * Головная компания
    *
-   * @var null|string|Company
-   * @ORM\ManyToOne(targetEntity="Company")
+   * @var null|string|InsuranceCompany
+   * @ORM\ManyToOne(targetEntity="InsuranceCompany")
    * @ORM\JoinColumn(name="company_id", nullable=true, onDelete="RESTRICT")
    */
   private $company;
@@ -142,10 +142,10 @@ class CompanyBranch
   private $emailThird;
 
   /**
-   * @var int
-   * @ORM\Column(type="integer", nullable=false)
+   * @var boolean
+   * @ORM\Column(type="boolean", nullable=false, options={"default"=true})
    */
-  private $status;
+  private $published;
 
   /**
    * @var Feedback[]|ArrayCollection
@@ -239,7 +239,7 @@ class CompanyBranch
 
 
   /**
-   * @return null|Company
+   * @return null|InsuranceCompany
    */
   public function getCompany()
   {
@@ -247,7 +247,7 @@ class CompanyBranch
   }
 
   /**
-   * @param Company company
+   * @param InsuranceCompany company
    *
    * @return $this
    */
@@ -379,9 +379,9 @@ class CompanyBranch
   /**
    * @return int
    */
-  public function getStatus()
+  public function getPublished()
   {
-    return $this->status;
+    return $this->published;
   }
 
   /**
@@ -389,21 +389,16 @@ class CompanyBranch
    */
   public function getStatusLabel ()
   {
-    return CompanyStatus::getName($this->status);
+    return $this->published ? 'Опубликован' : 'Не опубликован';
   }
 
   /**
-   * @param $status
+   * @param $published
    * @return $this
    */
-  public function setStatus($status)
+  public function setPublished($published)
   {
-    if (null !== $status && !in_array($status, CompanyStatus::getAvailableValues()))
-    {
-      throw new \InvalidArgumentException();
-    }
-
-    $this->status = $status;
+    $this->published = $published;
 
     return $this;
   }
@@ -418,9 +413,9 @@ class CompanyBranch
 
   /**
    * @param int|null $bitrixId
-   * @return CompanyBranch
+   * @return InsuranceCompanyBranch
    */
-  public function setBitrixId(?int $bitrixId): CompanyBranch
+  public function setBitrixId(?int $bitrixId): InsuranceCompanyBranch
   {
     $this->bitrixId = $bitrixId;
     return $this;

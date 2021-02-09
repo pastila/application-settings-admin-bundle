@@ -2,7 +2,6 @@
 
 namespace AppBundle\Repository\Company;
 
-use AppBundle\Entity\Company\CompanyStatus;
 use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\Company\FeedbackModerationStatus;
 use AppBundle\Model\InsuranceCompany\FeedbackListFilter;
@@ -46,9 +45,9 @@ class FeedbackRepository extends ServiceEntityRepository
     return $qb
       ->innerJoin('rv.branch', 'rvb')
       ->innerJoin('rvb.company', 'rvc')
-      ->andWhere('rvb.status = :status')
-      ->andWhere('rvc.status = :status')
-      ->setParameter('status', CompanyStatus::ACTIVE);
+      ->andWhere('rvb.published = :published')
+      ->andWhere('rvc.published = :published')
+      ->setParameter('published', true);
   }
 
   /**
