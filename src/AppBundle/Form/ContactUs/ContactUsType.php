@@ -39,11 +39,11 @@ class ContactUsType extends AbstractType
           new NotBlank(),
           new Length([
             'max' => self::MESSAGE_LENGTH_MAX,
-            'maxMessage' => 'Письмо слишком длинное. Пожалуйста, введите более {{ limit }} ' .
+            'maxMessage' => 'Письмо слишком длинное. Пожалуйста, введите не более {{ limit }} ' .
               EndingFormatter::format(self::MESSAGE_LENGTH_MAX, ['символа', 'символов', 'символов']) .
-              'или меньше.',
+              ' или меньше.',
             'min' => self::MESSAGE_LENGTH_MIN,
-            'minMessage' => 'Письмо слишком короткое. Пожалуйста, введите не более {{ limit }} ' .
+            'minMessage' => 'Письмо слишком короткое. Пожалуйста, введите более {{ limit }} ' .
               EndingFormatter::format(self::MESSAGE_LENGTH_MIN, ['символа', 'символов', 'символов']) .
               ' или больше.',
           ]),

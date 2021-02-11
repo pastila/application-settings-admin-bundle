@@ -549,6 +549,7 @@ class FeedbackController extends Controller
       ->andWhere('c.name LIKE :nameHospital')
       ->setParameter('nameHospital', '%' . $request->get('name_hospital') . '%')
       ->setParameter('regionId', $request->get('region_id'))
+      ->orderBy('cb.name', 'ASC')
       ->groupBy('cb.id')
       ->getQuery()
       ->getResult();

@@ -20,9 +20,9 @@ class Year
   public static function getYears()
   {
     $years = [];
-    for ($i = 2019, $key = 0; $i <= date("Y"); $i++, $key++)
+    for ($i = 2019; $i <= date("Y"); $i++)
     {
-      $years[$i] = $key;
+      $years[$i] = $i;
     }
     return $years;
   }

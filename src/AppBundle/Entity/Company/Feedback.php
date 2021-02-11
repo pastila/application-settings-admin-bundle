@@ -5,6 +5,8 @@ namespace AppBundle\Entity\Company;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Entity\User\User;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -14,11 +16,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="s_company_feedbacks")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Company\FeedbackRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Feedback
 {
-  use TimestampableEntity;
-
   /**
    * @var integer
    * @ORM\Id()
@@ -134,9 +135,67 @@ class Feedback
   private $company;
 
   /**
+   * @var \DateTime
+   * @ORM\Column(type="datetime")
+   */
+  protected $createdAt;
+
+  /**
+   * @var \DateTime
+   * @ORM\Column(type="datetime", nullable=true)
+   */
+  protected $updatedAt;
+
+  /**
+   * Sets createdAt.
+   *
+   * @param \DateTime $createdAt
+   * @return $this
+   */
+  public function setCreatedAt(\DateTime $createdAt)
+  {
+    $this->createdAt = $createdAt;
+
+    return $this;
+  }
+
+  /**
+   * Returns createdAt.
+   *
+   * @return \DateTime
+   */
+  public function getCreatedAt()
+  {
+    return $this->createdAt;
+  }
+
+  /**
+   * Sets updatedAt.
+   *
+   * @param \DateTime $updatedAt
+   * @return $this
+   */
+  public function setUpdatedAt(\DateTime $updatedAt = null)
+  {
+    $this->updatedAt = $updatedAt;
+
+    return $this;
+  }
+
+  /**
+   * Returns updatedAt.
+   *
+   * @return \DateTime
+   */
+  public function getUpdatedAt()
+  {
+    return $this->updatedAt;
+  }
+
+  /**
    * Company constructor.
    */
-  public function __construct ()
+  public function __construct()
   {
     $this->comments = new ArrayCollection();
   }
@@ -362,17 +421,15 @@ class Feedback
   /**
    * @return int|string
    */
-  public function getModerationStatusLabel ()
+  public function getModerationStatusLabel()
   {
     if ($this->moderationStatus === FeedbackModerationStatus::MODERATION_ACCEPTED)
     {
       return 'Одобрено';
-    }
-    elseif ($this->moderationStatus === FeedbackModerationStatus::MODERATION_REJECTED)
+    } elseif ($this->moderationStatus === FeedbackModerationStatus::MODERATION_REJECTED)
     {
       return 'Отклонено';
-    }
-    elseif ($this->moderationStatus === FeedbackModerationStatus::MODERATION_NONE)
+    } elseif ($this->moderationStatus === FeedbackModerationStatus::MODERATION_NONE)
     {
       return 'Неизвестно';
     }
@@ -416,29 +473,31 @@ class Feedback
   }
 
   /**
-   * Sets createdAt.
-   *
-   * @param  \DateTime $createdAt
-   * @return $this
+   * @ORM\PrePersist()
    */
-  public function setCreatedAt(\DateTime $createdAt = null)
+  public function prePersist()
   {
-    $this->createdAt = $createdAt;
-
-    return $this;
+    if (!$this->createdAt)
+    {
+      $this->createdAt = new \DateTime();
+    }
   }
 
   /**
-   * Sets updatedAt.
-   *
-   * @param  \DateTime $updatedAt
-   * @return $this
+   * @ORM\PreUpdate()
+   * @param PreUpdateEventArgs $args
    */
-  public function setUpdatedAt(\DateTime $updatedAt = null)
+  public function preUpdate(PreUpdateEventArgs $args)
   {
-    $this->updatedAt = $updatedAt;
-
-    return $this;
+    if (
+      !$args->hasChangedField('updated_at') &&
+      ($args->hasChangedField('title')
+        || $args->hasChangedField('description')
+        || $args->hasChangedField('valuation'))
+    )
+    {
+      $this->updatedAt = new \DateTime();
+    }
   }
 
   /**

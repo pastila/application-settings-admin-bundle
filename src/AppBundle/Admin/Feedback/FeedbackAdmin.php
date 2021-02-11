@@ -33,7 +33,7 @@ class FeedbackAdmin extends AbstractAdmin
    */
   protected $datagridValues = array(
     '_page' => 1,
-    '_sort_order' => 'ASC',
+    '_sort_order' => 'DESC',
     '_sort_by' => 'createdAt',
   );
 
@@ -148,16 +148,18 @@ class FeedbackAdmin extends AbstractAdmin
           ]),
         ],
       ])
+      ->add('valuation', 'AppBundle\Form\Feedback\FeedbackValuationChoiceType', [
+        'label' => 'Оценка',
+        'required' => false,
+        "expanded" => false
+      ])
       ->add("createdAt", DateTimePickerType::class, [
+        'required' => false,
         'label' => 'Дата создания',
-        'required' => true,
         'by_reference' => true,
         'format' => 'd MMMM yyyy',
         'view_timezone' => 'UTC',
         'model_timezone' => 'UTC',
-        'constraints' => [
-          new NotBlank(),
-        ],
       ])
       ->add("updatedAt", DateTimePickerType::class, [
         'required' => false,
@@ -199,7 +201,6 @@ class FeedbackAdmin extends AbstractAdmin
   public function prePersist($feedback)
   {
     $this->setBranch($feedback);
-    $this->setUpdatedAt($feedback);
   }
 
   /**
@@ -208,7 +209,6 @@ class FeedbackAdmin extends AbstractAdmin
   public function preUpdate($feedback)
   {
     $this->setBranch($feedback);
-    $this->setUpdatedAt($feedback);
   }
 
   /**
@@ -228,14 +228,6 @@ class FeedbackAdmin extends AbstractAdmin
         ]);
       $feedback->setBranch($branch);
     }
-  }
-
-  /**
-   * @param Feedback $feedback
-   */
-  protected function setUpdatedAt($feedback)
-  {
-    $feedback->setUpdatedAt(empty($feedback->getUpdatedAt()) ? $feedback->getCreatedAt() : $feedback->getUpdatedAt());
   }
 
   /**

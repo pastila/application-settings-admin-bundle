@@ -91,6 +91,7 @@ class InsuranceCompany implements ImageAwareInterface, SluggableInterface
    */
   protected $branches;
 
+
   /**
    * Company constructor.
    */
