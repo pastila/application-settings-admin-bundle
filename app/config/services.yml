@@ -15,6 +15,11 @@ services:
             $mailerSenderName: '%mailer_sender_name%'
             $appealPathPdf: '%appeal_path_pdf%'
             $appealPathAttached: '%appeal_path_attached%'
+            $smsPrivateKey: '%sms_private_key%'
+            $smsPublicKey: '%sms_public_key%'
+            $smsUrl: '%sms_url%'
+            $smsProtocolVersion: '%sms_protocol_version%'
+
 
     _instanceof:
         Accurateweb\ClientApplicationBundle\DataAdapter\ClientApplicationModelAdapterInterface:
@@ -118,3 +123,6 @@ services:
             - Sonata\Form\Validator\Constraints\InlineConstraint:
                   service: sonata.page.cms.page
                   method: validateBlock
+
+    AppBundle\Service\Sms\SmsAtomPark:
+      public: true
