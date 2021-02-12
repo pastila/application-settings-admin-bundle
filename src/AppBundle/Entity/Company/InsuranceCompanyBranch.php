@@ -4,12 +4,16 @@ namespace AppBundle\Entity\Company;
 
 use AppBundle\Entity\Geo\Region;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\UniqueConstraint;
+use Doctrine\ORM\Mapping\Index;
 
 /**
  * InsuranceCompanyBranch.
  *
- * @ORM\Table(name="s_company_branches", uniqueConstraints={@ORM\UniqueConstraint(name="company_region_unique_idx", columns={"company", "region"})}
+ * @ORM\Table(
+ *   name="s_company_branches"
+ * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Company\InsuranceCompanyBranchRepository")
  */
 class InsuranceCompanyBranch
