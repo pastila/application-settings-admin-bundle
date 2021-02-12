@@ -32,7 +32,6 @@ class CompanyBranch extends Fixture implements DependentFixtureInterface
     $sogazMed66
       ->setCompany($this->getReference('sogaz-med'))
       ->setRegion($this->getReference('region-66'))
-      ->setName('СОГАЗ-МЕД')
       ->setValuation(4.0)
       ->setPublished(true);
     $manager->persist($sogazMed66);
@@ -41,7 +40,6 @@ class CompanyBranch extends Fixture implements DependentFixtureInterface
     $akbars66
       ->setCompany($this->getReference('akbars'))
       ->setRegion($this->getReference('region-66'))
-      ->setName('АКБАРС-МЕД')
       ->setValuation(3.0)
       ->setPublished(true);
     $manager->persist($akbars66);
@@ -50,7 +48,6 @@ class CompanyBranch extends Fixture implements DependentFixtureInterface
     $ingostach_m66
       ->setCompany($this->getReference('ingostach_m'))
       ->setRegion($this->getReference('region-66'))
-      ->setName('ИНГОССТРАХ-М')
       ->setValuation(5.0)
       ->setPublished(true);
     $manager->persist($ingostach_m66);
@@ -59,7 +56,6 @@ class CompanyBranch extends Fixture implements DependentFixtureInterface
     $arsenal66
       ->setCompany($this->getReference('arsenal'))
       ->setRegion($this->getReference('region-66'))
-      ->setName('АРСЕНАЛМС')
       ->setValuation(3.0)
       ->setPublished(false);
     $manager->persist($arsenal66);
@@ -68,7 +64,6 @@ class CompanyBranch extends Fixture implements DependentFixtureInterface
     $maksm66
       ->setCompany($this->getReference('maksm'))
       ->setRegion($this->getReference('region-66'))
-      ->setName('МАКС-М')
       ->setValuation(5.0)
       ->setPublished(true);
     $manager->persist($maksm66);
@@ -77,7 +72,6 @@ class CompanyBranch extends Fixture implements DependentFixtureInterface
     $maksm47
       ->setCompany($this->getReference('maksm'))
       ->setRegion($this->getReference('region-47'))
-      ->setName('МАКС-М')
       ->setValuation(4.0)
       ->setPublished(true);
     $manager->persist($maksm47);

@@ -51,7 +51,7 @@ class FeedbackType extends AbstractType
           new NotBlank(),
         ],
         'query_builder' => function(InsuranceCompanyBranchRepository $repository){
-          return $repository->createQueryBuilder('b')->orderBy('b.name');
+          return $repository->createQueryBuilder('b')->leftJoin('b.company', 'c')->orderBy('c.name');
         },
       ])
       ->add('author_name')

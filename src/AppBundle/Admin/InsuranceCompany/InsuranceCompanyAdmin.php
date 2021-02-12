@@ -2,20 +2,18 @@
 
 namespace AppBundle\Admin\InsuranceCompany;
 
-
-use AppBundle\Entity\Company\FeedbackModerationStatus;
+use AppBundle\Entity\Company\InsuranceCompany;
+use AppBundle\Entity\Company\InsuranceCompanyBranch;
+use AppBundle\Entity\Geo\Region;
+use AppBundle\Validator\InsuranceCompany\InsuranceCompanyBranchPublished;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
-use Sonata\CoreBundle\Form\Type\DatePickerType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Sonata\Form\Type\CollectionType;
 
 /**
  * Class InsuranceCompanyAdmin
@@ -49,6 +47,7 @@ class InsuranceCompanyAdmin extends AbstractAdmin
   protected function configureFormFields(FormMapper $form)
   {
     $form
+      ->tab('СМО')
       ->add('logo', 'Accurateweb\MediaBundle\Form\ImageType', [
         'required' => false,
         'label' => 'Логотип',
@@ -73,7 +72,34 @@ class InsuranceCompanyAdmin extends AbstractAdmin
           ]),
         ],
       ])
-      ->add('published');
+      ->add('published')
+      ->end()
+      ->end();
+
+    $form
+      ->tab('Филиалы')
+      ->add('branches', CollectionType::class, [
+        'by_reference' => false,
+        'label' => 'Филиалы:',
+        'btn_add' => false,
+        'type_options' => [
+          'delete' => false,
+          'delete_options' => [
+            'type_options' => [
+              'mapped' => false,
+              'required' => false,
+            ]
+          ]
+        ]
+      ], [
+        'edit' => 'inline',
+        'inline' => 'table',
+        'sortable' => 'regions',
+        'order' => 'DESC',
+        'admin_code' => 'main.admin.insurance_company_branch'
+      ])
+      ->end()
+      ->end();
   }
 
   /**
@@ -85,5 +111,16 @@ class InsuranceCompanyAdmin extends AbstractAdmin
       ->add('kpp')
       ->add('name')
       ->add('published');
+  }
+
+  /**
+   *
+   */
+  protected function attachInlineValidator()
+  {
+    $metadata = $this->validator->getMetadataFor($this->getClass());
+    $metadata->addConstraint(new InsuranceCompanyBranchPublished());
+
+    return parent::attachInlineValidator();
   }
 }

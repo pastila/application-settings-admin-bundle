@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Accurateweb\MediaBundle\Annotation as Media;
 
 /**
- * Company.
+ * InsuranceCompany.
  *
  * @ORM\Table(name="s_companies")
  * @UniqueEntity("slug")
@@ -86,9 +86,11 @@ class InsuranceCompany implements ImageAwareInterface, SluggableInterface
 
   /**
    * @var InsuranceCompanyBranch[]|ArrayCollection
-   * @ORM\OneToMany(targetEntity="InsuranceCompanyBranch", mappedBy="company")
+   * @ORM\OneToMany(targetEntity="InsuranceCompanyBranch", mappedBy="company", cascade={"persist"})
+   * @ORM\OrderBy({"region" = "ASC"})
    */
   protected $branches;
+
 
   /**
    * Company constructor.
@@ -104,6 +106,28 @@ class InsuranceCompany implements ImageAwareInterface, SluggableInterface
   public function getBranches()
   {
     return $this->branches;
+  }
+
+  /**
+   * @param $branches
+   * @return $this
+   */
+  public function setBranches($branches)
+  {
+    $this->branches = $branches;
+
+    return $this;
+  }
+
+  /**
+   * @param $branch
+   * @return $this
+   */
+  public function addBranch($branch)
+  {
+    $this->branches->add($branch);
+
+    return $this;
   }
 
   /**
