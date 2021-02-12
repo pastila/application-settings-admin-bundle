@@ -48,61 +48,58 @@ class InsuranceCompanyAdmin extends AbstractAdmin
   {
     $form
       ->tab('СМО')
-        ->add('logo', 'Accurateweb\MediaBundle\Form\ImageType', [
-          'required' => false,
-          'label' => 'Логотип',
-        ])
-        ->add("name", TextType::class, [
-          'required' => true,
-          'constraints' => [
-            new NotBlank(),
-            new Length([
-              'min' => 3,
-              'max' => 255,
-            ]),
-          ],
-        ])
-        ->add("kpp", TextType::class, [
-          'required' => true,
-          'constraints' => [
-            new NotBlank(),
-            new Length([
-              'min' => 3,
-              'max' => 255,
-            ]),
-          ],
-        ])
-        ->add('published')
+      ->add('logo', 'Accurateweb\MediaBundle\Form\ImageType', [
+        'required' => false,
+        'label' => 'Логотип',
+      ])
+      ->add("name", TextType::class, [
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+          new Length([
+            'min' => 3,
+            'max' => 255,
+          ]),
+        ],
+      ])
+      ->add("kpp", TextType::class, [
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+          new Length([
+            'min' => 3,
+            'max' => 255,
+          ]),
+        ],
+      ])
+      ->add('published')
       ->end()
       ->end();
 
-    if ($this->getSubject() && $this->getSubject()->getId())
-    {
-      $form
-        ->tab('Филиалы')
-        ->add('branches', CollectionType::class, [
-          'by_reference' => false,
-          'label' => 'Филиалы:',
-          'btn_add' => false,
-          'type_options' => [
-            'delete' => false,
-            'delete_options' => [
-              'type_options' => [
-                'mapped'   => false,
-                'required' => false,
-              ]
+    $form
+      ->tab('Филиалы')
+      ->add('branches', CollectionType::class, [
+        'by_reference' => false,
+        'label' => 'Филиалы:',
+        'btn_add' => false,
+        'type_options' => [
+          'delete' => false,
+          'delete_options' => [
+            'type_options' => [
+              'mapped' => false,
+              'required' => false,
             ]
           ]
-        ], [
-          'edit' => 'inline',
-          'inline' => 'table',
-          'sortable' => 'regions',
-          'order' => 'DESC',
-          'admin_code' => 'main.admin.insurance_company_branch'
-        ])
-        ->end()
-        ->end();
-    }
+        ]
+      ], [
+        'edit' => 'inline',
+        'inline' => 'table',
+        'sortable' => 'regions',
+        'order' => 'DESC',
+        'admin_code' => 'main.admin.insurance_company_branch'
+      ])
+      ->end()
+      ->end();
   }
 
   /**
