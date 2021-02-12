@@ -2,16 +2,14 @@
 
 namespace AppBundle\Entity\Company;
 
-use Accurateweb\MediaBundle\Model\Media\ImageInterface;
-use Accurateweb\MediaBundle\Model\Thumbnail\ImageThumbnail;
 use AppBundle\Entity\Geo\Region;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;use Doctrine\ORM\Mapping\OneToOne;
 
 /**
- * Company.
+ * InsuranceCompanyBranch.
  *
- * @ORM\Table(name="s_company_branches", indexes={@ORM\Index(name="bitrix_id_idx", columns={"bitrix_id"})})
+ * @ORM\Table(name="s_company_branches", uniqueConstraints={@ORM\UniqueConstraint(name="company_region_unique_idx", columns={"company", "region"})}
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Company\InsuranceCompanyBranchRepository")
  */
 class InsuranceCompanyBranch
@@ -23,22 +21,6 @@ class InsuranceCompanyBranch
    * @ORM\Column(type="integer")
    */
   protected $id;
-
-  /**
-   * @var integer|null
-   *
-   * @ORM\Column(type="integer", nullable=true)
-   */
-  private $bitrixId;
-
-  /**
-   * Название компании
-   *
-   * @var string
-   *
-   * @ORM\Column(name="name", type="string", length=512, nullable=false)
-   */
-  private $name;
 
   /**
    * Кпп компании
@@ -61,7 +43,7 @@ class InsuranceCompanyBranch
    * Головная компания
    *
    * @var null|string|InsuranceCompany
-   * @ORM\ManyToOne(targetEntity="InsuranceCompany")
+   * @ORM\ManyToOne(targetEntity="InsuranceCompany", cascade={"persist"})
    * @ORM\JoinColumn(name="company_id", nullable=true, onDelete="RESTRICT")
    */
   private $company;
@@ -75,77 +57,17 @@ class InsuranceCompanyBranch
    */
   private $region;
 
-//  /**
-//   * Фактический адресс
-//   *
-//   * @var string
-//   *
-//   * @ORM\Column(name="type", type="string", length=512, nullable=true)
-//   */
-//  private $type;
-
-  /**
-   * Код компании(название на английском)
-   *
-   * @var string
-   *
-   * @ORM\Column(name="code", type="string", length=256, nullable=true)
-   */
-  private $code;
-
-  /**
-   * ID логотипа в системе БИТРИКС
-   *
-   * @var string
-   *
-   * @ORM\Column(name="logo_id_from_bitrix", type="string", length=256, nullable=true)
-   */
-  private $logoIdFromBitrix;
-
-  /**
-   * URL логотипа в системе БИТРИКС
-   *
-   * @var string
-   *
-   * @ORM\Column(name="logo_url_from_bitrix", type="string", length=256, nullable=true)
-   */
-  private $logoUrlFromBitrix;
-
-
-  /**
-   * Email №1 компании
-   *
-   * @var string
-   *
-   * @ORM\Column(name="email_first", type="string", length=256, nullable=true)
-   */
-  private $emailFirst;
-
-
-  /**
-   * Email №2 компании
-   *
-   * @var string
-   *
-   * @ORM\Column(name="email_second", type="string", length=256, nullable=true)
-   */
-  private $emailSecond;
-
-
-  /**
-   * Email №2 компании
-   *
-   * @var string
-   *
-   * @ORM\Column(name="email_third", type="string", length=256, nullable=true)
-   */
-  private $emailThird;
-
   /**
    * @var boolean
    * @ORM\Column(type="boolean", nullable=false, options={"default"=true})
    */
   private $published;
+
+  /**
+   * @var InsuranceRepresentative[]|ArrayCollection
+   * @ORM\OneToMany(targetEntity="InsuranceRepresentative", mappedBy="branch", cascade={"persist"})
+   */
+  private $representatives; // TODO: orphanRemoval=true
 
   /**
    * @var Feedback[]|ArrayCollection
@@ -159,6 +81,7 @@ class InsuranceCompanyBranch
   public function __construct ()
   {
     $this->feedbacks = new ArrayCollection();
+    $this->representatives = new ArrayCollection();
   }
 
   /**
@@ -167,6 +90,27 @@ class InsuranceCompanyBranch
   public function getFeedbacks()
   {
     return $this->feedbacks;
+  }
+
+  /**
+   * @return InsuranceRepresentative[]|ArrayCollection
+   */
+  public function getRepresentatives()
+  {
+    return $this->representatives;
+  }
+
+  /**
+   * @param $representatives
+   */
+  public function setRepresentatives($representatives): void
+  {
+    $this->representatives = $representatives;
+
+    foreach ($this->representatives as $representative)
+    {
+      $representative->setBranch($this);
+    }
   }
 
   /**
@@ -180,26 +124,6 @@ class InsuranceCompanyBranch
   /**
    * @return string
    */
-  public function getName()
-  {
-    return $this->name;
-  }
-
-  /**
-   * @param string $name
-   *
-   * @return string
-   */
-  public function setName($name)
-  {
-    $this->name = $name;
-
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
   public function getKpp()
   {
     return $this->kpp;
@@ -207,16 +131,11 @@ class InsuranceCompanyBranch
 
   /**
    * @param string $kpp
-   *
-   * @return string
    */
   public function setKpp($kpp)
   {
     $this->kpp = $kpp;
-
-    return $this;
   }
-
 
   /**
    * @return float
@@ -236,7 +155,6 @@ class InsuranceCompanyBranch
 
     return $this;
   }
-
 
   /**
    * @return null|InsuranceCompany
@@ -279,117 +197,11 @@ class InsuranceCompanyBranch
   }
 
   /**
-   * @return string
-   */
-  public function getCode()
-  {
-    return $this->code;
-  }
-
-  /**
-   * @param string $code
-   *
-   * @return string
-   */
-  public function setCode($code)
-  {
-    $this->code = $code;
-
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getLogoIdFromBitrix()
-  {
-    return $this->logoIdFromBitrix;
-  }
-
-  /**
-   * @param string $logoIdFromBitrix
-   *
-   * @return string
-   */
-  public function setLogoIdFromBitrix($logoIdFromBitrix)
-  {
-    $this->logoIdFromBitrix = $logoIdFromBitrix;
-
-    return $this;
-  }
-
-
-  /**
-   * @return string
-   */
-  public function getEmailFirst()
-  {
-    return $this->emailFirst;
-  }
-
-  /**
-   * @param string $emailFirst
-   * @return $this
-   */
-  public function setEmailFirst($emailFirst)
-  {
-    $this->emailFirst = $emailFirst;
-
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getEmailSecond()
-  {
-    return $this->emailSecond;
-  }
-
-  /**
-   * @param string $emailSecond
-   * @return $this
-   */
-  public function setEmailSecond($emailSecond)
-  {
-    $this->emailSecond = $emailSecond;
-
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getEmailThird()
-  {
-    return $this->emailThird;
-  }
-
-  /**
-   * @param string $emailThird
-   * @return $this
-   */
-  public function setEmailThird($emailThird)
-  {
-    $this->emailThird = $emailThird;
-
-    return $this;
-  }
-
-  /**
    * @return int
    */
   public function getPublished()
   {
     return $this->published;
-  }
-
-  /**
-   * @return int|string
-   */
-  public function getStatusLabel ()
-  {
-    return $this->published ? 'Опубликован' : 'Не опубликован';
   }
 
   /**
@@ -404,29 +216,11 @@ class InsuranceCompanyBranch
   }
 
   /**
-   * @return int|null
-   */
-  public function getBitrixId(): ?int
-  {
-    return $this->bitrixId;
-  }
-
-  /**
-   * @param int|null $bitrixId
-   * @return InsuranceCompanyBranch
-   */
-  public function setBitrixId(?int $bitrixId): InsuranceCompanyBranch
-  {
-    $this->bitrixId = $bitrixId;
-    return $this;
-  }
-
-  /**
    * @return string
    */
   public function getRegionName()
   {
-    return $this->region . ' ' . $this->name ;
+    return $this->region . ' ' . ($this->company ? $this->company->getName() : '');
   }
 
   /**
@@ -434,6 +228,6 @@ class InsuranceCompanyBranch
    */
   public function __toString()
   {
-    return $this->id ? $this->name : 'Новое отделение';
+    return $this->id ?  ($this->company ? $this->company->getName() : '') : 'Новое отделение';
   }
 }

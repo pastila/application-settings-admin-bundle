@@ -2,25 +2,14 @@
 
 namespace AppBundle\Admin\InsuranceCompany;
 
-
-use AppBundle\Entity\Company\FeedbackModerationStatus;
 use AppBundle\Entity\Company\InsuranceCompany;
 use AppBundle\Entity\Company\InsuranceCompanyBranch;
-use AppBundle\Entity\Company\InsuranceRepresentative;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Validator\InsuranceCompany\InsuranceCompanyBranchPublished;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
-use Sonata\CoreBundle\Form\Type\DatePickerType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -136,53 +125,5 @@ class InsuranceCompanyAdmin extends AbstractAdmin
     $metadata->addConstraint(new InsuranceCompanyBranchPublished());
 
     return parent::attachInlineValidator();
-  }
-
-  /**
-   * @param $company
-   */
-  public function prePersist($company)
-  {
-    $this->addNewBranch($company);
-  }
-
-  /**
-   * @param $company
-   */
-  public function preUpdate($company)
-  {
-    $this->addNewBranch($company);
-  }
-
-  /**
-   * @param InsuranceCompany $company
-   */
-  private function addNewBranch($company)
-  {
-    $container = $this->getConfigurationPool()->getContainer();
-    $em = $container->get('doctrine.orm.entity_manager');
-
-    $regions = $em->getRepository(Region::class)
-      ->createQueryBuilder('r')
-      ->orderBy('r.name', 'ASC')
-      ->getQuery()
-      ->getResult();
-    foreach ($regions as $region) {
-      $branch = $em->getRepository(InsuranceCompanyBranch::class)
-        ->findOneBy([
-          'region' => $region,
-          'company' => $company
-        ]);
-
-      if (!$branch)
-      {
-        $branch = new InsuranceCompanyBranch();
-        $branch->setRegion($region);
-        $branch->setCompany($company);
-        $branch->setKpp($company->getKpp());
-        $branch->setPublished(false);
-        $company->addBranch($branch);
-      }
-    }
   }
 }
