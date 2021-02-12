@@ -549,7 +549,7 @@ class FeedbackController extends Controller
       ->andWhere('c.name LIKE :nameHospital')
       ->setParameter('nameHospital', '%' . $request->get('name_hospital') . '%')
       ->setParameter('regionId', $request->get('region_id'))
-      ->orderBy('cb.name', 'ASC')
+      ->orderBy('c.name', 'ASC')
       ->groupBy('cb.id')
       ->getQuery()
       ->getResult();
@@ -594,17 +594,9 @@ class FeedbackController extends Controller
 
         $branch = $feedback->getBranch();
         $emails = [];
-        if (!empty($branch->getEmailFirst()))
+        foreach ($branch->getRepresentatives() as $representative)
         {
-          $emails[] = $branch->getEmailFirst();
-        }
-        if (!empty($branch->getEmailSecond()))
-        {
-          $emails[] = $branch->getEmailSecond();
-        }
-        if (!empty($branch->getEmailThird()))
-        {
-          $emails[] = $branch->getEmailThird();
+          $emails[] = $representative->getEmail();
         }
 
         foreach ($emails as $email)
