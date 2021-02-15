@@ -15,8 +15,8 @@ final class Version20210215054213 extends AbstractMigration
     // this up() migration is auto-generated, please modify it to your needs
     $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-    $this->addSql('ALTER TABLE s_company_branches ADD phone VARCHAR(32) DEFAULT NULL');
-    $this->addSql('ALTER TABLE s_companies ADD phone VARCHAR(32) DEFAULT NULL');
+    $this->addSql('ALTER TABLE s_company_branches ADD phones VARCHAR(255) DEFAULT NULL');
+    $this->addSql('ALTER TABLE s_companies ADD phones VARCHAR(255) DEFAULT NULL');
   }
 
   public function down(Schema $schema): void
@@ -24,7 +24,7 @@ final class Version20210215054213 extends AbstractMigration
     // this down() migration is auto-generated, please modify it to your needs
     $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-    $this->addSql('ALTER TABLE s_companies DROP phone');
-    $this->addSql('ALTER TABLE s_company_branches DROP phone');
+    $this->addSql('ALTER TABLE s_companies DROP phones');
+    $this->addSql('ALTER TABLE s_company_branches DROP phones');
   }
 }

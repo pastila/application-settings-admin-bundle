@@ -68,13 +68,13 @@ class InsuranceCompanyBranch
   private $published;
 
   /**
-   * Телефон горячей линии
+   * Телефон горячей линии филила в регионе
    *
    * @var string
    *
-   * @ORM\Column( type="string", length=32, nullable=true)
+   * @ORM\Column( type="string", length=255, nullable=true)
    */
-  private $phone;
+  private $phones;
 
   /**
    * @var InsuranceRepresentative[]|ArrayCollection
@@ -253,17 +253,17 @@ class InsuranceCompanyBranch
   /**
    * @return string
    */
-  public function getPhone()
+  public function getPhones()
   {
-    return $this->phone;
+    return $this->phones;
   }
 
   /**
-   * @param string $phone
+   * @param string $phones
    */
-  public function setPhone($phone): void
+  public function setPhones($phones): void
   {
-    $this->phone = $phone;
+    $this->phones = $phones;
   }
 
   /**

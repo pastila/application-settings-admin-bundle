@@ -67,11 +67,11 @@ class InsuranceCompanyBranchAdmin extends AbstractAdmin
           ]),
         ],
       ])
-      ->add('phone', TextType::class, [
+      ->add('phones', TextType::class, [
         'required' => false,
         'constraints' => [
           new Length([
-            'max' => 18,
+            'max' => 255,
           ]),
         ],
       ])
