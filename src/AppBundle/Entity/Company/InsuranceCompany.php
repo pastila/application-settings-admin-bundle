@@ -91,6 +91,14 @@ class InsuranceCompany implements ImageAwareInterface, SluggableInterface
    */
   protected $branches;
 
+  /**
+   * Телефон горячей линии головной компании
+   *
+   * @var string
+   *
+   * @ORM\Column( type="string", length=255, nullable=true)
+   */
+  private $phones;
 
   /**
    * Company constructor.
@@ -351,6 +359,22 @@ class InsuranceCompany implements ImageAwareInterface, SluggableInterface
   {
     $this->slugRoot = $slugRoot;
     return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getPhones()
+  {
+    return $this->phones;
+  }
+
+  /**
+   * @param string $phones
+   */
+  public function setPhones($phones): void
+  {
+    $this->phones = $phones;
   }
 
   /**

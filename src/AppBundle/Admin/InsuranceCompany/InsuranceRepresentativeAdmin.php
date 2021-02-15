@@ -30,6 +30,27 @@ class InsuranceRepresentativeAdmin extends AbstractAdmin
             'max' => 255,
           ]),
         ],
+      ])
+      ->add('lastName', null, [
+        'constraints' => [
+          new Length([
+            'max' => 255,
+          ]),
+        ],
+      ])
+      ->add('firstName', null, [
+        'constraints' => [
+          new Length([
+            'max' => 255,
+          ]),
+        ],
+      ])
+      ->add('middleName', null, [
+        'constraints' => [
+          new Length([
+            'max' => 255,
+          ]),
+        ],
       ]);
   }
 }

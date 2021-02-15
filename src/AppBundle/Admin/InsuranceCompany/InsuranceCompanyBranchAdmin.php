@@ -2,15 +2,20 @@
 
 namespace AppBundle\Admin\InsuranceCompany;
 
+use AppBundle\Entity\Company\FeedbackModerationStatus;
 use AppBundle\Entity\Company\InsuranceCompanyBranch;
 use AppBundle\Form\DataTransformer\RegionToEntityTransformer;
 use Doctrine\ORM\PersistentCollection;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Datagrid\DatagridMapper;
+use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Sonata\Form\Type\CollectionType;
 use AppBundle\Entity\Company\InsuranceRepresentative;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class InsuranceCompanyBranchAdmin
@@ -18,6 +23,31 @@ use AppBundle\Entity\Company\InsuranceRepresentative;
  */
 class InsuranceCompanyBranchAdmin extends AbstractAdmin
 {
+  /**
+   * @param ListMapper $list
+   */
+  protected function configureListFields(ListMapper $list)
+  {
+    $container = $this->getConfigurationPool()->getContainer();
+    $router = $container->get('router');
+    $route = $router->match($this->getRequest()->getPathInfo());
+
+    if ($route['_route'] !== 'admin_app_company_insurancecompany_company_insurancecompanybranch_list')
+    {
+      $list->add('company');
+    }
+    $list->add('region');
+    $list->add('published', null, [
+      'label' => 'Публикация',
+    ])
+      ->add('_action', null, [
+        'actions' => [
+          'edit' => [],
+          'delete' => [],
+        ]
+      ]);
+  }
+
   /**
    * @param FormMapper $form
    */
@@ -27,11 +57,23 @@ class InsuranceCompanyBranchAdmin extends AbstractAdmin
     $subject = $this->getSubject();
 
     $form
-      ->add('region', TextType::class, [
-        'label' => 'Регион',
-        'attr' => array(
-          'readonly' => true,
-        ),
+      ->add('region')
+      ->add('kpp', null, [
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+          new Length([
+            'max' => 255,
+          ]),
+        ],
+      ])
+      ->add('phones', TextType::class, [
+        'required' => false,
+        'constraints' => [
+          new Length([
+            'max' => 255,
+          ]),
+        ],
       ])
       ->add('representatives', CollectionType::class, [
         'by_reference' => false,
@@ -50,27 +92,52 @@ class InsuranceCompanyBranchAdmin extends AbstractAdmin
       ])
       ->add('published');
 
-    $form ->get('representatives')
+    $form->get('representatives')
       ->addModelTransformer(new CallbackTransformer(
-        function ($collection) {
+        function ($collection)
+        {
           return $collection;
         },
-        function ($collection) use ($subject) {
+        function ($collection) use ($subject)
+        {
           /**
            * @var PersistentCollection $collection
            */
-          $collection->map(function($value) use ($subject){
-            /**
-             * @var InsuranceRepresentative $value
-             */
-            $value->setBranch($subject);
-            return $value;
-          });
+          if ($collection instanceof PersistentCollection)
+          {
+            $collection->map(function ($value) use ($subject)
+            {
+              /**
+               * @var InsuranceRepresentative $value
+               */
+              $value->setBranch($subject);
+              return $value;
+            });
+          }
+
           return $collection;
         }
       ));
+  }
 
-    $form->get('region')
-      ->addModelTransformer(new RegionToEntityTransformer($this->getSubject()));
+
+  /**
+   * @param DatagridMapper $filter
+   */
+  protected function configureDatagridFilters(DatagridMapper $filter)
+  {
+    $container = $this->getConfigurationPool()->getContainer();
+    $router = $container->get('router');
+    $route = $router->match($this->getRequest()->getPathInfo());
+
+    if ($route['_route'] !== 'admin_app_company_insurancecompany_company_insurancecompanybranch_list')
+    {
+      $filter->add('company');
+    }
+    $filter
+      ->add('region')
+      ->add('published')
+      ->add('kpp')
+      ->add('representatives');
   }
 }

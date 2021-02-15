@@ -68,10 +68,19 @@ class InsuranceCompanyBranch
   private $published;
 
   /**
-   * @var InsuranceRepresentative[]|ArrayCollection
-   * @ORM\OneToMany(targetEntity="InsuranceRepresentative", mappedBy="branch", cascade={"persist"})
+   * Телефон горячей линии филила в регионе
+   *
+   * @var string
+   *
+   * @ORM\Column( type="string", length=255, nullable=true)
    */
-  private $representatives; // TODO: orphanRemoval=true
+  private $phones;
+
+  /**
+   * @var InsuranceRepresentative[]|ArrayCollection
+   * @ORM\OneToMany(targetEntity="InsuranceRepresentative", mappedBy="branch", cascade={"persist"}, orphanRemoval=true)
+   */
+  private $representatives;
 
   /**
    * @var Feedback[]|ArrayCollection
@@ -97,6 +106,25 @@ class InsuranceCompanyBranch
   }
 
   /**
+   * @param $representative
+   */
+  public function addRepresentative($representative)
+  {
+    $this->representatives->add($representative);
+  }
+
+  /**
+   * @param $representative
+   */
+  public function removeRepresentative($representative)
+  {
+    if ($this->representatives->contains($representative))
+    {
+      $this->representatives->removeElement($representative);
+    }
+  }
+
+  /**
    * @return InsuranceRepresentative[]|ArrayCollection
    */
   public function getRepresentatives()
@@ -110,11 +138,6 @@ class InsuranceCompanyBranch
   public function setRepresentatives($representatives): void
   {
     $this->representatives = $representatives;
-
-    foreach ($this->representatives as $representative)
-    {
-      $representative->setBranch($this);
-    }
   }
 
   /**
@@ -225,6 +248,22 @@ class InsuranceCompanyBranch
   public function getRegionName()
   {
     return $this->region . ' ' . ($this->company ? $this->company->getName() : '');
+  }
+
+  /**
+   * @return string
+   */
+  public function getPhones()
+  {
+    return $this->phones;
+  }
+
+  /**
+   * @param string $phones
+   */
+  public function setPhones($phones): void
+  {
+    $this->phones = $phones;
   }
 
   /**

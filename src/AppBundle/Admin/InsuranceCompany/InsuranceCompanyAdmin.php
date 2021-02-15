@@ -14,6 +14,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Sonata\Form\Type\CollectionType;
+use Sonata\AdminBundle\Route\RouteCollection;
+use Knp\Menu\ItemInterface as MenuItemInterface;
+use Sonata\AdminBundle\Admin\AdminInterface;
 
 /**
  * Class InsuranceCompanyAdmin
@@ -37,6 +40,9 @@ class InsuranceCompanyAdmin extends AbstractAdmin
         'actions' => array(
           'edit' => array(),
           'delete' => array(),
+          'branches' => [
+            'template' => '@App/admin/branches/buttons.html.twig',
+          ],
         )
       ));
   }
@@ -47,7 +53,7 @@ class InsuranceCompanyAdmin extends AbstractAdmin
   protected function configureFormFields(FormMapper $form)
   {
     $form
-      ->tab('СМО')
+      ->tab('Основное')
       ->add('logo', 'Accurateweb\MediaBundle\Form\ImageType', [
         'required' => false,
         'label' => 'Логотип',
@@ -72,32 +78,15 @@ class InsuranceCompanyAdmin extends AbstractAdmin
           ]),
         ],
       ])
-      ->add('published')
-      ->end()
-      ->end();
-
-    $form
-      ->tab('Филиалы')
-      ->add('branches', CollectionType::class, [
-        'by_reference' => false,
-        'label' => 'Филиалы:',
-        'btn_add' => false,
-        'type_options' => [
-          'delete' => false,
-          'delete_options' => [
-            'type_options' => [
-              'mapped' => false,
-              'required' => false,
-            ]
-          ]
-        ]
-      ], [
-        'edit' => 'inline',
-        'inline' => 'table',
-        'sortable' => 'regions',
-        'order' => 'DESC',
-        'admin_code' => 'main.admin.insurance_company_branch'
+      ->add('phones', TextType::class, [
+        'required' => false,
+        'constraints' => [
+          new Length([
+            'max' => 255,
+          ]),
+        ],
       ])
+      ->add('published')
       ->end()
       ->end();
   }
@@ -122,5 +111,35 @@ class InsuranceCompanyAdmin extends AbstractAdmin
     $metadata->addConstraint(new InsuranceCompanyBranchPublished());
 
     return parent::attachInlineValidator();
+  }
+
+  /**
+   * @param RouteCollection $collection
+   */
+  protected function configureRoutes(RouteCollection $collection)
+  {
+    $collection->add('branches');
+  }
+
+  /**
+   * @param MenuItemInterface $menu
+   * @param string $action
+   * @param AdminInterface|null $childAdmin
+   */
+  protected function configureTabMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
+  {
+    parent::configureTabMenu($menu, $action, $childAdmin);
+
+    if ($this->getSubject() && $action === 'edit')
+    {
+      $menu->addChild('branches', [
+        'uri' => $this->getConfigurationPool()
+          ->getContainer()->get('router')
+          ->generate('admin_app_company_insurancecompany_company_insurancecompanybranch_list', [
+            'id' => $this->getSubject()->getId()
+          ]),
+        'label' => 'Список филиалов СМО',
+      ]);
+    }
   }
 }

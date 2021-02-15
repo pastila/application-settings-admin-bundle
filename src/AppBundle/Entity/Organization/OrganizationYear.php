@@ -3,7 +3,6 @@
 namespace AppBundle\Entity\Organization;
 
 
-use AppBundle\Entity\Company\Company;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
