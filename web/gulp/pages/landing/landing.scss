@@ -28,7 +28,7 @@
     .app-header__lk,
     .app-header__location {
       @include noAnimate;
-      transition: none,background-color .4s ease,color .4s ease!important;
+      transition: background-color 0.4s ease 0s, color 0.4s ease 0s;
     }
   }
 
