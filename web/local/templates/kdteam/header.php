@@ -86,10 +86,6 @@ $url = $APPLICATION->GetCurDir();
       })(window,document,'script','dataLayer','GTM-N3VBFGG');
     </script>
     <!-- End Google Tag Manager -->
-
-    <!--  JivoSite -->
-    <script src="//code-ya.jivosite.com/widget/u0hymF3kCA" async></script>
-    <!-- / JivoSite -->
 </head>
 
 <body>
