@@ -37,6 +37,9 @@ class InsuranceCompanyAdmin extends AbstractAdmin
         'actions' => array(
           'edit' => array(),
           'delete' => array(),
+          'branches' => [
+            'template' => '@App/admin/branches/buttons.html.twig',
+          ],
         )
       ));
   }
@@ -75,34 +78,6 @@ class InsuranceCompanyAdmin extends AbstractAdmin
       ->add('published')
       ->end()
       ->end();
-
-    if ($this->getSubject() && $this->getSubject()->getId())
-    {
-      $form
-        ->tab('Филиалы')
-        ->add('branches', CollectionType::class, [
-          'by_reference' => false,
-          'label' => 'Филиалы:',
-          'btn_add' => false,
-          'type_options' => [
-            'delete' => false,
-            'delete_options' => [
-              'type_options' => [
-                'mapped'   => false,
-                'required' => false,
-              ]
-            ]
-          ]
-        ], [
-          'edit' => 'inline',
-          'inline' => 'table',
-          'sortable' => 'regions',
-          'order' => 'DESC',
-          'admin_code' => 'main.admin.insurance_company_branch'
-        ])
-        ->end()
-        ->end();
-    }
   }
 
   /**
@@ -125,54 +100,5 @@ class InsuranceCompanyAdmin extends AbstractAdmin
     $metadata->addConstraint(new InsuranceCompanyBranchPublished());
 
     return parent::attachInlineValidator();
-  }
-
-
-  /**
-   * @param $company
-   */
-  public function prePersist($company)
-  {
-    $this->addNewBranch($company);
-  }
-
-  /**
-   * @param $company
-   */
-  public function preUpdate($company)
-  {
-    $this->addNewBranch($company);
-  }
-
-  /**
-   * @param InsuranceCompany $company
-   */
-  private function addNewBranch($company)
-  {
-    $container = $this->getConfigurationPool()->getContainer();
-    $em = $container->get('doctrine.orm.entity_manager');
-
-    $regions = $em->getRepository(Region::class)
-      ->createQueryBuilder('r')
-      ->orderBy('r.name', 'ASC')
-      ->getQuery()
-      ->getResult();
-    foreach ($regions as $region) {
-      $branch = $em->getRepository(InsuranceCompanyBranch::class)
-        ->findOneBy([
-          'region' => $region,
-          'company' => $company
-        ]);
-
-      if (!$branch)
-      {
-        $branch = new InsuranceCompanyBranch();
-        $branch->setRegion($region);
-        $branch->setCompany($company);
-        $branch->setKpp($company->getKpp());
-        $branch->setPublished(false);
-        $company->addBranch($branch);
-      }
-    }
   }
 }
