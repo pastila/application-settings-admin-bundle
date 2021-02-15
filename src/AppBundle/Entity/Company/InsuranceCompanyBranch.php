@@ -68,6 +68,15 @@ class InsuranceCompanyBranch
   private $published;
 
   /**
+   * Телефон горячей линии
+   *
+   * @var string
+   *
+   * @ORM\Column( type="string", length=32, nullable=true)
+   */
+  private $phone;
+
+  /**
    * @var InsuranceRepresentative[]|ArrayCollection
    * @ORM\OneToMany(targetEntity="InsuranceRepresentative", mappedBy="branch", cascade={"persist"}, orphanRemoval=true)
    */
@@ -239,6 +248,22 @@ class InsuranceCompanyBranch
   public function getRegionName()
   {
     return $this->region . ' ' . ($this->company ? $this->company->getName() : '');
+  }
+
+  /**
+   * @return string
+   */
+  public function getPhone()
+  {
+    return $this->phone;
+  }
+
+  /**
+   * @param string $phone
+   */
+  public function setPhone($phone): void
+  {
+    $this->phone = $phone;
   }
 
   /**

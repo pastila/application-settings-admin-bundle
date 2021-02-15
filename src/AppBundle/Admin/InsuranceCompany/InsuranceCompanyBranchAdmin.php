@@ -67,6 +67,14 @@ class InsuranceCompanyBranchAdmin extends AbstractAdmin
           ]),
         ],
       ])
+      ->add('phone', TextType::class, [
+        'required' => false,
+        'constraints' => [
+          new Length([
+            'max' => 18,
+          ]),
+        ],
+      ])
       ->add('representatives', CollectionType::class, [
         'by_reference' => false,
         'label' => 'Представители СМО:',
