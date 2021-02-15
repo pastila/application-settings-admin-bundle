@@ -2,8 +2,7 @@
 
 namespace AppBundle\Repository\Company;
 
-use AppBundle\Entity\Company\Company;
-use AppBundle\Entity\Company\CompanyStatus;
+use AppBundle\Entity\Company\InsuranceCompany;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -11,7 +10,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  * Class CompanyRepository
  * @package AppBundle\Repository\Company
  */
-class CompanyRepository extends ServiceEntityRepository
+class InsuranceCompanyRepository extends ServiceEntityRepository
 {
   /**
    * CompanyRepository constructor.
@@ -19,7 +18,7 @@ class CompanyRepository extends ServiceEntityRepository
    */
   public function __construct(ManagerRegistry $registry)
   {
-    parent::__construct($registry, Company::class);
+    parent::__construct($registry, InsuranceCompany::class);
   }
 
   /**
@@ -30,8 +29,8 @@ class CompanyRepository extends ServiceEntityRepository
    */
   public function filterByActive($qb, $alias = 'c')
   {
-    return $qb->andWhere($alias . '.status = :status')
-      ->setParameter('status', CompanyStatus::ACTIVE);
+    return $qb->andWhere($alias . '.published = :published')
+      ->setParameter('published', true);
   }
 
   /**
@@ -85,8 +84,8 @@ class CompanyRepository extends ServiceEntityRepository
   public function getActive()
   {
     return $this->createQueryBuilder('c')
-      ->andWhere('c.status = :status')
-      ->setParameter('status', CompanyStatus::ACTIVE);
+      ->andWhere('c.published = :published')
+      ->setParameter('published', true);
   }
 
   /**
@@ -95,6 +94,6 @@ class CompanyRepository extends ServiceEntityRepository
   public function getWithBranchActive()
   {
     return $this->getActive()
-      ->innerJoin('c.branches', 'cb', 'WITH', 'cb.status = :status');
+      ->innerJoin('c.branches', 'cb', 'WITH', 'cb.published = :published');
   }
 }

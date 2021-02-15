@@ -102,6 +102,8 @@ sonata_admin:
   title: Раздел администрирования
   dashboard:
     groups:
+      mo_cmo:
+        label: МО и СМО
       main_page:
         label: Главная страница
       text:

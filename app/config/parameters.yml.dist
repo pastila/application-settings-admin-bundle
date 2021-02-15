@@ -36,6 +36,11 @@ parameters:
     router.request_context.host: '%env(REQUEST_DEFAULT_HOST)%'
     router.request_context.scheme: '%env(REQUEST_DEFAULT_SCHEME)%'
 
+    sms_private_key: '%env(SMS_PRIVATE_KEY)%'
+    sms_public_key: '%env(SMS_PUBLIC_KEY)%'
+    sms_url: http://atompark.com/api/sms/
+    sms_protocol_version: 3.0
+
 # Environment variable defaults
     env(MYSQL_USER): root
     env(MYSQL_PASSWORD): ~
@@ -52,5 +57,8 @@ parameters:
     env(MAILER_USER): null
     env(MAILER_PASSWORD): null
     env(MAILER_PORT): 25
-    env(MAILER_FROM): admin@example.com
+    env(MAILER_FROM): info@accurateweb.ru
     env(MAILER_SENDER_NAME): admin
+
+    env(SMS_PRIVATE_KEY): b92986f663c0596737dfcb773f6eca17
+    env(SMS_PUBLIC_KEY): 6bd53830b4d07adbb4f2e4df6bd67ccc

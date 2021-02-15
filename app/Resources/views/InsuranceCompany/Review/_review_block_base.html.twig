@@ -34,19 +34,18 @@
         {% endif %}
         <div class="feedback__block_top_name">
                     <span class="feedback__block_top_name_text" itemprop="author" itemscope itemtype="https://schema.org/Person">
-                        {{ review.authorName }}, {{ (review.branch and review.branch.region) ? review.branch.region.name|trim: ''}}, {{ review.createdAt|prepareDate("d F, Y") }}
+                        {{ (is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user == review.author) ? app.user.login : review.authorName }},
+                        {{ (review.branch and review.branch.region) ? review.branch.region.name|trim: ''}}, {{ review.createdAt|prepareDate("d F, Y") }}
                         <meta itemprop="name" content="{{ review.authorName }}">
                     </span>
 
             <!-- Company Name -->
             <div class="feedback__block_company-name" itemprop="itemReviewed" itemscope itemtype="https://schema.org/Organization">
-                {{ render(controller('AppBundle:InsuranceCompany/Company:_logoPanel',
-                    {
-                        'logo_id': (review.branch ? review.branch.logoIdFromBitrix : null),
-                        'name': (review.branch ? review.branch.name : ''),
-                        'disableLink': (filter is defined) ? filter.company != null : false,
-                    } )) }}
-                <meta itemprop="name" content="{{ review.branch ? review.branch.name : '' }}">
+                {% include "Company/_logo_panel.html.twig" with  {
+                    'branch': review.branch,
+                    'disableLink': (filter is defined) ? filter.company != null : false,
+                } %}
+                <meta itemprop="name" content="{{ review.branch ? review.branch.company.name : '' }}">
 {#                <meta itemprop="email" content="{{ review.branch ? review.branch.emailFirst : '' }}">#}
             </div>
         </div>

@@ -2,12 +2,12 @@
 
 namespace AppBundle\Admin\Feedback;
 
-use AppBundle\Entity\Company\Company;
-use AppBundle\Entity\Company\CompanyBranch;
 use AppBundle\Entity\Company\Feedback;
+use AppBundle\Entity\Company\InsuranceCompany;
+use AppBundle\Entity\Company\InsuranceCompanyBranch;
+use AppBundle\Repository\Company\InsuranceCompanyRepository;
 use AppBundle\Entity\Company\FeedbackModerationStatus;
 use AppBundle\Entity\Geo\Region;
-use AppBundle\Repository\Company\CompanyRepository;
 use AppBundle\Repository\Geo\RegionRepository;
 use AppBundle\Validator\Feedback\FeedbackAuthor;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -33,7 +33,7 @@ class FeedbackAdmin extends AbstractAdmin
    */
   protected $datagridValues = array(
     '_page' => 1,
-    '_sort_order' => 'ASC',
+    '_sort_order' => 'DESC',
     '_sort_by' => 'createdAt',
   );
 
@@ -85,11 +85,11 @@ class FeedbackAdmin extends AbstractAdmin
     $form
       ->add('company', EntityType::class, [
         'label' => 'Компания',
-        'class' => Company::class,
+        'class' => InsuranceCompany::class,
         'choice_label' => 'name',
         'placeholder' => '',
         "expanded" => false,
-        'query_builder' => function (CompanyRepository $repository)
+        'query_builder' => function (InsuranceCompanyRepository $repository)
         {
           return $repository
             ->getWithBranchActive()
@@ -154,15 +154,12 @@ class FeedbackAdmin extends AbstractAdmin
         "expanded" => false
       ])
       ->add("createdAt", DateTimePickerType::class, [
+        'required' => false,
         'label' => 'Дата создания',
-        'required' => true,
         'by_reference' => true,
         'format' => 'd MMMM yyyy',
         'view_timezone' => 'UTC',
         'model_timezone' => 'UTC',
-        'constraints' => [
-          new NotBlank(),
-        ],
       ])
       ->add("updatedAt", DateTimePickerType::class, [
         'required' => false,
@@ -204,7 +201,6 @@ class FeedbackAdmin extends AbstractAdmin
   public function prePersist($feedback)
   {
     $this->setBranch($feedback);
-    $this->setUpdatedAt($feedback);
   }
 
   /**
@@ -213,7 +209,6 @@ class FeedbackAdmin extends AbstractAdmin
   public function preUpdate($feedback)
   {
     $this->setBranch($feedback);
-    $this->setUpdatedAt($feedback);
   }
 
   /**
@@ -226,21 +221,13 @@ class FeedbackAdmin extends AbstractAdmin
     if (!empty($feedback->getRegionRaw()) && !empty($feedback->getCompanyRaw()))
     {
       $em = $container->get('doctrine.orm.entity_manager');
-      $branch = $em->getRepository(CompanyBranch::class)
+      $branch = $em->getRepository(InsuranceCompanyBranch::class)
         ->findOneBy([
           'region' => $feedback->getRegionRaw(),
           'company' => $feedback->getCompanyRaw(),
         ]);
       $feedback->setBranch($branch);
     }
-  }
-
-  /**
-   * @param Feedback $feedback
-   */
-  protected function setUpdatedAt($feedback)
-  {
-    $feedback->setUpdatedAt(empty($feedback->getUpdatedAt()) ? $feedback->getCreatedAt() : $feedback->getUpdatedAt());
   }
 
   /**

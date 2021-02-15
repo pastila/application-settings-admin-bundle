@@ -8,9 +8,8 @@ namespace AppBundle\Controller\InsuranceCompany;
 use Accurateweb\ApplicationSettingsAdminBundle\Model\Manager\SettingManagerInterface;
 use AppBundle\Entity\Company\Citation;
 use AppBundle\Entity\Company\Comment;
-use AppBundle\Entity\Company\Company;
-use AppBundle\Entity\Company\CompanyBranch;
-use AppBundle\Entity\Company\CompanyStatus;
+use AppBundle\Entity\Company\InsuranceCompany;
+use AppBundle\Entity\Company\InsuranceCompanyBranch;
 use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\Company\FeedbackModerationStatus;
 use AppBundle\Entity\Geo\Region;
@@ -114,7 +113,7 @@ class FeedbackController extends Controller
 
     if ($request->get('slug'))
     {
-      $company = $this->getDoctrine()->getManager()->getRepository(Company::class)
+      $company = $this->getDoctrine()->getManager()->getRepository(InsuranceCompany::class)
         ->findOneBy(['slug' => $request->get('slug')]);
 
       if (!$company)
@@ -149,16 +148,16 @@ class FeedbackController extends Controller
     } else
     {
       $reviewListQb
-        ->andWhere('rv.moderationStatus = :status')
-        ->setParameter('status', FeedbackModerationStatus::MODERATION_ACCEPTED);
+        ->andWhere('rv.moderationStatus = :moderationStatus')
+        ->setParameter('moderationStatus', FeedbackModerationStatus::MODERATION_ACCEPTED);
     }
 
     $reviewListQb
       ->innerJoin('rv.branch', 'rvb')
       ->innerJoin('rvb.company', 'rvc')
-      ->andWhere('rvb.status = :status')
-      ->andWhere('rvc.status = :status')
-      ->setParameter('status', CompanyStatus::ACTIVE);
+      ->andWhere('rvb.published = :published')
+      ->andWhere('rvc.published = :published')
+      ->setParameter('published', true);
 //      ->leftJoin('rv.comments', 'rvct')
 //      ->leftJoin('rvct.citations', 'rvctcs')
     ;
@@ -543,13 +542,14 @@ class FeedbackController extends Controller
   public function companySearchAction(Request $request)
   {
     $em = $this->getDoctrine()->getManager();
-    $repository = $em->getRepository(CompanyBranch::class);
+    $repository = $em->getRepository(InsuranceCompanyBranch::class);
     $branches = $repository
       ->getActive()
       ->andWhere('cb.region = :regionId')
-      ->andWhere('cb.name LIKE :nameHospital')
+      ->andWhere('c.name LIKE :nameHospital')
       ->setParameter('nameHospital', '%' . $request->get('name_hospital') . '%')
       ->setParameter('regionId', $request->get('region_id'))
+      ->orderBy('c.name', 'ASC')
       ->groupBy('cb.id')
       ->getQuery()
       ->getResult();
@@ -594,17 +594,9 @@ class FeedbackController extends Controller
 
         $branch = $feedback->getBranch();
         $emails = [];
-        if (!empty($branch->getEmailFirst()))
+        foreach ($branch->getRepresentatives() as $representative)
         {
-          $emails[] = $branch->getEmailFirst();
-        }
-        if (!empty($branch->getEmailSecond()))
-        {
-          $emails[] = $branch->getEmailSecond();
-        }
-        if (!empty($branch->getEmailThird()))
-        {
-          $emails[] = $branch->getEmailThird();
+          $emails[] = $representative->getEmail();
         }
 
         foreach ($emails as $email)

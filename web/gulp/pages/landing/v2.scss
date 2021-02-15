@@ -1,3 +1,5 @@
+@import '../../styles/utils/mixins';
+
 .v2 {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -789,22 +791,22 @@
   .app-header__list,
   .app-header__lk,
   .app-header__location {
-    transition: 1s ease all !important;
+    transition: 1s ease all;
     opacity: 0;
     -webkit-transform: translateX(-40px);
     transform: translateX(-40px);
   }
 
   .app-header__list {
-    transition-delay: 0.3s !important;
+    transition-delay: 0.3s;
   }
 
-  .app-header__lk {
-    transition-delay: 0.6s !important;
+  .app-header .app-header__lk {
+    transition: 1s ease all 0.6s, background-color 0.4s ease 0s, color 0.4s ease 0s;
   }
 
   .app-header__location {
-    transition-delay: 0.9s !important;
+    transition-delay: 0.9s;
   }
 
   .app-header.is-visible .app-header__logo,

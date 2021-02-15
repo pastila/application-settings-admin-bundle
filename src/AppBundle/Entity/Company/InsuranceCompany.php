@@ -2,22 +2,24 @@
 
 namespace AppBundle\Entity\Company;
 
+use Accurateweb\MediaBundle\Exception\OperationNotSupportedException;
 use Accurateweb\MediaBundle\Model\Image\ImageAwareInterface;
 use Accurateweb\MediaBundle\Model\Media\ImageInterface;
-use Accurateweb\MediaBundle\Model\Thumbnail\ImageThumbnail;
+use AppBundle\Model\Media\CompanyLogo;
 use AppBundle\Sluggable\SluggableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Accurateweb\MediaBundle\Annotation as Media;
 
 /**
- * Company.
+ * InsuranceCompany.
  *
- * @ORM\Table(name="s_companies", indexes={@ORM\Index(name="bitrix_id_idx", columns={"bitrix_id"})})
+ * @ORM\Table(name="s_companies")
  * @UniqueEntity("slug")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\Company\CompanyRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\Company\InsuranceCompanyRepository")
  */
-class Company implements ImageAwareInterface, ImageInterface, SluggableInterface
+class InsuranceCompany implements ImageAwareInterface, SluggableInterface
 {
   /**
    * @var integer
@@ -26,14 +28,6 @@ class Company implements ImageAwareInterface, ImageInterface, SluggableInterface
    * @ORM\Column(type="integer")
    */
   protected $id;
-
-  /**
-   * @var integer|null
-   *
-   * @ORM\Column(type="integer", nullable=true)
-   */
-  private $bitrixId;
-
 
   /**
    * @var string
@@ -79,28 +73,32 @@ class Company implements ImageAwareInterface, ImageInterface, SluggableInterface
    * Логотип компании
    *
    * @var string
-   *
    * @ORM\Column(name="image", type="string", length=255, nullable=true)
+   * @Media\Image(id="company_logos")
    */
-  protected $file;
+  protected $logo;
 
   /**
-   * @var int
-   * @ORM\Column(type="integer", nullable=false)
+   * @var boolean
+   * @ORM\Column(type="boolean", nullable=false, options={"default"=true})
    */
-  private $status;
+  private $published;
 
   /**
-   * @var Feedback[]|ArrayCollection
-   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Company\Feedback", mappedBy="company")
-   */
-  protected $feedbacks;
-
-  /**
-   * @var CompanyBranch[]|ArrayCollection
-   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Company\CompanyBranch", mappedBy="company")
+   * @var InsuranceCompanyBranch[]|ArrayCollection
+   * @ORM\OneToMany(targetEntity="InsuranceCompanyBranch", mappedBy="company", cascade={"persist"})
+   * @ORM\OrderBy({"region" = "ASC"})
    */
   protected $branches;
+
+  /**
+   * Телефон горячей линии головной компании
+   *
+   * @var string
+   *
+   * @ORM\Column( type="string", length=255, nullable=true)
+   */
+  private $phones;
 
   /**
    * Company constructor.
@@ -111,11 +109,33 @@ class Company implements ImageAwareInterface, ImageInterface, SluggableInterface
   }
 
   /**
-   * @return CompanyBranch[]|ArrayCollection
+   * @return InsuranceCompanyBranch[]|ArrayCollection
    */
   public function getBranches()
   {
     return $this->branches;
+  }
+
+  /**
+   * @param $branches
+   * @return $this
+   */
+  public function setBranches($branches)
+  {
+    $this->branches = $branches;
+
+    return $this;
+  }
+
+  /**
+   * @param $branch
+   * @return $this
+   */
+  public function addBranch($branch)
+  {
+    $this->branches->add($branch);
+
+    return $this;
   }
 
   /**
@@ -139,28 +159,6 @@ class Company implements ImageAwareInterface, ImageInterface, SluggableInterface
   {
     return $this->id;
   }
-
-  /**
-   * @return int|null
-   */
-  public function getBitrixId(): ?int
-  {
-    return $this->bitrixId;
-  }
-
-  /**
-   * @param int|null $bitrixId
-   * @return Company
-   */
-  public function setBitrixId(?int $bitrixId): Company
-  {
-    $this->bitrixId = $bitrixId;
-    return $this;
-  }
-
-
-
-
 
   /**
    * @return string
@@ -222,33 +220,20 @@ class Company implements ImageAwareInterface, ImageInterface, SluggableInterface
   }
 
   /**
-   * @return int
+   * @return bool
    */
-  public function getStatus()
+  public function getPublished()
   {
-    return $this->status;
+    return $this->published;
   }
 
   /**
-   * @return int|string
-   */
-  public function getStatusLabel ()
-  {
-    return CompanyStatus::getName($this->status);
-  }
-
-  /**
-   * @param $status
+   * @param $published
    * @return $this
    */
-  public function setStatus($status)
+  public function setPublished($published)
   {
-    if (null !== $status && !in_array($status, CompanyStatus::getAvailableValues()))
-    {
-      throw new \InvalidArgumentException();
-    }
-
-    $this->status = $status;
+    $this->published = $published;
 
     return $this;
   }
@@ -256,22 +241,23 @@ class Company implements ImageAwareInterface, ImageInterface, SluggableInterface
   /**
    * @return string
    */
-  public function getFile()
+  public function getLogo()
   {
-    return $this->file;
+    return $this->logo;
   }
 
   /**
-   * @param string $file
+   * @param string $logo
    * @return $this
    */
-  public function setFile($file)
+  public function setLogo($logo)
   {
-    if ($file === null) {
+    if ($logo === null)
+    {
       return $this;
     }
 
-    $this->file = $file;
+    $this->logo = $logo;
 
     return $this;
   }
@@ -282,7 +268,7 @@ class Company implements ImageAwareInterface, ImageInterface, SluggableInterface
    */
   public function getImage($id = null)
   {
-    return $this;
+    return new CompanyLogo('company_logos', $this->logo);
   }
 
   /**
@@ -291,86 +277,46 @@ class Company implements ImageAwareInterface, ImageInterface, SluggableInterface
    */
   public function setImage(ImageInterface $image)
   {
-    $this->setResourceId($image->getResourceId());
+    $this->setLogo($image->getResourceId());
 
     return $this;
   }
 
   /**
+   * @param $image
+   * @return $this
+   */
+  public function setLogoImage($image)
+  {
+    return $this->setImage($image);
+  }
+
+  /**
+   * @return ImageInterface
+   */
+  public function getLogoImage()
+  {
+    return $this->getImage();
+  }
+
+  /**
    * @param $id
-   * @return mixed|null
+   * @return mixed
    */
   public function getImageOptions($id)
   {
     return null;
   }
 
-  /**
-   * @param $id
-   * @return $this
-   */
   public function setImageOptions($id)
   {
-    return $this;
+    throw new OperationNotSupportedException();
   }
 
-  /**
-   * @return array
-   */
-  public function getThumbnailDefinitions()
-  {
-    return array();
-  }
-
-  /**
-   * @param string $id
-   * @return ImageThumbnail
-   * @throws \Exception
-   */
-  public function getThumbnail($id)
-  {
-    $definitions = $this->getThumbnailDefinitions();
-
-    $found = false;
-
-    foreach ($definitions as $definition) {
-      if ($definition->getId() == $id) {
-        $found = true;
-        break;
-      }
-    }
-
-    if (!$found) {
-      throw new \Exception('Image thumbnail definition not found');
-    }
-
-    return new ImageThumbnail($id, $this);
-  }
-
-  /**
-   * @return string
-   */
-  public function getResourceId()
-  {
-    return $this->getFile();
-  }
-
-  /**
-   * @param $id
-   */
-  public function setResourceId($id)
-  {
-    $this->setFile($id);
-  }
 
   public function getRating()
   {
     return $this->getValuation();
-  }
-
-  public function getLogo()
-  {
-    return 849;
   }
 
   public function getSlugSource()
@@ -413,6 +359,22 @@ class Company implements ImageAwareInterface, ImageInterface, SluggableInterface
   {
     $this->slugRoot = $slugRoot;
     return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getPhones()
+  {
+    return $this->phones;
+  }
+
+  /**
+   * @param string $phones
+   */
+  public function setPhones($phones): void
+  {
+    $this->phones = $phones;
   }
 
   /**

@@ -6,12 +6,10 @@
 namespace AppBundle\Model\InsuranceCompany\Branch;
 
 
-use AppBundle\Entity\Company\Company;
-use AppBundle\Entity\Company\CompanyBranch;
-use AppBundle\Entity\Company\CompanyStatus;
+use AppBundle\Entity\Company\InsuranceCompany;
 use AppBundle\Entity\Geo\Region;
-use AppBundle\Repository\Company\CompanyBranchRepository;
-use AppBundle\Repository\Company\CompanyRepository;
+use AppBundle\Repository\Company\InsuranceCompanyBranchRepository;
+use AppBundle\Repository\Company\InsuranceCompanyRepository;
 use Doctrine\ORM\UnexpectedResultException;
 
 class BranchRatingHelper
@@ -21,19 +19,19 @@ class BranchRatingHelper
   private $companyRepository;
 
   public function __construct(
-    CompanyBranchRepository $branchRepository,
-    CompanyRepository $companyRepository)
+    InsuranceCompanyBranchRepository $branchRepository,
+    InsuranceCompanyRepository $companyRepository)
   {
     $this->branchRepository = $branchRepository;
     $this->companyRepository = $companyRepository;
   }
 
   /**
-   * @param Company $company
+   * @param InsuranceCompany $company
    * @param Region|null $region
    * @return |null
    */
-  public function getCompanyRating(Company $company, Region $region = null)
+  public function getCompanyRating(InsuranceCompany $company, Region $region = null)
   {
     if (!$region)
     {
