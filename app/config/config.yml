@@ -55,6 +55,7 @@ twig:
   form_themes:
     - 'Form/bezbahil_form_theme.html.twig'
     - 'SonataCoreBundle:Form:datepicker.html.twig'
+    - '@App/form/taxon_jstree_widget.html.twig'
 
 # Doctrine Configuration
 doctrine:
@@ -110,6 +111,7 @@ stof_doctrine_extensions:
     default:
       timestampable: true
       sortable: true
+      tree: true
 
 sonata_admin:
   title: Раздел администрирования
@@ -117,6 +119,8 @@ sonata_admin:
     groups:
       mo_cmo:
         label: МО и СМО
+      disease:
+        label: Справочник заболеваний
       main_page:
         label: Главная страница
       text:

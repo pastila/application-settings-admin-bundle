@@ -159,3 +159,8 @@ services:
       autowire: true
       tags:
         - { name: kernel.event_listener, event: kernel.terminate, method: persist, priority: 100 }
+
+    AppBundle\Repository\Disease\CategoryDiseaseRepository:
+      class: AppBundle\Repository\Disease\CategoryDiseaseRepository
+      arguments:
+        - '@doctrine.orm.entity_manager'

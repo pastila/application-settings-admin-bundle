@@ -1,0 +1,19 @@
+{% block taxon_jstree_widget %}
+    {% block product_taxons_widget %}
+        <div id="{{ jstree.id }}">
+
+            <script type="text/javascript">
+              (function($){
+                $(function(){
+                  $('#{{ jstree.id }}').jstree_choice({
+                    json_data: {{ jstree.data|raw }},
+                    name: '{{ form.vars.full_name }}',
+                    multiple: {{ jstree.multiple?'true':'false' }}
+                  })
+                }) })(jQuery)
+            </script>
+
+        </div>
+    {% endblock %}
+
+{% endblock %}

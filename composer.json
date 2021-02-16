@@ -61,6 +61,7 @@
         "php-amqplib/rabbitmq-bundle": "^1.14",
         "phpunit/phpunit": "^5.7",
         "pixassociates/sortable-behavior-bundle": "^1.5",
+        "redcode/tree-bundle": "^0.1.0@alpha",
         "sensio/distribution-bundle": "^5.0.19",
         "sensio/framework-extra-bundle": "^5.0.0",
         "sonata-project/admin-bundle": "^3.4",

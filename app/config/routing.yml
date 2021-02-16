@@ -19,6 +19,10 @@ _sonata_admin:
     type: sonata_admin
     prefix: /admin
 
+redcode_tree:
+    resource: "@RedCodeTreeBundle/Resources/config/routing.yml"
+    prefix:   /admin
+
 article_show:
     path:      /{slug}
     defaults:  { _controller: AppBundle:Article:show }
