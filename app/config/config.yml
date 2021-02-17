@@ -140,6 +140,7 @@ stfalcon_tinymce:
       theme: "modern"
       height: '400px'
       relative_urls: false
+      convert_urls: false
       external_filemanager_path: '/fm/'
       plugins:
         - "advlist autolink lists link image charmap print preview hr anchor pagebreak"
