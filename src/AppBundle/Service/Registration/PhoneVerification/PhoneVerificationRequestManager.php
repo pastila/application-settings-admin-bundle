@@ -56,7 +56,7 @@ class PhoneVerificationRequestManager
        * Проверям, что она была отправлена не раньше 30 сек
        */
       $sessionTime = clone $request->getVerificationCodeSentAt();
-      $sessionTime->add(new DateInterval('PT30S'));
+      $sessionTime->add(new \DateInterval('PT30S'));
 
       if ($sessionTime > $currentTime)
       {
@@ -139,10 +139,10 @@ class PhoneVerificationRequestManager
   public function validatePhoneVerificationRequest(PhoneVerificationRequest $request, User $user)
   {
     //@Todo: 1. Проверить, что пользователь есть, и что введенный код совпадает с сгенерированным
-    return $this->id || (!empty($this->codePhoneConfirm) && $this->codePhoneConfirm === $this->codePhoneConfirmGenerated);
+//    return $this->id || (!empty($this->codePhoneConfirm) && $this->codePhoneConfirm === $this->codePhoneConfirmGenerated);
 
     //@Todo: 2. Проверить, что пользователь есть, и что введенный номер телефона совпадает с тем, для которого сгенерирован код
-    return $this->id || (!empty($this->phone) && $this->phone === $this->phoneRequested);
+//    return $this->id || (!empty($this->phone) && $this->phone === $this->phoneRequested);
   }
 
   public function persist()
