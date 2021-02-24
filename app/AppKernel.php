@@ -40,6 +40,7 @@ class AppKernel extends Kernel
             new Accurateweb\LocationBundle\AccuratewebLocationBundle(),
             new Accurateweb\EmailTemplateBundle\AccuratewebEmailTemplateBundle(),
             new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

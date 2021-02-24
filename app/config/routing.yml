@@ -2,12 +2,17 @@ app:
     resource: '@AppBundle/Controller/'
     type: annotation
 
-logout:
-    path: /logout
-
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
     prefix: /admin
+
+fos_user-security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+    prefix: /
+
+fos_user_registration:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
 
 _sonata_admin:
     resource: .

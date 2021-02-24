@@ -2,16 +2,21 @@
 
 namespace AppBundle\Entity\User;
 
-
+use AppBundle\Entity\Company\InsuranceCompany;
 use AppBundle\Entity\Company\InsuranceCompanyBranch;
+use AppBundle\Entity\Geo\Region;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use FOS\UserBundle\Model\User as BaseUser;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\AttributeOverrides;
+use Doctrine\ORM\Mapping\AttributeOverride;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="s_users")
  */
-class User implements UserInterface
+class User extends BaseUser
 {
   const ROLE_USER = 'ROLE_USER';
   const ROLE_ADMIN = 'ROLE_ADMIN';
@@ -24,18 +29,6 @@ class User implements UserInterface
    * @ORM\Column(type="integer")
    */
   protected $id;
-
-  /**
-   * @var string
-   * @ORM\Column(name="login", type="string", length=255, nullable=true)
-   */
-  protected $login;
-
-  /**
-   * @var string
-   * @ORM\Column(name="email", type="string", length=255, nullable=true)
-   */
-  protected $email;
 
   /**
    * @var string
@@ -56,9 +49,9 @@ class User implements UserInterface
   protected $middleName;
 
   /**
-   * Флаг, что представитель отделения в компании
-   * @var int
-   * @ORM\Column(type="integer", nullable=true)
+   * Флаг, что пользователь представитель отделения в компании
+   * @var boolean
+   * @ORM\Column(type="boolean", nullable=true, options={"default"=false})
    */
   private $representative;
 
@@ -71,18 +64,38 @@ class User implements UserInterface
   private $branch;
 
   /**
-   * ID пользователя в системе битрикс
-   *
-   * @var integer
-   *
-   * @ORM\Column(name="bitrix_id", type="integer", nullable=true)
+   * Согласие с пользовательским соглашением и обработкой персональных данных
+   * При судебных разбирательствах, будет одним из доказательств для проверяющих лиц
+   * @var boolean
+   * @ORM\Column(type="boolean", nullable=false, options={"default"=false})
    */
-  private $bitrixId;
+  private $termsAndConditionsAccepted;
 
   /**
-   * @var
+   * @var string
+   * @ORM\Column(type="string", length=50, nullable=true)
    */
-  private $isAdmin;
+  private $phone;
+
+  /**
+   * @var \DateTime
+   * @ORM\Column(name="birthdate", type="date", nullable=true)
+   */
+  private $birthDate;
+
+  /**
+   * @var string
+   * @ORM\Column(type="string", length=16, nullable=true)
+   */
+  private $insurancePolicyNumber;
+
+  /**
+   * User constructor.
+   */
+  public function __construct()
+  {
+    parent::__construct();
+  }
 
   /**
    * @return integer
@@ -92,18 +105,39 @@ class User implements UserInterface
     return $this->id;
   }
 
+  /**
+   * @param $id
+   * @return $this
+   */
   public function setId($id)
   {
     $this->id = $id;
 
     return $this;
   }
+
+  /**
+   * @return null|Region
+   */
+  public function getRegion()
+  {
+    return $this->getBranch() ? $this->getBranch()->getRegion() : null;
+  }
+
+  /**
+   * @return InsuranceCompany|null
+   */
+  public function getCompany()
+  {
+    return $this->getBranch() ? $this->getBranch()->getCompany() : null;
+  }
+
   /**
    * @return string
    */
   public function getLogin()
   {
-    return $this->login;
+    return $this->username;
   }
 
   /**
@@ -113,27 +147,7 @@ class User implements UserInterface
    */
   public function setLogin($login)
   {
-    $this->login = $login;
-
-    return $this;
-  }
-
-  /**
-   * @return string
-   */
-  public function getEmail()
-  {
-    return $this->email;
-  }
-
-  /**
-   * @param string $email
-   *
-   * @return $this
-   */
-  public function setEmail($email)
-  {
-    $this->email = $email;
+    $this->username = $login;
 
     return $this;
   }
@@ -187,6 +201,18 @@ class User implements UserInterface
   }
 
   /**
+   * @param string $middleName
+   *
+   * @return $this
+   */
+  public function setMiddleName($middleName)
+  {
+    $this->middleName = $middleName;
+
+    return $this;
+  }
+
+  /**
    * @return string
    */
   public function getFullName()
@@ -219,91 +245,9 @@ class User implements UserInterface
   }
 
   /**
-   * @param string $middleName
-   *
-   * @return $this
+   * @return bool
    */
-  public function setMiddleName($middleName)
-  {
-    $this->middleName = $middleName;
-
-    return $this;
-  }
-
-  /**
-   * @return mixed
-   */
-  public function getIsAdmin()
-  {
-    return $this->isAdmin;
-  }
-
-  /**
-   * @param mixed $isAdmin
-   * @return User
-   */
-  public function setIsAdmin($isAdmin)
-  {
-    $this->isAdmin = $isAdmin;
-    return $this;
-  }
-
-
-  /**
-   * @return mixed
-   */
-  public function getRoles()
-  {
-    $roles = [self::ROLE_USER];
-
-    if ($this->getIsAdmin())
-    {
-      $roles[] = self::ROLE_ADMIN;
-    }
-    if ($this->getRepresentative())
-    {
-      $roles[] = self::ROLE_IC_REPRESENTATIVE;
-    }
-
-    return $roles;
-  }
-
-  /**
-   * @return string|null
-   */
-  public function getPassword()
-  {
-    return null;
-  }
-
-  /**
-   * @return string|null
-   */
-  public function getSalt()
-  {
-    return null;
-  }
-
-  /**
-   * @return string
-   */
-  public function getUsername()
-  {
-    return $this->getLogin();
-  }
-
-  /**
-   * @return mixed
-   */
-  public function eraseCredentials()
-  {
-
-  }
-
-  /**
-   * @return int
-   */
-  public function getRepresentative()
+  public function isRepresentative()
   {
     return $this->representative;
   }
@@ -317,6 +261,72 @@ class User implements UserInterface
     $this->representative = $representative;
 
     return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getPhone ()
+  {
+    return $this->phone;
+  }
+
+  /**
+   * @param string $phone
+   * @return $this
+   */
+  public function setPhone ($phone)
+  {
+    $this->phone = $phone;
+    return $this;
+  }
+
+  /**
+   * @return \DateTime
+   */
+  public function getBirthDate()
+  {
+    return $this->birthDate;
+  }
+
+  /**
+   * @param \DateTime $birthDate
+   */
+  public function setBirthDate($birthDate)
+  {
+    $this->birthDate = $birthDate;
+  }
+
+  /**
+   * @return string
+   */
+  public function getInsurancePolicyNumber()
+  {
+    return $this->insurancePolicyNumber;
+  }
+
+  /**
+   * @param string $insurancePolicyNumber
+   */
+  public function setInsurancePolicyNumber($insurancePolicyNumber)
+  {
+    $this->insurancePolicyNumber = $insurancePolicyNumber;
+  }
+
+  /**
+   * @return bool
+   */
+  public function termsAndConditionsAccepted()
+  {
+    return $this->termsAndConditionsAccepted;
+  }
+
+  /**
+   * @param bool $termsAndConditionsAccepted
+   */
+  public function setTermsAndConditionsAccepted($termsAndConditionsAccepted)
+  {
+    $this->termsAndConditionsAccepted = $termsAndConditionsAccepted;
   }
 
   /**
@@ -335,25 +345,6 @@ class User implements UserInterface
   public function setBranch($branch)
   {
     $this->branch = $branch;
-
-    return $this;
-  }
-
-  /**
-   * @return int
-   */
-  public function getBitrixId()
-  {
-    return $this->bitrixId;
-  }
-
-  /**
-   * @param $bitrixId
-   * @return $this
-   */
-  public function setBitrixId($bitrixId)
-  {
-    $this->bitrixId = $bitrixId;
 
     return $this;
   }

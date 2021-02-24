@@ -91,6 +91,19 @@ sensio_framework_extra:
   router:
     annotations: false
 
+fos_user:
+  db_driver: orm
+  firewall_name: main
+  user_class: AppBundle\Entity\User\User
+  from_email:
+    address: "%mailer_from%"
+    sender_name: "%mailer_sender_name%"
+  registration:
+    confirmation:
+      enabled: true
+    form:
+      type: AppBundle\Form\Profile\RegistrationFormType
+
 stof_doctrine_extensions:
   default_locale: ru_RU
   orm:
@@ -114,6 +127,8 @@ sonata_admin:
         label: Настройки
   options:
     html5_validate: false
+  security:
+    handler: sonata.admin.security.handler.role
 
 sonata_block:
   default_contexts: [cms]

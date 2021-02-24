@@ -1,13 +1,22 @@
 # To get started with security, check out the documentation:
 # https://symfony.com/doc/current/security.html
 security:
+    always_authenticate_before_granting: true
+    encoders:
+        AppBundle\Entity\User\User:
+            algorithm: bcrypt
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        users:
-            entity:
-                class: AppBundle\Entity\User\User
-                property: login
+        in_memory:
+            memory: ~
+        fos_userbundle:
+            id: fos_user.user_provider.username_email
+    #      id: AppBundle\Model\Security\EmailProvider
+
+    access_decision_manager:
+        strategy: unanimous
+        allow_if_all_abstain: true
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -16,22 +25,26 @@ security:
             security: false
 
         main:
-            anonymous: ~
-            # activate different ways to authenticate
-            logout_on_user_change: true
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
-
-            # https://symfony.com/doc/current/security/form_login_setup.html
-            #form_login: ~
+            context: main
+            pattern: ^/
+            anonymous: true
+            form_login:
+                login_path: fos_user_security_login
+                check_path: fos_user_security_check
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
+                default_target_path: homepage
             logout:
-                path:   /logout
-                target: /ajax/logout.php
+                path: fos_user_security_logout
+                target: homepage
 
-            guard:
-                authenticators:
-                    - AppBundle\Security\BitrixAuthenticator
+    role_hierarchy:
+        ROLE_ADMIN:
+            - ROLE_SONATA_ADMIN
+            - ROLE_SUPER_ADMIN
 
     access_control:
-        - { path: ^/cabinet, roles: ROLE_USER }
-        - { path: '^/admin', roles: ROLE_ADMIN }
+        - { path: ^/admin/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin.*$, role: ROLE_ADMIN }
+        - { path: ^/cabinet.*$, roles: ROLE_USER }

@@ -1,0 +1,80 @@
+{% extends "base.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block title %}
+    <title>
+        Регистрация — Безбахил — сервис для возврата денег за ОМС, рейтинг страховых компаний
+    </title>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/local/templates/kdteam/pages/landing/landing.min.css">
+    <link rel="stylesheet" href="/local/templates/kdteam/pages/authorization/authorization.min.css">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/dist/bundle.js"></script>
+    <script type="text/javascript" src="/local/templates/kdteam/pages/feedback/add/main.min.js"></script>
+{% endblock %}
+
+{% block main %}
+    <div class="app__content">
+    <ul class="breadcrumbs" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+        {% if is_mobile() or is_tablet() %}
+            <li class="active-breadcrumbs" itemprop="itemListElement" itemscope=""
+                itemtype="http://schema.org/ListItem">
+                <a href="{{ path('homepage') }}" itemprop="item">Главная
+                    <meta itemprop="name" content="Главная">
+                </a>
+                <meta itemprop="position" content="1">
+            </li>
+        {% else %}
+            <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a href="{{ path('homepage') }}" itemprop="item">Главная
+                    <meta itemprop="name" content="Главная">
+                </a>
+                <meta itemprop="position" content="1">
+            </li>
+            <li class="active-breadcrumbs" itemscope="" itemtype="http://schema.org/ListItem">
+                <a itemprop="item">Регистрация
+                    <meta itemprop="name" content="Регистрация">
+                </a>
+                <meta itemprop="position" content="2">
+            </li>
+        {% endif %}
+    </ul>
+    <h1 class="title-page">Регистрация</h1>
+    <div class="registration-form">
+        {% block fos_user_content %}
+            {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'),
+                'attr': {'class': 'fos_user_registration_register', 'id' : 'auth-form-reg'}}) }}
+            {{ form_errors(form) }}
+            <div class="popup__wrap" style="position: relative; left: 0;">
+                <div class="popup__wrap_middle">
+                    <div class="input__wrap">
+                        <label class="input__wrap_label">Электронная почта</label>
+                        {{ form_row(form.email) }}
+                    </div>
+                    <div class="input__wrap">
+                        {{ form_label(form.plainPassword.first) }}
+                        {{ form_row(form.plainPassword.first) }}
+                    </div>
+                    <div class="input__wrap">
+                        {{ form_label(form.plainPassword.second) }}
+                        {{ form_row(form.plainPassword.second) }}
+                    </div>
+                </div>
+                <div class="popup__wrap_middle popup__wrap_middle_align-flex-end">
+                    <div class="input__wrap adc" style="margin-top: 70px;">
+                        <button type="submit" id="registration" class="mainBtn">
+                            Регистрация
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        {% endblock fos_user_content %}
+    </div><!-- b:m-content -->
+{% endblock %}
