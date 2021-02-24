@@ -163,7 +163,7 @@ class PhoneVerificationRequestManager
       catch (\InvalidArgumentException $e)
       {
         $request = null;
-        $this->logger->warn(sprintf('Unable to load stored phone verification request: %s', $e->getMessage());
+        $this->logger->warn(sprintf('Unable to load stored phone verification request: %s', $e->getMessage()));
       }
     }
 

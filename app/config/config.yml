@@ -129,6 +129,7 @@ sonata_admin:
     html5_validate: false
   security:
     handler: sonata.admin.security.handler.role
+    role_super_admin: ROLE_ADMIN
 
 sonata_block:
   default_contexts: [cms]
