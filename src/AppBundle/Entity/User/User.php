@@ -89,6 +89,9 @@ class User extends BaseUser
    */
   private $insurancePolicyNumber;
 
+  private $phoneVerificationCode;
+  private $phoneVerificationRequest;
+
   /**
    * User constructor.
    */
