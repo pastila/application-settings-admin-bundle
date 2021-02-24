@@ -5,13 +5,23 @@
 
 namespace AppBundle\Service\Registration\PhoneVerification;
 
+use _HumbugBoxf99c1794c57d\Symfony\Component\Console\Exception\LogicException;
 use Exception;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PhoneVerificationRequest implements \Serializable
 {
+  /**
+   * Время жизни кода в секундах
+   */
+  const CODE_LIFETIME = 600;
+
   private $phone;
   private $verificationCode;
+
+  /**
+   * @var \DateTime
+   */
   private $verificationCodeSentAt;
 
   /**
@@ -132,5 +142,22 @@ class PhoneVerificationRequest implements \Serializable
     $this->setCreatedAt($values['created_at']);
     $this->setVerificationCode($values['verification_code']);
     $this->setVerificationCodeSentAt($values['verification_code_sent_at']);
+  }
+
+  /**
+   * Возвращает true, если этот запрос проверки кода просрочен
+   *
+   * @return bool
+   */
+  public function isExpired()
+  {
+    if (!$this->getVerificationCodeSentAt())
+    {
+      throw new LogicException('A request code has not been sent');
+    }
+
+    $now = new \DateTime();
+
+    return $now->getTimestamp() - $this->getVerificationCodeSentAt()->getTimestamp() > self::CODE_LIFETIME;
   }
 }

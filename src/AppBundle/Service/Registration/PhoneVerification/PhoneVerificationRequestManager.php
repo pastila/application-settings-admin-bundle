@@ -136,15 +136,6 @@ class PhoneVerificationRequestManager
     return $this->phoneVerificationRequest;
   }
 
-  public function validatePhoneVerificationRequest(PhoneVerificationRequest $request, User $user)
-  {
-    //@Todo: 1. Проверить, что пользователь есть, и что введенный код совпадает с сгенерированным
-//    return $this->id || (!empty($this->codePhoneConfirm) && $this->codePhoneConfirm === $this->codePhoneConfirmGenerated);
-
-    //@Todo: 2. Проверить, что пользователь есть, и что введенный номер телефона совпадает с тем, для которого сгенерирован код
-//    return $this->id || (!empty($this->phone) && $this->phone === $this->phoneRequested);
-  }
-
   public function persist()
   {
     $this->session->set(self::SESSION_KEY, serialize($this->phoneVerificationRequest));

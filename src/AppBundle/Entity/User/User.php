@@ -5,6 +5,8 @@ namespace AppBundle\Entity\User;
 use AppBundle\Entity\Company\InsuranceCompany;
 use AppBundle\Entity\Company\InsuranceCompanyBranch;
 use AppBundle\Entity\Geo\Region;
+use AppBundle\Validator\Constraints\PhoneVerificationAwareInterface;
+use AppBundle\Validator\Constraints\PhoneVerificationRequest;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -15,8 +17,12 @@ use Doctrine\ORM\Mapping\AttributeOverride;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="s_users")
+ *
+ * Валидиация проверочного кода выполняется только при регистрации
+ *
+ * @PhoneVerificationRequest(groups={"registration"})
  */
-class User extends BaseUser
+class User extends BaseUser implements PhoneVerificationAwareInterface
 {
   const ROLE_USER = 'ROLE_USER';
   const ROLE_ADMIN = 'ROLE_ADMIN';
@@ -89,8 +95,8 @@ class User extends BaseUser
    */
   private $insurancePolicyNumber;
 
+
   private $phoneVerificationCode;
-  private $phoneVerificationRequest;
 
   /**
    * User constructor.
@@ -359,4 +365,22 @@ class User extends BaseUser
   {
     return $this->id ? $this->getFullName() : 'Новый пользователь';
   }
+
+  /**
+   * @return mixed
+   */
+  public function getVerifiedPhone()
+  {
+    return $this->phone;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getVerificationCode()
+  {
+    return $this->phoneVerificationCode;
+  }
+
+
 }
