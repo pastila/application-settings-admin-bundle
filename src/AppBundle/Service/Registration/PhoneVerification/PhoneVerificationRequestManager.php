@@ -45,6 +45,12 @@ class PhoneVerificationRequestManager
     $this->fetch();
   }
 
+  /**
+   * Отправляет код проверки на указанный номер и сохраняет запрос в качестве текущего
+   *
+   * @param PhoneVerificationRequest $request
+   * @throws PhoneVerificationRequestManagerException
+   */
   public function sendVerificationCode(PhoneVerificationRequest $request) //отправляет запрос и сохраняет в сессии
   {
     $currentTime = new \DateTime();
@@ -81,6 +87,9 @@ class PhoneVerificationRequestManager
 //        'datetime' => "",
 //        'sms_lifetime' => "0"
 //      ]);
+
+    $this->phoneVerificationRequest = $request;
+
 //    } catch (SmsRequestException $exception)
 //    {
 //      $this->get('logger')->error(sprintf('Exception in sending sms to phone %s, exception:  %s', $phone, $exception));
