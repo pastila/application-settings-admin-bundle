@@ -42,7 +42,7 @@ class FeedbackMailer
   public function sendFeedback(Feedback $feedback, $email)
   {
     $ext = new DateExtension();
-    $date = $ext->prepareDate($feedback->getCreatedAt(), 'd F, Y');
+    $date = $ext->prepareDate($feedback->getCreatedAt(), 'd F Y');
 
     $message = $this->emailFactory->createMessage('email_feedback', [
       $this->mailerFrom => $this->mailerSenderName,
