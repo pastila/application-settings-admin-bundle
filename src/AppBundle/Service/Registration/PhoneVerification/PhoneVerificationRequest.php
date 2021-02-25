@@ -5,7 +5,6 @@
 
 namespace AppBundle\Service\Registration\PhoneVerification;
 
-use _HumbugBoxf99c1794c57d\Symfony\Component\Console\Exception\LogicException;
 use Exception;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -153,7 +152,7 @@ class PhoneVerificationRequest implements \Serializable
   {
     if (!$this->getVerificationCodeSentAt())
     {
-      throw new LogicException('A request code has not been sent');
+      throw new \LogicException('A request code has not been sent');
     }
 
     $now = new \DateTime();
