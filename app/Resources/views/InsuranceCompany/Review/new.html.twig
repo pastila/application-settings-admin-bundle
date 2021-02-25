@@ -226,19 +226,12 @@
     <h3 class="feedback__title">
         Расскажите о вашей ситуации
     </h3>
-    {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
     <div class="input__wrap name_user_no_Authorized">
         <label for="name_user" class="input__wrap_label">Введите свое имя</label>
         {{ form_row(form.author_name, { attr: { placeholder: "Имя" } }) }}
 {#        <input id="name_user" type="name_user" name="name_user" placeholder="Имя" required#}
 {#               pattern="([а-яЁА-ЯЁ]+)">#}
     </div>
-    {% endif %}
-    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-        <div style="display: none">
-            {{ form_row(form.author_name, { attr: { placeholder: "Имя" } }) }}
-        </div>
-    {% endif %}
 
     <div class="input__wrap">
         <label for="name" class="input__wrap_label">Заголовок</label>

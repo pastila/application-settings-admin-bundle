@@ -469,7 +469,7 @@ class Feedback
   {
     $author = $this->getAuthor();
 
-    return $author ? $author->getFullName() : $this->authorName;
+    return $this->authorName ? $this->authorName : ($author ? $author->getFullName() : '');
   }
 
   /**

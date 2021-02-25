@@ -286,6 +286,7 @@ class FeedbackController extends Controller
   {
     $feedback = new Feedback();
     $feedback->setAuthor($this->getUser());
+    $feedback->setAuthorName($this->getUser());
 
     if ($request->get('letter'))
     {
