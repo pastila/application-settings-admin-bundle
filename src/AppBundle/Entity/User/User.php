@@ -85,7 +85,7 @@ class User extends BaseUser implements PhoneVerificationAwareInterface
 
   /**
    * @var \DateTime
-   * @ORM\Column(name="birthdate", type="date", nullable=true)
+   * @ORM\Column(type="date", nullable=true)
    */
   private $birthDate;
 
@@ -325,7 +325,7 @@ class User extends BaseUser implements PhoneVerificationAwareInterface
   /**
    * @return bool
    */
-  public function termsAndConditionsAccepted()
+  public function isTermsAndConditionsAccepted()
   {
     return $this->termsAndConditionsAccepted;
   }

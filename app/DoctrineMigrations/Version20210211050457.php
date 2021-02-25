@@ -34,11 +34,11 @@ final class Version20210211050457 extends AbstractMigration
                 su.insurance_policy_number = uu.UF_INSURANCE_POLICY,
                 su.roles = "a:0:{}",
                 su.phone = bu.PERSONAL_PHONE,
-                su.birthdate = bu.PERSONAL_BIRTHDAY,
+                su.birth_date = bu.PERSONAL_BIRTHDAY,
                 su.password = "";';
     $this->addSql($sql);
 
-    // Для отзывов, которые создали незарегестированные пользователи,
+    // Для отзывов, которые создали незарегистированные пользователи,
     // Удалить связь с этими пользователями, так как они будут удалены далее в файле
     // И перенести его фио в author_name
     $sql = 'UPDATE s_company_feedbacks f
