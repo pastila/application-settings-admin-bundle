@@ -490,9 +490,9 @@ class Feedback
   public function preUpdate(PreUpdateEventArgs $args)
   {
     if (
-      !$args->hasChangedField('updated_at') &&
+      !$args->hasChangedField('updatedAt') &&
       ($args->hasChangedField('title')
-        || $args->hasChangedField('description')
+        || $args->hasChangedField('text')
         || $args->hasChangedField('valuation'))
     )
     {
