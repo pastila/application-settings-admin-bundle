@@ -56,10 +56,11 @@ class FeedbackMailer
           'id' => $feedback->getId()], UrlGeneratorInterface::ABSOLUTE_URL)
       ]
     );
-    if (!empty($this->settingManager->getValue('administrator_email')) &&
-      $email !== $this->settingManager->getValue('administrator_email'))
+    $administratorEmail = $this->settingManager->getValue('administrator_email');
+    if (!empty($administratorEmail) &&
+      $email !== $administratorEmail)
     {
-      $message->setBcc([$this->settingManager->getValue('administrator_email')]);
+      $message->setBcc([$administratorEmail]);
     }
     $this->mailer->send($message);
   }

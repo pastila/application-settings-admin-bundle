@@ -121,6 +121,7 @@ class FeedbackControllerTest extends AppWebTestCase
   /**
    * Тест отправки писем при создании отзыва
    * https://jira.accurateweb.ru/browse/BEZBAHIL-221
+   * https://jira.accurateweb.ru/browse/BEZBAHIL-254
    */
   public function testNew()
   {
@@ -151,5 +152,6 @@ class FeedbackControllerTest extends AppWebTestCase
     $this->assertInstanceOf('Swift_Message', $message, 'Проверка, что объект Swift_Message');
     $this->assertSame('Отзыв', $message->getSubject(), 'Проверка заголовка');
     $this->assertSame('no-reply@bezbahil.ru', key($message->getTo()), 'Проверка адреса получателя');
+    $this->assertSame(null, $message->getBcc(), 'Проверка скрытого адреса получателя, при создании отзыва должен быть пустым');
   }
 }

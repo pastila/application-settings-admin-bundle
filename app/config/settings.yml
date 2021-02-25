@@ -45,7 +45,7 @@ services:
       - { name: aw.setting.configuration }
 
   app.settings.administrator_email:
-    class: Accurateweb\ApplicationSettingsAdminBundle\Model\SettingConfiguration\StringSettingConfiguration
+    class: AppBundle\Model\SettingConfiguration\EmailType
     arguments:
       - 'administrator_email'
       - 'На этот адрес e-mail будут отправляться копии писем, отправляемых в СМО и пользователям сайта'
@@ -54,7 +54,7 @@ services:
       - { name: aw.setting.configuration }
 
   app.settings.contact_email:
-    class: Accurateweb\ApplicationSettingsAdminBundle\Model\SettingConfiguration\StringSettingConfiguration
+    class: AppBundle\Model\SettingConfiguration\EmailType
     arguments:
       - 'contact_email'
       - 'На этот адрес e-mail будут приходить письма с вопросами пользователей. Он также будет использоваться, как контактный e-mail при отправке обращений в СМО'
