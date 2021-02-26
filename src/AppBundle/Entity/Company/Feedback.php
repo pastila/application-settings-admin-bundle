@@ -467,9 +467,7 @@ class Feedback
 
   public function getAuthorName()
   {
-    $author = $this->getAuthor();
-
-    return $this->authorName ? $this->authorName : ($author ? $author->getFullName() : '');
+    return $this->authorName ?: ($this->getAuthor() ? $this->getAuthor()->getFullName() : '');
   }
 
   /**

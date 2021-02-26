@@ -9,6 +9,7 @@ use Tests\AppBundle\Fixtures\Company\Feedback;
 use Tests\AppBundle\Fixtures\Company\InsuranceRepresentative;
 use Tests\AppBundle\Fixtures\Geo\Region;
 use Tests\AppBundle\Fixtures\Setting\Setting;
+use Tests\AppBundle\Fixtures\User\User;
 
 class FeedbackControllerTest extends AppWebTestCase
 {
@@ -19,6 +20,7 @@ class FeedbackControllerTest extends AppWebTestCase
     $this->addFixture(new Setting());
     $this->addFixture(new Feedback());
     $this->addFixture(new InsuranceRepresentative());
+    $this->addFixture(new User());
   }
 
   /**
@@ -186,5 +188,33 @@ class FeedbackControllerTest extends AppWebTestCase
     $this->assertInstanceOf('Swift_Message', $message, 'Проверка, что объект Swift_Message');
     $this->assertSame('Отзыв', $message->getSubject(), 'Проверка заголовка');
     $this->assertTrue(array_key_exists('no-reply@bezbahil.ru', $message->getBcc()), 'Проверка что отправлено скрытое письмо на адрес администратора');
+  }
+
+  /**
+   * Создание отзыва, от неавторизованного пользователя
+   * https://jira.accurateweb.ru/browse/BEZBAHIL-209
+   */
+  public function testAuthorizedAndAnonymous()
+  {
+    $client = $this->getClient();
+    $crawler = $client->request('GET', '/feedback/add');
+    $this->assertSame(null,
+      $crawler->filter('#feedback_author_name')->attr('value'),
+      'Проверка, что псевдоним остался пустым');
+
+  }
+
+  /**
+   * Создание отзыва, от авторизованного пользователя
+   * https://jira.accurateweb.ru/browse/BEZBAHIL-209
+   */
+  public function testAuthorized()
+  {
+    $client = $this->getClient();
+    $this->logIn();
+    $crawler = $client->request('GET', '/feedback/add');
+    $this->assertSame('Циолковский Константин Эдуардович',
+      $crawler->filter('#feedback_author_name')->attr('value'),
+      'Проверка, что псевдоним получил значение ФИО авторизованного пользователя');
   }
 }

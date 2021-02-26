@@ -285,8 +285,10 @@ class FeedbackController extends Controller
   public function newAction(Request $request)
   {
     $feedback = new Feedback();
-    $feedback->setAuthor($this->getUser());
-    $feedback->setAuthorName($this->getUser());
+    if ($this->getUser())
+    {
+      $feedback->setAuthor($this->getUser());
+    }
 
     if ($request->get('letter'))
     {
