@@ -65,7 +65,7 @@ services:
   maildev:
     build:
       context: ./maildev
-    entrypoint: ["bin/maildev", "--web", "80", "--smtp", "25", "--outgoing-host", "${MAILDEV_OUTGOING_HOST}", "--outgoing-user", "${MAILDEV_OUTGOING_USER}", "--outgoing-pass", "${MAILDEV_OUTGOING_PASS}", "--auto-relay-rules", "/tmp/rules.json"]
+    entrypoint: ["bin/maildev", "--web", "80", "--smtp", "25", "--outgoing-host", "${MAILDEV_OUTGOING_HOST}", "--outgoing-user", "${MAILDEV_OUTGOING_USER}", "--outgoing-pass", "${MAILDEV_OUTGOING_PASS}"]
     environment:
       MAILDEV_OUTGOING_HOST: ${MAILDEV_OUTGOING_HOST}
       MAILDEV_OUTGOING_USER: ${MAILDEV_OUTGOING_USER}
