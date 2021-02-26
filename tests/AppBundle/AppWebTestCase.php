@@ -43,7 +43,6 @@ class AppWebTestCase extends FixtureAwareWebTestCase
       if (!$user)
       {
         $user = $this->getByReference('user-admin');
-        $user->setIsAdmin(true);
       }
       if (!$roles)
       {

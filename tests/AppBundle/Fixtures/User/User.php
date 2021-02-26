@@ -36,6 +36,7 @@ class User extends Fixture implements DependentFixtureInterface
     $admin->setLastName('Циолковский');
     $admin->setTermsAndConditionsAccepted(true);
     $admin->setPassword("");
+    $admin->setRoles([\AppBundle\Entity\User\User::ROLE_ADMIN]);
     $manager->persist($admin);
 
     $user1 = new \AppBundle\Entity\User\User();
