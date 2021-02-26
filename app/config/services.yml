@@ -160,7 +160,7 @@ services:
       tags:
         - { name: kernel.event_listener, event: kernel.terminate, method: persist, priority: 100 }
 
-    AppBundle\Repository\Disease\CategoryDiseaseRepository:
-      class: AppBundle\Repository\Disease\CategoryDiseaseRepository
+    AppBundle\Repository\Disease\DiseaseCategoryRepository:
+      class: AppBundle\Repository\Disease\DiseaseCategoryRepository
       arguments:
         - '@doctrine.orm.entity_manager'

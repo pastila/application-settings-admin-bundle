@@ -2,7 +2,7 @@
 
 namespace AppBundle\Admin\Disease;
 
-use AppBundle\Entity\Disease\CategoryDisease;
+use AppBundle\Entity\Disease\DiseaseCategory;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 use RedCode\TreeBundle\Admin\AbstractTreeAdmin;
 use Sonata\AdminBundle\Admin\AbstractAdmin;

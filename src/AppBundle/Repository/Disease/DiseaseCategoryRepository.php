@@ -2,22 +2,22 @@
 
 namespace AppBundle\Repository\Disease;
 
-use AppBundle\Entity\Disease\CategoryDisease;
+use AppBundle\Entity\Disease\DiseaseCategory;
 use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 
 /**
- * Class CategoryDiseaseRepository
+ * Class DiseaseCategoryRepository
  * @package AppBundle\Repository\Disease
  */
-class CategoryDiseaseRepository extends NestedTreeRepository
+class DiseaseCategoryRepository extends NestedTreeRepository
 {
   /**
-   * CategoryDiseaseRepository constructor.
+   * DiseaseCategoryRepository constructor.
    * @param EntityManagerInterface $manager
    */
   public function __construct(EntityManagerInterface $manager)
   {
-    parent::__construct($manager, $manager->getClassMetadata(CategoryDisease::class));
+    parent::__construct($manager, $manager->getClassMetadata(DiseaseCategory::class));
   }
 }

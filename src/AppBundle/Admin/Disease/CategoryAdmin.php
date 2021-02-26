@@ -2,7 +2,7 @@
 
 namespace AppBundle\Admin\Disease;
 
-use AppBundle\Entity\Disease\CategoryDisease;
+use AppBundle\Entity\Disease\DiseaseCategory;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 use RedCode\TreeBundle\Admin\AbstractTreeAdmin;
 use Sonata\AdminBundle\Admin\AdminInterface;
@@ -63,6 +63,7 @@ class CategoryAdmin extends AbstractTreeAdmin
   protected function configureRoutes(RouteCollection $collection)
   {
     parent::configureRoutes($collection);
+    $collection->remove('create');
     $collection->add('reorder-all');
     $collection->add('move', 'move');
     $collection->add('tree');
@@ -81,7 +82,7 @@ class CategoryAdmin extends AbstractTreeAdmin
   }
 
   /**
-   * @param CategoryDisease $object
+   * @param DiseaseCategory $object
    * @throws ModelManagerException
    */
   public function preRemove($object)

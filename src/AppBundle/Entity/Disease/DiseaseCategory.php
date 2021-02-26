@@ -8,15 +8,15 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Table(name="s_disease_categories")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\Disease\CategoryDiseaseRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\Disease\DiseaseCategoryRepository")
  * @Gedmo\Tree(type="nested")
  */
-class CategoryDisease
+class DiseaseCategory
 {
   /**
    * Уровень в дереве(подгруппа), на которую ссылается болезнь
    */
-  const LEVEL_SUBGROUP = 3;
+  const DEPTH_SUBGROUP = 3;
   
   /**
    * @var integer
@@ -60,25 +60,25 @@ class CategoryDisease
   protected $treeRight;
 
   /**
-   * @var CategoryDisease
+   * @var DiseaseCategory
    * @Gedmo\TreeRoot()
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Disease\CategoryDisease")
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Disease\DiseaseCategory")
    * @ORM\JoinColumn(referencedColumnName="id", onDelete="CASCADE")
    */
   protected $treeRoot;
 
   /**
-   * @var CategoryDisease
+   * @var DiseaseCategory
    * @Gedmo\TreeParent
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Disease\CategoryDisease", inversedBy="children")
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Disease\DiseaseCategory", inversedBy="children")
    * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
    * @Gedmo\SortableGroup()
    */
   private $parent;
 
   /**
-   * @var CategoryDisease[]|ArrayCollection
-   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Disease\CategoryDisease", mappedBy="parent")
+   * @var DiseaseCategory[]|ArrayCollection
+   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Disease\DiseaseCategory", mappedBy="parent")
    * @ORM\OrderBy({"position" = "ASC"})
    */
   private $children;
@@ -91,7 +91,7 @@ class CategoryDisease
   private $position;
 
   /**
-   * CategoryDisease constructor.
+   * DiseaseCategory constructor.
    */
   public function __construct ()
   {
@@ -104,7 +104,7 @@ class CategoryDisease
    */
   public function __toString ()
   {
-    return $this->getId() ? $this->getName() : '-';
+    return $this->getId() ? $this->getName() : 'Новый раздел';
   }
 
   /**
@@ -196,7 +196,7 @@ class CategoryDisease
   }
 
   /**
-   * @return CategoryDisease
+   * @return DiseaseCategory
    */
   public function getTreeRoot ()
   {
@@ -204,17 +204,17 @@ class CategoryDisease
   }
 
   /**
-   * @param CategoryDisease $treeRoot
+   * @param DiseaseCategory $treeRoot
    * @return $this
    */
-  public function setTreeRoot (CategoryDisease $treeRoot)
+  public function setTreeRoot (DiseaseCategory $treeRoot)
   {
     $this->treeRoot = $treeRoot;
     return $this;
   }
 
   /**
-   * @return CategoryDisease
+   * @return DiseaseCategory
    */
   public function getParent ()
   {
@@ -222,7 +222,7 @@ class CategoryDisease
   }
 
   /**
-   * @param CategoryDisease $parent
+   * @param DiseaseCategory $parent
    * @return $this
    */
   public function setParent ($parent)
@@ -232,7 +232,7 @@ class CategoryDisease
   }
 
   /**
-   * @return CategoryDisease[]|ArrayCollection
+   * @return DiseaseCategory[]|ArrayCollection
    */
   public function getChildren ()
   {
@@ -240,7 +240,7 @@ class CategoryDisease
   }
 
   /**
-   * @param CategoryDisease[]|ArrayCollection $children
+   * @param DiseaseCategory[]|ArrayCollection $children
    * @return $this
    */
   public function setChildren ($children)
@@ -256,10 +256,10 @@ class CategoryDisease
   }
 
   /**
-   * @param CategoryDisease $category
+   * @param DiseaseCategory $category
    * @return $this
    */
-  public function addChild (CategoryDisease $category)
+  public function addChild (DiseaseCategory $category)
   {
     $category->setParent($this);
     $this->children->add($category);
@@ -267,10 +267,10 @@ class CategoryDisease
   }
 
   /**
-   * @param CategoryDisease $category
+   * @param DiseaseCategory $category
    * @return $this
    */
-  public function removeChild (CategoryDisease $category)
+  public function removeChild (DiseaseCategory $category)
   {
     $this->children->removeElement($category);
     return $this;

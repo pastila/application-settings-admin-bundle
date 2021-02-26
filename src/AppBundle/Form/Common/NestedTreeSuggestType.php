@@ -2,8 +2,8 @@
 
 namespace AppBundle\Form\Common;
 
-use AppBundle\Entity\Disease\CategoryDisease;
-use AppBundle\Repository\Disease\CategoryDiseaseRepository;
+use AppBundle\Entity\Disease\DiseaseCategory;
+use AppBundle\Repository\Disease\DiseaseCategoryRepository;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\ChoiceList\Factory\ChoiceListFactoryInterface;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -21,10 +21,10 @@ class NestedTreeSuggestType extends ChoiceType implements DataTransformerInterfa
 
   /**
    * NestedTreeSuggestType constructor.
-   * @param CategoryDiseaseRepository $entityManager
+   * @param DiseaseCategoryRepository $entityManager
    * @param ChoiceListFactoryInterface|null $choiceListFactory
    */
-  public function __construct(CategoryDiseaseRepository $entityManager, ChoiceListFactoryInterface $choiceListFactory = null)
+  public function __construct(DiseaseCategoryRepository $entityManager, ChoiceListFactoryInterface $choiceListFactory = null)
   {
     $this->suggest = [];
     $this->categoryDiseaseRepository = $entityManager;
@@ -63,7 +63,7 @@ class NestedTreeSuggestType extends ChoiceType implements DataTransformerInterfa
    */
   public function transform($value)
   {
-    if ($value instanceof CategoryDisease)
+    if ($value instanceof DiseaseCategory)
     {
       $value = $value->getId();
     }
@@ -123,7 +123,7 @@ class NestedTreeSuggestType extends ChoiceType implements DataTransformerInterfa
 
     foreach ($childSections as $child)
     {
-      if ($child->getTreeLevel() === CategoryDisease::LEVEL_SUBGROUP)
+      if ($child->getTreeLevel() === DiseaseCategory::DEPTH_SUBGROUP)
       {
         $this->suggest[] = $child;
       }

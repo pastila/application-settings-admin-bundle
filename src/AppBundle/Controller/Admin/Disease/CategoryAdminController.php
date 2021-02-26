@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller\Admin\Disease;
 
-use AppBundle\Entity\Disease\CategoryDisease;
+use AppBundle\Entity\Disease\DiseaseCategory;
 use Doctrine\ORM\EntityManager;
 use RedCode\TreeBundle\Controller\TreeAdminController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,7 +19,7 @@ class CategoryAdminController extends TreeAdminController
 {
   public function reorderAllAction (Request $request)
   {
-    $rep = $this->getDoctrine()->getRepository('AppBundle:Disease\CategoryDisease');
+    $rep = $this->getDoctrine()->getRepository('AppBundle:Disease\DiseaseCategory');
     $rep->reorderAll();
     $this->addFlash('success', 'Дерево категорий было восстановлено');
 
@@ -28,7 +28,7 @@ class CategoryAdminController extends TreeAdminController
 
   /**
    * @param Request $request
-   * @param CategoryDisease $object
+   * @param DiseaseCategory $object
    * @return \Symfony\Component\HttpFoundation\Response|void|null
    */
   protected function preDelete (Request $request, $object)
@@ -87,9 +87,9 @@ class CategoryAdminController extends TreeAdminController
     $pos = $request->get('position');
     $parent = $request->get('parent');
 
-    /** @var CategoryDisease $category */
-    $category = $this->getDoctrine()->getRepository('AppBundle:Disease\CategoryDisease')->find($id);
-    $parent = $this->getDoctrine()->getRepository('AppBundle:Disease\CategoryDisease')->find($parent);
+    /** @var DiseaseCategory $category */
+    $category = $this->getDoctrine()->getRepository('AppBundle:Disease\DiseaseCategory')->find($id);
+    $parent = $this->getDoctrine()->getRepository('AppBundle:Disease\DiseaseCategory')->find($parent);
 
     if (!$category || !$parent)
     {

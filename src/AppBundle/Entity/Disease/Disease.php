@@ -22,8 +22,8 @@ class Disease
   protected $id;
 
   /**
-   * @var CategoryDisease|null
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Disease\CategoryDisease", inversedBy="diseases")
+   * @var DiseaseCategory|null
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Disease\DiseaseCategory", inversedBy="diseases")
    * @ORM\JoinColumn(onDelete="RESTRICT")
    */
   protected $category;
@@ -67,7 +67,7 @@ class Disease
   }
 
   /**
-   * @return CategoryDisease|null
+   * @return DiseaseCategory|null
    */
   public function getCategory ()
   {
@@ -83,7 +83,7 @@ class Disease
   }
 
   /**
-   * @param CategoryDisease|null $tag
+   * @param DiseaseCategory|null $tag
    * @return $this
    */
   public function setCategory ($tag)
@@ -99,6 +99,6 @@ class Disease
   {
     $category = $this->getCategory();
 
-    return $category ? $category->getTreeLevel() === CategoryDisease::LEVEL_SUBGROUP : false;
+    return $category ? $category->getTreeLevel() === DiseaseCategory::DEPTH_SUBGROUP : false;
   }
 }

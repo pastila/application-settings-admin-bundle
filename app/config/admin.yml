@@ -125,6 +125,6 @@ services:
 
   AppBundle\Admin\Disease\CategoryAdmin:
     class: AppBundle\Admin\Disease\CategoryAdmin
-    arguments: [~, 'AppBundle\Entity\Disease\CategoryDisease', 'AppBundle:Admin\Disease\CategoryAdmin', 'name']
+    arguments: [~, 'AppBundle\Entity\Disease\DiseaseCategory', 'AppBundle:Admin\Disease\CategoryAdmin', 'name']
     tags:
       - { name: sonata.admin, group: 'disease', manager_type: orm, label: 'Категории' }
