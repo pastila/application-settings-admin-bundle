@@ -2,10 +2,11 @@
 
 namespace Tests\AppBundle\Controller;
 
-
 use Tests\AppBundle\AppWebTestCase;
 use Tests\AppBundle\Fixtures\Company\Citation;
 use Symfony\Component\DomCrawler\Crawler;
+use Tests\AppBundle\Fixtures\Company\Feedback;
+use Tests\AppBundle\Fixtures\Company\InsuranceRepresentative;
 use Tests\AppBundle\Fixtures\Geo\Region;
 use Tests\AppBundle\Fixtures\Setting\Setting;
 
@@ -16,6 +17,8 @@ class FeedbackControllerTest extends AppWebTestCase
     $this->addFixture(new Citation());
     $this->addFixture(new Region());
     $this->addFixture(new Setting());
+    $this->addFixture(new Feedback());
+    $this->addFixture(new InsuranceRepresentative());
   }
 
   /**
@@ -153,5 +156,35 @@ class FeedbackControllerTest extends AppWebTestCase
     $this->assertSame('Отзыв', $message->getSubject(), 'Проверка заголовка');
     $this->assertSame('no-reply@bezbahil.ru', key($message->getTo()), 'Проверка адреса получателя');
     $this->assertSame(null, $message->getBcc(), 'Проверка скрытого адреса получателя, при создании отзыва должен быть пустым');
+  }
+
+  /**
+   * https://jira.accurateweb.ru/browse/BEZBAHIL-254
+   * В момент отправки в СМО письма об отзыве в скрытую копию нужно добавлять no-reply@bezbahil.ru (Адрес из настройки "E-mail администратора", если он указан)
+   */
+  public function testModerationSendBcc()
+  {
+    $client = $this->getClient();
+    $client->enableProfiler();
+    $this->logIn();
+
+    $client->request('POST', '/feedback/admin-check', [
+      'id' => $this->getReference('feedback-moderation-not')->getId(),
+      'accepted' => true,
+    ], [],
+      [
+        'HTTP_X-Requested-With' => 'XMLHttpRequest',
+      ]);
+
+    $mailCollector = $client->getProfile()->getCollector('swiftmailer');
+    $this->assertSame(1, $mailCollector->getMessageCount(), 'Проверка, что только одно письмо');
+
+    $collectedMessages = $mailCollector->getMessages();
+    $message = $collectedMessages[0];
+
+    /* Проверка письма: */
+    $this->assertInstanceOf('Swift_Message', $message, 'Проверка, что объект Swift_Message');
+    $this->assertSame('Отзыв', $message->getSubject(), 'Проверка заголовка');
+    $this->assertTrue(array_key_exists('no-reply@bezbahil.ru', $message->getBcc()), 'Проверка что отправлено скрытое письмо на адрес администратора');
   }
 }
