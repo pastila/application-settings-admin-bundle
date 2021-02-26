@@ -35,6 +35,12 @@ class Disease
   protected $name;
 
   /**
+   * @var string
+   * @ORM\Column(type="string", length=8, nullable=false)
+   */
+  protected $code;
+
+  /**
    * @return string
    */
   public function __toString ()
@@ -90,6 +96,22 @@ class Disease
   {
     $this->category = $tag;
     return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getCode()
+  {
+    return $this->code;
+  }
+
+  /**
+   * @param string $code
+   */
+  public function setCode($code): void
+  {
+    $this->code = $code;
   }
 
   /**

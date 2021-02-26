@@ -2,15 +2,12 @@
 
 namespace AppBundle\Admin\Disease;
 
-use AppBundle\Entity\Disease\DiseaseCategory;
-use Knp\Menu\ItemInterface as MenuItemInterface;
-use RedCode\TreeBundle\Admin\AbstractTreeAdmin;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
-use Sonata\AdminBundle\Admin\AdminInterface;
+use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
-use Sonata\AdminBundle\Exception\ModelManagerException;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -26,6 +23,7 @@ class DiseaseAdmin extends AbstractAdmin
   {
     $list
       ->add('name')
+      ->add('code')
       ->add('_action', null, [
         'actions' => [
           'edit' => [],
@@ -44,6 +42,31 @@ class DiseaseAdmin extends AbstractAdmin
         'label' => 'Категория',
         'required' => true,
       ])
-      ->add('name');
+      ->add("name", TextType::class, [
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+          new Length([
+            'min' => 3,
+            'max' => 255,
+          ]),
+        ],
+      ])
+      ->add('code',TextType::class, [
+        'required' => true,
+        'constraints' => [
+          new NotBlank(),
+        ],
+      ]);
+  }
+
+  /**
+   * @param DatagridMapper $filter
+   */
+  protected function configureDatagridFilters(DatagridMapper $filter)
+  {
+    $filter
+      ->add('name')
+      ->add('code');
   }
 }
