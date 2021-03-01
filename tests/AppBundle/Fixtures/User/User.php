@@ -37,6 +37,7 @@ class User extends Fixture implements DependentFixtureInterface
     $admin->setTermsAndConditionsAccepted(true);
     $admin->setPassword("");
     $admin->setRoles([\AppBundle\Entity\User\User::ROLE_ADMIN]);
+    $admin->setEnabled(true);
     $manager->persist($admin);
 
     $user1 = new \AppBundle\Entity\User\User();
@@ -49,6 +50,7 @@ class User extends Fixture implements DependentFixtureInterface
     $user1->setLastName('Королев');
     $user1->setTermsAndConditionsAccepted(true);
     $user1->setPassword("");
+    $user1->setEnabled(true);
     $manager->persist($user1);
 
     $user2 = new \AppBundle\Entity\User\User();
@@ -60,6 +62,7 @@ class User extends Fixture implements DependentFixtureInterface
     $user2->setLastName('Глушко');
     $user2->setTermsAndConditionsAccepted(true);
     $user2->setPassword("");
+    $user2->setEnabled(true);
     $manager->persist($user2);
 
     $manager->flush();
