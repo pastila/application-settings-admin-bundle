@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Doctrine\ORM\Mapping\Index;
+use AppBundle\Validator\InsuranceCompany\InsuranceCompanyBranchPublished;
 
 /**
  * InsuranceCompanyBranch.
@@ -25,6 +26,15 @@ class InsuranceCompanyBranch
    * @ORM\Column(type="integer")
    */
   protected $id;
+
+  /**
+   * Уникальный номер СМО
+   *
+   * @var integer
+   *
+   * @ORM\Column(type="bigint", nullable=true)
+   */
+  private $code;
 
   /**
    * Кпп компании
@@ -64,6 +74,7 @@ class InsuranceCompanyBranch
   /**
    * @var boolean
    * @ORM\Column(type="boolean", nullable=false, options={"default"=true})
+   * @InsuranceCompanyBranchPublished
    */
   private $published;
 
@@ -75,6 +86,15 @@ class InsuranceCompanyBranch
    * @ORM\Column( type="string", length=255, nullable=true)
    */
   private $phones;
+
+  /**
+   * ФИО руководителя (дат. пад.)
+   *
+   * @var string
+   *
+   * @ORM\Column(type="string", length=255, nullable=true)
+   */
+  private $bossFullNameDative;
 
   /**
    * @var InsuranceRepresentative[]|ArrayCollection
@@ -110,6 +130,7 @@ class InsuranceCompanyBranch
    */
   public function addRepresentative($representative)
   {
+    $representative->setBranch($this);
     $this->representatives->add($representative);
   }
 
@@ -264,6 +285,38 @@ class InsuranceCompanyBranch
   public function setPhones($phones): void
   {
     $this->phones = $phones;
+  }
+
+  /**
+   * @return int
+   */
+  public function getCode()
+  {
+    return $this->code;
+  }
+
+  /**
+   * @param int $code
+   */
+  public function setCode($code): void
+  {
+    $this->code = $code;
+  }
+
+  /**
+   * @return string
+   */
+  public function getBossFullNameDative()
+  {
+    return $this->bossFullNameDative;
+  }
+
+  /**
+   * @param string $bossFullNameDative
+   */
+  public function setBossFullNameDative($bossFullNameDative): void
+  {
+    $this->bossFullNameDative = $bossFullNameDative;
   }
 
   /**

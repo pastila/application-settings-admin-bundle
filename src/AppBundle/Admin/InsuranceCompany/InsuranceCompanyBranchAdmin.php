@@ -2,20 +2,15 @@
 
 namespace AppBundle\Admin\InsuranceCompany;
 
-use AppBundle\Entity\Company\FeedbackModerationStatus;
-use AppBundle\Entity\Company\InsuranceCompanyBranch;
-use AppBundle\Form\DataTransformer\RegionToEntityTransformer;
-use Doctrine\ORM\PersistentCollection;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Sonata\Form\Type\CollectionType;
-use AppBundle\Entity\Company\InsuranceRepresentative;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class InsuranceCompanyBranchAdmin
@@ -36,7 +31,12 @@ class InsuranceCompanyBranchAdmin extends AbstractAdmin
     {
       $list->add('company');
     }
-    $list->add('region');
+    $list->add('code', null, [
+      'label' => 'Код СМО'
+    ]);
+    $list->add('region', null, [
+      'route' => ['name' => '']
+    ]);
     $list->add('published', null, [
       'label' => 'Публикация',
     ])
@@ -53,15 +53,25 @@ class InsuranceCompanyBranchAdmin extends AbstractAdmin
    */
   protected function configureFormFields(FormMapper $form)
   {
-    /** @var InsuranceCompanyBranch $subject */
-    $subject = $this->getSubject();
-
     $form
-      ->add('region')
-      ->add('kpp', null, [
+      ->add('code', IntegerType::class, [
+        'required' => true,
+        'label' => 'Код СМО',
+        'help' => 'Уникальный номер СМО',
+        'constraints' => [
+          new NotBlank(),
+          new Assert\Type('integer'),
+        ]
+      ])
+      ->add('region', null, [
         'required' => true,
         'constraints' => [
           new NotBlank(),
+        ]
+      ])
+      ->add('kpp', null, [
+        'required' => false,
+        'constraints' => [
           new Length([
             'max' => 255,
           ]),
@@ -75,49 +85,28 @@ class InsuranceCompanyBranchAdmin extends AbstractAdmin
           ]),
         ],
       ])
-      ->add('representatives', CollectionType::class, [
-        'by_reference' => false,
-        'label' => 'Представители СМО:',
-        'btn_add' => 'Добавить',
-        'type_options' => [
-          'delete' => true,
+      ->add('bossFullNameDative', TextType::class, [
+        'required' => true,
+        'label' => 'ФИО руководителя',
+        'help' => 'ФИО руководителя в дательном падеже для отправки обращения',
+        'constraints' => [
+          new NotBlank(),
+          new Length([
+            'max' => 255,
+          ]),
         ]
+      ])
+      ->add('representatives', 'Sonata\AdminBundle\Form\Type\CollectionType', [
+        'by_reference' => false,
+        'allow_add' => true,
+        'allow_delete' => true,
+        'required' => false,
+        'entry_type' => 'AppBundle\Form\InsuranceCompany\InsuranceRepresentativeType',
       ], [
         'edit' => 'inline',
         'inline' => 'table',
-        'allow_add' => true,
-        'allow_delete' => true,
-        'sortable' => 'region',
-        'admin_code' => 'main.admin.insurance_representative'
       ])
       ->add('published');
-
-    $form->get('representatives')
-      ->addModelTransformer(new CallbackTransformer(
-        function ($collection)
-        {
-          return $collection;
-        },
-        function ($collection) use ($subject)
-        {
-          /**
-           * @var PersistentCollection $collection
-           */
-          if ($collection instanceof PersistentCollection)
-          {
-            $collection->map(function ($value) use ($subject)
-            {
-              /**
-               * @var InsuranceRepresentative $value
-               */
-              $value->setBranch($subject);
-              return $value;
-            });
-          }
-
-          return $collection;
-        }
-      ));
   }
 
 
@@ -135,9 +124,10 @@ class InsuranceCompanyBranchAdmin extends AbstractAdmin
       $filter->add('company');
     }
     $filter
+      ->add('code')
       ->add('region')
       ->add('published')
       ->add('kpp')
-      ->add('representatives');
+      ->add('bossFullNameDative');
   }
 }

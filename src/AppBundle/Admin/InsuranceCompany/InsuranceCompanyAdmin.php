@@ -103,17 +103,6 @@ class InsuranceCompanyAdmin extends AbstractAdmin
   }
 
   /**
-   *
-   */
-  protected function attachInlineValidator()
-  {
-    $metadata = $this->validator->getMetadataFor($this->getClass());
-    $metadata->addConstraint(new InsuranceCompanyBranchPublished());
-
-    return parent::attachInlineValidator();
-  }
-
-  /**
    * @param RouteCollection $collection
    */
   protected function configureRoutes(RouteCollection $collection)

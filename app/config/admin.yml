@@ -75,16 +75,9 @@ services:
 
   main.admin.insurance_company_branch:
     class: AppBundle\Admin\InsuranceCompany\InsuranceCompanyBranchAdmin
-    arguments: [~, 'AppBundle\Entity\Company\InsuranceCompanyBranch', 'SonataAdminBundle:CRUD']
+    arguments: [~, 'AppBundle\Entity\Company\InsuranceCompanyBranch',~]
     tags:
       - { name: sonata.admin, manager_type: orm, group: 'mo_cmo', label: 'Филиалы страховых медицинских организаций',  show_in_dashboard: false}
-    public: true
-
-  main.admin.insurance_representative:
-    class: AppBundle\Admin\InsuranceCompany\InsuranceRepresentativeAdmin
-    arguments: [~, 'AppBundle\Entity\Company\InsuranceRepresentative', 'SonataAdminBundle:CRUD']
-    tags:
-      - { name: sonata.admin, manager_type: orm, group: 'mo_cmo', label: 'Представители СМО',  show_in_dashboard: false}
     public: true
 
   AppBundle\Admin\Common\EmailTemplateAdmin:

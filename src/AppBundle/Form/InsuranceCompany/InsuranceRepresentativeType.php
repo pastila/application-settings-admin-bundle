@@ -1,25 +1,23 @@
 <?php
 
-namespace AppBundle\Admin\InsuranceCompany;
+namespace AppBundle\Form\InsuranceCompany;
 
-use Sonata\AdminBundle\Admin\AbstractAdmin;
-use Sonata\AdminBundle\Form\FormMapper;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- * Class InsuranceRepresentativeAdmin
- * @package AppBundle\Admin\InsuranceCompany
+ * Class InsuranceRepresentativeType
+ * @package AppBundle\Form\InsuranceCompany
  */
-class InsuranceRepresentativeAdmin extends AbstractAdmin
+class InsuranceRepresentativeType extends AbstractType
 {
-  /**
-   * @param FormMapper $form
-   */
-  protected function configureFormFields(FormMapper $form)
+  public function buildForm (FormBuilderInterface $builder, array $options)
   {
-    $form
+    $builder
       ->add('email', null, [
         'required' => true,
         'constraints' => [
@@ -52,5 +50,11 @@ class InsuranceRepresentativeAdmin extends AbstractAdmin
           ]),
         ],
       ]);
+    ;
+  }
+
+  public function configureOptions (OptionsResolver $resolver)
+  {
+    $resolver->setDefault('data_class', 'AppBundle\Entity\Company\InsuranceRepresentative');
   }
 }
