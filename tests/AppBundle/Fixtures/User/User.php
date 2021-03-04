@@ -51,6 +51,7 @@ class User extends Fixture implements DependentFixtureInterface
     $user1->setTermsAndConditionsAccepted(true);
     $user1->setPassword("");
     $user1->setEnabled(true);
+    $user1->setPhone('+7(912)235-57-22');
     $manager->persist($user1);
 
     $user2 = new \AppBundle\Entity\User\User();

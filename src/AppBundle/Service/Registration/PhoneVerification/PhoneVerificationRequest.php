@@ -100,8 +100,6 @@ class PhoneVerificationRequest implements \Serializable
     return $this;
   }
 
-
-
   /**
    * @inheritDoc
    */
@@ -127,26 +125,39 @@ class PhoneVerificationRequest implements \Serializable
       'verification_code_sent_at',
       'created_at'
     ));
+    $resolver->setAllowedTypes('phone', 'string');
+    $resolver->setAllowedTypes('verification_code', 'string');
+    $resolver->setAllowedTypes('verification_code_sent_at', 'DateTime');
+    $resolver->setAllowedTypes('created_at', 'DateTime');
 
-    try
+    $result = unserialize($serialized);
+    if (is_array($result))
     {
-      $values = $resolver->resolve(unserialize($serialized));
-    }
-    catch (\InvalidArgumentException $e)
+      try
+      {
+        $values = $resolver->resolve($result);
+      } catch (\InvalidArgumentException $e)
+      {
+        throw $e;
+      }
+      $this->setPhone($values['phone']);
+      $this->setCreatedAt($values['created_at']);
+      $this->setVerificationCode($values['verification_code']);
+      $this->setVerificationCodeSentAt($values['verification_code_sent_at']);
+    } else if ($result instanceof PhoneVerificationRequest)
     {
-      throw $e;
+      $this->setPhone($result->getPhone());
+      $this->setCreatedAt($result->getCreatedAt());
+      $this->setVerificationCode($result->getVerificationCode());
+      $this->setVerificationCodeSentAt($result->getVerificationCodeSentAt());
     }
-
-    $this->setPhone($values['phone']);
-    $this->setCreatedAt($values['created_at']);
-    $this->setVerificationCode($values['verification_code']);
-    $this->setVerificationCodeSentAt($values['verification_code_sent_at']);
   }
 
   /**
    * Возвращает true, если этот запрос проверки кода просрочен
    *
    * @return bool
+   * @throws Exception
    */
   public function isExpired()
   {

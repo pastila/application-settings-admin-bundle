@@ -5,18 +5,16 @@
 
 namespace AppBundle\Service\Registration\PhoneVerification;
 
-
-use AppBundle\Entity\User\User;
+use Accurateweb\SmsBundle\Sms\Factory\SmsFactory;
 use AppBundle\Exception\PhoneVerificationRequestManagerException;
-use AppBundle\Service\Sms\SmsAtomPark;
+use AppBundle\Exception\SmsDataException;
+use AppBundle\Exception\SmsRequestException;
+use AppBundle\Service\Sms\SmsInterface;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Есть сервис PhoneVerificationRequestManager, который отвечает за хранение и поиск PhoneConfirmationRequest'ов
- *
- * @Todo: подписаться на Kernel::shutdown и сохранить текущий PhoneVerificationRequest в
  *
  * Class PhoneVerificationRequestManager
  * @package AppBundle\Service\Registration\PhoneVerification
@@ -25,6 +23,9 @@ class PhoneVerificationRequestManager
 {
   const SESSION_KEY = 'PHONE_VERIFICATION_REQUEST';
 
+  /**
+   * @var PhoneVerificationRequest
+   */
   private $phoneVerificationRequest;
 
   private $logger;
@@ -33,14 +34,19 @@ class PhoneVerificationRequestManager
 
   private $session;
 
+  private $smsFactory;
+
   public function __construct(
-    SessionInterface  $session,
+    SessionInterface $session,
     LoggerInterface $logger,
-    SmsAtomPark $smsService)
+    SmsInterface $smsService,
+    SmsFactory $smsFactory
+  )
   {
     $this->session = $session;
     $this->logger = $logger;
     $this->smsService = $smsService;
+    $this->smsFactory = $smsFactory;
 
     $this->fetch();
   }
@@ -49,83 +55,59 @@ class PhoneVerificationRequestManager
    * Отправляет код проверки на указанный номер и сохраняет запрос в качестве текущего
    *
    * @param PhoneVerificationRequest $request
+   * @return bool - true если код отправлен успешно
    * @throws PhoneVerificationRequestManagerException
    */
   public function sendVerificationCode(PhoneVerificationRequest $request) //отправляет запрос и сохраняет в сессии
   {
     $currentTime = new \DateTime();
 
-    if ($request->getVerificationCodeSentAt())
+    if ($this->phoneVerificationRequest && $this->phoneVerificationRequest->getVerificationCodeSentAt())
     {
       /**
        * Если в сессии есть запись, о уже отправленной смс
        * Проверям, что она была отправлена не раньше 30 сек
        */
-      $sessionTime = clone $request->getVerificationCodeSentAt();
+      $sessionTime = clone $this->phoneVerificationRequest->getVerificationCodeSentAt();
       $sessionTime->add(new \DateInterval('PT30S'));
 
       if ($sessionTime > $currentTime)
       {
         throw new PhoneVerificationRequestManagerException('Превышено количество запросов для отправки sms кодов!');
-
-//        return new JsonResponse([
-//          'message' => 'Превышено количество запросов для отправки sms кодов!'
-//        ], 429);
       }
     }
 
-//    try
-//    {
-//      $this->smsService->sendCommand('registerSender', [
-//        'name' => "bezbahil",
-//        'country' => "ru"
-//      ]);
-//      $this->smsService->sendCommand("sendSMS", [
-//        'sender' => "bezbahil",
-//        'text' => "Ваш код - $smsCode",
-//        'phone' => $phone,
-//        'datetime' => "",
-//        'sms_lifetime' => "0"
-//      ]);
+    $message = $this->smsFactory->createSms('registration', [
+      'CODE' => $request->getVerificationCode()
+    ]);
 
-    $this->phoneVerificationRequest = $request;
+    try
+    {
+      $this->smsService->send($request, $message->getText());
+      $this->phoneVerificationRequest = $request;
+      $this->phoneVerificationRequest->setVerificationCodeSentAt(new \DateTime());
+      $this->persist();
+      return true;
+    } catch (SmsRequestException $exception)
+    {
+      $this->logger->error(
+        sprintf('Exception in sending sms to phone %s, exception: %s', $request->getPhone(), $exception));
+    } catch (SmsDataException $exception)
+    {
+      $this->logger->error(
+        sprintf('Data error when sending SMS to phone %s, exception: %s', $request->getPhone(), $exception));
+    } catch (\Exception $exception)
+    {
+      $this->logger->error(
+        sprintf('Exception when sending SMS to phone %s, exception: %s', $request->getPhone(), $exception));
+    }
 
-//    } catch (SmsRequestException $exception)
-//    {
-//      $this->get('logger')->error(sprintf('Exception in sending sms to phone %s, exception:  %s', $phone, $exception));
-//      return new JsonResponse([
-//        'status' => 'error'
-//      ]);
-//    } catch (SmsDataException $exception)
-//    {
-//      $this->get('logger')->error(sprintf('Data error when sending SMS to phone %s, exception:  %s', $phone, $exception));
-//      return new JsonResponse([
-//        'status' => 'error'
-//      ]);
-//    } catch (\Exception $exception)
-//    {
-//      $this->get('logger')->error(sprintf('Exception when sending SMS to phone %s, exception:  %s', $phone, $exception));
-//      return new JsonResponse([
-//        'status' => 'error'
-//      ]);
-//    }
+    return false;
   }
 
   public function createVerificationRequest($phone): PhoneVerificationRequest // Создает запрос, генерит код, сохраняет в сессии
   {
-//    $phone = $request->get('phone');
-//    $user = $this->userManager->findUserBy([
-//      'phone' => $phone
-//    ]);
-//    if ($user)
-//    {
-//      return new JsonResponse([
-//        'message' => 'Пользователь с таким номером телефона уже существует!'
-//      ], 406);
-//    }
-
     $request = new PhoneVerificationRequest();
-
     $code = (string)random_int(10000, 99999);
 
     $request->setPhone($phone);
@@ -159,8 +141,7 @@ class PhoneVerificationRequestManager
       {
         $request = new PhoneVerificationRequest();
         $request->unserialize($this->session->get(self::SESSION_KEY));
-      }
-      catch (\InvalidArgumentException $e)
+      } catch (\InvalidArgumentException $e)
       {
         $request = null;
         $this->logger->warn(sprintf('Unable to load stored phone verification request: %s', $e->getMessage()));

@@ -27,6 +27,10 @@
         {
           "type": "vcs",
           "url": "https://github.com/accurateweb/location-bundle.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/accurateweb/symfony-sms-bundle.git"
         }
     ],
     "autoload": {
@@ -52,6 +56,7 @@
         "accurateweb/image-bundle": "2.x-dev",
         "accurateweb/location-bundle": "dev-master",
         "accurateweb/media-bundle": "2.x-dev",
+        "accurateweb/sms-bundle": "dev-development",
         "deployer/deployer": "^6.8",
         "doctrine/doctrine-bundle": "^1.8.1",
         "doctrine/doctrine-migrations-bundle": "^1.3",

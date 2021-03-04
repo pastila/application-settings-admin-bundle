@@ -8,8 +8,6 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use FOS\UserBundle\Form\Type\RegistrationFormType as BaseRegistrationFormType;
 use Symfony\Component\Form\FormEvent;
@@ -21,20 +19,6 @@ use Symfony\Component\Form\FormEvents;
  */
 class RegistrationFormType extends AbstractType
 {
-  /**
-   * При регистрации пользователя также нужно выполнять валидации из группы "registration"
-   *
-   * @param OptionsResolver $resolver
-   */
-  public function configureOptions(OptionsResolver $resolver)
-  {
-    parent::configureOptions($resolver);
-
-    $resolver->setDefaults([
-      'validation_groups' => ['Default', 'registration']
-    ]);
-  }
-
   /**
    * @param FormBuilderInterface $builder
    * @param array $options

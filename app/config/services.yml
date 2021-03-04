@@ -160,6 +160,23 @@ services:
       tags:
         - { name: kernel.event_listener, event: kernel.terminate, method: persist, priority: 100 }
 
+    Accurateweb\SmsBundle\Sms\Factory\SmsFactory:
+      alias: aw_sms.template.factory
+      lazy: true
+
+    AppBundle\Controller\User\RegistrationController:
+      decorates: fos_user.registration.controller
+      arguments:
+        - '@AppBundle\Controller\User\RegistrationController.inner'
+        - '@event_dispatcher'
+        - '@fos_user.registration.form.factory'
+        - '@fos_user.user_manager'
+        - '@security.token_storage'
+        - '@aw.settings.manager'
+        - '@session'
+        - '@AppBundle\Service\Registration\PhoneVerification\PhoneVerificationRequestManager'
+      public: true
+
     AppBundle\Repository\Disease\DiseaseCategoryRepository:
       class: AppBundle\Repository\Disease\DiseaseCategoryRepository
       arguments:

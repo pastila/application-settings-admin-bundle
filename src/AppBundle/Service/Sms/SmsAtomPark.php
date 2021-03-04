@@ -5,13 +5,14 @@ namespace AppBundle\Service\Sms;
 use AppBundle\Exception\BitrixRequestException;
 use AppBundle\Exception\SmsDataException;
 use AppBundle\Exception\SmsRequestException;
+use AppBundle\Service\Registration\PhoneVerification\PhoneVerificationRequest;
 use Psr\Log\LoggerInterface;
 
 /**
  * Class SmsAtomPark
  * @package AppBundle\Service\Sms
  */
-class SmsAtomPark
+class SmsAtomPark implements SmsInterface
 {
   private $privateKey;
   private $publicKey;
@@ -44,13 +45,35 @@ class SmsAtomPark
   }
 
   /**
+   * @param PhoneVerificationRequest $phoneVerificationRequest
+   * @param $message
+   * @return mixed|void
+   * @throws SmsDataException
+   * @throws SmsRequestException
+   */
+  public function send($phoneVerificationRequest, $message)
+  {
+    $this->sendCommand('registerSender', [
+      'name' => "bezbahil",
+      'country' => "ru"
+    ]);
+    $this->sendCommand("sendSMS", [
+      'sender' => "bezbahil",
+      'text' => $message,
+      'phone' => $phoneVerificationRequest->getPhone(),
+      'datetime' => "",
+      'sms_lifetime' => "0"
+    ]);
+  }
+
+  /**
    * @param $action
    * @param $params
    * @return mixed
    * @throws SmsDataException
    * @throws SmsRequestException
    */
-  public function sendCommand($action, $params)
+  protected function sendCommand($action, $params)
   {
     $params['key'] = $this->publicKey;
     $params['version'] = $this->version;
@@ -85,7 +108,7 @@ class SmsAtomPark
   /**
    * @return |null
    */
-  public function getCode()
+  protected function getCode()
   {
     return key_exists('http_code', $this->info) ? $this->info['http_code'] : null;
   }
@@ -93,7 +116,7 @@ class SmsAtomPark
   /**
    * @return mixed
    */
-  public function getResult()
+  protected function getResult()
   {
     return $this->result;
   }
@@ -102,7 +125,7 @@ class SmsAtomPark
    * @param $params
    * @return mixed
    */
-  private function getCheckSum($params)
+  protected function getCheckSum($params)
   {
     ksort($params);
     $sum = '';
@@ -121,7 +144,7 @@ class SmsAtomPark
    * @param $action
    * @param $params
    */
-  private function sendDataToProvider($action, $params)
+  protected function sendDataToProvider($action, $params)
   {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

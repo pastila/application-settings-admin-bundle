@@ -23,7 +23,8 @@ class PhoneVerificationRequestValidator extends ConstraintValidator
 
   public function validate($value, Constraint $constraint)
   {
-    if (!$constraint instanceof PhoneVerificationRequest) {
+    if (!$constraint instanceof PhoneVerificationRequest)
+    {
       throw new UnexpectedTypeException($constraint, PhoneVerificationRequest::class);
     }
 
@@ -38,7 +39,7 @@ class PhoneVerificationRequestValidator extends ConstraintValidator
     if (!$verificationRequest)
     {
       $this->context->buildViolation($constraint->invalidCodeMessage)
-        ->setParameter('{{ code }}', $value)
+        ->setParameter('{code}', $value)
         ->addViolation();
     }
 
@@ -54,14 +55,14 @@ class PhoneVerificationRequestValidator extends ConstraintValidator
 
     // 2. Если код был создан, но не был отправлен, то его нельзя пропускать
     if (!$verificationRequest->getVerificationCodeSentAt()
-    // 3. Если код или телефон не введены, то их нельзя пропускать
+      // 3. Если код или телефон не введены, то их нельзя пропускать
       || (!$verificationRequest->getVerificationCode() || !$verificationRequest->getPhone())
-    // 4. Если код или телефон не совпадают с проверенными, то их нельзя пропускать
+      // 4. Если код или телефон не совпадают с проверенными, то их нельзя пропускать
       || ($verificationRequest->getVerificationCode() !== $value->getVerificationCode()
-          || $verificationRequest->getPhone() !== $value->getVerifiedPhone()))
+        || $verificationRequest->getPhone() !== $value->getVerifiedPhone()))
     {
       $this->context->buildViolation($constraint->invalidCodeMessage)
-        ->setParameter('{{ code }}', $value)
+        ->setParameter('{code}', $value->getVerificationCode())
         ->addViolation();
     }
 

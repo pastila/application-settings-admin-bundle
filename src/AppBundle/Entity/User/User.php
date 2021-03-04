@@ -10,9 +10,6 @@ use AppBundle\Validator\Constraints\PhoneVerificationRequest;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\AttributeOverrides;
-use Doctrine\ORM\Mapping\AttributeOverride;
 
 /**
  * @ORM\Entity()
@@ -20,7 +17,7 @@ use Doctrine\ORM\Mapping\AttributeOverride;
  *
  * Валидиация проверочного кода выполняется только при регистрации
  *
- * @PhoneVerificationRequest(groups={"registration"})
+ * @PhoneVerificationRequest(groups={"VerificationPhone"})
  */
 class User extends BaseUser implements PhoneVerificationAwareInterface
 {
@@ -80,6 +77,10 @@ class User extends BaseUser implements PhoneVerificationAwareInterface
   /**
    * @var string
    * @ORM\Column(type="string", length=50, nullable=true)
+   * @Assert\Regex(
+   *   pattern = "#^\+[0-9]{1,2}\s?\([0-9]{3}\)[0-9]+\-[0-9]+\-[0-9]+$#",
+   *   message = "Неверный формат телефона"
+   * )
    */
   private $phone;
 
@@ -95,7 +96,9 @@ class User extends BaseUser implements PhoneVerificationAwareInterface
    */
   private $insurancePolicyNumber;
 
-
+  /**
+   * @var string
+   */
   private $phoneVerificationCode;
 
   /**
@@ -382,5 +385,11 @@ class User extends BaseUser implements PhoneVerificationAwareInterface
     return $this->phoneVerificationCode;
   }
 
-
+  /**
+   * @param string $phoneVerificationCode
+   */
+  public function setVerificationCode($phoneVerificationCode)
+  {
+    $this->phoneVerificationCode = $phoneVerificationCode;
+  }
 }

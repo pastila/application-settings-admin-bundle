@@ -41,6 +41,7 @@ class AppKernel extends Kernel
             new Accurateweb\EmailTemplateBundle\AccuratewebEmailTemplateBundle(),
             new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new Accurateweb\SmsBundle\AccuratewebSmsBundle(),
             new RedCode\TreeBundle\RedCodeTreeBundle(),
         ];
 

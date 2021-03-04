@@ -1,0 +1,9 @@
+aw_sms:
+  sms_templates:
+    registration:
+      description: Шаблон с кодом для регистрации нового пользователя
+      variables:
+        CODE: { description: Код }
+      defaults:
+        text: |
+          Ваш код - %%CODE%%
