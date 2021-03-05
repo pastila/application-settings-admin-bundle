@@ -21,17 +21,6 @@
 
 .app.v2 {
 
-  .app-header.no-animate {
-
-    .app-header__logo,
-    .app-header__list,
-    .app-header__lk,
-    .app-header__location {
-      @include noAnimate;
-      transition: background-color 0.4s ease 0s, color 0.4s ease 0s;
-    }
-  }
-
   .b-first {
     position: relative;
     z-index: 1;

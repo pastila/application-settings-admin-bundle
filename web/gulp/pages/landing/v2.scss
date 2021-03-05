@@ -655,6 +655,16 @@
     padding-top: 43px;
     padding-bottom: 25px;
     transition: 0.4s ease all;
+
+    &.no-animate {
+      .app-header__logo,
+      .app-header__list,
+      .app-header__lk,
+      .app-header__location {
+        @include noAnimate;
+        transition: background-color 0.4s ease 0s, color 0.4s ease 0s;
+      }
+    }
   }
 
   .app-header:before {
