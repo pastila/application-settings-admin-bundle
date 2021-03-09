@@ -213,7 +213,9 @@ services:
 
   ### MailDev ##############################################
   maildev:
-    build: ./maildev
+    build:
+      context: ./maildev
+    entrypoint: ["bin/maildev", "--web", "80", "--smtp", "25", "--outgoing-host", "${MAILDEV_OUTGOING_HOST}", "--outgoing-user", "${MAILDEV_OUTGOING_USER}", "--outgoing-pass", "${MAILDEV_OUTGOING_PASS}"]
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.bezbahilru_maildev.rule=Host(`mail.bezbahil.aw-dev.ru`)"
