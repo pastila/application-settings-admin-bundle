@@ -167,6 +167,7 @@ class OrganizationAdmin extends AbstractAdmin
   protected function configureRoutes (RouteCollection $collection)
   {
     $collection->add('import');
+    $collection->add('export');
   }
 
   protected function configureTabMenu (MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
@@ -178,6 +179,12 @@ class OrganizationAdmin extends AbstractAdmin
         'attributes' => [
         ],
         'label' => 'Импорт МО',
+      ]);
+      $menu->addChild('export', [
+        'uri' => $this->generateUrl('export'),
+        'attributes' => [
+        ],
+        'label' => 'Экспорт МО',
       ]);
     }
 
