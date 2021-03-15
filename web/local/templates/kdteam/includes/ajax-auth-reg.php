@@ -49,7 +49,7 @@ CModule::IncludeModule("iblock");
             <div class="input__wrap">
                 <label class="input__wrap_label">Дата рождения</label>
 <?$adult= date('Y-m-d', strtotime("-6570 day"));?>
-                <input id="datepicker_reg0" class="datepicker-here" type="date" name="time" autocomplete="off" required 
+                <input id="datepicker_reg0" class="datepicker-here" type="date" name="time" autocomplete="off" required
                       placeholder="DD.MM.YYYY" max="<?=$adult?>" title="Регистрация лиц, не достигших 18 лет, не допускается">
                 <div class="danger date" style="display: none;">Регистрация лиц, не достигших 18 лет, не допускается</div>
             </div>
@@ -109,7 +109,7 @@ input[type="date"]::-webkit-calendar-picker-indicator
         <div class="popup__wrap_middle">
             <div class="input__wrap">
                 <label class="input__wrap_label">Электронная почта</label>
-                <input id="email" type="email" name="email" pattern="^[a-z0-9\.\-]+@[a-z]+\.[a-z]{2,6}$" required placeholder="Электронная почта">
+                <input id="email" type="email" name="email" required placeholder="Электронная почта">
             </div>
             <div class="input__wrap">
                 <label class="input__wrap_label">Пароль</label>
@@ -139,8 +139,8 @@ input[type="date"]::-webkit-calendar-picker-indicator
             </div>
             <div class="wrap-chrckbox checkbox_registration checkbox_registration_modal ">
                 <label class="check-label relative_block" >
-                    Я ознакомлен и согласен с условиями <a target="_blank" href="/terms-of-use/">пользовательского соглашения</a> и
-                    <a target="_blank" href="/personal-data-processing/">политикой по обработке персональных данных</a>
+                    Я ознакомлен и согласен с условиями <a target="_blank" href="/polzovatelskoe-soglashenie">пользовательского соглашения</a> и
+                    <a target="_blank" href="/politika-obrabotki-personalnyh-dannyh">политикой по обработке персональных данных</a>
                     <input type="checkbox" required value="" />
                     <span class="check-img check-img_reg"></span>
                 </label>
@@ -161,7 +161,7 @@ input[type="date"]::-webkit-calendar-picker-indicator
             </div>
         </div>
         <div class="popup__wrap_bottom center__child">
-        
+
     </div>
 </form>
 <style>
