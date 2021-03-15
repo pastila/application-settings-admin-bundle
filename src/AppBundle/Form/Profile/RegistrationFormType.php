@@ -46,8 +46,15 @@ class RegistrationFormType extends AbstractType
       'first_options' => array('label' => 'Пароль'),
       'second_options' => array('label' => 'Подтвердите пароль'),
       'invalid_message' => 'Пароли не совпадают!',
+      'constraints' => array(
+        new Length([
+          'min' => 6,
+        ]),
+      ),
     ));
-    $builder->add('username', HiddenType::class);
+    $builder->add('username', HiddenType::class, [
+      'error_bubbling' => false
+    ]);
     $builder->add('termsAndConditionsAccepted', HiddenType::class);
 
     $builder->addEventListener(
