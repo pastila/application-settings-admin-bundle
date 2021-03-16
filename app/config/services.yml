@@ -19,6 +19,7 @@ services:
             $smsPublicKey: '%sms_public_key%'
             $smsUrl: '%sms_url%'
             $smsProtocolVersion: '%sms_protocol_version%'
+            $pathToTemplateExcelMO: '%path_to_template_excel_mo%'
 
 
     _instanceof:
