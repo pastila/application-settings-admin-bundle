@@ -66,7 +66,20 @@ class Mailer implements MailerInterface
    */
   public function sendResettingEmailMessage(UserInterface $user)
   {
-    $this->baseMailer->sendResettingEmailMessage($user);
+    $url = $this->router->generate('fos_user_resetting_reset', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
+
+    $message = $this->emailFactory->createMessage('resseting_email', [
+      $this->mailerFrom => $this->mailerSenderName,
+    ],
+      $user->getEmail(),
+      [
+        'social_instagram' => $this->settingManager->getValue('social_instagram'),
+        'contact_email' => $this->settingManager->getValue('contact_email'),
+        'url' => $url,
+        'recipient_name' => $user->getUsername(),
+      ]
+    );
+    $this->mailer->send($message);
   }
 
   /**
