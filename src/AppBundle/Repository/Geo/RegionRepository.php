@@ -37,4 +37,23 @@ class RegionRepository extends ServiceEntityRepository implements UserLocationRe
       ->setMaxResults(1)
       ->getOneOrNullResult();
   }
+
+  /**
+   * Получить запрос QueryBuilder,
+   * который производит запрос для получения списка регионов в которых присутствуеют филиалы СМО
+   * отсортированного по названию регионов
+   * @param $companyId - ID в InsuranceCompany, по которой будут получены все регионы по филиалам указанной компании
+   * @return \Doctrine\ORM\QueryBuilder
+   */
+  public function getRegionsInCompanyQueryBuilder($companyId)
+  {
+    return $this->createQueryBuilder('r')
+    ->leftJoin('r.branches', 'cb')
+    ->leftJoin('cb.company', 'c')
+    ->where('cb.company = :company')
+    ->andWhere('cb.published = :published')
+    ->andWhere('c.published = :published')
+    ->setParameter('company', $companyId)
+    ->setParameter('published', true);
+  }
 }
