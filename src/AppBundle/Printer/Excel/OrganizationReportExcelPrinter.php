@@ -15,6 +15,11 @@ use Symfony\Component\HttpKernel\KernelInterface;
 class OrganizationReportExcelPrinter
 {
   /**
+   * Путь до шаблона со списком МО
+   */
+  const PATH_TO_TEMPLATE_EXCEL = '/src/AppBundle/Resources/excel_templates/mo.xls';
+
+  /**
    * @var string
    */
   protected $excelTemplates;
@@ -24,12 +29,9 @@ class OrganizationReportExcelPrinter
    * @param KernelInterface $kernel
    * @param $pathToTemplateExcel
    */
-  public function __construct(
-    KernelInterface $kernel,
-    $pathToTemplateExcelMO
-  )
+  public function __construct(KernelInterface $kernel)
   {
-    $this->excelTemplates = $kernel->getProjectDir() . $pathToTemplateExcelMO;
+    $this->excelTemplates = $kernel->getProjectDir() . self::PATH_TO_TEMPLATE_EXCEL;
   }
 
   /**

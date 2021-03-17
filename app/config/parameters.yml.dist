@@ -43,8 +43,6 @@ parameters:
 
     php_executable: php
 
-    path_to_template_excel_mo: /src/AppBundle/Resources/excel_templates/mo.xls #Путь до шаблона со списком МО
-
 # Environment variable defaults
     env(MYSQL_USER): root
     env(MYSQL_PASSWORD): ~
