@@ -46,6 +46,15 @@
     <h3 class="title-page">Восстановление пароля</h3>
     <div class="resetting-form">
         {% block fos_user_content %}
+            {% if app.request.hasPreviousSession %}
+                {% for type, messages in app.session.flashbag.all() %}
+                    {% for message in messages %}
+                        <div class="flash-{{ type }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
             {% include "@FOSUser/Resetting/request_content.html.twig" %}
         {% endblock fos_user_content %}
     </div><!-- b:m-content -->
