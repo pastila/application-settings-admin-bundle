@@ -120,7 +120,7 @@ class FeedbackAdmin extends AbstractAdmin
           if ($subject && $subject->getBranch())
           {
             return $regionRepository
-              ->getRegionsInCompanyQueryBuilder($subject->getBranch()->getCompany()->getId())
+              ->getRegionsInCompanyQueryBuilder($subject->getBranch()->getCompany())
               ->orderBy('r.name', 'ASC');
           }
           return $regionRepository

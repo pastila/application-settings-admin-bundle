@@ -20,8 +20,7 @@ class FeedbackAdminController extends CRUDController
    */
   public function reloadRegionsAction(Request $request)
   {
-    $companyId = $request->request->get('id');
-    $company = $this->getDoctrine()->getRepository(InsuranceCompany::class)->find($companyId);
+    $company = $this->getDoctrine()->getRepository(InsuranceCompany::class)->find($request->request->get('id'));
     if (!$company)
     {
       throw new NotFoundHttpException();
@@ -29,7 +28,7 @@ class FeedbackAdminController extends CRUDController
 
     $regions = $this->getDoctrine()
       ->getRepository(Region::class)
-      ->getRegionsInCompanyQueryBuilder($company->getId())
+      ->getRegionsInCompanyQueryBuilder($company)
       ->orderBy('r.name', 'ASC')
       ->getQuery()
       ->getResult();

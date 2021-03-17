@@ -4,6 +4,7 @@ namespace AppBundle\Repository\Geo;
 
 use Accurateweb\LocationBundle\Model\ResolvedUserLocation;
 use Accurateweb\LocationBundle\Model\UserLocationRepositoryInterface;
+use AppBundle\Entity\Company\InsuranceCompany;
 use AppBundle\Entity\Geo\Region;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -42,10 +43,10 @@ class RegionRepository extends ServiceEntityRepository implements UserLocationRe
    * Получить запрос QueryBuilder,
    * который производит запрос для получения списка регионов в которых присутствуеют филиалы СМО
    * отсортированного по названию регионов
-   * @param $companyId - ID в InsuranceCompany, по которой будут получены все регионы по филиалам указанной компании
+   * @param InsuranceCompany $company - компания, по которой будут получены все регионы по филиалам указанной компании
    * @return \Doctrine\ORM\QueryBuilder
    */
-  public function getRegionsInCompanyQueryBuilder($companyId)
+  public function getRegionsInCompanyQueryBuilder(InsuranceCompany $company)
   {
     return $this->createQueryBuilder('r')
     ->leftJoin('r.branches', 'cb')
@@ -53,7 +54,7 @@ class RegionRepository extends ServiceEntityRepository implements UserLocationRe
     ->where('cb.company = :company')
     ->andWhere('cb.published = :published')
     ->andWhere('c.published = :published')
-    ->setParameter('company', $companyId)
+    ->setParameter('company', $company)
     ->setParameter('published', true);
   }
 }
