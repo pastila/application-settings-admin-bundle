@@ -35,6 +35,19 @@ class CabinetController extends AbstractController
     $this->validator = $validator;
   }
 
+  /**
+   * Личный кабинет
+   * @Route(name="cabinet", path="/cabinet")
+   * @param Request $request
+   */
+  public function cabinetAction(Request $request)
+  {
+    $this->denyAccessUnlessGranted(['ROLE_USER']);
+
+    // todo ожидание нового личного кабинета
+    // перенапрвление на старый
+    return $this->redirect('/personal-cabinet/', 301);
+  }
 
     /**
    * Личный кабинет - Ваши отзывы

@@ -198,3 +198,12 @@ services:
       class: AppBundle\Repository\Disease\DiseaseCategoryRepository
       arguments:
         - '@doctrine.orm.entity_manager'
+
+    AppBundle\EventListener\ResettingListener:
+      class: AppBundle\EventListener\ResettingListener
+      decorates: fos_user.listener.resetting
+      arguments:
+        - '@router'
+        - '%fos_user.resetting.token_ttl%'
+      tags:
+        - { name: kernel.event_subscriber }
