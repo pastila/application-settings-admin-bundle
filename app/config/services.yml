@@ -144,6 +144,12 @@ services:
       factory: ['@doctrine.orm.entity_manager', 'getRepository']
       arguments: ['AppBundle\Entity\Common\BackgroundJob']
 
+    app.organization_export.excel:
+      class: AppBundle\Printer\Excel\OrganizationReportExcelPrinter
+      public: true
+      autowire: true
+      lazy: true
+
     app.form.registration:
       class: AppBundle\Form\Profile\RegistrationFormType
       tags:

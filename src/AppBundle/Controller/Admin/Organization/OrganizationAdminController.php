@@ -1,14 +1,17 @@
 <?php
 
-namespace AppBundle\Controller\Admin\Import;
+namespace AppBundle\Controller\Admin\Organization;
 
 use Accurateweb\TaskSchedulerBundle\Model\MetaData;
+use AppBundle\Entity\Organization\Organization;
+use AppBundle\Form\Admin\Organization\OrganizationExportType;
 use Sonata\AdminBundle\Controller\CRUDController;
 use AppBundle\Form\Admin\Organization\OrganizationImportType;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class OrganizationAdminController extends CRUDController
 {
@@ -52,8 +55,57 @@ class OrganizationAdminController extends CRUDController
       }
     }
 
-    return $this->renderWithExtraParams('@App/admin/organization_import/import.html.twig', [
+    return $this->renderWithExtraParams('@App/admin/organization/import.html.twig', [
       'action' => 'import',
+      'elements' => $this->admin->getShow(),
+      'form' => $form->createView(),
+    ], null);
+  }
+
+  /**
+   * @param Request $request
+   * @return \Symfony\Component\HttpFoundation\Response
+   */
+  public function exportAction(Request $request)
+  {
+    $form = $this->container->get('form.factory')->create(OrganizationExportType::class);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid())
+    {
+      $data = $form->getData();
+      $em = $this->container->get('doctrine.orm.entity_manager');
+      $organizationsListQb = $em->getRepository(Organization::class)
+        ->createQueryBuilder('o');
+      if (!empty($data['year']))
+      {
+        $organizationsListQb
+          ->join('o.years', 'y')
+          ->andWhere('y.year = :year')
+          ->setParameter('year', $data['year']);
+      }
+      $printer = $this->container->get('app.organization_export.excel');
+      $organizations = $organizationsListQb->getQuery()->getResult();
+
+      $fileName = 'mo_' . date('Y-m-d') . '.xls';
+      $response = new StreamedResponse(
+        function() use ($printer, $organizations)
+        {
+          $printer->doPrint($organizations);
+        },
+        200,
+        [
+          'Content-Disposition' => sprintf('%s;filename="%s"', ResponseHeaderBag::DISPOSITION_ATTACHMENT, $fileName),
+          'Content-Type' => 'application/vnd.ms-excel',
+          'Cache-Control' => 'max-age=0',
+        ]
+      );
+
+      return $response;
+    }
+
+    return $this->renderWithExtraParams('@App/admin/organization/export.html.twig', [
+      'action' => 'export',
       'elements' => $this->admin->getShow(),
       'form' => $form->createView(),
     ], null);
