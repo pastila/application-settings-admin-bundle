@@ -1,0 +1,56 @@
+{% extends "base.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block title %}
+    <title>
+        Восстановление пароля — Безбахил — сервис для возврата денег за ОМС, рейтинг страховых компаний
+    </title>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/local/templates/kdteam/pages/landing/landing.min.css">
+    <link rel="stylesheet" href="/local/templates/kdteam/pages/authorization/authorization.min.css">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/dist/bundle.js"></script>
+{% endblock %}
+
+{% block main %}
+<div class="app__content">
+    <ul class="breadcrumbs" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+        {% if is_mobile() or is_tablet() %}
+            <li class="active-breadcrumbs" itemprop="itemListElement" itemscope=""
+                itemtype="http://schema.org/ListItem">
+                <a href="{{ path('homepage') }}" itemprop="item">Главная
+                    <meta itemprop="name" content="Главная">
+                </a>
+                <meta itemprop="position" content="1">
+            </li>
+        {% else %}
+            <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                <a href="{{ path('homepage') }}" itemprop="item">Главная
+                    <meta itemprop="name" content="Главная">
+                </a>
+                <meta itemprop="position" content="1">
+            </li>
+            <li class="active-breadcrumbs" itemscope="" itemtype="http://schema.org/ListItem">
+                <a itemprop="item">Восстановление пароля
+                    <meta itemprop="name" content="Восстановление пароля">
+                </a>
+                <meta itemprop="position" content="2">
+            </li>
+        {% endif %}
+    </ul>
+    <h3 class="title-page">Восстановление пароля</h3>
+    <div class="resetting-form">
+        {% block fos_user_content %}
+            <p>
+                {{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}
+            </p>
+        {% endblock fos_user_content %}
+    </div><!-- b:m-content -->
+{% endblock %}

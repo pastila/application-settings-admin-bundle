@@ -1,0 +1,21 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{{ form_start(form, { 'action': path('fos_user_resetting_reset', {'token': token}), 'attr': { 'class': 'fos_user_resetting_reset' } }) }}
+<div class="popup__wrap" style="position: relative; left: 0;">
+    <div class="popup__wrap_middle">
+        <div class="input__wrap">
+            {{ form_label(form.plainPassword.first) }}
+            {{ form_row(form.plainPassword.first) }}
+        </div>
+        <div class="input__wrap">
+            {{ form_label(form.plainPassword.second) }}
+            {{ form_row(form.plainPassword.second) }}
+        </div>
+    </div>
+    <div class="input__wrap adc" style="margin-top: 70px;">
+        <button type="submit" class="mainBtn">
+            Обновить пароль
+        </button>
+    </div>
+</div>
+{{ form_end(form) }}

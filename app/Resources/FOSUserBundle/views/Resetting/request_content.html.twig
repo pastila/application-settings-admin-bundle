@@ -1,0 +1,19 @@
+<div class="white_block block-recovery_pass block-recovery_form">
+    <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+        <input type="hidden" name="backurl" value="/personal-cabinet/">
+        <input type="hidden" name="AUTH_FORM" value="Y">
+        <input type="hidden" name="TYPE" value="SEND_PWD">
+
+        <div class="bx-authform-formgroup-container">
+            <div class="input__wrap">
+                <label class="input__wrap_label">Ведите email</label>
+                <input type="text" id="username" name="username" required="required" />
+            </div>
+            <div class="bx-authform-note-container">Данные для востановления пароля, будут высланы вам на email.</div>
+        </div>
+        <div class="bx-authform-formgroup-container">
+            <input type="submit" class="mainBtn main-btn_fullwidth send_account_info" name="send_account_info"
+                   value="Продолжить" style="width: 100%">
+        </div>
+    </form>
+</div>
