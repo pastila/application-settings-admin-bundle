@@ -42,39 +42,41 @@ class DataFromBitrix
    */
   public function getData($url)
   {
-    if (!isset($_SERVER['REMOTE_ADDR']))
-    {
-      throw new BitrixRequestException('Unable to determine our client remote address.');
-    }
+    throw new BitrixRequestException('Bitrix no more.');
 
-    $ch = curl_init(sprintf($url, 'http://nginx'));
-
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-      'X-SF-SECRET: 2851f0ae-9dc7-4a22-9283-b86abfa44900',
-      'X-SF-REMOTE-ADDR: ' . $_SERVER['REMOTE_ADDR'],
-      'X-Requested-With: XmlHttpRequest'
-    ));
-
-    curl_setopt($ch, CURLOPT_COOKIE, sprintf('BX_USER_ID=%s;BITRIX_SM_LOGIN=%s;BITRIX_SM_SOUND_LOGIN_PLAYED=%s;PHPSESSID=%s',
-      $this->request->cookies->get('BX_USER_ID'),
-      $this->request->cookies->get('BITRIX_SM_LOGIN'),
-      $this->request->cookies->get('BITRIX_SM_SOUND_LOGIN_PLAYED'),
-      $this->request->cookies->get('PHPSESSID')
-    ));
-
-    //curl_setopt($ch, CURLOPT_VERBOSE, true);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-    $this->res = curl_exec($ch);
-    $this->info = curl_getinfo($ch);
-    curl_close($ch);
-
-    if ($this->getCode() !== 200) {
-      throw new BitrixRequestException(sprintf('Failed request, http_code: %s.', $this->info['http_code']), 0,
-        $this->info['http_code'], $this->getRes());
-    }
-
-    return $this->getRes();
+//    if (!isset($_SERVER['REMOTE_ADDR']))
+//    {
+//      throw new BitrixRequestException('Unable to determine our client remote address.');
+//    }
+//
+//    $ch = curl_init(sprintf($url, 'http://nginx'));
+//
+//    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+//      'X-SF-SECRET: 2851f0ae-9dc7-4a22-9283-b86abfa44900',
+//      'X-SF-REMOTE-ADDR: ' . $_SERVER['REMOTE_ADDR'],
+//      'X-Requested-With: XmlHttpRequest'
+//    ));
+//
+//    curl_setopt($ch, CURLOPT_COOKIE, sprintf('BX_USER_ID=%s;BITRIX_SM_LOGIN=%s;BITRIX_SM_SOUND_LOGIN_PLAYED=%s;PHPSESSID=%s',
+//      $this->request->cookies->get('BX_USER_ID'),
+//      $this->request->cookies->get('BITRIX_SM_LOGIN'),
+//      $this->request->cookies->get('BITRIX_SM_SOUND_LOGIN_PLAYED'),
+//      $this->request->cookies->get('PHPSESSID')
+//    ));
+//
+//    //curl_setopt($ch, CURLOPT_VERBOSE, true);
+//    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//
+//    $this->res = curl_exec($ch);
+//    $this->info = curl_getinfo($ch);
+//    curl_close($ch);
+//
+//    if ($this->getCode() !== 200) {
+//      throw new BitrixRequestException(sprintf('Failed request, http_code: %s.', $this->info['http_code']), 0,
+//        $this->info['http_code'], $this->getRes());
+//    }
+//
+//    return $this->getRes();
   }
 
   /**
