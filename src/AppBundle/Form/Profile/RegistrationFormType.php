@@ -25,6 +25,11 @@ class RegistrationFormType extends AbstractType
    */
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
+    if ($builder->has('username'))
+    {
+      $builder->remove('username');
+    }
+
     $builder->add('email', EmailType::class, [
       'required' => true,
       'label' => 'Электронная почта',
@@ -52,9 +57,6 @@ class RegistrationFormType extends AbstractType
         ]),
       ),
     ));
-    $builder->add('username', HiddenType::class, [
-      'error_bubbling' => false
-    ]);
     $builder->add('termsAndConditionsAccepted', HiddenType::class);
 
     $builder->addEventListener(
@@ -72,7 +74,6 @@ class RegistrationFormType extends AbstractType
     if (!$user) {
       return;
     }
-    $user['username'] = !empty($user['email']) ? $user['email'] : null;
     $user['termsAndConditionsAccepted'] = true;
     $event->setData($user);
   }
