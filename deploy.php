@@ -81,33 +81,33 @@ set('git_tty', false);
 add('shared_files', [
   '.env', // Symfony app env
   'web/.htaccess',
-  'web/ajax/for_admin/import/log_cmo.txt',
-  'web/ajax/for_admin/import/log_mo.txt',
-  'web/bitrix/modules/updater.log',
-  'web/bitrix/modules/updater_partner.log',
-  'web/bitrix/php_interface/dbconn.php',
-  'web/bitrix/.settings.php',
-  'web/bitrix/site_checker_797f0a4ef69e8b269ee562becb5b10e5.log',
-  'web/bitrix/site_checker_afb111f71ba090216f391e97d08677c8.log',
+//  'web/ajax/for_admin/import/log_cmo.txt',
+//  'web/ajax/for_admin/import/log_mo.txt',
+//  'web/bitrix/modules/updater.log',
+//  'web/bitrix/modules/updater_partner.log',
+//  'web/bitrix/php_interface/dbconn.php',
+//  'web/bitrix/.settings.php',
+//  'web/bitrix/site_checker_797f0a4ef69e8b269ee562becb5b10e5.log',
+//  'web/bitrix/site_checker_afb111f71ba090216f391e97d08677c8.log',
   'web/cert1.pem',
   'web/export_2.csv',
   'web/export_f1111.csv',
   'laradock/.env', // Laradock build env
   'laradock/nginx/sites/bezbahil.ru.conf',
   'laradock/nginx/sites/devdoc1.kdteam.su.conf',
-  'laradock/php-fpm-bitrix/msmtprc',
+//  'laradock/php-fpm-bitrix/msmtprc',
   'web/robots.txt',
   'web/sitemap.xml',
   'web/ssh/send_mail_after_30_day.txt',
-  'web/symfony-integration/config_rabbitmq.php',
+//  'web/symfony-integration/config_rabbitmq.php',
 ]);
 
 add('shared_dirs', [
   'laradock/certbot/certs',
-  'web/bitrix/backup',
-  'web/bitrix/cache',
-  'web/bitrix/managed_cache',
-  'web/bitrix_logs',
+//  'web/bitrix/backup',
+//  'web/bitrix/cache',
+//  'web/bitrix/managed_cache',
+//  'web/bitrix_logs',
   'web/images',
   'web/upload',
   'var/uploads', //sf app uploads private
@@ -117,10 +117,10 @@ add('shared_dirs', [
 
 // Writable dirs by web server
 add('writable_dirs', [
-  'web/bitrix/cache',
-  'web/bitrix/managed_cache',
+//  'web/bitrix/cache',
+//  'web/bitrix/managed_cache',
   'web/upload',
-  'web/vendor/mpdf/mpdf/tmp'
+//  'web/vendor/mpdf/mpdf/tmp'
 ]);
 
 set('allow_anonymous_stats', false);
