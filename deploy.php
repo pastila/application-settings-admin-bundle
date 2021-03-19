@@ -135,7 +135,7 @@ set('docker_deploy_path', '/var/www');
 set('docker_start_services', [
   'percona',
   'php-fpm-symfony',
-  'php-fpm-bitrix',
+//  'php-fpm-bitrix',
   'nginx',
   'rabbitmq',
   'php-rabbimq-consumer-obrashscheniya-files',
