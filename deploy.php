@@ -181,7 +181,7 @@ host('staging')
     'php-rabbimq-consumer-obrashscheniya-emails',
     'php-rabbimq-consumer-obrashscheniya-files',
     'php-fpm-symfony',
-    'php-fpm-bitrix',
+//    'php-fpm-bitrix',
     'nginx',
     'maildev',
   ])
