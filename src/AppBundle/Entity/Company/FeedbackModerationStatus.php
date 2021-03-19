@@ -32,7 +32,7 @@ abstract class FeedbackModerationStatus
     return [
       FeedbackModerationStatus::MODERATION_ACCEPTED => 'Одобрено',
       FeedbackModerationStatus::MODERATION_REJECTED => 'Отклонено',
-      FeedbackModerationStatus::MODERATION_NONE => 'Неизвестно',
+      FeedbackModerationStatus::MODERATION_NONE => 'Требует модерации',
     ];
   }
 }

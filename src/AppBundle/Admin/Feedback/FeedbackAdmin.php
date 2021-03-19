@@ -10,6 +10,8 @@ use AppBundle\Entity\Company\FeedbackModerationStatus;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Repository\Geo\RegionRepository;
 use AppBundle\Validator\Feedback\FeedbackAuthor;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -53,7 +55,10 @@ class FeedbackAdmin extends AbstractAdmin
         'label' => 'Заголовок',
       ])
       ->add('author', null, [
-        'label' => 'Пользователь',
+        'label' => 'Автор',
+      ])
+      ->add('authorName', null, [
+        'label' => 'Псевдоним',
       ])
       ->add('createdAt', 'date', [
         'label' => 'Дата создания',
@@ -82,6 +87,10 @@ class FeedbackAdmin extends AbstractAdmin
    */
   protected function configureFormFields(FormMapper $form)
   {
+    /**
+     * @var Feedback $subject
+     */
+    $subject = $this->getSubject();
     $form
       ->add('company', EntityType::class, [
         'label' => 'Компания',
@@ -106,9 +115,15 @@ class FeedbackAdmin extends AbstractAdmin
         'choice_label' => 'name',
         'placeholder' => '',
         "expanded" => false,
-        'query_builder' => function (RegionRepository $repository)
+        'query_builder' => function (RegionRepository $regionRepository) use ($subject)
         {
-          return $repository
+          if ($subject && $subject->getBranch())
+          {
+            return $regionRepository
+              ->getRegionsInCompanyQueryBuilder($subject->getBranch()->getCompany())
+              ->orderBy('r.name', 'ASC');
+          }
+          return $regionRepository
             ->createQueryBuilder('r')
             ->orderBy('r.name');
         },
@@ -118,13 +133,16 @@ class FeedbackAdmin extends AbstractAdmin
         ],
       ])
       ->add('author', null, [
-        'label' => 'Авторизованный пользователь',
-        'help' => 'Можно оставить пустым, если пользватель не авторизованный',
+        'label' => 'Автор',
+        'help' => 'Выберите зарегистрированного пользователя, с которым Вы хотите связать этот отзыв. (Не обязательно.)',
       ])
       ->add('authorName', null, [
         'required' => true,
-        'label' => 'Имя пользователя',
+        'label' => 'Псевдоним',
         'help' => 'Подставляется автоматически после сохранения, если пользователь выбран как авторизованный',
+        'constraints' => [
+          new FeedbackAuthor(),
+        ]
       ])
       ->add("title", TextType::class, [
         'required' => true,
@@ -187,6 +205,7 @@ class FeedbackAdmin extends AbstractAdmin
     $filter
       ->add('title')
       ->add('author')
+      ->add('authorName')
       ->add('author.email')
       ->add('branch.region')
       ->add('branch.company')
@@ -228,17 +247,6 @@ class FeedbackAdmin extends AbstractAdmin
         ]);
       $feedback->setBranch($branch);
     }
-  }
-
-  /**
-   *
-   */
-  protected function attachInlineValidator()
-  {
-    $metadata = $this->validator->getMetadataFor($this->getClass());
-    $metadata->addConstraint(new FeedbackAuthor());
-
-    return parent::attachInlineValidator();
   }
 
   /**

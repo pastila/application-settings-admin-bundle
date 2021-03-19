@@ -3,15 +3,20 @@
 namespace Tests\AppBundle\Unit\EventListener;
 
 use AppBundle\Entity\Company\FeedbackModerationStatus;
+use phpDocumentor\Reflection\Types\This;
 use Tests\AppBundle\AppWebTestCase;
+use Tests\AppBundle\Fixtures\Company\CompanyBranch;
 use Tests\AppBundle\Fixtures\Company\Feedback;
+use Tests\AppBundle\Fixtures\User\User;
 
 class FeedbackEventTest extends AppWebTestCase
 {
-  protected function setUpFixtures ()
+  protected function setUpFixtures()
   {
     parent::setUpFixtures();
     $this->addFixture(new Feedback());
+    $this->addFixture(new User());
+    $this->addFixture(new CompanyBranch());
   }
 
   /**
@@ -67,5 +72,32 @@ class FeedbackEventTest extends AppWebTestCase
     $em->flush();
     $this->assertTrue(!empty($feedback->getUpdatedAt()), 'Оценка изменена, Дата изменения отзыва должна быть установлена автоматически равной текущей дате в случае,
     если пользователь или администратор поменяли в отзыве значение хотя бы одного из следующих полей: заголовок, текст отзыва, оценка');
+  }
+
+  /**
+   * @throws \Doctrine\ORM\ORMException
+   * @throws \Doctrine\ORM\OptimisticLockException
+   * https://jira.accurateweb.ru/browse/BEZBAHIL-226
+   */
+  public function testAuthorSave()
+  {
+    $em = $this->getEntityManager();
+
+    /**
+     * @var \AppBundle\Entity\Company\Feedback $feedback
+     */
+    $feedback = new \AppBundle\Entity\Company\Feedback();
+    $feedback->setBranch($this->getReference('sogaz-med-66'));
+    $feedback->setAuthor($this->getReference('user-admin'));
+    $feedback->setAuthorName('Мой псевдоним');
+    $feedback->setText('text');
+    $feedback->setTitle('title');
+    $feedback->setCreatedAt(new \DateTime('2020-01-01'));
+    $feedback->setUpdatedAt(new \DateTime('2020-01-01'));
+    $feedback->setModerationStatus(FeedbackModerationStatus::MODERATION_ACCEPTED);
+    $em->persist($feedback);
+    $em->flush();
+
+    $this->assertEquals('Мой псевдоним', $feedback->getAuthorName(), 'Проверка, что псевдоним был сохранен');
   }
 }
