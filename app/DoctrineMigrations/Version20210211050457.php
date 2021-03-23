@@ -16,6 +16,11 @@ final class Version20210211050457 extends AbstractMigration
     $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
     $sql = 'UPDATE s_users su
+            SET su.login = su.email
+            WHERE su.login = "Admin";';
+    $this->addSql($sql);
+
+    $sql = 'UPDATE s_users su
             LEFT JOIN b_user bu ON bu.LOGIN = su.login
             LEFT JOIN b_uts_user uu ON uu.VALUE_ID = bu.ID
             LEFT JOIN b_iblock_section sr ON sr.ID = uu.UF_REGION
@@ -24,9 +29,10 @@ final class Version20210211050457 extends AbstractMigration
             LEFT JOIN b_iblock_element_property cp_kpp ON cp_kpp.IBLOCK_ELEMENT_ID = ec.ID AND cp_kpp.IBLOCK_PROPERTY_ID = 112
             LEFT JOIN s_company_branches scb ON scb.kpp = cp_kpp.VALUE AND scb.region_id = srg.id
             SET
-                su.username = bu.LOGIN,
-                su.username_canonical = bu.LOGIN,
-                su.email_canonical = bu.EMAIL,
+                su.username = su.login,
+                su.username_canonical = su.login,
+                su.email = su.login,
+                su.email_canonical = su.login,
                 su.enabled = true,
                 su.terms_and_conditions_accepted = true,
                 su.confirmation_token = UUID(),

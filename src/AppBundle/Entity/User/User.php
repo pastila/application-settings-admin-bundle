@@ -8,16 +8,36 @@ use AppBundle\Entity\Geo\Region;
 use AppBundle\Validator\Constraints\PhoneVerificationAwareInterface;
 use AppBundle\Validator\Constraints\PhoneVerificationRequest;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\AttributeOverride;
+use Doctrine\ORM\Mapping\AttributeOverrides;
+use Doctrine\ORM\Mapping\Column;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="s_users")
+ * @AttributeOverrides({
+ *      @AttributeOverride(name="usernameCanonical",
+ *          column=@Column(
+ *              nullable = true,
+ *          )
+ *      ),
+ *      @AttributeOverride(name="username",
+ *          column=@Column(
+ *              nullable = true,
+ *          )
+ *      )
+ * })
  *
  * Валидиация проверочного кода выполняется только при регистрации
- *
  * @PhoneVerificationRequest(groups={"VerificationPhone"})
+ * @UniqueEntity(
+ *     fields={"email"},
+ *     message="Такой Email адрес уже зарегистрирован на сайте",
+ *     groups={"RegistrationBezbahil"}
+ * )
  */
 class User extends BaseUser implements PhoneVerificationAwareInterface
 {
@@ -391,5 +411,41 @@ class User extends BaseUser implements PhoneVerificationAwareInterface
   public function setVerificationCode($phoneVerificationCode)
   {
     $this->phoneVerificationCode = $phoneVerificationCode;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getUsername()
+  {
+    return $this->email;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getUsernameCanonical()
+  {
+    return $this->emailCanonical;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUsername($username)
+  {
+    $this->email = $username;
+
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUsernameCanonical($usernameCanonical)
+  {
+    $this->emailCanonical = $usernameCanonical;
+
+    return $this;
   }
 }
