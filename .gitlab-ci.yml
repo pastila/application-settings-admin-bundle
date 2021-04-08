@@ -25,7 +25,6 @@ cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
     - vendor/
-    - web/vendor/
 
 variables:
   MYSQL_DATABASE: dbbezbahil

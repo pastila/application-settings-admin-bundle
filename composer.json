@@ -47,8 +47,7 @@
         },
         "classmap": [
             "app/AppKernel.php",
-            "app/AppCache.php",
-            "web/kdteam-classes/Mobile_Detect.php"
+            "app/AppCache.php"
         ]
     },
     "autoload-dev": {

@@ -414,12 +414,12 @@ services:
       - "bezbahil.ru:84.201.185.203"
     environment:
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
-      - DOCKER_HOST=tcp://docker-in-docker:2375
+#      - DOCKER_HOST=tcp://docker-in-docker:2375
       - FAKETIME=${PHP_FPM_FAKETIME}
     networks:
       - backend
-    links:
-      - docker-in-docker
+#    links:
+#      - docker-in-docker
     depends_on:
       - rabbitmq
     volumes:
@@ -478,12 +478,12 @@ services:
       - "bezbahil.ru:84.201.185.203"
     environment:
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
-      - DOCKER_HOST=tcp://docker-in-docker:2375
+#      - DOCKER_HOST=tcp://docker-in-docker:2375
       - FAKETIME=${PHP_FPM_FAKETIME}
     networks:
       - backend
-    links:
-      - docker-in-docker
+#    links:
+#      - docker-in-docker
     depends_on:
       - rabbitmq
     volumes:
@@ -542,12 +542,12 @@ services:
       - "bezbahil.ru:84.201.185.203"
     environment:
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
-      - DOCKER_HOST=tcp://docker-in-docker:2375
+#      - DOCKER_HOST=tcp://docker-in-docker:2375
       - FAKETIME=${PHP_FPM_FAKETIME}
     networks:
       - backend
-    links:
-      - docker-in-docker
+#    links:
+#      - docker-in-docker
     depends_on:
       - percona
     volumes:
