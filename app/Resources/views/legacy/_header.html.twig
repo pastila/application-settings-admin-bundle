@@ -14,9 +14,9 @@
                             </span>
                     <span class="header__r_auth_user_name">{{ app.user.firstLastName }}!</span>
                 </a>
-                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                    {{ render(controller('AppBundle:User:_userPanel')) }}
-                {% endif %}
+{#                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}#}
+{#                    {{ render(controller('AppBundle:User:_userPanel')) }}#}
+{#                {% endif %}#}
 
                 <!-- <div class="header__r_auth">
                     <div class="header__r_auth_user-image">

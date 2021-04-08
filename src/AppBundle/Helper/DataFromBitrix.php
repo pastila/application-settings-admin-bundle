@@ -40,7 +40,7 @@ class DataFromBitrix
    * @param $url
    * @throws BitrixRequestException
    */
-  public function getData($url)
+  public function   getData($url)
   {
     throw new BitrixRequestException('Bitrix no more.');
 

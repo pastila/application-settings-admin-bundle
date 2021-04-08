@@ -1,11 +1,5 @@
 <?php
 
-if (isset($_SERVER['HTTP_X_SF_SECRET']))
-{
-  trigger_error("X-SF-SECRET header found. Wrong upstream? Please, check your nginx config.", E_USER_ERROR);
-  die;
-}
-
 use Symfony\Component\HttpFoundation\Request;
 
 require __DIR__.'/../vendor/autoload.php';
