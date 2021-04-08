@@ -11,15 +11,28 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
-class ObrashcheniyaController extends Controller
+class AppealController extends Controller
 {
+  /**
+   * @Route
+   */
+  public function indexLegacyAction()
+  {
+
+  }
+
+  public function indexAction()
+  {
+
+  }
+
   /**
    * @Route("/appeals/{id}/download", name="appeal_download")
    */
   public function appealDownloadAction(Request $request)
   {
     $this->denyAccessUnlessGranted(['ROLE_ADMIN', 'ROLE_USER']);
-    
+
     $user = $this->getUser();
     $em = $this->getDoctrine()->getManager();
     $obrashcheniyaFile = $em->getRepository(ObrashcheniyaFile::class)

@@ -1,20 +1,8 @@
-{% extends "legacy/base.html.twig" %}
+{% extends "base.html.twig" %}
 {% block title %}error 500{% endblock %}
-{% block svgSprites %}
-    {% include 'SvgSprites/svgSprites.html.twig' %}
-{% endblock %}
-{% block header %}
-    <div class="app-header v2">
-        {{ render(controller('AppBundle:Common:_header')) }}
-    </div>
-{% endblock %}
+
 {% block main %}
     <div class="page-500">
         <h3 class="page-500_sub-title">Ошибка 500</h3>
-    </div>
-{% endblock %}
-{% block footer %}
-    <div class="app-footer v2">
-        {% include '_footer.html.twig' %}
     </div>
 {% endblock %}
