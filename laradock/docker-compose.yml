@@ -179,10 +179,11 @@ services:
       - FAKETIME=${PHP_FPM_FAKETIME}
     networks:
       - backend
-    links:
-      - docker-in-docker
+#    links:
+#      - docker-in-docker
     depends_on:
       - rabbitmq
+      - percona
     volumes:
       - ./php-fpm-symfony/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
       - ./php-fpm-symfony/laravel.ini:/usr/local/etc/php/conf.d/laravel.ini
