@@ -1,13 +1,26 @@
 {% extends "base.html.twig" %}
 
-{% block title %}404 Not Found{% endblock %}
+{% block title %}<title>404 - Страница не найдена</title>{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="/landing/css/plugins.min.css">
+    <link rel="stylesheet" href="/local/templates/kdteam/pages/landing/landing.min.css">
+    <link href="/local/templates/kdteam/pages/news/news.min.css" type="text/css" rel="stylesheet"/>
+{% endblock %}
 
 {% block main %}
-    <div class="page-404">
-        <h3 class="page-404_sub-title">Ошибка 404</h3>
-        <h1 class="page-404_title">Страница не найдена!</h1>
-
-        <p class="page-404_text">Неправильно набран адрес или такой страницы на сайте больше не существует.</p>
-        <p class="page-404_text">Вы можете перейти на <a class="page-404_link" href="/">главную страницу </a>.</p>
+    <div class="app-content">
+        <ul class="breadcrumbs"></ul>
+        <div class="site-width">
+            <div class="news-item">
+                <h1 class="page-404_sub-title">404</h1>
+                <p>Страница не найдена.</p>
+                <p class="page-404_text">Неправильно набран адрес или такой страницы на сайте больше не существует.</p>
+                <p class="page-404_text">Вы можете перейти на <a class="page-404_link" href="/">главную страницу </a>.</p>
+            </div>
+        </div>
     </div>
 {% endblock %}

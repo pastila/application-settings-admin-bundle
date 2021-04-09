@@ -6,6 +6,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Obrashcheniya\ObrashcheniyaFile;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,16 +15,19 @@ use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 class AppealController extends Controller
 {
   /**
-   * @Route
+   * @Route("/forma-obrasheniya/")
    */
   public function indexLegacyAction()
   {
-
+    return $this->redirectToRoute('oms_charge_complaint_index');
   }
 
+  /**
+   * @Route("/oms-charge-complaint", name="oms_charge_complaint_index")
+   */
   public function indexAction()
   {
-
+    return $this->render('AppBundle:OmsChargeComplaint:index.html.twig');
   }
 
   /**

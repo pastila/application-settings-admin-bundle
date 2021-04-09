@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {#    <link rel="stylesheet" href="/landing/css/app.css">#}
+    {#    стили которые собираются дефолтной задачей gulp#}
+    <link rel="stylesheet" href="/local/templates/kdteam/pages/landing/landing.min.css">
+{% endblock %}
+
+{% block main %}
+    <div class="app-content"></div>
+{% endblock %}

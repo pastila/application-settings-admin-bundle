@@ -17,7 +17,7 @@ class AppealControllerTest extends AppWebTestCase
   /**
    * https://jira.accurateweb.ru/browse/BEZBAHIL-216
    */
-  public function testIndex()
+  public function testAppealDownload()
   {
     $client = static::createClient();
 
@@ -26,5 +26,28 @@ class AppealControllerTest extends AppWebTestCase
      */
     $client->request('GET', '/appeals/61805/download');
     $this->assertEquals(302, $client->getResponse()->getStatusCode(), 'Не авторизованный пользователь не был перенаправлен с 302 статусом');
+  }
+
+  public function testIndexLegacy()
+  {
+    $client = static::createClient();
+
+    $client->request('GET', '/forma-obrashenija/');
+
+    $response = $client->getResponse();
+
+    $this->assertEquals(301, $response->getStatusCode(), 'Legacy chargeback form redirects to new appeal form with status code 301');
+    $this->assertEquals('/oms-charge-complaint', $response->headers->get('Location'), 'Legacy chargeback form redirects to new form');
+  }
+
+  public function testIndex()
+  {
+    $client = static::createClient();
+
+    $client->request('GET', '/oms-charge-complaint');
+
+    $response = $client->getResponse();
+
+    $this->assertEquals(200, $response->getStatusCode(), 'Charge complaint form index page');
   }
 }

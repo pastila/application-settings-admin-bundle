@@ -5,13 +5,15 @@
 
 namespace AppBundle\Twig;
 
+use AppBundle\Helper\MobileDetect;
+
 class MobileDetectExtension extends \Twig_Extension
 {
   private $mobileDetect;
 
-  public function __construct()
+  public function __construct(MobileDetect $mobileDetect)
   {
-    $this->mobileDetect = new \Mobile_Detect();
+    $this->mobileDetect = $mobileDetect;
   }
 
   public function getFunctions()
