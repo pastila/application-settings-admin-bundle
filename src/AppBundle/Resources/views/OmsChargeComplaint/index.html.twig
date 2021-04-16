@@ -2,11 +2,132 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {#    <link rel="stylesheet" href="/landing/css/app.css">#}
-    {#    стили которые собираются дефолтной задачей gulp#}
+    {# <link rel="stylesheet" href="/landing/css/app.css"> #}
+    {# стили которые собираются дефолтной задачей gulp #}
     <link rel="stylesheet" href="/local/templates/kdteam/pages/landing/landing.min.css">
+    <link rel="stylesheet" href="/local/templates/kdteam/pages/oms-charge-complaint/main.min.css">
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">urlPrefix = '{{ app.request.getBaseURL() }}'</script>
+    <script src="/dist/bundle.js"></script>
 {% endblock %}
 
+
 {% block main %}
-    <div class="app-content"></div>
+    <div class="app__content">
+        <div class="hide-desktop">
+            <ul class="breadcrumbs breadcrumbs_dark">
+                <li>Главная</li>
+                <li class="active-breadcrumbs_dark">Новое обращение</li>
+            </ul>
+        </div>
+        <div class="about hide-desktop">
+            <h6 class="about__title">Новое обращение</h6>
+            <div class="about__description">Оплачивали медицинскую помощь? Давайте проверим, можно ли вернуть деньги.
+            </div>
+        </div>
+        <div class="roadmap">
+            <div class="roadmap__wrap">
+                <div class="roadmap__item current">
+                    <div class="roadmap__item__image">
+                        <img src="{{ asset('gulp/images/svg/oms-charge-complaint-roadmap-step1.svg') }}">
+                    </div>
+                    <div class="roadmap__item__description">Регион и год</div>
+                </div>
+                <div class="roadmap__item">
+                    <div class="roadmap__item__image">
+                        <div class="step-number">2</div>
+                    </div>
+                    <div>Больница</div>
+                </div>
+                <div class="roadmap__item">
+                    <div class="roadmap__item__image">
+                        <div class="step-number">3</div>
+                    </div>
+                    <div>Каким было обращение</div>
+                </div>
+                <div class="roadmap__item">
+                    <div class="roadmap__item__image">
+                        <div class="step-number">4</div>
+                    </div>
+                    <div>Заболевание</div>
+                </div>
+                <div class="roadmap__item">
+                    <div class="roadmap__item__image">
+                        <div class="step-number">5</div>
+                    </div>
+                    <div>Результат</div>
+                </div>
+            </div>
+        </div>
+        <div class="formarea">
+            <div class="formarea__title">
+                <div class="title hide-mobile">
+                    Регион и год оказания услуги
+                </div>
+                <div class="title hide-desktop">
+                    Выберите период и регион оказания услуги
+                </div>
+                <div class="question">
+                    <div class="question-image hide-mobile">
+                        <img src="{{ asset('gulp/images/svg/oms-charge-complaint-question.svg') }}">
+                    </div>
+                    <div class="question-popup">Обращение в медицинскую организацию, не связанное с ухудшением
+                        здоровья.
+                        Это обращение “без жалоб”,
+                        когда вы приходите, чтобы пройти очередное обследование по поводу имеющегося хронического
+                        заболевания для контроля состояния и лечения. При этом важно, что ухудшения состояния нет.
+                        Также к
+                        плановым обращениям относятся визиты для прохождения профилактичес- ких осмотров,
+                        диспансеризации.
+                    </div>
+                </div>
+            </div>
+            <form>
+                <div class="formarea__form-field">
+                    <div class="form-item">
+                        <div class="form-item__description hide-desktop">Ваш регион</div>
+                        <input type="text" class="form-item__input hide-mobile">
+                        <select class="hide-desktop">
+                            <option>77 Москва</option>
+                            <option>66 Екатеринбург</option>
+                            <option>228 Кккккккккккк</option>
+                        </select>
+                    </div>
+                    <div class="form-item">
+                        <div class="form-item__description hide-desktop">Год оказания услуги</div>
+                        <select>
+                            <option>2021</option>
+                            <option>2020</option>
+                            <option>2019</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="formarea__buttonarea">
+                    <button class="btn2 hide-mobile">К выбору больницы <img
+                                src="{{ asset('gulp/images/svg/oms-charge-complaint-next-step-arrow.svg') }}"></button>
+                    <button class="btn2 hide-desktop">Далее</button>
+                </div>
+            </form>
+            <div class="formarea__description">
+                <div class="formarea__description__item">
+                    <div class="formarea__description__item__formfield-name">Регион</div>
+                    <div class="formarea__description__item__formfield-value">15 Республика Северная Осетия-Алания</div>
+                </div>
+                <div class="formarea__description__item">
+                    <div class="formarea__description__item__formfield-name">Год оказания услуги</div>
+                    <div class="formarea__description__item__formfield-value">2021</div>
+                </div>
+            </div>
+        </div>
+        <div class="note hide-desktop">Обращение в медицинскую организацию, не&nbsp;связанное с ухудшением здоровья. Это&nbsp;обращение
+            “без жалоб”, когда вы приходите, чтобы пройти очередное обследование по&nbsp;поводу&nbsp;имеющегося хронического
+            заболевания для контроля состояния и лечения. При этом важно, что ухудшения состояния нет. Также к плановым
+            обращениям относятся визиты для прохождения профилактических осмотров, диспансеризации.
+        </div>
+
+    </div>
 {% endblock %}

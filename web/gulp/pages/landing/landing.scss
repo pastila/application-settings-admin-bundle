@@ -1750,6 +1750,10 @@
     margin: 0 auto 1rem;
     padding-top: 190px;
     padding-left: 25px;
+
+    &_dark {
+      padding: 0;
+    }
   }
 
   .breadcrumbs .active-breadcrumbs a{
@@ -2467,13 +2471,30 @@
 
     .breadcrumbs {
       padding-top: 100px;
-    }
 
-    .breadcrumbs li {
-      font-size: 1rem;
+      li {
+        font-size: 1rem;
 
-      &:after {
-        width: 2.6rem;
+        &:after {
+          width: 2.6rem;
+        }
+      }
+
+      &_dark {
+        padding: 0;
+        margin: 0;
+        .active-breadcrumbs_dark{
+          text-decoration: none;
+        }
+        li {
+          text-decoration: underline;
+          font-family: Arial;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 10px;
+          line-height: 11px;
+          color: #000000;
+        }
       }
     }
 
