@@ -6,15 +6,26 @@
     {# стили которые собираются дефолтной задачей gulp #}
     <link rel="stylesheet" href="/local/templates/kdteam/pages/landing/landing.min.css">
     <link rel="stylesheet" href="/local/templates/kdteam/pages/oms-charge-complaint/main.min.css">
-
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript">urlPrefix = '{{ app.request.getBaseURL() }}'</script>
-    <script src="/dist/bundle.js"></script>
-    <script>
-    $(".formarea__title__question-mark").tooltip();
+    <script type="text/javascript">urlPrefix = '{{ app.request.getBaseURL() }}'
     </script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="/dist/bundle.js"></script>
+    <script> $(".formarea__title__question-mark__image").tooltip({
+            tooltipClass: "jq-tooltip",
+            position: { my: "left+18 bottom-18" }
+        })</script>
+    <script> $(".form-item__radio__labelarea__question-mark__image").tooltip({
+            tooltipClass: "jq-tooltip jq-tooltip_big",
+            position: { my: "left+18 bottom-18" }
+        })</script>
+    <script> $(".form-item_phone-field__question-mark").tooltip({
+            tooltipClass: "jq-tooltip jq-tooltip_big",
+            position: { my: "left+18 bottom-18" }
+        })</script>
+
 {% endblock %}
 
 
@@ -258,9 +269,7 @@
                 </div>
                 <div class="formarea__title__question-mark">
                     <div class="formarea__title__question-mark__image">
-                        <img src="{{ asset('gulp/images/svg/oms-charge-complaint-question.svg') }}">
-                    </div>
-                    <div class="formarea__title__question-mark__popup">Обращение в медицинскую организацию, не связанное
+                        <img src="{{ asset('gulp/images/svg/oms-charge-complaint-question.svg') }}" class="123" title="Обращение в медицинскую организацию, не связанное
                         с ухудшением
                         здоровья.
                         Это обращение “без жалоб”,
@@ -268,7 +277,7 @@
                         заболевания для контроля состояния и лечения. При этом важно, что ухудшения состояния нет.
                         Также к
                         плановым обращениям относятся визиты для прохождения профилактичес- ких осмотров,
-                        диспансеризации.
+                        диспансеризации.">
                     </div>
                 </div>
             </div>
@@ -315,9 +324,7 @@
                 </div>
                 <div class="formarea__title__question-mark">
                     <div class="formarea__title__question-mark__image">
-                        <img src="{{ asset('gulp/images/svg/oms-charge-complaint-question.svg') }}">
-                    </div>
-                    <div class="formarea__title__question-mark__popup">Обращение в медицинскую организацию, не связанное
+                        <img src="{{ asset('gulp/images/svg/oms-charge-complaint-question.svg') }}" title="Обращение в медицинскую организацию, не связанное
                         с ухудшением
                         здоровья.
                         Это обращение “без жалоб”,
@@ -325,7 +332,7 @@
                         заболевания для контроля состояния и лечения. При этом важно, что ухудшения состояния нет.
                         Также к
                         плановым обращениям относятся визиты для прохождения профилактичес- ких осмотров,
-                        диспансеризации.
+                        диспансеризации.">
                     </div>
                 </div>
             </div>
@@ -385,17 +392,15 @@
                             <input type="radio" id="scheduled-treatment" name="type-of-treatment">
                             <div class="form-item__radio__labelarea">
                                 <div class="form-item__radio__labelarea__name">Плановое</div>
-                                <div class="form-item__radio__labelarea__question-mark">
+                                <div class="form-item__radio__labelarea__question-mark" >
                                     <div class="form-item__radio__labelarea__question-mark__image">
-                                        <img src="{{ asset('gulp/images/svg/oms-charge-complaint-question-grey.svg') }}">
-                                    </div>
-                                    <div class="form-item__radio__labelarea__question-mark__popup">Не связанное с
+                                        <img src="{{ asset('gulp/images/svg/oms-charge-complaint-question-grey.svg') }}" title="Не связанное с
                                         ухудшением
                                         здоровья.
                                         Прохождение очередного обследования по хроническому заболеванию для контроля
                                         состояния и
                                         лечения. При этом важно, что ухудшения состояния нет. Также сюда относятся
-                                        профилактические осмотры, диспансеризация.
+                                        профилактические осмотры, диспансеризация.">
                                     </div>
                                 </div>
                             </div>
@@ -409,13 +414,11 @@
 
                                 <div class="form-item__radio__labelarea__question-mark">
                                     <div class="form-item__radio__labelarea__question-mark__image">
-                                        <img src="{{ asset('gulp/images/svg/oms-charge-complaint-question-grey.svg') }}">
-                                    </div>
-                                    <div class="form-item__radio__labelarea__question-mark__popup">Любое обращение
+                                        <img src="{{ asset('gulp/images/svg/oms-charge-complaint-question-grey.svg') }}" title="Любое обращение
                                         вызванное ухудшением
                                         состояния здоровья. Ухудшение может быть связано с хроническим заболеванием
                                         (обострение) или с острым (например, ОРВИ).
-                                        Не важно, когда произошло ухудшение - день или неделю назад.
+                                        Не важно, когда произошло ухудшение - день или неделю назад.">
                                     </div>
                                 </div>
                             </div>
@@ -463,12 +466,10 @@
                 </div>
                 <div class="formarea__title__question-mark">
                     <div class="formarea__title__question-mark__image">
-                        <img src="{{ asset('gulp/images/svg/oms-charge-complaint-question.svg') }}">
-                    </div>
-                    <div class="formarea__title__question-mark__popup">Укажите заболевание по поводу которого вы
+                        <img src="{{ asset('gulp/images/svg/oms-charge-complaint-question.svg') }}" title="Укажите заболевание по поводу которого вы
                         обратились
                         за медицинской помощью.
-                        Если точного диагноза вы не знаете, укажите наиболее близкий к нему.
+                        Если точного диагноза вы не знаете, укажите наиболее близкий к нему.">
                     </div>
                 </div>
             </div>
@@ -658,10 +659,7 @@
                         </div>
                         <div class="form-item form-item_phone-field">
                             <div class="form-item_phone-field__question-mark">
-                                <img src="{{ asset('gulp/images/svg/oms-charge-complaint-question-grey.svg') }}">
-                                <div class="form-item_phone-field__question-mark__popup">
-                                    Укажите телефон заявителя обращения
-                                </div>
+                                <img src="{{ asset('gulp/images/svg/oms-charge-complaint-question-grey.svg') }}" title="Укажите телефон заявителя обращения">
                             </div>
                             <input type="phone" placeholder="+7 (xxx) xxx-xx-xx"
                                    pattern="7[0-9]{8}" required>

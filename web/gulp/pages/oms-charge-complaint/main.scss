@@ -11,7 +11,7 @@
   content: url(../../images/svg/oms-charge-complaint-right-banner.svg);
   display: block;
   position: absolute;
-  bottom: -100px;
+  top: 682px;
   right: 0px;
   z-index: -1;
 }
@@ -25,7 +25,7 @@
   .roadmap {
     display: flex;
     justify-content: space-between;
-    margin: 0 auto 0 auto;
+    margin: 0 auto;
     width: 100%;
     max-width: 682px;
     position: relative;
@@ -46,32 +46,6 @@
       width: calc(100% - 84px);
       height: 2px;
       background-color: #8FDEF6;
-    }
-
-    .current {
-      .roadmap__item__image {
-        border: 2px solid #8FDEF6;
-        width: 60px;
-        min-height: 60px;
-        min-width: 60px;
-        border-radius: 100%;
-        background-color: #b1e8f9;;
-        margin: 0 auto 12px auto;
-
-        img {
-          position: relative;
-          right: 0.1px;
-          top: 1.3px;
-        }
-      }
-
-      .roadmap__item__description {
-        color: #515151;
-        width: 68px;
-        margin-left: auto;
-        margin-right: auto;
-        padding: 0 8px 0 8px;
-      }
     }
 
     &__item {
@@ -95,7 +69,9 @@
         margin: 13px auto 12px auto;
         background-color: #ffffff;
         vertical-align: center;
-
+        img{
+          margin-top: 7px;
+        }
         .step-number {
           width: 9px;
           height: 24px;
@@ -105,188 +81,567 @@
           font-size: 16px;
         }
       }
+
+      &_current {
+        .roadmap__item {
+          &__image {
+            border: 2px solid #8FDEF6;
+            width: 60px;
+            min-height: 60px;
+            min-width: 60px;
+            border-radius: 100%;
+            background-color: #b1e8f9;;
+            margin: 0 auto 12px auto;
+
+            img {
+              position: relative;
+              right: 0.1px;
+              top: 1.3px;
+            }
+          }
+
+          &__description {
+            color: #515151;
+            margin-left: auto;
+            margin-right: auto;
+          }
+        }
+      }
     }
   }
 
-  .formarea {
-    width: 860px;
-    background: #FFFFFF;
-    box-shadow: -4.5px 5.4px 18px rgba(41, 41, 41, 0.15);
-    border-radius: 10px;
-    position: relative;
+  .form {
     display: flex;
-    flex-direction: column;
-    margin: 24px auto 0px auto;
+    margin: 24px auto;
 
-    form {
-      display: flex;
-      flex-direction: column;
-    }
-
-    &__form-field {
-      display: flex;
-      flex-direction: column;
-      max-width: 378px;
-      width: 100%;
-      margin-right: auto;
-      margin-left: auto;
-
-      .form-item {
-        width: 100%;
-        margin-bottom: 20px;
-
-        input {
-          width: inherit;
-          border: 1px solid #d7d7d7;
-          border-radius: 10px;
-          box-shadow: -4.5px 5.4px 18px rgba(17, 17, 17, 0.09);
-          height: 65px;
-          outline: 0;
-          color: #515151;
-          font-size: 16px;
-          font-family: Montserrat;
-          font-style: normal;
-          font-weight: normal;
-          font-size: 16px;
-          line-height: 24px;
-          padding: 20.5px 20px;
-        }
-
-        .jq-selectbox__select {
-          color: #515151;
-        }
-      }
-    }
-
-    &__form-field :last-child {
-      margin-bottom: 0;
-    }
-
-    &__buttonarea {
-      width: 100%;
-      min-height: 145px;
-      background-color: #F1F4FC;;
-      border-bottom-left-radius: 10px;
-      border-bottom-right-radius: 10px;
-      margin-top: 52px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      button {
-        width: 378px;
-        height: 65px;
-
-        img {
-          margin-left: 10px;
-        }
-      }
-    }
-
-    &__title {
-      margin: 40px auto;
-      font-family: Playfair Display;
-      font-style: normal;
-      font-weight: bold;
-      line-height: 48px;
-      font-size: 0px;
-      color: #134469;
-      text-align: center;
+    .formarea {
+      width: 860px;
+      background: #FFFFFF;
+      box-shadow: -4.5px 5.4px 18px rgba(41, 41, 41, 0.15);
+      border-radius: 10px;
       position: relative;
-      height: 48px;
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto;
+      margin-left: 233px;
+      height: fit-content;
 
-      .question {
-        display: inline-block;
-        margin-left: 16px;
+      &__form-title {
+        margin: 20px auto;
+        justify-content: center;
+        font-size: 18px;
+        color: #00ABD8;
+        line-height: 24px;
+        text-align: center;
+        width: calc(100% - 200px);
+      }
+
+      &__image {
+        margin: 48px auto 28px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      &__form-field {
+        display: flex;
+        flex-direction: column;
+        max-width: 378px;
+        width: calc(100% - 32px);
+        margin: 0px auto 52px;
+
+        .form-item {
+          width: 100%;
+          margin-bottom: 20px;
+          position: relative;
+
+          .file-input-label {
+            border: 1px dashed #D7D7D7;
+            box-sizing: border-box;
+            border-radius: 10px;
+            font-family: Montserrat;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 24px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            flex-direction: column;
+            color: #515151;
+            padding: 55px 73px;
+
+            &__description {
+              a {
+                text-decoration: underline;
+                color: #00ABD8;
+              }
+              &_mobile {
+                display: none;
+              }
+            }
+
+            &__file-types {
+              font-size: 14px;
+              margin-top: 8px;
+            }
+          }
+
+          input[type=file] {
+            display: none;
+          }
+
+          input {
+            width: inherit;
+            border: 1px solid #d7d7d7;
+            border-radius: 10px;
+            box-shadow: -4.5px 5.4px 18px rgba(17, 17, 17, 0.09);
+            height: 65px;
+            outline: 0;
+            color: #515151;
+            font-size: 16px;
+            font-family: Montserrat;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 24px;
+            padding: 19.5px 19px;
+          }
+
+          input[type=checkbox] {
+            position: absolute;
+            height: 24px;
+            width: 24px;
+            opacity: 0;
+            z-index: 2;
+            right: 20.95px;
+            top: 24.5px;
+          }
+
+          input[type=checkbox]:checked + .hidden-password:before {
+            content: url(../../images/svg/oms-charge-complaint-opened-eye.svg.svg);
+            right: 19.95px;
+            top: 20.5px;
+          }
+
+          .hidden-password:before {
+            content: url(../../images/svg/oms-charge-complaint-closed-eye.svg);
+            position: absolute;
+            bottom: -11px;
+            z-index: 1;
+            right: 19px;
+            top: 22px;
+            height: 24px;
+            width: 24px;
+          }
+
+          input[type=password] {
+            padding-right: 43px;
+            position: relative;
+          }
+
+          &__radio {
+            width: 100%;
+            height: 65px;
+            position: relative;
+
+            input {
+              display: none;
+            }
+
+            input:checked ~ .form-item__radio__labelarea {
+              background-color: rgba(143, 222, 246, 0.2);
+              border: 1px solid #8FDEF6;
+            }
+
+            input:checked ~ .form-item__radio__labelarea:before {
+              content: url(../../images/svg/oms-charge-complaint-radio-checked.svg);
+              position: absolute;
+              top: 21px;
+              left: 21px;
+              height: 21px;
+              width: 21px;
+            }
+
+            &__labelarea {
+              width: 100%;
+              height: 100%;
+              border: 1px solid #D7D7D7;
+              border-radius: 10px;
+              padding: 25.5px 37px 25.5px 51px;
+              position: relative;
+
+              &__name {
+                line-height: 12px;
+                font-weight: bold;
+                font-size: 16px;
+                color: #00ABD8;
+              }
+
+              &__question-mark {
+                display: inline-block;
+                position: relative;
+                min-height: 18px;
+                min-width: 18px;
+                line-height: 2px;
+                bottom: 19px;
+                left: 100%;
+              }
+            }
+          }
+
+          &__radio:before {
+            content: url(../../images/svg/oms-charge-complaint-radio.svg);
+            position: absolute;
+            top: 22px;
+            left: 22px;
+            height: 21px;
+            width: 21px;
+          }
+
+          .jq-selectbox__select {
+            color: #515151;
+          }
+
+          &__exist {
+            text-align: center;
+            font-size: 16px;
+            line-height: 24px;
+            a {
+              display: block;
+              margin-top: 12px;
+            }
+          }
+
+          &__error-message {
+            display: none;
+            margin-top: 12px;
+          }
+
+          &_error {
+            input {
+              border-color: #FA7167;
+            }
+
+            .form-item__error-message {
+              color: #FA7167;
+              display: inherit;
+            }
+
+            .form-item__exist a {
+              display: none;
+            }
+
+            .form-item__send-code-button {
+              display: none;
+            }
+            .form-item__send-code-button-again {
+              display: block;
+            }
+          }
+          &_success {
+            .form-item {
+              &__exist {
+                a {
+                  display: block;
+                }
+              }
+
+              &__send-code-button {
+                display: none;
+              }
+            }
+          }
+          &_success:before {
+            content: url(../../images/svg/oms-charge-complaint-gree-check-mark.svg);
+            position: absolute;
+            left:calc(100% - 39px);
+            top: 20.5px;
+          }
+          &_neutral {
+            .form-item__exist {
+              display: none;
+
+            }
+          }
+          &__send-code-button {
+            border: none;
+            position: absolute;
+            height: 24px;
+            left: calc(100% + 20px);
+            top: 20.5px;
+            font-family: Arial;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 24px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #00ABD8;
+            background-color: white;
+            padding: 0;
+            &-again {
+              display: none;
+              img {
+                margin: 0 0 4px 8.5px;
+              }
+            }
+          }
+          &_file-field {
+            display: flex;
+            flex-direction: row;
+            padding: 0 20px;
+            height: 65px;
+            align-items: center;
+            border: 1px solid #d7d7d7;
+            border-radius: 10px;
+            box-shadow: -4.5px 5.4px 18px rgba(17, 17, 17, 0.09);
+            height: 65px;
+            outline: 0;
+            color: #515151;
+            font-size: 16px;
+            font-family: Montserrat;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 17.7px;
+
+            button {
+              padding: 0;
+              border: none;
+              background-color: white;
+              width: 24px;
+              height: 24px;
+            }
+
+            &__file-info {
+              width: 100%;
+              margin: 0 16px;
+            }
+          }
+
+          &_phone-field {
+            &__question-mark {
+              position: absolute;
+              right: 20px;
+              top: 20px;
+            }
+          }
+        }
+      }
+
+      &__form-field :last-child {
+        margin-bottom: 0;
+      }
+
+      &__note {
+        width: calc(100% - 200px);
+        margin: 0 auto;
+        text-align: center;
+        font-size: 18px;
+        line-height: 24px;
+        color: #515151;
+        display: none;
+      }
+
+      &__buttonarea {
+        width: 100%;
+        background-color: #F1F4FC;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        padding-top: 40px;
+        padding-bottom: 40px;
+        align-items: center;
+
+        &__buttons {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          width: 100%;
+          &__next-button {
+            max-width: 378px;
+            width: calc(100% - 32px);
+            height: 65px;
+
+            img {
+              margin-left: 10px;
+            }
+          }
+
+          &__prev-button {
+            margin-right: 20px;
+            width: 146px;
+            min-width: 0px;
+            height: 65px;
+            border: none;
+            background-color: rgba(0, 0, 0, 0);
+            color: #00abd8;
+            font-weight: bold;
+            font-size: 16px;
+            line-height: 24px;
+            padding: 0;
+            box-shadow: none;
+
+            img {
+              margin-right: 10px;
+            }
+          }
+
+          button {
+            margin-right: 166px;
+            margin-left: 20px;
+            font-size: 16px;
+            line-height: 24px;
+          }
+
+          button:first-child {
+            margin-right: 0px;
+            margin-left: 0px;
+          }
+        }
+
+        &__description {
+          margin-top: 10px;
+          font-size: 14px;
+          line-height: 24px;
+          text-align: center;
+          max-width: 459px;
+          width: calc(100% - 32px );
+
+          a {
+            text-decoration: underline;
+            color: #00ABD8;
+          }
+        }
+      }
+
+      &__title {
+        margin: 40px auto;
+        font-family: Playfair Display;
+        font-style: normal;
+        font-weight: bold;
+        line-height: 48px;
+        color: #134469;
+        text-align: center;
         position: relative;
         font-size: 36px;
+        display: flex;
 
-        &-image {
-          vertical-align: middle;
-          line-height: 2px;
-          width: 18px;
+        &_insurance-case {
+          margin-top: 0;
+        }
+        &__name {
+          margin: 0 16px;
+        }
+        &__question-mark {
+          display: inline-block;
+          position: relative;
+          font-size: 36px;
+          margin: auto 16px 10px 0;
           height: 18px;
+          &__image {
+            vertical-align: middle;
+            line-height: 2px;
+            width: 18px;
+            height: 18px;
+          }
         }
 
-        &-popup {
-          width: 348px;
-          display: none;
-          background: #FFFFFF;
-          box-shadow: -4.5px 5.4px 18px rgba(41, 41, 41, 0.15);
-          border-radius: 10px;
-          font-family: Montserrat;
-          font-style: normal;
-          font-weight: normal;
-          font-size: 14px;
-          line-height: 18px;
-          letter-spacing: 0.005em;
-          color: #515151;
-          bottom: 30px;
-          left: 50%;
-          position: absolute;
-          text-align: left;
-          padding: 16px;
-          z-index: 1;
+
+        &__name {
+          display: inline-block;
         }
       }
 
-      .question:hover .question-popup {
-        display: block;
-      }
+      &__description {
+        width: 233px;
+        padding: 16px;
+        margin-left: 24px;
+        font-size: 12px;
+        line-height: 12px;
+        font-family: Arial;
+        font-style: normal;
+        font-weight: bold;
 
-      .title {
-        display: inline-block;
-        font-size: 36px;
+        &__item {
+          margin-bottom: 16px;
+
+          &__formfield-name {
+            color: #00ABD8;
+            margin-bottom: 8px;
+          }
+
+          &__formfield-value {
+            color: #515151;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 18px;
+            font-family: Montserrat;
+          }
+        }
+
+        &__item:last-child {
+          margin-bottom: 0px;
+        }
       }
     }
 
-    &__description {
-      width: 233px;
-      height: 100%;
-      position: absolute;
-      padding: 16px;
-      margin-left: 24px;
-      left: 100%;
-      font-size: 12px;
-      line-height: 12px;
-      font-family: Arial;
-      font-style: normal;
-      font-weight: bold;
-
-      &__item {
-        margin-bottom: 16px;
-
-        &__formfield-name {
-          color: #00ABD8;
-          margin-bottom: 8px;
-        }
-
-        &__formfield-value {
-          color: #515151;
-          font-weight: normal;
-          font-size: 14px;
-          line-height: 18px;
-        }
-      }
-
-      &__item:last-child {
-        margin-bottom: 0px;
-      }
+    .formarea-description-sidebar-expand {
+      display: none;
+    }
+    .formarea-description-sidebar-expand-label {
+      display: none;
     }
   }
 
-  .breadcrumbs {
-    padding: 0px;
+  .insurance-case {
+    &_success {
+      display: inherit !important;
+    }
+
+    &_reject {
+      display: none !important;
+    }
+
+    &_note {
+      margin-top: 0px;
+      margin-bottom: 52px;
+      display: inherit;
+    }
   }
 }
-
-@media screen and (max-width: 1280px) {
-  .question-popup {
-    transform: translateX(-50%);
+.ui-helper-hidden-accessible { display:none; }
+.jq-tooltip {
+  max-width: 348px;
+  width: calc(100% - 20px);
+  background: #FFFFFF;
+  box-shadow: -4.5px 5.4px 18px rgba(41, 41, 41, 0.15);
+  border-radius: 10px;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.005em;
+  color: #515151;
+  position: absolute;
+  text-align: left;
+  padding: 16px;
+  z-index: 11;
+  height: auto;
+  display: table;
+  &_big{
+    font-size: 18px;
+    line-height: 24px;
   }
-  .formarea__description {
-    display: none;
-  }
+}
+@media screen and (max-width: 1820px) {
   .app__content::before {
     display: none;
   }
@@ -295,173 +650,187 @@
   }
 }
 
-@media screen and (max-width: 890px) {
-  .question-popup {
-    transform: translateX(-100%);
-  }
-}
-
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1334px) {
   .app__content {
-    .formarea {
-      width: 100%;
-      border-radius: 0px;
-      box-shadow: none;
+    overflow: hidden;
+    .form {
+      position: relative;
 
-      &__buttonarea {
-        border-radius: 0px;
+      .formarea__description {
+        position: absolute;
+        right: -234px;
+        transition: right 0.3s;
+        background: none;
+        padding: 16px 0 0 5px;
+      }
+
+      .formarea {
+        margin-left: auto;
+      }
+
+      .formarea-description-sidebar-expand-label {
+        position: absolute;
+        right: -2px;
+        top: 20px;
+        transition: right 0.3s, transform 1s;
+        transform: rotate(0);
+        display: block;
+      }
+
+      .formarea-description-sidebar-expand:checked ~ .formarea__description {
+        right: 0px;
+        display: block;
+        background-color: white;
+      }
+
+      .formarea-description-sidebar-expand:checked ~ .formarea-description-sidebar-expand-label {
+        display: block;
+        position: absolute;
+        right: 231px;
+        top: 20px;
+        transform: rotate(180deg);
       }
     }
   }
 }
 
-.hide-desktop {
-  display: none !important;
+@media screen and (max-width: 860px) {
+  .app__content {
+    .form {
+      width: 100%;
+      .formarea {
+        width: 100%;
+        border-radius: 0px;
+        box-shadow: none;
+
+        &__buttonarea {
+          border-radius: 0px;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 790px) {
+  .app__content {
+    .form {
+      .formarea {
+        &__form-field {
+          .form-item {
+            &_error,&_neutral {
+              .form-item__send-code-button {
+                position: unset;
+                margin: 20px auto 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
-.hide-mobile {
-  display: inline-block !important;
+
+@media screen and (max-width: 670px) {
+  .app__content {
+    .form {
+      .formarea {
+        &__buttonarea {
+          &__buttons {
+            &__prev-button {
+              display: none;
+            }
+
+            button {
+              margin: 0;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 640px) {
+  .app.v2 .jq-selectbox__select {
+    height: 65px;
+  }
   .v2 .app-header.is-fixed:before {
     opacity: 0;
   }
-  .v2 .btn2 {
-    width: 220px;
-    font-size: 16px;
-    line-height: 24px;
-  }
   .app__content {
-    padding: 80px 16px 40px;
-
-    .about {
-      &__title {
-        margin: 28px 0px;
-        line-height: 26px;
-      }
-
-      &__description {
-        font-family: Arial;
-        font-style: normal;
-        font-weight: bold;
-        font-size: 14px;
-        line-height: 20px;
-        color: #515151;
-      }
-    }
-
-    .roadmap {
-      margin-top: 20px;
-      margin-bottom: 14px;
-    }
-
-    .note {
-      font-family: Arial;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 14px;
-      line-height: 20px;
-      color: #515151;
-    }
-
-    .formarea {
-      margin: 14px 0 20px 0;
-
-      &__title {
-        margin: 0 0 20px 0;
-        height: 20px;
-
-        .title {
-          font-family: Arial;
-          font-style: normal;
-          font-weight: bold;
-          font-size: 14px;
-          line-height: 20px;
-          color: #515151;
-        }
-      }
-
-      &__form-field {
-        .form-item {
-          &__description {
-            font-family: Arial;
-            font-style: normal;
-            font-weight: bold;
-            font-size: 14px;
-            line-height: 24px;
-            color: #00ABD8;
-            margin: 4px 0;
-          }
-
-          input {
-            padding: 10.5px 16px;
-          }
-
-          button {
-            min-width: 220px;
-          }
-        }
-      }
-
-      &__buttonarea {
-        background: none;
-        margin-top: 32px;
-        min-height: 45px;
-
-        button {
-          width: 220px;
-          font-size: 16px;
-          line-height: 24px;
-          height: inherit;
-        }
-      }
-    }
-  }
-
-  @media screen and (max-width: 500px) {
-    .app__content {
-      .roadmap::-webkit-scrollbar {
-        width: 0;
-      }
-
-      .roadmap {
-        width: calc(100% + 16px);
-        margin: 20px 0;
-        overflow: auto;
-        &__wrap {
-          min-width: 140%;
-        }
-
-        &__wrap::before {
-          width: calc(140% - 84px);
-        }
-      }
-    }
-  }
-  @media screen and (max-width: 410px) {
-    .app__content {
+    padding: 80px 0 40px;
+    .form {
       .formarea {
         &__title {
-          text-align: left;
+          font-size: 24px;
+          line-height: 26px;
+          &__question-mark {
+            margin-bottom: 0px;
+          }
         }
-
-        form {
-          .formarea__buttonarea {
-            display: block;
+        &__form-title , &__note {
+          width: calc(100% - 32px);
+        }
+        &__form-field {
+          .form-item {
+            .file-input-label {
+              border:none;
+              padding: 20px;
+              &__description {
+                display: none;
+                &_mobile {
+                  display: block;
+                }
+              }
+            }
           }
         }
       }
     }
-  }
-
-  .hide-desktop {
-    display: block !important;
-  }
-  .hide-mobile {
-    display: none !important;
   }
 }
 
+@media screen and (max-width: 500px) {
+  .app__content {
+    .roadmap::-webkit-scrollbar {
+      width: 0;
+    }
 
+    .roadmap {
+      width: 100%;
+      margin: 20px 0;
+      overflow: auto;
 
+      &__wrap {
+        min-width: 140%;
+      }
+
+      &__wrap::before {
+        width: calc(140% - 84px);
+      }
+    }
+  }
+}
+@media screen and (max-width: 360px) {
+  .app__content {
+    .form {
+      .formarea {
+        &__buttonarea {
+          padding-top: 20px;
+          padding-bottom: 20px;
+        }
+        &__note {
+          font-size: 14px;
+          line-height: 20px;
+        }
+        &__form-title {
+          font-size: 16px;
+          line-height: 24px;
+        }
+      }
+    }
+  }
+  .jq-tooltip {
+    margin-left: 10px;
+  }
+}
