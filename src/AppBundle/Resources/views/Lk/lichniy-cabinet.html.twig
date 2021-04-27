@@ -1,0 +1,58 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {#    <link rel="stylesheet" href="/landing/css/app.css">#}
+    {#    стили которые собираются дефолтной задачей gulp#}
+    <link rel="stylesheet" href="/local/templates/kdteam/pages/landing/landing.min.css">
+    <link rel="stylesheet" href="/gulp/pages/lichniy-cabinet/lichniy-cabinet.scss">
+{% endblock %}
+
+{% block main %}
+{#    <<<<<<< Updated upstream
+    <div class="app-content"></div>
+    =======#}
+    <div class="lk">
+        <nav class="lk__nav">
+            <ul>
+                <li class="lk__nav__item lk__nav__item_active">
+                    <a href="#">Обзор</a>
+                </li>
+                <li class="lk__nav__item">
+                    <a href="#">Сообщения</a>
+                </li>
+                <li class="lk__nav__item">
+                    <a href="#">Обращения</a>
+                </li>
+                <li class="lk__nav__item">
+                    <a href="#">Мои отзывы</a>
+                </li>
+                <li class="lk__nav__item">
+                    <a href="#">Пациенты</a>
+                </li>
+                <li class="lk__nav__item">
+                    <a href="#">Спецпредложения</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="lk__title">Личный кабинет</div>
+        <div class="lk__content">
+            <div class="lk__content__big-content lk-border">
+                <div class="lk__content__big-content__title">Обращения</div>
+                <div class="lk__content__big-content__year">2020</div>
+                <div class="lk__content__big-content__appeal"></div>
+                <div class="lk__content__big-content__appeal"></div>
+                <div class="lk__content__big-content__appeal"></div>
+                <div class="lk__content__big-content__appeal"></div>
+                <div class="lk__content__big-content__appeal"></div>
+                <div class="lk__content__big-content__appeal"></div>
+                <div class="lk__content__big-content__appeal"></div>
+
+            </div>
+            <div class="lk__content__small-content">
+                <div class="lk__content__small-content__insurance-companies lk-border"></div>
+                <div class="lk__content__small-content__reviews lk-border"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

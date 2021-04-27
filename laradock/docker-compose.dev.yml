@@ -37,3 +37,6 @@ services:
     networks:
       - backend
       - frontend
+
+  percona:
+    user: "999:999"
