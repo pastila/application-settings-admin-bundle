@@ -87,8 +87,8 @@
           &__image {
             border: 2px solid #8FDEF6;
             width: 60px;
-            min-height: 60px;
-            min-width: 60px;
+            max-height: 60px;
+            max-width: 60px;
             border-radius: 100%;
             background-color: #b1e8f9;;
             margin: 0 auto 12px auto;
