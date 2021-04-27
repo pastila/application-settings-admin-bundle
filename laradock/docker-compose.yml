@@ -326,7 +326,7 @@ services:
       - ${DATA_PATH_HOST}/percona:/var/lib/mysql
       - ${PERCONA_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
       - ${DATA_PATH_LOGS}/mysql:/var/log/mysql
-      - ./percona/my.cnf:/etc/my.cnf.d/my.cnf
+#      - ./percona/my.cnf:/etc/my.cnf.d/my.cnf
     restart: always
 #    ports:
 #      - "${PERCONA_PORT}:3306"
