@@ -48,6 +48,10 @@ class AppealControllerTest extends AppWebTestCase
 
     $response = $client->getResponse();
 
-    $this->assertEquals(200, $response->getStatusCode(), 'Charge complaint form index page');
+    $this->assertTrue($response->isSuccessful(), 'Charge complaint form index page');
+
+    $client->request('POST', '/oms-charge-complaint');
+
+    $this->assertSame($response->isSuccessful(), 'Empty form returns 400');
   }
 }

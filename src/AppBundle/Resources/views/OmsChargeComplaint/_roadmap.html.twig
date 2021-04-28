@@ -1,0 +1,24 @@
+{% import _self as roadmap %}
+
+{% macro step(stepNo, stepTitle, currentStepNo) %}
+    <div class="roadmap__item{% if stepNo == currentStepNo %} roadmap__item_current{% endif %}">
+        <div class="roadmap__item__image">
+            {% if stepNo == currentStepNo %}
+                <img src="{{ asset('gulp/images/svg/oms-charge-complaint-roadmap-step' ~ currentStepNo ~ '.svg') }}" alt="Обращение в страховую медицинскую организацию - шаг {{ currentStepNo }}">
+            {% else %}
+                <div class="step-number">{{ stepNo }}</div>
+            {% endif %}
+        </div>
+        <div>{{ stepTitle }}</div>
+    </div>
+{% endmacro %}
+
+<div class="roadmap">
+    <div class="roadmap__wrap">
+        {{ roadmap.step(1, "Регион и год", step) }}
+        {{ roadmap.step(2, "Больница", step) }}
+        {{ roadmap.step(3, "Каким было обращение", step) }}
+        {{ roadmap.step(4, "Заболевание", step) }}
+        {{ roadmap.step(5, "Результат", step) }}
+    </div>
+</div>
