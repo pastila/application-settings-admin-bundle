@@ -31,14 +31,14 @@
                     <a href="#">Пациенты</a>
                 </li>
                 <li class="lk__nav__item">
-                    <a href="#">Спецпредложения</a>
+                    <a href="#">Спецпредложения<div class="special-offer-quantity">3</div></a>
                 </li>
             </ul>
         </nav>
         <div class="lk__title">Личный кабинет</div>
         <div class="lk__content">
             <div class="lk__content__big-content lk-border">
-                <div class="lk__content__big-content__title">Обращения</div>
+                <div class="lk__content__big-content__title">Обращения<img src="{{ asset('gulp/images/svg/lk-more-buttons.svg') }}"></div>
                 <div class="lk__content__big-content__appeal-history">
                     <div class="lk__content__big-content__appeal-history__year">2020</div>
                     <div class="lk__content__big-content__appeal-history__appeal-item">
@@ -84,12 +84,40 @@
                         <div class="appeal-item__insurance-company"><img src="{{ asset('gulp/images/svg/lk-alpha-strahovanie.svg') }}"></div>
                     </div>
                 </div>
-                <button class="lk__content__big-content__more-content-button">Еще 5 обращений</button>
+                <button class="lk__content__big-content__more-content-button btn">Еще 5 обращений</button>
 
             </div>
             <div class="lk__content__small-content">
-                <div class="lk__content__small-content__insurance-companies lk-border"></div>
-                <div class="lk__content__small-content__reviews lk-border"></div>
+                <div class="lk__content__small-content__insurance-companies lk-border">
+                    <div class="insurance-companies__title">Ваша страховая компания</div>
+                    <div class="insurance-companies__logo"><img src="{{ asset('gulp/images/svg/lk-alpha-strahovanie.svg') }}"></div>
+                    <div class="insurance-companies__phone">
+                        <div class="insurance-companies__phone__main">
+                            8 800 9000 400
+                        </div>
+                        <div class="insurance-companies__phone__additional">
+                            +7 495 342-33-43   +7 495 342-33-76
+                        </div>
+                    </div>
+                </div>
+                <div class="lk__content__small-content__reviews lk-border">
+                    <div class="reviews-title">Отзывы<img src="{{ asset('gulp/images/svg/lk-more-buttons.svg') }}"></div>
+                    <div class="reviews-item">
+                        <div class="reviews-item__info">
+                            <div class="reviews-item__info__date">12 декабря 2021</div>
+                            <div class="reviews-item__info__status">На модерации</div>
+                        </div>
+                        <div class="reviews-item__text">В прошлом году сын понюхал марганцовку. Очень испугались за него, вызвали скорую ...</div>
+                    </div>
+                    <div class="reviews-item">
+                        <div class="reviews-item__info">
+                            <div class="reviews-item__info__date">5 ноября 2021</div>
+                            <div class="reviews-item__info__status"></div>
+                        </div>
+                        <div class="reviews-item__text">Год назад обращался в больницу с проблемами носа, быстро приняли меня, но произошло ...</div>
+                    </div>
+                    <button class="reviews-all-reviews btn">Все отзывы</button>
+                </div>
             </div>
         </div>
     </div>
