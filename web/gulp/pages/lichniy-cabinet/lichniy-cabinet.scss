@@ -14,7 +14,7 @@
     }
     &__item {
       list-style-type: none;
-      margin: 0 10px;
+      margin: 0 25px;
       line-height: 33px;
       font-family: Arial;
       font-style: normal;
@@ -22,6 +22,18 @@
       font-size: 14px;
       a {
         color: #000000;
+        .special-offer-quantity {
+          display: inline-block;
+          background-color: #17A44C;
+          width: 22px;
+          height: 22px;
+          border-radius: 50%;
+          margin-left: 5px;
+          text-align: center;
+          vertical-align: middle;
+          line-height: 22px;
+          color: white;
+        }
       }
       &_active {
         a{
@@ -55,12 +67,13 @@
       padding: 38px 46px 46px 51px;
       &__title {
         font-family: Playfair Display;
-        font-style: normal;
-        font-weight: bold;
         font-size: 30px;
         line-height: 40px;
-        margin-bottom: 33px;
+        margin-bottom: 27px;
         color: #134469;
+        img {
+          margin-left: 17px;
+        }
       }
       &__appeal-history {
         &__year {
@@ -110,28 +123,78 @@
       }
       &__more-content-button {
       width: 235px;
-        height:55px;
-        border: 1px solid #00ABD8;
-        background: #FFFFFF;
-        border-radius: 10px !important;
-        font-weight: bold;
-        font-size: 14px !important;
-        line-height: 16px;
-        color: #00ABD8;
-        padding: 0;
     }
     }
     &__small-content {
       display: flex;
       flex-direction: column;
       width: 346px;
+      justify-content: space-between;
       &__insurance-companies {
-        width: 100%;
-        margin-bottom: 57px;
-        height: 245px;
+        padding: 38px 57px;
+        .insurance-companies {
+          &__title {
+            font-size: 14px;
+            line-height: 19px;
+            color: #000000;
+          }
+          &__logo {
+            margin: 16px 0 16px -11px;
+          }
+          &__phone {
+            &__main {
+              font-weight: bold;
+              font-size: 30px;
+              line-height: 19px;
+              margin-bottom: 14px;
+            }
+            &__additional {
+              font-size: 14px;
+              line-height: 19px;
+            }
+          }
+        }
       }
       &__reviews {
-        width: 100%;
+        padding: 38px 54px 46px 57px;
+        .reviews {
+          &-title {
+            font-family: Playfair Display;
+            font-size: 30px;
+            line-height: 40px;
+            color: #134469;
+            margin-bottom: 36px;
+            img {
+              margin-left: 17px;
+            }
+          }
+          &-item {
+            margin-bottom: 13px;
+            &__info {
+              display: flex;
+              justify-content: space-between;
+              &__date, &__status {
+                font-size: 14px;
+                line-height: 33px;
+              }
+              &__date {
+                color: #535353;
+              }
+              &__status {
+                color: #FA7167;
+              }
+            }
+            &__text {
+              font-size: 14px;
+              line-height: 19px;
+              color: #000000;
+            }
+          }
+          &-all-reviews {
+            margin-top: 25px;
+            width: 100%;
+          }
+        }
       }
     }
   }
