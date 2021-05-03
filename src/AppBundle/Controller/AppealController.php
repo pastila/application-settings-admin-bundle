@@ -30,6 +30,41 @@ class AppealController extends Controller
   }
 
   /**
+   * @Route("/oms-charge-complaint/step-2", name="oms_charge_complaint_2nd_step")
+   */
+  public function secondStepAction(Request $request)
+  {
+    $complaintDraft = $this->omsChargeComplaintSessionResolver->resolve();
+
+    $response = $this->validateDraftStep($complaintDraft, 2);
+
+    if ($response)
+    {
+      return $response;
+    }
+
+    $form = $this->createForm(OmsChargeComplaint1stStepType::class, $complaintDraft);
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid())
+    {
+      $em = $this->getDoctrine()->getManager();
+
+      $em->persist($form->getData());
+      $em->flush();
+
+      $this->omsChargeComplaintSessionPersister->persist($complaintDraft);
+
+      return $this->redirect('oms_charge_complaint_3rd_step');
+    }
+
+    return $this->render('AppBundle:OmsChargeComplaint:step2.html.twig', [
+      'form' => $form->createView()
+    ]);
+  }
+
+  /**
    * @Route("/appeals/{id}/download", name="appeal_download")
    */
   public function appealDownloadAction(Request $request)
@@ -60,5 +95,31 @@ class AppealController extends Controller
     }
 
     return $response;
+  }
+
+  /**
+   * Если текущий шаг меньше запрошенного (т.е. до запрошенного еще не дошли)
+   * то надо возвращать на правильный шаг
+   *
+   * Шаги начинаются с 1
+   *
+   * @param OmsChargeComplaint $omsChargeComplaint
+   * @param $step
+   * @return RedirectResponse|null
+   */
+  public function validateDraftStep(OmsChargeComplaint $omsChargeComplaint, $step)
+  {
+    if ($omsChargeComplaint->getDraftStep() < $step)
+    {
+      if (isset(self::DRAFT_STEP_ROUTE_NAMES[$step-1]))
+      {
+        return $this->redirectToRoute(self::DRAFT_STEP_ROUTE_NAMES[$step-1]);
+      }
+
+      // Если такого шага нет, вернем на первый шаг
+      return $this->redirectToRoute(self::DRAFT_STEP_ROUTE_NAMES[0]);
+    }
+
+    return null;
   }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use AppBundle\Dotenv\Dotenv;
+use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpFoundation\Request;
 
 require __DIR__.'/../vendor/autoload.php';
@@ -7,10 +9,36 @@ if (PHP_VERSION_ID < 70000) {
     include_once __DIR__.'/../var/bootstrap.php.cache';
 }
 
-$kernel = new AppKernel('prod', false);
+if (class_exists(Dotenv::class) && is_file(dirname(__DIR__) . '/.env'))
+{
+  // load all the .env files
+  (new Dotenv())->loadEnv(dirname(__DIR__) . '/.env');
+}
+
+$env = isset($_SERVER['APP_ENV']) ? $_SERVER['APP_ENV'] : 'prod';
+$debug = isset($_SERVER['APP_DEBUG']) && $_SERVER['APP_DEBUG'] === 'true' ? true : false;
+
+//if ($trustedProxies = $_SERVER['TRUSTED_PROXIES'] ?? false)
+//{
+//  Request::setTrustedProxies(explode(',', $trustedProxies), Request::HEADER_X_FORWARDED_FOR | Request::HEADER_X_FORWARDED_PORT | Request::HEADER_X_FORWARDED_PROTO);
+//}
+
+if ($trustedHosts = $_SERVER['TRUSTED_HOSTS'] ?? false)
+{
+  Request::setTrustedHosts([$trustedHosts]);
+}
+
+if ($debug === true)
+{
+  Debug::enable();
+}
+
+$kernel = new AppKernel($env, $debug);
+
 if (PHP_VERSION_ID < 70000) {
     $kernel->loadClassCache();
 }
+
 //$kernel = new AppCache($kernel);
 
 Request::setTrustedProxies(
