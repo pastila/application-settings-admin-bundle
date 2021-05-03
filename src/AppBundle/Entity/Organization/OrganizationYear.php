@@ -33,8 +33,8 @@ class OrganizationYear
   /**
    * МО
    *
-   * @var string|Organization
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Organization\Organization", cascade={"persist"})
+   * @var string|MedicalOrganization
+   * @ORM\ManyToOne(targetEntity="MedicalOrganization", cascade={"persist"})
    * @ORM\JoinColumn(name="organization_code", referencedColumnName="code", nullable=false)
    */
   protected $organization;
@@ -55,7 +55,7 @@ class OrganizationYear
   }
 
   /**
-   * @return Organization|string
+   * @return MedicalOrganization|string
    */
   public function getOrganization()
   {
@@ -63,7 +63,7 @@ class OrganizationYear
   }
 
   /**
-   * @param Organization|string $organization
+   * @param MedicalOrganization|string $organization
    */
   public function setOrganization($organization): void
   {

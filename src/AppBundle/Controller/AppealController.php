@@ -4,6 +4,10 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\Obrashcheniya\ObrashcheniyaFile;
+use AppBundle\Entity\OmsChargeComplaint\OmsChargeComplaint;
+use AppBundle\Form\Obrashcheniya\OmsChargeComplaint1stStepType;
+use AppBundle\Service\Obrashcheniya\OmsChargeComplaintSessionPersister;
+use AppBundle\Service\Obrashcheniya\OmsChargeComplaintSessionResolver;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
@@ -13,6 +17,24 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AppealController extends Controller
 {
+  const DRAFT_STEP_ROUTE_NAMES = [
+    'oms_charge_complaint_index',
+    'oms_charge_complaint_2nd_step'
+  ];
+
+  private $omsChargeComplaintSessionResolver;
+
+  private $omsChargeComplaintSessionPersister;
+
+  public function __construct(
+    OmsChargeComplaintSessionResolver $omsChargeComplaintSessionResolver,
+    OmsChargeComplaintSessionPersister $omsChargeComplaintSessionPersister
+  )
+  {
+    $this->omsChargeComplaintSessionResolver = $omsChargeComplaintSessionResolver;
+    $this->omsChargeComplaintSessionPersister = $omsChargeComplaintSessionPersister;
+  }
+
   /**
    * @Route("/forma-obrasheniya/")
    */
@@ -24,9 +46,31 @@ class AppealController extends Controller
   /**
    * @Route("/oms-charge-complaint", name="oms_charge_complaint_index")
    */
-  public function indexAction()
+  public function indexAction(Request $request)
   {
-    return $this->render('AppBundle:OmsChargeComplaint:index.html.twig');
+    $complaintDraft = $this->omsChargeComplaintSessionResolver->resolve();
+
+    $form = $this->createForm(OmsChargeComplaint1stStepType::class, $complaintDraft);
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid())
+    {
+      $complaintDraft->setDraftStep(2);
+
+      $em = $this->getDoctrine()->getManager();
+
+      $em->persist($form->getData());
+      $em->flush();
+
+      $this->omsChargeComplaintSessionPersister->persist($complaintDraft);
+
+      return $this->redirect('oms_charge_complaint_2nd_step');
+    }
+
+    return $this->render('AppBundle:OmsChargeComplaint:index.html.twig', [
+      'form' => $form->createView()
+    ]);
   }
 
   /**

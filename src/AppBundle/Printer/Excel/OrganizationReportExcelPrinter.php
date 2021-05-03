@@ -2,10 +2,9 @@
 
 namespace AppBundle\Printer\Excel;
 
-use AppBundle\Entity\Organization\Organization;
+use AppBundle\Entity\Organization\MedicalOrganization;
 use AppBundle\Entity\Organization\OrganizationChiefMedicalOfficer;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -50,7 +49,7 @@ class OrganizationReportExcelPrinter
     foreach ($organizations as $organization)
     {
       /**
-       * @var Organization $organization
+       * @var MedicalOrganization $organization
        * @var OrganizationChiefMedicalOfficer $chief
        */
       $chief = $organization->getChiefMedicalOfficer();

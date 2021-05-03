@@ -2,7 +2,7 @@
 
 namespace AppBundle\Repository\Organization;
 
-use AppBundle\Entity\Organization\Organization;
+use AppBundle\Entity\Organization\MedicalOrganization;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -18,6 +18,6 @@ class OrganizationRepository extends ServiceEntityRepository
    */
   public function __construct(ManagerRegistry $registry)
   {
-    parent::__construct($registry, Organization::class);
+    parent::__construct($registry, MedicalOrganization::class);
   }
 }
