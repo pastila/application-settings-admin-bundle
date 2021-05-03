@@ -25,21 +25,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomepageController extends Controller
 {
   private $branchRatingHelper;
-  private $settingManager;
   private $regionRepository;
   private $locationService;
   private $contactUsMailer;
 
   public function __construct(
     BranchRatingHelper $branchRatingHelper,
-    SettingManagerInterface $settingManager,
     RegionRepository $regionRepository,
     Location $locationService,
     ContactUsMailer $contactUsMailer
   )
   {
     $this->branchRatingHelper = $branchRatingHelper;
-    $this->settingManager = $settingManager;
     $this->regionRepository = $regionRepository;
     $this->locationService = $locationService;
     $this->contactUsMailer = $contactUsMailer;
