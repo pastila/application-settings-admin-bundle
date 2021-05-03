@@ -4,6 +4,7 @@
 namespace Tests\AppBundle\Controller;
 
 
+use AppBundle\Entity\Geo\Region;
 use Tests\AppBundle\AppWebTestCase;
 use Tests\AppBundle\Fixtures\User\User;
 
@@ -12,6 +13,7 @@ class AppealControllerTest extends AppWebTestCase
   protected function setUpFixtures()
   {
     $this->addFixture(new User());
+    $this->addFixture(new Region());
   }
 
   /**
@@ -52,6 +54,18 @@ class AppealControllerTest extends AppWebTestCase
 
     $client->request('POST', '/oms-charge-complaint');
 
-    $this->assertSame($response->isSuccessful(), 'Empty form returns 400');
+    $this->assertSame($response->isSuccessful(), 'Empty form returns 200');
+
+    /** @var Region $region02 */
+    $region02 = $this->getReference('region-02');
+
+    $client->request('POST', '/oms-charge-complaint', [
+      'oms_charge_complaint1st_step' => [
+        'region' => $region02->getId(),
+        'year' => 2019
+      ]
+    ]);
+
+    $this->assertTrue($response->isRedirect('/oms-charge-complaint/step-2'), 'Valid form redirects to 2nd step');
   }
 }
