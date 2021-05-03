@@ -10,6 +10,7 @@ use AppBundle\Entity\Geo\Region;
 use AppBundle\Entity\Organization\MedicalOrganization;
 use AppBundle\Entity\User\Patient;
 use AppBundle\Helper\Year\Year;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -28,7 +29,7 @@ class OmsChargeComplaint
   /**
    * @var int
    *
-   * @ORM\Column()
+   * @ORM\Column(type="integer")
    * @ORM\Id()
    * @ORM\GeneratedValue(strategy="AUTO")
    */
@@ -74,7 +75,6 @@ class OmsChargeComplaint
   /**
    * @var Disease
    *
-   * @ORM\Column()
    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Disease\Disease")
    */
   private $disease;
@@ -87,7 +87,7 @@ class OmsChargeComplaint
   private $documents;
 
   /**
-   * @var \DateTime
+   * @var DateTime
    *
    * @ORM\Column(type="datetime", nullable=true)
    */
@@ -242,18 +242,18 @@ class OmsChargeComplaint
   }
 
   /**
-   * @return \DateTime
+   * @return DateTime
    */
-  public function getPaidAt(): \DateTime
+  public function getPaidAt(): DateTime
   {
     return $this->paidAt;
   }
 
   /**
-   * @param \DateTime $paidAt
+   * @param DateTime $paidAt
    * @return OmsChargeComplaint
    */
-  public function setPaidAt(\DateTime $paidAt): OmsChargeComplaint
+  public function setPaidAt(DateTime $paidAt): OmsChargeComplaint
   {
     $this->paidAt = $paidAt;
     return $this;

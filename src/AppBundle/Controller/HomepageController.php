@@ -16,6 +16,7 @@ use AppBundle\Form\Obrashcheniya\OmsChargeComplaint1stStepType;
 use AppBundle\Model\InsuranceCompany\Branch\BranchRatingHelper;
 use AppBundle\Repository\Geo\RegionRepository;
 use AppBundle\Service\ContactUs\ContactUsMailer;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,7 +46,7 @@ class HomepageController extends Controller
   /**
    * @Route("/", name="homepage")
    */
-  public function indexAction(Request $request)
+  public function indexAction()
   {
     $em = $this->getDoctrine()->getManager();
 
@@ -93,12 +94,10 @@ class HomepageController extends Controller
 
     $forms = [
       $this->createForm(OmsChargeComplaint1stStepType::class, $omsChargeComplaint, [
-        'csrf_protection' => false,
-        'data' => $omsChargeComplaint
+        // 'csrf_protection' => false,
       ]),
       $this->createForm(OmsChargeComplaint1stStepType::class, $omsChargeComplaint, [
-        'csrf_protection' => false,
-        'data' => $omsChargeComplaint
+        // 'csrf_protection' => false,
       ]),
     ];
     $formViews = [];
@@ -172,7 +171,7 @@ class HomepageController extends Controller
         try
         {
           $this->contactUsMailer->sendContactUs($contactUs);
-        } catch (\Exception $e)
+        } catch (Exception $e)
         {
           $this->get('logger')->error('Failed to send contact us: ' . $e->getMessage());
         }

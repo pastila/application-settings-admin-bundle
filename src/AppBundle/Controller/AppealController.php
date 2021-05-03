@@ -65,7 +65,7 @@ class AppealController extends Controller
 
       $this->omsChargeComplaintSessionPersister->persist($complaintDraft);
 
-      return $this->redirect('oms_charge_complaint_2nd_step');
+      return $this->redirectToRoute('oms_charge_complaint_2nd_step');
     }
 
     return $this->render('AppBundle:OmsChargeComplaint:index.html.twig', [
