@@ -11,6 +11,7 @@ use AppBundle\Service\Obrashcheniya\OmsChargeComplaintSessionResolver;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,7 +37,7 @@ class AppealController extends Controller
   }
 
   /**
-   * @Route("/forma-obrasheniya/")
+   * @Route("/forma-obrashenija/")
    */
   public function indexLegacyAction()
   {
