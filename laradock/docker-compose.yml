@@ -1,21 +1,9 @@
 version: '3'
 
 networks:
-  default:
-    driver: ${NETWORKS_DRIVER}
-    ipam:
-      config:
-        - subnet: 192.168.123.30/29
-  frontend:
-    driver: ${NETWORKS_DRIVER}
-    ipam:
-      config:
-        - subnet: 192.168.123.40/29
-  backend:
-    driver: ${NETWORKS_DRIVER}
-    ipam:
-      config:
-        - subnet: 192.168.123.50/28
+  frontend: ~
+  backend: ~
+
 
 volumes:
   percona:
@@ -92,8 +80,8 @@ services:
     extra_hosts:
       - "dockerhost:${DOCKER_HOST_IP}"
       - "bezbahil.ru:84.201.185.203"
-    ports:
-      - "${WORKSPACE_SSH_PORT}:22"
+#    ports:
+#      - "${WORKSPACE_SSH_PORT}:22"
     tty: true
     restart: always
     environment:
@@ -328,6 +316,7 @@ services:
   percona:
     build:
       context: ./percona
+    user: "999:999"
     environment:
       - MYSQL_DATABASE=${PERCONA_DATABASE}
       - MYSQL_USER=${PERCONA_USER}
@@ -339,23 +328,23 @@ services:
       - ${DATA_PATH_LOGS}/mysql:/var/log/mysql
       - ./percona/my.cnf:/etc/my.cnf.d/my.cnf
     restart: always
-    ports:
-      - "${PERCONA_PORT}:3306"
+#    ports:
+#      - "${PERCONA_PORT}:3306"
     networks:
       - backend
 
   ### LogStash a.krylov #######################################
-  logstash:
-    build:
-      context: ./logstash
-    volumes:
-      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
-      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
-      - ./logstash/pipeline/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
-      - ${DATA_PATH_LOGS}/:/var/log
-      - ./logstash/pattern/:/opt/logstash/patterns/
-    networks:
-      - backend
+#  logstash:
+#    build:
+#      context: ./logstash
+#    volumes:
+#      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
+#      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+#      - ./logstash/pipeline/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+#      - ${DATA_PATH_LOGS}/:/var/log
+#      - ./logstash/pattern/:/opt/logstash/patterns/
+#    networks:
+#      - backend
 
   ### Node.js ########################################################
   node:
@@ -440,7 +429,7 @@ services:
         - INSTALL_SOAP=${PHP_FPM_INSTALL_SOAP}
         - INSTALL_IMAP=${PHP_FPM_INSTALL_IMAP}
         - INSTALL_MONGO=${PHP_FPM_INSTALL_MONGO}
-        - INSTALL_AMQP=${PHP_FPM_INSTALL_AMQP}
+        - INSTALL_AMQP=true
         - INSTALL_MSSQL=${PHP_FPM_INSTALL_MSSQL}
         - INSTALL_ZIP_ARCHIVE=${PHP_FPM_INSTALL_ZIP_ARCHIVE}
         - INSTALL_BCMATH=${PHP_FPM_INSTALL_BCMATH}
