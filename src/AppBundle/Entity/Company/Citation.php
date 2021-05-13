@@ -47,7 +47,7 @@ class Citation
    * Комментарий
    *
    * @var null|Comment
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\Comment")
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\Comment", inversedBy="citations")
    * @ORM\JoinColumn(name="comment_id", nullable=true, onDelete="CASCADE")
    */
   private $comment;

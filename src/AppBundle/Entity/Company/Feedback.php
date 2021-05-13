@@ -60,7 +60,7 @@ class Feedback
    * Филиал компании
    *
    * @var null|InsuranceCompanyBranch
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\InsuranceCompanyBranch")
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company\InsuranceCompanyBranch", inversedBy="feedbacks")
    * @ORM\JoinColumn(name="branch_id", nullable=true, onDelete="RESTRICT")
    */
   private $branch;
