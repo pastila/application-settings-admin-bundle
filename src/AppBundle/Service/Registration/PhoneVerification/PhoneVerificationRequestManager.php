@@ -134,7 +134,7 @@ class PhoneVerificationRequestManager
     return $this->phoneVerificationRequest;
   }
 
-  private function persist()
+  public function persist()
   {
     $this->session->set(self::SESSION_KEY, serialize($this->getVerificationRequest()));
   }

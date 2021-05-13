@@ -6,6 +6,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Obrashcheniya\ObrashcheniyaFile;
 use AppBundle\Entity\OmsChargeComplaint\OmsChargeComplaint;
 use AppBundle\Form\Obrashcheniya\OmsChargeComplaint1stStepType;
+use AppBundle\Form\Obrashcheniya\OmsChargeComplaint2ndStepType;
+use AppBundle\Form\Obrashcheniya\OmsChargeComplaint3rdStepType;
 use AppBundle\Service\Obrashcheniya\OmsChargeComplaintSessionPersister;
 use AppBundle\Service\Obrashcheniya\OmsChargeComplaintSessionResolver;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -20,7 +22,9 @@ class AppealController extends Controller
 {
   const DRAFT_STEP_ROUTE_NAMES = [
     'oms_charge_complaint_index',
-    'oms_charge_complaint_2nd_step'
+    'oms_charge_complaint_2nd_step',
+    'oms_charge_complaint_3rd_step',
+    'oms_charge_complaint_4th_step',
   ];
 
   private $omsChargeComplaintSessionResolver;
@@ -80,7 +84,6 @@ class AppealController extends Controller
   public function secondStepAction(Request $request)
   {
     $complaintDraft = $this->omsChargeComplaintSessionResolver->resolve();
-
     $response = $this->validateDraftStep($complaintDraft, 2);
 
     if ($response)
@@ -88,12 +91,15 @@ class AppealController extends Controller
       return $response;
     }
 
-    $form = $this->createForm(OmsChargeComplaint1stStepType::class, $complaintDraft);
-
+    $form = $this->createForm(OmsChargeComplaint2ndStepType::class, $complaintDraft, [
+      'year' => $complaintDraft->getYear(),
+      'region' => $complaintDraft->getRegion(),
+    ]);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid())
     {
+      $complaintDraft->setDraftStep(3);
       $em = $this->getDoctrine()->getManager();
 
       $em->persist($form->getData());
@@ -101,11 +107,47 @@ class AppealController extends Controller
 
       $this->omsChargeComplaintSessionPersister->persist($complaintDraft);
 
-      return $this->redirect('oms_charge_complaint_3rd_step');
+      return $this->redirect($this->generateUrl('oms_charge_complaint_3rd_step'));
     }
 
     return $this->render('AppBundle:OmsChargeComplaint:step2.html.twig', [
-      'form' => $form->createView()
+      'form' => $form->createView(),
+      'complaintDraft' => $complaintDraft,
+    ]);
+  }
+
+  /**
+   * @Route("/oms-charge-complaint/step-3", name="oms_charge_complaint_3rd_step")
+   */
+  public function thirdStepAction(Request $request)
+  {
+    $complaintDraft = $this->omsChargeComplaintSessionResolver->resolve();
+    $response = $this->validateDraftStep($complaintDraft, 3);
+
+    if ($response)
+    {
+      return $response;
+    }
+
+    $form = $this->createForm(OmsChargeComplaint3rdStepType::class, $complaintDraft);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid())
+    {
+      $complaintDraft->setDraftStep(4);
+      $em = $this->getDoctrine()->getManager();
+
+      $em->persist($form->getData());
+      $em->flush();
+
+      $this->omsChargeComplaintSessionPersister->persist($complaintDraft);
+
+      return $this->redirect('oms_charge_complaint_4th_step');
+    }
+
+    return $this->render('AppBundle:OmsChargeComplaint:step3.html.twig', [
+      'form' => $form->createView(),
+      'complaintDraft' => $complaintDraft,
     ]);
   }
 

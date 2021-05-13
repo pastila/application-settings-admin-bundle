@@ -25,6 +25,9 @@ class OmsChargeComplaintSessionResolver
     $this->session = $session;
   }
 
+  /**
+   * @return OmsChargeComplaint
+   */
   public function resolve()
   {
     $omsChargeComplaint = $this->omsChargeComplaintRepository->findOneBy([

@@ -62,9 +62,9 @@ class OmsChargeComplaint
   private $medicalOrganization;
 
   /**
-   * Плановое обращение или неотложное
+   * Плановое обращение(false) или неотложное(true)
    *
-   * @var bool
+   * @var bool|null
    *
    * @ORM\Column(type="boolean", nullable=true)
    *
@@ -172,7 +172,7 @@ class OmsChargeComplaint
   /**
    * @return bool
    */
-  public function isUrgent(): bool
+  public function isUrgent(): ?bool
   {
     return $this->urgent;
   }

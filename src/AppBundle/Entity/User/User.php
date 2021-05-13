@@ -92,7 +92,7 @@ class User extends BaseUser implements PhoneVerificationAwareInterface
    * @var boolean
    * @ORM\Column(type="boolean", nullable=false, options={"default"=false})
    */
-  private $termsAndConditionsAccepted;
+  private $termsAndConditionsAccepted=false;
 
   /**
    * @var string
