@@ -19,36 +19,30 @@
 
 {% block main %}
     <div class="app__content">
-        {% include "AppBundle:OmsChargeComplaint:_roadmap.html.twig" with { step: 2 } %}
+        {% include "AppBundle:OmsChargeComplaint:_roadmap.html.twig" with { step: 4 } %}
         <div class="form">
             <div class="formarea">
                 <div class="formarea__title">
                     <div class="formarea__title__name">
-                        Медицинская организация
+                        Заболевание
                     </div>
                     <div class="formarea__title__question-mark">
                         <div class="formarea__title__question-mark__image">
-                            <img src="{{ asset('gulp/images/svg/oms-charge-complaint-question.svg') }}" title="Обращение в медицинскую организацию, не связанное
-                        с ухудшением
-                        здоровья.
-                        Это обращение “без жалоб”,
-                        когда вы приходите, чтобы пройти очередное обследование по поводу имеющегося хронического
-                        заболевания для контроля состояния и лечения. При этом важно, что ухудшения состояния нет.
-                        Также к
-                        плановым обращениям относятся визиты для прохождения профилактичес- ких осмотров,
-                        диспансеризации.">
+                            <img src="{{ asset('gulp/images/svg/oms-charge-complaint-question.svg') }}" title="Укажите заболевание по поводу которого вы
+                        обратились
+                        за медицинской помощью.
+                        Если точного диагноза вы не знаете, укажите наиболее близкий к нему.">
                         </div>
                     </div>
                 </div>
                 {{ form_start(form) }}
                     <div class="formarea__form-field">
                         <div class="form-item">
-                            {{ form_errors(form.medicalOrganization) }}
-                            {{ form_widget(form.medicalOrganization, {'attr': {'class': 'form-item__input'}}) }}
-{#                            <input type="text" class="form-item__input">#}
+{#                            <input type="text" class="form-item__input" placeholder="Начните вводить наименование">#}
+                            {{ form_widget(form, {'attr' : {'class': 'form-item__input', 'placeholder': 'Начните вводить наименование'}}) }}
                             <div class="form-item__exist">
-                                <a href="#">Организации нет в списке?</a>
-                                <div class="form-item__error-message">Организации нет в списке</div>
+                                <a href="#">Заболевания нет в списке?</a>
+                                <div class="form-item__error-message">Заболевания нет в списке</div>
                             </div>
                         </div>
                     </div>
@@ -57,10 +51,10 @@
                     </div>
                     <div class="formarea__buttonarea">
                         <div class="formarea__buttonarea__buttons">
-                            <a href="{{ path('oms_charge_complaint_index') }}" class="btn2 formarea__buttonarea__buttons__prev-button"><img
+                            <button class="btn2 formarea__buttonarea__buttons__prev-button"><img
                                         src="{{ asset('gulp/images/svg/oms-charge-complaint-prev-step-arrow.svg') }}">Назад
-                            </a>
-                            <button class="btn2 formarea__buttonarea__buttons__next-button">К выбору обращения <img
+                            </button>
+                            <button class="btn2 formarea__buttonarea__buttons__next-button">Узнать результат <img
                                         src="{{ asset('gulp/images/svg/oms-charge-complaint-next-step-arrow.svg') }}">
                             </button>
                         </div>
@@ -81,6 +75,14 @@
                 <div class="formarea__description__item">
                     <div class="formarea__description__item__formfield-name">Медицинская организация</div>
                     <div class="formarea__description__item__formfield-value">{{ complaintDraft.medicalOrganization ? complaintDraft.medicalOrganization.name : '' }}</div>
+                </div>
+                <div class="formarea__description__item">
+                    <div class="formarea__description__item__formfield-name">Обращение</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.urgent ? 'Неотложное' : 'Плановое' }}</div>
+                </div>
+                <div class="formarea__description__item">
+                    <div class="formarea__description__item__formfield-name">Заболевание</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.disease ? complaintDraft.disease.name : '' }}</div>
                 </div>
             </div>
         </div>

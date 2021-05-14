@@ -70,11 +70,11 @@
             <div class="formarea__description">
                 <div class="formarea__description__item">
                     <div class="formarea__description__item__formfield-name">Регион</div>
-                    <div class="formarea__description__item__formfield-value">15 Республика Северная Осетия-Алания</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.region ? complaintDraft.region.name : '' }}</div>
                 </div>
                 <div class="formarea__description__item">
                     <div class="formarea__description__item__formfield-name">Год оказания услуги</div>
-                    <div class="formarea__description__item__formfield-value">2021</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.year }}</div>
                 </div>
             </div>
         </div>

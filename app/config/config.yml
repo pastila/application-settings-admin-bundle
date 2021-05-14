@@ -59,6 +59,7 @@ twig:
     - 'Form/bezbahil_form_theme.html.twig'
     - 'SonataCoreBundle:Form:datepicker.html.twig'
     - '@App/form/taxon_jstree_widget.html.twig'
+    - '@App/form/form.html.twig'
 
 # Doctrine Configuration
 doctrine:

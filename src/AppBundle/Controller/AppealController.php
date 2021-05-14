@@ -8,6 +8,8 @@ use AppBundle\Entity\OmsChargeComplaint\OmsChargeComplaint;
 use AppBundle\Form\Obrashcheniya\OmsChargeComplaint1stStepType;
 use AppBundle\Form\Obrashcheniya\OmsChargeComplaint2ndStepType;
 use AppBundle\Form\Obrashcheniya\OmsChargeComplaint3rdStepType;
+use AppBundle\Form\Obrashcheniya\OmsChargeComplaint4thStepType;
+use AppBundle\Form\Obrashcheniya\OmsChargeComplaint5thStepType;
 use AppBundle\Service\Obrashcheniya\OmsChargeComplaintSessionPersister;
 use AppBundle\Service\Obrashcheniya\OmsChargeComplaintSessionResolver;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -54,27 +56,23 @@ class AppealController extends Controller
   public function indexAction(Request $request)
   {
     $complaintDraft = $this->omsChargeComplaintSessionResolver->resolve();
-
     $form = $this->createForm(OmsChargeComplaint1stStepType::class, $complaintDraft);
-
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid())
     {
       $complaintDraft->setDraftStep(2);
-
       $em = $this->getDoctrine()->getManager();
-
       $em->persist($form->getData());
       $em->flush();
-
       $this->omsChargeComplaintSessionPersister->persist($complaintDraft);
 
       return $this->redirectToRoute('oms_charge_complaint_2nd_step');
     }
 
     return $this->render('AppBundle:OmsChargeComplaint:index.html.twig', [
-      'form' => $form->createView()
+      'form' => $form->createView(),
+      'complaintDraft' => $complaintDraft,
     ]);
   }
 
@@ -142,11 +140,64 @@ class AppealController extends Controller
 
       $this->omsChargeComplaintSessionPersister->persist($complaintDraft);
 
-      return $this->redirect('oms_charge_complaint_4th_step');
+      return $this->redirect($this->generateUrl('oms_charge_complaint_4th_step'));
     }
 
     return $this->render('AppBundle:OmsChargeComplaint:step3.html.twig', [
       'form' => $form->createView(),
+      'complaintDraft' => $complaintDraft,
+    ]);
+  }
+
+  /**
+   * @Route("/oms-charge-complaint/step-4", name="oms_charge_complaint_4th_step")
+   */
+  public function fourthStepAction(Request $request)
+  {
+    $complaintDraft = $this->omsChargeComplaintSessionResolver->resolve();
+    $response = $this->validateDraftStep($complaintDraft, 4);
+
+    if ($response)
+    {
+      return $response;
+    }
+
+    $form = $this->createForm(OmsChargeComplaint4thStepType::class, $complaintDraft);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid())
+    {
+      $complaintDraft->setDraftStep(5);
+      $em = $this->getDoctrine()->getManager();
+
+      $em->persist($form->getData());
+      $em->flush();
+
+      $this->omsChargeComplaintSessionPersister->persist($complaintDraft);
+
+      return $this->redirect($this->generateUrl('oms_charge_complaint_5th_step'));
+    }
+
+    return $this->render('AppBundle:OmsChargeComplaint:step4.html.twig', [
+      'form' => $form->createView(),
+      'complaintDraft' => $complaintDraft,
+    ]);
+  }
+
+  /**
+   * @Route("/oms-charge-complaint/step-5", name="oms_charge_complaint_5th_step")
+   */
+  public function fifthStepAction(Request $request)
+  {
+    $complaintDraft = $this->omsChargeComplaintSessionResolver->resolve();
+    $response = $this->validateDraftStep($complaintDraft, 5);
+
+    if ($response)
+    {
+      return $response;
+    }
+
+    return $this->render('AppBundle:OmsChargeComplaint:step5.html.twig', [
       'complaintDraft' => $complaintDraft,
     ]);
   }
@@ -198,9 +249,9 @@ class AppealController extends Controller
   {
     if ($omsChargeComplaint->getDraftStep() < $step)
     {
-      if (isset(self::DRAFT_STEP_ROUTE_NAMES[$step-1]))
+      if (isset(self::DRAFT_STEP_ROUTE_NAMES[$step - 1]))
       {
-        return $this->redirectToRoute(self::DRAFT_STEP_ROUTE_NAMES[$step-1]);
+        return $this->redirectToRoute(self::DRAFT_STEP_ROUTE_NAMES[$step - 1]);
       }
 
       // Если такого шага нет, вернем на первый шаг
