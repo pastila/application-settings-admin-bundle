@@ -41,7 +41,7 @@
 {#                            <input type="text" class="form-item__input" placeholder="Начните вводить наименование">#}
                             {{ form_widget(form, {'attr' : {'class': 'form-item__input', 'placeholder': 'Начните вводить наименование'}}) }}
                             <div class="form-item__exist">
-                                <a href="#">Заболевания нет в списке?</a>
+                                <a href="{{ path('not_insurance_case') }}">Заболевания нет в списке?</a>
                                 <div class="form-item__error-message">Заболевания нет в списке</div>
                             </div>
                         </div>

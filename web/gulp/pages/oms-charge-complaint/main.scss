@@ -601,13 +601,13 @@
   }
 
   .insurance-case {
-    &_success {
-      display: inherit !important;
-    }
-
-    &_reject {
-      display: none !important;
-    }
+    //&_success {
+    //  display: inherit !important;
+    //}
+    //
+    //&_reject {
+    //  display: none !important;
+    //}
 
     &_note {
       margin-top: 0px;

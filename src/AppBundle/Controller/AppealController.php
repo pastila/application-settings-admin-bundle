@@ -9,7 +9,6 @@ use AppBundle\Form\Obrashcheniya\OmsChargeComplaint1stStepType;
 use AppBundle\Form\Obrashcheniya\OmsChargeComplaint2ndStepType;
 use AppBundle\Form\Obrashcheniya\OmsChargeComplaint3rdStepType;
 use AppBundle\Form\Obrashcheniya\OmsChargeComplaint4thStepType;
-use AppBundle\Form\Obrashcheniya\OmsChargeComplaint5thStepType;
 use AppBundle\Service\Obrashcheniya\OmsChargeComplaintSessionPersister;
 use AppBundle\Service\Obrashcheniya\OmsChargeComplaintSessionResolver;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -27,6 +26,8 @@ class AppealController extends Controller
     'oms_charge_complaint_2nd_step',
     'oms_charge_complaint_3rd_step',
     'oms_charge_complaint_4th_step',
+    'oms_charge_complaint_5th_step',
+    'oms_charge_complaint_6th_step',
   ];
 
   private $omsChargeComplaintSessionResolver;
@@ -197,7 +198,56 @@ class AppealController extends Controller
       return $response;
     }
 
+    if ($this->isGranted('ROLE_USER'))
+    {
+      $complaintDraft->setDraftStep(6);
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($complaintDraft);
+      $em->flush();
+      $this->omsChargeComplaintSessionPersister->persist($complaintDraft);
+
+      return $this->redirectToRoute(self::DRAFT_STEP_ROUTE_NAMES[5]);
+    }
+
+    $csrfToken = $this->get('security.csrf.token_manager')->getToken('authenticate')->getValue();
+    $lastUsername = $request->getSession()->get('_security.last_username');
+    $lastError = $request->getSession()->get('_security.last_error');
+    $request->getSession()->remove('_security.last_error');
+
     return $this->render('AppBundle:OmsChargeComplaint:step5.html.twig', [
+      'complaintDraft' => $complaintDraft,
+      'csrfToken' => $csrfToken,
+      'lastUsername' => $lastUsername,
+      'lastError' => $lastError,
+    ]);
+  }
+
+  /**
+   * @Route(name="oms_charge_complaint_6th_step", path="oms-charge-complaint/step-6")
+   */
+  public function sixthStepAction ()
+  {
+    $complaintDraft = $this->omsChargeComplaintSessionResolver->resolve();
+    $response = $this->validateDraftStep($complaintDraft, 6);
+
+    if ($response)
+    {
+      return $response;
+    }
+
+    return $this->render('AppBundle:OmsChargeComplaint:step6.html.twig', [
+      'complaintDraft' => $complaintDraft,
+    ]);
+  }
+
+  /**
+   * @Route(name="not_insurance_case", methods={"GET"}, path="/oms-charge-complaint/not-insurance-case")
+   * @param Request $request
+   */
+  public function notInsuranceCaseAction (Request $request)
+  {
+    $complaintDraft = $this->omsChargeComplaintSessionResolver->resolve();
+    return $this->render('@App/OmsChargeComplaint/not_insurance_case.html.twig', [
       'complaintDraft' => $complaintDraft,
     ]);
   }
