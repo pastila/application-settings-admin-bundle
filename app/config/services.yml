@@ -19,6 +19,7 @@ services:
             $smsPublicKey: '%sms_public_key%'
             $smsUrl: '%sms_url%'
             $smsProtocolVersion: '%sms_protocol_version%'
+            $fileStorageDir: '%kernel.root_dir%/../var/uploads/files'
 
 
     _instanceof:
@@ -51,6 +52,13 @@ services:
             - '@validator'
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+
+    AppBundle\EventListener\FileUploadListener:
+      class: AppBundle\EventListener\FileUploadListener
+      autowire: true
+      autoconfigure: true
+      tags:
+        - { name: doctrine.event_subscriber }
 
 #    twig.extension.EndingFormatter:
 #        class: AppBundle\Twig\EndingFormatTwigExtension

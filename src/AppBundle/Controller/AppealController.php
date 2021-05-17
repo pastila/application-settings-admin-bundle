@@ -5,10 +5,14 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Obrashcheniya\ObrashcheniyaFile;
 use AppBundle\Entity\OmsChargeComplaint\OmsChargeComplaint;
+use AppBundle\Entity\OmsChargeComplaint\OmsChargeComplaintDocument;
+use AppBundle\Entity\User\Patient;
 use AppBundle\Form\Obrashcheniya\OmsChargeComplaint1stStepType;
 use AppBundle\Form\Obrashcheniya\OmsChargeComplaint2ndStepType;
 use AppBundle\Form\Obrashcheniya\OmsChargeComplaint3rdStepType;
 use AppBundle\Form\Obrashcheniya\OmsChargeComplaint4thStepType;
+use AppBundle\Form\Obrashcheniya\OmsChargeComplaint6thStepType;
+use AppBundle\Model\OmsChargeComplaint\OmsChargeComplaintPatientData;
 use AppBundle\Service\Obrashcheniya\OmsChargeComplaintSessionPersister;
 use AppBundle\Service\Obrashcheniya\OmsChargeComplaintSessionResolver;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -225,7 +229,7 @@ class AppealController extends Controller
   /**
    * @Route(name="oms_charge_complaint_6th_step", path="oms-charge-complaint/step-6")
    */
-  public function sixthStepAction ()
+  public function sixthStepAction (Request $request)
   {
     $complaintDraft = $this->omsChargeComplaintSessionResolver->resolve();
     $response = $this->validateDraftStep($complaintDraft, 6);
@@ -235,7 +239,60 @@ class AppealController extends Controller
       return $response;
     }
 
+    $form = $this->createForm(OmsChargeComplaint6thStepType::class, $complaintDraft);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid())
+    {
+      $existingPatient = $this->getDoctrine()->getRepository('AppBundle:User\Patient')
+        ->resolveByOmsChangeComplaint($complaintDraft, $this->getUser());
+
+      if ($existingPatient !== null)
+      {
+        $patient = $complaintDraft->getPatient();
+        $existingPatient->setPhone($patient->getPhone());
+        $existingPatient->setInsuranceCompany($patient->getInsuranceCompany());
+        $existingPatient->setInsurancePolicyNumber($patient->getInsuranceCompany());
+        $existingPatient->setRegion($patient->getRegion());
+        $existingPatient->setFirstName($patient->getFirstName());
+        $existingPatient->setLastName($patient->getLastName());
+        $existingPatient->setMiddleName($patient->getMiddleName());
+        $existingPatient->setUser($this->getUser());
+        $existingPatient->setBirthDate($patient->getBirthDate());
+        $complaintDraft->setPatient($existingPatient);
+      }
+
+      $complaintDraft->setDraftStep(7);
+      $em = $this->getDoctrine()->getManager();
+
+      $em->persist($complaintDraft);
+      $em->flush();
+
+      $this->omsChargeComplaintSessionPersister->persist($complaintDraft);
+
+      return $this->redirect($this->generateUrl('oms_charge_complaint_7th_step'));
+    }
+
     return $this->render('AppBundle:OmsChargeComplaint:step6.html.twig', [
+      'complaintDraft' => $complaintDraft,
+      'form' => $form->createView(),
+    ]);
+  }
+
+  /**
+   * @Route(name="oms_charge_complaint_7th_step", path="oms-charge-complaint/step-7")
+   */
+  public function seventhStepAction (Request $request)
+  {
+    $complaintDraft = $this->omsChargeComplaintSessionResolver->resolve();
+    $response = $this->validateDraftStep($complaintDraft, 7);
+
+    if ($response)
+    {
+      return $response;
+    }
+
+    return $this->render('AppBundle:OmsChargeComplaint:step7.html.twig', [
       'complaintDraft' => $complaintDraft,
     ]);
   }

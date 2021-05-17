@@ -19,50 +19,100 @@
 
 {% block main %}
     <div class="app__content">
-        {% include "AppBundle:OmsChargeComplaint:_roadmap.html.twig" with { step: '6' } %}
+        <div class="roadmap">
+            <div class="roadmap__wrap">
+                <div class="roadmap__item">
+                    <div class="roadmap__item__image">
+                        <div class="step-number">2</div>
+                    </div>
+                </div>
+                <div class="roadmap__item">
+                    <div class="roadmap__item__image">
+                        <div class="step-number">3</div>
+                    </div>
+                    <div class="roadmap__item__description">Каким было обращение</div>
+                </div>
+                <div class="roadmap__item">
+                    <div class="roadmap__item__image">
+                        <div class="step-number">4</div>
+                    </div>
+                    <div class="roadmap__item__description">Заболевание</div>
+                </div>
+                <div class="roadmap__item">
+                    <div class="roadmap__item__image">
+                        <div class="step-number">5</div>
+                    </div>
+                    <div class="roadmap__item__description">Результат</div>
+                </div>
+                <div class="roadmap__item roadmap__item_current ">
+                    <div class="roadmap__item__image">
+                        <img src="{{ asset('gulp/images/svg/oms-charge-complaint-roadmap-step6.svg') }}">
+                    </div>
+                    <div class="roadmap__item__description">Оформить обращение</div>
+                </div>
+            </div>
+        </div>
         <div class="form">
             <div class="formarea">
                 <div class="formarea__title">
                     Данные пациента
                 </div>
-                <form>
+                {{ form_start(form) }}
                     <div class="formarea__form-field">
                         <div class="form-item">
-                            <input type="text" placeholder="Фамилия" required>
+{#                            <input type="text" placeholder="Фамилия" required>#}
+                            {{ form_errors(form.patient.lastName) }}
+                            {{ form_widget(form.patient.lastName, {'attr': {'placeholder': 'Фамилия'}}) }}
                         </div>
                         <div class="form-item">
-                            <input type="text" placeholder="Имя" required>
+{#                            <input type="text" placeholder="Имя" required>#}
+                            {{ form_errors(form.patient.firstName) }}
+                            {{ form_widget(form.patient.firstName, {'attr': {'placeholder': 'Имя'}}) }}
                         </div>
                         <div class="form-item">
-                            <input type="text" placeholder="Отчество" required>
+{#                            <input type="text" placeholder="Отчество" required>#}
+                            {{ form_errors(form.patient.middleName) }}
+                            {{ form_widget(form.patient.middleName, {'attr': {'placeholder': 'Отчество'}}) }}
                         </div>
                         <div class="form-item">
-                            <input type="date" placeholder="Дата рождения">
+{#                            <input type="date" placeholder="Дата рождения">#}
+                            {{ form_errors(form.patient.birthDate) }}
+                            {{ form_widget(form.patient.birthDate, {'attr': {'placeholder': 'Дата рождения'}}) }}
                         </div>
                         <div class="form-item">
-                            <input type="text" placeholder="Номер полиса" required>
+{#                            <input type="text" placeholder="Номер полиса" required>#}
+                            {{ form_errors(form.patient.insurancePolicyNumber) }}
+                            {{ form_widget(form.patient.insurancePolicyNumber, {'attr': {'placeholder': 'Номер полиса'}}) }}
                         </div>
                         <div class="form-item">
-                            <input type="text" placeholder="Регион страховой компании" required>
+{#                            <input type="text" placeholder="Регион страховой компании" required>#}
+                            {{ form_errors(form.patient.region) }}
+                            {{ form_widget(form.patient.region, {'attr': {'placeholder': 'Регион страховой компании'}}) }}
                         </div>
                         <div class="form-item">
-                            <input type="text" placeholder="Страховая компания" required>
+{#                            <input type="text" placeholder="Страховая компания" required>#}
+                            {{ form_errors(form.patient.insuranceCompany) }}
+                            {{ form_widget(form.patient.insuranceCompany, {'attr': {'placeholder': 'Страховая компания'}}) }}
                         </div>
                         <div class="form-item">
-                            <input type="date" placeholder="Дата оплаты услуги" required>
+{#                            <input type="date" placeholder="Дата оплаты услуги" required>#}
+                            {{ form_errors(form.paidAt) }}
+                            {{ form_widget(form.paidAt, {'attr': {'placeholder': 'Дата оплаты услуги'}}) }}
                         </div>
-                        <div class="form-item form-item_file-field">
-                            <button type="button"><img
-                                        src="{{ asset('gulp/images/svg/oms-charge-complaint-file-blank.svg') }}"/>
-                            </button>
-                            <div class="form-item_file-field__file-info">Скан квитанции.pdf <br> 1.1 MB</div>
-                            <button type="button"><img
-                                        src="{{ asset('gulp/images/svg/oms-charge-complaint-file-trash.svg') }}"/>
-                            </button>
-                        </div>
+{#                        <div class="form-item form-item_file-field">#}
+{#                            <button type="button"><img#}
+{#                                        src="{{ asset('gulp/images/svg/oms-charge-complaint-file-blank.svg') }}"/>#}
+{#                            </button>#}
+{#                            <div class="form-item_file-field__file-info">Скан квитанции.pdf <br> 1.1 MB</div>#}
+{#                            <button type="button"><img#}
+{#                                        src="{{ asset('gulp/images/svg/oms-charge-complaint-file-trash.svg') }}"/>#}
+{#                            </button>#}
+{#                        </div>#}
                         <div class="form-item">
-                            <input type="file" id="file-input" multiple accept="image/jpeg,image/pdf" required>
-                            <label for="file-input" class="file-input-label">
+{#                            <input type="file" id="file-input" multiple accept="image/jpeg,image/pdf" required>#}
+                            {{ form_errors(form.documents) }}
+                            {{ form_widget(form.documents) }}
+                            <label for="{{ form.documents.vars.id }}" class="file-input-label">
                                 <div class="file-input-label__description">Перенесите или <a>Загрузите</a>
                                     сюда документы об оплате
                                 </div>
@@ -76,14 +126,17 @@
                             <div class="form-item_phone-field__question-mark">
                                 <img src="{{ asset('gulp/images/svg/oms-charge-complaint-question-grey.svg') }}" title="Укажите телефон заявителя обращения">
                             </div>
-                            <input type="phone" placeholder="+7 (xxx) xxx-xx-xx"
-                                   pattern="7[0-9]{8}" required>
+{#                            <input type="phone" placeholder="+7 (xxx) xxx-xx-xx" pattern="7[0-9]{8}" required>#}
+                            {{ form_widget(form.patient.phone, {'attr': {'placeholder': '+7 (xxx) xxx-xx-xx', 'pattern':'7[0-9]{10}'}}) }}
                         </div>
-                        <div class="form-item form-item_error">
-                            <input type="text" placeholder="SMS-код" required>
+                        <div class="form-item {# form-item_error#}">
+{#                            <input type="text" placeholder="SMS-код" required>#}
+                            {{ form_widget(form.verifySmsCode, {'attr': {'placeholder': 'SMS-код'}}) }}
                             <div class="form-item__exist">
                                 <a href="#">Посмотреть сформированное обращение</a>
-                                <div class="form-item__error-message">Не верный код</div>
+                                {% if form_errors(form.verifySmsCode) %}
+                                <div class="form-item__error-message">{{ form_errors(form.verifySmsCode) }}</div>
+                                {% endif %}
                             </div>
                             <button class="form-item__send-code-button">Подтвердить</button>
                             <button class="form-item__send-code-button form-item__send-code-button-again">Отправить ещё раз <img
@@ -104,30 +157,30 @@
                             с&nbsp;<a href="#">политикой&nbsp;конфиденциальности</a> и правилами <a href="#">предоставления
                                 услуг</a></div>
                     </div>
-                </form>
+                {{ form_end(form) }}
             </div>
             <input id="sidebar-expand" type="checkbox" class="formarea-description-sidebar-expand">
             <label for="sidebar-expand" class="formarea-description-sidebar-expand-label"><img src="{{ asset('gulp/images/svg/oms-charge-complaint-sidebar-expand.svg') }}"></label>
             <div class="formarea__description">
                 <div class="formarea__description__item">
                     <div class="formarea__description__item__formfield-name">Регион</div>
-                    <div class="formarea__description__item__formfield-value">15 Республика Северная Осетия-Алания</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.region ? complaintDraft.region.name : '' }}</div>
                 </div>
                 <div class="formarea__description__item">
                     <div class="formarea__description__item__formfield-name">Год оказания услуги</div>
-                    <div class="formarea__description__item__formfield-value">2021</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.year }}</div>
                 </div>
                 <div class="formarea__description__item">
                     <div class="formarea__description__item__formfield-name">Медицинская организация</div>
-                    <div class="formarea__description__item__formfield-value">Доктор плюс</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.medicalOrganization ? complaintDraft.medicalOrganization.name : '' }}</div>
                 </div>
                 <div class="formarea__description__item">
                     <div class="formarea__description__item__formfield-name">Обращение</div>
-                    <div class="formarea__description__item__formfield-value">Плановое</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.urgent ? 'Неотложное' : 'Плановое' }}</div>
                 </div>
                 <div class="formarea__description__item">
                     <div class="formarea__description__item__formfield-name">Заболевание</div>
-                    <div class="formarea__description__item__formfield-value">ОРВИ</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.disease ? complaintDraft.disease.name : '' }}</div>
                 </div>
                 <div class="formarea__description__item">
                     <div class="formarea__description__item__formfield-name">Фамилия</div>
