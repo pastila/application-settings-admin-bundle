@@ -5,14 +5,12 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Obrashcheniya\ObrashcheniyaFile;
 use AppBundle\Entity\OmsChargeComplaint\OmsChargeComplaint;
-use AppBundle\Entity\OmsChargeComplaint\OmsChargeComplaintDocument;
 use AppBundle\Entity\User\Patient;
 use AppBundle\Form\Obrashcheniya\OmsChargeComplaint1stStepType;
 use AppBundle\Form\Obrashcheniya\OmsChargeComplaint2ndStepType;
 use AppBundle\Form\Obrashcheniya\OmsChargeComplaint3rdStepType;
 use AppBundle\Form\Obrashcheniya\OmsChargeComplaint4thStepType;
 use AppBundle\Form\Obrashcheniya\OmsChargeComplaint6thStepType;
-use AppBundle\Model\OmsChargeComplaint\OmsChargeComplaintPatientData;
 use AppBundle\Service\Obrashcheniya\OmsChargeComplaintSessionPersister;
 use AppBundle\Service\Obrashcheniya\OmsChargeComplaintSessionResolver;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -26,7 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AppealController extends Controller
 {
   const DRAFT_STEP_ROUTE_NAMES = [
-    'oms_charge_complaint_index',
+    1 => 'oms_charge_complaint_index',
     'oms_charge_complaint_2nd_step',
     'oms_charge_complaint_3rd_step',
     'oms_charge_complaint_4th_step',

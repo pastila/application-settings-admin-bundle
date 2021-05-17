@@ -53,6 +53,16 @@
                             <div class="hidden-password"></div>
                             <input type="password" name="_password" placeholder="Пароль" required>
                         </div>
+                        <div class="form-item">
+                            <div class="popup-login-content__links">
+                                <a href="{{ path('fos_user_resetting_request') }}" class="popup-login-content__links__item">
+                                    Забыли пароль ?
+                                </a>
+                                <a href="{{ path('fos_user_registration_register', {'backUrl': url('oms_charge_complaint_5th_step')}) }}" class="popup-login-content__links__item">
+                                    Зарегистрироваться
+                                </a>
+                            </div>
+                        </div>
                     </div>
                     <div class="formarea__buttonarea insurance-case_success">
                         <div class="formarea__buttonarea__buttons">

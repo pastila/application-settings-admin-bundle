@@ -221,3 +221,10 @@ services:
         - '%fos_user.resetting.token_ttl%'
       tags:
         - { name: kernel.event_subscriber }
+
+    AppBundle\EventListener\Security\RegistrationCompleteUrlListener:
+      class: AppBundle\EventListener\Security\RegistrationCompleteUrlListener
+      autowire: true
+      autoconfigure: true
+      tags:
+        - { name: kernel.event_subscriber }
