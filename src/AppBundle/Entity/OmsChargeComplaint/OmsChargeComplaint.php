@@ -283,7 +283,7 @@ class OmsChargeComplaint
   /**
    * @return DateTime
    */
-  public function getPaidAt(): DateTime
+  public function getPaidAt(): ?DateTime
   {
     return $this->paidAt;
   }

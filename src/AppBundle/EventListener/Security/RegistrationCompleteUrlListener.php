@@ -2,14 +2,16 @@
 
 namespace AppBundle\EventListener\Security;
 
-use FOS\UserBundle\Event\FormEvent;
+use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\FOSUserEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class RegistrationCompleteUrlListener implements EventSubscriberInterface
 {
+  /*
+   * Запоминаем backUrl на странице регистрации
+   */
   public function onInitialize (GetResponseUserEvent $event)
   {
     $request = $event->getRequest();
@@ -20,14 +22,16 @@ class RegistrationCompleteUrlListener implements EventSubscriberInterface
     }
   }
 
-  public function onSuccess (FormEvent $event)
+  /*
+   * После подтверждения email редиректим на нужную страницу
+   */
+  public function onSuccess (FilterUserResponseEvent $event)
   {
     $request = $event->getRequest();
 
     if ($request->getSession()->get('registration_complete_url'))
     {
-      $response = new RedirectResponse($request->getSession()->get('registration_complete_url'));
-      $event->setResponse($response);
+      $event->getResponse()->setTargetUrl($request->getSession()->get('registration_complete_url'));
       $request->getSession()->remove('registration_complete_url');
     }
   }
@@ -36,7 +40,7 @@ class RegistrationCompleteUrlListener implements EventSubscriberInterface
   {
     return [
       FOSUserEvents::REGISTRATION_INITIALIZE => ['onInitialize'],
-      FOSUserEvents::REGISTRATION_SUCCESS => ['onSuccess'],
+      FOSUserEvents::REGISTRATION_CONFIRMED => ['onSuccess'],
     ];
   }
 

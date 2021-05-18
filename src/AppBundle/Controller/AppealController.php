@@ -208,7 +208,7 @@ class AppealController extends Controller
       $em->flush();
       $this->omsChargeComplaintSessionPersister->persist($complaintDraft);
 
-      return $this->redirectToRoute(self::DRAFT_STEP_ROUTE_NAMES[5]);
+      return $this->redirectToRoute('oms_charge_complaint_6th_step');
     }
 
     $csrfToken = $this->get('security.csrf.token_manager')->getToken('authenticate')->getValue();
