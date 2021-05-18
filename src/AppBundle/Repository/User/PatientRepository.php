@@ -16,6 +16,20 @@ class PatientRepository extends ServiceEntityRepository
   }
 
   /**
+   * @param User $user
+   * @return int
+   */
+  public function countByUser (User $user)
+  {
+    return (int)$this->createQueryBuilder('p')
+      ->where('p.user = :user')
+      ->setParameter('user', $user)
+      ->select('COUNT(p)')
+      ->getQuery()
+      ->getSingleScalarResult();
+  }
+
+  /**
    * @param OmsChargeComplaint $chargeComplaint
    * @param User|null $user
    * @return Patient|null

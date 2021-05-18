@@ -154,7 +154,7 @@
                         </div>
                         <div class="formarea__buttonarea__description">Нажимая на кнопку «Отправить обращение» вы
                             соглашаетесь
-                            с&nbsp;<a href="#">политикой&nbsp;конфиденциальности</a> и правилами <a href="#">предоставления
+                            с&nbsp;<a href="{{ setting('personal_data') }}">политикой&nbsp;конфиденциальности</a> и правилами <a href="{{ setting('agreement') }}">предоставления
                                 услуг</a></div>
                     </div>
                 {{ form_end(form) }}
@@ -184,23 +184,23 @@
                 </div>
                 <div class="formarea__description__item">
                     <div class="formarea__description__item__formfield-name">Фамилия</div>
-                    <div class="formarea__description__item__formfield-value">Фамилия</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.patient ? complaintDraft.patient.lastName : '' }}</div>
                 </div>
                 <div class="formarea__description__item">
                     <div class="formarea__description__item__formfield-name">Имя</div>
-                    <div class="formarea__description__item__formfield-value">Имя</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.patient ? complaintDraft.patient.firstName : '' }}</div>
                 </div>
                 <div class="formarea__description__item">
                     <div class="formarea__description__item__formfield-name">Телефон</div>
-                    <div class="formarea__description__item__formfield-value">+7 (ххх) ххх-хх-хх</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.patient ? complaintDraft.patient.phone : '' }}</div>
                 </div>
                 <div class="formarea__description__item">
                     <div class="formarea__description__item__formfield-name">Регион</div>
-                    <div class="formarea__description__item__formfield-value">Регион</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.patient ? complaintDraft.patient.region : '' }}</div>
                 </div>
                 <div class="formarea__description__item">
                     <div class="formarea__description__item__formfield-name">Страховая компания</div>
-                    <div class="formarea__description__item__formfield-value">Страховая компания</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.patient ? complaintDraft.patient.insuranceCompany : '' }}</div>
                 </div>
             </div>
         </div>

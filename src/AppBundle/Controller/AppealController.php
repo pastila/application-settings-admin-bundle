@@ -11,6 +11,7 @@ use AppBundle\Form\Obrashcheniya\OmsChargeComplaint2ndStepType;
 use AppBundle\Form\Obrashcheniya\OmsChargeComplaint3rdStepType;
 use AppBundle\Form\Obrashcheniya\OmsChargeComplaint4thStepType;
 use AppBundle\Form\Obrashcheniya\OmsChargeComplaint6thStepType;
+use AppBundle\Form\Obrashcheniya\OmsChargeComplaintChoosePatientType;
 use AppBundle\Service\Obrashcheniya\OmsChargeComplaintSessionPersister;
 use AppBundle\Service\Obrashcheniya\OmsChargeComplaintSessionResolver;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -19,6 +20,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AppealController extends Controller
@@ -237,29 +239,71 @@ class AppealController extends Controller
       return $response;
     }
 
+    $nbPatients = $this->getDoctrine()->getRepository('AppBundle:User\Patient')->countByUser($this->getUser());
+
+    if ($nbPatients < 1)
+    {
+      return $this->redirectToRoute('oms_charge_complaint_6th_step_create');
+    }
+
+    $form = $this->createForm(OmsChargeComplaintChoosePatientType::class, null, [
+      'user' => $this->getUser(),
+    ]);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid())
+    {
+      /** @var Patient $patient */
+      $patient = $form->get('patient')->getData();
+
+      if ($patient instanceof Patient)
+      {
+        return $this->redirectToRoute('oms_charge_complaint_6th_step_edit', ['patientId' => $patient->getId()]);
+      }
+
+      return $this->redirectToRoute('oms_charge_complaint_6th_step_create');
+    }
+
+    return $this->render('AppBundle:OmsChargeComplaint:choose_patient.html.twig', [
+      'complaintDraft' => $complaintDraft,
+      'form' => $form->createView(),
+    ]);
+  }
+
+  /**
+   * @Route(name="oms_charge_complaint_6th_step_edit", path="oms-charge-complaint/step-6/{patientId}/edit")
+   * @Route(name="oms_charge_complaint_6th_step_create", path="oms-charge-complaint/step-6/create")
+   */
+  public function sixthStepEditAction (Request $request)
+  {
+    $complaintDraft = $this->omsChargeComplaintSessionResolver->resolve();
+    $response = $this->validateDraftStep($complaintDraft, 6);
+
+    if ($response)
+    {
+      return $response;
+    }
+
+    $patient = new Patient();
+    $patient->setUser($this->getUser());
+
+    if ($request->get('patientId'))
+    {
+      $patient = $this->getDoctrine()->getRepository('AppBundle:User\Patient')
+        ->findOneBy(['id' => $request->get('patientId'), 'user' => $this->getUser()]);
+
+      if ($patient === null)
+      {
+        throw new NotFoundHttpException(sprintf('Patient %s not found', $request->get('patientId')));
+      }
+    }
+
+    $complaintDraft->setPatient($patient);
     $form = $this->createForm(OmsChargeComplaint6thStepType::class, $complaintDraft);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid())
     {
-      $existingPatient = $this->getDoctrine()->getRepository('AppBundle:User\Patient')
-        ->resolveByOmsChangeComplaint($complaintDraft, $this->getUser());
-
-      if ($existingPatient !== null)
-      {
-        $patient = $complaintDraft->getPatient();
-        $existingPatient->setPhone($patient->getPhone());
-        $existingPatient->setInsuranceCompany($patient->getInsuranceCompany());
-        $existingPatient->setInsurancePolicyNumber($patient->getInsuranceCompany());
-        $existingPatient->setRegion($patient->getRegion());
-        $existingPatient->setFirstName($patient->getFirstName());
-        $existingPatient->setLastName($patient->getLastName());
-        $existingPatient->setMiddleName($patient->getMiddleName());
-        $existingPatient->setUser($this->getUser());
-        $existingPatient->setBirthDate($patient->getBirthDate());
-        $complaintDraft->setPatient($existingPatient);
-      }
-
       $complaintDraft->setDraftStep(7);
       $em = $this->getDoctrine()->getManager();
 

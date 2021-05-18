@@ -25,7 +25,7 @@ class OmsChargeComplaint6thStepType extends OmsChargeComplaintType
         ],
       ])
       ->add('documents', OmsChargeComplaintDocumentType::class, [
-        'required' => true,
+        'required' => false,
         'multiple' => true,
       ])
       ->add('verifySmsCode', TextType::class, [

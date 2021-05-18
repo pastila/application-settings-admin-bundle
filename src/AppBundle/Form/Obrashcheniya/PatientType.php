@@ -15,6 +15,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class PatientType extends AbstractType
 {
@@ -68,6 +69,12 @@ class PatientType extends AbstractType
       ])
       ->add('phone', TextType::class, [
         'required' => true,
+        'constraints' => [
+          new Regex([
+            'pattern' => '#^\+[0-9]{1,2}\s?\([0-9]{3}\)[0-9]+\-[0-9]+\-[0-9]+$#',
+            'message' => 'Неверный формат телефона',
+          ]),
+        ],
       ])
     ;
   }

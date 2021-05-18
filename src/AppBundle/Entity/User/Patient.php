@@ -46,10 +46,6 @@ class Patient
   /**
    * @var string
    * @ORM\Column(type="string", length=50, nullable=true)
-   * @Assert\Regex(
-   *   pattern = "#^\+[0-9]{1,2}\s?\([0-9]{3}\)[0-9]+\-[0-9]+\-[0-9]+$#",
-   *   message = "Неверный формат телефона"
-   * )
    */
   private $phone;
 
@@ -81,7 +77,7 @@ class Patient
 
   /**
    * @var User
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User\User")
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User\User", inversedBy="patients")
    * @ORM\JoinColumn(nullable=false)
    */
   private $user;
@@ -255,4 +251,23 @@ class Patient
     $this->user = $user;
     return $this;
   }
+
+  /**
+   * @return string
+   */
+  public function getFio ()
+  {
+    return implode(' ', array_filter([
+      $this->getLastName(),
+      $this->getFirstName(),
+      $this->getMiddleName(),
+    ]));
+  }
+
+  public function __toString ()
+  {
+    return $this->getFio() ? $this->getFio() : 'Новый пациент';
+  }
+
+
 }

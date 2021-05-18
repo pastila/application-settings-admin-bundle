@@ -1,0 +1,141 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {# <link rel="stylesheet" href="/landing/css/app.css"> #}
+    {# стили которые собираются дефолтной задачей gulp #}
+    <link rel="stylesheet" href="/local/templates/kdteam/pages/landing/landing.min.css">
+    <link rel="stylesheet" href="/local/templates/kdteam/pages/oms-charge-complaint/main.min.css">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">urlPrefix = '{{ app.request.getBaseURL() }}'
+    </script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="/dist/bundle.js"></script>
+    <script src="/local/templates/kdteam/pages/oms-charge-complaint/main.min.js"></script>
+{% endblock %}
+
+
+{% block main %}
+    <div class="app__content">
+        <div class="roadmap">
+            <div class="roadmap__wrap">
+                <div class="roadmap__item">
+                    <div class="roadmap__item__image">
+                        <div class="step-number">2</div>
+                    </div>
+                </div>
+                <div class="roadmap__item">
+                    <div class="roadmap__item__image">
+                        <div class="step-number">3</div>
+                    </div>
+                    <div class="roadmap__item__description">Каким было обращение</div>
+                </div>
+                <div class="roadmap__item">
+                    <div class="roadmap__item__image">
+                        <div class="step-number">4</div>
+                    </div>
+                    <div class="roadmap__item__description">Заболевание</div>
+                </div>
+                <div class="roadmap__item">
+                    <div class="roadmap__item__image">
+                        <div class="step-number">5</div>
+                    </div>
+                    <div class="roadmap__item__description">Результат</div>
+                </div>
+                <div class="roadmap__item roadmap__item_current ">
+                    <div class="roadmap__item__image">
+                        <img src="{{ asset('gulp/images/svg/oms-charge-complaint-roadmap-step6.svg') }}">
+                    </div>
+                    <div class="roadmap__item__description">Оформить обращение</div>
+                </div>
+            </div>
+        </div>
+        <div class="form">
+            <div class="formarea">
+                <div class="formarea__title">
+                    <div class="formarea__title__name">
+                        Выберите пациента
+                    </div>
+                </div>
+                {{ form_start(form) }}
+                {{ form_errors(form) }}
+                <div class="formarea__form-field">
+                    {% for item in form.patient %}
+                        <div class="form-item">
+                            <label for="{{ item.vars.id }}" class="form-item form-item__radio">
+                                {#                                    <input type="radio" id="scheduled-treatment" name="type-of-treatment">#}
+                                {{ form_errors(item) }}
+                                {{ form_widget(item) }}
+                                <div class="form-item__radio__labelarea">
+                                    <div class="form-item__radio__labelarea__name">{{ form_label(item) }}</div>
+{#                                    <div class="form-item__radio__labelarea__question-mark" >#}
+{#                                        <div class="form-item__radio__labelarea__question-mark__image">#}
+{#                                            <img src="{{ asset('gulp/images/svg/oms-charge-complaint-question-grey.svg') }}" title="{{ item.vars.help }}">#}
+{#                                        </div>#}
+{#                                    </div>#}
+                                </div>
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="formarea__buttonarea">
+                    <div class="formarea__buttonarea__buttons">
+                        <a href="{{ path('oms_charge_complaint_2nd_step') }}" class="btn2 formarea__buttonarea__buttons__prev-button"><img
+                                    src="{{ asset('gulp/images/svg/oms-charge-complaint-prev-step-arrow.svg') }}">Назад
+                        </a>
+                        <button class="btn2 formarea__buttonarea__buttons__next-button">К выбору заболевания <img
+                                    src="{{ asset('gulp/images/svg/oms-charge-complaint-next-step-arrow.svg') }}">
+                        </button>
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            </div>
+            <input id="sidebar-expand" type="checkbox" class="formarea-description-sidebar-expand">
+            <label for="sidebar-expand" class="formarea-description-sidebar-expand-label"><img src="{{ asset('gulp/images/svg/oms-charge-complaint-sidebar-expand.svg') }}"></label>
+            <div class="formarea__description">
+                <div class="formarea__description__item">
+                    <div class="formarea__description__item__formfield-name">Регион</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.region ? complaintDraft.region.name : '' }}</div>
+                </div>
+                <div class="formarea__description__item">
+                    <div class="formarea__description__item__formfield-name">Год оказания услуги</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.year }}</div>
+                </div>
+                <div class="formarea__description__item">
+                    <div class="formarea__description__item__formfield-name">Медицинская организация</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.medicalOrganization ? complaintDraft.medicalOrganization.name : '' }}</div>
+                </div>
+                <div class="formarea__description__item">
+                    <div class="formarea__description__item__formfield-name">Обращение</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.urgent ? 'Неотложное' : 'Плановое' }}</div>
+                </div>
+                <div class="formarea__description__item">
+                    <div class="formarea__description__item__formfield-name">Заболевание</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.disease ? complaintDraft.disease.name : '' }}</div>
+                </div>
+                <div class="formarea__description__item">
+                    <div class="formarea__description__item__formfield-name">Фамилия</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.patient ? complaintDraft.patient.lastName : '' }}</div>
+                </div>
+                <div class="formarea__description__item">
+                    <div class="formarea__description__item__formfield-name">Имя</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.patient ? complaintDraft.patient.firstName : '' }}</div>
+                </div>
+                <div class="formarea__description__item">
+                    <div class="formarea__description__item__formfield-name">Телефон</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.patient ? complaintDraft.patient.phone : '' }}</div>
+                </div>
+                <div class="formarea__description__item">
+                    <div class="formarea__description__item__formfield-name">Регион</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.patient ? complaintDraft.patient.region : '' }}</div>
+                </div>
+                <div class="formarea__description__item">
+                    <div class="formarea__description__item__formfield-name">Страховая компания</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.patient ? complaintDraft.patient.insuranceCompany : '' }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
