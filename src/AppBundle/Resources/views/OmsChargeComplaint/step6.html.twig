@@ -57,48 +57,18 @@
                 <div class="formarea__title">
                     Данные пациента
                 </div>
+                {% form_theme form '@App/form/form_oms.html.twig' %}
+
                 {{ form_start(form) }}
                     <div class="formarea__form-field">
-                        <div class="form-item">
-{#                            <input type="text" placeholder="Фамилия" required>#}
-                            {{ form_errors(form.patient.lastName) }}
-                            {{ form_widget(form.patient.lastName, {'attr': {'placeholder': 'Фамилия'}}) }}
-                        </div>
-                        <div class="form-item">
-{#                            <input type="text" placeholder="Имя" required>#}
-                            {{ form_errors(form.patient.firstName) }}
-                            {{ form_widget(form.patient.firstName, {'attr': {'placeholder': 'Имя'}}) }}
-                        </div>
-                        <div class="form-item">
-{#                            <input type="text" placeholder="Отчество" required>#}
-                            {{ form_errors(form.patient.middleName) }}
-                            {{ form_widget(form.patient.middleName, {'attr': {'placeholder': 'Отчество'}}) }}
-                        </div>
-                        <div class="form-item">
-{#                            <input type="date" placeholder="Дата рождения">#}
-                            {{ form_errors(form.patient.birthDate) }}
-                            {{ form_widget(form.patient.birthDate, {'attr': {'placeholder': 'Дата рождения'}}) }}
-                        </div>
-                        <div class="form-item">
-{#                            <input type="text" placeholder="Номер полиса" required>#}
-                            {{ form_errors(form.patient.insurancePolicyNumber) }}
-                            {{ form_widget(form.patient.insurancePolicyNumber, {'attr': {'placeholder': 'Номер полиса'}}) }}
-                        </div>
-                        <div class="form-item">
-{#                            <input type="text" placeholder="Регион страховой компании" required>#}
-                            {{ form_errors(form.patient.region) }}
-                            {{ form_widget(form.patient.region, {'attr': {'placeholder': 'Регион страховой компании'}}) }}
-                        </div>
-                        <div class="form-item">
-{#                            <input type="text" placeholder="Страховая компания" required>#}
-                            {{ form_errors(form.patient.insuranceCompany) }}
-                            {{ form_widget(form.patient.insuranceCompany, {'attr': {'placeholder': 'Страховая компания'}}) }}
-                        </div>
-                        <div class="form-item">
-{#                            <input type="date" placeholder="Дата оплаты услуги" required>#}
-                            {{ form_errors(form.paidAt) }}
-                            {{ form_widget(form.paidAt, {'attr': {'placeholder': 'Дата оплаты услуги'}}) }}
-                        </div>
+                        {{ form_row(form.patient.lastName, {'attr': {'placeholder': 'Фамилия'}}) }}
+                        {{ form_row(form.patient.firstName, {'attr': {'placeholder': 'Имя'}}) }}
+                        {{ form_row(form.patient.middleName, {'attr': {'placeholder': 'Отчество'}}) }}
+                        {{ form_row(form.patient.birthDate, {'attr': {'placeholder': 'Дата рождения'}}) }}
+                        {{ form_row(form.patient.insurancePolicyNumber, {'attr': {'placeholder': 'Номер полиса'}}) }}
+                        {{ form_row(form.patient.region, {'attr': {'placeholder': 'Регион страховой компании'}}) }}
+                        {{ form_row(form.patient.insuranceCompany, {'attr': {'placeholder': 'Страховая компания'}}) }}
+                        {{ form_row(form.paidAt, {'attr': {'placeholder': 'Дата оплаты услуги'}}) }}
 {#                        <div class="form-item form-item_file-field">#}
 {#                            <button type="button"><img#}
 {#                                        src="{{ asset('gulp/images/svg/oms-charge-complaint-file-blank.svg') }}"/>#}
@@ -122,15 +92,14 @@
                                 <div class="file-input-label__file-types">jpeg или pdf</div>
                             </label>
                         </div>
-                        <div class="form-item form-item_phone-field">
+                        <div class="form-item form-item_phone-field{% if form_errors(form.patient.phone) %} form-item_error{% endif %}">
                             <div class="form-item_phone-field__question-mark">
                                 <img src="{{ asset('gulp/images/svg/oms-charge-complaint-question-grey.svg') }}" title="Укажите телефон заявителя обращения">
                             </div>
-{#                            <input type="phone" placeholder="+7 (xxx) xxx-xx-xx" pattern="7[0-9]{8}" required>#}
                             {{ form_widget(form.patient.phone, {'attr': {'placeholder': '+7 (xxx) xxx-xx-xx', 'pattern':'7[0-9]{10}'}}) }}
+                            {{ form_errors(form.patient.phone) }}
                         </div>
-                        <div class="form-item {# form-item_error#}">
-{#                            <input type="text" placeholder="SMS-код" required>#}
+                        <div class="form-item{% if form_errors(form.verifySmsCode) %} form-item_error{% endif %}">
                             {{ form_widget(form.verifySmsCode, {'attr': {'placeholder': 'SMS-код'}}) }}
                             <div class="form-item__exist">
                                 <a href="#">Посмотреть сформированное обращение</a>
