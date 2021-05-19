@@ -45,7 +45,8 @@
                 <div class="formarea__form-field">
                     <div class="form-item">
                         {{ form_row(form.region) }}
-                        {#                        <input type="text" class="form-item__input">#}
+{#                        <input name="{{ form.region.vars.full_name }}" id="{{ form.region.vars.id }}" type="text" class="form-item__input">#}
+                        {% do form.region.setRendered %}
                     </div>
                     <div class="form-item">
                         {{ form_row(form.year) }}
