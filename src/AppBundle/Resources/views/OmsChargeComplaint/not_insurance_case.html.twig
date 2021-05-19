@@ -35,7 +35,7 @@
                 </div>
                 <div class="formarea__buttonarea insurance-case_reject">
                     <div class="formarea__buttonarea__buttons">
-                        <a href="{{ path('oms_charge_complaint_4th_step') }}" class="btn2 formarea__buttonarea__buttons__prev-button"><img
+                        <a href="{% if backUrl %}{{ backUrl }}{% else %}{{ path('oms_charge_complaint_index') }}{% endif %}" class="btn2 formarea__buttonarea__buttons__prev-button"><img
                                     src="{{ asset('gulp/images/svg/oms-charge-complaint-prev-step-arrow.svg') }}">Назад
                         </a>
                         <a href="{{ path('homepage') }}" class="btn2 formarea__buttonarea__buttons__next-button">

@@ -50,7 +50,7 @@
                     <div class="form-item">
                         {{ form_row(form.year) }}
                         <div class="form-item__exist">
-                            <a href="#">Организации нет в списке?</a>
+                            <a href="{{ path('not_insurance_case', {'backUrl': path('oms_charge_complaint_index')}) }}">Организации нет в списке?</a>
                             <div class="form-item__error-message">Организации нет в списке</div>
                         </div>
                     </div>

@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\Disease;
+namespace AppBundle\Controller\Api\V1\Disease;
 
 use AppBundle\Form\Common\SuggestType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class DiseaseController extends Controller
 {
   /**
-   * @Route(name="disease_suggest", path="/diseases/suggest", methods={"GET"})
+   * @Route(name="api_disease", path="/api/v1/diseases", methods={"GET"})
    * @param Request $request
    */
   public function suggestAction (Request $request)
@@ -21,16 +21,7 @@ class DiseaseController extends Controller
     $form->submit($request->query->all());
     $query = $form->get('query')->getData();
     $diseases = $this->getDoctrine()->getRepository('AppBundle:Disease\Disease')->findByQuery($query);
-    $data = [];
 
-    foreach ($diseases as $disease)
-    {
-      $data[] = [
-        'value' => $disease->getName(),
-        'data' => $disease->getId(),
-      ];
-    }
-
-    return $this->json($data);
+    return $this->json($this->get('aw.client_application.transformer')->getClientModelCollectionData($diseases, 'disease'));
   }
 }

@@ -346,8 +346,10 @@ class AppealController extends Controller
   public function notInsuranceCaseAction (Request $request)
   {
     $complaintDraft = $this->omsChargeComplaintSessionResolver->resolve();
+
     return $this->render('@App/OmsChargeComplaint/not_insurance_case.html.twig', [
       'complaintDraft' => $complaintDraft,
+      'backUrl' => $request->get('backUrl'),
     ]);
   }
 
