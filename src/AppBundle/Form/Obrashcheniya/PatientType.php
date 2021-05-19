@@ -7,6 +7,7 @@ namespace AppBundle\Form\Obrashcheniya;
 use AppBundle\Entity\Company\InsuranceCompany;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Entity\User\Patient;
+use AppBundle\Validator\User\Phone;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -69,12 +70,12 @@ class PatientType extends AbstractType
       ])
       ->add('phone', TextType::class, [
         'required' => true,
-//        'constraints' => [
-//          new Regex([
-//            'pattern' => '#^\+[0-9]{1,2}\s?\([0-9]{3}\)[0-9]+\-[0-9]+\-[0-9]+$#',
-//            'message' => 'Неверный формат телефона',
-//          ]),
-//        ],
+        'constraints' => [
+          new Phone(),
+        ],
+      ])
+      ->add('verificationCode', TextType::class, [
+        'required' => false,
       ])
     ;
   }

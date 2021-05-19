@@ -8,6 +8,7 @@ namespace AppBundle\Entity\User;
 use AppBundle\Entity\Company\InsuranceCompany;
 use AppBundle\Entity\Company\InsuranceCompanyBranch;
 use AppBundle\Entity\Geo\Region;
+use AppBundle\Validator\Constraints\PhoneVerificationAwareInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -15,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\User\PatientRepository")
  * @ORM\Table(name="patients")
  */
-class Patient
+class Patient implements PhoneVerificationAwareInterface
 {
   /**
    * @var integer
@@ -81,6 +82,11 @@ class Patient
    * @ORM\JoinColumn(nullable=false)
    */
   private $user;
+
+  /**
+   * @var string
+   */
+  private $phoneVerificationCode;
 
   /**
    * @return int
@@ -269,5 +275,23 @@ class Patient
     return $this->getFio() ? $this->getFio() : 'Новый пациент';
   }
 
+  public function getVerifiedPhone ()
+  {
+    return $this->getPhone();
+  }
 
+  public function getVerificationCode ()
+  {
+    return $this->phoneVerificationCode;
+  }
+
+  /**
+   * @param string $phoneVerificationCode
+   * @return $this
+   */
+  public function setVerificationCode ($phoneVerificationCode)
+  {
+    $this->phoneVerificationCode = $phoneVerificationCode;
+    return $this;
+  }
 }

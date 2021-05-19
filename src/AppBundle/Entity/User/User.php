@@ -7,6 +7,7 @@ use AppBundle\Entity\Company\InsuranceCompanyBranch;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Validator\Constraints\PhoneVerificationAwareInterface;
 use AppBundle\Validator\Constraints\PhoneVerificationRequest;
+use AppBundle\Validator\User\Phone;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\AttributeOverride;
@@ -98,10 +99,7 @@ class User extends BaseUser implements PhoneVerificationAwareInterface
   /**
    * @var string
    * @ORM\Column(type="string", length=50, nullable=true)
-   * @Assert\Regex(
-   *   pattern = "#^\+[0-9]{1,2}\s?\([0-9]{3}\)[0-9]+\-[0-9]+\-[0-9]+$#",
-   *   message = "Неверный формат телефона"
-   * )
+   * @Phone(message="Неверный формат телефона")
    */
   private $phone;
 

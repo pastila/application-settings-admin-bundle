@@ -62,6 +62,7 @@ class PhoneVerificationRequestValidator extends ConstraintValidator
         || $verificationRequest->getPhone() !== $value->getVerifiedPhone()))
     {
       $this->context->buildViolation($constraint->invalidCodeMessage)
+        ->atPath('verificationCode')
         ->setParameter('{code}', $value->getVerificationCode())
         ->addViolation();
     }

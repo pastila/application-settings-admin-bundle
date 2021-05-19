@@ -20,6 +20,7 @@ services:
             $smsUrl: '%sms_url%'
             $smsProtocolVersion: '%sms_protocol_version%'
             $fileStorageDir: '%kernel.root_dir%/../var/uploads/files'
+            $smsHandler: '%sms_handler%'
 
 
     _instanceof:
@@ -132,8 +133,13 @@ services:
                   service: sonata.page.cms.page
                   method: validateBlock
 
-    AppBundle\Service\Sms\SmsAtomPark:
+    AppBundle\Service\Sms\SmsInterface:
       public: true
+      factory: ['@AppBundle\Service\Sms\SmsFactory', 'createSmsHandler']
+
+    AppBundle\Service\Sms\SmsFactory:
+      arguments:
+        - ['@AppBundle\Service\Sms\SmsAtomPark', '@AppBundle\Service\Sms\FileSmsHandler']
 
     app.organization.uploader:
       class: AppBundle\Service\Uploader\ImportUploader
@@ -228,3 +234,20 @@ services:
       autoconfigure: true
       tags:
         - { name: kernel.event_subscriber }
+
+    app.sms_file_handler:
+      class: Monolog\Handler\RotatingFileHandler
+      autoconfigure: false
+      arguments:
+        - '%kernel.root_dir%/../var/logs/sms.log'
+        - 5
+
+    app.sms_file_logger:
+      class: Monolog\Logger
+      arguments:
+        - 'sms_file_logger'
+        - ['@app.sms_file_handler']
+
+    AppBundle\Service\Sms\FileSmsHandler:
+      class: AppBundle\Service\Sms\FileSmsHandler
+      arguments: ['@app.sms_file_logger']

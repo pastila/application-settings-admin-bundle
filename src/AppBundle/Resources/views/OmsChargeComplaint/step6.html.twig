@@ -96,15 +96,15 @@
                             <div class="form-item_phone-field__question-mark">
                                 <img src="{{ asset('gulp/images/svg/oms-charge-complaint-question-grey.svg') }}" title="Укажите телефон заявителя обращения">
                             </div>
-                            {{ form_widget(form.patient.phone, {'attr': {'placeholder': '+7 (xxx) xxx-xx-xx', 'pattern':'7[0-9]{10}'}}) }}
+                            {{ form_widget(form.patient.phone, {'attr': {'placeholder': '+7 (xxx) xxx-xx-xx'}}) }}
                             {{ form_errors(form.patient.phone) }}
                         </div>
-                        <div class="form-item{% if form_errors(form.verifySmsCode) %} form-item_error{% endif %}">
-                            {{ form_widget(form.verifySmsCode, {'attr': {'placeholder': 'SMS-код'}}) }}
+                        <div class="form-item{% if form_errors(form.patient.verificationCode) %} form-item_error{% endif %}">
+                            {{ form_widget(form.patient.verificationCode, {'attr': {'placeholder': 'SMS-код'}}) }}
                             <div class="form-item__exist">
                                 <a href="#">Посмотреть сформированное обращение</a>
-                                {% if form_errors(form.verifySmsCode) %}
-                                <div class="form-item__error-message">{{ form_errors(form.verifySmsCode) }}</div>
+                                {% if form_errors(form.patient.verificationCode) %}
+                                <div class="form-item__error-message">{{ form_errors(form.patient.verificationCode) }}</div>
                                 {% endif %}
                             </div>
                             <button class="form-item__send-code-button">Подтвердить</button>
