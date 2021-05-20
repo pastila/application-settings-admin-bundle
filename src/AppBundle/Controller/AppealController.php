@@ -6,11 +6,10 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Obrashcheniya\ObrashcheniyaFile;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
 class AppealController extends Controller
 {
@@ -19,7 +18,7 @@ class AppealController extends Controller
    */
   public function indexLegacyAction()
   {
-    return $this->redirectToRoute('oms_charge_complaint_index');
+    return $this->redirectToRoute('oms_charge_complaint_index', [], 301);
   }
 
   /**
