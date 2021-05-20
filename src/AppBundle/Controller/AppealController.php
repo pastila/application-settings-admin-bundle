@@ -6,6 +6,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Obrashcheniya\ObrashcheniyaFile;
 use AppBundle\Entity\OmsChargeComplaint\OmsChargeComplaint;
 use AppBundle\Entity\User\Patient;
+use AppBundle\Exception\Patient\AmbiguousPatientResolveException;
 use AppBundle\Form\Obrashcheniya\OmsChargeComplaint1stStepType;
 use AppBundle\Form\Obrashcheniya\OmsChargeComplaint2ndStepType;
 use AppBundle\Form\Obrashcheniya\OmsChargeComplaint3rdStepType;
@@ -15,12 +16,14 @@ use AppBundle\Form\Obrashcheniya\OmsChargeComplaintChoosePatientType;
 use AppBundle\Service\Obrashcheniya\OmsChargeComplaintSessionPersister;
 use AppBundle\Service\Obrashcheniya\OmsChargeComplaintSessionResolver;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AppealController extends Controller
@@ -241,71 +244,36 @@ class AppealController extends Controller
       return $response;
     }
 
-    $nbPatients = $this->getDoctrine()->getRepository('AppBundle:User\Patient')->countByUser($this->getUser());
-
-    if ($nbPatients < 1)
-    {
-      return $this->redirectToRoute('oms_charge_complaint_6th_step_create');
-    }
-
-    $form = $this->createForm(OmsChargeComplaintChoosePatientType::class, null, [
-      'user' => $this->getUser(),
-    ]);
-    $form->handleRequest($request);
-
-    if ($form->isSubmitted() && $form->isValid())
-    {
-      /** @var Patient $patient */
-      $patient = $form->get('patient')->getData();
-
-      if ($patient instanceof Patient)
-      {
-        return $this->redirectToRoute('oms_charge_complaint_6th_step_edit', ['patientId' => $patient->getId()]);
-      }
-
-      return $this->redirectToRoute('oms_charge_complaint_6th_step_create');
-    }
-
-    return $this->render('AppBundle:OmsChargeComplaint:choose_patient.html.twig', [
-      'complaintDraft' => $complaintDraft,
-      'form' => $form->createView(),
-    ]);
-  }
-
-  /**
-   * @Route(name="oms_charge_complaint_6th_step_edit", path="oms-charge-complaint/step-6/{patientId}/edit")
-   * @Route(name="oms_charge_complaint_6th_step_create", path="oms-charge-complaint/step-6/create")
-   */
-  public function sixthStepEditAction (Request $request)
-  {
-    $complaintDraft = $this->omsChargeComplaintSessionResolver->resolve();
-    $response = $this->validateDraftStep($complaintDraft, 6);
-
-    if ($response)
-    {
-      return $response;
-    }
-
     $patient = new Patient();
     $patient->setUser($this->getUser());
-
-    if ($request->get('patientId'))
-    {
-      $patient = $this->getDoctrine()->getRepository('AppBundle:User\Patient')
-        ->findOneBy(['id' => $request->get('patientId'), 'user' => $this->getUser()]);
-
-      if ($patient === null)
-      {
-        throw new NotFoundHttpException(sprintf('Patient %s not found', $request->get('patientId')));
-      }
-    }
-
     $complaintDraft->setPatient($patient);
     $form = $this->createForm(OmsChargeComplaint6thStepType::class, $complaintDraft);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid())
     {
+      try
+      {
+        $existingPatient = $this->getDoctrine()->getRepository('AppBundle:User\Patient')->resolveByPatient($patient);
+      }
+      catch (AmbiguousPatientResolveException $e)
+      {
+      }
+
+      if ($existingPatient !== null)
+      {
+        $propertyAccessor = PropertyAccess::createPropertyAccessor();
+
+        /** @var Form $item */
+        foreach ($form->get('patient')->getIterator() as $item)
+        {
+          $propertyPath = (string)$item->getPropertyPath();
+          $propertyAccessor->setValue($existingPatient, $propertyPath, $propertyAccessor->getValue($patient, $propertyPath));
+        }
+
+        $complaintDraft->setPatient($existingPatient);
+      }
+
       $complaintDraft->setDraftStep(7);
       $em = $this->getDoctrine()->getManager();
 
@@ -335,6 +303,15 @@ class AppealController extends Controller
     {
       return $response;
     }
+
+    $complaintDraft->setStatus(OmsChargeComplaint::STATUS_CREATED);
+    $em = $this->getDoctrine()->getManager();
+
+    $em->persist($complaintDraft);
+    $em->flush();
+
+    $this->omsChargeComplaintSessionPersister->persist($complaintDraft);
+    $this->omsChargeComplaintSessionPersister->reset();
 
     return $this->render('AppBundle:OmsChargeComplaint:step7.html.twig', [
       'complaintDraft' => $complaintDraft,

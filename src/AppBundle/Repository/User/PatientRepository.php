@@ -5,7 +5,10 @@ namespace AppBundle\Repository\User;
 use AppBundle\Entity\OmsChargeComplaint\OmsChargeComplaint;
 use AppBundle\Entity\User\Patient;
 use AppBundle\Entity\User\User;
+use AppBundle\Exception\Patient\AmbiguousPatientResolveException;
+use AppBundle\Model\Filter\PatientFilter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 class PatientRepository extends ServiceEntityRepository
@@ -30,14 +33,14 @@ class PatientRepository extends ServiceEntityRepository
   }
 
   /**
-   * @param OmsChargeComplaint $chargeComplaint
+   * @param Patient $patient
    * @param User|null $user
    * @return Patient|null
+   * @throws AmbiguousPatientResolveException
    */
-  public function resolveByOmsChangeComplaint (OmsChargeComplaint $chargeComplaint, User $user = null)
+  public function resolveByPatient (Patient $patient, User $user = null)
   {
     $qb = $this->createQueryBuilder('p');
-    $patient = $chargeComplaint->getPatient();
 
     if ($user !== null)
     {
@@ -67,13 +70,75 @@ class PatientRepository extends ServiceEntityRepository
         ->setParameter('middlename', $patient->getMiddleName());
     }
 
-    if ($patient->getBirthDate())
+    if ($patient->getInsurancePolicyNumber())
     {
       $qb
-        ->andWhere('p.birthDate = :birth')
-        ->setParameter('birth', $patient->getBirthDate());
+        ->andWhere('p.insurancePolicyNumber = :policyNumber')
+        ->setParameter('policyNumber', $patient->getInsurancePolicyNumber());
     }
 
-    return $qb->getQuery()->getOneOrNullResult();
+    try
+    {
+      return $qb->getQuery()->getOneOrNullResult();
+    }
+    catch (NonUniqueResultException $e)
+    {
+      throw new AmbiguousPatientResolveException();
+    }
+  }
+
+  /**
+   * @param PatientFilter $filter
+   * @return Patient[]
+   */
+  public function findByFilter (PatientFilter $filter)
+  {
+    return $this->createQueryBuilderByFilter($filter)->getQuery()->getResult();
+  }
+
+  /**
+   * @param PatientFilter $filter
+   * @return \Doctrine\ORM\QueryBuilder
+   */
+  public function createQueryBuilderByFilter (PatientFilter $filter)
+  {
+    $qb = $this->createQueryBuilder('p');
+
+    if ($filter->getUser() !== null)
+    {
+      $qb
+        ->andWhere('p.user = :user')
+        ->setParameter('user', $filter->getUser());
+    }
+
+    if ($filter->getLastName())
+    {
+      $qb
+        ->andWhere('p.lastName LIKE :lastname')
+        ->setParameter('lastname', '%' . $filter->getLastName() . '%');
+    }
+
+    if ($filter->getFirstName())
+    {
+      $qb
+        ->andWhere('p.firstName LIKE :firstname')
+        ->setParameter('firstname', '%' . $filter->getFirstName() . '%');
+    }
+
+    if ($filter->getMiddleName())
+    {
+      $qb
+        ->andWhere('p.middleName LIKE :middlename')
+        ->setParameter('middlename', '%' . $filter->getMiddleName() . '%');
+    }
+
+    if ($filter->getInsurancePolicyNumber())
+    {
+      $qb
+        ->andWhere('p.insurancePolicyNumber LIKE :policyNumber')
+        ->setParameter('policyNumber', '%' . $filter->getInsurancePolicyNumber() . '%');
+    }
+
+    return $qb;
   }
 }

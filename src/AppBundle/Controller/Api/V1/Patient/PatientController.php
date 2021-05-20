@@ -4,6 +4,8 @@ namespace AppBundle\Controller\Api\V1\Patient;
 
 use AppBundle\Exception\PhoneVerificationRequestManagerException;
 use AppBundle\Form\Obrashcheniya\PatientFormVerifyType;
+use AppBundle\Form\Patient\PatientFilterType;
+use AppBundle\Model\Filter\PatientFilter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -40,5 +42,27 @@ class PatientController extends Controller
     }
 
     return $this->json(null);
+  }
+
+  /**
+   * @Route(name="api_patients", path="/api/v1/patients", methods={"GET"})
+   * @param Request $request
+   */
+  public function suggestAction (Request $request)
+  {
+    $filter = new PatientFilter();
+    $filter->setUser($this->getUser());
+    $form = $this->createForm(PatientFilterType::class, $filter, [
+      'csrf_protection' => false,
+    ]);
+    $form->submit($request->query->all());
+
+    if ($form->isValid() === false)
+    {
+      return $this->json($this->get('aw.client_application.transformer')->getClientModelData($form, 'form.errors'), 400);
+    }
+
+    $patients = $this->getDoctrine()->getRepository('AppBundle:User\Patient')->findByFilter($filter);
+    return $this->json($this->get('aw.client_application.transformer')->getClientModelCollectionData($patients, 'patient'));
   }
 }
