@@ -23,6 +23,8 @@
 
 namespace AppBundle\Helper;
 
+use BadMethodCallException;
+
 class MobileDetect
 {
     /**
