@@ -166,7 +166,6 @@ build-sf-app:
   script:
     - sleep 60
     - composer install -o
-    - cd web && composer install -o
 
 phpunit:
   <<: *tests-image
