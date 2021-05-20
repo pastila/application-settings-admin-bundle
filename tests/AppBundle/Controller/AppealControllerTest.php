@@ -4,8 +4,9 @@
 namespace Tests\AppBundle\Controller;
 
 
-use AppBundle\Entity\Geo\Region;
+use AppBundle\Entity\Geo\Region as RegionEntity;
 use Tests\AppBundle\AppWebTestCase;
+use Tests\AppBundle\Fixtures\Geo\Region;
 use Tests\AppBundle\Fixtures\User\User;
 
 class AppealControllerTest extends AppWebTestCase
@@ -56,7 +57,7 @@ class AppealControllerTest extends AppWebTestCase
 
     $this->assertSame($response->isSuccessful(), 'Empty form returns 200');
 
-    /** @var Region $region02 */
+    /** @var RegionEntity $region02 */
     $region02 = $this->getReference('region-02');
 
     $client->request('POST', '/oms-charge-complaint', [

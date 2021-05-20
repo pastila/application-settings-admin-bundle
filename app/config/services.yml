@@ -181,7 +181,7 @@ services:
     AppBundle\Service\Registration\PhoneVerification\PhoneVerificationRequestManager:
       autowire: true
       tags:
-        - { name: kernel.event_listener, event: kernel.terminate, method: persist, priority: 100 }
+        - { name: kernel.event_listener, event: kernel.response, method: persist, priority: 100 }
 
     Accurateweb\SmsBundle\Sms\Factory\SmsFactory:
       alias: aw_sms.template.factory
