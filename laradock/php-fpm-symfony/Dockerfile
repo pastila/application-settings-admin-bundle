@@ -355,9 +355,9 @@ RUN if [ ${INSTALL_XHPROF} = false ]; then \
 
 ARG INSTALL_EXT_SOCKETS=true
 
-RUN if [ ${INSTALL_EXT_SOCKETS} = true ]; then
+RUN if [ ${INSTALL_EXT_SOCKETS} = true ]; then \
 # Install the sockets extension
-docker-php-ext-install sockets
+docker-php-ext-install sockets \
 ;fi
 
 ###########################################################################
