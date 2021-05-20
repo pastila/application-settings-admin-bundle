@@ -261,7 +261,7 @@ task('deploy', [
 //  'deploy:upload_artifacts',
   'rsync', //rsync artifacts
   'deploy:docker:vendors',
-  'deploy:docker:vendors_bitrix',
+//  'deploy:docker:vendors_bitrix',
   'deploy:docker:assets:install',
   'deploy:docker:cache:clear',
   'deploy:docker:cache:warmup',
