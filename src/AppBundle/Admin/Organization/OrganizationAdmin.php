@@ -2,10 +2,12 @@
 
 namespace AppBundle\Admin\Organization;
 
-use AppBundle\Entity\Organization\Organization;
+use AppBundle\Entity\Organization\MedicalOrganization;
 use AppBundle\Form\DataTransformer\YearsToCollectionTransformer;
 use AppBundle\Helper\Year\Year;
+use Knp\Menu\ItemInterface as MenuItemInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -15,8 +17,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Knp\Menu\ItemInterface as MenuItemInterface;
-use Sonata\AdminBundle\Admin\AdminInterface;
 
 /**
  * Class OrganizationAdmin
@@ -154,7 +154,7 @@ class OrganizationAdmin extends AbstractAdmin
   }
 
   /**
-   * @param Organization $object
+   * @param MedicalOrganization $object
    */
   protected function setRelation($object)
   {

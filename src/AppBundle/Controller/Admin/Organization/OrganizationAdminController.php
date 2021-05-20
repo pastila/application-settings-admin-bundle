@@ -3,10 +3,10 @@
 namespace AppBundle\Controller\Admin\Organization;
 
 use Accurateweb\TaskSchedulerBundle\Model\MetaData;
-use AppBundle\Entity\Organization\Organization;
+use AppBundle\Entity\Organization\MedicalOrganization;
 use AppBundle\Form\Admin\Organization\OrganizationExportType;
-use Sonata\AdminBundle\Controller\CRUDController;
 use AppBundle\Form\Admin\Organization\OrganizationImportType;
+use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
@@ -75,7 +75,7 @@ class OrganizationAdminController extends CRUDController
     {
       $data = $form->getData();
       $em = $this->container->get('doctrine.orm.entity_manager');
-      $organizationsListQb = $em->getRepository(Organization::class)
+      $organizationsListQb = $em->getRepository(MedicalOrganization::class)
         ->createQueryBuilder('o');
       if (!empty($data['year']))
       {

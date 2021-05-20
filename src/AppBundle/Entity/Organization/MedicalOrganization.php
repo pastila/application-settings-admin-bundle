@@ -3,21 +3,17 @@
 namespace AppBundle\Entity\Organization;
 
 use AppBundle\Entity\Geo\Region;
-use AppBundle\Helper\Year\Year;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\OneToOne;
 
 /**
- * Organization.
+ * Медицинская организация (МО).
  *
- * @ORM\Table(name="s_organizations")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\Organization\OrganizationRepository")
+ * @ORM\Table(name="s_medical_organizations")
+ * @ORM\Entity()
  */
-class Organization
+class MedicalOrganization
 {
   /**
    * Код МО

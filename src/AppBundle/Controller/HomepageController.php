@@ -6,43 +6,38 @@ use Accurateweb\LocationBundle\Exception\LocationServiceException;
 use Accurateweb\LocationBundle\Service\Location;
 use AppBundle\Entity\Common\News;
 use AppBundle\Entity\Company\Feedback;
+use AppBundle\Entity\ContactUs\ContactUs;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Entity\Number\Number;
+use AppBundle\Entity\OmsChargeComplaint\OmsChargeComplaint;
 use AppBundle\Entity\Question\Question;
+use AppBundle\Form\ContactUs\ContactUsType;
+use AppBundle\Form\Obrashcheniya\OmsChargeComplaint1stStepType;
 use AppBundle\Model\InsuranceCompany\Branch\BranchRatingHelper;
 use AppBundle\Repository\Geo\RegionRepository;
-use AppBundle\Form\Obrashcheniya\ObrashcheniyaType;
-use AppBundle\Helper\Year\Year;
-use AppBundle\Model\Obrashcheniya\Obrashcheniya;
-use AppBundle\Form\ContactUs\ContactUsType;
 use AppBundle\Service\ContactUs\ContactUsMailer;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Routing\Annotation\Route;
-use Accurateweb\ApplicationSettingsAdminBundle\Model\Manager\SettingManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
-use AppBundle\Entity\ContactUs\ContactUs;
+use Symfony\Component\Routing\Annotation\Route;
 
 class HomepageController extends Controller
 {
   private $branchRatingHelper;
-  private $settingManager;
   private $regionRepository;
   private $locationService;
   private $contactUsMailer;
 
   public function __construct(
     BranchRatingHelper $branchRatingHelper,
-    SettingManagerInterface $settingManager,
     RegionRepository $regionRepository,
     Location $locationService,
     ContactUsMailer $contactUsMailer
   )
   {
     $this->branchRatingHelper = $branchRatingHelper;
-    $this->settingManager = $settingManager;
     $this->regionRepository = $regionRepository;
     $this->locationService = $locationService;
     $this->contactUsMailer = $contactUsMailer;
@@ -51,7 +46,7 @@ class HomepageController extends Controller
   /**
    * @Route("/", name="homepage")
    */
-  public function indexAction(Request $request)
+  public function indexAction()
   {
     $em = $this->getDoctrine()->getManager();
 
@@ -94,16 +89,15 @@ class HomepageController extends Controller
       ->getQuery()
       ->getResult();
 
-    $obrashcheniya = new Obrashcheniya();
-    $obrashcheniya->setRegion($region);
+    $omsChargeComplaint = new OmsChargeComplaint();
+    $omsChargeComplaint->setRegion($region);
+
     $forms = [
-      $this->createForm(ObrashcheniyaType::class, $obrashcheniya, [
-        'csrf_protection' => false,
-        'data' => $obrashcheniya
+      $this->createForm(OmsChargeComplaint1stStepType::class, $omsChargeComplaint, [
+        // 'csrf_protection' => false,
       ]),
-      $this->createForm(ObrashcheniyaType::class, $obrashcheniya, [
-        'csrf_protection' => false,
-        'data' => $obrashcheniya
+      $this->createForm(OmsChargeComplaint1stStepType::class, $omsChargeComplaint, [
+        // 'csrf_protection' => false,
       ]),
     ];
     $formViews = [];
@@ -177,7 +171,7 @@ class HomepageController extends Controller
         try
         {
           $this->contactUsMailer->sendContactUs($contactUs);
-        } catch (\Exception $e)
+        } catch (Exception $e)
         {
           $this->get('logger')->error('Failed to send contact us: ' . $e->getMessage());
         }
@@ -211,25 +205,4 @@ class HomepageController extends Controller
     ]);
   }
 
-  /**
-   * @Route("/homepage-obrashcheniya", name="homepage_obrashcheniya")
-   */
-  public function obrashcheniyaAction(Request $request)
-  {
-    $obrashcheniya = $request->request->get('obrashcheniya');
-    if (empty($obrashcheniya) || !key_exists('year', $obrashcheniya) || !key_exists('region', $obrashcheniya))
-    {
-      throw new NotFoundHttpException(sprintf('Year in obrashcheniya not found'));
-    }
-    $em = $this->getDoctrine()->getManager();
-    $region = $em->getRepository(Region::class)
-      ->find($obrashcheniya['region']);
-
-    $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
-    $url = sprintf($baseurl . '/forma-obrashenija/?year=%s&region=%s',
-      Year::getYear($obrashcheniya['year']),
-      !empty($region) ? $region->getBitrixCityHospitalId() : null);
-
-    return $this->redirect($url, 301);
-  }
 }

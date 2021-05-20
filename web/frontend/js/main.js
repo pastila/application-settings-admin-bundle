@@ -26,3 +26,4 @@ if (window.location.pathname === `${urlPrefix}/contact_us`) {
     });
   }
 }
+$('select').styler();
