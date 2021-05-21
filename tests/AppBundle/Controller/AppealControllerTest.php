@@ -34,7 +34,7 @@ class AppealControllerTest extends AppWebTestCase
   {
     $client = static::createClient();
 
-    $client->request('GET', '/forma-obrasheniya/');
+    $client->request('GET', '/forma-obrashenija/');
 
     $response = $client->getResponse();
 
