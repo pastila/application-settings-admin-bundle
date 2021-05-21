@@ -34,13 +34,44 @@
                     должна&nbsp;быть предоставлена бесплатно (по полису ОМС).
                 </div>
 
-                <div class="formarea__buttonarea insurance-case_success">
-                    <div class="formarea__buttonarea__buttons">
-                        <a href="{{ path('oms_charge_complaint_6th_step') }}" class="btn2 formarea__buttonarea__buttons__next-button">
-                            <span>Сформировать обращение</span>
-                        </a>
+                <form action="{{ path("fos_user_security_check") }}" method="post">
+                    <input type="hidden" name="_csrf_token" value="{{ csrfToken }}" />
+                    <input type="hidden" name="_failure_path" value="{{ path('oms_charge_complaint_5th_step') }}">
+                    <input type="hidden" name="_target_path" value="{{ path('oms_charge_complaint_6th_step') }}">
+                    <div class="formarea__form-title insurance-case_success">Для продолжения вам нужно войти в личный
+                        кабинет
                     </div>
-                </div>
+                    <div class="formarea__form-field insurance-case_success">
+                        {% if lastError %}
+                            <div>{{ lastError.message|trans }}</div>
+                        {% endif %}
+                        <div class="form-item">
+                            <input name="_username" value="{{ lastUsername }}" type="email" placeholder="Почта" required>
+                        </div>
+                        <div class="form-item">
+                            <input type="checkbox">
+                            <div class="hidden-password"></div>
+                            <input type="password" name="_password" placeholder="Пароль" required>
+                        </div>
+                        <div class="form-item">
+                            <div class="popup-login-content__links">
+                                <a href="{{ path('fos_user_resetting_request') }}" class="popup-login-content__links__item">
+                                    Забыли пароль ?
+                                </a>
+                                <a href="{{ path('fos_user_registration_register', {'backUrl': url('oms_charge_complaint_5th_step')}) }}" class="popup-login-content__links__item">
+                                    Зарегистрироваться
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="formarea__buttonarea insurance-case_success">
+                        <div class="formarea__buttonarea__buttons">
+                            <button class="btn2 formarea__buttonarea__buttons__next-button">
+                                <span>Войти и сформировать обращение</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
             <input id="sidebar-expand" type="checkbox" class="formarea-description-sidebar-expand">
             <label for="sidebar-expand" class="formarea-description-sidebar-expand-label"><img src="{{ asset('gulp/images/svg/oms-charge-complaint-sidebar-expand.svg') }}"></label>

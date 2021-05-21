@@ -210,7 +210,9 @@ class AppealController extends Controller
       $em->flush();
       $this->omsChargeComplaintSessionPersister->persist($complaintDraft);
 
-      return $this->redirectToRoute('oms_charge_complaint_6th_step');
+      return $this->render('@App/OmsChargeComplaint/step5.html.twig', [
+        'complaintDraft' => $complaintDraft,
+      ]);
     }
 
     $csrfToken = $this->get('security.csrf.token_manager')->getToken('authenticate')->getValue();
@@ -218,7 +220,7 @@ class AppealController extends Controller
     $lastError = $request->getSession()->get('_security.last_error');
     $request->getSession()->remove('_security.last_error');
 
-    return $this->render('AppBundle:OmsChargeComplaint:step5.html.twig', [
+    return $this->render('AppBundle:OmsChargeComplaint:step5_login.html.twig', [
       'complaintDraft' => $complaintDraft,
       'csrfToken' => $csrfToken,
       'lastUsername' => $lastUsername,
