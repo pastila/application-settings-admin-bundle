@@ -24,8 +24,9 @@ class CabinetControllerTest extends AppWebTestCase
 
     $client->request('GET', '/lk');
 
+    // Похоже, Symfony делает редирект по абсолютному URL, и в тестовом окружении он http://localhost/login
     $this->assertTrue(
-      $client->getResponse()->isRedirect('/login'),
+      $client->getResponse()->isRedirect('http://localhost/login'),
       'Страница личного кабинета перенаправляет на форму входа, если не авторизован'
     );
 
