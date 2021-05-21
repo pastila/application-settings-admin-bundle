@@ -98,6 +98,7 @@
 </button><!-- b:m-page-scroller -->
 
 {% block javascripts %}
+    <script type="text/javascript">urlPrefix = '{{ app.request.getBaseURL() }}';</script>
     <script src="/local/templates/kdteam/js/main.min.js"></script>
     <script src="/local/templates/kdteam/js/validator.min.js"></script>
     <script src="/landing/js/plugins.min.js"></script>

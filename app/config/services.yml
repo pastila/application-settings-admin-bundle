@@ -19,6 +19,8 @@ services:
             $smsPublicKey: '%sms_public_key%'
             $smsUrl: '%sms_url%'
             $smsProtocolVersion: '%sms_protocol_version%'
+            $fileStorageDir: '%kernel.root_dir%/../var/uploads/files'
+            $smsHandler: '%sms_handler%'
 
 
     _instanceof:
@@ -51,6 +53,13 @@ services:
             - '@validator'
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+
+    AppBundle\EventListener\FileUploadListener:
+      class: AppBundle\EventListener\FileUploadListener
+      autowire: true
+      autoconfigure: true
+      tags:
+        - { name: doctrine.event_subscriber }
 
 #    twig.extension.EndingFormatter:
 #        class: AppBundle\Twig\EndingFormatTwigExtension
@@ -124,8 +133,13 @@ services:
                   service: sonata.page.cms.page
                   method: validateBlock
 
-    AppBundle\Service\Sms\SmsAtomPark:
+    AppBundle\Service\Sms\SmsInterface:
       public: true
+      factory: ['@AppBundle\Service\Sms\SmsFactory', 'createSmsHandler']
+
+    AppBundle\Service\Sms\SmsFactory:
+      arguments:
+        - ['@AppBundle\Service\Sms\SmsAtomPark', '@AppBundle\Service\Sms\FileSmsHandler']
 
     app.organization.uploader:
       class: AppBundle\Service\Uploader\ImportUploader
@@ -213,3 +227,27 @@ services:
         - '%fos_user.resetting.token_ttl%'
       tags:
         - { name: kernel.event_subscriber }
+
+    AppBundle\EventListener\Security\RegistrationCompleteUrlListener:
+      class: AppBundle\EventListener\Security\RegistrationCompleteUrlListener
+      autowire: true
+      autoconfigure: true
+      tags:
+        - { name: kernel.event_subscriber }
+
+    app.sms_file_handler:
+      class: Monolog\Handler\RotatingFileHandler
+      autoconfigure: false
+      arguments:
+        - '%kernel.root_dir%/../var/logs/sms.log'
+        - 5
+
+    app.sms_file_logger:
+      class: Monolog\Logger
+      arguments:
+        - 'sms_file_logger'
+        - ['@app.sms_file_handler']
+
+    AppBundle\Service\Sms\FileSmsHandler:
+      class: AppBundle\Service\Sms\FileSmsHandler
+      arguments: ['@app.sms_file_logger']

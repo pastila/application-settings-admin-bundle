@@ -47,8 +47,6 @@ class PhoneVerificationRequestManager
     $this->logger = $logger;
     $this->smsService = $smsService;
     $this->smsFactory = $smsFactory;
-
-    $this->fetch();
   }
 
   /**
@@ -62,13 +60,13 @@ class PhoneVerificationRequestManager
   {
     $currentTime = new \DateTime();
 
-    if ($this->phoneVerificationRequest && $this->phoneVerificationRequest->getVerificationCodeSentAt())
+    if ($this->getVerificationRequest() && $this->getVerificationRequest()->getVerificationCodeSentAt())
     {
       /**
        * Если в сессии есть запись, о уже отправленной смс
        * Проверям, что она была отправлена не раньше 30 сек
        */
-      $sessionTime = clone $this->phoneVerificationRequest->getVerificationCodeSentAt();
+      $sessionTime = clone $this->getVerificationRequest()->getVerificationCodeSentAt();
       $sessionTime->add(new \DateInterval('PT30S'));
 
       if ($sessionTime > $currentTime)
@@ -87,16 +85,20 @@ class PhoneVerificationRequestManager
       $this->phoneVerificationRequest = $request;
       $this->phoneVerificationRequest->setVerificationCodeSentAt(new \DateTime());
       $this->persist();
+
       return true;
-    } catch (SmsRequestException $exception)
+    }
+    catch (SmsRequestException $exception)
     {
       $this->logger->error(
         sprintf('Exception in sending sms to phone %s, exception: %s', $request->getPhone(), $exception));
-    } catch (SmsDataException $exception)
+    }
+    catch (SmsDataException $exception)
     {
       $this->logger->error(
         sprintf('Data error when sending SMS to phone %s, exception: %s', $request->getPhone(), $exception));
-    } catch (\Exception $exception)
+    }
+    catch (\Exception $exception)
     {
       $this->logger->error(
         sprintf('Exception when sending SMS to phone %s, exception: %s', $request->getPhone(), $exception));
@@ -124,24 +126,31 @@ class PhoneVerificationRequestManager
    */
   public function getVerificationRequest(): ?PhoneVerificationRequest
   {
+    if ($this->phoneVerificationRequest === null)
+    {
+      $this->fetch();
+    }
+
     return $this->phoneVerificationRequest;
   }
 
   public function persist()
   {
-    $this->session->set(self::SESSION_KEY, serialize($this->phoneVerificationRequest));
+    $this->session->set(self::SESSION_KEY, serialize($this->getVerificationRequest()));
   }
 
   public function fetch()
   {
     $request = null;
+
     if ($this->session->has(self::SESSION_KEY))
     {
       try
       {
         $request = new PhoneVerificationRequest();
         $request->unserialize($this->session->get(self::SESSION_KEY));
-      } catch (\InvalidArgumentException $e)
+      }
+      catch (\InvalidArgumentException $e)
       {
         $request = null;
         $this->logger->warn(sprintf('Unable to load stored phone verification request: %s', $e->getMessage()));

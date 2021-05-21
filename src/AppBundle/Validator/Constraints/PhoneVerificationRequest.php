@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class PhoneVerificationRequest extends Constraint
 {
-  public $invalidCodeMessage = 'Неверный проверчный код {code}';
+  public $invalidCodeMessage = 'Неверный проверочный код {code}';
 
   public $codeExpiredMessage = 'Срок действия проверочного кода истек';
 

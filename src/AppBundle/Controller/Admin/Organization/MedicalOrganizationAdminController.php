@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-class OrganizationAdminController extends CRUDController
+class MedicalOrganizationAdminController extends CRUDController
 {
   /**
    * @param Request $request

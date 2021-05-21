@@ -34,7 +34,7 @@ class OrganizationYear
    * МО
    *
    * @var string|MedicalOrganization
-   * @ORM\ManyToOne(targetEntity="MedicalOrganization", cascade={"persist"})
+   * @ORM\ManyToOne(targetEntity="MedicalOrganization", cascade={"persist"}, inversedBy="years")
    * @ORM\JoinColumn(name="organization_code", referencedColumnName="code", nullable=false)
    */
   protected $organization;

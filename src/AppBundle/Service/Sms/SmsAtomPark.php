@@ -51,7 +51,7 @@ class SmsAtomPark implements SmsInterface
    * @throws SmsDataException
    * @throws SmsRequestException
    */
-  public function send($phoneVerificationRequest, $message)
+  public function send(PhoneVerificationRequest $phoneVerificationRequest, $message)
   {
     $this->sendCommand('registerSender', [
       'name' => "bezbahil",
@@ -156,5 +156,10 @@ class SmsAtomPark implements SmsInterface
     $this->result = curl_exec($ch);
     $this->info = curl_getinfo($ch);
     curl_close($ch);
+  }
+
+  public function getName ()
+  {
+    return 'atom';
   }
 }

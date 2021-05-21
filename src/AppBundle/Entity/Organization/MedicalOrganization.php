@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping\OneToOne;
  * Медицинская организация (МО).
  *
  * @ORM\Table(name="s_medical_organizations")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\Organization\MedicalOrganizationRepository")
  */
 class MedicalOrganization
 {

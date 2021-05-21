@@ -45,12 +45,13 @@
                 <div class="formarea__form-field">
                     <div class="form-item">
                         {{ form_row(form.region) }}
-                        {#                        <input type="text" class="form-item__input">#}
+{#                        <input name="{{ form.region.vars.full_name }}" id="{{ form.region.vars.id }}" type="text" class="form-item__input">#}
+                        {% do form.region.setRendered %}
                     </div>
                     <div class="form-item">
                         {{ form_row(form.year) }}
                         <div class="form-item__exist">
-                            <a href="#">Организации нет в списке?</a>
+                            <a href="{{ path('not_insurance_case', {'backUrl': path('oms_charge_complaint_index')}) }}">Организации нет в списке?</a>
                             <div class="form-item__error-message">Организации нет в списке</div>
                         </div>
                     </div>
@@ -70,11 +71,11 @@
             <div class="formarea__description">
                 <div class="formarea__description__item">
                     <div class="formarea__description__item__formfield-name">Регион</div>
-                    <div class="formarea__description__item__formfield-value">15 Республика Северная Осетия-Алания</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.region ? complaintDraft.region.name : '' }}</div>
                 </div>
                 <div class="formarea__description__item">
                     <div class="formarea__description__item__formfield-name">Год оказания услуги</div>
-                    <div class="formarea__description__item__formfield-value">2021</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.year }}</div>
                 </div>
             </div>
         </div>

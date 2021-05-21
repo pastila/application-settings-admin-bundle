@@ -57,7 +57,7 @@ class InsuranceCompanyBranch
    * Головная компания
    *
    * @var null|string|InsuranceCompany
-   * @ORM\ManyToOne(targetEntity="InsuranceCompany", cascade={"persist"})
+   * @ORM\ManyToOne(targetEntity="InsuranceCompany", cascade={"persist"}, inversedBy="branches")
    * @ORM\JoinColumn(name="company_id", nullable=true, onDelete="RESTRICT")
    */
   private $company;
@@ -66,7 +66,7 @@ class InsuranceCompanyBranch
    * Регион
    *
    * @var null|Region
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Geo\Region")
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Geo\Region", inversedBy="branches")
    * @ORM\JoinColumn(name="region_id", nullable=true, onDelete="RESTRICT")
    */
   private $region;

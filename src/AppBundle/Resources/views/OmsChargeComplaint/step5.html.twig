@@ -1,0 +1,71 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {# <link rel="stylesheet" href="/landing/css/app.css"> #}
+    {# стили которые собираются дефолтной задачей gulp #}
+    <link rel="stylesheet" href="/local/templates/kdteam/pages/landing/landing.min.css">
+    <link rel="stylesheet" href="/local/templates/kdteam/pages/oms-charge-complaint/main.min.css">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">urlPrefix = '{{ app.request.getBaseURL() }}'
+    </script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="/dist/bundle.js"></script>
+    <script src="/local/templates/kdteam/pages/oms-charge-complaint/main.min.js"></script>
+{% endblock %}
+
+
+{% block main %}
+    <div class="app__content">
+        {% include "AppBundle:OmsChargeComplaint:_roadmap.html.twig" with { step: '5-success' } %}
+        <div class="form">
+            <div class="formarea">
+                <div class="formarea__image insurance-case_success">
+                    <img src="{{ asset('gulp/images/svg/oms-charge-complaint-insurance-case-success.svg') }}">
+                </div>
+                <div class="formarea__title formarea__title_insurance-case insurance-case_success">
+                    Случай является страховым
+                </div>
+                <div class="formarea__note insurance-case_note insurance-case_success">Медицинская помощь в соответствии
+                    с
+                    имеющимися стандартами
+                    должна&nbsp;быть предоставлена бесплатно (по полису ОМС).
+                </div>
+
+                <div class="formarea__buttonarea insurance-case_success">
+                    <div class="formarea__buttonarea__buttons">
+                        <a href="{{ path('oms_charge_complaint_6th_step') }}" class="btn2 formarea__buttonarea__buttons__next-button">
+                            <span>Сформировать обращение</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <input id="sidebar-expand" type="checkbox" class="formarea-description-sidebar-expand">
+            <label for="sidebar-expand" class="formarea-description-sidebar-expand-label"><img src="{{ asset('gulp/images/svg/oms-charge-complaint-sidebar-expand.svg') }}"></label>
+            <div class="formarea__description">
+                <div class="formarea__description__item">
+                    <div class="formarea__description__item__formfield-name">Регион</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.region ? complaintDraft.region.name : '' }}</div>
+                </div>
+                <div class="formarea__description__item">
+                    <div class="formarea__description__item__formfield-name">Год оказания услуги</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.year }}</div>
+                </div>
+                <div class="formarea__description__item">
+                    <div class="formarea__description__item__formfield-name">Медицинская организация</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.medicalOrganization ? complaintDraft.medicalOrganization.name : '' }}</div>
+                </div>
+                <div class="formarea__description__item">
+                    <div class="formarea__description__item__formfield-name">Обращение</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.urgent ? 'Неотложное' : 'Плановое' }}</div>
+                </div>
+                <div class="formarea__description__item">
+                    <div class="formarea__description__item__formfield-name">Заболевание</div>
+                    <div class="formarea__description__item__formfield-value">{{ complaintDraft.disease ? complaintDraft.disease.name : '' }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
