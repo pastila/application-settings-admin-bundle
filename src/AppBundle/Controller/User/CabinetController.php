@@ -42,9 +42,9 @@ class CabinetController extends AbstractController
    */
   public function cabinetAction(Request $request)
   {
-    // $this->denyAccessUnlessGranted(['ROLE_USER']);
+    $this->denyAccessUnlessGranted(['ROLE_USER']);
 
-    return $this->render('AppBundle:Lk:lichniy-cabinet.html.twig');
+    return $this->render('AppBundle:Lk:index.html.twig');
   }
 
     /**
