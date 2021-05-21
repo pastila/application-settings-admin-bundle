@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "25dca756e06703c3c1e9ebe7dd5666e0",
+    "content-hash": "1891348554ad3c82e0b76727468f06cb",
     "packages": [
         {
             "name": "accurateweb/application-settings-admin-bundle",
@@ -132,12 +132,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/accurateweb/location-bundle.git",
-                "reference": "8ab2c1e7fd8ac0f3eda090414e99c5afdea83960"
+                "reference": "d8e6bbceb0f28f3184e45cd3bcd1e583b160a26a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/accurateweb/location-bundle/zipball/8ab2c1e7fd8ac0f3eda090414e99c5afdea83960",
-                "reference": "8ab2c1e7fd8ac0f3eda090414e99c5afdea83960",
+                "url": "https://api.github.com/repos/accurateweb/location-bundle/zipball/d8e6bbceb0f28f3184e45cd3bcd1e583b160a26a",
+                "reference": "d8e6bbceb0f28f3184e45cd3bcd1e583b160a26a",
                 "shasum": ""
             },
             "default-branch": true,
@@ -151,7 +151,7 @@
                 "source": "https://github.com/accurateweb/location-bundle/tree/master",
                 "issues": "https://github.com/accurateweb/location-bundle/issues"
             },
-            "time": "2020-12-07T21:02:27+00:00"
+            "time": "2021-03-15T11:34:52+00:00"
         },
         {
             "name": "accurateweb/media-bundle",
@@ -8744,9 +8744,9 @@
         "accurateweb/image-bundle": 20,
         "accurateweb/location-bundle": 20,
         "accurateweb/media-bundle": 20,
-        "accurateweb/sms-bundle": 20,
         "accurateweb/synchronization-bundle": 20,
         "accurateweb/task-scheduler-bundle": 20,
+        "accurateweb/sms-bundle": 20,
         "redcode/tree-bundle": 15
     },
     "prefer-stable": false,

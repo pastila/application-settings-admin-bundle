@@ -57,4 +57,17 @@ class RegionRepository extends ServiceEntityRepository implements UserLocationRe
     ->setParameter('company', $company)
     ->setParameter('published', true);
   }
+
+  /**
+   * @param $query
+   * @return Region[]
+   */
+  public function findByQuery ($query)
+  {
+    return $this->createQueryBuilder('r')
+      ->where('r.name LIKE :query')
+      ->setParameter('query', '%' . $query . '%')
+      ->getQuery()
+      ->getResult();
+  }
 }

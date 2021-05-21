@@ -186,8 +186,9 @@ First Name: Имя
 Middle Name: Отчество
 Region: Регион
 Status: Статус
-Organization Create: Новая организация
-Organization List: Список организаций
+Medical Organization Create: Новая организация
+Medical Organization List: Список организаций
+Medical Organization Import: Импорт организаций
 Years: Года
 Year: Год
 Organization Years Create: Новый год
@@ -217,3 +218,4 @@ Import: Импорт
 Organization Import: Импорт организаций
 Organization Export: Экспорт организаций
 Author Name: Псевдоним
+Bad credentials.: Неверные Email или пароль

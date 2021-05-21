@@ -11,6 +11,7 @@ use AppBundle\Entity\Organization\MedicalOrganization;
 use AppBundle\Entity\User\Patient;
 use AppBundle\Helper\Year\Year;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -62,9 +63,9 @@ class OmsChargeComplaint
   private $medicalOrganization;
 
   /**
-   * Плановое обращение или неотложное
+   * Плановое обращение(false) или неотложное(true)
    *
-   * @var bool
+   * @var bool|null
    *
    * @ORM\Column(type="boolean", nullable=true)
    *
@@ -81,9 +82,15 @@ class OmsChargeComplaint
 
   /**
    * @var Patient
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User\Patient", cascade={"persist"})
+   * @ORM\JoinColumn(nullable=true)
    */
   private $patient;
 
+  /**
+   * @var OmsChargeComplaintDocument[]|ArrayCollection
+   * @ORM\OneToMany(targetEntity="AppBundle\Entity\OmsChargeComplaint\OmsChargeComplaintDocument", mappedBy="omsChargeComplaint", cascade={"persist"})
+   */
   private $documents;
 
   /**
@@ -106,6 +113,11 @@ class OmsChargeComplaint
    * @ORM\Column(type="integer")
    */
   private $draftStep = 1;
+
+  public function __construct ()
+  {
+    $this->documents = new ArrayCollection();
+  }
 
   /**
    * @return int
@@ -172,7 +184,7 @@ class OmsChargeComplaint
   /**
    * @return bool
    */
-  public function isUrgent(): bool
+  public function isUrgent(): ?bool
   {
     return $this->urgent;
   }
@@ -224,27 +236,54 @@ class OmsChargeComplaint
   }
 
   /**
-   * @return mixed
+   * @return OmsChargeComplaintDocument[]|ArrayCollection
    */
-  public function getDocuments()
+  public function getDocuments ()
   {
     return $this->documents;
   }
 
   /**
-   * @param mixed $documents
-   * @return OmsChargeComplaint
+   * @param OmsChargeComplaintDocument[]|ArrayCollection $documents
+   * @return $this
    */
-  public function setDocuments($documents)
+  public function setDocuments ($documents)
   {
-    $this->documents = $documents;
+    $this->documents = new ArrayCollection();
+
+    foreach ($documents as $document)
+    {
+      $this->addDocument($document);
+    }
+
+    return $this;
+  }
+
+  /**
+   * @param OmsChargeComplaintDocument $document
+   * @return $this
+   */
+  public function addDocument (OmsChargeComplaintDocument $document)
+  {
+    $this->documents->add($document);
+    $document->setOmsChargeComplaint($this);
+    return $this;
+  }
+
+  /**
+   * @param OmsChargeComplaintDocument $document
+   * @return $this
+   */
+  public function removeDocument (OmsChargeComplaintDocument $document)
+  {
+    $this->documents->removeElement($document);
     return $this;
   }
 
   /**
    * @return DateTime
    */
-  public function getPaidAt(): DateTime
+  public function getPaidAt(): ?DateTime
   {
     return $this->paidAt;
   }

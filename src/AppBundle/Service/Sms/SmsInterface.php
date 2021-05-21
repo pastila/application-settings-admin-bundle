@@ -11,5 +11,10 @@ interface SmsInterface
    * @param $message
    * @return mixed
    */
-  public function send($phoneVerificationRequest, $message);
+  public function send (PhoneVerificationRequest $phoneVerificationRequest, $message);
+
+  /**
+   * @return string
+   */
+  public function getName ();
 }

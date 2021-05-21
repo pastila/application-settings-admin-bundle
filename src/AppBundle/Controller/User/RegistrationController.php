@@ -5,6 +5,7 @@ namespace AppBundle\Controller\User;
 use Accurateweb\ApplicationSettingsAdminBundle\Model\Manager\SettingManagerInterface;
 use AppBundle\Entity\User\User;
 use AppBundle\Service\Registration\PhoneVerification\PhoneVerificationRequestManager;
+use AppBundle\Validator\User\Phone;
 use FOS\UserBundle\Controller\RegistrationController as BaseRegistrationController;
 use FOS\UserBundle\Form\Factory\FactoryInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
@@ -74,14 +75,18 @@ class RegistrationController extends BaseRegistrationController
   public function generateSmsCodeAction(Request $request)
   {
     $phone = $request->query->get('phone');
+
     if (!$phone)
     {
       return new JsonResponse([
         'message' => 'Номер телефона не может быть пустым!'
       ], 422);
     }
-    $violations = $this->get('validator')->validatePropertyValue(User::class, 'phone', $phone);
-    if (count($violations)) {
+
+    $violations = $this->get('validator')->validate($phone, [new Phone()]);
+
+    if (count($violations))
+    {
       $errors = [];
       foreach ($violations as $violation)
       {
@@ -95,9 +100,11 @@ class RegistrationController extends BaseRegistrationController
         'errors' => $errors
       ], 422);
     }
+
     $user = $this->userManager->findUserBy([
       'phone' => $phone
     ]);
+
     if ($user)
     {
       return new JsonResponse([
@@ -106,6 +113,7 @@ class RegistrationController extends BaseRegistrationController
     }
 
     $verificationRequest = $this->phoneVerificationRequestManager->createVerificationRequest($phone);
+
     if ($this->phoneVerificationRequestManager->sendVerificationCode($verificationRequest))
     {
       return new JsonResponse([

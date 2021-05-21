@@ -2,10 +2,12 @@
 
 namespace AppBundle\Controller\Api\V1;
 
+use Accurateweb\ClientApplicationBundle\DataAdapter\ClientApplicationModelTransformer;
 use Accurateweb\LocationBundle\Exception\LocationServiceException;
 use Accurateweb\LocationBundle\Service\Location;
 use AppBundle\DataAdapter\Geo\RegionDataAdapter;
 use AppBundle\Entity\Geo\Region;
+use AppBundle\Form\Common\SuggestType;
 use AppBundle\Repository\Geo\RegionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -20,14 +22,6 @@ use Psr\Log\LoggerInterface;
 class RegionController extends AbstractController
 {
   /**
-   * @var RegionRepository
-   */
-  private $regionRepository;
-  /**
-   * @var RegionDataAdapter
-   */
-  private $adapter;
-  /**
    * @var LoggerInterface
    */
   protected $logger;
@@ -37,21 +31,31 @@ class RegionController extends AbstractController
   private $locationService;
 
   /**
+   * @var RegionRepository
+   */
+  private $regionRepository;
+
+  /**
+   * @var RegionDataAdapter
+   */
+  private $adapter;
+
+  /**
    * RegionController constructor.
    * @param RegionRepository $regionRepository
    * @param RegionDataAdapter $adapter
    */
   public function __construct(
-    RegionRepository $regionRepository,
-    RegionDataAdapter $adapter,
     LoggerInterface $logger,
-    Location $locationService
+    Location $locationService,
+    RegionRepository $regionRepository,
+    RegionDataAdapter $adapter
   )
   {
-    $this->regionRepository = $regionRepository;
-    $this->adapter = $adapter;
     $this->logger = $logger;
     $this->locationService = $locationService;
+    $this->regionRepository = $regionRepository;
+    $this->adapter = $adapter;
   }
 
   /**
@@ -59,27 +63,17 @@ class RegionController extends AbstractController
    */
   public function getRegionsAction(Request $request)
   {
-    $name = $request->get('name');
-
-    $q = $this->regionRepository
-      ->createQueryBuilder('r');
-    if ($name)
-    {
-      $q->andWhere('r.name LIKE :name')
-        ->setParameter('name', '%' . $name . '%');
-    }
-    $regions = $q
-      ->getQuery()
-      ->getResult();
-
-    $data = [];
-    foreach ($regions as $region)
-    {
-      $data[] = $this->adapter->transform($region);
-    }
+    $form = $this->createForm(SuggestType::class, null, [
+      'csrf_protection' => false,
+    ]);
+    $form->submit($request->query->all());
+    $query = $form->get('name')->getData();
+    $regions = $this->getDoctrine()
+      ->getRepository('AppBundle:Geo\Region')
+      ->findByQuery($query);
 
     return new JsonResponse(json_encode([
-      'regions' => $data
+      'regions' => $this->get('aw.client_application.transformer')->getClientModelCollectionData($regions, 'region'),
     ]), 200, [], true);
   }
 
@@ -108,5 +102,12 @@ class RegionController extends AbstractController
       'region_id' => $region->getLocationId(),
       'region_name' => $region->getLocationName(),
     ]), 200, [], true);
+  }
+
+  public static function getSubscribedServices ()
+  {
+    return array_merge(parent::getSubscribedServices(), [
+      'aw.client_application.transformer' => ClientApplicationModelTransformer::class,
+    ]);
   }
 }

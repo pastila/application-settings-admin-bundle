@@ -80,8 +80,6 @@ services:
     extra_hosts:
       - "dockerhost:${DOCKER_HOST_IP}"
       - "bezbahil.ru:84.201.185.203"
-#    ports:
-#      - "${WORKSPACE_SSH_PORT}:22"
     tty: true
     restart: always
     environment:
@@ -326,10 +324,8 @@ services:
       - ${DATA_PATH_HOST}/percona:/var/lib/mysql
       - ${PERCONA_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
       - ${DATA_PATH_LOGS}/mysql:/var/log/mysql
-      - ./percona/my.cnf:/etc/my.cnf.d/my.cnf
+#      - ./percona/my.cnf:/etc/my.cnf.d/my.cnf
     restart: always
-#    ports:
-#      - "${PERCONA_PORT}:3306"
     networks:
       - backend
 

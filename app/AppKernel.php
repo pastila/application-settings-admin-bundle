@@ -45,6 +45,7 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new Accurateweb\SmsBundle\AccuratewebSmsBundle(),
             new RedCode\TreeBundle\RedCodeTreeBundle(),
+            new Accurateweb\ClientApplicationBundle\AccuratewebClientApplicationBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

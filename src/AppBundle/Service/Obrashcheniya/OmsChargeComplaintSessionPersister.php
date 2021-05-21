@@ -24,4 +24,9 @@ class OmsChargeComplaintSessionPersister
 
     $this->session->set('oms_charge_complaint_id', $omsChargeComplaint->getId());
   }
+
+  public function reset ()
+  {
+    $this->session->remove('oms_charge_complaint_id');
+  }
 }

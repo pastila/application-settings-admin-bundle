@@ -7,6 +7,8 @@ use AppBundle\Entity\Company\InsuranceCompanyBranch;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Validator\Constraints\PhoneVerificationAwareInterface;
 use AppBundle\Validator\Constraints\PhoneVerificationRequest;
+use AppBundle\Validator\User\Phone;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\AttributeOverride;
 use Doctrine\ORM\Mapping\AttributeOverrides;
@@ -92,15 +94,12 @@ class User extends BaseUser implements PhoneVerificationAwareInterface
    * @var boolean
    * @ORM\Column(type="boolean", nullable=false, options={"default"=false})
    */
-  private $termsAndConditionsAccepted;
+  private $termsAndConditionsAccepted=false;
 
   /**
    * @var string
    * @ORM\Column(type="string", length=50, nullable=true)
-   * @Assert\Regex(
-   *   pattern = "#^\+[0-9]{1,2}\s?\([0-9]{3}\)[0-9]+\-[0-9]+\-[0-9]+$#",
-   *   message = "Неверный формат телефона"
-   * )
+   * @Phone(message="Неверный формат телефона")
    */
   private $phone;
 
@@ -122,11 +121,18 @@ class User extends BaseUser implements PhoneVerificationAwareInterface
   private $phoneVerificationCode;
 
   /**
+   * @var Patient[]|ArrayCollection
+   * @ORM\OneToMany(targetEntity="AppBundle\Entity\User\Patient", mappedBy="user")
+   */
+  private $patients;
+
+  /**
    * User constructor.
    */
   public function __construct()
   {
     parent::__construct();
+    $this->patients = new ArrayCollection();
   }
 
   /**
@@ -447,5 +453,13 @@ class User extends BaseUser implements PhoneVerificationAwareInterface
     $this->emailCanonical = $usernameCanonical;
 
     return $this;
+  }
+
+  /**
+   * @return Patient[]|ArrayCollection
+   */
+  public function getPatients ()
+  {
+    return $this->patients;
   }
 }

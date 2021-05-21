@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * Class OrganizationAdmin
  * @package AppBundle\Admin\Organization
  */
-class OrganizationAdmin extends AbstractAdmin
+class MedicalOrganizationAdmin extends AbstractAdmin
 {
   /**
    * @param ListMapper $list
