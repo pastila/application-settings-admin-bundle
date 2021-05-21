@@ -31,17 +31,31 @@ class RegionController extends AbstractController
   private $locationService;
 
   /**
+   * @var RegionRepository
+   */
+  private $regionRepository;
+
+  /**
+   * @var RegionDataAdapter
+   */
+  private $adapter;
+
+  /**
    * RegionController constructor.
    * @param RegionRepository $regionRepository
    * @param RegionDataAdapter $adapter
    */
   public function __construct(
     LoggerInterface $logger,
-    Location $locationService
+    Location $locationService,
+    RegionRepository $regionRepository,
+    RegionDataAdapter $adapter
   )
   {
     $this->logger = $logger;
     $this->locationService = $locationService;
+    $this->regionRepository = $regionRepository;
+    $this->adapter = $adapter;
   }
 
   /**
@@ -49,17 +63,46 @@ class RegionController extends AbstractController
    */
   public function getRegionsAction(Request $request)
   {
-    $form = $this->createForm(SuggestType::class, null, [
-      'csrf_protection' => false,
-    ]);
-    $form->submit($request->query->all());
-    $query = $form->get('name')->getData();
-    $regions = $this->getDoctrine()
-      ->getRepository('AppBundle:Geo\Region')
-      ->findByQuery($query);
+    $name = $request->get('name');
 
-    return $this->json($this->get('aw.client_application.transformer')->getClientModelCollectionData($regions, 'region'));
+    $q = $this->regionRepository
+      ->createQueryBuilder('r');
+    if ($name)
+    {
+      $q->andWhere('r.name LIKE :name')
+        ->setParameter('name', '%' . $name . '%');
+    }
+    $regions = $q
+      ->getQuery()
+      ->getResult();
+
+    $data = [];
+    foreach ($regions as $region)
+    {
+      $data[] = $this->adapter->transform($region);
+    }
+
+    return new JsonResponse(json_encode([
+      'regions' => $data
+    ]), 200, [], true);
   }
+
+  /**
+   * @ Route("/api/v1/regions", name="api_regions"))
+   */
+//  public function getRegionsAction(Request $request)
+//  {
+//    $form = $this->createForm(SuggestType::class, null, [
+//      'csrf_protection' => false,
+//    ]);
+//    $form->submit($request->query->all());
+//    $query = $form->get('name')->getData();
+//    $regions = $this->getDoctrine()
+//      ->getRepository('AppBundle:Geo\Region')
+//      ->findByQuery($query);
+//
+//    return $this->json($this->get('aw.client_application.transformer')->getClientModelCollectionData($regions, 'region'));
+//  }
 
   /**
    * @Route("/api/v1/region", name="api_region"))

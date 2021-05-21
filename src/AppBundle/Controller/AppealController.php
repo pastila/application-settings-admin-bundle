@@ -260,7 +260,7 @@ class AppealController extends Controller
       {
       }
 
-      if ($existingPatient !== null)
+      if (isset($existingPatient))
       {
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
 
