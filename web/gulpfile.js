@@ -165,6 +165,6 @@ function watchFiles() {
 }
 
 // export tasks
-//exports.default = series(cleanAll, parallel(fonts, style, script, images, imageToWebp, watchFiles));
+exports.watch = series(cleanAll, parallel(fonts, style, script, images, imageToWebp, watchFiles));
 //Для сборки нужно без watch
 exports.default = series(cleanAll, parallel(fonts, style, script, images, imageToWebp));

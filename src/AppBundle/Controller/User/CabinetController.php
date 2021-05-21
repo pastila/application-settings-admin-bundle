@@ -37,16 +37,14 @@ class CabinetController extends AbstractController
 
   /**
    * Личный кабинет
-   * @Route(name="cabinet", path="/cabinet")
+   * @Route(name="lk", path="/lk")
    * @param Request $request
    */
   public function cabinetAction(Request $request)
   {
     $this->denyAccessUnlessGranted(['ROLE_USER']);
 
-    // todo ожидание нового личного кабинета
-    // перенапрвление на старый
-    return $this->redirect('/personal-cabinet/', 301);
+    return $this->render('AppBundle:Lk:index.html.twig');
   }
 
     /**
