@@ -9,6 +9,8 @@ class SmsFactory
    */
   private $smsHandlers;
 
+  private $smsHandler;
+
   public function __construct (iterable $smsHandlers, $smsHandler)
   {
     $this->smsHandlers = $smsHandlers;

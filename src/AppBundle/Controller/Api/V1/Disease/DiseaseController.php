@@ -19,7 +19,7 @@ class DiseaseController extends Controller
       'csrf_protection' => false,
     ]);
     $form->submit($request->query->all());
-    $query = $form->get('query')->getData();
+    $query = $form->get('name')->getData();
     $diseases = $this->getDoctrine()->getRepository('AppBundle:Disease\Disease')->findByQuery($query);
 
     return $this->json($this->get('aw.client_application.transformer')->getClientModelCollectionData($diseases, 'disease'));

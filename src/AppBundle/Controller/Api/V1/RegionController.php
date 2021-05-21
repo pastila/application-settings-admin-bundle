@@ -53,7 +53,7 @@ class RegionController extends AbstractController
       'csrf_protection' => false,
     ]);
     $form->submit($request->query->all());
-    $query = $form->get('query')->getData();
+    $query = $form->get('name')->getData();
     $regions = $this->getDoctrine()
       ->getRepository('AppBundle:Geo\Region')
       ->findByQuery($query);

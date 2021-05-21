@@ -9,6 +9,6 @@ class SuggestType extends AbstractType
 {
   public function buildForm (FormBuilderInterface $builder, array $options)
   {
-    $builder->add('query', 'Symfony\Component\Form\Extension\Core\Type\TextType', []);
+    $builder->add('name', 'Symfony\Component\Form\Extension\Core\Type\TextType', []);
   }
 }
