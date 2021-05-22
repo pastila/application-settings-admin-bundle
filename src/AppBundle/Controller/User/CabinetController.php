@@ -7,15 +7,20 @@ namespace AppBundle\Controller\User;
 
 
 use AppBundle\Entity\Company\Feedback;
+use AppBundle\Entity\OmsChargeComplaint\OmsChargeComplaint;
 use AppBundle\Entity\User\User;
+use AppBundle\Form\Obrashcheniya\OmsChargeComplaint1stStepType;
+use AppBundle\Model\GroupedPagination;
 use AppBundle\Model\InsuranceCompany\FeedbackListFilter;
 use AppBundle\Model\InsuranceCompany\FeedbackListFilterUrlBuilder;
+use AppBundle\Model\InsuranceCompany\OmsChargeComplaintFilter;
 use AppBundle\Model\Pagination;
 use AppBundle\Repository\Company\FeedbackRepository;
+use AppBundle\Repository\OmsChargeComplaint\OmsChargeComplaintRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -24,14 +29,18 @@ class CabinetController extends AbstractController
 {
   private $reviewRepository;
 
+  private $omsChargeComplaintRepository;
+
   private $validator;
 
   public function __construct(
       FeedbackRepository $feedbackRepository,
+      OmsChargeComplaintRepository $omsChargeComplaintRepository,
       ValidatorInterface $validator
   )
   {
     $this->reviewRepository = $feedbackRepository;
+    $this->omsChargeComplaintRepository = $omsChargeComplaintRepository;
     $this->validator = $validator;
   }
 
@@ -47,6 +56,38 @@ class CabinetController extends AbstractController
     return $this->render('AppBundle:Lk:index.html.twig');
   }
 
+  public function _dashboardAppealListAction()
+  {
+    $user = $this->getUser();
+
+    $appealListQb = $this
+      ->omsChargeComplaintRepository
+      ->createQueryBuilder('ap')
+//      ->where('ap.user = :user')
+//      ->setParameters([
+//        ':user' => $user
+//      ])
+    ;
+
+    $filter = new OmsChargeComplaintFilter();
+    $filter->setPage(1);
+
+//    $reviewListUrlbuilder = new FeedbackListFilterUrlBuilder($filter, $this->get('router'),
+//      $this->get('form.factory'), 'app_user_cabinet_feedback');
+
+    $maxPerPage = 10;
+
+    $appealListQb->orderBy('ap.createdAt', 'DESC');
+
+    $pagination = new GroupedPagination($appealListQb, $filter->getPage(), $maxPerPage);
+
+    $omsChargeComplaints = $pagination->getIterator();
+
+    return $this->render('AppBundle:Lk:_dashboard_appeal_list.html.twig', [
+      'omsChargeComplaints' => $omsChargeComplaints,
+      'currentYear' => null,
+    ]);
+  }
 
   /**
    * Личный кабинет
@@ -55,15 +96,52 @@ class CabinetController extends AbstractController
    */
   public function cabinetMyAppealListAction(Request $request)
   {
-    // $this->denyAccessUnlessGranted(['ROLE_USER']);
+    $this->denyAccessUnlessGranted(['ROLE_USER']);
 
-    return $this->render('AppBundle:Lk:my_appeal_list.html.twig');
+    $appealForm = $this->createForm(OmsChargeComplaint1stStepType::class);
+
+    $user = $this->getUser();
+
+    $appealListQb = $this
+      ->omsChargeComplaintRepository
+      ->createQueryBuilder('ap')
+      ->innerJoin('ap.patient', 'p')
+      ->where('p.user = :user')
+      ->setParameters([
+        ':user' => $user
+      ])
+    ;
+
+    $filter = new OmsChargeComplaintFilter();
+    $filter->setPage($request->query->get('page', 1));
+
+//    $reviewListUrlbuilder = new FeedbackListFilterUrlBuilder($filter, $this->get('router'),
+//      $this->get('form.factory'), 'app_user_cabinet_feedback');
+
+    $maxPerPage = 10;
+
+    $appealListQb->orderBy('ap.createdAt', 'DESC');
+
+    $pagination = new GroupedPagination($appealListQb, $filter->getPage(), $maxPerPage);
+
+    $omsChargeComplaints = $pagination->getIterator();
+
+    /** @var OmsChargeComplaint|null $lastAppealOnPreviousPage */
+    $lastAppealOnPreviousPage = $pagination->getLastItemOnPreviousPage();
+
+    $previousYear = $lastAppealOnPreviousPage ? $lastAppealOnPreviousPage->getYear() : null;
+
+    return $this->render('AppBundle:Lk:my_appeal_list.html.twig', [
+      'appealForm' => $appealForm->createView(),
+      'omsChargeComplaints' => $omsChargeComplaints,
+      'currentYear' => $previousYear,
+    ]);
   }
 
 
   /**
    * Личный кабинет
-   * @Route(name="lk_my_appeal_show", path="/lk/my-appeals/appeal-item")
+   * @Route(name="lk_my_appeal_show", path="/lk/my-appeals/{id}")
    * @param Request $request
    */
   public function cabinetMyAppealShowAction(Request $request)

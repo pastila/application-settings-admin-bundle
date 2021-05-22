@@ -7,6 +7,7 @@ networks:
 
 services:
   percona:
+    user: "999:999"
     ports:
       - "${PERCONA_PORT}:3306"
 
@@ -21,7 +22,7 @@ services:
       - ${APP_CODE_PATH_HOST_SF}:${APP_CODE_PATH_CONTAINER_SF}
       - ${DATA_PATH_LOGS}/nginx:/var/log/nginx
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ${NGINX_SITES_PATH}/bezbahil.local.conf:/etc/nginx/sites-available/bezbahil.local.conf
+      - ${NGINX_SITES_PATH}/bezbahil.local.conf1:/etc/nginx/conf.d/bezbahil.local.conf
     networks:
       - traefik
 
@@ -37,6 +38,3 @@ services:
     networks:
       - backend
       - frontend
-
-  percona:
-    user: "999:999"

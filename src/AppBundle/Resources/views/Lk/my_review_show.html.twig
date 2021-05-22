@@ -10,30 +10,7 @@
 
 {% block main %}
     <div class="lk">
-        <nav class="lk__nav">
-            <ul>
-                <li class="lk__nav__item">
-                    <a href="#">Обзор</a>
-                </li>
-                <li class="lk__nav__item">
-                    <a href="#">Сообщения</a>
-                </li>
-                <li class="lk__nav__item">
-                    <a href="#">Обращения</a>
-                </li>
-                <li class="lk__nav__item lk__nav__item_active">
-                    <a href="#">Мои отзывы</a>
-                </li>
-                <li class="lk__nav__item">
-                    <a href="#">Пациенты</a>
-                </li>
-                <li class="lk__nav__item">
-                    <a href="#">Спецпредложения
-                        <div class="special-offer-quantity">3</div>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+        {{ include('@App/Lk/_menu.html.twig', { activeMenuItemAlias: 'reviews'}) }}
         <div class="lk__title">Мой отзыв от 12 декабря 2021<span class="lk__title__status">На модерации</span></div>
         <div class="lk__content">
             <div class="lk__content__big-content lk-border">

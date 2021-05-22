@@ -10,30 +10,7 @@
 
 {% block main %}
     <div class="lk">
-        <nav class="lk__nav">
-            <ul>
-                <li class="lk__nav__item lk__nav__item_active">
-                    <a href="#">Обзор</a>
-                </li>
-                <li class="lk__nav__item">
-                    <a href="#">Сообщения</a>
-                </li>
-                <li class="lk__nav__item">
-                    <a href="#">Обращения</a>
-                </li>
-                <li class="lk__nav__item">
-                    <a href="#">Мои отзывы</a>
-                </li>
-                <li class="lk__nav__item">
-                    <a href="#">Пациенты</a>
-                </li>
-                <li class="lk__nav__item">
-                    <a href="#">Спецпредложения
-                        <div class="special-offer-quantity">3</div>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+        {{ include('@App/Lk/_menu.html.twig', { activeMenuItemAlias: 'appeals'}) }}
         <div class="lk__title">25 ноября, Васильев Д.А.</div>
         <div class="lk__content">
             <div class="lk__content__small-content">
@@ -116,7 +93,7 @@
                     </div>
                 </div>
             </div>
-            <button class="lk__content__to-appeals-button btn">К списку обращений</button>
+            <a class="lk__content__to-appeals-button btn" href="{{ path('lk_my_appeal_list') }}">К списку обращений</a>
         </div>
     </div>
 {% endblock %}

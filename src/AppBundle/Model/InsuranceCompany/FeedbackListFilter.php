@@ -5,16 +5,15 @@
 
 namespace AppBundle\Model\InsuranceCompany;
 
+use AppBundle\Model\Filter\PagedCollectionFilter;
 
-class FeedbackListFilter
+class FeedbackListFilter extends PagedCollectionFilter
 {
   private $company;
 
   private $rating;
 
   private $region;
-
-  private $page;
 
   private $moderation;
 
@@ -93,27 +92,6 @@ class FeedbackListFilter
     $this->moderation = $moderation;
     return $this;
   }
-
-
-  /**
-   * @return mixed
-   */
-  public function getPage()
-  {
-    return $this->page;
-  }
-
-  /**
-   * @param mixed $page
-   * @return FeedbackListFilter
-   */
-  public function setPage($page)
-  {
-    $this->page = $page;
-    return $this;
-  }
-
-
 
   public function getValues()
   {

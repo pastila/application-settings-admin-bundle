@@ -6,11 +6,9 @@
 namespace AppBundle\Entity\User;
 
 use AppBundle\Entity\Company\InsuranceCompany;
-use AppBundle\Entity\Company\InsuranceCompanyBranch;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Validator\Constraints\PhoneVerificationAwareInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\User\PatientRepository")
@@ -267,6 +265,20 @@ class Patient implements PhoneVerificationAwareInterface
       $this->getLastName(),
       $this->getFirstName(),
       $this->getMiddleName(),
+    ]));
+  }
+
+  /**
+   * @return string
+   */
+  public function getFioShort ()
+  {
+    $nameParts = [];
+
+    return implode(' ', array_filter([
+      $this->getFirstName(),
+      $this->getLastName() ? mb_substr($this->getLastName(), 0, 1).'.' : null,
+      $this->getMiddleName()? mb_substr($this->getMiddleName(), 0, 1).'.' : null,
     ]));
   }
 

@@ -15,106 +15,37 @@
 
 {% endblock %}
 {% block main %}
-    {#    <<<<<<< Updated upstream
-    <div class="app-content"></div>
-    =======#}
     <div class="lk">
-        <nav class="lk__nav">
-            <ul>
-                <li class="lk__nav__item">
-                    <a href="#">Обзор</a>
-                </li>
-                <li class="lk__nav__item">
-                    <a href="#">Сообщения</a>
-                </li>
-                <li class="lk__nav__item lk__nav__item_active">
-                    <a href="#">Обращения</a>
-                </li>
-                <li class="lk__nav__item">
-                    <a href="#">Мои отзывы</a>
-                </li>
-                <li class="lk__nav__item">
-                    <a href="#">Пациенты</a>
-                </li>
-                <li class="lk__nav__item">
-                    <a href="#">Спецпредложения<div class="special-offer-quantity">3</div></a>
-                </li>
-            </ul>
-        </nav>
+        {{ include('@App/Lk/_menu.html.twig', { activeMenuItemAlias: 'appeals'}) }}
         <div class="lk__title">Мои обращения</div>
         <div class="lk__content">
-            <div class="lk__content__big-content lk-border">
-                <div class="lk__content__big-content__title">Мои обращения</div>
-                <div class="lk__content__big-content__appeal-history">
-                    <div class="lk__content__big-content__appeal-history__year">2020</div>
-                    <div class="lk__content__big-content__appeal-history__appeal-item">
-                        <div class="appeal-item__date">12 декабря</div>
-                        <div class="appeal-item__name"> Громут П.А.</div>
-                        <div class="appeal-item__medical-institution">АО "Европейский медицинский центр"</div>
-                        <div class="appeal-item__insurance-company"><img src="{{ asset('gulp/images/svg/lk-alpha-strahovanie.svg') }}"></div>
+            {% if omsChargeComplaints|length %}
+                <div class="lk__content__big-content lk-border">
+                    <div class="lk__content__big-content__appeal-history">
+                        {% for appeal in omsChargeComplaints %}
+                            {% if (not currentYear is defined) or (appeal.year != currentYear) %}
+                                {% set currentYear = appeal.year %}
+                                <div class="lk__content__big-content__appeal-history__year">{{ appeal.year }}</div>
+                            {% endif %}
+                            <a class="lk__content__big-content__appeal-history__appeal-item"
+                               href="{{ path('lk_my_appeal_show', { id: appeal.id }) }}">
+                                <div class="appeal-item__date">{{ appeal.createdAt|prepareDate('d M') }}</div>
+                                <div class="appeal-item__name">{{ appeal.patient.fioShort }}</div>
+                                <div class="appeal-item__medical-institution">{{ appeal.medicalOrganization.name }}</div>
+                                <div class="appeal-item__insurance-company"><img src="{{ image_url(appeal.patient.insuranceCompany) }}" alt="{{ appeal.patient.insuranceCompany.name }}"></div>
+                            </a>
+                        {% endfor %}
                     </div>
-                    <div class="lk__content__big-content__appeal-history__appeal-item">
-                        <div class="appeal-item__date">12 декабря</div>
-                        <div class="appeal-item__name"> Константинопольский А.О.</div>
-                        <div class="appeal-item__medical-institution">АО "Европейский медицинский центр"</div>
-                        <div class="appeal-item__insurance-company"><img src="{{ asset('gulp/images/svg/lk-alpha-strahovanie.svg') }}"></div>
-                    </div>
-                    <div class="lk__content__big-content__appeal-history__appeal-item">
-                        <div class="appeal-item__date">12 декабря</div>
-                        <div class="appeal-item__name"> Громут П.А.</div>
-                        <div class="appeal-item__medical-institution">АО "Европейский медицинский центр"</div>
-                        <div class="appeal-item__insurance-company"><img src="{{ asset('gulp/images/svg/lk-alpha-strahovanie.svg') }}"></div>
-                    </div>
-                    <div class="lk__content__big-content__appeal-history__appeal-item">
-                        <div class="appeal-item__date">12 декабря</div>
-                        <div class="appeal-item__name"> Громут П.А.</div>
-                        <div class="appeal-item__medical-institution">АО "Европейский медицинский центр"</div>
-                        <div class="appeal-item__insurance-company"><img src="{{ asset('gulp/images/svg/lk-alpha-strahovanie.svg') }}"></div>
-                    </div>
+                    <button class="lk__content__big-content__more-content-button btn">Еще 5 обращений</button>
                 </div>
-                <div class="lk__content__big-content__appeal-history">
-                    <div class="lk__content__big-content__appeal-history__year">2019</div>
-                    <div class="lk__content__big-content__appeal-history__appeal-item">
-                        <div class="appeal-item__date">12 декабря</div>
-                        <div class="appeal-item__name"> Громут П.А.</div>
-                        <div class="appeal-item__medical-institution">АО "Европейский медицинский центр"</div>
-                        <div class="appeal-item__insurance-company"><img src="{{ asset('gulp/images/svg/lk-alpha-strahovanie.svg') }}"></div>
-                    </div>
-                    <div class="lk__content__big-content__appeal-history__appeal-item">
-                        <div class="appeal-item__date">12 декабря</div>
-                        <div class="appeal-item__name"> Громут П.А.</div>
-                        <div class="appeal-item__medical-institution">АО "Европейский медицинский центр"</div>
-                        <div class="appeal-item__insurance-company"><img src="{{ asset('gulp/images/svg/lk-alpha-strahovanie.svg') }}"></div>
-                    </div>
-                    <div class="lk__content__big-content__appeal-history__appeal-item">
-                        <div class="appeal-item__date">12 декабря</div>
-                        <div class="appeal-item__name"> Громут П.А.</div>
-                        <div class="appeal-item__medical-institution">АО "Европейский медицинский центр"</div>
-                        <div class="appeal-item__insurance-company"><img src="{{ asset('gulp/images/svg/lk-alpha-strahovanie.svg') }}"></div>
-                    </div>
-                </div>
-                <button class="lk__content__big-content__more-content-button btn">Еще 5 обращений</button>
-            </div>
+            {% endif %}
             <div class="lk__content__small-content lk-border">
-                <form>
-                    <div class="form-item form-item_where">
-                        <div class="form-item__title">Где вы лечились</div>
-                        <select>
-                            <option>50 Московская область</option>
-                            <option>1</option>
-                            <option>1</option>
-                        </select>
-                    </div>
-                    <div class="form-item form-item_when">
-                        <div class="form-item__title">Когда вы лечились</div>
-                        <select>
-                            <option>2019</option>
-                            <option>2020</option>
-                            <option>2021</option>
-                        </select>
-                    </div>
-                    <button class="form-item_button btn2">Создать новое обращение</button>
-                </form>
+                {% include '@App/_obrashcheniya.html.twig' with {
+                    'formid': 'appeal-form',
+                    'form': appealForm,
+                    'submitClass': 'form-item_button btn2',
+                    'submitLabel': 'Создать новое обращение'
+                } %}
             </div>
         </div>
     </div>
