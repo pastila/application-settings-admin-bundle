@@ -1,0 +1,26 @@
+{% import _self as menu %}
+
+{% macro menuItem(alias, url, title, activeMenuItemAlias) %}
+    <li class="lk__nav__item{% if alias == activeMenuItemAlias %} lk__nav__item_active{% endif %}">
+        {% if alias == activeMenuItemAlias %}
+            <span>{{ title }}</span>
+        {% else %}
+            <a href="{{ url }}">{{ title }}</a>
+        {% endif %}
+    </li>
+{#    <li class="lk__nav__item">#}
+{#        <a href="#">Спецпредложения#}
+{#            <div class="special-offer-quantity">3</div>#}
+{#        </a>#}
+{#    </li>#}
+{% endmacro %}
+
+<nav class="lk__nav">
+    <ul>
+        {{ menu.menuItem('dashboard', path('lk_index'), 'Обзор', activeMenuItemAlias) }}
+{#        {{ menu.menuItem('messages', path('lk_my_message_list'), 'Сообщения', activeMenuItemAlias) }}#}
+        {{ menu.menuItem('appeals', path('lk_my_appeal_list'), 'Мои обращения', activeMenuItemAlias) }}
+        {{ menu.menuItem('reviews', path('lk_my_review_list'), 'Мои отзывы', activeMenuItemAlias) }}
+{#        {{ menu.menuItem('dashboard', path('lk_my_patient_list'), 'Пациенты', activeMenuItemAlias) }}#}
+    </ul>
+</nav>

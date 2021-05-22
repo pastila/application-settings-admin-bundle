@@ -13,6 +13,7 @@ use AppBundle\Helper\Year\Year;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -113,6 +114,29 @@ class OmsChargeComplaint
    * @ORM\Column(type="integer")
    */
   private $draftStep = 1;
+
+  /**
+   * @var ?DateTime
+   *
+   * @ORM\Column(type="datetime", nullable=true)
+   * @Gedmo\Timestampable(on="create")
+   */
+  private $createdAt;
+
+  /**
+   * @var ?DateTime
+   *
+   * @ORM\Column(type="datetime", nullable=true)
+   * @Gedmo\Timestampable(on="update")
+   */
+  private $updatedAt;
+
+  /**
+   * @var ?DateTime
+   *
+   * @ORM\Column(type="datetime", nullable=true)
+   */
+  private $sentAt;
 
   public function __construct ()
   {
@@ -341,6 +365,60 @@ class OmsChargeComplaint
   public function setDraftStep(int $draftStep): OmsChargeComplaint
   {
     $this->draftStep = $draftStep;
+    return $this;
+  }
+
+  /**
+   * @return DateTime|null
+   */
+  public function getCreatedAt(): ?DateTime
+  {
+    return $this->createdAt;
+  }
+
+  /**
+   * @param DateTime|null $createdAt
+   * @return OmsChargeComplaint
+   */
+  public function setCreatedAt(?DateTime $createdAt): OmsChargeComplaint
+  {
+    $this->createdAt = $createdAt;
+    return $this;
+  }
+
+  /**
+   * @return DateTime|null
+   */
+  public function getUpdatedAt(): ?DateTime
+  {
+    return $this->updatedAt;
+  }
+
+  /**
+   * @param DateTime|null $updatedAt
+   * @return OmsChargeComplaint
+   */
+  public function setUpdatedAt(?DateTime $updatedAt): OmsChargeComplaint
+  {
+    $this->updatedAt = $updatedAt;
+    return $this;
+  }
+
+  /**
+   * @return DateTime|null
+   */
+  public function getSentAt(): ?DateTime
+  {
+    return $this->sentAt;
+  }
+
+  /**
+   * @param DateTime|null $sentAt
+   * @return OmsChargeComplaint
+   */
+  public function setSentAt(?DateTime $sentAt): OmsChargeComplaint
+  {
+    $this->sentAt = $sentAt;
     return $this;
   }
 

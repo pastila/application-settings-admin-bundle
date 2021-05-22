@@ -32,7 +32,7 @@
             <nav class="app-header__list">
                 {{ knp_menu_render('AppBundle:Builder:headerMenu') }}
             </nav>
-            <a {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}href="/personal-cabinet/" class="app-header__lk btn"{% else %}href="{{ path('fos_user_security_login') }}" class="app-header__lk btn"{% endif%}>
+            <a {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}href="{{ path('lk_index') }}" class="app-header__lk btn"{% else %}href="{{ path('fos_user_security_login') }}" class="app-header__lk btn"{% endif%}>
 
                 <div class="svg-icon svg-icon--lk" aria-hidden="true">
                     <svg class="svg-icon__link">

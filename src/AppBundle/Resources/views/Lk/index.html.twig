@@ -10,79 +10,12 @@
 
 {% block main %}
     <div class="lk">
-        <nav class="lk__nav">
-            <ul>
-                <li class="lk__nav__item lk__nav__item_active">
-                    <a href="#">Обзор</a>
-                </li>
-                <li class="lk__nav__item">
-                    <a href="#">Сообщения</a>
-                </li>
-                <li class="lk__nav__item">
-                    <a href="#">Обращения</a>
-                </li>
-                <li class="lk__nav__item">
-                    <a href="#">Мои отзывы</a>
-                </li>
-                <li class="lk__nav__item">
-                    <a href="#">Пациенты</a>
-                </li>
-                <li class="lk__nav__item">
-                    <a href="#">Спецпредложения<div class="special-offer-quantity">3</div></a>
-                </li>
-            </ul>
-        </nav>
+        {{ include('@App/Lk/_menu.html.twig', { activeMenuItemAlias: 'dashboard'}) }}
         <div class="lk__title">Личный кабинет</div>
         <div class="lk__content">
             <div class="lk__content__big-content lk-border">
-                <div class="lk__content__big-content__title">Обращения<img src="{{ asset('gulp/images/svg/lk-more-buttons.svg') }}"></div>
-                <div class="lk__content__big-content__appeal-history">
-                    <div class="lk__content__big-content__appeal-history__year">2020</div>
-                    <div class="lk__content__big-content__appeal-history__appeal-item">
-                        <div class="appeal-item__date">12 декабря</div>
-                        <div class="appeal-item__name"> Громут П.А.</div>
-                        <div class="appeal-item__medical-institution">АО "Европейский медицинский центр"</div>
-                        <div class="appeal-item__insurance-company"><img src="{{ asset('gulp/images/svg/lk-alpha-strahovanie.svg') }}"></div>
-                    </div>
-                    <div class="lk__content__big-content__appeal-history__appeal-item">
-                        <div class="appeal-item__date">12 декабря</div>
-                        <div class="appeal-item__name"> Громут П.А.</div>
-                        <div class="appeal-item__medical-institution">АО "Европейский медицинский центр"</div>
-                        <div class="appeal-item__insurance-company"><img src="{{ asset('gulp/images/svg/lk-alpha-strahovanie.svg') }}"></div>
-                    </div>
-                    <div class="lk__content__big-content__appeal-history__appeal-item">
-                        <div class="appeal-item__date">12 декабря</div>
-                        <div class="appeal-item__name"> Громут П.А.</div>
-                        <div class="appeal-item__medical-institution">АО "Европейский медицинский центр"</div>
-                        <div class="appeal-item__insurance-company"><img src="{{ asset('gulp/images/svg/lk-alpha-strahovanie.svg') }}"></div>
-                    </div>
-                    <div class="lk__content__big-content__appeal-history__appeal-item">
-                        <div class="appeal-item__date">12 декабря</div>
-                        <div class="appeal-item__name"> Громут П.А.</div>
-                        <div class="appeal-item__medical-institution">АО "Европейский медицинский центр"</div>
-                        <div class="appeal-item__insurance-company"><img src="{{ asset('gulp/images/svg/lk-alpha-strahovanie.svg') }}"></div>
-                    </div>
-                    <div class="lk__content__big-content__appeal-history__appeal-item">
-                        <div class="appeal-item__date">12 декабря</div>
-                        <div class="appeal-item__name"> Громут П.А.</div>
-                        <div class="appeal-item__medical-institution">АО "Европейский медицинский центр"</div>
-                        <div class="appeal-item__insurance-company"><img src="{{ asset('gulp/images/svg/lk-alpha-strahovanie.svg') }}"></div>
-                    </div>
-                    <div class="lk__content__big-content__appeal-history__appeal-item">
-                        <div class="appeal-item__date">12 декабря</div>
-                        <div class="appeal-item__name"> Громут П.А.</div>
-                        <div class="appeal-item__medical-institution">АО "Европейский медицинский центр"</div>
-                        <div class="appeal-item__insurance-company"><img src="{{ asset('gulp/images/svg/lk-alpha-strahovanie.svg') }}"></div>
-                    </div>
-                    <div class="lk__content__big-content__appeal-history__appeal-item">
-                        <div class="appeal-item__date">12 декабря</div>
-                        <div class="appeal-item__name"> Громут П.А.</div>
-                        <div class="appeal-item__medical-institution">АО "Европейский медицинский центр"</div>
-                        <div class="appeal-item__insurance-company"><img src="{{ asset('gulp/images/svg/lk-alpha-strahovanie.svg') }}"></div>
-                    </div>
-                </div>
-                <button class="lk__content__big-content__more-content-button btn">Еще 5 обращений</button>
-
+                <div class="lk__content__big-content__title">Обращения<a href="{{ path('oms_charge_complaint_index') }}"><img src="{{ asset('gulp/images/svg/lk-more-buttons.svg') }}"></a></div>
+                {{ render(controller('AppBundle:User\\Cabinet:_dashboardAppealList')) }}
             </div>
             <div class="lk__content__small-content">
                 <div class="lk__content__small-content__insurance-companies lk-border">

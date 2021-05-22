@@ -1,3 +1,5 @@
+{% if not submitClass is defined %}{% set submitClass = 'b-form__button btn2' %}{% endif %}
+{% if not submitLabel is defined %}{% set submitLabel = 'Вернуть деньги' %}{% endif %}
 {{ form_start(form, {'action': path('oms_charge_complaint_index'), 'method': 'POST', 'attr': {
     class: 'b-form',
     id: formid
@@ -16,7 +18,7 @@
 </div>
 <div class="b-form__item">
     <div class="b-form__item-content">
-        <button class="b-form__button btn2" type="submit">Вернуть деньги</button>
+        <button class="{{ submitClass }}" type="submit">{{ submitLabel }}</button>
     </div>
 </div>
 {{ form_rest(form) }}

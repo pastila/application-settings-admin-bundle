@@ -77,7 +77,8 @@ class HomepageController extends Controller
     try
     {
       $region = $this->locationService->getLocation();
-    } catch (LocationServiceException $e)
+    }
+    catch (LocationServiceException $e)
     {
       $this->get('logger')->err('Unable to determine user region.');
       throw $e;
