@@ -105,10 +105,11 @@ class CabinetController extends AbstractController
     $appealListQb = $this
       ->omsChargeComplaintRepository
       ->createQueryBuilder('ap')
-//      ->where('ap.user = :user')
-//      ->setParameters([
-//        ':user' => $user
-//      ])
+      ->innerJoin('ap.patient', 'p')
+      ->where('p.user = :user')
+      ->setParameters([
+        ':user' => $user
+      ])
     ;
 
     $filter = new OmsChargeComplaintFilter();
