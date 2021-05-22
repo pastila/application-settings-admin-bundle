@@ -1,0 +1,125 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {# <link rel="stylesheet" href="/landing/css/app.css"> #}
+    {# стили которые собираются дефолтной задачей gulp #}
+    <link rel="stylesheet" href="/local/templates/kdteam/pages/landing/landing.min.css">
+    <link rel="stylesheet" href="/local/templates/kdteam/pages/lichniy-cabinet/my-reviews.min.css">
+{% endblock %}
+
+{% block main %}
+    <div class="lk">
+        <nav class="lk__nav">
+            <ul>
+                <li class="lk__nav__item">
+                    <a href="#">Обзор</a>
+                </li>
+                <li class="lk__nav__item">
+                    <a href="#">Сообщения</a>
+                </li>
+                <li class="lk__nav__item">
+                    <a href="#">Обращения</a>
+                </li>
+                <li class="lk__nav__item lk__nav__item_active">
+                    <a href="#">Мои отзывы</a>
+                </li>
+                <li class="lk__nav__item">
+                    <a href="#">Пациенты</a>
+                </li>
+                <li class="lk__nav__item">
+                    <a href="#">Спецпредложения
+                        <div class="special-offer-quantity">3</div>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="lk__title">Мои отзывы</div>
+        <div class="lk__content">
+            <div class="lk__content__big-content lk-border">
+                <div class="lk__content__big-content__title">
+                    Мои отзывы
+                </div>
+                <div class="lk__content__big-content__my-reviews">
+                    <div class="review-item">
+                        <div class="review-item__info">
+                            <img src="{{ asset('gulp/images/svg/lk-my-reviews-review-star.svg') }}">
+                            <img src="{{ asset('gulp/images/svg/lk-my-reviews-review-star.svg') }}">
+                            <img src="{{ asset('gulp/images/svg/lk-my-reviews-review-star.svg') }}">
+                            <img src="{{ asset('gulp/images/svg/lk-my-reviews-review-star.svg') }}">
+                            <img src="{{ asset('gulp/images/svg/lk-my-reviews-review-star.svg') }}">
+                            <div class="review-item__info__date">
+                                12 декабря 2021
+                            </div>
+                            <div class="review-item__info__status">
+                                На модерации
+                            </div>
+                        </div>
+                        <div class="review-item__text">
+                            В прошлом году сын понюхал марганцовку. Очень испугались за него, вызвали скорую
+                        </div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-item__info">
+                            <div class="review-item__info__rate">
+                                <img src="{{ asset('gulp/images/svg/lk-my-reviews-review-star.svg') }}">
+                                <img src="{{ asset('gulp/images/svg/lk-my-reviews-review-star.svg') }}">
+                                <img src="{{ asset('gulp/images/svg/lk-my-reviews-review-star.svg') }}">
+                                <img src="{{ asset('gulp/images/svg/lk-my-reviews-review-star.svg') }}">
+                                <img src="{{ asset('gulp/images/svg/lk-my-reviews-review-star.svg') }}">
+                            </div>
+                            <div class="review-item__info__date">
+                                12 декабря 2021
+                            </div>
+                        </div>
+                        <div class="review-item__text">
+                            Год назад обращался в больницу с проблемами носа, быстро приняли меня, но произошло ... В
+                            прошлом году сын понюхал марганцовку. Очень испугались за него, вызвали скорую
+                        </div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-item__info">
+                            <img src="{{ asset('gulp/images/svg/lk-my-reviews-review-star.svg') }}">
+                            <img src="{{ asset('gulp/images/svg/lk-my-reviews-review-star.svg') }}">
+                            <img src="{{ asset('gulp/images/svg/lk-my-reviews-review-star.svg') }}">
+                            <img src="{{ asset('gulp/images/svg/lk-my-reviews-review-star.svg') }}">
+                            <img src="{{ asset('gulp/images/svg/lk-my-reviews-review-star.svg') }}">
+                            <div class="review-item__info__date">
+                                12 декабря 2021
+                            </div>
+                        </div>
+                        <div class="review-item__text">
+                            В прошлом году сын понюхал марганцовку. Очень испугались за него, вызвали скорую
+                        </div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-item__info">
+                            <img src="{{ asset('gulp/images/svg/lk-my-reviews-review-star.svg') }}">
+                            <img src="{{ asset('gulp/images/svg/lk-my-reviews-review-star.svg') }}">
+                            <img src="{{ asset('gulp/images/svg/lk-my-reviews-review-star.svg') }}">
+                            <img src="{{ asset('gulp/images/svg/lk-my-reviews-review-star.svg') }}">
+                            <img src="{{ asset('gulp/images/svg/lk-my-reviews-review-star.svg') }}">
+                            <div class="review-item__info__date">
+                                12 декабря 2021
+                            </div>
+                        </div>
+                        <div class="review-item__text">
+                            Год назад обращался в больницу с проблемами носа, быстро приняли меня, но произошло ... В
+                            прошлом году сын понюхал марганцовку. Очень испугались за него, вызвали скорую
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="lk__content__small-content">
+                <div class="lk__content__small-content__new-review lk-border">
+                    <button class="btn2">Новый отзыв</button>
+                    <div class="lk__content__small-content__new-review__description">
+                        Если у вас есть опыт обращения к своему страховому представителю, опишите его, вне зависимости
+                        от того, положительный он или отрицательный.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="lk__button btn2">В личный кабинет</button>
+    </div>
+{% endblock %}
