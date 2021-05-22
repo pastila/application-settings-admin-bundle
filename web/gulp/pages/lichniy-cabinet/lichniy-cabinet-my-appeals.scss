@@ -1,0 +1,334 @@
+.lk::before {
+  content: url(../../images/svg/oms-charge-complaint-left-banner.svg);
+  display: block;
+  position: absolute;
+  top: 107px;
+  left: -6px;
+  z-index: -1;
+}
+
+.lk::after {
+  content: url(../../images/svg/oms-charge-complaint-right-banner.svg);
+  display: block;
+  position: absolute;
+  top: 682px;
+  right: 0px;
+  z-index: -1;
+}
+
+.lk {
+  width: 100%;
+  max-width: 1300px;
+  padding: 170px 0 93px;
+  margin: 0 auto;
+  flex: 1 0 auto;
+  &__nav {
+    height: 55px;
+    background: #DDE8FE;
+    border-radius: 10px;
+    padding: 12px 40px 10px;
+    &__item:first-child {
+      margin-left: 0;
+    }
+    &__item {
+      list-style-type: none;
+      margin: 0 25px;
+      line-height: 33px;
+      font-family: Arial;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 14px;
+      a {
+        color: #000000;
+        .special-offer-quantity {
+          display: inline-block;
+          background-color: #17A44C;
+          width: 22px;
+          height: 22px;
+          border-radius: 50%;
+          margin-left: 5px;
+          text-align: center;
+          vertical-align: middle;
+          line-height: 22px;
+          color: white;
+        }
+      }
+      &_active {
+        a{
+          color: #00ABD8;
+        }
+      }
+    }
+    &__item:last-child {
+      margin-right:0;
+    }
+    ul {
+      display: flex;
+      margin: 0;
+      padding: 0;
+    }
+  }
+  &__title {
+    font-family: Playfair Display;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 53px;
+    color: #134469;
+    margin: 77px 0 51px;
+  }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    &__big-content {
+      padding: 38px 46px 46px 51px;
+      &__title {
+        display: none;
+      }
+      &__appeal-history {
+        &__year {
+          height: 36px;
+          padding-left: 15px;
+          background: #F4FBFF;
+          line-height: 36px;
+          font-size: 14px;
+          color: #535353;
+        }
+        &__appeal-item {
+          display: flex;
+          width: 100%;
+          border-bottom: 1px solid #E5E5E5;
+          padding: 18px 5px 17px 15px;
+          font-family: Arial;
+          font-size: 14px;
+          color: #000000;
+          min-height: 70px;
+          .appeal-item {
+            &__date, &__name, &__medical-institution,&__insurance-company {
+              margin: auto 0;
+            }
+            &__date {
+              min-width: 80px;
+              width: 80px;
+              color: #535353;
+            }
+            &__name {
+              width: 33.3%;
+              margin-left: 20px;
+              margin-right: 10px;
+              word-wrap: break-word;
+            }
+            &__medical-institution {
+              width: 66.6%;
+              margin-left: 10px;
+              margin-right: 20px;
+              word-wrap: break-word;
+            }
+            &__insurance-company {
+              min-width: 120px;
+              width: 120px
+            }
+          }
+          div {
+            line-height: 18px;
+          }
+        }
+        &__appeal-item:last-child {
+          border: none;
+          margin-bottom: 10px;
+          padding-bottom: 18px;
+        }
+      }
+      .lk__content__big-content &__more-content-button {
+        margin-top: 5px;
+      width: 235px;
+    }
+    }
+    &__small-content {
+      margin-top: 42px;
+      padding: 37px 73px 64px;
+      form {
+        display: flex;
+        align-items: flex-end;
+        .form-item {
+          width: 300px;
+          &__title {
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 33px;
+            color: #00ABD8;
+          }
+          &_when {
+            width: 179px;
+            margin-right: 30px;
+          }
+          &_where {
+            width: 378px;
+            margin-right: 23px;
+          }
+          &_button {
+            width: 344px;
+          }
+          .jq-selectbox__select-text {
+            color: #515151;
+          }
+        }
+      }
+    }
+  }
+  .lk-border {
+    border: 1px solid #DEE8FD;
+    box-sizing: border-box;
+    box-shadow: -4.5px 34px 66px #EEEEEE;
+    border-radius: 10px;
+    background: #FFFFFF;
+  }
+}
+@media screen and (max-width: 1332px) {
+  .lk {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+@media screen and (max-width: 880px) {
+  .app__wrapper {
+    .lk {
+      &__nav {
+        display: none;
+      }
+      &__title {
+        display: none;
+      }
+      &__content {
+        &__big-content {
+          margin-top:44px;
+          padding: 24px 37px 37px 35px;
+          &__title {
+            font-family: Playfair Display;
+            font-size: 40px;
+            line-height: 53px;
+            color: #134469;
+            margin-bottom: 20px;
+            display: inherit;
+          }
+        }
+        &__small-content {
+          padding: 26px 35px 49px;
+          form {
+            flex-wrap: wrap;
+            .form-item {
+              &__title {
+                margin-bottom: 10px;
+                }
+              &_where{
+                width: calc(100% - 202px);
+                min-width: 277px;
+                max-width: 378px;
+              }
+              &_when {
+                width: 179px;
+                margin: 0;
+              }
+              &_button {
+                width: 100%;
+                margin-top: 27px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 640px) {
+  .v2 .app-header.is-fixed:before {
+    display: none;
+  }
+  .app.v2 .jq-selectbox__select {
+    height: 55px;
+  }
+  .lk {
+    padding-top: 74px;
+    padding-bottom: 41px;
+    &__content {
+      &__small-content {
+        margin-top: 34px;
+      }
+      &__big-content {
+       .lk &__more-content-button {
+          height: 55px;
+        }
+      }
+      form {
+        .form-item_button {
+          height: 55px;
+          font-size: 16px;
+          min-width: unset;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 582px) {
+  .app__wrapper {
+    .lk {
+      padding: 0;
+      &__content {
+        padding: 105px 0 0 0;
+        &__big-content {
+          border: none;
+          box-shadow: none;
+          margin-top:0;
+          padding: 0;
+          &__title {
+            font-size: 30px;
+            line-height: 40px;
+            margin: 0 15px 25px;
+          }
+          &__appeal-history {
+            &__appeal-item {
+              flex-wrap: wrap;
+              justify-content: space-between;
+              padding: 10px 15px;
+              .appeal-item{
+                &__name {
+                  text-align: end;
+                }
+                &__medical-institution {
+                  width: 100%;
+                  margin: 10px 0 5px;
+                }
+              }
+            }
+          }
+          &__more-content-button {
+            width: calc(100% - 30px);
+            margin-left: 15px;
+            margin-right: 15px;
+          }
+        }
+        &__small-content {
+          margin: 39px 15px;
+          padding: 21px 25px 39px;
+          form {
+            .form-item{
+              &__title {
+                margin-bottom: 0;
+              }
+              &_where {
+                width: 378px;
+                min-width: unset;
+                max-width: unset;
+                margin-right: unset;
+              }
+              &_when {
+                margin-top: 10px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
