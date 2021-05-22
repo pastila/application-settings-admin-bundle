@@ -129,6 +129,7 @@ services:
       - ${NGINX_SITES_PATH}/bezbahil.ru.conf:/etc/nginx/sites-available/bezbahil.ru.conf
       - ${NGINX_SITES_PATH}/.htpasswd:/etc/nginx/sites-available/.htpasswd
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      # certbot
       - ${APP_SHARED_PATH_HOST}/laradock/certbot/certs/:/var/certs:ro
       - ${APP_SHARED_PATH_HOST}/laradock/certbot/letsencrypt/:/var/www/letsencrypt
       # App shares
@@ -147,7 +148,6 @@ services:
       - ${APP_SHARED_PATH_HOST}/web/robots.txt:/var/www/web/robots.txt
       - ${APP_SHARED_PATH_HOST}/web/sitemap.xml:/var/www/web/sitemap.xml
       - ${APP_SHARED_PATH_HOST}/web/ssh/send_mail_after_30_day.txt:/var/www/web/ssh/send_mail_after_30_day.txt
-      - ${APP_SHARED_PATH_HOST}/laradock/certbot/certs:/var/www/laradock/certbot/certs
       - ${APP_SHARED_PATH_HOST}/web/bitrix/backup:/var/www/web/bitrix/backup
       - ${APP_SHARED_PATH_HOST}/web/bitrix/cache:/var/www/web/bitrix/cache
       - ${APP_SHARED_PATH_HOST}/web/bitrix/managed_cache:/var/www/web/bitrix/managed_cache
@@ -157,6 +157,7 @@ services:
       # sf app uploads
       - ${APP_SHARED_PATH_HOST}/var/uploads:/var/www/var/uploads
       - ${APP_SHARED_PATH_HOST}/web/uploads:/var/www/web/uploads
+
 
     ports:
       - "${NGINX_HOST_HTTP_PORT}:80"
@@ -221,3 +222,9 @@ services:
       # sf app uploads
       - ${APP_SHARED_PATH_HOST}/var/uploads:/var/www/var/uploads
       - ${APP_SHARED_PATH_HOST}/var/synchronization:/var/www/var/synchronization
+
+  certbot:
+    volumes:
+      - ${APP_SHARED_PATH_HOST}/certbot/certs/:/var/certs
+      - ${APP_SHARED_PATH_HOST}/certbot/letsencrypt/:/var/www/letsencrypt
+      - ${DATA_PATH_LOGS}/cerbot/:/var/log/letsencrypt

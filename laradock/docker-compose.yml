@@ -356,7 +356,7 @@ services:
     volumes:
       - ./certbot/certs/:/var/certs
       - ./certbot/letsencrypt/:/var/www/letsencrypt
-      - ${DATA_PATH_LOGS}/cerboot/:/var/log/letsencrypt
+      - ${DATA_PATH_LOGS}/certbot/:/var/log/letsencrypt
     environment:
       - CN=bezbahil.ru
       - EMAIL=no-reply@bezbahil.ru
