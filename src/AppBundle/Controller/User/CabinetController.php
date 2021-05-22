@@ -60,7 +60,21 @@ class CabinetController extends AbstractController
     return $this->render('AppBundle:Lk:my_appeal_list.html.twig');
   }
 
-    /**
+
+  /**
+   * Личный кабинет
+   * @Route(name="lk/my-appeals/appeal-item", path="/lk/my-appeals/appeal-item")
+   * @param Request $request
+   */
+  public function cabinetMyAppealShowAction(Request $request)
+  {
+    // $this->denyAccessUnlessGranted(['ROLE_USER']);
+
+    return $this->render('AppBundle:Lk:my_appeal_show.html.twig');
+  }
+
+
+  /**
    * Личный кабинет - Ваши отзывы
    * @Route(path="/cabinet/feedback")
    */
