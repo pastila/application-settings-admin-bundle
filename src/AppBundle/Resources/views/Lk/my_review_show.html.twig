@@ -1,0 +1,83 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {# <link rel="stylesheet" href="/landing/css/app.css"> #}
+    {# стили которые собираются дефолтной задачей gulp #}
+    <link rel="stylesheet" href="/local/templates/kdteam/pages/landing/landing.min.css">
+    <link rel="stylesheet" href="/local/templates/kdteam/pages/lichniy-cabinet/review-item.min.css">
+{% endblock %}
+
+{% block main %}
+    <div class="lk">
+        <nav class="lk__nav">
+            <ul>
+                <li class="lk__nav__item">
+                    <a href="#">Обзор</a>
+                </li>
+                <li class="lk__nav__item">
+                    <a href="#">Сообщения</a>
+                </li>
+                <li class="lk__nav__item">
+                    <a href="#">Обращения</a>
+                </li>
+                <li class="lk__nav__item lk__nav__item_active">
+                    <a href="#">Мои отзывы</a>
+                </li>
+                <li class="lk__nav__item">
+                    <a href="#">Пациенты</a>
+                </li>
+                <li class="lk__nav__item">
+                    <a href="#">Спецпредложения
+                        <div class="special-offer-quantity">3</div>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="lk__title">Мой отзыв от 12 декабря 2021<span class="lk__title__status">На модерации</span></div>
+        <div class="lk__content">
+            <div class="lk__content__big-content lk-border">
+                <div class="lk__content__big-content__my-review">
+                    <div class="my-review__title">
+                        Мой отзыв от 12 декабря 2021
+                    </div>
+                    <div class="my-review__rate">
+                        <img src="{{ asset('gulp/images/svg/lk-my-reviews-review-star.svg') }}">
+                        <img src="{{ asset('gulp/images/svg/lk-my-reviews-review-star.svg') }}">
+                        <img src="{{ asset('gulp/images/svg/lk-my-reviews-review-star.svg') }}">
+                        <img src="{{ asset('gulp/images/svg/lk-my-reviews-review-star.svg') }}">
+                        <img src="{{ asset('gulp/images/svg/lk-my-reviews-review-star.svg') }}">
+                    </div>
+                    <div class="my-review__text">
+                        Год назад обращался в больницу с проблемами носа, быстро приняли меня, но произошло ... В
+                        прошлом году сын понюхал марганцовку. Очень испугались за него, вызвали скорую
+                    </div>
+                    <div class="my-review__name">
+                        Петр Громут
+                    </div>
+                </div>
+                <div class="lk__content__big-content__answer">
+                    <div class="lk__content__big-content__answer__subtitle">Ответ организации</div>
+                    <div class="lk__content__big-content__answer__text">Год назад обращался в больницу с проблемами
+                        носа, быстро приняли меня, но произошло ... В прошлом году сын понюхал марганцовку. Очень
+                        испугались за него, вызвали скорую
+                    </div>
+                    <div class="lk__content__big-content__answer__subtitle">Регион</div>
+                    <div class="lk__content__big-content__answer__region">77 Московская область</div>
+                    <div class="lk__content__big-content__answer__subtitle">Медицинская организация</div>
+                    <div class="lk__content__big-content__answer__medical-organization">Поликлиника 77 имени Склифасовского</div>
+                </div>
+            </div>
+            <div class="lk__content__small-content">
+                <div class="lk__content__small-content__new-review lk-border">
+                    <button class="btn2">Новый отзыв</button>
+                    <div class="lk__content__small-content__new-review__description">
+                        Если у вас есть опыт обращения к своему страховому представителю, опишите его, вне зависимости
+                        от того, положительный он или отрицательный.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="lk__button btn2">В личный кабинет</button>
+    </div>
+{% endblock %}

@@ -1,0 +1,320 @@
+.lk {
+  width: 100%;
+  max-width: 1300px;
+  padding: 170px 16px 93px;
+  margin: 0 auto;
+  flex: 1 0 auto;
+
+  &__nav {
+    background: #DDE8FE;
+    border-radius: 10px;
+    padding: 12px 40px 10px;
+
+    &__item:first-child {
+      margin-left: 0;
+    }
+
+    &__item {
+      list-style-type: none;
+      margin: 0 25px;
+      line-height: 33px;
+      font-family: Arial;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 14px;
+
+      a {
+        color: #000000;
+
+        .special-offer-quantity {
+          display: inline-block;
+          background-color: #17A44C;
+          width: 22px;
+          height: 22px;
+          border-radius: 50%;
+          margin-left: 5px;
+          text-align: center;
+          vertical-align: middle;
+          line-height: 22px;
+          color: white;
+        }
+      }
+
+      &_active {
+        a {
+          color: #00ABD8;
+        }
+      }
+    }
+
+    &__item:last-child {
+      margin-right: 0;
+    }
+
+    ul {
+      display: flex;
+      margin: 0;
+      padding: 0;
+      flex-wrap: wrap;
+    }
+  }
+
+  &__title {
+    font-family: Playfair Display;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 53px;
+    color: #134469;
+    margin: 77px 0 51px;
+
+    &__status {
+      font-family: Arial;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 33px;
+      color: #FA7167;
+      margin-left: 20px;
+    }
+  }
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+
+    &__big-content {
+      margin-right: 20px;
+      width: 894px;
+
+      &__title {
+        display: none;
+      }
+
+      &__my-review {
+        background: #F4FBFF;
+        border-bottom: 1px solid #DEE8FD;
+        padding: 35px 7.5% 31px;
+
+        .my-review {
+          &__title {
+            display: none;
+          }
+
+          &__text {
+            font-size: 25px;
+            line-height: 33px;
+            color: #000000;
+            margin: 16px 0 7px;
+          }
+
+          &__name {
+            font-size: 14px;
+            line-height: 33px;
+            color: #000000;
+          }
+        }
+      }
+
+      &__answer {
+        padding: 32px 6.5% 65px;
+
+        &__subtitle {
+          font-family: Arial;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 14px;
+          line-height: 33px;
+          color: #535353;
+        }
+
+        &__medical-organization, &__region, &__text {
+          font-family: Arial;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 25px;
+          line-height: 33px;
+          color: #000000;
+        }
+
+        &__text {
+          margin: 0 -2.5% 24px;
+          padding: 0 2.5% 42px;
+          border-bottom: 1px solid #E5E5E5;
+        }
+
+        &__region {
+          margin-bottom: 16px;
+        }
+      }
+    }
+
+    &__small-content {
+      max-width: 346px;
+      width: 346px;
+
+      &__new-review {
+        text-align: center;
+        padding: 40px 11% 30px;
+
+        &__description {
+          margin: 0 auto;
+          font-size: 14px;
+          line-height: 16px;
+          color: #000000;
+        }
+      }
+
+      &__new-review .btn2 {
+        margin-bottom: 25px;
+        width: 100%;
+        min-width: unset;
+      }
+    }
+
+
+    .lk-border {
+      border: 1px solid #DEE8FD;
+      box-sizing: border-box;
+      box-shadow: -4.5px 34px 66px #EEEEEE;
+      border-radius: 10px;
+      background: #FFFFFF;
+    }
+  }
+
+  &__button {
+    width: 265px;
+  }
+}
+
+@media screen and (max-width: 1080px) {
+  .lk {
+    padding: 170px 16px 47px;
+
+    &__title {
+      display: none;
+    }
+
+    &__content {
+      margin-top: 44px;
+      width: 100%;
+      flex-direction: column;
+
+      &__big-content {
+        width: 100%;
+        margin-right: 0;
+
+        .my-review {
+          &__title {
+            display: block;
+            font-family: Playfair Display;
+            font-size: 40px;
+            line-height: 53px;
+            color: #134469;
+            margin-bottom: 29px;
+          }
+
+          &__name {
+            display: none;
+          }
+        }
+
+        &__answer {
+          padding-bottom: 45px;
+          padding-top: 23px;
+          &__text {
+            padding-bottom: 31px;
+          }
+        }
+      }
+
+      &__small-content {
+        width: 100%;
+        max-width: unset;
+        margin-top: 40px;
+
+        &__new-review {
+          padding: 31px 115px 39px;
+
+          &__description {
+            max-width: 505px;
+          }
+        }
+
+        &__new-review .btn2 {
+          max-width: 277px;
+        }
+      }
+    }
+
+    &__button {
+      width: 100%;
+      height: 55px;
+    }
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .lk {
+    padding: 74px 0 42px;
+
+    &__nav {
+      display: none !important;
+    }
+
+    &__content {
+      margin-top: 12px;
+
+      &__big-content {
+        border: none !important;
+        padding: 0;
+        box-shadow: none !important;
+
+        &__my-review {
+          padding: 19px 20px 21px;
+          border-top: 1px solid #DEE8FD;
+
+          .my-review {
+            &__title {
+              font-size: 30px;
+              line-height: 40px;
+              margin-bottom: 21px;
+            }
+            &__text {
+              margin-top: 8px;
+              font-size: 20px;
+              line-height: 22px;
+            }
+            &__rate {
+              img {
+                width: 12.5px;
+              }
+            }
+          }
+        }
+        &__answer {
+          padding: 14px 20px 0;
+          &__text, &__region, &__medical-organization {
+            font-size: 20px;
+            line-height: 22px;
+          }
+          &__text {
+            margin: 0 -20px 12px;
+            padding: 0 20px 22px;
+          }
+        }
+      }
+      &__small-content {
+        margin: 32px 20px 0;
+        width: calc(100% - 40px)
+      }
+      &__small-content__new-review {
+        padding: 28px 25px;
+      }
+    }
+    &__button{
+      margin: 0 20px !important;
+      width: calc(100% - 40px)
+    }
+  }
+}

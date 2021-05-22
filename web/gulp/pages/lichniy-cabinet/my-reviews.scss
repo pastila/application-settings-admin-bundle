@@ -1,0 +1,235 @@
+.lk {
+  width: 100%;
+  max-width: 1300px;
+  padding: 170px 16px 93px;
+  margin: 0 auto;
+  flex: 1 0 auto;
+
+  &__nav {
+    background: #DDE8FE;
+    border-radius: 10px;
+    padding: 12px 40px 10px;
+
+    &__item:first-child {
+      margin-left: 0;
+    }
+
+    &__item {
+      list-style-type: none;
+      margin: 0 25px;
+      line-height: 33px;
+      font-family: Arial;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 14px;
+
+      a {
+        color: #000000;
+
+        .special-offer-quantity {
+          display: inline-block;
+          background-color: #17A44C;
+          width: 22px;
+          height: 22px;
+          border-radius: 50%;
+          margin-left: 5px;
+          text-align: center;
+          vertical-align: middle;
+          line-height: 22px;
+          color: white;
+        }
+      }
+
+      &_active {
+        a {
+          color: #00ABD8;
+        }
+      }
+    }
+
+    &__item:last-child {
+      margin-right: 0;
+    }
+
+    ul {
+      display: flex;
+      margin: 0;
+      padding: 0;
+      flex-wrap: wrap;
+    }
+  }
+
+  &__title {
+    font-family: Playfair Display;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 53px;
+    color: #134469;
+    margin: 77px 0 51px;
+  }
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    &__big-content {
+      margin-right: 20px;
+      width: 894px;
+      padding: 40px 7.8% 26px 5.2%;
+      &__title {
+        display: none;
+      }
+      &__my-reviews {
+        display: flex;
+        flex-direction: column;
+        .review-item {
+          margin-bottom: 38px;
+          &__info {
+            display: flex;
+            flex-wrap: wrap;
+            &__date {
+              margin: 0 16px 0 5px;
+              font-size: 14px;
+              line-height: 33px;
+              color: #535353;
+            }
+            &__status {
+              font-size: 14px;
+              line-height: 33px;
+              color: #FA7167;
+            }
+            img {
+              margin-right: 7px;
+            }
+          }
+          &__text {
+            font-family: Arial;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 25px;
+            line-height: 33px;
+            color: #000000;
+          }
+        }
+      }
+    }
+
+    &__small-content {
+      max-width: 346px;
+      width: 346px;
+
+      &__new-review {
+        text-align: center;
+        padding: 40px 11% 30px;
+        &__description {
+          margin: 0 auto;
+          font-size: 14px;
+          line-height: 16px;
+          color: #000000;
+        }
+      }
+
+      &__new-review .btn2 {
+        margin-bottom: 25px;
+        width: 100%;
+        min-width: unset;
+      }
+    }
+
+
+    .lk-border {
+      border: 1px solid #DEE8FD;
+      box-sizing: border-box;
+      box-shadow: -4.5px 34px 66px #EEEEEE;
+      border-radius: 10px;
+      background: #FFFFFF;
+    }
+  }
+  &__button {
+    width: 265px;
+  }
+}
+@media screen and (max-width: 1080px) {
+  .lk {
+    padding: 170px 16px 47px;
+    &__title {
+      display:none;
+    }
+    &__content {
+      margin-top: 44px;
+      width: 100%;
+      flex-direction: column;
+      &__big-content {
+        width: 100%;
+        padding: 24px 37px 0;
+        margin-right: 0;
+        &__title {
+          display: block;
+          font-family: Playfair Display;
+          font-size: 40px;
+          line-height: 53px;
+          color: #134469;
+          margin-bottom: 23px;
+        }
+      }
+      &__small-content {
+        width: 100%;
+        max-width: unset;
+        margin-top: 40px;
+        &__new-review {
+          padding: 31px 115px 39px;
+          &__description {
+            max-width: 505px;
+          }
+        }
+        &__new-review .btn2 {
+          max-width: 277px;
+        }
+      }
+    }
+    &__button {
+      width: 100%;
+      height: 55px;
+    }
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .lk {
+    &__nav{
+      display: none !important;
+    }
+    padding-top:74px;
+    &__content {
+      margin-top: 30px;
+      &__big-content {
+        border: none !important;
+        padding: 0;
+        box-shadow: none !important;
+        &__title {
+          font-size: 30px;
+          line-height: 40px;
+          margin-bottom: 19px;
+        }
+        &__my-reviews {
+          .review-item {
+            margin-bottom: 18px;
+            &__text {
+              font-size: 20px;
+              line-height: 22px;
+            }
+            &__info {
+              img {
+                width: 13.35px;
+              }
+            }
+          }
+        }
+      }
+      &__small-content__new-review {
+        padding: 28px 25px;
+      }
+    }
+  }
+}

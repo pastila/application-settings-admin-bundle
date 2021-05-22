@@ -37,7 +37,7 @@ class CabinetController extends AbstractController
 
   /**
    * Личный кабинет
-   * @Route(name="lk", path="/lk")
+   * @Route(name="lk_index", path="/lk")
    * @param Request $request
    */
   public function cabinetAction(Request $request)
@@ -50,7 +50,7 @@ class CabinetController extends AbstractController
 
   /**
    * Личный кабинет
-   * @Route(name="lk/my-appeals", path="/lk/my-appeals")
+   * @Route(name="lk_my_appeal_list", path="/lk/my-appeals")
    * @param Request $request
    */
   public function cabinetMyAppealListAction(Request $request)
@@ -63,7 +63,7 @@ class CabinetController extends AbstractController
 
   /**
    * Личный кабинет
-   * @Route(name="lk/my-appeals/appeal-item", path="/lk/my-appeals/appeal-item")
+   * @Route(name="lk_my_appeal_show", path="/lk/my-appeals/appeal-item")
    * @param Request $request
    */
   public function cabinetMyAppealShowAction(Request $request)
@@ -73,6 +73,30 @@ class CabinetController extends AbstractController
     return $this->render('AppBundle:Lk:my_appeal_show.html.twig');
   }
 
+
+  /**
+   * Личный кабинет
+   * @Route(name="lk_my_review_list", path="/lk/my-reviews")
+   * @param Request $request
+   */
+  public function cabinetMyReviewListAction(Request $request)
+  {
+    // $this->denyAccessUnlessGranted(['ROLE_USER']);
+
+    return $this->render('AppBundle:Lk:my_review_list.html.twig');
+  }
+
+  /*
+  * Страница отзыва
+  * @Route(name="lk_my_review_show", path="/lk/my-reviews/review-item")
+  * @param Request $request
+  */
+  public function cabinetMyReviewShowAction(Request $request)
+  {
+    // $this->denyAccessUnlessGranted(['ROLE_USER']);
+
+    return $this->render('AppBundle:Lk:my_review_show.html.twig');
+  }
 
   /**
    * Личный кабинет - Ваши отзывы
