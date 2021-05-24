@@ -1,0 +1,47 @@
+{% block insurance_company_branch_autocomplete_widget %}
+    <label for="{{ form.vars.id }}_company" class="control-label required">Страховая компания</label>
+    <select name="" id="{{ form.vars.id }}_company">
+        <option value="">Выберите страховую компанию</option>
+        {% for company in form.vars.companies %}
+            <option value="{{ company.id }}" {% if form.vars.data.company is defined and form.vars.data.company.id == company.id %}selected="selected"{% endif %}>{{ company.name }}</option>
+        {% endfor %}
+    </select>
+    <label for="{{ form.vars.id }}_select" class="control-label required">Филиал СМО</label>
+    <select name="{{ form.vars.full_name }}" id="{{ form.vars.id }}">
+        <option value="">Выберите филиал СМО</option>
+        {% for branch in branches %}
+            <option value="{{ branch.id }}" {% if branch.id == value %}selected="selected"{% endif %}>{{ branch.region }}</option>
+        {% endfor %}
+    </select>
+    <script>
+        $(function(){
+          var $input = $('#{{ form.vars.id }}');
+          var $companyInput = $('#{{ form.vars.id }}_company');
+          $companyInput.on('change', function (){
+            var companyId = this.value;
+            $input.find('option').remove()
+            $input.select2("val", "");
+            $.ajax({
+              method: 'GET',
+              url: '{{ path('admin_app_company_insurancecompany_branches') }}',
+              data: {
+                id: companyId
+              },
+              success: function (data){
+                // console.log(data)
+                $input.append('<option>Выберите филиал СМО</option>');
+
+                $.each(data, function (index, item){
+                  var value = item.id;
+                  var label = item.region;
+                  var $el = $('<option/>',{
+                    value: value
+                  }).text(label);
+                  $el.appendTo($input);
+                });
+              },
+            });
+          });
+        });
+    </script>
+{% endblock %}

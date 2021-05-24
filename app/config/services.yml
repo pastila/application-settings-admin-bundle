@@ -21,7 +21,7 @@ services:
             $smsProtocolVersion: '%sms_protocol_version%'
             $fileStorageDir: '%kernel.root_dir%/../var/uploads/files'
             $smsHandler: '%sms_handler%'
-
+            $registry: '@doctrine'
 
     _instanceof:
         Accurateweb\ClientApplicationBundle\DataAdapter\ClientApplicationModelAdapterInterface:

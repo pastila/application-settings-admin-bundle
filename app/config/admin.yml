@@ -67,7 +67,7 @@ services:
 
   main.admin.insurance_company:
     class: AppBundle\Admin\InsuranceCompany\InsuranceCompanyAdmin
-    arguments: [~, 'AppBundle\Entity\Company\InsuranceCompany', ~]
+    arguments: [~, 'AppBundle\Entity\Company\InsuranceCompany', 'AppBundle:Admin/Company/InsuranceCompanyAdmin']
     calls:
       - [ addChild, ['@main.admin.insurance_company_branch', 'company'] ]
     tags:
@@ -121,3 +121,9 @@ services:
     arguments: [~, 'AppBundle\Entity\Disease\DiseaseCategory', 'AppBundle:Admin\Disease\CategoryAdmin', 'name']
     tags:
       - { name: sonata.admin, group: 'disease', manager_type: orm, label: 'Категории' }
+
+  AppBundle\Admin\User\UserAdmin:
+    class: AppBundle\Admin\User\UserAdmin
+    arguments: [~, 'AppBundle\Entity\User\User', ~]
+    tags:
+      - { name: sonata.admin, group: 'user', manager_type: orm, label: 'Пользователи' }
