@@ -28,7 +28,7 @@
 {% endblock %}
 
 {% block main %}
-    <div class="app__content">
+    <div class="app__content app__content_news">
         <ul class="breadcrumbs breadcrumbs_news" itemscope="" itemtype="http://schema.org/BreadcrumbList">
             {% if is_mobile() or is_tablet() %}
                 <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
@@ -59,8 +59,9 @@
                 </li>
             {% endif %}
         </ul>
-        <div class="site-width">
-            <div class="news-item">
+        <div class="site-width__wrap">
+            <div class="site-width">
+                <div class="news-item">
                 <h1 class="page-title">{{ title }}</h1>
 
                 <div class="news-detail flex-detail-news" itemscope itemtype="http://schema.org/NewsArticle">
@@ -104,6 +105,7 @@
                     </a>
                 </p>
             </div>
+            </div>
         </div>
         <div class="site-width site-width_features">
             <div class="news-features">
@@ -144,16 +146,22 @@
                 <a href="{{ path("news_list") }}" class="b-interesting__button btn">Все статьи</a>
             </div>
             <div class="b-interesting__slider">
-                <div class="b-interesting__slider-item">
-                    <div class="b-interesting__item-image">
-                        <img src="https://bezbahil.ru/uploads/news_article/058da37ca511d21b1776ef9c31d6155a/main_lg.jpg"
-                             alt="">
+                {% for item in news.relatedNews %}
+                    <div class="b-interesting__slider-item">
+                        <div class="b-interesting__slider-item-wrap">
+                            {% if image_exists(item) %}
+                                <div class="b-interesting__item-image">
+                                    <img src="{{ image_thumbnail_url(item, null, 'main_lg') }}"
+                                         alt="">
+                                </div>
+                            {% endif %}
+                            <div class="b-interesting__item-content">
+                                <div class="b-interesting__item-title">{{ item.title }}</div>
+                                <div class="b-interesting__item-text">{{ news.announce }}</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="b-interesting__item-content">
-                        <div class="b-interesting__item-title">Кому должны делать анализ?</div>
-                        <div class="b-interesting__item-text">Он заставляет работать других!</div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
