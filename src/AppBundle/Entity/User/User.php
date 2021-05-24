@@ -462,4 +462,30 @@ class User extends BaseUser implements PhoneVerificationAwareInterface
   {
     return $this->patients;
   }
+
+  public function isAdmin ()
+  {
+    return $this->hasRole(self::ROLE_ADMIN);
+  }
+
+  public function setAdmin ($admin)
+  {
+    if ($admin)
+    {
+      $this->addRole(self::ROLE_ADMIN);
+    }
+    else
+    {
+      $this->removeRole(self::ROLE_ADMIN);
+    }
+  }
+
+  public function getFio ()
+  {
+    return implode(' ',array_filter([
+      $this->getLastName(),
+      $this->getFirstName(),
+      $this->getMiddleName(),
+    ]));
+  }
 }

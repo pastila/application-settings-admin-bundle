@@ -1,0 +1,10 @@
+{% block masked_widget %}
+    {{ form_widget(form) }}
+    {% apply spaceless %}
+    <script type="application/javascript">
+        $(function (){
+          $('#{{ form.vars.id }}').inputmask({"mask": "{{ form.vars.mask }}"});
+        });
+    </script>
+    {% endapply %}
+{% endblock %}

@@ -59,6 +59,8 @@ twig:
     - 'Form/bezbahil_form_theme.html.twig'
     - 'SonataCoreBundle:Form:datepicker.html.twig'
     - '@App/form/taxon_jstree_widget.html.twig'
+    - '@App/form/insurance_company_branch_autocomplete_widget.html.twig'
+    - '@App/form/masked_widget.html.twig'
 #    - '@App/form/form.html.twig'
 
 # Doctrine Configuration
@@ -135,10 +137,15 @@ sonata_admin:
         label: Текстовые разделы
       messages:
         label: Сообщения
+      user:
+        label: Пользователи
       settings:
         label: Настройки
   options:
     html5_validate: false
+  assets:
+    extra_javascripts:
+      - '/js/vendor/inputmask/jquery.inputmask.min.js'
   security:
     handler: sonata.admin.security.handler.role
     role_super_admin: ROLE_ADMIN

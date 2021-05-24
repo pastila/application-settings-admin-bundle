@@ -245,9 +245,18 @@ class InsuranceCompanyBranch
   }
 
   /**
-   * @return int
+   * @return boolean
+   * @deprecated
    */
   public function getPublished()
+  {
+    return $this->isPublished();
+  }
+
+  /**
+   * @return bool
+   */
+  public function isPublished ()
   {
     return $this->published;
   }
