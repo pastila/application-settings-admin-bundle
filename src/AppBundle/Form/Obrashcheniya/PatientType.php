@@ -35,9 +35,9 @@ class PatientType extends AbstractType
       ])
       ->add('middleName', TextType::class, [
         'required' => true,
-        'constraints' => [
-          new NotBlank(['message' => 'Укажите отчество',]),
-        ],
+//        'constraints' => [
+//          new NotBlank(['message' => 'Укажите отчество',]),
+//        ],
       ])
       ->add('birthDate', DateType::class, [
         'required' => true,

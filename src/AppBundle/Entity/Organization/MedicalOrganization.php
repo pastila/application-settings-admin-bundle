@@ -50,8 +50,8 @@ class MedicalOrganization
 
   /**
    * Главный врач
-   *
-   * @OneToOne(targetEntity="OrganizationChiefMedicalOfficer", mappedBy="organization", cascade={"persist", "remove"},)
+   * @var OrganizationChiefMedicalOfficer
+   * @OneToOne(targetEntity="AppBundle\Entity\Organization\OrganizationChiefMedicalOfficer", mappedBy="organization", cascade={"persist", "remove"},)
    */
   private $chiefMedicalOfficer;
 
@@ -93,11 +93,13 @@ class MedicalOrganization
   }
 
   /**
-   * @param $chiefMedicalOfficer
+   * @param OrganizationChiefMedicalOfficer $chiefMedicalOfficer
+   * @return $this
    */
-  public function setChiefMedicalOfficer($chiefMedicalOfficer): void
+  public function setChiefMedicalOfficer($chiefMedicalOfficer): MedicalOrganization
   {
     $this->chiefMedicalOfficer = $chiefMedicalOfficer;
+    return $this;
   }
 
   /**
@@ -110,29 +112,37 @@ class MedicalOrganization
 
   /**
    * @param $year
+   * @return $this
    */
-  public function addYear($year)
+  public function addYear(OrganizationYear $year): MedicalOrganization
   {
     $this->years->add($year);
+    $year->setOrganization($this);
+    return $this;
   }
 
   /**
-   * @param $years
+   * @param OrganizationYear[] $years
+   * @return $this
    */
-  public function setYears($years): void
+  public function setYears($years): MedicalOrganization
   {
     $this->years = $years;
+    return $this;
   }
 
   /**
-   * @param $year
+   * @param OrganizationYear $year
+   * @return $this
    */
-  public function removeYear($year)
+  public function removeYear($year): MedicalOrganization
   {
     if ($this->years->contains($year))
     {
       $this->years->removeElement($year);
     }
+
+    return $this;
   }
 
   /**
@@ -145,10 +155,12 @@ class MedicalOrganization
 
   /**
    * @param Region|null $region
+   * @return $this
    */
-  public function setRegion(?Region $region): void
+  public function setRegion(?Region $region): MedicalOrganization
   {
     $this->region = $region;
+    return $this;
   }
 
   /**
@@ -162,9 +174,9 @@ class MedicalOrganization
   /**
    * @param string $name
    *
-   * @return string
+   * @return $this
    */
-  public function setName($name)
+  public function setName($name): MedicalOrganization
   {
     $this->name = $name;
 
@@ -181,10 +193,12 @@ class MedicalOrganization
 
   /**
    * @param string $fullName
+   * @return $this
    */
-  public function setFullName($fullName): void
+  public function setFullName($fullName): MedicalOrganization
   {
     $this->fullName = $fullName;
+    return $this;
   }
 
   /**
@@ -197,10 +211,12 @@ class MedicalOrganization
 
   /**
    * @param $code
+   * @return $this
    */
-  public function setCode($code): void
+  public function setCode($code): MedicalOrganization
   {
     $this->code = $code;
+    return $this;
   }
 
   /**
@@ -213,10 +229,12 @@ class MedicalOrganization
 
   /**
    * @param string $address
+   * @return $this
    */
-  public function setAddress($address): void
+  public function setAddress($address): MedicalOrganization
   {
     $this->address = $address;
+    return $this;
   }
 
   /**
@@ -231,7 +249,7 @@ class MedicalOrganization
    * @param $published
    * @return $this
    */
-  public function setPublished($published)
+  public function setPublished($published): MedicalOrganization
   {
     $this->published = $published;
 

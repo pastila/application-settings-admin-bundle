@@ -66,10 +66,12 @@ class Disease
 
   /**
    * @param string $name
+   * @return $this
    */
-  public function setName($name)
+  public function setName($name): Disease
   {
     $this->name = $name;
+    return $this;
   }
 
   /**
@@ -108,10 +110,12 @@ class Disease
 
   /**
    * @param string $code
+   * @retur $this
    */
-  public function setCode($code): void
+  public function setCode($code): Disease
   {
     $this->code = $code;
+    return $this;
   }
 
   /**

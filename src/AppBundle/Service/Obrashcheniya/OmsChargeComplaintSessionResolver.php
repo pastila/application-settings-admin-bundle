@@ -31,7 +31,7 @@ class OmsChargeComplaintSessionResolver
   public function resolve()
   {
     $omsChargeComplaint = $this->omsChargeComplaintRepository->findOneBy([
-      'id' => $this->session->get('oms_charge_complaint_id')
+      'id' => $this->session->get('oms_charge_complaint_id'),
     ]);
 
     if ($omsChargeComplaint)

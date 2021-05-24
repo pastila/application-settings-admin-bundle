@@ -8,9 +8,7 @@ namespace AppBundle\Form\Obrashcheniya;
 use AppBundle\Entity\Disease\Disease;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class OmsChargeComplaint4thStepType extends OmsChargeComplaintType
 {
@@ -22,7 +20,7 @@ class OmsChargeComplaint4thStepType extends OmsChargeComplaintType
         'required' => true,
         'class' => Disease::class,
         'constraints' => [
-          new NotBlank(['message' => 'Выберите болезнь',]),
+          new NotNull(['message' => 'Выберите болезнь',]),
         ],
       ]);
   }

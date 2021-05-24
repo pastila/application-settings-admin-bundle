@@ -33,11 +33,8 @@ class AppealControllerTest extends AppWebTestCase
   public function testIndexLegacy()
   {
     $client = static::createClient();
-
     $client->request('GET', '/forma-obrashenija/');
-
     $response = $client->getResponse();
-
     $this->assertEquals(301, $response->getStatusCode(), 'Legacy chargeback form redirects to new appeal form with status code 301');
     $this->assertEquals('/oms-charge-complaint', $response->headers->get('Location'), 'Legacy chargeback form redirects to new form');
   }
@@ -45,15 +42,10 @@ class AppealControllerTest extends AppWebTestCase
   public function testIndex()
   {
     $client = static::createClient();
-
     $client->request('GET', '/oms-charge-complaint');
-
     $response = $client->getResponse();
-
     $this->assertTrue($response->isSuccessful(), 'Charge complaint form index page');
-
     $client->request('POST', '/oms-charge-complaint');
-
     $this->assertTrue($response->isSuccessful(), 'Empty form returns 200');
 
 //    /** @var RegionEntity $region02 */

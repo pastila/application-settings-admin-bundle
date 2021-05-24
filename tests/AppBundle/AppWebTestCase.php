@@ -3,6 +3,8 @@
 
 namespace Tests\AppBundle;
 
+use Symfony\Component\BrowserKit\Cookie;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Tests\FixtureAwareWebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
@@ -42,7 +44,7 @@ class AppWebTestCase extends FixtureAwareWebTestCase
     {
       if (!$user)
       {
-        $user = $this->getByReference('user-admin');
+        $user = $this->getReference('user-admin');
       }
       if (!$roles)
       {
@@ -54,8 +56,25 @@ class AppWebTestCase extends FixtureAwareWebTestCase
       $token = new UsernamePasswordToken($user, null, $firewallContext, $roles);
       $session->set('_security_' . $firewallContext, serialize($token));
       $session->save();
-      $cookie = new \Symfony\Component\BrowserKit\Cookie($session->getName(), $session->getId());
+      $cookie = new Cookie($session->getName(), $session->getId());
       $this->client->getCookieJar()->set($cookie);
       $this->client->getContainer()->get('security.token_storage')->setToken($token);
+    }
+
+    /**
+     * @return SessionInterface|null
+     */
+    protected function getSession ()
+    {
+      return $this->getClient()->getContainer()->get('session');
+    }
+
+  /**
+   * @param $formName
+   * @return string|null
+   */
+    protected function generateCsrfToken ($formName)
+    {
+      return (string)$this->getClient()->getContainer()->get('security.csrf.token_manager')->getToken($formName);
     }
 }

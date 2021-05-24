@@ -14,7 +14,7 @@ class User extends Fixture implements DependentFixtureInterface
   /**
    * @return array
    */
-  function getDependencies()
+  public function getDependencies()
   {
     return [
       CompanyBranch::class,

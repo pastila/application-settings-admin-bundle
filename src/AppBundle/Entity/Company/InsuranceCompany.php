@@ -171,7 +171,7 @@ class InsuranceCompany implements ImageAwareInterface, SluggableInterface
   /**
    * @param string $name
    *
-   * @return string
+   * @return $this
    */
   public function setName($name)
   {
@@ -183,7 +183,7 @@ class InsuranceCompany implements ImageAwareInterface, SluggableInterface
   /**
    * @param string $kpp
    *
-   * @return string
+   * @return $this
    */
   public function setKpp($kpp)
   {
