@@ -252,30 +252,20 @@ class AppealController extends Controller
 
     if ($form->isSubmitted() && $form->isValid())
     {
-      try
-      {
-        $existingPatient = $this->getDoctrine()->getRepository('AppBundle:User\Patient')->resolveByPatient($patient);
-      }
-      catch (AmbiguousPatientResolveException $e)
-      {
-      }
-
-      if (isset($existingPatient))
-      {
-        $propertyAccessor = PropertyAccess::createPropertyAccessor();
-
-        /** @var Form $item */
-        foreach ($form->get('patient')->getIterator() as $item)
-        {
-          $propertyPath = (string)$item->getPropertyPath();
-          $propertyAccessor->setValue($existingPatient, $propertyPath, $propertyAccessor->getValue($patient, $propertyPath));
-        }
-
-        $complaintDraft->setPatient($existingPatient);
-      }
-
       $complaintDraft->setDraftStep(7);
       $em = $this->getDoctrine()->getManager();
+      $patientData = $complaintDraft->getPatientData();
+      $patient = $complaintDraft->getPatient();
+      $patientData->setInsurancePolicyNumber($patient->getInsurancePolicyNumber());
+      $patientData->setMiddleName($patient->getMiddleName());
+      $patientData->setOmsChargeComplaint($complaintDraft);
+      $patientData->setRegion($patient->getRegion());
+      $patientData->setBirthDate($patient->getBirthDate());
+      $patientData->setInsuranceCompany($patient->getInsuranceCompany());
+      $patientData->setPhone($patient->getPhone());
+      $patientData->setLastName($patient->getLastName());
+      $patientData->setFirstName($patient->getFirstName());
+      $complaintDraft->setPatientData($patientData);
 
       $em->persist($complaintDraft);
       $em->flush();

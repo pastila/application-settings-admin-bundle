@@ -296,8 +296,8 @@ services:
       - ${APP_CODE_PATH_HOST_SF}:${APP_CODE_PATH_CONTAINER_SF}
       - ${DATA_PATH_LOGS}/nginx:/var/log/nginx
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - /var/www/bezbahilru/shared/laradock/certbot/certs/:/var/certs:ro
-      - /var/www/bezbahilru/shared/laradock/certbot/letsencrypt/:/var/www/letsencrypt
+#      - /var/www/bezbahilru/shared/laradock/certbot/certs/:/var/certs:ro
+#      - /var/www/bezbahilru/shared/laradock/certbot/letsencrypt/:/var/www/letsencrypt
     environment:
       VIRTUAL_HOST: bezbahil.ru
     restart: always

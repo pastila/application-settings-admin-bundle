@@ -1,77 +1,159 @@
-Symfony Standard Edition
-========================
+# Bezbahil
+Bezbahil
 
-**WARNING**: This distribution does not support Symfony 4. See the
-[Installing & Setting up the Symfony Framework][15] page to find a replacement
-that fits you best.
+## Version: 1.0.0
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony
-application that you can use as the skeleton for your new applications.
+### /regions
 
-For details on how to download and get started with Symfony, see the
-[Installation][1] chapter of the Symfony Documentation.
+#### GET
+##### Summary
 
-What's inside?
---------------
+Список регионов
 
-The Symfony Standard Edition is configured with the following defaults:
+##### Parameters
 
-  * An AppBundle you can use to start coding;
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| name | query | Название региона | No | string |
 
-  * Twig as the only configured template engine;
+##### Responses
 
-  * Doctrine ORM/DBAL;
+| Code | Description |
+| ---- | ----------- |
+| 200 | Ok |
 
-  * Swiftmailer;
+### /diseases
 
-  * Annotations enabled for everything.
+#### GET
+##### Summary
 
-It comes pre-configured with the following bundles:
+Список болезней
 
-  * **FrameworkBundle** - The core Symfony framework bundle
+##### Parameters
 
-  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
-    template and routing annotation capability
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| name | query | Название болезни | No | string |
 
-  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
+##### Responses
 
-  * [**TwigBundle**][8] - Adds support for the Twig templating engine
+| Code | Description |
+| ---- | ----------- |
+| 200 | Ok |
 
-  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
-    component
+### /medical-organizations
 
-  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
-    sending emails
+#### GET
+##### Summary
 
-  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
+Список медицинских организаций
 
-  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-    the web debug toolbar
+##### Parameters
 
-  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
-    configuring and working with Symfony distributions
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| query | query | Название органиазации | No | string |
+| region | query | Идентификатор региона | No | integer |
+| year | query | Год | No | integer |
 
-  * [**SensioGeneratorBundle**][13] (in dev env) - Adds code generation
-    capabilities
+##### Responses
 
-  * [**WebServerBundle**][14] (in dev env) - Adds commands for running applications
-    using the PHP built-in web server
+| Code | Description |
+| ---- | ----------- |
+| 200 | Ok |
 
-  * **DebugBundle** (in dev/test env) - Adds Debug and VarDumper component
-    integration
+### /phone-verify
 
-All libraries and bundles included in the Symfony Standard Edition are
-released under the MIT or BSD license.
+#### POST
+##### Summary
 
-Enjoy!
+Отправить проверочный СМС код
 
-[1]:  https://symfony.com/doc/3.4/setup.html
-[6]:  https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  https://symfony.com/doc/3.4/doctrine.html
-[8]:  https://symfony.com/doc/3.4/templating.html
-[9]:  https://symfony.com/doc/3.4/security.html
-[10]: https://symfony.com/doc/3.4/email.html
-[11]: https://symfony.com/doc/3.4/logging.html
-[13]: https://symfony.com/doc/current/bundles/SensioGeneratorBundle/index.html
-[14]: https://symfony.com/doc/current/setup/built_in_web_server.html
-[15]: https://symfony.com/doc/current/setup.html
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | Ok |
+| 400 | Bad phone format |
+| 500 | Server error |
+
+### /patients
+
+#### GET
+##### Summary
+
+Поиск пациентов
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| lastName | query |  | No | string |
+| firstName | query |  | No | string |
+| middleName | query |  | No | string |
+| insurancePolicyNumber | query |  | No | string |
+
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | Ok |
+
+### Models
+
+#### Region
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| id | integer | _Example:_ `8` | No |
+| name | string | _Example:_ `"11  Республика Коми"` | No |
+
+#### Disease
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| id | integer |  | No |
+| code | string |  | No |
+| name | string |  | No |
+
+#### MedicalOrganization
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| code | string |  | No |
+| name | string |  | No |
+| fullName | string |  | No |
+| address | string |  | No |
+
+#### InsuranceCompany
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| id | integer |  | No |
+| name | string |  | No |
+
+#### Patient
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| id | integer |  | No |
+| lastName | string |  | No |
+| firstName | string |  | No |
+| middleName | string |  | No |
+| birthDate | string |  | No |
+| phone | string |  | No |
+| insurancePolicyNumber | string |  | No |
+| region | object |  | No |
+| insuranceCompany | object |  | No |
+
+#### inline_response_200
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| regions | [ object ] |  | No |
+
+#### body
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| phone | string |  | No |

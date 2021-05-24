@@ -39,8 +39,9 @@ class PhoneVerificationRequestValidator extends ConstraintValidator
     if (!$verificationRequest)
     {
       $this->context->buildViolation($constraint->invalidCodeMessage)
-        ->setParameter('{code}', $value)
+        ->setParameter('{code}', $value->getVerificationCode())
         ->addViolation();
+      return ;
     }
 
     if (!$verificationRequest->getPhone())

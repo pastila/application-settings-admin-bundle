@@ -138,6 +138,12 @@ class OmsChargeComplaint
    */
   private $sentAt;
 
+  /**
+   * @var OmsChargeComplaintPatient
+   * @ORM\OneToOne(targetEntity="AppBundle\Entity\OmsChargeComplaint\OmsChargeComplaintPatient", mappedBy="omsChargeComplaint", cascade={"persist"})
+   */
+  private $patientData;
+
   public function __construct ()
   {
     $this->documents = new ArrayCollection();
@@ -428,5 +434,29 @@ class OmsChargeComplaint
   public function getAvailableYears()
   {
     return Year::getYears();
+  }
+
+  /**
+   * @return OmsChargeComplaintPatient
+   */
+  public function getPatientData ()
+  {
+    if ($this->patientData === null)
+    {
+      $this->patientData = new OmsChargeComplaintPatient();
+      $this->patientData->setOmsChargeComplaint($this);
+    }
+
+    return $this->patientData;
+  }
+
+  /**
+   * @param OmsChargeComplaintPatient $patientData
+   * @return $this
+   */
+  public function setPatientData ($patientData)
+  {
+    $this->patientData = $patientData;
+    return $this;
   }
 }

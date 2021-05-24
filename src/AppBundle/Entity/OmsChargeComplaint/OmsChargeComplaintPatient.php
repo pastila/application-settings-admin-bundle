@@ -1,21 +1,20 @@
 <?php
-/**
- * @author Denis N. Ragozin <dragozin@accurateweb.ru>
- */
 
-namespace AppBundle\Entity\User;
+namespace AppBundle\Entity\OmsChargeComplaint;
 
 use AppBundle\Entity\Company\InsuranceCompany;
 use AppBundle\Entity\Geo\Region;
 use AppBundle\Model\Patient\PatientInterface;
-use AppBundle\Validator\Constraints\PhoneVerificationAwareInterface;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\User\PatientRepository")
- * @ORM\Table(name="patients")
+ * Копия данных пациента
+ *
+ * @ORM\Entity()
+ * @ORM\Table(name="s_oms_charge_complaint_patients")
  */
-class Patient implements PhoneVerificationAwareInterface, PatientInterface
+class OmsChargeComplaintPatient implements PatientInterface
 {
   /**
    * @var integer
@@ -76,16 +75,11 @@ class Patient implements PhoneVerificationAwareInterface, PatientInterface
   private $region;
 
   /**
-   * @var User
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User\User", inversedBy="patients")
-   * @ORM\JoinColumn(nullable=false)
+   * @var OmsChargeComplaint
+   * @ORM\OneToOne(targetEntity="AppBundle\Entity\OmsChargeComplaint\OmsChargeComplaint", inversedBy="patientData")
+   * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
    */
-  private $user;
-
-  /**
-   * @var string
-   */
-  private $phoneVerificationCode;
+  private $omsChargeComplaint;
 
   /**
    * @return int
@@ -168,7 +162,7 @@ class Patient implements PhoneVerificationAwareInterface, PatientInterface
   }
 
   /**
-   * @return \DateTime
+   * @return DateTime
    */
   public function getBirthDate ()
   {
@@ -176,7 +170,7 @@ class Patient implements PhoneVerificationAwareInterface, PatientInterface
   }
 
   /**
-   * @param \DateTime $birthDate
+   * @param DateTime $birthDate
    * @return $this
    */
   public function setBirthDate ($birthDate)
@@ -240,26 +234,34 @@ class Patient implements PhoneVerificationAwareInterface, PatientInterface
   }
 
   /**
-   * @return User
+   * @return OmsChargeComplaint
    */
-  public function getUser ()
+  public function getOmsChargeComplaint ()
   {
-    return $this->user;
+    return $this->omsChargeComplaint;
   }
 
   /**
-   * @param User $user
+   * @param OmsChargeComplaint $omsChargeComplaint
    * @return $this
    */
-  public function setUser ($user)
+  public function setOmsChargeComplaint ($omsChargeComplaint)
   {
-    $this->user = $user;
+    $this->omsChargeComplaint = $omsChargeComplaint;
+
+    if (!$omsChargeComplaint->getPatientData())
+    {
+      $omsChargeComplaint->setPatientData($this);
+    }
+
     return $this;
   }
 
-  /**
-   * @return string
-   */
+  public function __toString ()
+  {
+    return $this->getFio();
+  }
+
   public function getFio ()
   {
     return implode(' ', array_filter([
@@ -267,44 +269,5 @@ class Patient implements PhoneVerificationAwareInterface, PatientInterface
       $this->getFirstName(),
       $this->getMiddleName(),
     ]));
-  }
-
-  /**
-   * @return string
-   */
-  public function getFioShort ()
-  {
-    $nameParts = [];
-
-    return implode(' ', array_filter([
-      $this->getFirstName(),
-      $this->getLastName() ? mb_substr($this->getLastName(), 0, 1).'.' : null,
-      $this->getMiddleName()? mb_substr($this->getMiddleName(), 0, 1).'.' : null,
-    ]));
-  }
-
-  public function __toString ()
-  {
-    return $this->getFio() ? $this->getFio() : 'Новый пациент';
-  }
-
-  public function getVerifiedPhone ()
-  {
-    return $this->getPhone();
-  }
-
-  public function getVerificationCode ()
-  {
-    return $this->phoneVerificationCode;
-  }
-
-  /**
-   * @param string $phoneVerificationCode
-   * @return $this
-   */
-  public function setVerificationCode ($phoneVerificationCode)
-  {
-    $this->phoneVerificationCode = $phoneVerificationCode;
-    return $this;
   }
 }
