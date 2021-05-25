@@ -9,8 +9,7 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript">urlPrefix = '{{ app.request.getBaseURL() }}'
-    </script>
+    {{ omsChargeComplaints|client_model('pagination', {'adapter': 'appeal'},'Appeals') }}
     <script src="/dist/bundle.js"></script>
 
 {% endblock %}
@@ -23,9 +22,10 @@
                 <div class="lk__content__big-content lk-border">
                     <div class="lk__content__big-content__appeal-history">
                         {% for appeal in omsChargeComplaints %}
-                            {% if (not currentYear is defined) or (appeal.year != currentYear) %}
-                                {% set currentYear = appeal.year %}
-                                <div class="lk__content__big-content__appeal-history__year">{{ appeal.year }}</div>
+                            {% set appealYear = appeal.createdAt|date('Y') %}
+                            {% if (not currentYear is defined) or (appealYear != currentYear) %}
+                                {% set currentYear = appealYear %}
+                                <div class="lk__content__big-content__appeal-history__year">{{ appealYear }}</div>
                             {% endif %}
                             <a class="lk__content__big-content__appeal-history__appeal-item"
                                href="{{ path('lk_my_appeal_show', { id: appeal.id }) }}">
@@ -36,7 +36,9 @@
                             </a>
                         {% endfor %}
                     </div>
-                    <button class="lk__content__big-content__more-content-button btn">Еще 5 обращений</button>
+                    {% if omsChargeComplaints.more %}
+                    <button class="lk__content__big-content__more-content-button btn">Еще {{ omsChargeComplaints.more }} {{ omsChargeComplaints.more|ending_format(['обращение', 'обращения', 'обращений']) }}</button>
+                    {% endif %}
                 </div>
             {% endif %}
             <div class="lk__content__small-content lk-border">

@@ -13,6 +13,11 @@ class PhoneValidator extends ConstraintValidator
    */
   public function validate ($value, Constraint $constraint)
   {
+    if (null === $value || '' === $value)
+    {
+      return;
+    }
+
     if (!preg_match('/^\+[0-9]{1,2}\s?\([0-9]{3}\)[0-9]+\-[0-9]+\-[0-9]+$/', $value))
     {
       $this->context->addViolation($constraint->message);

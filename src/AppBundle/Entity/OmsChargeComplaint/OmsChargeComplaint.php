@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Жалоба на взимание денежных средств
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\OmsChargeComplaint\OmsChargeComplaintRepository")
  * @ORM\Table(name="s_oms_charge_complaints")
  */
 class OmsChargeComplaint
@@ -458,5 +458,17 @@ class OmsChargeComplaint
   {
     $this->patientData = $patientData;
     return $this;
+  }
+
+  /**
+   * @return int[]
+   */
+  public static function getAvailableStatuses ()
+  {
+    return [
+      self::STATUS_DRAFT,
+      self::STATUS_CREATED,
+      self::STATUS_SENT,
+    ];
   }
 }

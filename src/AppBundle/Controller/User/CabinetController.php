@@ -6,6 +6,7 @@
 namespace AppBundle\Controller\User;
 
 
+use Accurateweb\ClientApplicationBundle\DataAdapter\ClientApplicationModelTransformer;
 use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\OmsChargeComplaint\OmsChargeComplaint;
 use AppBundle\Entity\User\User;
@@ -58,29 +59,20 @@ class CabinetController extends AbstractController
 
   public function _dashboardAppealListAction()
   {
-    $user = $this->getUser();
-
-    $appealListQb = $this
-      ->omsChargeComplaintRepository
-      ->createQueryBuilder('ap')
-//      ->where('ap.user = :user')
-//      ->setParameters([
-//        ':user' => $user
-//      ])
-    ;
-
     $filter = new OmsChargeComplaintFilter();
     $filter->setPage(1);
+    $filter->setPerPage(10);
+    $filter->setUser($this->getUser());
+    $filter->setStatuses([OmsChargeComplaint::STATUS_CREATED, OmsChargeComplaint::STATUS_SENT]);
+    $appealListQb = $this->getDoctrine()
+      ->getRepository('AppBundle:OmsChargeComplaint\OmsChargeComplaint')
+      ->createQueryBuilderByFilter($filter);
 
 //    $reviewListUrlbuilder = new FeedbackListFilterUrlBuilder($filter, $this->get('router'),
 //      $this->get('form.factory'), 'app_user_cabinet_feedback');
 
-    $maxPerPage = 10;
-
     $appealListQb->orderBy('ap.createdAt', 'DESC');
-
-    $pagination = new GroupedPagination($appealListQb, $filter->getPage(), $maxPerPage);
-
+    $pagination = new GroupedPagination($appealListQb, $filter->getPage(), $filter->getPerPage());
     $omsChargeComplaints = $pagination->getIterator();
 
     return $this->render('AppBundle:Lk:_dashboard_appeal_list.html.twig', [
@@ -92,6 +84,7 @@ class CabinetController extends AbstractController
   /**
    * Личный кабинет
    * @Route(name="lk_my_appeal_list", path="/lk/my-appeals")
+   * @Route(name="api_appeal_list", path="/api/v1/lk/my-appeals", defaults={"_api"=true})
    * @param Request $request
    */
   public function cabinetMyAppealListAction(Request $request)
@@ -99,41 +92,36 @@ class CabinetController extends AbstractController
     $this->denyAccessUnlessGranted(['ROLE_USER']);
 
     $appealForm = $this->createForm(OmsChargeComplaint1stStepType::class);
-
     $user = $this->getUser();
+    $filter = new OmsChargeComplaintFilter();
+    $filter->setPage($request->query->get('page', 1));
+    $filter->setPerPage(10);
+    $filter->setUser($user);
 
     $appealListQb = $this
       ->omsChargeComplaintRepository
-      ->createQueryBuilder('ap')
-      ->innerJoin('ap.patient', 'p')
-      ->where('p.user = :user')
-      ->setParameters([
-        ':user' => $user
-      ])
-    ;
-
-    $filter = new OmsChargeComplaintFilter();
-    $filter->setPage($request->query->get('page', 1));
+      ->createQueryBuilderByFilter($filter);
 
 //    $reviewListUrlbuilder = new FeedbackListFilterUrlBuilder($filter, $this->get('router'),
 //      $this->get('form.factory'), 'app_user_cabinet_feedback');
 
-    $maxPerPage = 10;
-
     $appealListQb->orderBy('ap.createdAt', 'DESC');
+    $pagination = new GroupedPagination($appealListQb, $filter->getPage(), $filter->getPerPage());
 
-    $pagination = new GroupedPagination($appealListQb, $filter->getPage(), $maxPerPage);
-
-    $omsChargeComplaints = $pagination->getIterator();
+    if ($request->get('_api'))
+    {
+      return $this->json($this->get('aw.client_application.transformer')->getClientModelData($pagination, 'pagination', [
+        'adapter' => 'appeal',
+      ]));
+    }
 
     /** @var OmsChargeComplaint|null $lastAppealOnPreviousPage */
     $lastAppealOnPreviousPage = $pagination->getLastItemOnPreviousPage();
-
     $previousYear = $lastAppealOnPreviousPage ? $lastAppealOnPreviousPage->getYear() : null;
 
     return $this->render('AppBundle:Lk:my_appeal_list.html.twig', [
       'appealForm' => $appealForm->createView(),
-      'omsChargeComplaints' => $omsChargeComplaints,
+      'omsChargeComplaints' => $pagination,
       'currentYear' => $previousYear,
     ]);
   }
@@ -144,11 +132,49 @@ class CabinetController extends AbstractController
    * @Route(name="lk_my_appeal_show", path="/lk/my-appeals/{id}")
    * @param Request $request
    */
-  public function cabinetMyAppealShowAction(Request $request)
+  public function cabinetMyAppealShowAction(Request $request, $id)
   {
-    // $this->denyAccessUnlessGranted(['ROLE_USER']);
+    $appeal = $this->getDoctrine()->getRepository('AppBundle:OmsChargeComplaint\OmsChargeComplaint')->find($id);
 
-    return $this->render('AppBundle:Lk:my_appeal_show.html.twig');
+    if ($appeal === null)
+    {
+      throw new NotFoundHttpException(sprintf('Appeal %s not found', $id));
+    }
+
+    if ($appeal->getStatus() === OmsChargeComplaint::STATUS_DRAFT)
+    {
+      throw new NotFoundHttpException(sprintf('Appeal %s not complete', $id));
+    }
+
+    $appealFilter = new OmsChargeComplaintFilter();
+    $appealFilter->setUser($this->getUser());
+    $appealFilter->setStatuses([OmsChargeComplaint::STATUS_CREATED, OmsChargeComplaint::STATUS_SENT]);
+    $appealsQb = $this->getDoctrine()
+      ->getRepository('AppBundle:OmsChargeComplaint\OmsChargeComplaint')
+      ->createQueryBuilderByFilter($appealFilter);
+    $appealsQb->andWhere('ap != :appeal');
+    $appealsQb->setParameter('appeal', $appeal);
+    $beforeQb = clone $appealsQb;
+    $afterQb = clone $appealsQb;
+    $beforeQb
+      ->andWhere('ap.createdAt >= :created')
+      ->addOrderBy('ap.createdAt', 'ASC')
+      ->setParameter('created', $appeal->getCreatedAt())
+      ->setMaxResults(2);
+    $afterQb
+      ->andWhere('ap.createdAt <= :created')
+      ->addOrderBy('ap.createdAt', 'DESC')
+      ->setParameter('created', $appeal->getCreatedAt())
+      ->setMaxResults(2);
+
+    $before = $beforeQb->getQuery()->getResult();
+    $after = $afterQb->getQuery()->getResult();
+    $appeals = array_merge(array_reverse($before), [$appeal], $after);
+
+    return $this->render('AppBundle:Lk:my_appeal_show.html.twig', [
+      'appeal' => $appeal,
+      'appeals' => $appeals,
+    ]);
   }
 
 
@@ -420,5 +446,12 @@ class CabinetController extends AbstractController
       }
     }*/
 
+  }
+
+  public static function getSubscribedServices ()
+  {
+    return array_merge(parent::getSubscribedServices(), [
+      'aw.client_application.transformer' => ClientApplicationModelTransformer::class,
+    ]);
   }
 }

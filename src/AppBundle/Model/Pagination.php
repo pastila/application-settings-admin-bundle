@@ -19,16 +19,31 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 /**
  * @author Denis N. Ragozin <dragozin@accurateweb.ru>
  */
-class Pagination
+class Pagination implements \Countable, \IteratorAggregate
 {
+  /**
+   * @var integer
+   */
   private $page;
 
+  /**
+   * @var integer
+   */
   private $maxPerPage;
 
+  /**
+   * @var integer
+   */
   private $pageCount;
 
+  /**
+   * @var integer
+   */
   private $nbResults;
 
+  /**
+   * @var Paginator
+   */
   private $paginator;
 
   public function __construct(QueryBuilder $queryBuilder, $page, $maxPerPage)
@@ -51,18 +66,24 @@ class Pagination
     return $this->paginator->getIterator();
   }
 
+  /**
+   * @return int
+   */
   public function getLastPage()
   {
     return $this->pageCount;
   }
 
+  /**
+   * @return int
+   */
   public function getOffset()
   {
-    return ($this->page - 1)*$this->maxPerPage;
+    return ($this->page - 1) * $this->maxPerPage;
   }
 
   /**
-   * @return mixed
+   * @return int
    */
   public function getPage()
   {
@@ -70,7 +91,7 @@ class Pagination
   }
 
   /**
-   * @return mixed
+   * @return int
    */
   public function getMaxPerPage()
   {
@@ -78,7 +99,7 @@ class Pagination
   }
 
   /**
-   * @return float
+   * @return int
    */
   public function getPageCount()
   {
@@ -93,14 +114,37 @@ class Pagination
     return $this->nbResults;
   }
 
-
+  /**
+   * @return int
+   */
   public function getFirstResult()
   {
     return $this->getOffset() + 1;
   }
 
+  /**
+   * @return integer
+   */
   public function getLastResult()
   {
     return min($this->getNbResults(), $this->getFirstResult() + $this->getMaxPerPage() - 1);
+  }
+
+  /**
+   * @return int
+   */
+  public function getMore ()
+  {
+    if ($this->getLastPage() == $this->getPage())
+    {
+      return 0;
+    }
+
+    return min($this->getMaxPerPage(), max($this->getNbResults() - ($this->getPage() * $this->getMaxPerPage()), 0));
+  }
+
+  public function count ()
+  {
+    return $this->paginator->count();
   }
 }

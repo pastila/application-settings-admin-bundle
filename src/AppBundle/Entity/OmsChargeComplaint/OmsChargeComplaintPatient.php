@@ -262,12 +262,12 @@ class OmsChargeComplaintPatient implements PatientInterface
     return $this->getFio();
   }
 
-  public function getFio ()
+  public function getFio ($short=false)
   {
     return implode(' ', array_filter([
       $this->getLastName(),
-      $this->getFirstName(),
-      $this->getMiddleName(),
+      $short ? mb_strimwidth($this->getFirstName(), 0, 2, '.') : $this->getFirstName(),
+      $short ? mb_strimwidth($this->getMiddleName(), 0, 2, '.') : $this->getMiddleName(),
     ]));
   }
 }
