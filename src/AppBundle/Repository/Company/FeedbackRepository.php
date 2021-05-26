@@ -4,6 +4,7 @@ namespace AppBundle\Repository\Company;
 
 use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\Company\FeedbackModerationStatus;
+use AppBundle\Model\Filter\FeedbackFilter;
 use AppBundle\Model\InsuranceCompany\FeedbackListFilter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -81,6 +82,34 @@ class FeedbackRepository extends ServiceEntityRepository
     $this->filterAccepted($qb);
     $this->joinCompanyBranchActive($qb);
     $this->joinCommentsCitations($qb);
+
+    return $qb;
+  }
+
+  public function createQueryBuilderByFilter (FeedbackFilter $filter)
+  {
+    $qb = $this->createQueryBuilder('f');
+
+    if ($filter->getAuthor())
+    {
+      $qb
+        ->andWhere('f.author = :author')
+        ->setParameter('author', $filter->getAuthor());
+    }
+
+    if ($filter->getModerationStatus() !== null)
+    {
+      $qb
+        ->andWhere('f.moderationStatus = :status')
+        ->setParameter('status', $filter->getModerationStatus());
+    }
+
+    if ($filter->getModerationStatuses() && is_array($filter->getModerationStatuses()) && count($filter->getModerationStatuses()))
+    {
+      $qb
+        ->andWhere('f.moderationStatus IN (:statuses)')
+        ->setParameter('statuses', $filter->getModerationStatuses());
+    }
 
     return $qb;
   }
