@@ -19,7 +19,7 @@
                 </div>
                 <div class="lk__content__big-content__my-reviews">
                     {% for review in reviews %}
-                        <div class="review-item">
+                        <a href="{{ path('lk_my_review_show', {'id': review.id}) }}" class="review-item">
                             <div class="review-item__info">
                                 {% set emptyStars = 5 - review.valuation %}
                                 {% set fullStars = review.valuation %}
@@ -51,7 +51,7 @@
                             <div class="review-item__text">
                                 {{ review.text }}
                             </div>
-                        </div>
+                        </a>
                     {% endfor %}
                 </div>
             </div>

@@ -207,16 +207,25 @@ class CabinetController extends AbstractController
     ]);
   }
 
-  /*
+  /**
   * Страница отзыва
-  * @Route(name="lk_my_review_show", path="/lk/my-reviews/review-item")
+  * @Route(name="lk_my_review_show", path="/lk/my-reviews/{id}")
   * @param Request $request
   */
-  public function cabinetMyReviewShowAction(Request $request)
+  public function cabinetMyReviewShowAction(Request $request, $id)
   {
-    // $this->denyAccessUnlessGranted(['ROLE_USER']);
+    $review = $this->getDoctrine()
+      ->getRepository('AppBundle:Company\Feedback')
+      ->findOneBy(['author' => $this->getUser(), 'id' => $id]);
 
-    return $this->render('AppBundle:Lk:my_review_show.html.twig');
+    if ($review === null)
+    {
+      throw new NotFoundHttpException(sprintf('Review %s not found', $id));
+    }
+
+    return $this->render('AppBundle:Lk:my_review_show.html.twig', [
+      'review' => $review,
+    ]);
   }
 
   /**

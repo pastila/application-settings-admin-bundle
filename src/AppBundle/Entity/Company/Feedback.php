@@ -361,7 +361,7 @@ class Feedback
   /**
    * @param string $title
    *
-   * @return string
+   * @return $this
    */
   public function setTitle($title)
   {
@@ -401,7 +401,7 @@ class Feedback
   /**
    * @param string $text
    *
-   * @return string
+   * @return $this
    */
   public function setText($text)
   {
