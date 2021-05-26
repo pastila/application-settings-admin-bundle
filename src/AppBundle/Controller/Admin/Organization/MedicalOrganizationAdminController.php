@@ -48,7 +48,7 @@ class MedicalOrganizationAdminController extends CRUDController
           'email' => $this->getUser()->getEmail(),
         ]));
         $this->addFlash('success', 'Файл успешно загружен и добавлен в очередь на импорт');
-        return $this->redirectToRoute('admin_app_organization_organization_list');
+        return $this->redirectToList();
       } else
       {
         $this->addFlash('error', 'Во время загрузки файла произошла ошибка!');
