@@ -10,6 +10,7 @@ use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\OmsChargeComplaint\OmsChargeComplaint;
 use AppBundle\Entity\User\User;
 use AppBundle\Form\Obrashcheniya\OmsChargeComplaint1stStepType;
+use AppBundle\Model\Filter\FeedbackFilter;
 use AppBundle\Model\GroupedPagination;
 use AppBundle\Model\InsuranceCompany\FeedbackListFilter;
 use AppBundle\Model\InsuranceCompany\FeedbackListFilterUrlBuilder;
@@ -159,9 +160,19 @@ class CabinetController extends AbstractController
    */
   public function cabinetMyReviewListAction(Request $request)
   {
-    // $this->denyAccessUnlessGranted(['ROLE_USER']);
+    $filter = new FeedbackFilter();
+    $filter->setAuthor($this->getUser());
+    $reviews = $this->getDoctrine()
+      ->getRepository('AppBundle:Company\Feedback')
+      ->createQueryBuilderByFilter($filter)
+      ->addOrderBy('f.createdAt', 'DESC')
+      ->getQuery()
+      ->getResult()
+    ;
 
-    return $this->render('AppBundle:Lk:my_review_list.html.twig');
+    return $this->render('AppBundle:Lk:my_review_list.html.twig', [
+      'reviews' => $reviews,
+    ]);
   }
 
   /*
