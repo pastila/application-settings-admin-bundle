@@ -99,7 +99,37 @@ Bezbahil
 | ---- | ----------- |
 | 200 | Ok |
 
+### /lk/my-appeals
+
+#### GET
+##### Summary
+
+Обращения пользователя
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| page | query |  | No | integer |
+
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | Ok |
+
 ### Models
+
+#### Pager
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| page | integer | _Example:_ `2` | No |
+| maxPerPage | integer | _Example:_ `10` | No |
+| firstPage | integer | _Example:_ `1` | No |
+| lastPage | integer | _Example:_ `3` | No |
+| nbResults | integer | _Example:_ `25` | No |
+| more | integer | _Example:_ `5` | No |
 
 #### Region
 
@@ -146,6 +176,31 @@ Bezbahil
 | region | object |  | No |
 | insuranceCompany | object |  | No |
 
+#### Appeal
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| id | integer |  | No |
+| createdAt | string | _Example:_ `"May 26, 2021 12:01"` | No |
+| sentAt | string | _Example:_ `"May 26, 2021 12:01"` | No |
+| status | integer | 0 - В процессе создания, 1 - Создан, но не отправлен, 2 - Отправлен<br>_Enum:_ `0`, `1`, `2`<br>_Example:_ `1` | No |
+| region | object |  | No |
+| disease | object |  | No |
+| medicalOrganization | object |  | No |
+| year | integer | _Example:_ `2020` | No |
+| draftStep | integer | Шаг создания обращения<br>_Example:_ `6` | No |
+| patient | object |  | No |
+| documents | [ object ] |  | No |
+
+#### AppealDocument
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| originalFilename | string |  | No |
+| fileSize | string | _Example:_ `"16 Mb"` | No |
+| url | string | _Example:_ `"/uploads/file.zip"` | No |
+| extension | string | _Example:_ `"zip"` | No |
+
 #### inline_response_200
 
 | Name | Type | Description | Required |
@@ -157,3 +212,10 @@ Bezbahil
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
 | phone | string |  | No |
+
+#### inline_response_200_1
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| pager | object |  | No |
+| items | [ object ] |  | No |

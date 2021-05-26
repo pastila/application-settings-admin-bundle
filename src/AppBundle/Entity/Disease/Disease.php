@@ -110,7 +110,7 @@ class Disease
 
   /**
    * @param string $code
-   * @retur $this
+   * @return $this
    */
   public function setCode($code): Disease
   {

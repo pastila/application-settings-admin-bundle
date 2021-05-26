@@ -5,26 +5,67 @@
 
 namespace AppBundle\Repository\OmsChargeComplaint;
 
+use AppBundle\Entity\OmsChargeComplaint\OmsChargeComplaint;
+use AppBundle\Entity\User\User;
+use AppBundle\Model\InsuranceCompany\OmsChargeComplaintFilter;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-use Doctrine\ORM\EntityManagerInterface;
-
-/**
- * Class OmsChargeComplaintRepository
- * @package AppBundle\Repository\OmsChargeComplaint
- *
- * @method findOneBy(array $array)
- */
-class OmsChargeComplaintRepository
+class OmsChargeComplaintRepository extends ServiceEntityRepository
 {
-  private $repository;
-
-  public function __construct(EntityManagerInterface $entityManager)
+  public function __construct (ManagerRegistry $registry, $entityClass = OmsChargeComplaint::class)
   {
-    $this->repository = $entityManager->getRepository('AppBundle:OmsChargeComplaint\OmsChargeComplaint');
+    parent::__construct($registry, $entityClass);
   }
 
-  public function __call($name, $arguments)
+  /**
+   * @param OmsChargeComplaintFilter $filter
+   * @return \Doctrine\ORM\QueryBuilder
+   */
+  public function createQueryBuilderByFilter (OmsChargeComplaintFilter $filter)
   {
-    return call_user_func_array([$this->repository, $name], $arguments);
+    $qb = $this->createQueryBuilder('ap');
+
+    if ($filter->getUser() !== null)
+    {
+      $qb
+        ->join('ap.patient', 'p')
+        ->andWhere('p.user = :user')
+        ->setParameter('user', $filter->getUser());
+    }
+
+    if ($filter->getStatuses() && is_array($filter->getStatuses()) && count($filter->getStatuses()))
+    {
+      $qb
+        ->andWhere('ap.status IN (:statuses)')
+        ->setParameter('statuses', $filter->getStatuses());
+    }
+
+    if ($filter->getYear())
+    {
+      $qb
+        ->andWhere('ap.year = :year')
+        ->setParameter('year', $filter->getYear());
+    }
+
+    if ($filter->getPerPage() && $filter->getPage())
+    {
+      $page = max(1, $filter->getPage());
+      $perPage = max(1, $filter->getPerPage());
+      $offset = ($page - 1) * $perPage;
+      $qb->setMaxResults($perPage);
+      $qb->setFirstResult($offset);
+    }
+
+    return $qb;
+  }
+
+  /**
+   * @param OmsChargeComplaintFilter $filter
+   * @return OmsChargeComplaint[]
+   */
+  public function findByFilter (OmsChargeComplaintFilter $filter)
+  {
+    return $this->createQueryBuilderByFilter($filter)->getQuery()->getResult();
   }
 }

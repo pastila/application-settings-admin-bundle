@@ -42,6 +42,7 @@ security:
         - { path: ^/admin/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/lk, role: ROLE_USER }
+        - { path: ^/api/v1/lk, role: ROLE_USER }
         - { path: ^/admin.*$, role: ROLE_ADMIN }
         - { path: ^/cabinet.*$, roles: ROLE_USER }
         - { path: ^/oms-charge-complaint/step-6$, roles: ROLE_USER }

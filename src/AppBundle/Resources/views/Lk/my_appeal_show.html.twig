@@ -11,40 +11,36 @@
 {% block main %}
     <div class="lk">
         {{ include('@App/Lk/_menu.html.twig', { activeMenuItemAlias: 'appeals'}) }}
-        <div class="lk__title">25 ноября, Васильев Д.А.</div>
+        <div class="lk__title">{{ appeal.createdAt|prepareDate('j F') }}, {{ appeal.patientData.fio(true) }}</div>
         <div class="lk__content">
             <div class="lk__content__small-content">
                 <div class="lk__content__small-content__my-appeals lk-border">
-                    <div class="my-appeals__year">2020</div>
-                    <div class="my-appeals__item">
-                        <div class="my-appeals__item__date">12 декабря</div>
-                        <div class="my-appeals__item__name">Громут П.А.</div>
-                    </div>
-                    <div class="my-appeals__item my-appeals__item_active">
-                        <div class="my-appeals__item__date">25 ноября</div>
-                        <div class="my-appeals__item__name">Васильев Д.А.</div>
-                    </div>
-                    <div class="my-appeals__item">
-                        <div class="my-appeals__item__date">17 сентября</div>
-                        <div class="my-appeals__item__name">Константинопольский А.О.</div>
-                    </div>
-                    <div class="my-appeals__item">
-                        <div class="my-appeals__item__date">12 декабря</div>
-                        <div class="my-appeals__item__name">Громут П.А.</div>
-                    </div>
+                    <div class="my-appeals__year">{{ appeal.year }}</div>
+                    {% for _appeal in appeals %}
+                        {% if _appeal.id == appeal.id %}
+                            <div class="my-appeals__item my-appeals__item_active">
+                                <div class="my-appeals__item__date">{{ _appeal.createdAt|prepareDate('j F') }}</div>
+                                <div class="my-appeals__item__name">{{ _appeal.patientData.fio(true) }}</div>
+                            </div>
+                        {% else %}
+                            <a href="{{ path('lk_my_appeal_show', {'id': _appeal.id}) }}" class="my-appeals__item">
+                                <div class="my-appeals__item__date">{{ _appeal.createdAt|prepareDate('j F') }}</div>
+                                <div class="my-appeals__item__name">{{ _appeal.patientData.fio(true) }}</div>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
             <div class="lk__content__big-content lk-border">
                 <div class="lk__content__big-content__title">
                     <div class="lk__content__big-content__title__patient-info">
-                        <div class="lk__content__big-content__title__patient-info__date-name">25 ноября, Васильев&nbsp;Д.А.</div>
+                        <div class="lk__content__big-content__title__patient-info__date-name">{{ appeal.createdAt|prepareDate('j F') }}, {{ appeal.patientData.fio(true) }}</div>
                         <div class="lk__content__big-content__title__patient-info__patient">Пациент</div>
-                        <div class="lk__content__big-content__title__patient-info__name">Васильев Дмитрий Анатольевич</div>
-                        <div class="lk__content__big-content__title__patient-info__polis-info">Полис: 345234 7234 2222
-                            от 23.02.2020
-                        </div>
+                        <div class="lk__content__big-content__title__patient-info__name">{{ appeal.patientData.fio }}</div>
+{#                        <div class="lk__content__big-content__title__patient-info__polis-info">Полис: 345234 7234 2222 от 23.02.2020</div>#}
+                        <div class="lk__content__big-content__title__patient-info__polis-info">Полис: {{ appeal.patientData.insurancePolicyNumber }}</div>
                         <div class="lk__content__big-content__title__patient-info__insurance-company">
-                            Альфа-страхование
+                            {{ appeal.patientData.insuranceCompany }}
                         </div>
                     </div>
                     <div class="lk__content__big-content__title__download-button">
@@ -54,43 +50,44 @@
                 <div class="lk__content__big-content__appeal-info">
                     <div class="lk__content__big-content__appeal-info__item">
                         <div class="lk__content__big-content__appeal-info__item__title">Регион</div>
-                        <div class="lk__content__big-content__appeal-info__item__value">77 Московская область</div>
+                        <div class="lk__content__big-content__appeal-info__item__value">{{ appeal.region ? appeal.region.name : '' }}</div>
                     </div>
                     <div class="lk__content__big-content__appeal-info__item">
                         <div class="lk__content__big-content__appeal-info__item__title">Год оказания услуги</div>
-                        <div class="lk__content__big-content__appeal-info__item__value">2020</div>
+                        <div class="lk__content__big-content__appeal-info__item__value">{{ appeal.year }}</div>
                     </div>
                     <div class="lk__content__big-content__appeal-info__item">
                         <div class="lk__content__big-content__appeal-info__item__title">Медицинская организация</div>
-                        <div class="lk__content__big-content__appeal-info__item__value">Поликлиника 77 имени Склифасовского</div>
+                        <div class="lk__content__big-content__appeal-info__item__value">{{ appeal.medicalOrganization ? appeal.medicalOrganization.name : '' }}</div>
                     </div>
                     <div class="lk__content__big-content__appeal-info__item">
                         <div class="lk__content__big-content__appeal-info__item__title">Юридический адрес</div>
-                        <div class="lk__content__big-content__appeal-info__item__value">124124, г. Москва, ул. Пречистинка, д. 21</div>
+                        <div class="lk__content__big-content__appeal-info__item__value">{{ appeal.medicalOrganization ? appeal.medicalOrganization.address : '' }}</div>
                     </div>
                     <div class="lk__content__big-content__appeal-info__item">
                         <div class="lk__content__big-content__appeal-info__item__title">Руководитель, главный врач</div>
-                        <div class="lk__content__big-content__appeal-info__item__value">Подоплелов Владмир Всеволодович</div>
+                        <div class="lk__content__big-content__appeal-info__item__value">{{ (appeal.medicalOrganization and appeal.medicalOrganization.chiefMedicalOfficer) ? appeal.medicalOrganization.chiefMedicalOfficer.fullName : '' }}</div>
                     </div>
                     <div class="lk__content__big-content__appeal-info__item">
                         <div class="lk__content__big-content__appeal-info__item__title">Обращение</div>
-                        <div class="lk__content__big-content__appeal-info__item__value">Плановое</div>
+                        <div class="lk__content__big-content__appeal-info__item__value">{{ appeal.urgent ? 'Неотложное' : 'Плановое' }}</div>
                     </div>
                     <div class="lk__content__big-content__appeal-info__item">
                         <div class="lk__content__big-content__appeal-info__item__title">Заболевание</div>
-                        <div class="lk__content__big-content__appeal-info__item__value">ОРВИ</div>
+                        <div class="lk__content__big-content__appeal-info__item__value">{{ appeal.disease ? appeal.disease.name : '' }}</div>
                     </div>
+                    {% if appeal.documents|length %}
                     <div class="lk__content__big-content__appeal-info__item">
                         <div class="lk__content__big-content__appeal-info__item__title">Документы об оплате</div>
                         <div class="lk__content__big-content__appeal-info__item__docs">
-                            <div class="lk__content__big-content__appeal-info__item__docs__item">
-                                <img src="{{ asset('gulp/images/svg/lk-doc-icon.svg') }}">Документ1.doc
-                            </div>
-                            <div class="lk__content__big-content__appeal-info__item__docs__item">
-                                <img src="{{ asset('gulp/images/svg/lk-pdf-icon.svg') }}">Документ2.pdf
-                            </div>
+                            {% for document in appeal.documents %}
+                            <a href="{{ getFileUrl(document) }}" class="lk__content__big-content__appeal-info__item__docs__item">
+                                <img src="{{ asset('gulp/images/svg/lk-'~getFileExtension(document)~'-icon.svg') }}">{{ document.originalFilename }}
+                            </a>
+                            {% endfor %}
                         </div>
                     </div>
+                    {% endif %}
                 </div>
             </div>
             <a class="lk__content__to-appeals-button btn" href="{{ path('lk_my_appeal_list') }}">К списку обращений</a>
