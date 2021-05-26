@@ -50,7 +50,7 @@
                 <div class="lk__content__big-content__appeal-info">
                     <div class="lk__content__big-content__appeal-info__item">
                         <div class="lk__content__big-content__appeal-info__item__title">Регион</div>
-                        <div class="lk__content__big-content__appeal-info__item__value">{{ appeal.region.name }}</div>
+                        <div class="lk__content__big-content__appeal-info__item__value">{{ appeal.region ? appeal.region.name : '' }}</div>
                     </div>
                     <div class="lk__content__big-content__appeal-info__item">
                         <div class="lk__content__big-content__appeal-info__item__title">Год оказания услуги</div>
@@ -58,15 +58,15 @@
                     </div>
                     <div class="lk__content__big-content__appeal-info__item">
                         <div class="lk__content__big-content__appeal-info__item__title">Медицинская организация</div>
-                        <div class="lk__content__big-content__appeal-info__item__value">{{ appeal.medicalOrganization.name }}</div>
+                        <div class="lk__content__big-content__appeal-info__item__value">{{ appeal.medicalOrganization ? appeal.medicalOrganization.name : '' }}</div>
                     </div>
                     <div class="lk__content__big-content__appeal-info__item">
                         <div class="lk__content__big-content__appeal-info__item__title">Юридический адрес</div>
-                        <div class="lk__content__big-content__appeal-info__item__value">{{ appeal.medicalOrganization.address }}</div>
+                        <div class="lk__content__big-content__appeal-info__item__value">{{ appeal.medicalOrganization ? appeal.medicalOrganization.address : '' }}</div>
                     </div>
                     <div class="lk__content__big-content__appeal-info__item">
                         <div class="lk__content__big-content__appeal-info__item__title">Руководитель, главный врач</div>
-                        <div class="lk__content__big-content__appeal-info__item__value">{{ appeal.medicalOrganization.chiefMedicalOfficer.fullName }}</div>
+                        <div class="lk__content__big-content__appeal-info__item__value">{{ (appeal.medicalOrganization and appeal.medicalOrganization.chiefMedicalOfficer) ? appeal.medicalOrganization.chiefMedicalOfficer.fullName : '' }}</div>
                     </div>
                     <div class="lk__content__big-content__appeal-info__item">
                         <div class="lk__content__big-content__appeal-info__item__title">Обращение</div>
@@ -74,7 +74,7 @@
                     </div>
                     <div class="lk__content__big-content__appeal-info__item">
                         <div class="lk__content__big-content__appeal-info__item__title">Заболевание</div>
-                        <div class="lk__content__big-content__appeal-info__item__value">{{ appeal.disease.name }}</div>
+                        <div class="lk__content__big-content__appeal-info__item__value">{{ appeal.disease ? appeal.disease.name : '' }}</div>
                     </div>
                     {% if appeal.documents|length %}
                     <div class="lk__content__big-content__appeal-info__item">

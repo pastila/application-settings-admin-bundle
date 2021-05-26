@@ -72,12 +72,41 @@ class OmsChargeComplaintFixture extends Fixture implements DependentFixtureInter
 //      ->addDocument()
     ;
 
+    $createdAppeal = new OmsChargeComplaint();
+    $createdAppeal
+      ->setYear(2020)
+      ->setDraftStep(7)
+      ->setRegion($this->getReference('region-66'))
+      ->setYear(2020)
+      ->setMedicalOrganization($this->getReference('medical-organization-1'))
+      ->setUrgent(false)
+      ->setDisease($this->getReference('disease-prostuda'))
+      ->setPatient($this->getReference('patient-sogaz-med-66'))
+      ->setPaidAt(new \DateTime('2020-01-20'))
+      ->setStatus(OmsChargeComplaint::STATUS_CREATED)
+    ;
+    $sentAppeal = new OmsChargeComplaint();
+    $sentAppeal
+      ->setYear(2020)
+      ->setDraftStep(7)
+      ->setRegion($this->getReference('region-66'))
+      ->setYear(2020)
+      ->setMedicalOrganization($this->getReference('medical-organization-1'))
+      ->setUrgent(false)
+      ->setDisease($this->getReference('disease-prostuda'))
+      ->setPatient($this->getReference('patient-sogaz-med-66'))
+      ->setPaidAt(new \DateTime('2020-01-20'))
+      ->setStatus(OmsChargeComplaint::STATUS_SENT)
+    ;
+
     $manager->persist($secondStep);
     $manager->persist($thirdStep);
     $manager->persist($fourthStep);
     $manager->persist($fifthStep);
     $manager->persist($sixthStep);
     $manager->persist($seventhStep);
+    $manager->persist($createdAppeal);
+    $manager->persist($sentAppeal);
     $manager->flush();
 
     $this->setReference('oms-charge-complaint-2nd', $secondStep); //готовый к прохождению 2 шага
@@ -86,6 +115,8 @@ class OmsChargeComplaintFixture extends Fixture implements DependentFixtureInter
     $this->setReference('oms-charge-complaint-5th', $fifthStep); //готовый к прохождению 5 шага
     $this->setReference('oms-charge-complaint-6th', $sixthStep); //готовый к прохождению 6 шага
     $this->setReference('oms-charge-complaint-7th', $seventhStep); //готовый к прохождению 7 шага
+    $this->setReference('oms-charge-complaint-created', $createdAppeal);
+    $this->setReference('oms-charge-complaint-sent', $sentAppeal);
   }
 
   public function getDependencies ()

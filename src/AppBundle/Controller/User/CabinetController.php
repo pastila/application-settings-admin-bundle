@@ -130,6 +130,7 @@ class CabinetController extends AbstractController
   /**
    * Личный кабинет
    * @Route(name="lk_my_appeal_show", path="/lk/my-appeals/{id}")
+   * @Route(name="api_appeal_show", path="/api/v1/lk/my-appeals/{id}", defaults={"_api"=true})
    * @param Request $request
    */
   public function cabinetMyAppealShowAction(Request $request, $id)
@@ -144,6 +145,11 @@ class CabinetController extends AbstractController
     if ($appeal->getStatus() === OmsChargeComplaint::STATUS_DRAFT)
     {
       throw new NotFoundHttpException(sprintf('Appeal %s not complete', $id));
+    }
+
+    if ($request->get('_api'))
+    {
+      return $this->json($this->get('aw.client_application.transformer')->getClientModelData($appeal, 'appeal'));
     }
 
     $appealFilter = new OmsChargeComplaintFilter();
