@@ -87,7 +87,7 @@ class ResettingListener extends BaseResettingListener
    */
   public function onPasswordResettingSuccess(FormEvent $event)
   {
-    $url = $this->router->generate('cabinet');
+    $url = $this->router->generate('lk_index');
 
     $event->setResponse(new RedirectResponse($url));
   }
