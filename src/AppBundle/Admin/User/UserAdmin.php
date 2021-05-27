@@ -7,7 +7,9 @@ use AppBundle\Form\Admin\Common\MaskedType;
 use AppBundle\Form\Admin\Company\InsuranceCompanyBranchAutocompleteType;
 use AppBundle\Validator\User\Phone;
 use FOS\UserBundle\Model\UserManager;
+use Knp\Menu\ItemInterface as MenuItemInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -30,6 +32,9 @@ class UserAdmin extends AbstractAdmin
       ->add('_action', null, array(
         'label' => 'Действия',
         'actions' => array(
+          'patients' => [
+            'template' => '@App/admin/user/patients_btn.htm.twig',
+          ],
           'edit' => array(),
           'delete' => array(),
         )
@@ -50,7 +55,7 @@ class UserAdmin extends AbstractAdmin
       ->add('plainPassword', PasswordType::class, [
         'required' => false,
         'help' => 'Введите пароль, чтобы изменить его',
-        'constraints' => $this->getSubject()->getId() ? [] : [
+        'constraints' => $this->getSubject() && $this->getSubject()->getId() ? [] : [
           new NotBlank(),
         ],
       ])
@@ -137,6 +142,21 @@ class UserAdmin extends AbstractAdmin
     if ($object->getPlainPassword())
     {
       $this->getConfigurationPool()->getContainer()->get('fos_user.user_manager')->updatePassword($object);
+    }
+  }
+
+  protected function configureTabMenu (MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
+  {
+    parent::configureTabMenu($menu, $action, $childAdmin);
+
+    if ($childAdmin === null)
+    {
+      if ($action === 'edit')
+      {
+        $menu->addChild('Пациенты', [
+            'uri' => $this->getChild('main.admin.patient')->generateUrl('list'),
+        ]);
+      }
     }
   }
 }

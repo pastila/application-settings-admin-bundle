@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity\User;
 
+use AppBundle\Entity\Company\Feedback;
 use AppBundle\Entity\Company\InsuranceCompany;
 use AppBundle\Entity\Company\InsuranceCompanyBranch;
 use AppBundle\Entity\Geo\Region;
@@ -127,12 +128,19 @@ class User extends BaseUser implements PhoneVerificationAwareInterface
   private $patients;
 
   /**
+   * @var Feedback[]|ArrayCollection
+   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Company\Feedback", mappedBy="author")
+   */
+  private $feedbacks;
+
+  /**
    * User constructor.
    */
   public function __construct()
   {
     parent::__construct();
     $this->patients = new ArrayCollection();
+    $this->feedbacks = new ArrayCollection();
   }
 
   /**
@@ -392,7 +400,8 @@ class User extends BaseUser implements PhoneVerificationAwareInterface
    */
   public function __toString()
   {
-    return $this->id ? $this->getFullName() : 'Новый пользователь';
+    $fullName = $this->getFullName();
+    return $this->id ? ($fullName ?: $this->getEmail()) : 'Новый пользователь';
   }
 
   /**
