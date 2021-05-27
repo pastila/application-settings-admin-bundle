@@ -41,7 +41,7 @@ class Feedback
    * Пользователь, который оставил отзыв
    *
    * @var null|User
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User\User")
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User\User", inversedBy="feedbacks")
    * @ORM\JoinColumn(name="user_id", nullable=true, onDelete="RESTRICT")
    */
   private $author;

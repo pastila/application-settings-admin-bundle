@@ -50,7 +50,7 @@ class UserAdmin extends AbstractAdmin
       ->add('plainPassword', PasswordType::class, [
         'required' => false,
         'help' => 'Введите пароль, чтобы изменить его',
-        'constraints' => $this->getSubject()->getId() ? [] : [
+        'constraints' => $this->getSubject() && $this->getSubject()->getId() ? [] : [
           new NotBlank(),
         ],
       ])

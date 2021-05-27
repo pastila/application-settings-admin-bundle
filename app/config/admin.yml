@@ -124,6 +124,6 @@ services:
 
   AppBundle\Admin\User\UserAdmin:
     class: AppBundle\Admin\User\UserAdmin
-    arguments: [~, 'AppBundle\Entity\User\User', ~]
+    arguments: [~, 'AppBundle\Entity\User\User', 'AppBundle:Admin/User/UserAdmin']
     tags:
       - { name: sonata.admin, group: 'user', manager_type: orm, label: 'Пользователи' }
