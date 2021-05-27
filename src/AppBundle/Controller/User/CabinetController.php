@@ -54,8 +54,19 @@ class CabinetController extends AbstractController
   public function cabinetAction(Request $request)
   {
     $this->denyAccessUnlessGranted(['ROLE_USER']);
+    $reviewFilter = new FeedbackFilter();
+    $reviewFilter->setPage(1);
+    $reviewFilter->setPerPage(2);
+    $reviewFilter->setAuthor($this->getUser());
+    $reviews = $this->getDoctrine()->getRepository('AppBundle:Company\Feedback')
+      ->createQueryBuilderByFilter($reviewFilter)
+      ->addOrderBy('f.createdAt', 'DESC')
+      ->getQuery()->getResult();
 
-    return $this->render('AppBundle:Lk:index.html.twig');
+    return $this->render('AppBundle:Lk:index.html.twig', [
+      'user' => $this->getUser(),
+      'reviews' => $reviews,
+    ]);
   }
 
   public function _dashboardAppealListAction()

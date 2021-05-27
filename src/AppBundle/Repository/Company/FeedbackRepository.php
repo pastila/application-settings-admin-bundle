@@ -111,6 +111,15 @@ class FeedbackRepository extends ServiceEntityRepository
         ->setParameter('statuses', $filter->getModerationStatuses());
     }
 
+    if ($filter->getPage() && $filter->getPerPage())
+    {
+      $page = $filter->getPage();
+      $perPage = $filter->getPerPage();
+      $offset = ($page - 1) * $perPage;
+      $qb->setMaxResults($perPage);
+      $qb->setFirstResult($offset);
+    }
+
     return $qb;
   }
 }

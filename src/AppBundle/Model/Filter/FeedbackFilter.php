@@ -4,7 +4,7 @@ namespace AppBundle\Model\Filter;
 
 use AppBundle\Entity\User\User;
 
-class FeedbackFilter
+class FeedbackFilter extends PagedCollectionFilter
 {
   /**
    * @var User

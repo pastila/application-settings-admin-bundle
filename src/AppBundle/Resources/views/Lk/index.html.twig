@@ -30,24 +30,21 @@
                         </div>
                     </div>
                 </div>
+                {% if reviews|length %}
                 <div class="lk__content__small-content__reviews lk-border">
                     <div class="reviews-title">Отзывы<img src="{{ asset('gulp/images/svg/lk-more-buttons.svg') }}"></div>
+                    {% for review in reviews %}
                     <div class="reviews-item">
                         <div class="reviews-item__info">
-                            <div class="reviews-item__info__date">12 декабря 2021</div>
-                            <div class="reviews-item__info__status">На модерации</div>
+                            <div class="reviews-item__info__date">{{ review.createdAt|prepareDate('j F Y') }}</div>
+                            <div class="reviews-item__info__status">{% if review.moderationStatus == constant('AppBundle\\Entity\\Company\\FeedbackModerationStatus::MODERATION_NONE') %}На модерации{% endif %}</div>
                         </div>
-                        <div class="reviews-item__text">В прошлом году сын понюхал марганцовку. Очень испугались за него, вызвали скорую ...</div>
+                        <div class="reviews-item__text">{{ review.text|truncate(80) }}</div>
                     </div>
-                    <div class="reviews-item">
-                        <div class="reviews-item__info">
-                            <div class="reviews-item__info__date">5 ноября 2021</div>
-                            <div class="reviews-item__info__status"></div>
-                        </div>
-                        <div class="reviews-item__text">Год назад обращался в больницу с проблемами носа, быстро приняли меня, но произошло ...</div>
-                    </div>
-                    <button class="reviews-all-reviews btn">Все отзывы</button>
+                    {% endfor %}
+                    <a href="{{ path('lk_my_review_list') }}" class="reviews-all-reviews btn">Все отзывы</a>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>
