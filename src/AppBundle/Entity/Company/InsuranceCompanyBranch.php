@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Doctrine\ORM\Mapping\Index;
 use AppBundle\Validator\InsuranceCompany\InsuranceCompanyBranchPublished;
+use Doctrine\ORM\PersistentCollection;
 
 /**
  * InsuranceCompanyBranch.
@@ -139,6 +140,17 @@ class InsuranceCompanyBranch
    */
   public function removeRepresentative($representative)
   {
+    /**
+     * @see PersistentCollection::removeElement()
+     * Нам нужен orphanRemoval, чтобы Doctrine удаляла элементы коллекции, но в реализации PersistentCollection
+     * метод removeElement отправляет элементы в очередь на удаление и они удаляются не зависимо от того был сохранен
+     * родительский объект или нет, соответственно меняем коллекцтю на ArrayCollection
+     */
+    if ($this->representatives instanceof PersistentCollection)
+    {
+      $this->representatives = new ArrayCollection($this->representatives->toArray());
+    }
+
     if ($this->representatives->contains($representative))
     {
       $this->representatives->removeElement($representative);

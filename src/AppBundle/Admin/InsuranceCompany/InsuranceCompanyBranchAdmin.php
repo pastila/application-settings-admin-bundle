@@ -31,6 +31,7 @@ class InsuranceCompanyBranchAdmin extends AbstractAdmin
     {
       $list->add('company');
     }
+    $list->add('bossFullNameDative');
     $list->add('code', null, [
       'label' => 'Код СМО'
     ]);
