@@ -125,5 +125,15 @@ services:
   AppBundle\Admin\User\UserAdmin:
     class: AppBundle\Admin\User\UserAdmin
     arguments: [~, 'AppBundle\Entity\User\User', 'AppBundle:Admin/User/UserAdmin']
+    calls:
+      -
+        - addChild
+        - ['@main.admin.patient']
     tags:
       - { name: sonata.admin, group: 'user', manager_type: orm, label: 'Пользователи' }
+
+  main.admin.patient:
+    class: AppBundle\Admin\User\PatientAdmin
+    arguments: [~, 'AppBundle\Entity\User\Patient', ~]
+    tags:
+      - { name: sonata.admin, group: 'user', manager_type: orm, label: 'Пациенты', show_in_dashboard: false }
