@@ -34,6 +34,13 @@ class OmsChargeComplaintRepository extends ServiceEntityRepository
         ->setParameter('user', $filter->getUser());
     }
 
+    if ($filter->getPatient() !== null)
+    {
+      $qb
+        ->andWhere('ap.patient = :patient')
+        ->setParameter('patient', $filter->getPatient());
+    }
+
     if ($filter->getStatuses() && is_array($filter->getStatuses()) && count($filter->getStatuses()))
     {
       $qb
@@ -67,5 +74,17 @@ class OmsChargeComplaintRepository extends ServiceEntityRepository
   public function findByFilter (OmsChargeComplaintFilter $filter)
   {
     return $this->createQueryBuilderByFilter($filter)->getQuery()->getResult();
+  }
+
+  /**
+   * @param OmsChargeComplaintFilter $filter
+   * @return int
+   */
+  public function countByFilter (OmsChargeComplaintFilter $filter)
+  {
+    return (int)$this->createQueryBuilderByFilter($filter)
+      ->select('COUNT(DISTINCT ap)')
+      ->getQuery()
+      ->getSingleScalarResult();
   }
 }

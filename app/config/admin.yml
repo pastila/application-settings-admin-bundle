@@ -132,8 +132,14 @@ services:
     tags:
       - { name: sonata.admin, group: 'user', manager_type: orm, label: 'Пользователи' }
 
+  app.admin.oms_charge_complaint:
+    class: AppBundle\Admin\OmsChargeComplaint\OmsChargeComplaintAdmin
+    arguments: [~, 'AppBundle\Entity\OmsChargeComplaint\OmsChargeComplaint', ~]
+    tags:
+      - { name: sonata.admin, group: 'user', manager_type: orm, label: 'Обращения' }
+
   main.admin.patient:
     class: AppBundle\Admin\User\PatientAdmin
-    arguments: [~, 'AppBundle\Entity\User\Patient', ~]
+    arguments: [~, 'AppBundle\Entity\User\Patient', 'AppBundle:Admin/User/PatientAdmin']
     tags:
       - { name: sonata.admin, group: 'user', manager_type: orm, label: 'Пациенты', show_in_dashboard: false }

@@ -1,0 +1,8 @@
+<tr>
+    <th>Документы</th>
+    <td>
+        {% for document in value %}
+            <a href="{{ getFileUrl(document) }}">{{ document.originalFilename }}</a>&nbsp;({{ getFileSize(document) }})<br>
+        {% endfor %}
+    </td>
+</tr>

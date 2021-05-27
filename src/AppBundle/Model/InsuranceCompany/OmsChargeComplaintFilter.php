@@ -5,6 +5,7 @@
 
 namespace AppBundle\Model\InsuranceCompany;
 
+use AppBundle\Entity\User\Patient;
 use AppBundle\Entity\User\User;
 use AppBundle\Model\Filter\PagedCollectionFilter;
 
@@ -14,6 +15,11 @@ class OmsChargeComplaintFilter extends PagedCollectionFilter
    * @var User
    */
   private $user;
+
+  /**
+   * @var Patient
+   */
+  private $patient;
 
   /**
    * @var array
@@ -76,6 +82,24 @@ class OmsChargeComplaintFilter extends PagedCollectionFilter
   public function setYear ($year)
   {
     $this->year = $year;
+    return $this;
+  }
+
+  /**
+   * @return Patient
+   */
+  public function getPatient ()
+  {
+    return $this->patient;
+  }
+
+  /**
+   * @param Patient $patient
+   * @return $this
+   */
+  public function setPatient ($patient)
+  {
+    $this->patient = $patient;
     return $this;
   }
 }
