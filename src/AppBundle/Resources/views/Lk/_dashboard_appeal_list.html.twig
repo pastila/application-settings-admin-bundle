@@ -1,8 +1,9 @@
 <div class="lk__content__big-content__appeal-history">
     {% for appeal in omsChargeComplaints %}
-        {% if (not currentYear is defined) or (appeal.year != currentYear) %}
-            {% set currentYear = appeal.year %}
-            <div class="lk__content__big-content__appeal-history__year">2020</div>
+        {% set appealYear = appeal.createdAt|date('Y') %}
+        {% if (not currentYear is defined) or (appealYear != currentYear) %}
+            {% set currentYear = appealYear %}
+            <div class="lk__content__big-content__appeal-history__year">{{ appealYear }}</div>
         {% endif %}
         <a class="lk__content__big-content__appeal-history__appeal-item" href="{{ path('lk_my_appeal_show', { id: appeal.id }) }}">
             <div class="appeal-item__date">{{ appeal.createdAt|prepareDate('d M') }}</div>
