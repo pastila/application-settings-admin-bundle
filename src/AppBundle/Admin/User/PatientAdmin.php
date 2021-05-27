@@ -32,6 +32,8 @@ class PatientAdmin extends AbstractAdmin
     return $query;
   }
 
+
+
   protected function configureListFields (ListMapper $list)
   {
     $list
@@ -42,7 +44,7 @@ class PatientAdmin extends AbstractAdmin
         'label' => 'Действия',
         'actions' => array(
           'edit' => array(),
-//          'delete' => array(), //Нельзя удалять пациента с обращениями. А это пока единственный способ создания пациента
+          'delete' => array(),
         )
       ));
   }
