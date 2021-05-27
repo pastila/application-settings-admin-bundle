@@ -90,7 +90,7 @@ class OmsChargeComplaint
 
   /**
    * @var OmsChargeComplaintDocument[]|ArrayCollection
-   * @ORM\OneToMany(targetEntity="AppBundle\Entity\OmsChargeComplaint\OmsChargeComplaintDocument", mappedBy="omsChargeComplaint", cascade={"persist"})
+   * @ORM\OneToMany(targetEntity="AppBundle\Entity\OmsChargeComplaint\OmsChargeComplaintDocument", mappedBy="omsChargeComplaint", cascade={"persist", "remove"}, orphanRemoval=true)
    */
   private $documents;
 
@@ -336,6 +336,17 @@ class OmsChargeComplaint
     return $this->status;
   }
 
+  public function getStatusLabel ()
+  {
+    $labels = [
+      self::STATUS_DRAFT => 'Черновик',
+      self::STATUS_CREATED => 'Создано',
+      self::STATUS_SENT => 'Отправлено',
+    ];
+
+    return isset($labels[$this->getStatus()]) ? $labels[$this->getStatus()] : $this->getStatus();
+  }
+
   /**
    * @param int $status
    * @return OmsChargeComplaint
@@ -471,4 +482,11 @@ class OmsChargeComplaint
       self::STATUS_SENT,
     ];
   }
+
+  public function __toString ()
+  {
+    return $this->getId() ? sprintf('Обращение %s', $this->getPatient() ?: '') : 'Новое обращение';
+  }
+
+
 }

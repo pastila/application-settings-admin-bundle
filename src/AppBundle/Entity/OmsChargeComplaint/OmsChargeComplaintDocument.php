@@ -147,4 +147,11 @@ class OmsChargeComplaintDocument implements FileAwareInterface
     $this->omsChargeComplaint = $omsChargeComplaint;
     return $this;
   }
+
+  public function __toString ()
+  {
+    return $this->getId() ? $this->getOriginalFilename() : 'Новый документ';
+  }
+
+
 }

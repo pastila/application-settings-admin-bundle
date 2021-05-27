@@ -19,7 +19,7 @@ services:
             $smsPublicKey: '%sms_public_key%'
             $smsUrl: '%sms_url%'
             $smsProtocolVersion: '%sms_protocol_version%'
-            $fileStorageDir: '%kernel.root_dir%/../var/uploads/files'
+            $fileStorageDir: '%kernel.root_dir%/../web/uploads/files'
             $smsHandler: '%sms_handler%'
             $registry: '@doctrine'
 
