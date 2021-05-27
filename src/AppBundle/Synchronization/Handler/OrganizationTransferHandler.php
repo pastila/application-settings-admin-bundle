@@ -30,8 +30,9 @@ class OrganizationTransferHandler extends TransferHandler implements ArgsAwareIn
 
   protected function preTransfer()
   {
-    $sql = 'UPDATE s_organizations_tmp so_tmp
-            LEFT JOIN s_regions sr ON SUBSTRING(sr.name, 1, 3) = SUBSTRING(so_tmp.region, 1, 3)
+    $this->query('INSERT IGNORE INTO s_regions (code, name) (SELECT region_code, region FROM s_medical_organizations_tmp GROUP BY region_code, region)');
+    $sql = 'UPDATE s_medical_organizations_tmp so_tmp
+            LEFT JOIN s_regions sr ON sr.code = so_tmp.region_code
             SET so_tmp.region_id = sr.ID
     ';
     $this->query($sql);
@@ -47,14 +48,14 @@ class OrganizationTransferHandler extends TransferHandler implements ArgsAwareIn
     $sql = 'INSERT INTO s_organization_chief_medical_officers 
             (organization_id, first_name, last_name, middle_name) 
             SELECT so_tmp.code, so_tmp.firstName, so_tmp.lastName, so_tmp.middleName
-            FROM s_organizations_tmp so_tmp
+            FROM s_medical_organizations_tmp so_tmp
             ON DUPLICATE KEY UPDATE first_name=so_tmp.firstName, last_name=so_tmp.lastName, middle_name=so_tmp.middleName';
     $this->query($sql);
 
     $sql = 'INSERT INTO s_organization_years 
             (organization_code, year) 
             SELECT so_tmp.code, ' . $this->year . '
-            FROM s_organizations_tmp so_tmp
+            FROM s_medical_organizations_tmp so_tmp
             ON DUPLICATE KEY UPDATE organization_code=so_tmp.code, year=' . $this->year;
     $this->query($sql);
   }

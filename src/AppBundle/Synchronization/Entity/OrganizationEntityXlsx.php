@@ -23,6 +23,8 @@ class OrganizationEntityXlsx extends BaseEntity
     $sourceResolver = new OptionsResolver();
     $this->configureResolver($sourceResolver);
     $data = $sourceResolver->resolve($source);
+    $code = preg_replace('/^(\d+)\s.*/', '$1', $data['region']);
+    $data['region_code'] = $code;
     $this->setValues($data);
   }
 
