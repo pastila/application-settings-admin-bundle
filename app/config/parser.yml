@@ -28,9 +28,10 @@ subjects:
     schema:
       class: \Accurateweb\SynchronizationBundle\Model\Schema\CommonSchema
       options:
-        tableName: s_organizations
+        tableName: s_medical_organizations
         columns:
           region: { type: VARCHAR, size: 255, mapWith: false }
+          region_code: { type: VARCHAR, size: 255, mapWith: false }
           region_id: { type: INTEGER, size: 11, mapWith: region_id }
           code: { type: INTEGER, size: 11 }
           fullName: { type: VARCHAR, size: 512, mapWith: name_full }
