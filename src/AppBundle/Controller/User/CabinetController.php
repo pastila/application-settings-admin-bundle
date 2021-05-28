@@ -62,9 +62,11 @@ class CabinetController extends AbstractController
       ->createQueryBuilderByFilter($reviewFilter)
       ->addOrderBy('f.createdAt', 'DESC')
       ->getQuery()->getResult();
+    /** @var User $user */
+    $user = $this->getUser();
 
     return $this->render('AppBundle:Lk:index.html.twig', [
-      'user' => $this->getUser(),
+      'user' => $user,
       'reviews' => $reviews,
     ]);
   }

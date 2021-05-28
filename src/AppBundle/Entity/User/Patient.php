@@ -307,4 +307,17 @@ class Patient implements PhoneVerificationAwareInterface, PatientInterface
     $this->phoneVerificationCode = $phoneVerificationCode;
     return $this;
   }
+
+  /**
+   * @return bool
+   */
+  public function isMain ()
+  {
+    if ($this->getUser())
+    {
+      return $this->getUser()->getMainPatient() === $this;
+    }
+
+    return false;
+  }
 }

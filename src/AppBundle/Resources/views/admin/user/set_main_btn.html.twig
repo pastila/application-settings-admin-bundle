@@ -1,0 +1,6 @@
+{% if not object.main %}
+<a href="{{ path('admin_app_user_patient_set-main', {'id': object.id}) }}" class="btn btn-sm btn-default edit_link" title="Выбрать">
+    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+    Выбрать основным
+</a>
+{% endif %}

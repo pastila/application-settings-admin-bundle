@@ -32,18 +32,22 @@ class PatientAdmin extends AbstractAdmin
     return $query;
   }
 
-
-
   protected function configureListFields (ListMapper $list)
   {
     $list
       ->add('fio')
       ->add('insurancePolicyNumber')
       ->add('phone')
+      ->add('main', 'boolean', [
+        'label' => 'Основной',
+      ])
       ->add('_action', null, array(
         'label' => 'Действия',
         'actions' => array(
           'edit' => array(),
+          'setMain' => array(
+            'template' => '@App/admin/user/set_main_btn.html.twig',
+          ),
           'delete' => array(),
         )
       ));
@@ -95,5 +99,6 @@ class PatientAdmin extends AbstractAdmin
     parent::configureRoutes($collection);
     //Пока что не делаем возможность создавать пациента в админке
     $collection->remove('create');
+    $collection->add('set-main', sprintf('{%s}/set-main', $this->getIdParameter()));
   }
 }

@@ -18,18 +18,20 @@
                 {{ render(controller('AppBundle:User\\Cabinet:_dashboardAppealList')) }}
             </div>
             <div class="lk__content__small-content">
+                {% if user.company %}
                 <div class="lk__content__small-content__insurance-companies lk-border">
                     <div class="insurance-companies__title">Ваша страховая компания</div>
-                    <div class="insurance-companies__logo"><img src="{{ asset('gulp/images/svg/lk-alpha-strahovanie.svg') }}"></div>
+                    <div class="insurance-companies__logo"><img src="{{ image_url(user.company) }}" alt="{{ user.company.name }}"></div>
                     <div class="insurance-companies__phone">
                         <div class="insurance-companies__phone__main">
-                            8 800 9000 400
+                            {{ user.branch.phones }}
                         </div>
                         <div class="insurance-companies__phone__additional">
-                            +7 495 342-33-43   +7 495 342-33-76
+                            {{ user.company.phones }}
                         </div>
                     </div>
                 </div>
+                {% endif %}
                 {% if reviews|length %}
                 <div class="lk__content__small-content__reviews lk-border">
                     <div class="reviews-title">Отзывы<img src="{{ asset('gulp/images/svg/lk-more-buttons.svg') }}"></div>
