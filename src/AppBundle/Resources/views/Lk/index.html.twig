@@ -18,16 +18,21 @@
                 {{ render(controller('AppBundle:User\\Cabinet:_dashboardAppealList')) }}
             </div>
             <div class="lk__content__small-content">
-                {% if user.company %}
+                {% if user.mainPatient and user.mainPatient.insuranceCompany %}
+                {% if user.region %}
+                {% set branch = resolveBranchByInsuranceCompanyAndRegion(user.mainPatient.insuranceCompany, user.region) %}
+                {% endif %}
                 <div class="lk__content__small-content__insurance-companies lk-border">
                     <div class="insurance-companies__title">Ваша страховая компания</div>
-                    <div class="insurance-companies__logo"><img src="{{ image_url(user.company) }}" alt="{{ user.company.name }}"></div>
+                    <div class="insurance-companies__logo"><img src="{{ image_url(user.mainPatient.insuranceCompany) }}" alt="{{ user.mainPatient.insuranceCompany.name }}"></div>
                     <div class="insurance-companies__phone">
                         <div class="insurance-companies__phone__main">
-                            {{ user.branch.phones }}
+                            {% if branch is defined %}
+                            {{ branch.phones }}
+                            {% endif %}
                         </div>
                         <div class="insurance-companies__phone__additional">
-                            {{ user.company.phones }}
+                            {{ user.mainPatient.insuranceCompany.phones }}
                         </div>
                     </div>
                 </div>

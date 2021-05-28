@@ -7,6 +7,7 @@ use AppBundle\Model\InsuranceCompany\OmsChargeComplaintFilter;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PatientAdminController extends CRUDController
 {
@@ -80,6 +81,30 @@ class PatientAdminController extends CRUDController
     {
       return $this->redirectToRoute('admin_app_user_user_user_patient_edit');
     }
+  }
+
+  /**
+   * @param Request $request
+   */
+  public function setMainAction (Request $request)
+  {
+    /** @var Patient $patient */
+    $patient = $this->admin->getSubject();
+
+    if ($patient === null)
+    {
+      throw new NotFoundHttpException();
+    }
+
+    if ($patient->getUser() === null)
+    {
+      throw new NotFoundHttpException();
+    }
+
+    $patient->getUser()->setMainPatient($patient);
+    $this->getDoctrine()->getManager()->persist($patient);
+    $this->getDoctrine()->getManager()->flush();
+    return $this->redirectToList();
   }
 
 }
