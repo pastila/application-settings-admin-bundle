@@ -2,10 +2,6 @@
 
 namespace AppBundle\Admin\InsuranceCompany;
 
-use AppBundle\Entity\Company\InsuranceCompany;
-use AppBundle\Entity\Company\InsuranceCompanyBranch;
-use AppBundle\Entity\Geo\Region;
-use AppBundle\Validator\InsuranceCompany\InsuranceCompanyBranchPublished;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -13,7 +9,6 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Sonata\Form\Type\CollectionType;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 use Sonata\AdminBundle\Admin\AdminInterface;

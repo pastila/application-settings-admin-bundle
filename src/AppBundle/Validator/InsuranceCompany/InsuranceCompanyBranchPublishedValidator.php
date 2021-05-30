@@ -25,7 +25,9 @@ class InsuranceCompanyBranchPublishedValidator extends ConstraintValidator
     {
       return;
     }
-    if (!$constraint instanceof InsuranceCompanyBranchPublished) {
+
+    if (!$constraint instanceof InsuranceCompanyBranchPublished)
+    {
       throw new UnexpectedTypeException($constraint, InsuranceCompanyBranchPublished::class);
     }
 
@@ -33,11 +35,13 @@ class InsuranceCompanyBranchPublishedValidator extends ConstraintValidator
      * @var InsuranceCompanyBranch $feedback
      */
     $branch = $this->context->getObject();
-    if (!$branch instanceof InsuranceCompanyBranch) {
+
+    if (!$branch instanceof InsuranceCompanyBranch)
+    {
       throw new UnexpectedTypeException($branch, InsuranceCompanyBranch::class);
     }
 
-    if ($branch->getPublished() && count($branch->getRepresentatives()) == 0)
+    if ($branch->isPublished() && count($branch->getRepresentatives()) == 0)
     {
       $this->context->addViolation($constraint->message, [
         '{message}' => 'Филиал должен иметь представителей перед публикацией',
