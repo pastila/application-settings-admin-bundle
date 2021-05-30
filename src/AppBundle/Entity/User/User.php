@@ -122,10 +122,19 @@ class User extends BaseUser implements PhoneVerificationAwareInterface
   private $phoneVerificationCode;
 
   /**
+   * Пациенты, законным предствателем которого является пользователь
    * @var Patient[]|ArrayCollection
    * @ORM\OneToMany(targetEntity="AppBundle\Entity\User\Patient", mappedBy="user")
    */
   private $patients;
+
+  /**
+   * Пациент, которым является сам пользователь
+   * @var Patient|null
+   * @ORM\OneToOne(targetEntity="AppBundle\Entity\User\Patient")
+   * @ORM\JoinColumn(nullable=true, onDelete="RESTRICT")
+   */
+  private $mainPatient;
 
   /**
    * @var Feedback[]|ArrayCollection
@@ -470,6 +479,24 @@ class User extends BaseUser implements PhoneVerificationAwareInterface
   public function getPatients ()
   {
     return $this->patients;
+  }
+
+  /**
+   * @return Patient|null
+   */
+  public function getMainPatient ()
+  {
+    return $this->mainPatient;
+  }
+
+  /**
+   * @param Patient|null $mainPatient
+   * @return $this
+   */
+  public function setMainPatient ($mainPatient)
+  {
+    $this->mainPatient = $mainPatient;
+    return $this;
   }
 
   public function isAdmin ()

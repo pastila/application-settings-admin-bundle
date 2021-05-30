@@ -5,6 +5,7 @@ namespace AppBundle\Admin\User;
 use AppBundle\Entity\User\User;
 use AppBundle\Form\Admin\Common\MaskedType;
 use AppBundle\Form\Admin\Company\InsuranceCompanyBranchAutocompleteType;
+use AppBundle\Repository\User\PatientRepository;
 use AppBundle\Validator\User\Phone;
 use FOS\UserBundle\Model\UserManager;
 use Knp\Menu\ItemInterface as MenuItemInterface;
@@ -28,6 +29,7 @@ class UserAdmin extends AbstractAdmin
     $list
       ->add('email')
       ->add('insurancePolicyNumber')
+      ->add('insuranceCompany')
       ->add('fio')
       ->add('_action', null, array(
         'label' => 'Действия',
@@ -43,6 +45,7 @@ class UserAdmin extends AbstractAdmin
 
   protected function configureFormFields (FormMapper $form)
   {
+    $user = $this->getSubject();
     $form
       ->tab('Данные пользователя')
       ->with('Основное')
@@ -86,7 +89,27 @@ class UserAdmin extends AbstractAdmin
         'mask' => '+7(999)999-99-99',
       ])
       ->add('insurancePolicyNumber')
-      ->end()
+      ->end();
+
+    if ($user && $user->getId())
+    {
+      $form
+        ->with('Пациент')
+        ->add('mainPatient', null, [
+          'label' => 'Основой пациент',
+          'help' => 'Пациент, которым является пользователь',
+          'query_builder' => function(PatientRepository $patientRepository) use ($user)
+          {
+            return $patientRepository
+              ->createQueryBuilder('p')
+              ->where('p.user = :user')
+              ->setParameter('user', $user);
+          },
+        ])
+        ->end();
+    }
+
+    $form
       ->with('Представительство')
       ->add('representative', ChoiceFieldMaskType::class, [
         'choices' => [

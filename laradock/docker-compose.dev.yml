@@ -8,8 +8,8 @@ networks:
 services:
   percona:
     user: "999:999"
-    ports:
-      - "${PERCONA_PORT}:3306"
+#    ports:
+#      - "${PERCONA_PORT}:3306"
 
   nginx:
     labels:

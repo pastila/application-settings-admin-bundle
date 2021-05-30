@@ -42,6 +42,26 @@ class InsuranceCompanyBranchRepository extends ServiceEntityRepository
   }
 
   /**
+   * @param InsuranceCompany $company
+   * @param Region $region
+   * @return InsuranceCompanyBranch|null
+   */
+  public function findOnePublishedByCompanyAndRegion (InsuranceCompany $company, Region $region)
+  {
+    return $this
+      ->createQueryBuilder('cb')
+      ->where('cb.company = :company')
+      ->andWhere('cb.region = :region')
+      ->andWhere('cb.published = TRUE')
+      ->setParameters([
+        'company' => $company,
+        'region' => $region
+      ])
+      ->getQuery()
+      ->getOneOrNullResult();
+  }
+
+  /**
    * @return \Doctrine\ORM\QueryBuilder
    */
   public function getActive()
