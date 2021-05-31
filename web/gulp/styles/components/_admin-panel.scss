@@ -1,0 +1,87 @@
+.control-panel {
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    border: 1px solid #ebeef0;
+    display: inline-block;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 101;
+
+    a {
+        text-decoration: none;
+        font-size: 14px;
+        color: #0070ba;
+
+        &:hover {
+            color:  #2fb4e9;
+        }
+    }
+
+    .show-admin-controls {
+        background-image: url('/local/templates/kdteam/images/svg/sprite-icons-admin-panel.svg');
+        background-position: 0 -96px;
+        width: 15px;
+        height: 15px;
+        padding: 16px;
+        display: block;
+        margin: 5px;
+
+        &:hover {
+            background-position: 0 -64px;
+        }
+    }
+
+    .admin-controls {
+        background-color: #f2f2f2;
+        border-radius: 5px;
+        border: 1px solid #ebeef0;
+        position: fixed;
+        left: -100%;
+        top: 0;
+        bottom: 0;
+        padding: 15px;
+        max-width: 300px;
+        -webkit-transition: left 0.5s;
+        -moz-transition: left 0.5s;
+        -ms-transition: left 0.5s;
+        -o-transition: left 0.5s;
+        transition: left 0.5s;
+
+        .hide-admin-controls {
+            background-image: url('/local/templates/kdteam/images/svg/sprite-icons-admin-panel.svg');
+            background-position: 0 -32px;
+            width: 15px;
+            height: 15px;
+            padding: 15px;
+            display: block;
+            margin: 5px;
+            margin-left: auto;
+
+            &:hover {
+                background-position: 0 0;
+            }
+        }
+
+        &.deployed {
+            display: inline-block;
+            left: 0;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+            -ms-transition: all 0.5s;
+            -o-transition: all 0.5s;
+            transition: all 0.5s;
+
+        }
+    }
+
+    &__link {
+        display: block;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    //&:hover {
+        //box-shadow: @box-shadow-hover;
+    //}
+}

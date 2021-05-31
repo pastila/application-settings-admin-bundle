@@ -1,0 +1,12 @@
+<div class="control-panel">
+    <a class="show-admin-controls" title="Показать панель администрирования"></a>
+
+    <div class="admin-controls">
+        <a class="hide-admin-controls" title="Скрыть панель администрирования"></a>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a class="control-panel__link" href="{{ path('sonata_admin_dashboard') }}">
+                Перейти в раздел администрирования
+            </a>
+        {% endif %}
+    </div>
+</div>
