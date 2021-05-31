@@ -187,6 +187,16 @@ $(document).ready(function() {
   //   },
   // });
 
+  $(function () {
+    $('.show-admin-controls').on('click', function () {
+      var $adminControl = $(this).parent().find('.admin-controls');
+      $adminControl.addClass('deployed')
+    });
+    $('.hide-admin-controls').on('click', function () {
+      var $adminControl = $(this).parent();
+      $adminControl.removeClass('deployed')
+    })
+  });
 });
 
 $(document).on('click', '.close-modal', function(e) {
