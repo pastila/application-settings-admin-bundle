@@ -426,12 +426,14 @@ class Feedback
     if ($this->moderationStatus === FeedbackModerationStatus::MODERATION_ACCEPTED)
     {
       return 'Одобрено';
-    } elseif ($this->moderationStatus === FeedbackModerationStatus::MODERATION_REJECTED)
+    }
+    elseif ($this->moderationStatus === FeedbackModerationStatus::MODERATION_REJECTED)
     {
       return 'Отклонено';
-    } elseif ($this->moderationStatus === FeedbackModerationStatus::MODERATION_NONE)
+    }
+    elseif ($this->moderationStatus === FeedbackModerationStatus::MODERATION_NONE)
     {
-      return 'Неизвестно';
+      return 'Требует модерации';
     }
 
     return $this->getModerationStatus();

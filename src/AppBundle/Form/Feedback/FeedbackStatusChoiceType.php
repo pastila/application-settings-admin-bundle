@@ -17,7 +17,7 @@ class FeedbackStatusChoiceType extends ChoiceType
     $choices = [
       'Одобрено' => FeedbackModerationStatus::MODERATION_ACCEPTED,
       'Отклонено' => FeedbackModerationStatus::MODERATION_REJECTED,
-      'Неизвестно' => FeedbackModerationStatus::MODERATION_NONE,
+      'Требует модерации' => FeedbackModerationStatus::MODERATION_NONE,
     ];
 
     parent::configureOptions($resolver);
