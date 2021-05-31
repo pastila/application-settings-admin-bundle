@@ -48,7 +48,7 @@
     <div class="confirmed-form">
         {% block fos_user_content %}
             <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
-            <p><a href="/personal-cabinet/">Перейти в личный кабинет</a></p>
+            <p><a href="{{ path('lk_index') }}">Перейти в личный кабинет</a></p>
         {% endblock fos_user_content %}
     </div><!-- b:m-content -->
 {% endblock %}
