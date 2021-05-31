@@ -17,9 +17,9 @@ class OrganizationExportType extends AbstractType
     $builder
       ->add('year', ChoiceType::class, [
         'required' => false,
-        'constraints' => [
-          new NotBlank(),
-        ],
+//        'constraints' => [
+//          new NotBlank(),
+//        ],
         'choices' => $years,
       ])
       ->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
