@@ -68,7 +68,7 @@ class MedicalOrganizationAdminController extends CRUDController
    */
   public function exportAction(Request $request)
   {
-    $form = $this->container->get('form.factory')->create(OrganizationExportType::class);
+    $form = $this->createForm(OrganizationExportType::class);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid())
@@ -87,7 +87,7 @@ class MedicalOrganizationAdminController extends CRUDController
       $printer = $this->container->get('app.organization_export.excel');
       $organizations = $organizationsListQb->getQuery()->getResult();
 
-      $fileName = 'mo_' . date('Y-m-d') . '.xls';
+      $fileName = 'mo_' . date('Y-m-d') . '.xlsx';
       $response = new StreamedResponse(
         function() use ($printer, $organizations)
         {
