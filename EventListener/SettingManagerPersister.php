@@ -37,6 +37,8 @@ class SettingManagerPersister
 
   protected function persistSettings()
   {
+    $hasChangedSettings = false;
+
     foreach ($this->settingManager->getModifiedValues() as $item)
     {
       $configure = $this->settingConfigurationPool->getSettingConfiguration($item);
@@ -49,8 +51,12 @@ class SettingManagerPersister
       }
 
       $this->settingStorage->set($name, $value);
+      $hasChangedSettings = true;
     }
 
-    $this->settingStorage->commit();
+    if ($hasChangedSettings)
+    {
+      $this->settingStorage->commit();
+    }
   }
 }
