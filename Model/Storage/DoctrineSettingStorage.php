@@ -14,6 +14,7 @@
 namespace Accurateweb\ApplicationSettingsAdminBundle\Model\Storage;
 
 use Accurateweb\ApplicationSettingsAdminBundle\Repository\SettingRepository;
+use Doctrine\DBAL\Exception\TableNotFoundException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\UnitOfWork;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -35,15 +36,23 @@ class DoctrineSettingStorage implements SettingStorageInterface
   {
     if (!isset($this->settings[$name]))
     {
-      $this->settings[$name] = $this->settingsRepository->findOneBy(array('name' => $name));
-
-      if (!$this->settings[$name])
+      try
       {
-//        $class = $this->settingsRepository->getClassName();
-//        $this->settings[$name] = new $class();
-//        $this->settings[$name]->setName($name);
-//        $this->em->persist($this->settings[$name]);
-//        $this->em->flush();
+        $this->settings[$name] = $this->settingsRepository->findOneBy(array('name' => $name));
+      }
+      catch (TableNotFoundException $e)
+      {
+        /*
+         * Если таблица еще не создана (миграции не выполнены) - не пытаемся получить настройку от туда
+         */
+        $this->settings[$name] =  null;
+      }
+
+      if ($this->settings[$name] === null)
+      {
+        $class = $this->settingsRepository->getClassName();
+        $this->settings[$name] = new $class();
+        $this->settings[$name]->setName($name);
         return null;
       }
     }
